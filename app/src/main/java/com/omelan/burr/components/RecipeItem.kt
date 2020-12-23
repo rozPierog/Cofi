@@ -1,14 +1,11 @@
 package com.omelan.burr.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,29 +20,31 @@ import com.omelan.burr.ui.BurrTheme
 @Composable
 fun RecipeItem(recipe: Recipe, onClick: (Recipe) -> Unit) {
     BurrTheme {
-
         Card(
             elevation = 5.dp,
             shape = RoundedCornerShape(15.dp),
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(10.dp),
         )
         {
-            Button(
-                onClick = { onClick(recipe) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.cardBackground))
+            Row(
+                modifier = Modifier.fillMaxWidth()
+                    .clickable(onClick = { onClick(recipe) })
+                    .padding(horizontal = 10.dp),
             ) {
+                Icon(
+                    Icons.Rounded.Add,
+                    modifier = Modifier.height(25.dp).aspectRatio(1f)
+                        .align(Alignment.CenterVertically)
+                )
                 Column(modifier = Modifier.padding(15.dp)) {
-                    Row(modifier = Modifier.fillMaxWidth().align(Alignment.Start)) {
-//                    Image(imageResource(icon))
-                        Text(text = recipe.name)
-                    }
+                    Text(text = recipe.name)
                     Text(text = recipe.description)
                 }
             }
         }
     }
-
 }
+
 
 @Preview
 @Composable
