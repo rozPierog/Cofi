@@ -10,13 +10,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.burr.model.Recipe
 
 @Composable
-fun RecipeList(recipes: List<Recipe>) {
+fun RecipeList(recipes: List<Recipe>, onClick: (Recipe) -> Unit) {
         LazyColumn {
             items(recipes, itemContent = { recipe ->
                 RecipeItem(
-                    name = recipe.name,
-                    description = recipe.description,
-                    icon = recipe.iconName,
+                    recipe = recipe,
+                    onClick = onClick,
                 )
             })
         }
@@ -25,10 +24,10 @@ fun RecipeList(recipes: List<Recipe>) {
 @Preview
 @Composable
 fun RecipeListPreview() {
-    val listOfRecipes = listOf<Recipe>(
+    val listOfRecipes = listOf(
         Recipe("Ultimate v60", description = "Hoffman"),
         Recipe("Ultimate v60", description = "Hoffman"),
         Recipe("Ultimate v60", description = "Hoffman"),
     )
-    RecipeList(listOfRecipes)
+    RecipeList(listOfRecipes, onClick = {})
 }

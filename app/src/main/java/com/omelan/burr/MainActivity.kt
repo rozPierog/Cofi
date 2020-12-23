@@ -26,18 +26,17 @@ import com.omelan.burr.components.RecipeList
 import com.omelan.burr.model.Recipe
 
 class MainActivity : AppCompatActivity() {
-
-    val timeOfTask = (15 * 1000).toLong()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val listOfRecipes = listOf<Recipe>(
+        val listOfRecipes = listOf(
             Recipe("Ultimate v60", description = "Hoffman"),
-            Recipe("Ultimate v60", description = "Hoffman"),
-            Recipe("Ultimate v60", description = "Hoffman"),
+            Recipe("Ultimate French Press", description = "Hoffman"),
+            Recipe("Ultimate Coś tam coś tam", description = "Hoffman"),
         )
         setContent {
-            RecipeList(recipes = listOfRecipes)
+            RecipeList(recipes = listOfRecipes, onClick = {
+                // TODO: Transiton to details page!
+            })
         }
     }
-
 }
