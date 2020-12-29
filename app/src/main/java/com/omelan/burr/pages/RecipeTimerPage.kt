@@ -77,7 +77,6 @@ fun RecipeTimerPage(recipe: Recipe) {
             return@onCommit
         }
         animatedProgress.snapTo(0f)
-//        animatedColor.snapTo(Color.DarkGray)
         startAnimations()
     })
 
