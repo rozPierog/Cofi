@@ -16,11 +16,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.model.Step
 import com.omelan.burr.ui.BurrTheme
+import com.omelan.burr.utils.Haptics
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
@@ -33,7 +36,17 @@ fun RecipeTimerPage(recipe: Recipe) {
     val indexOfLastStep = recipe.steps.lastIndex
     val animatedProgress = animatedFloat(0f)
     val animatedColor = animatedColor(Color.DarkGray)
+    val haptics = Haptics(AmbientContext.current)
 
+    fun changeToNextStep() {
+        if (indexOfCurrentStep != indexOfLastStep) {
+            setCurrentStep(recipe.steps[indexOfCurrentStep + 1])
+        } else {
+            animatedProgress.snapTo(0f)
+            setCurrentStep(null)
+        }
+        haptics.tick()
+    }
     fun pauseAnimations() {
         animatedColor.stop()
         animatedProgress.stop()
@@ -55,12 +68,7 @@ fun RecipeTimerPage(recipe: Recipe) {
                 if (endValue != 1f) {
                     return@animateTo
                 }
-                if (indexOfCurrentStep != indexOfLastStep) {
-                    setCurrentStep(recipe.steps[indexOfCurrentStep + 1])
-                } else {
-                    animatedProgress.snapTo(0f)
-                    setCurrentStep(null)
-                }
+                changeToNextStep()
             }
         )
     }
@@ -69,7 +77,7 @@ fun RecipeTimerPage(recipe: Recipe) {
             return@onCommit
         }
         animatedProgress.snapTo(0f)
-        animatedColor.snapTo(Color.DarkGray)
+//        animatedColor.snapTo(Color.DarkGray)
         startAnimations()
     })
 
