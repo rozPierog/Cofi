@@ -1,17 +1,12 @@
 package com.omelan.burr.pages
 
-import android.util.Log
-import androidx.compose.animation.animate
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.animatedColor
 import androidx.compose.animation.animatedFloat
-import androidx.compose.animation.core.AnimationConstants
 import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.repeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
@@ -25,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.model.Step
 import com.omelan.burr.ui.BurrTheme
-import kotlin.math.floor
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
@@ -38,20 +32,28 @@ fun RecipeTimerPage(recipe: Recipe) {
     val indexOfLastStep = recipe.steps.lastIndex
     val animatedProgress = animatedFloat(0f)
     val animatedColor = animatedColor(Color.DarkGray)
-    onCommit(v1 = indexOfCurrentStep, callback = {
+
+    fun pauseAnimations() {
+        animatedColor.stop()
+        animatedProgress.stop()
+    }
+
+    fun startAnimations() {
         if (currentStep == null) {
-            return@onCommit
+            return
         }
-        animatedProgress.snapTo(0f)
-        animatedColor.snapTo(Color.DarkGray)
+        val duration = (currentStep.time - (currentStep.time * animatedProgress.value)).toInt()
         animatedColor.animateTo(
             targetValue = currentStep.type.getColor(),
-            anim = tween(durationMillis = currentStep.time, easing = LinearEasing),
+            anim = tween(durationMillis = duration, easing = LinearEasing),
         )
         animatedProgress.animateTo(
             targetValue = 1f,
-            anim = tween(durationMillis = currentStep.time, easing = LinearEasing),
-            onEnd = { _, _ ->
+            anim = tween(durationMillis = duration, easing = LinearEasing),
+            onEnd = { _, endValue ->
+                if (endValue != 1f) {
+                    return@animateTo
+                }
                 if (indexOfCurrentStep != indexOfLastStep) {
                     setCurrentStep(recipe.steps[indexOfCurrentStep + 1])
                 } else {
@@ -60,6 +62,14 @@ fun RecipeTimerPage(recipe: Recipe) {
                 }
             }
         )
+    }
+    onCommit(v1 = indexOfCurrentStep, callback = {
+        if (currentStep == null) {
+            return@onCommit
+        }
+        animatedProgress.snapTo(0f)
+        animatedColor.snapTo(Color.DarkGray)
+        startAnimations()
     })
 
 
@@ -114,7 +124,7 @@ fun RecipeTimerPage(recipe: Recipe) {
                         )
                         currentStep.value?.let {
                             val currentValueFromProgress =
-                                floor(currentStep.value * animatedProgress.value)
+                                (currentStep.value * animatedProgress.value).toInt()
                             Divider(color = Color.Black)
                             Text(
                                 text = "${currentValueFromProgress}g/${it}g",
@@ -131,7 +141,15 @@ fun RecipeTimerPage(recipe: Recipe) {
             Button(
                 modifier = Modifier.animateContentSize(),
                 onClick = {
-                    setCurrentStep(recipe.steps.first())
+                    if (currentStep != null) {
+                        if (animatedColor.isRunning && animatedProgress.isRunning) {
+                            pauseAnimations()
+                        } else {
+                            startAnimations()
+                        }
+                    } else {
+                        setCurrentStep(recipe.steps.first())
+                    }
                 },
             ) {
                 Text(text = "Start")
