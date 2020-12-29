@@ -94,5 +94,5 @@ fun RecipeTimerPage(recipe: Recipe) {
 @Preview(showBackground = true)
 @Composable
 fun RecipeTimerPagePreview() {
-    RecipeTimerPage(Recipe("V60", "Ble ble"))
+    RecipeTimerPage(Recipe(id="1", name = "V60", description = "Ble ble"))
 }

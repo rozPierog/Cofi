@@ -12,13 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.omelan.burr.R
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.ui.BurrTheme
-
+import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun RecipeItem(recipe: Recipe, onClick: (Recipe) -> Unit) {
+fun RecipeItem(recipe: Recipe, navigateToRecipe: (recipeId: String) -> Unit) {
+    fun onClickRecipe() {
+        navigateToRecipe(recipe.id)
+    }
     BurrTheme {
         Card(
             elevation = 5.dp,
@@ -28,7 +33,7 @@ fun RecipeItem(recipe: Recipe, onClick: (Recipe) -> Unit) {
         {
             Row(
                 modifier = Modifier.fillMaxWidth()
-                    .clickable(onClick = { onClick(recipe) })
+                    .clickable(onClick = { onClickRecipe() })
                     .padding(horizontal = 10.dp),
             ) {
                 Icon(
@@ -51,9 +56,11 @@ fun RecipeItem(recipe: Recipe, onClick: (Recipe) -> Unit) {
 fun PreviewRecipeItem() {
     RecipeItem(
         recipe = Recipe(
+            id = "1",
             name = "Ultimate V60",
             description = "Recipe by Hoffman",
             iconName = R.drawable.ic_drip
-        ), onClick = {}
+        ),
+        navigateToRecipe = {}
     )
 }

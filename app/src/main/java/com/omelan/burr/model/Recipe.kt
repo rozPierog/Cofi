@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import com.omelan.burr.R
 
 data class Recipe(
+    val id: String,
     val name: String,
     val description: String,
     val steps: List<Step> = listOf(
