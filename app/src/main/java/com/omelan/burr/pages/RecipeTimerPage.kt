@@ -39,7 +39,7 @@ fun RecipeTimerPage(recipe: Recipe) {
         animatedProgress.snapTo(0f)
         animatedColor.snapTo(Color.DarkGray)
         animatedColor.animateTo(
-            targetValue = Color.Green,
+            targetValue = currentStep.type.getColor(),
             anim = tween(durationMillis = currentStep.time, easing = LinearEasing),
         )
         animatedProgress.animateTo(
