@@ -9,6 +9,7 @@ import androidx.compose.animation.core.AnimationConstants
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.repeatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -24,7 +25,12 @@ import androidx.compose.ui.unit.dp
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.model.Step
 import com.omelan.burr.ui.BurrTheme
+import kotlin.math.floor
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
+import kotlin.time.toDuration
 
+@ExperimentalTime
 @Composable
 fun RecipeTimerPage(recipe: Recipe) {
     val (currentStep, setCurrentStep) = remember { mutableStateOf<Step?>(null) }
@@ -53,7 +59,8 @@ fun RecipeTimerPage(recipe: Recipe) {
                     setCurrentStep(null)
                 }
             }
-        ) })
+        )
+    })
 
 
     BurrTheme {
@@ -68,35 +75,83 @@ fun RecipeTimerPage(recipe: Recipe) {
                 style = MaterialTheme.typography.body1
             )
             Spacer(modifier = Modifier.height(15.dp))
-            CircularProgressIndicator(
-                progress = animatedProgress.value,
-                modifier = Modifier.fillMaxWidth().aspectRatio(1f)
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxWidth()
                     .align(Alignment.CenterHorizontally),
-                color = animatedColor.value,
-                strokeWidth = 25.dp
-            )
+            ) {
+                CircularProgressIndicator(
+                    progress = animatedProgress.value,
+                    modifier = Modifier.fillMaxWidth().aspectRatio(1f),
+                    color = animatedColor.value,
+                    strokeWidth = 25.dp
+                )
+                Column(modifier = Modifier.padding(25.dp).animateContentSize()) {
+
+                    if (currentStep != null) {
+                        val duration = (currentStep.time * animatedProgress.value).toInt()
+                            .toDuration(DurationUnit.MILLISECONDS)
+                        Text(
+                            text = "${
+                                duration.inMinutes.toInt()
+                            }:${
+                                duration.inSeconds.toInt()
+                            }:${
+                                duration.inMilliseconds.toInt()
+                            }",
+                            style = MaterialTheme.typography.body1,
+                            modifier = Modifier.align(
+                                Alignment.CenterHorizontally
+                            )
+                        )
+                        Divider(color = Color.Black)
+                        Text(
+                            text = currentStep.name,
+                            style = MaterialTheme.typography.body1,
+                            modifier = Modifier.align(
+                                Alignment.CenterHorizontally
+                            )
+                        )
+                        currentStep.value?.let {
+                            val currentValueFromProgress =
+                                floor(currentStep.value * animatedProgress.value)
+                            Divider(color = Color.Black)
+                            Text(
+                                text = "${currentValueFromProgress}g/${it}g",
+                                modifier = Modifier.align(
+                                    Alignment.CenterHorizontally
+                                )
+                            )
+                        }
+
+                    }
+                }
+            }
+
             Button(
+                modifier = Modifier.animateContentSize(),
                 onClick = {
                     setCurrentStep(recipe.steps.first())
                 },
             ) {
-                Text(text = "Click Me ${animatedProgress.value}")
+                Text(text = "Start")
             }
             Spacer(modifier = Modifier.height(25.dp))
 
-            LazyColumn {
-                items(recipe.steps, itemContent = { step ->
+            ScrollableColumn {
+                recipe.steps.forEach { step ->
                     Row(modifier = Modifier.animateContentSize()) {
                         val indexOfThisStep = recipe.steps.indexOf(step)
                         if (indexOfThisStep < indexOfCurrentStep) {
                             Icon(Icons.Rounded.CheckCircle)
-                        } else if ( indexOfCurrentStep == indexOfThisStep) {
+                        } else if (indexOfCurrentStep == indexOfThisStep) {
                             Icon(Icons.Rounded.AccountCircle)
                         }
                         Text(text = step.name, style = MaterialTheme.typography.subtitle1)
-                        Spacer(modifier = Modifier.height(1.dp))
+
                     }
-                })
+                    Divider(color = Color.Black)
+                }
             }
         }
     }
@@ -104,8 +159,9 @@ fun RecipeTimerPage(recipe: Recipe) {
 
 }
 
+@ExperimentalTime
 @Preview(showBackground = true)
 @Composable
 fun RecipeTimerPagePreview() {
-    RecipeTimerPage(Recipe(id="1", name = "V60", description = "Ble ble"))
+    RecipeTimerPage(Recipe(id = "1", name = "V60", description = "Ble ble"))
 }

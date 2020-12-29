@@ -1,5 +1,6 @@
 package com.omelan.burr.components
 
+import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.lazy.LazyListScope
@@ -11,13 +12,13 @@ import com.omelan.burr.model.Recipe
 
 @Composable
 fun RecipeList(recipes: List<Recipe>, navigateToRecipe: (recipeId: String) -> Unit ) {
-        LazyColumn {
-            items(recipes, itemContent = { recipe ->
+        ScrollableColumn {
+            recipes.forEach { recipe ->
                 RecipeItem(
                     recipe = recipe,
                     navigateToRecipe = navigateToRecipe,
                 )
-            })
+            }
         }
 }
 

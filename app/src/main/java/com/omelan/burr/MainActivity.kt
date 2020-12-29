@@ -11,7 +11,9 @@ import androidx.navigation.compose.navigate
 import com.omelan.burr.components.RecipeList
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.pages.RecipeTimerPage
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
