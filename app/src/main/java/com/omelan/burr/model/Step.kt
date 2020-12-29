@@ -1,12 +1,14 @@
 package com.omelan.burr.model
 
 import androidx.compose.ui.graphics.Color
+import com.omelan.burr.ui.brown
+import com.omelan.burr.ui.green
 
 
 enum class StepType {
     ADD_COFFEE {
         override fun getColor(): Color {
-            return Color.Black
+            return brown
         }
     },
     WATER {
@@ -16,7 +18,7 @@ enum class StepType {
     },
     WAIT {
         override fun getColor(): Color {
-            return Color.Green
+            return green
         }
     },
     OTHER {

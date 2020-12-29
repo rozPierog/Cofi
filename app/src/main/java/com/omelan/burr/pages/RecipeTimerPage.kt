@@ -7,6 +7,7 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
@@ -91,6 +92,12 @@ fun RecipeTimerPage(recipe: Recipe) {
                     .align(Alignment.CenterHorizontally),
             ) {
                 CircularProgressIndicator(
+                    progress = 1f,
+                    modifier = Modifier.fillMaxWidth().aspectRatio(1f),
+                    color = Color(0xFFE8EAF6),
+                    strokeWidth = 25.dp
+                )
+                CircularProgressIndicator(
                     progress = animatedProgress.value,
                     modifier = Modifier.fillMaxWidth().aspectRatio(1f),
                     color = animatedColor.value,
@@ -109,15 +116,15 @@ fun RecipeTimerPage(recipe: Recipe) {
                             }:${
                                 duration.inMilliseconds.toInt()
                             }",
-                            style = MaterialTheme.typography.body1,
+                            style = MaterialTheme.typography.h6,
                             modifier = Modifier.align(
                                 Alignment.CenterHorizontally
                             )
                         )
                         Divider(color = Color.Black)
                         Text(
-                            text = currentStep.name,
-                            style = MaterialTheme.typography.body1,
+                            text = "${currentStep.name} (${currentStep.time/1000}s)",
+                            style = MaterialTheme.typography.subtitle1,
                             modifier = Modifier.align(
                                 Alignment.CenterHorizontally
                             )
@@ -130,16 +137,16 @@ fun RecipeTimerPage(recipe: Recipe) {
                                 text = "${currentValueFromProgress}g/${it}g",
                                 modifier = Modifier.align(
                                     Alignment.CenterHorizontally
-                                )
+                                ), style = MaterialTheme.typography.h5
                             )
                         }
 
                     }
                 }
             }
-
+            Spacer(modifier = Modifier.height(15.dp))
             Button(
-                modifier = Modifier.animateContentSize(),
+                modifier = Modifier.animateContentSize().align(Alignment.CenterHorizontally),
                 onClick = {
                     if (currentStep != null) {
                         if (animatedColor.isRunning && animatedProgress.isRunning) {
@@ -158,12 +165,19 @@ fun RecipeTimerPage(recipe: Recipe) {
 
             ScrollableColumn {
                 recipe.steps.forEach { step ->
-                    Row(modifier = Modifier.animateContentSize()) {
+                    Row(modifier = Modifier.animateContentSize().padding(vertical = 5.dp)) {
                         val indexOfThisStep = recipe.steps.indexOf(step)
-                        if (indexOfThisStep < indexOfCurrentStep) {
-                            Icon(Icons.Rounded.CheckCircle)
-                        } else if (indexOfCurrentStep == indexOfThisStep) {
-                            Icon(Icons.Rounded.AccountCircle)
+                        val isPastStep = indexOfThisStep < indexOfCurrentStep
+                        val isCurrentStep = indexOfCurrentStep == indexOfThisStep
+                        if (isPastStep || isCurrentStep) {
+                            Icon(
+                                imageVector = if (isPastStep) {
+                                    Icons.Rounded.CheckCircle
+                                } else {
+                                    Icons.Rounded.AccountCircle
+                                },
+                                modifier = Modifier.padding(horizontal = 5.dp)
+                            )
                         }
                         Text(text = step.name, style = MaterialTheme.typography.subtitle1)
 
