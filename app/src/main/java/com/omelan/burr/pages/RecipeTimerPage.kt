@@ -73,47 +73,50 @@ fun RecipeTimerPage(recipe: Recipe) {
             }
         )
     }
-    onCommit(v1 = currentStep, callback = {
+    onCommit(currentStep) {
         if (currentStep == null) {
             return@onCommit
         }
         animatedProgressValue.snapTo(0f)
         startAnimations()
-    })
+    }
     BurrTheme {
-        Column(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(16.dp)
+        ScrollableColumn(
+            modifier = Modifier.fillMaxWidth().fillMaxHeight()
         ) {
-            Text(text = recipe.name, color = Color.Black, style = MaterialTheme.typography.h6)
-            Spacer(modifier = Modifier.height(15.dp))
-            Description(modifier = Modifier.fillMaxWidth(), descriptionText = recipe.description)
-            Spacer(modifier = Modifier.height(15.dp))
-            Timer(
-                modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
-                currentStep = currentStep,
-                animatedProgressValue = animatedProgressValue,
-                animatedProgressColor = animatedProgressColor,
-            )
-            Spacer(modifier = Modifier.height(15.dp))
-            Button(
-                modifier = Modifier.animateContentSize().align(Alignment.CenterHorizontally),
-                onClick = {
-                    if (currentStep != null) {
-                        if (animatedProgressColor.isRunning && animatedProgressValue.isRunning) {
-                            pauseAnimations()
-                        } else {
-                            startAnimations()
-                        }
-                    } else {
-                        setCurrentStep(recipe.steps.first())
-                    }
-                },
-            ) {
-                Text(text = "Start")
-            }
-            Spacer(modifier = Modifier.height(25.dp))
+            Column(modifier = Modifier.padding(16.dp)) {
 
-            ScrollableColumn {
+                Text(text = recipe.name, color = Color.Black, style = MaterialTheme.typography.h6)
+                Spacer(modifier = Modifier.height(15.dp))
+                Description(
+                    modifier = Modifier.fillMaxWidth(),
+                    descriptionText = recipe.description
+                )
+                Spacer(modifier = Modifier.height(15.dp))
+                Timer(
+                    modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
+                    currentStep = currentStep,
+                    animatedProgressValue = animatedProgressValue,
+                    animatedProgressColor = animatedProgressColor,
+                )
+                Spacer(modifier = Modifier.height(15.dp))
+                Button(
+                    modifier = Modifier.animateContentSize().align(Alignment.CenterHorizontally),
+                    onClick = {
+                        if (currentStep != null) {
+                            if (animatedProgressColor.isRunning && animatedProgressValue.isRunning) {
+                                pauseAnimations()
+                            } else {
+                                startAnimations()
+                            }
+                        } else {
+                            setCurrentStep(recipe.steps.first())
+                        }
+                    },
+                ) {
+                    Text(text = "Start")
+                }
+                Spacer(modifier = Modifier.height(25.dp))
                 recipe.steps.forEach { step ->
                     Row(modifier = Modifier.animateContentSize().padding(vertical = 5.dp)) {
                         val indexOfThisStep = recipe.steps.indexOf(step)

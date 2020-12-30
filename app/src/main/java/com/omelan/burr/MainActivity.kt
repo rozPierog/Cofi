@@ -18,7 +18,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val listOfRecipes = listOf(
-            Recipe(id = "1", name = "Ultimate v60", description = "Hoffman"),
+            Recipe(
+                id = "1",
+                name = "Ultimate v60",
+                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pellentesque lacus nec ex pellentesque gravida. Morbi a fringilla ex. Ut lacinia velit vel diam luctus, et facilisis risus commodo. Sed suscipit tellus leo, sit amet cursus augue posuere id. Cras posuere, nibh in tempus vestibulum, justo neque rhoncus nibh, eget efficitur quam mi at enim. Ut quis luctus tellus. Proin porttitor, ex vitae tempus ornare, dolor lectus viverra turpis, ac vulputate leo nunc sit amet magna. Proin odio sapien, commodo eget justo vel, malesuada fringilla erat. Donec vitae vestibulum tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec rutrum tortor. Ut pulvinar quis diam ac semper. Praesent ornare id leo quis porttitor. Nullam vitae augue ac nibh viverra hendrerit. Cras purus turpis, vulputate ac tincidunt non, mollis eget sapien."
+            ),
             Recipe(id = "2", name = "Ultimate French Press", description = "Hoffman"),
             Recipe(id = "3", name = "Ultimate Coś tam coś tam", description = "Hoffman"),
         )

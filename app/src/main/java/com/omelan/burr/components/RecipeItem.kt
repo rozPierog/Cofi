@@ -42,8 +42,8 @@ fun RecipeItem(recipe: Recipe, navigateToRecipe: (recipeId: String) -> Unit) {
                         .align(Alignment.CenterVertically)
                 )
                 Column(modifier = Modifier.padding(15.dp)) {
-                    Text(text = recipe.name)
-                    Text(text = recipe.description)
+                    Text(text = recipe.name, maxLines = 1, style = MaterialTheme.typography.subtitle1)
+                    Text(text = recipe.description, maxLines = 1, style = MaterialTheme.typography.body2)
                 }
             }
         }
