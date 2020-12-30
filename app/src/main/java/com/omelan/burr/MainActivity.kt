@@ -7,13 +7,17 @@ import android.os.Bundle
 import android.util.Rational
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener
 import androidx.lifecycle.LiveData
@@ -31,6 +35,12 @@ import kotlin.time.ExperimentalTime
 class MainActivityViewModel : ViewModel() {
     private val _pipState = MutableLiveData(false)
     val pipState: LiveData<Boolean> = _pipState
+    private val _statusBarHeight = MutableLiveData(0)
+    val statusBarHeight: LiveData<Int> = _statusBarHeight
+
+    fun setStatusBarHeight(newHeight: Int) {
+        _statusBarHeight.value = newHeight
+    }
 
     fun setIsInPiP(newPiPState: Boolean) {
         _pipState.value = newPiPState
@@ -53,9 +63,8 @@ class MainActivity : AppCompatActivity() {
             Recipe(id = "2", name = "Ultimate French Press", description = "Hoffman"),
             Recipe(id = "3", name = "Ultimate Coś tam coś tam", description = "Hoffman"),
         )
-        var topPaddingInPx = 0
         setOnApplyWindowInsetsListener(window.decorView) { _, insets ->
-            topPaddingInPx = insets.systemWindowInsetTop
+            viewModel.setStatusBarHeight(insets.systemWindowInsetTop)
             insets.consumeSystemWindowInsets()
         }
         setContent {
@@ -67,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
             Column {
 
-                PiPAwareAppBar(topPaddingInPx = topPaddingInPx, isInPiP = isInPiP)
+                PiPAwareAppBar(isInPiP = isInPiP)
 
                 NavHost(navController, startDestination = "list") {
                     composable("list") {
@@ -87,21 +96,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun PiPAwareAppBar(topPaddingInPx: Int, isInPiP: Boolean) {
+    fun PiPAwareAppBar(isInPiP: Boolean) {
         if (!isInPiP) {
-            TopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.app_name))
-                },
-                backgroundColor = colorResource(id = R.color.navigationBar),
-                contentColor = colorResource(id = R.color.textPrimary),
-                modifier = Modifier.padding(
-                    top = (topPaddingInPx / (
-                            resources?.displayMetrics?.density
-                                ?: 1f
-                            )).dp
+            var topPaddingInDp: Dp by remember { mutableStateOf(0.dp) }
+
+            viewModel.statusBarHeight.observe(this) {
+                topPaddingInDp = (it / (
+                        resources?.displayMetrics?.density
+                            ?: 1f
+                        )).dp
+            }
+            Column {
+                Surface(elevation = 4.dp) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().height(topPaddingInDp)
+                            .background(colorResource(id = R.color.navigationBar)),
+                    )
+                }
+                TopAppBar(
+                    title = {
+                        Text(text = stringResource(id = R.string.app_name))
+                    },
+                    elevation = 4.dp,
+                    backgroundColor = colorResource(id = R.color.navigationBar),
+                    contentColor = colorResource(id = R.color.textPrimary),
                 )
-            )
+            }
         }
     }
 
