@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -37,7 +38,7 @@ fun RecipeItem(recipe: Recipe, navigateToRecipe: (recipeId: String) -> Unit) {
                     .padding(horizontal = 10.dp),
             ) {
                 Icon(
-                    Icons.Rounded.Add,
+                    vectorResource(id = recipe.iconName),
                     modifier = Modifier.height(25.dp).aspectRatio(1f)
                         .align(Alignment.CenterVertically)
                 )
@@ -59,7 +60,7 @@ fun PreviewRecipeItem() {
             id = "1",
             name = "Ultimate V60",
             description = "Recipe by Hoffman",
-            iconName = R.drawable.ic_drip
+            iconName = R.drawable.ic_coffee
         ),
         navigateToRecipe = {}
     )

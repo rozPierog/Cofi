@@ -55,11 +55,11 @@ fun Timer(
                     .toDuration(DurationUnit.MILLISECONDS)
                 Text(
                     text = "${
-                        duration.inMinutes.toInt()
+                        duration.inMinutes.toInt().toString().padStart(2, '0')
                     }:${
-                        duration.inSeconds.toInt()
+                        duration.inSeconds.toInt().toString().padStart(2, '0')
                     }:${
-                        duration.inMilliseconds.toInt()
+                        duration.inMilliseconds.toInt().toString().padStart(4, '0')
                     }",
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.align(

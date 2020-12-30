@@ -19,5 +19,5 @@ data class Recipe(
         Step(id = 7, name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
         ),
     @DrawableRes
-    val iconName: Int = R.drawable.ic_drip
+    val iconName: Int = R.drawable.ic_coffee
 )

@@ -18,6 +18,8 @@ import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.burr.components.Description
+import com.omelan.burr.components.StepListItem
+import com.omelan.burr.components.StepProgress
 import com.omelan.burr.components.Timer
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.model.Step
@@ -118,29 +120,20 @@ fun RecipeTimerPage(recipe: Recipe) {
                 }
                 Spacer(modifier = Modifier.height(25.dp))
                 recipe.steps.forEach { step ->
-                    Row(modifier = Modifier.animateContentSize().padding(vertical = 5.dp)) {
-                        val indexOfThisStep = recipe.steps.indexOf(step)
-                        val isPastStep = indexOfThisStep < indexOfCurrentStep
-                        val isCurrentStep = indexOfCurrentStep == indexOfThisStep
-                        if (isPastStep || isCurrentStep) {
-                            Icon(
-                                imageVector = if (isPastStep) {
-                                    Icons.Rounded.CheckCircle
-                                } else {
-                                    Icons.Rounded.AccountCircle
-                                },
-                                modifier = Modifier.padding(horizontal = 5.dp)
-                            )
-                        }
-                        Text(text = step.name, style = MaterialTheme.typography.subtitle1)
-
+                    val indexOfThisStep = recipe.steps.indexOf(step)
+                    val stepProgress = when {
+                        indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
+                        indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
+                        else -> StepProgress.Upcoming
                     }
-                    Divider(color = Color.Black)
+                    StepListItem(step = step, stepProgress = stepProgress)
+                    Divider(color = Color(0xFFE8EAF6))
                 }
             }
         }
     }
 }
+
 
 @ExperimentalTime
 @Preview(showBackground = true)
