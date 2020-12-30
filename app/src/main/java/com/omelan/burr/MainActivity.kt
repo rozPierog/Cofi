@@ -1,15 +1,24 @@
 package com.omelan.burr
 
+import android.app.PictureInPictureParams
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
+import android.util.Rational
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,8 +28,20 @@ import com.omelan.burr.model.Recipe
 import com.omelan.burr.pages.RecipeTimerPage
 import kotlin.time.ExperimentalTime
 
+class MainActivityViewModel : ViewModel() {
+    private val _pipState = MutableLiveData(false)
+    val pipState: LiveData<Boolean> = _pipState
+
+    fun setIsInPiP(newPiPState: Boolean) {
+        _pipState.value = newPiPState
+    }
+}
+
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainActivityViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val listOfRecipes = listOf(
@@ -39,21 +60,15 @@ class MainActivity : AppCompatActivity() {
         }
         setContent {
             val navController = rememberNavController()
+            var isInPiP: Boolean by remember { mutableStateOf(false) }
+            viewModel.pipState.observe(this) {
+                isInPiP = it
+            }
+
             Column {
 
-                TopAppBar(
-                    title = {
-                        Text(text = stringResource(id = R.string.app_name))
-                    },
-                    backgroundColor = colorResource(id = R.color.navigationBar),
-                    contentColor = colorResource(id = R.color.textPrimary),
-                    modifier = Modifier.padding(
-                        top = (topPaddingInPx / (
-                                resources?.displayMetrics?.density
-                                    ?: 1f
-                                )).dp
-                    )
-                )
+                PiPAwareAppBar(topPaddingInPx = topPaddingInPx, isInPiP = isInPiP)
+
                 NavHost(navController, startDestination = "list") {
                     composable("list") {
                         RecipeList(recipes = listOfRecipes, navigateToRecipe = { recipeId ->
@@ -64,12 +79,44 @@ class MainActivity : AppCompatActivity() {
                         val recipeId = backStackEntry.arguments?.getString("recipeId")
                         val pickedRecipe = listOfRecipes.find { it.id == recipeId }
                             ?: throw IllegalArgumentException("No recipeId on transition!")
-                        RecipeTimerPage(pickedRecipe)
+                        RecipeTimerPage(recipe = pickedRecipe, isInPiP = isInPiP)
                     }
                 }
             }
-
         }
     }
 
+    @Composable
+    fun PiPAwareAppBar(topPaddingInPx: Int, isInPiP: Boolean) {
+        if (!isInPiP) {
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(id = R.string.app_name))
+                },
+                backgroundColor = colorResource(id = R.color.navigationBar),
+                contentColor = colorResource(id = R.color.textPrimary),
+                modifier = Modifier.padding(
+                    top = (topPaddingInPx / (
+                            resources?.displayMetrics?.density
+                                ?: 1f
+                            )).dp
+                )
+            )
+        }
+    }
+
+    override fun onPictureInPictureModeChanged(
+        isInPictureInPictureMode: Boolean,
+        newConfig: Configuration
+    ) {
+        viewModel.setIsInPiP(isInPictureInPictureMode)
+    }
+
+    override fun onUserLeaveHint() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            enterPictureInPictureMode(
+                PictureInPictureParams.Builder().setAspectRatio(Rational(1, 1)).build()
+            )
+        }
+    }
 }

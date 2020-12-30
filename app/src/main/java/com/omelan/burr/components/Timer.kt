@@ -30,8 +30,10 @@ fun Timer(
     modifier: Modifier = Modifier,
     currentStep: Step?,
     animatedProgressValue: AnimatedFloat,
-    animatedProgressColor: AnimatedValue<Color, AnimationVector4D>
+    animatedProgressColor: AnimatedValue<Color, AnimationVector4D>,
+    isInPiP: Boolean,
 ) {
+    val strokeWidth = if (isInPiP) 15.dp else 25.dp
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier,
@@ -40,27 +42,32 @@ fun Timer(
             progress = 1f,
             modifier = Modifier.fillMaxWidth().aspectRatio(1f),
             color = Color(0xFFE8EAF6),
-            strokeWidth = 25.dp
+            strokeWidth = strokeWidth
         )
         CircularProgressIndicator(
             progress = animatedProgressValue.value,
             modifier = Modifier.fillMaxWidth().aspectRatio(1f),
             color = animatedProgressColor.value,
-            strokeWidth = 25.dp
+            strokeWidth = strokeWidth
         )
-        Column(modifier = Modifier.padding(25.dp).animateContentSize()) {
+        Column(modifier = Modifier.padding(strokeWidth).animateContentSize()) {
 
             if (currentStep != null) {
                 val duration = (currentStep.time * animatedProgressValue.value).toInt()
                     .toDuration(DurationUnit.MILLISECONDS)
+                val durationInString = "${
+                    duration.inMinutes.toInt().toString().padStart(2, '0')
+                }:${
+                    duration.inSeconds.toInt().toString().padStart(2, '0')
+                }".also {
+                    if (!isInPiP) {
+                        it + ":${
+                            duration.inMilliseconds.toInt().toString().padStart(4, '0')
+                        }"
+                    }
+                }
                 Text(
-                    text = "${
-                        duration.inMinutes.toInt().toString().padStart(2, '0')
-                    }:${
-                        duration.inSeconds.toInt().toString().padStart(2, '0')
-                    }:${
-                        duration.inMilliseconds.toInt().toString().padStart(4, '0')
-                    }",
+                    text = durationInString,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.align(
                         Alignment.CenterHorizontally
@@ -98,6 +105,7 @@ fun TimerPreview() {
     Timer(
         currentStep = Step(id = 1, name = "Stir", time = 5 * 1000, type = StepType.OTHER),
         animatedProgressValue = animatedFloat(initVal = 0.5f),
-        animatedProgressColor = animatedColor(initVal = green)
+        animatedProgressColor = animatedColor(initVal = green),
+        isInPiP = false,
     )
 }

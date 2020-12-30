@@ -1,5 +1,7 @@
 package com.omelan.burr.pages
 
+import android.app.Activity
+import android.os.Build
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.animatedColor
 import androidx.compose.animation.animatedFloat
@@ -29,7 +31,7 @@ import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 @Composable
-fun RecipeTimerPage(recipe: Recipe) {
+fun RecipeTimerPage(recipe: Recipe, isInPiP: Boolean) {
     val (currentStep, setCurrentStep) = remember { mutableStateOf<Step?>(null) }
     val indexOfCurrentStep = recipe.steps.indexOf(currentStep)
     val indexOfLastStep = recipe.steps.lastIndex
@@ -37,7 +39,6 @@ fun RecipeTimerPage(recipe: Recipe) {
 
     val animatedProgressValue = animatedFloat(0f)
     val animatedProgressColor = animatedColor(Color.DarkGray)
-
 
     fun pauseAnimations() {
         animatedProgressColor.stop()
@@ -87,47 +88,56 @@ fun RecipeTimerPage(recipe: Recipe) {
             modifier = Modifier.fillMaxWidth().fillMaxHeight()
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-
-                Text(text = recipe.name, color = Color.Black, style = MaterialTheme.typography.h6)
-                Spacer(modifier = Modifier.height(15.dp))
-                Description(
-                    modifier = Modifier.fillMaxWidth(),
-                    descriptionText = recipe.description
-                )
-                Spacer(modifier = Modifier.height(15.dp))
+                if (!isInPiP) {
+                    Text(
+                        text = recipe.name,
+                        color = Color.Black,
+                        style = MaterialTheme.typography.h6
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Description(
+                        modifier = Modifier.fillMaxWidth(),
+                        descriptionText = recipe.description
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
                 Timer(
                     modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
                     currentStep = currentStep,
                     animatedProgressValue = animatedProgressValue,
                     animatedProgressColor = animatedProgressColor,
+                    isInPiP = isInPiP,
                 )
-                Spacer(modifier = Modifier.height(15.dp))
-                Button(
-                    modifier = Modifier.animateContentSize().align(Alignment.CenterHorizontally),
-                    onClick = {
-                        if (currentStep != null) {
-                            if (animatedProgressColor.isRunning && animatedProgressValue.isRunning) {
-                                pauseAnimations()
+                if (!isInPiP) {
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Button(
+                        modifier = Modifier.animateContentSize()
+                            .align(Alignment.CenterHorizontally),
+                        onClick = {
+                            if (currentStep != null) {
+                                if (animatedProgressColor.isRunning && animatedProgressValue.isRunning) {
+                                    pauseAnimations()
+                                } else {
+                                    startAnimations()
+                                }
                             } else {
-                                startAnimations()
+                                setCurrentStep(recipe.steps.first())
                             }
-                        } else {
-                            setCurrentStep(recipe.steps.first())
-                        }
-                    },
-                ) {
-                    Text(text = "Start")
-                }
-                Spacer(modifier = Modifier.height(25.dp))
-                recipe.steps.forEach { step ->
-                    val indexOfThisStep = recipe.steps.indexOf(step)
-                    val stepProgress = when {
-                        indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
-                        indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
-                        else -> StepProgress.Upcoming
+                        },
+                    ) {
+                        Text(text = "Start")
                     }
-                    StepListItem(step = step, stepProgress = stepProgress)
-                    Divider(color = Color(0xFFE8EAF6))
+                    Spacer(modifier = Modifier.height(25.dp))
+                    recipe.steps.forEach { step ->
+                        val indexOfThisStep = recipe.steps.indexOf(step)
+                        val stepProgress = when {
+                            indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
+                            indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
+                            else -> StepProgress.Upcoming
+                        }
+                        StepListItem(step = step, stepProgress = stepProgress)
+                        Divider(color = Color(0xFFE8EAF6))
+                    }
                 }
             }
         }
@@ -139,5 +149,5 @@ fun RecipeTimerPage(recipe: Recipe) {
 @Preview(showBackground = true)
 @Composable
 fun RecipeTimerPagePreview() {
-    RecipeTimerPage(Recipe(id = "1", name = "V60", description = "Ble ble"))
+    RecipeTimerPage(Recipe(id = "1", name = "V60", description = "Ble ble"), false)
 }
