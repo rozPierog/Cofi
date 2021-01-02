@@ -11,15 +11,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.burr.model.Recipe
 
 @Composable
-fun RecipeList(recipes: List<Recipe>, navigateToRecipe: (recipeId: String) -> Unit ) {
-        ScrollableColumn {
-            recipes.forEach { recipe ->
-                RecipeItem(
-                    recipe = recipe,
-                    navigateToRecipe = navigateToRecipe,
-                )
-            }
+fun RecipeList(
+    recipes: List<Recipe>,
+    navigateToRecipe: (recipeId: String) -> Unit,
+    addNewRecipe: () -> Unit
+) {
+    ScrollableColumn {
+        recipes.forEach { recipe ->
+            RecipeItem(
+                recipe = recipe,
+                onPress = navigateToRecipe,
+            )
         }
+        RecipeItem(
+            recipe = Recipe(id = "Add", name = "Add new!", description = "Add all new recipe"),
+            onPress = { addNewRecipe() },
+        )
+    }
 }
 
 @Preview
@@ -30,5 +38,5 @@ fun RecipeListPreview() {
         Recipe(id = "2", name = "Ultimate v60", description = "Hoffman"),
         Recipe(id = "3", name = "Ultimate v60", description = "Hoffman"),
     )
-    RecipeList(recipes = listOfRecipes, navigateToRecipe = {})
+    RecipeList(recipes = listOfRecipes, navigateToRecipe = {}, addNewRecipe = {})
 }

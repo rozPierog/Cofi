@@ -29,12 +29,15 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.navigate
 import com.omelan.burr.components.RecipeList
 import com.omelan.burr.model.Recipe
+import com.omelan.burr.pages.AddNewRecipePage
 import com.omelan.burr.pages.RecipeTimerPage
+import com.omelan.burr.pages.StepSheetFragment
 import kotlin.time.ExperimentalTime
 
 class MainActivityViewModel : ViewModel() {
     private val _pipState = MutableLiveData(false)
     val pipState: LiveData<Boolean> = _pipState
+
     private val _statusBarHeight = MutableLiveData(0)
     val statusBarHeight: LiveData<Int> = _statusBarHeight
 
@@ -67,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.setStatusBarHeight(insets.systemWindowInsetTop)
             insets.consumeSystemWindowInsets()
         }
+        val stepSheetFragment = StepSheetFragment.newInstance(null)
         setContent {
             val navController = rememberNavController()
             var isInPiP: Boolean by remember { mutableStateOf(false) }
@@ -80,15 +84,29 @@ class MainActivity : AppCompatActivity() {
 
                 NavHost(navController, startDestination = "list") {
                     composable("list") {
-                        RecipeList(recipes = listOfRecipes, navigateToRecipe = { recipeId ->
-                            navController.navigate("recipe/${recipeId}")
-                        })
+                        RecipeList(
+                            recipes = listOfRecipes,
+                            navigateToRecipe = { recipeId ->
+                                navController.navigate("recipe/${recipeId}")
+                            },
+                            addNewRecipe = {
+                                navController.navigate("add_recipe")
+                            },
+                        )
                     }
                     composable("recipe/{recipeId}") { backStackEntry ->
                         val recipeId = backStackEntry.arguments?.getString("recipeId")
                         val pickedRecipe = listOfRecipes.find { it.id == recipeId }
                             ?: throw IllegalArgumentException("No recipeId on transition!")
                         RecipeTimerPage(recipe = pickedRecipe, isInPiP = isInPiP)
+                    }
+                    composable("add_recipe") {
+                        AddNewRecipePage(openStepEdit = {
+                            stepSheetFragment.show(
+                                supportFragmentManager,
+                                "add_recipe"
+                            )
+                        })
                     }
                 }
             }

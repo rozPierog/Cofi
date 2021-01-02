@@ -21,9 +21,9 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun RecipeItem(recipe: Recipe, navigateToRecipe: (recipeId: String) -> Unit) {
+fun RecipeItem(recipe: Recipe, onPress: (recipeId: String) -> Unit) {
     fun onClickRecipe() {
-        navigateToRecipe(recipe.id)
+        onPress(recipe.id)
     }
     BurrTheme {
         Card(
@@ -62,6 +62,6 @@ fun PreviewRecipeItem() {
             description = "Recipe by Hoffman",
             iconName = R.drawable.ic_coffee
         ),
-        navigateToRecipe = {}
+        onPress = {}
     )
 }
