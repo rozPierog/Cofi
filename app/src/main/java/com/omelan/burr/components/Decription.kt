@@ -44,7 +44,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
         )
     }
     BurrTheme {
-        Card(modifier = modifier, shape = RoundedCornerShape(20.dp)) {
+        Card(modifier = modifier) {
             Column(
                 modifier = Modifier.animateContentSize().clickable(
                     onClick = if (isExpanded) {
@@ -67,7 +67,6 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     imageVector = Icons.Rounded.KeyboardArrowDown,
                     modifier = Modifier.padding(5.dp)
                         .align(Alignment.CenterHorizontally)
-//                        .fillMaxWidth()
                         .rotate(rotationDegree.value)
                 )
             }

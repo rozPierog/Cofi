@@ -28,7 +28,6 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: String) -> Unit) {
     BurrTheme {
         Card(
             elevation = 5.dp,
-            shape = RoundedCornerShape(15.dp),
             modifier = Modifier.padding(10.dp),
         )
         {
