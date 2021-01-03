@@ -17,16 +17,18 @@ import com.omelan.burr.components.StepAddCard
 import com.omelan.burr.components.StepListItem
 import com.omelan.burr.components.StepProgress
 import com.omelan.burr.model.Step
+import com.omelan.burr.model.dummySteps
 import com.omelan.burr.ui.BurrTheme
 import kotlin.time.ExperimentalTime
 
 @ExperimentalLayout
 @ExperimentalTime
 @Composable
-fun AddNewRecipePage(steps: List<Step> = listOf(), openStepEdit: (Step?) -> Unit) {
+fun AddNewRecipePage(steps: List<Step> = listOf()) {
     val (recipeName, setRecipeName) = remember { mutableStateOf("") }
     val (recipeDescription, setRecipeDescription) = remember { mutableStateOf("") }
     val (editedSteps, setEditedSteps) = remember { mutableStateOf(steps) }
+    val (stepCurrentlyEdited, setStepCurrentlyEdited) = remember { mutableStateOf<Step?>(null) }
     BurrTheme {
         ScrollableColumn(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
             Column(modifier = Modifier.padding(16.dp).animateContentSize()) {
@@ -44,16 +46,39 @@ fun AddNewRecipePage(steps: List<Step> = listOf(), openStepEdit: (Step?) -> Unit
                     label = { Text(text = "Description") },
                 )
                 editedSteps.forEach { step ->
-                    StepListItem(step = step, stepProgress = StepProgress.Upcoming)
+                    if (stepCurrentlyEdited == step) {
+                        val indexOfThisStep = editedSteps.indexOf(step)
+                        StepAddCard(stepToEdit = step,
+                            save = { stepToSave ->
+                                setEditedSteps(
+                                    editedSteps.mapIndexed { index, step ->
+                                        if (index == indexOfThisStep) {
+                                            stepToSave
+                                        } else {
+                                            step
+                                        }
+                                    }
+                                )
+                            })
+                    } else {
+                        StepListItem(
+                            step = step,
+                            stepProgress = StepProgress.Upcoming,
+                            onClick = { clickedStep ->
+                                setStepCurrentlyEdited(clickedStep)
+                            })
+                    }
                 }
-                StepAddCard(save = { stepToSave ->
-                    setEditedSteps(
-                        listOf(
-                            *editedSteps.toTypedArray(),
-                            stepToSave
+                if (stepCurrentlyEdited == null) {
+                    StepAddCard(save = { stepToSave ->
+                        setEditedSteps(
+                            listOf(
+                                *editedSteps.toTypedArray(),
+                                stepToSave
+                            )
                         )
-                    )
-                })
+                    })
+                }
 
             }
         }
@@ -66,5 +91,5 @@ fun AddNewRecipePage(steps: List<Step> = listOf(), openStepEdit: (Step?) -> Unit
 @Preview
 @Composable
 fun AddNewRecipePreview() {
-    AddNewRecipePage(openStepEdit = {})
+    AddNewRecipePage(steps = dummySteps)
 }

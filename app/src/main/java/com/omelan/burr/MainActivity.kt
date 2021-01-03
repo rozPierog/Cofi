@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels()
 
+    @ExperimentalLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val listOfRecipes = listOf(
@@ -101,12 +102,7 @@ class MainActivity : AppCompatActivity() {
                         RecipeTimerPage(recipe = pickedRecipe, isInPiP = isInPiP)
                     }
                     composable("add_recipe") {
-                        AddNewRecipePage(openStepEdit = {
-                            stepSheetFragment.show(
-                                supportFragmentManager,
-                                "add_recipe"
-                            )
-                        })
+                        AddNewRecipePage()
                     }
                 }
             }

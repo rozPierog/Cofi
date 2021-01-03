@@ -20,11 +20,11 @@ import kotlin.random.Random
 
 @ExperimentalLayout
 @Composable
-fun StepAddCard(save: (Step) -> Unit) {
-    val (pickedType, setPickedType) = remember { mutableStateOf<StepType?>(null) }
-    val (stepName, setStepName) = remember { mutableStateOf<String>("") }
-    val (stepTime, setStepTime) = remember { mutableStateOf<Int>(0) }
-    val (stepValue, setStepValue) = remember { mutableStateOf<Int>(0) }
+fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
+    val (pickedType, setPickedType) = remember { mutableStateOf<StepType?>(stepToEdit?.type) }
+    val (stepName, setStepName) = remember { mutableStateOf<String>(stepToEdit?.name ?: "") }
+    val (stepTime, setStepTime) = remember { mutableStateOf<Int>(stepToEdit?.time ?: 0) }
+    val (stepValue, setStepValue) = remember { mutableStateOf<Int>(stepToEdit?.value ?: 0) }
     BurrTheme {
         Card(
             shape = MaterialTheme.shapes.medium,
