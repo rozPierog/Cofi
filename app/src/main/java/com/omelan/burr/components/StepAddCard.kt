@@ -54,7 +54,7 @@ fun StepAddCard(save: (Step) -> Unit) {
                         onValueChange = { setStepName(it) })
                     OutlinedTextField(
                         label = { Text(text = "Time") },
-                        value = stepTime.toString(),
+                        value = stepTime.toStringFromMillis(),
                         onValueChange = { setStepTime(it.toMillisValue()) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                     )
@@ -95,6 +95,10 @@ fun StepAddCard(save: (Step) -> Unit) {
 
 private fun String.toMillisValue(): Int {
     return this.safeToInt() * 1000
+}
+
+private fun Int.toStringFromMillis(): String {
+    return (this / 1000).toString()
 }
 
 private fun String.safeToInt(): Int {
