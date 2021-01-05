@@ -6,6 +6,7 @@ import androidx.compose.animation.animatedFloat
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -16,6 +17,7 @@ import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
+import com.omelan.burr.MainActivityViewModel
 import com.omelan.burr.components.Description
 import com.omelan.burr.components.StepListItem
 import com.omelan.burr.components.StepProgress
@@ -31,7 +33,8 @@ fun RecipeTimerPage(
     recipeId: Int,
     isInPiP: Boolean,
     stepsViewModel: StepsViewModel = viewModel(),
-    recipeViewModel: RecipeViewModel = viewModel()
+    recipeViewModel: RecipeViewModel = viewModel(),
+    mainActivityViewModel: MainActivityViewModel = viewModel(),
 ) {
     val (currentStep, setCurrentStep) = remember { mutableStateOf<Step?>(null) }
     val steps = stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
@@ -39,7 +42,15 @@ fun RecipeTimerPage(
     val indexOfCurrentStep = steps.value.indexOf(currentStep)
     val indexOfLastStep = steps.value.lastIndex
     val haptics = Haptics(AmbientContext.current)
-
+    val navBarHeight = mainActivityViewModel.navBarHeight.observeAsState(48.dp)
+    val paddingValues = remember(navBarHeight) {
+        PaddingValues(
+            bottom = navBarHeight.value,
+            start = 16.dp,
+            end = 16.dp,
+            top = 16.dp
+        )
+    }
     val animatedProgressValue = animatedFloat(0f)
     val animatedProgressColor = animatedColor(Color.DarkGray)
 
@@ -87,61 +98,65 @@ fun RecipeTimerPage(
         startAnimations()
     }
     BurrTheme {
-        ScrollableColumn(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight()
+
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth().fillMaxHeight().animateContentSize(),
+            contentPadding = paddingValues
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                if (!isInPiP) {
-                    Text(
-                        text = recipe.value?.name ?: "",
-                        color = MaterialTheme.colors.onSurface,
-                        style = MaterialTheme.typography.h6
+            item {
+                Column {
+                    if (!isInPiP) {
+                        Text(
+                            text = recipe.value?.name ?: "",
+                            color = MaterialTheme.colors.onSurface,
+                            style = MaterialTheme.typography.h6
+                        )
+                        Spacer(modifier = Modifier.height(15.dp))
+                        Description(
+                            modifier = Modifier.fillMaxWidth(),
+                            descriptionText = recipe.value?.description ?: ""
+                        )
+                        Spacer(modifier = Modifier.height(15.dp))
+                    }
+                    Timer(
+                        modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
+                        currentStep = currentStep,
+                        animatedProgressValue = animatedProgressValue,
+                        animatedProgressColor = animatedProgressColor,
+                        isInPiP = isInPiP,
                     )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    Description(
-                        modifier = Modifier.fillMaxWidth(),
-                        descriptionText = recipe.value?.description ?: ""
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                }
-                Timer(
-                    modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
-                    currentStep = currentStep,
-                    animatedProgressValue = animatedProgressValue,
-                    animatedProgressColor = animatedProgressColor,
-                    isInPiP = isInPiP,
-                )
-                if (!isInPiP) {
-                    Spacer(modifier = Modifier.height(15.dp))
-                    Button(
-                        modifier = Modifier.animateContentSize()
-                            .align(Alignment.CenterHorizontally),
-                        onClick = {
-                            if (currentStep != null) {
-                                if (animatedProgressColor.isRunning && animatedProgressValue.isRunning) {
-                                    pauseAnimations()
+                    if (!isInPiP) {
+                        Spacer(modifier = Modifier.height(15.dp))
+                        Button(
+                            modifier = Modifier.animateContentSize()
+                                .align(Alignment.CenterHorizontally),
+                            onClick = {
+                                if (currentStep != null) {
+                                    if (animatedProgressColor.isRunning && animatedProgressValue.isRunning) {
+                                        pauseAnimations()
+                                    } else {
+                                        startAnimations()
+                                    }
                                 } else {
-                                    startAnimations()
+                                    setCurrentStep(steps.value.first())
                                 }
-                            } else {
-                                setCurrentStep(steps.value.first())
-                            }
-                        },
-                    ) {
-                        Text(text = "Start")
-                    }
-                    Spacer(modifier = Modifier.height(25.dp))
-                    steps.value.forEach { step ->
-                        val indexOfThisStep = steps.value.indexOf(step)
-                        val stepProgress = when {
-                            indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
-                            indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
-                            else -> StepProgress.Upcoming
+                            },
+                        ) {
+                            Text(text = "Start")
                         }
-                        StepListItem(step = step, stepProgress = stepProgress)
-                        Divider(color = Color(0xFFE8EAF6))
+                        Spacer(modifier = Modifier.height(25.dp))
                     }
                 }
+            }
+            items(steps.value) { step ->
+                val indexOfThisStep = steps.value.indexOf(step)
+                val stepProgress = when {
+                    indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
+                    indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
+                    else -> StepProgress.Upcoming
+                }
+                StepListItem(step = step, stepProgress = stepProgress)
+                Divider(color = Color(0xFFE8EAF6))
             }
         }
     }

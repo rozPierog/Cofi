@@ -34,6 +34,7 @@ import com.omelan.burr.model.dummySteps
 import com.omelan.burr.pages.AddNewRecipePage
 import com.omelan.burr.pages.RecipeTimerPage
 import com.omelan.burr.ui.BurrTheme
+import com.omelan.burr.utils.pixelsToDp
 import kotlinx.coroutines.runBlocking
 import kotlin.time.ExperimentalTime
 
@@ -44,11 +45,18 @@ class MainActivityViewModel : ViewModel() {
     private val _canGoToPiP = MutableLiveData(false)
     val canGoToPiP: LiveData<Boolean> = _canGoToPiP
 
-    private val _statusBarHeight = MutableLiveData(0)
-    val statusBarHeight: LiveData<Int> = _statusBarHeight
+    private val _statusBarHeight = MutableLiveData(0.dp)
+    val statusBarHeight: LiveData<Dp> = _statusBarHeight
 
-    fun setStatusBarHeight(newHeight: Int) {
+    private val _navBarHeight = MutableLiveData(0.dp)
+    val navBarHeight: LiveData<Dp> = _navBarHeight
+
+    fun setStatusBarHeight(newHeight: Dp) {
         _statusBarHeight.value = newHeight
+    }
+
+    fun setNavBarHeight(newHeight: Dp) {
+        _navBarHeight.value = newHeight
     }
 
     fun setIsInPiP(newPiPState: Boolean) {
@@ -68,7 +76,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setOnApplyWindowInsetsListener(window.decorView) { _, insets ->
-            mainActivityViewModel.setStatusBarHeight(insets.systemWindowInsetTop)
+            mainActivityViewModel.setStatusBarHeight(
+                insets.systemWindowInsetTop.pixelsToDp(
+                    resources
+                )
+            )
+            mainActivityViewModel.setNavBarHeight(
+                insets.systemWindowInsetBottom.pixelsToDp(
+                    resources
+                )
+            )
             insets.consumeSystemWindowInsets()
         }
         setStatusBarColor()
@@ -140,25 +157,19 @@ class MainActivity : AppCompatActivity() {
     @Composable
     fun PiPAwareAppBar(isInPiP: Boolean) {
         if (!isInPiP) {
-            var topPaddingInDp: Dp by remember { mutableStateOf(0.dp) }
+            val topPaddingInDp = mainActivityViewModel.statusBarHeight.observeAsState(0.dp)
 
-            mainActivityViewModel.statusBarHeight.observe(this) {
-                topPaddingInDp = (it / (
-                        resources?.displayMetrics?.density
-                            ?: 1f
-                        )).dp
-            }
             Column {
                 Surface(
-                    elevation = 4.dp,
-                    modifier = Modifier.fillMaxWidth().height(topPaddingInDp)
+                    elevation = 8.dp,
+                    modifier = Modifier.fillMaxWidth().height(topPaddingInDp.value)
                         .background(colorResource(id = R.color.navigationBar)),
                 ) {}
                 TopAppBar(
                     title = {
                         Text(text = stringResource(id = R.string.app_name))
                     },
-                    elevation = 4.dp,
+                    elevation = 0.dp,
                     backgroundColor = colorResource(id = R.color.navigationBar),
                     contentColor = colorResource(id = R.color.textPrimary),
                 )
