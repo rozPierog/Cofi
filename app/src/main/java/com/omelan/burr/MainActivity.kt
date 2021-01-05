@@ -9,11 +9,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -23,15 +23,14 @@ import androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.navigate
+import androidx.navigation.NavType
+import androidx.navigation.compose.*
 import com.omelan.burr.components.RecipeList
-import com.omelan.burr.model.Recipe
+import com.omelan.burr.model.AppDatabase
+import com.omelan.burr.model.dummySteps
 import com.omelan.burr.pages.AddNewRecipePage
 import com.omelan.burr.pages.RecipeTimerPage
-import com.omelan.burr.pages.StepSheetFragment
+import kotlinx.coroutines.runBlocking
 import kotlin.time.ExperimentalTime
 
 class MainActivityViewModel : ViewModel() {
@@ -58,27 +57,19 @@ class MainActivity : AppCompatActivity() {
     @ExperimentalLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val listOfRecipes = listOf(
-            Recipe(
-                id = "1",
-                name = "Ultimate v60",
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pellentesque lacus nec ex pellentesque gravida. Morbi a fringilla ex. Ut lacinia velit vel diam luctus, et facilisis risus commodo. Sed suscipit tellus leo, sit amet cursus augue posuere id. Cras posuere, nibh in tempus vestibulum, justo neque rhoncus nibh, eget efficitur quam mi at enim. Ut quis luctus tellus. Proin porttitor, ex vitae tempus ornare, dolor lectus viverra turpis, ac vulputate leo nunc sit amet magna. Proin odio sapien, commodo eget justo vel, malesuada fringilla erat. Donec vitae vestibulum tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec rutrum tortor. Ut pulvinar quis diam ac semper. Praesent ornare id leo quis porttitor. Nullam vitae augue ac nibh viverra hendrerit. Cras purus turpis, vulputate ac tincidunt non, mollis eget sapien."
-            ),
-            Recipe(id = "2", name = "Ultimate French Press", description = "Hoffman"),
-            Recipe(id = "3", name = "Ultimate Coś tam coś tam", description = "Hoffman"),
-        )
+        val db = AppDatabase.getInstance(this)
         setOnApplyWindowInsetsListener(window.decorView) { _, insets ->
             viewModel.setStatusBarHeight(insets.systemWindowInsetTop)
             insets.consumeSystemWindowInsets()
         }
-        val stepSheetFragment = StepSheetFragment.newInstance(null)
         setContent {
             val navController = rememberNavController()
             var isInPiP: Boolean by remember { mutableStateOf(false) }
             viewModel.pipState.observe(this) {
                 isInPiP = it
             }
-
+            val listOfRecipesAndSteps = runBlocking { db.recipeDao().getRecipesWithSteps() }
+            val listOfRecipes = listOfRecipesAndSteps.map { it.recipe }
             Column {
 
                 PiPAwareAppBar(isInPiP = isInPiP)
@@ -88,21 +79,46 @@ class MainActivity : AppCompatActivity() {
                         RecipeList(
                             recipes = listOfRecipes,
                             navigateToRecipe = { recipeId ->
-                                navController.navigate("recipe/${recipeId}")
+                                navController.navigate(
+                                    route = "recipe/${recipeId}",
+//                                    builder = NavOptionsBuilder().anim {
+//                                        AnimBuilder().apply {
+//                                            enter = R.anim.slide_in
+//                                            exit = R.anim.fade_out
+//                                            popEnter = R.anim.slide_in
+//                                            popExit = R.anim.fade_out
+//                                        }
+//                                    }
+                                )
                             },
                             addNewRecipe = {
                                 navController.navigate("add_recipe")
                             },
                         )
                     }
-                    composable("recipe/{recipeId}") { backStackEntry ->
-                        val recipeId = backStackEntry.arguments?.getString("recipeId")
+                    composable(
+                        "recipe/{recipeId}",
+                        arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val recipeId = backStackEntry.arguments?.getInt("recipeId")
                         val pickedRecipe = listOfRecipes.find { it.id == recipeId }
                             ?: throw IllegalArgumentException("No recipeId on transition!")
-                        RecipeTimerPage(recipe = pickedRecipe, isInPiP = isInPiP)
+                        RecipeTimerPage(
+                            recipe = pickedRecipe,
+                            steps = listOfRecipesAndSteps.find { it.recipe == pickedRecipe }?.steps
+                                ?: listOf(), isInPiP = isInPiP
+                        )
                     }
                     composable("add_recipe") {
-                        AddNewRecipePage()
+                        AddNewRecipePage(steps = dummySteps, saveRecipe = { recipe, steps ->
+                            runBlocking {
+                                val idOfRecipe = db.recipeDao().insertRecipe(recipe)
+                                db.stepDao()
+                                    .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
+
+                            }
+                            navController.navigate("list")
+                        })
                     }
                 }
             }

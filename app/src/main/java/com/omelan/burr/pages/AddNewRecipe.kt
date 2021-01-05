@@ -16,6 +16,7 @@ import com.omelan.burr.R
 import com.omelan.burr.components.StepAddCard
 import com.omelan.burr.components.StepListItem
 import com.omelan.burr.components.StepProgress
+import com.omelan.burr.model.Recipe
 import com.omelan.burr.model.Step
 import com.omelan.burr.model.dummySteps
 import com.omelan.burr.ui.BurrTheme
@@ -24,7 +25,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalLayout
 @ExperimentalTime
 @Composable
-fun AddNewRecipePage(steps: List<Step> = listOf()) {
+fun AddNewRecipePage(steps: List<Step> = listOf(), saveRecipe: (Recipe, List<Step>) -> Unit) {
     val (recipeName, setRecipeName) = remember { mutableStateOf("") }
     val (recipeDescription, setRecipeDescription) = remember { mutableStateOf("") }
     val (editedSteps, setEditedSteps) = remember { mutableStateOf(steps) }
@@ -79,6 +80,17 @@ fun AddNewRecipePage(steps: List<Step> = listOf()) {
                         )
                     })
                 }
+                Button(onClick = {
+                    saveRecipe(
+                        Recipe(
+                            name = recipeName,
+                            description = recipeDescription,
+                        ),
+                        editedSteps
+                    )
+                }) {
+
+                }
 
             }
         }
@@ -91,5 +103,5 @@ fun AddNewRecipePage(steps: List<Step> = listOf()) {
 @Preview
 @Composable
 fun AddNewRecipePreview() {
-    AddNewRecipePage(steps = dummySteps)
+    AddNewRecipePage(steps = dummySteps, saveRecipe = { _, _ -> })
 }

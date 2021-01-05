@@ -75,11 +75,11 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                         onClick = {
                             save(
                                 Step(
-                                    id = Random.nextInt(),
                                     name = stepName,
                                     time = stepTime,
                                     type = pickedType,
                                     value = if (stepValue != 0) stepValue else null
+
                                 )
                             )
                         },

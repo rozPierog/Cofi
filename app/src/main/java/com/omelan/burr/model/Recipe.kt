@@ -1,35 +1,82 @@
 package com.omelan.burr.model
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.WorkerThread
+import androidx.room.*
 import com.omelan.burr.R
 
 val dummySteps = listOf(
-    Step(id = 1, name = "Add Coffee", value = 30, time = 5 * 1000, type = StepType.ADD_COFFEE),
-    Step(id = 2, name = "Add water", value = 60, time = 5 * 1000, type = StepType.WATER),
-    Step(id = 3, name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
-    Step(id = 4, name = "Wait", time = 35 * 1000, type = StepType.WAIT),
-    Step(id = 5, name = "Add Water", time = 30 * 1000, type = StepType.WATER, value = 300),
     Step(
-        id = 6, name = "Add Water", time = 30 * 1000, type = StepType.WATER, value = 200
+        name = "Add Coffee",
+        value = 30,
+        time = 5 * 1000,
+        type = StepType.ADD_COFFEE
     ),
-    Step(id = 7, name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
+    Step(
+        name = "Add water",
+        value = 60,
+        time = 5 * 1000,
+        type = StepType.WATER
+    ),
+    Step( name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
+    Step( name = "Wait", time = 35 * 1000, type = StepType.WAIT),
+    Step(
+        name = "Add Water",
+        time = 30 * 1000,
+        type = StepType.WATER,
+        value = 300
+    ),
+    Step(
+        name = "Add Water",
+        time = 30 * 1000,
+        type = StepType.WATER,
+        value = 200
+    ),
+    Step(name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
 )
 
+@Entity
 data class Recipe(
-    val id: String,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val description: String,
-    val steps: List<Step> = listOf(
-        Step(id = 1, name = "Add Coffee", value = 30, time = 5 * 1000, type = StepType.ADD_COFFEE),
-        Step(id = 2, name = "Add water", value = 60, time = 5 * 1000, type = StepType.WATER),
-        Step(id = 3, name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
-        Step(id = 4, name = "Wait", time = 35 * 1000, type = StepType.WAIT),
-        Step(id = 5, name = "Add Water", time = 30 * 1000, type = StepType.WATER, value = 300),
-        Step(
-            id = 6, name = "Add Water", time = 30 * 1000, type = StepType.WATER, value = 200
-        ),
-        Step(id = 7, name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
-        ),
+//    @Ignore
+//    val steps: List<Step> = dummySteps,
     @DrawableRes
-    val iconName: Int = R.drawable.ic_coffee
+    @ColumnInfo(name = "icon_name") val iconName: Int = R.drawable.ic_coffee
 )
+
+data class RecipesWithSteps(
+    @Embedded val recipe: Recipe,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "recipeId"
+    )
+    val steps: List<Step>
+)
+
+
+@Dao
+interface RecipeDao {
+
+    @WorkerThread
+    @Query("SELECT * FROM recipe")
+    suspend fun getAll(): List<Recipe>
+
+    @Transaction
+    @WorkerThread
+    @Query("SELECT * FROM recipe")
+    suspend fun getRecipesWithSteps(): List<RecipesWithSteps>
+
+    @Insert
+    @WorkerThread
+    suspend fun insertAll(vararg recipes: Recipe)
+
+    @Insert
+    @WorkerThread
+    suspend fun insertRecipe(recipe: Recipe): Long
+
+    @Delete
+    @WorkerThread
+    suspend fun delete(recipe: Recipe)
+}

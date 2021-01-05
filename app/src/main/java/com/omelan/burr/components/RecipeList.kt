@@ -13,7 +13,7 @@ import com.omelan.burr.model.Recipe
 @Composable
 fun RecipeList(
     recipes: List<Recipe>,
-    navigateToRecipe: (recipeId: String) -> Unit,
+    navigateToRecipe: (recipeId: Int) -> Unit,
     addNewRecipe: () -> Unit
 ) {
     ScrollableColumn {
@@ -24,7 +24,7 @@ fun RecipeList(
             )
         }
         RecipeItem(
-            recipe = Recipe(id = "Add", name = "Add new!", description = "Add all new recipe"),
+            recipe = Recipe(id = 0, name = "Add new!", description = "Add all new recipe"),
             onPress = { addNewRecipe() },
         )
     }
@@ -34,9 +34,9 @@ fun RecipeList(
 @Composable
 fun RecipeListPreview() {
     val listOfRecipes = listOf(
-        Recipe(id = "1", name = "Ultimate v60", description = "Hoffman"),
-        Recipe(id = "2", name = "Ultimate v60", description = "Hoffman"),
-        Recipe(id = "3", name = "Ultimate v60", description = "Hoffman"),
+        Recipe(id = 1, name = "Ultimate v60", description = "Hoffman"),
+        Recipe(id = 2, name = "Ultimate v60", description = "Hoffman"),
+        Recipe(id = 3, name = "Ultimate v60", description = "Hoffman"),
     )
     RecipeList(recipes = listOfRecipes, navigateToRecipe = {}, addNewRecipe = {})
 }

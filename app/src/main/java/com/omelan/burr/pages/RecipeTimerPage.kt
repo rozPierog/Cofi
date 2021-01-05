@@ -20,16 +20,17 @@ import com.omelan.burr.components.StepProgress
 import com.omelan.burr.components.Timer
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.model.Step
+import com.omelan.burr.model.dummySteps
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.utils.Haptics
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 @Composable
-fun RecipeTimerPage(recipe: Recipe, isInPiP: Boolean) {
+fun RecipeTimerPage(recipe: Recipe, steps: List<Step>, isInPiP: Boolean) {
     val (currentStep, setCurrentStep) = remember { mutableStateOf<Step?>(null) }
-    val indexOfCurrentStep = recipe.steps.indexOf(currentStep)
-    val indexOfLastStep = recipe.steps.lastIndex
+    val indexOfCurrentStep = steps.indexOf(currentStep)
+    val indexOfLastStep = steps.lastIndex
     val haptics = Haptics(AmbientContext.current)
 
     val animatedProgressValue = animatedFloat(0f)
@@ -42,7 +43,7 @@ fun RecipeTimerPage(recipe: Recipe, isInPiP: Boolean) {
 
     fun changeToNextStep() {
         if (indexOfCurrentStep != indexOfLastStep) {
-            setCurrentStep(recipe.steps[indexOfCurrentStep + 1])
+            setCurrentStep(steps[indexOfCurrentStep + 1])
         } else {
             animatedProgressValue.snapTo(0f)
             setCurrentStep(null)
@@ -116,15 +117,15 @@ fun RecipeTimerPage(recipe: Recipe, isInPiP: Boolean) {
                                     startAnimations()
                                 }
                             } else {
-                                setCurrentStep(recipe.steps.first())
+                                setCurrentStep(steps.first())
                             }
                         },
                     ) {
                         Text(text = "Start")
                     }
                     Spacer(modifier = Modifier.height(25.dp))
-                    recipe.steps.forEach { step ->
-                        val indexOfThisStep = recipe.steps.indexOf(step)
+                    steps.forEach { step ->
+                        val indexOfThisStep = steps.indexOf(step)
                         val stepProgress = when {
                             indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
                             indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
@@ -144,5 +145,5 @@ fun RecipeTimerPage(recipe: Recipe, isInPiP: Boolean) {
 @Preview(showBackground = true)
 @Composable
 fun RecipeTimerPagePreview() {
-    RecipeTimerPage(Recipe(id = "1", name = "V60", description = "Ble ble"), false)
+    RecipeTimerPage(Recipe(id = 1, name = "V60", description = "Ble ble"), dummySteps, false)
 }

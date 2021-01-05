@@ -21,7 +21,7 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun RecipeItem(recipe: Recipe, onPress: (recipeId: String) -> Unit) {
+fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
     fun onClickRecipe() {
         onPress(recipe.id)
     }
@@ -56,7 +56,7 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: String) -> Unit) {
 fun PreviewRecipeItem() {
     RecipeItem(
         recipe = Recipe(
-            id = "1",
+            id = 0,
             name = "Ultimate V60",
             description = "Recipe by Hoffman",
             iconName = R.drawable.ic_coffee
