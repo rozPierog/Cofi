@@ -10,11 +10,14 @@ import android.view.WindowInsetsController
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayout
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
@@ -110,24 +113,33 @@ class MainActivity : AppCompatActivity() {
                             navigateToRecipe = { recipeId ->
                                 navController.navigate(
                                     route = "recipe/${recipeId}",
-//                                    builder = NavOptionsBuilder().anim {
-//                                        AnimBuilder().apply {
-//                                            enter = R.anim.slide_in
-//                                            exit = R.anim.fade_out
-//                                            popEnter = R.anim.slide_in
-//                                            popExit = R.anim.fade_out
+//                                    builder = {
+//                                        anim {
+//                                            enter = android.R.anim.slide_out_right
+//                                            exit = android.R.anim.fade_out
+//                                            popEnter = android.R.anim.slide_out_right
+//                                            popExit = android.R.anim.fade_out
 //                                        }
 //                                    }
                                 )
                             },
                             addNewRecipe = {
-                                navController.navigate("add_recipe")
+                                navController.navigate("add_recipe",
+//                                    builder = {
+//                                        anim {
+//                                            enter = android.R.anim.slide_out_right
+//                                            exit = android.R.anim.fade_out
+//                                            popEnter = android.R.anim.slide_out_right
+//                                            popExit = android.R.anim.fade_out
+//                                        }
+//                                    }
+                                )
                             },
                         )
                     }
                     composable(
                         "recipe/{recipeId}",
-                        arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+                        arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
                     ) { backStackEntry ->
                         val recipeId = backStackEntry.arguments?.getInt("recipeId")
                             ?: throw IllegalStateException("No Recipe ID")
@@ -146,7 +158,16 @@ class MainActivity : AppCompatActivity() {
                                     .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
 
                             }
-                            navController.navigate("list")
+                            navController.navigate("list",
+//                                builder = {
+//                                    anim {
+//                                        enter = android.R.anim.slide_out_right
+//                                        exit = android.R.anim.fade_out
+//                                        popEnter = android.R.anim.slide_out_right
+//                                        popExit = android.R.anim.fade_out
+//                                    }
+//                                }
+                            )
                         })
                     }
                 }
