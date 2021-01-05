@@ -6,29 +6,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.omelan.burr.ui.brown
-import com.omelan.burr.ui.green
+import com.omelan.burr.ui.*
 
 
 enum class StepType {
     ADD_COFFEE {
         override fun getColor(): Color {
-            return brown
+            return brown500
         }
     },
     WATER {
         override fun getColor(): Color {
-            return Color.Blue
+            return blue600
         }
     },
     WAIT {
         override fun getColor(): Color {
-            return green
+            return green600
         }
     },
     OTHER {
         override fun getColor(): Color {
-            return Color.Gray
+            return grey600
         }
     };
 

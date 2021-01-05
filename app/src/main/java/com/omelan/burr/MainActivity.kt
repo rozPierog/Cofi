@@ -59,7 +59,6 @@ class MainActivityViewModel : ViewModel() {
 
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
-
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
     @ExperimentalLayout
@@ -110,10 +109,8 @@ class MainActivity : AppCompatActivity() {
                     "recipe/{recipeId}",
                     arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
                 ) { backStackEntry ->
-
                     val recipeId = backStackEntry.arguments?.getInt("recipeId")
                         ?: throw IllegalStateException("No Recipe ID")
-
                     mainActivityViewModel.setCanGoToPiP(true)
                     RecipeTimerPage(
                         recipeId = recipeId,

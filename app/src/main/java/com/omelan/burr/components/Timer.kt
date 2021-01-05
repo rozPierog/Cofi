@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.burr.model.Step
 import com.omelan.burr.model.StepType
-import com.omelan.burr.ui.green
+import com.omelan.burr.ui.green600
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
@@ -105,7 +105,7 @@ fun TimerPreview() {
     Timer(
         currentStep = Step(id = 1, name = "Stir", time = 5 * 1000, type = StepType.OTHER),
         animatedProgressValue = animatedFloat(initVal = 0.5f),
-        animatedProgressColor = animatedColor(initVal = green),
+        animatedProgressColor = animatedColor(initVal = green600),
         isInPiP = false,
     )
 }

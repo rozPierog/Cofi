@@ -3,16 +3,16 @@ package com.omelan.burr.pages
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.omelan.burr.R
 import com.omelan.burr.components.StepAddCard
 import com.omelan.burr.components.StepListItem
 import com.omelan.burr.components.StepProgress
@@ -88,8 +88,9 @@ fun AddNewRecipePage(steps: List<Step> = listOf(), saveRecipe: (Recipe, List<Ste
                         ),
                         editedSteps
                     )
-                }) {
-
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 5.dp)) {
+                    Text(text = "Save this recipe")
                 }
 
             }
