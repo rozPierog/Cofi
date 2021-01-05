@@ -4,7 +4,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.animatedColor
 import androidx.compose.animation.animatedFloat
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -38,7 +37,8 @@ fun RecipeTimerPage(
 ) {
     val (currentStep, setCurrentStep) = remember { mutableStateOf<Step?>(null) }
     val steps = stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
-    val recipe = recipeViewModel.getRecipe(recipeId).observeAsState(null)
+    val recipe =
+        recipeViewModel.getRecipe(recipeId).observeAsState(Recipe(name = "", description = ""))
     val indexOfCurrentStep = steps.value.indexOf(currentStep)
     val indexOfLastStep = steps.value.lastIndex
     val haptics = Haptics(AmbientContext.current)
@@ -107,15 +107,17 @@ fun RecipeTimerPage(
                 Column {
                     if (!isInPiP) {
                         Text(
-                            text = recipe.value?.name ?: "",
+                            text = recipe.value.name,
                             color = MaterialTheme.colors.onSurface,
                             style = MaterialTheme.typography.h6
                         )
                         Spacer(modifier = Modifier.height(15.dp))
-                        Description(
-                            modifier = Modifier.fillMaxWidth(),
-                            descriptionText = recipe.value?.description ?: ""
-                        )
+                        if (recipe.value.description.isNotBlank()) {
+                            Description(
+                                modifier = Modifier.fillMaxWidth(),
+                                descriptionText = recipe.value.description
+                            )
+                        }
                         Spacer(modifier = Modifier.height(15.dp))
                     }
                     Timer(
@@ -132,7 +134,9 @@ fun RecipeTimerPage(
                                 .align(Alignment.CenterHorizontally),
                             onClick = {
                                 if (currentStep != null) {
-                                    if (animatedProgressColor.isRunning && animatedProgressValue.isRunning) {
+                                    if (animatedProgressColor.isRunning &&
+                                        animatedProgressValue.isRunning
+                                    ) {
                                         pauseAnimations()
                                     } else {
                                         startAnimations()
