@@ -48,6 +48,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
             }
             Icon(
                 imageVector = imageVector,
+                tint = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(horizontal = 5.dp).constrainAs(icon) {
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
@@ -59,6 +60,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
             Text(
                 text = step.name,
                 style = MaterialTheme.typography.subtitle1,
+                color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(horizontal = 5.dp).constrainAs(name) {
                     start.linkTo(icon.end)
                     top.linkTo(parent.top)
@@ -70,6 +72,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
                 Text(
                     text = "${step.value}g",
                     style = MaterialTheme.typography.subtitle2,
+                    color = MaterialTheme.colors.onSurface,
                     modifier = Modifier.padding(horizontal = 5.dp).constrainAs(value) {
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
@@ -81,6 +84,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
             Text(
                 text = step.time.toStringDuration(),
                 style = MaterialTheme.typography.subtitle2,
+                color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(horizontal = 5.dp).constrainAs(time) {
                     end.linkTo(parent.end)
                     top.linkTo(parent.top)

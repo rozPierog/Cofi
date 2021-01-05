@@ -27,7 +27,7 @@ enum class StepType {
     },
     OTHER {
         override fun getColor(): Color {
-            return grey600
+            return greyBlue900
         }
     };
 

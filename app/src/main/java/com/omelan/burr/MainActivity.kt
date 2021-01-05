@@ -5,6 +5,9 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Rational
+import android.view.View
+import android.view.WindowInsetsController
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
@@ -31,6 +34,7 @@ import com.omelan.burr.model.AppDatabase
 import com.omelan.burr.model.dummySteps
 import com.omelan.burr.pages.AddNewRecipePage
 import com.omelan.burr.pages.RecipeTimerPage
+import com.omelan.burr.ui.BurrTheme
 import kotlinx.coroutines.runBlocking
 import kotlin.time.ExperimentalTime
 
@@ -68,6 +72,7 @@ class MainActivity : AppCompatActivity() {
             mainActivityViewModel.setStatusBarHeight(insets.systemWindowInsetTop)
             insets.consumeSystemWindowInsets()
         }
+        setStatusBarColor()
         setContent {
             MainNavigation()
         }
@@ -79,17 +84,16 @@ class MainActivity : AppCompatActivity() {
         val navController = rememberNavController()
         val db = AppDatabase.getInstance(this)
         val isInPiP = mainActivityViewModel.pipState.observeAsState(false)
-        Column {
-
-            PiPAwareAppBar(isInPiP = isInPiP.value)
-
-            NavHost(navController, startDestination = "list") {
-                composable("list") {
-                    mainActivityViewModel.setCanGoToPiP(false)
-                    RecipeList(
-                        navigateToRecipe = { recipeId ->
-                            navController.navigate(
-                                route = "recipe/${recipeId}",
+        BurrTheme {
+            Column {
+                PiPAwareAppBar(isInPiP = isInPiP.value)
+                NavHost(navController, startDestination = "list") {
+                    composable("list") {
+                        mainActivityViewModel.setCanGoToPiP(false)
+                        RecipeList(
+                            navigateToRecipe = { recipeId ->
+                                navController.navigate(
+                                    route = "recipe/${recipeId}",
 //                                    builder = NavOptionsBuilder().anim {
 //                                        AnimBuilder().apply {
 //                                            enter = R.anim.slide_in
@@ -98,36 +102,37 @@ class MainActivity : AppCompatActivity() {
 //                                            popExit = R.anim.fade_out
 //                                        }
 //                                    }
-                            )
-                        },
-                        addNewRecipe = {
-                            navController.navigate("add_recipe")
-                        },
-                    )
-                }
-                composable(
-                    "recipe/{recipeId}",
-                    arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
-                ) { backStackEntry ->
-                    val recipeId = backStackEntry.arguments?.getInt("recipeId")
-                        ?: throw IllegalStateException("No Recipe ID")
-                    mainActivityViewModel.setCanGoToPiP(true)
-                    RecipeTimerPage(
-                        recipeId = recipeId,
-                        isInPiP = isInPiP.value
-                    )
-                }
-                composable("add_recipe") {
-                    mainActivityViewModel.setCanGoToPiP(false)
-                    AddNewRecipePage(steps = dummySteps, saveRecipe = { recipe, steps ->
-                        runBlocking {
-                            val idOfRecipe = db.recipeDao().insertRecipe(recipe)
-                            db.stepDao()
-                                .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
+                                )
+                            },
+                            addNewRecipe = {
+                                navController.navigate("add_recipe")
+                            },
+                        )
+                    }
+                    composable(
+                        "recipe/{recipeId}",
+                        arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val recipeId = backStackEntry.arguments?.getInt("recipeId")
+                            ?: throw IllegalStateException("No Recipe ID")
+                        mainActivityViewModel.setCanGoToPiP(true)
+                        RecipeTimerPage(
+                            recipeId = recipeId,
+                            isInPiP = isInPiP.value
+                        )
+                    }
+                    composable("add_recipe") {
+                        mainActivityViewModel.setCanGoToPiP(false)
+                        AddNewRecipePage(steps = dummySteps, saveRecipe = { recipe, steps ->
+                            runBlocking {
+                                val idOfRecipe = db.recipeDao().insertRecipe(recipe)
+                                db.stepDao()
+                                    .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
 
-                        }
-                        navController.navigate("list")
-                    })
+                            }
+                            navController.navigate("list")
+                        })
+                    }
                 }
             }
         }
@@ -145,12 +150,11 @@ class MainActivity : AppCompatActivity() {
                         )).dp
             }
             Column {
-                Surface(elevation = 4.dp) {
-                    Box(
-                        modifier = Modifier.fillMaxWidth().height(topPaddingInDp)
-                            .background(colorResource(id = R.color.navigationBar)),
-                    )
-                }
+                Surface(
+                    elevation = 4.dp,
+                    modifier = Modifier.fillMaxWidth().height(topPaddingInDp)
+                        .background(colorResource(id = R.color.navigationBar)),
+                ) {}
                 TopAppBar(
                     title = {
                         Text(text = stringResource(id = R.string.app_name))
@@ -160,6 +164,32 @@ class MainActivity : AppCompatActivity() {
                     contentColor = colorResource(id = R.color.textPrimary),
                 )
             }
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        setStatusBarColor()
+    }
+
+    private fun setStatusBarColor() {
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    window.insetsController?.setSystemBarsAppearance(
+                        APPEARANCE_LIGHT_STATUS_BARS,
+                        APPEARANCE_LIGHT_STATUS_BARS
+                    )
+                }
+            } // Night mode is not active, we're using the light theme
+            Configuration.UI_MODE_NIGHT_YES -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    window.insetsController?.setSystemBarsAppearance(
+                        0,
+                        APPEARANCE_LIGHT_STATUS_BARS
+                    )
+                }
+            } // Night mode is active, we're using dark theme
         }
     }
 

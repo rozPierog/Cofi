@@ -94,7 +94,7 @@ fun RecipeTimerPage(
                 if (!isInPiP) {
                     Text(
                         text = recipe.value?.name ?: "",
-                        color = Color.Black,
+                        color = MaterialTheme.colors.onSurface,
                         style = MaterialTheme.typography.h6
                     )
                     Spacer(modifier = Modifier.height(15.dp))

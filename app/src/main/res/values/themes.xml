@@ -4,8 +4,6 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/navigationBar</item>
         <item name="android:colorAccent">@color/teal_200</item>
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
-        <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/navigationBar</item>
     </style>
 
