@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Rational
 import android.view.View
 import android.view.WindowInsetsController
-import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
@@ -175,21 +174,55 @@ class MainActivity : AppCompatActivity() {
     private fun setStatusBarColor() {
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_NO -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    window.insetsController?.setSystemBarsAppearance(
-                        APPEARANCE_LIGHT_STATUS_BARS,
-                        APPEARANCE_LIGHT_STATUS_BARS
-                    )
-                }
-            } // Night mode is not active, we're using the light theme
+                setLightModeSystemBars()
+            }
             Configuration.UI_MODE_NIGHT_YES -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    window.insetsController?.setSystemBarsAppearance(
-                        0,
-                        APPEARANCE_LIGHT_STATUS_BARS
-                    )
+                setDarkModeSystemBars()
+            }
+        }
+    }
+
+    private fun setLightModeSystemBars(view: View = window.decorView) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            view.windowInsetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+            view.windowInsetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+            )
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                var flags = view.systemUiVisibility
+                flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    flags = flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
                 }
-            } // Night mode is active, we're using dark theme
+                view.systemUiVisibility = flags
+            }
+        }
+    }
+
+    private fun setDarkModeSystemBars(view: View = window.decorView) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            view.windowInsetsController?.setSystemBarsAppearance(
+                0,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+            view.windowInsetsController?.setSystemBarsAppearance(
+                0,
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+            )
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                var flags = view.systemUiVisibility
+                flags = flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    flags = flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+                }
+                view.systemUiVisibility = flags
+            }
         }
     }
 
