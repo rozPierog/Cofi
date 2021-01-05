@@ -13,6 +13,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.colorResource
@@ -37,6 +38,9 @@ class MainActivityViewModel : ViewModel() {
     private val _pipState = MutableLiveData(false)
     val pipState: LiveData<Boolean> = _pipState
 
+    private val _canGoToPiP = MutableLiveData(false)
+    val canGoToPiP: LiveData<Boolean> = _canGoToPiP
+
     private val _statusBarHeight = MutableLiveData(0)
     val statusBarHeight: LiveData<Int> = _statusBarHeight
 
@@ -47,40 +51,46 @@ class MainActivityViewModel : ViewModel() {
     fun setIsInPiP(newPiPState: Boolean) {
         _pipState.value = newPiPState
     }
+
+    fun setCanGoToPiP(newCanGoToPiP: Boolean) {
+        _canGoToPiP.value = newCanGoToPiP
+    }
 }
 
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainActivityViewModel by viewModels()
+    private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
     @ExperimentalLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val db = AppDatabase.getInstance(this)
         setOnApplyWindowInsetsListener(window.decorView) { _, insets ->
-            viewModel.setStatusBarHeight(insets.systemWindowInsetTop)
+            mainActivityViewModel.setStatusBarHeight(insets.systemWindowInsetTop)
             insets.consumeSystemWindowInsets()
         }
         setContent {
-            val navController = rememberNavController()
-            var isInPiP: Boolean by remember { mutableStateOf(false) }
-            viewModel.pipState.observe(this) {
-                isInPiP = it
-            }
-            val listOfRecipesAndSteps = runBlocking { db.recipeDao().getRecipesWithSteps() }
-            val listOfRecipes = listOfRecipesAndSteps.map { it.recipe }
-            Column {
+            MainNavigation()
+        }
+    }
 
-                PiPAwareAppBar(isInPiP = isInPiP)
+    @ExperimentalLayout
+    @Composable
+    fun MainNavigation() {
+        val navController = rememberNavController()
+        val db = AppDatabase.getInstance(this)
+        val isInPiP = mainActivityViewModel.pipState.observeAsState(false)
+        Column {
 
-                NavHost(navController, startDestination = "list") {
-                    composable("list") {
-                        RecipeList(
-                            recipes = listOfRecipes,
-                            navigateToRecipe = { recipeId ->
-                                navController.navigate(
-                                    route = "recipe/${recipeId}",
+            PiPAwareAppBar(isInPiP = isInPiP.value)
+
+            NavHost(navController, startDestination = "list") {
+                composable("list") {
+                    mainActivityViewModel.setCanGoToPiP(false)
+                    RecipeList(
+                        navigateToRecipe = { recipeId ->
+                            navController.navigate(
+                                route = "recipe/${recipeId}",
 //                                    builder = NavOptionsBuilder().anim {
 //                                        AnimBuilder().apply {
 //                                            enter = R.anim.slide_in
@@ -89,37 +99,38 @@ class MainActivity : AppCompatActivity() {
 //                                            popExit = R.anim.fade_out
 //                                        }
 //                                    }
-                                )
-                            },
-                            addNewRecipe = {
-                                navController.navigate("add_recipe")
-                            },
-                        )
-                    }
-                    composable(
-                        "recipe/{recipeId}",
-                        arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
-                    ) { backStackEntry ->
-                        val recipeId = backStackEntry.arguments?.getInt("recipeId")
-                        val pickedRecipe = listOfRecipes.find { it.id == recipeId }
-                            ?: throw IllegalArgumentException("No recipeId on transition!")
-                        RecipeTimerPage(
-                            recipe = pickedRecipe,
-                            steps = listOfRecipesAndSteps.find { it.recipe == pickedRecipe }?.steps
-                                ?: listOf(), isInPiP = isInPiP
-                        )
-                    }
-                    composable("add_recipe") {
-                        AddNewRecipePage(steps = dummySteps, saveRecipe = { recipe, steps ->
-                            runBlocking {
-                                val idOfRecipe = db.recipeDao().insertRecipe(recipe)
-                                db.stepDao()
-                                    .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
+                            )
+                        },
+                        addNewRecipe = {
+                            navController.navigate("add_recipe")
+                        },
+                    )
+                }
+                composable(
+                    "recipe/{recipeId}",
+                    arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+                ) { backStackEntry ->
 
-                            }
-                            navController.navigate("list")
-                        })
-                    }
+                    val recipeId = backStackEntry.arguments?.getInt("recipeId")
+                        ?: throw IllegalStateException("No Recipe ID")
+
+                    mainActivityViewModel.setCanGoToPiP(true)
+                    RecipeTimerPage(
+                        recipeId = recipeId,
+                        isInPiP = isInPiP.value
+                    )
+                }
+                composable("add_recipe") {
+                    mainActivityViewModel.setCanGoToPiP(false)
+                    AddNewRecipePage(steps = dummySteps, saveRecipe = { recipe, steps ->
+                        runBlocking {
+                            val idOfRecipe = db.recipeDao().insertRecipe(recipe)
+                            db.stepDao()
+                                .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
+
+                        }
+                        navController.navigate("list")
+                    })
                 }
             }
         }
@@ -130,7 +141,7 @@ class MainActivity : AppCompatActivity() {
         if (!isInPiP) {
             var topPaddingInDp: Dp by remember { mutableStateOf(0.dp) }
 
-            viewModel.statusBarHeight.observe(this) {
+            mainActivityViewModel.statusBarHeight.observe(this) {
                 topPaddingInDp = (it / (
                         resources?.displayMetrics?.density
                             ?: 1f
@@ -159,11 +170,13 @@ class MainActivity : AppCompatActivity() {
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration
     ) {
-        viewModel.setIsInPiP(isInPictureInPictureMode)
+        mainActivityViewModel.setIsInPiP(isInPictureInPictureMode)
     }
 
     override fun onUserLeaveHint() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+            mainActivityViewModel.canGoToPiP.value == true
+        ) {
             enterPictureInPictureMode(
                 PictureInPictureParams.Builder().setAspectRatio(Rational(1, 1)).build()
             )

@@ -1,7 +1,10 @@
 package com.omelan.burr.model
 
+import android.app.Application
 import androidx.annotation.WorkerThread
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.omelan.burr.ui.brown
 import com.omelan.burr.ui.green
@@ -67,6 +70,10 @@ interface StepDao {
     suspend fun getAll(): List<Step>
 
     @WorkerThread
+    @Query("SELECT * FROM step WHERE recipeId IS :recipeId")
+    fun getStepsForRecipe(recipeId: Int): LiveData<List<Step>>
+
+    @WorkerThread
     @Insert
     suspend fun insertAll(vararg steps: Step)
 
@@ -77,4 +84,10 @@ interface StepDao {
     @WorkerThread
     @Delete
     suspend fun delete(step: Step)
+}
+
+class StepsViewModel(application: Application) : AndroidViewModel(application) {
+    private val db = AppDatabase.getInstance(application)
+
+    fun getAllStepsForRecipe(recipeId: Int) = db.stepDao().getStepsForRecipe(recipeId)
 }

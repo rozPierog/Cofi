@@ -1,9 +1,15 @@
 package com.omelan.burr.model
 
+import android.app.Application
 import androidx.annotation.DrawableRes
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import androidx.room.*
 import com.omelan.burr.R
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 val dummySteps = listOf(
     Step(
@@ -18,8 +24,8 @@ val dummySteps = listOf(
         time = 5 * 1000,
         type = StepType.WATER
     ),
-    Step( name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
-    Step( name = "Wait", time = 35 * 1000, type = StepType.WAIT),
+    Step(name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
+    Step(name = "Wait", time = 35 * 1000, type = StepType.WAIT),
     Step(
         name = "Add Water",
         time = 30 * 1000,
@@ -41,9 +47,10 @@ data class Recipe(
     val name: String,
     val description: String,
 //    @Ignore
-//    val steps: List<Step> = dummySteps,
+//    val steps: List<Step> = listOf(),
+    @ColumnInfo(name = "last_finished") val lastFinished: Int = 0,
     @DrawableRes
-    @ColumnInfo(name = "icon_name") val iconName: Int = R.drawable.ic_coffee
+    @ColumnInfo(name = "icon_name") val iconName: Int = R.drawable.ic_coffee,
 )
 
 data class RecipesWithSteps(
@@ -60,13 +67,17 @@ data class RecipesWithSteps(
 interface RecipeDao {
 
     @WorkerThread
-    @Query("SELECT * FROM recipe")
-    suspend fun getAll(): List<Recipe>
+    @Query("SELECT * FROM recipe ORDER BY last_finished ASC")
+    fun getAll(): LiveData<List<Recipe>>
+
+    @WorkerThread
+    @Query("SELECT * FROM recipe WHERE ID is :id")
+    fun get(id: Int): LiveData<Recipe>
 
     @Transaction
     @WorkerThread
-    @Query("SELECT * FROM recipe")
-    suspend fun getRecipesWithSteps(): List<RecipesWithSteps>
+    @Query("SELECT * FROM recipe ORDER BY last_finished ASC")
+    fun getRecipesWithSteps(): LiveData<List<RecipesWithSteps>>
 
     @Insert
     @WorkerThread
@@ -79,4 +90,16 @@ interface RecipeDao {
     @Delete
     @WorkerThread
     suspend fun delete(recipe: Recipe)
+}
+
+class RecipeViewModel(application: Application) : AndroidViewModel(application) {
+    private val db = AppDatabase.getInstance(application)
+    private val dao = db.recipeDao()
+    fun getAllRecipesWithSteps(): LiveData<List<RecipesWithSteps>> {
+        return dao.getRecipesWithSteps()
+    }
+
+    fun getRecipe(id: Int) = dao.get(id)
+
+    fun getAllRecipes() = dao.getAll()
 }

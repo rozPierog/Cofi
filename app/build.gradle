@@ -67,6 +67,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     // Navigation
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha04"
+    // Integration with observables
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     // UI Tests
     def room_version = "2.2.6"
 

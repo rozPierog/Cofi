@@ -8,29 +8,36 @@ import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.viewModel
 import com.omelan.burr.components.Description
 import com.omelan.burr.components.StepListItem
 import com.omelan.burr.components.StepProgress
 import com.omelan.burr.components.Timer
-import com.omelan.burr.model.Recipe
-import com.omelan.burr.model.Step
-import com.omelan.burr.model.dummySteps
+import com.omelan.burr.model.*
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.utils.Haptics
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 @Composable
-fun RecipeTimerPage(recipe: Recipe, steps: List<Step>, isInPiP: Boolean) {
+fun RecipeTimerPage(
+    recipeId: Int,
+    isInPiP: Boolean,
+    stepsViewModel: StepsViewModel = viewModel(),
+    recipeViewModel: RecipeViewModel = viewModel()
+) {
     val (currentStep, setCurrentStep) = remember { mutableStateOf<Step?>(null) }
-    val indexOfCurrentStep = steps.indexOf(currentStep)
-    val indexOfLastStep = steps.lastIndex
+    val steps = stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
+    val recipe = recipeViewModel.getRecipe(recipeId).observeAsState(null)
+    val indexOfCurrentStep = steps.value.indexOf(currentStep)
+    val indexOfLastStep = steps.value.lastIndex
     val haptics = Haptics(AmbientContext.current)
 
     val animatedProgressValue = animatedFloat(0f)
@@ -43,7 +50,7 @@ fun RecipeTimerPage(recipe: Recipe, steps: List<Step>, isInPiP: Boolean) {
 
     fun changeToNextStep() {
         if (indexOfCurrentStep != indexOfLastStep) {
-            setCurrentStep(steps[indexOfCurrentStep + 1])
+            setCurrentStep(steps.value[indexOfCurrentStep + 1])
         } else {
             animatedProgressValue.snapTo(0f)
             setCurrentStep(null)
@@ -86,14 +93,14 @@ fun RecipeTimerPage(recipe: Recipe, steps: List<Step>, isInPiP: Boolean) {
             Column(modifier = Modifier.padding(16.dp)) {
                 if (!isInPiP) {
                     Text(
-                        text = recipe.name,
+                        text = recipe.value?.name ?: "",
                         color = Color.Black,
                         style = MaterialTheme.typography.h6
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     Description(
                         modifier = Modifier.fillMaxWidth(),
-                        descriptionText = recipe.description
+                        descriptionText = recipe.value?.description ?: ""
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                 }
@@ -117,15 +124,15 @@ fun RecipeTimerPage(recipe: Recipe, steps: List<Step>, isInPiP: Boolean) {
                                     startAnimations()
                                 }
                             } else {
-                                setCurrentStep(steps.first())
+                                setCurrentStep(steps.value.first())
                             }
                         },
                     ) {
                         Text(text = "Start")
                     }
                     Spacer(modifier = Modifier.height(25.dp))
-                    steps.forEach { step ->
-                        val indexOfThisStep = steps.indexOf(step)
+                    steps.value.forEach { step ->
+                        val indexOfThisStep = steps.value.indexOf(step)
                         val stepProgress = when {
                             indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
                             indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
@@ -145,5 +152,5 @@ fun RecipeTimerPage(recipe: Recipe, steps: List<Step>, isInPiP: Boolean) {
 @Preview(showBackground = true)
 @Composable
 fun RecipeTimerPagePreview() {
-    RecipeTimerPage(Recipe(id = 1, name = "V60", description = "Ble ble"), dummySteps, false)
+    RecipeTimerPage(recipeId = 1, isInPiP = false)
 }
