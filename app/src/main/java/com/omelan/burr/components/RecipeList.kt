@@ -20,13 +20,11 @@ fun RecipeList(
     recipeViewModel: RecipeViewModel = viewModel(),
     mainActivityViewModel: MainActivityViewModel = viewModel()
 ) {
-    val listOfRecipesAndSteps =
-        recipeViewModel.getAllRecipesWithSteps().observeAsState(initial = listOf())
+    val recipes = recipeViewModel.getAllRecipes().observeAsState(initial = listOf())
     val navBarHeight = mainActivityViewModel.navBarHeight.observeAsState(48.dp)
     val (paddingValues) = remember(navBarHeight) { mutableStateOf(PaddingValues(bottom = navBarHeight.value)) }
-    val listOfRecipe = listOfRecipesAndSteps.value.map { it.recipe }
     LazyColumn(contentPadding = paddingValues) {
-        items(listOfRecipe) { recipe ->
+        items(recipes.value) { recipe ->
             RecipeItem(
                 recipe = recipe,
                 onPress = navigateToRecipe,

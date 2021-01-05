@@ -59,6 +59,8 @@ data class Step(
     val name: String,
     val time: Int,
     val type: StepType,
+    // TODO: Add ordering of steps
+//    val order: Int,
     val value: Int? = null
 )
 

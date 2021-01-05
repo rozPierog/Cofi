@@ -39,6 +39,7 @@ import com.omelan.burr.pages.RecipeTimerPage
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.utils.pixelsToDp
 import kotlinx.coroutines.runBlocking
+import java.util.*
 import kotlin.time.ExperimentalTime
 
 class MainActivityViewModel : ViewModel() {
@@ -124,7 +125,8 @@ class MainActivity : AppCompatActivity() {
                                 )
                             },
                             addNewRecipe = {
-                                navController.navigate("add_recipe",
+                                navController.navigate(
+                                    "add_recipe",
 //                                    builder = {
 //                                        anim {
 //                                            enter = android.R.anim.slide_out_right
@@ -146,19 +148,28 @@ class MainActivity : AppCompatActivity() {
                         mainActivityViewModel.setCanGoToPiP(true)
                         RecipeTimerPage(
                             recipeId = recipeId,
-                            isInPiP = isInPiP.value
+                            isInPiP = isInPiP.value,
+                            onRecipeEnd = { recipe ->
+                                // TODO: This is shit
+                                runBlocking {
+                                    db.recipeDao()
+                                        .updateRecipe(recipe.copy(lastFinished = Date().time))
+                                }
+                            }
                         )
                     }
                     composable("add_recipe") {
                         mainActivityViewModel.setCanGoToPiP(false)
                         AddNewRecipePage(steps = dummySteps, saveRecipe = { recipe, steps ->
+                            // TODO: This is shit
                             runBlocking {
                                 val idOfRecipe = db.recipeDao().insertRecipe(recipe)
                                 db.stepDao()
                                     .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
 
                             }
-                            navController.navigate("list",
+                            navController.navigate(
+                                "list",
 //                                builder = {
 //                                    anim {
 //                                        enter = android.R.anim.slide_out_right

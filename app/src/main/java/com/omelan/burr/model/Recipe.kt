@@ -48,7 +48,7 @@ data class Recipe(
     val description: String,
 //    @Ignore
 //    val steps: List<Step> = listOf(),
-    @ColumnInfo(name = "last_finished") val lastFinished: Int = 0,
+    @ColumnInfo(name = "last_finished") val lastFinished: Long = 0L,
     @DrawableRes
     @ColumnInfo(name = "icon_name") val iconName: Int = R.drawable.ic_coffee,
 )
@@ -66,38 +66,28 @@ data class RecipesWithSteps(
 @Dao
 interface RecipeDao {
 
-    @WorkerThread
-    @Query("SELECT * FROM recipe ORDER BY last_finished ASC")
+    @Query("SELECT * FROM recipe ORDER BY last_finished DESC")
     fun getAll(): LiveData<List<Recipe>>
 
-    @WorkerThread
     @Query("SELECT * FROM recipe WHERE ID is :id")
     fun get(id: Int): LiveData<Recipe>
 
-    @Transaction
-    @WorkerThread
-    @Query("SELECT * FROM recipe ORDER BY last_finished ASC")
-    fun getRecipesWithSteps(): LiveData<List<RecipesWithSteps>>
-
     @Insert
-    @WorkerThread
     suspend fun insertAll(vararg recipes: Recipe)
 
     @Insert
-    @WorkerThread
     suspend fun insertRecipe(recipe: Recipe): Long
 
+    @Update
+    suspend fun updateRecipe(recipe: Recipe)
+
     @Delete
-    @WorkerThread
     suspend fun delete(recipe: Recipe)
 }
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
     private val db = AppDatabase.getInstance(application)
     private val dao = db.recipeDao()
-    fun getAllRecipesWithSteps(): LiveData<List<RecipesWithSteps>> {
-        return dao.getRecipesWithSteps()
-    }
 
     fun getRecipe(id: Int) = dao.get(id)
 

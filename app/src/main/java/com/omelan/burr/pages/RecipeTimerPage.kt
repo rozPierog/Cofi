@@ -30,7 +30,8 @@ import kotlin.time.ExperimentalTime
 @Composable
 fun RecipeTimerPage(
     recipeId: Int,
-    isInPiP: Boolean,
+    isInPiP: Boolean = false,
+    onRecipeEnd: (Recipe) -> Unit = {},
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
     mainActivityViewModel: MainActivityViewModel = viewModel(),
@@ -65,6 +66,7 @@ fun RecipeTimerPage(
         } else {
             animatedProgressValue.snapTo(0f)
             setCurrentStep(null)
+            onRecipeEnd(recipe.value)
         }
         haptics.progress()
     }
