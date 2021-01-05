@@ -1,38 +1,73 @@
 package com.omelan.burr.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 
-@SuppressLint("InlinedApi")
 class Haptics(context: Context) {
 
     private val vibrator =
         context.applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+//
+//    fun click() {
+//        vibrateCompat(VibrationEffect.EFFECT_CLICK)
+//    }
+//
+//    fun heavyClick() {
+//        vibrateCompat(VibrationEffect.EFFECT_HEAVY_CLICK)
+//    }
+//
+//    fun doubleClick() {
+//        vibrateCompat(VibrationEffect.EFFECT_DOUBLE_CLICK)
+//    }
+//
+//    fun tick() {
+//        vibrateCompat(VibrationEffect.EFFECT_TICK)
+//    }
 
-    fun click() {
-        createCompatVibration(VibrationEffect.EFFECT_CLICK)
+    fun progress() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrateCompat(vibrationEffect = stepProgressVibration)
+        }
+        vibrator.vibrateCompat()
     }
 
-    fun error() {
-        createCompatVibration(VibrationEffect.EFFECT_HEAVY_CLICK)
-    }
+    private val stepProgressVibration: VibrationEffect? =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            VibrationEffect.createOneShot(300, -1)
+        } else {
+            null
+        }
 
-    fun warning() {
-        createCompatVibration(VibrationEffect.EFFECT_DOUBLE_CLICK)
-    }
-
-    fun tick() {
-        createCompatVibration(VibrationEffect.EFFECT_TICK)
-    }
-
-    private fun createCompatVibration(effectId: Int) = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ->
-            vibrator.vibrate(VibrationEffect.createPredefined(effectId))
+    private fun Vibrator.vibrateCompat(
+        effectId: Int? = null,
+        vibrationEffect: VibrationEffect? = null
+    ) = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
+            when {
+                effectId != null -> {
+                    this.vibrate(VibrationEffect.createPredefined(effectId))
+                }
+                vibrationEffect != null -> {
+                    this.vibrate(vibrationEffect)
+                }
+                else -> {
+                    this.vibrate(300)
+                }
+            }
+        }
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ->
-            vibrator.vibrate(VibrationEffect.createOneShot(25, VibrationEffect.DEFAULT_AMPLITUDE))
-        else -> vibrator.vibrate(25)
+            when {
+                vibrationEffect != null -> {
+                    this.vibrate(vibrationEffect)
+                }
+                else -> {
+                    this.vibrate(300)
+                }
+            }
+        else ->
+            this.vibrate(300)
+
     }
 }

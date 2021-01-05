@@ -66,7 +66,7 @@ fun RecipeTimerPage(
             animatedProgressValue.snapTo(0f)
             setCurrentStep(null)
         }
-        haptics.tick()
+        haptics.progress()
     }
 
 
