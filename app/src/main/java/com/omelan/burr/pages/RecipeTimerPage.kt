@@ -108,10 +108,9 @@ fun RecipeTimerPage(
         startAnimations()
     }
     BurrTheme {
-
         LazyColumn(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight().animateContentSize(),
-            contentPadding = paddingValues
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+            contentPadding = if (isInPiP) PaddingValues(0.dp) else paddingValues
         ) {
             item {
                 Column {
@@ -187,4 +186,11 @@ fun RecipeTimerPage(
 @Composable
 fun RecipeTimerPagePreview() {
     RecipeTimerPage(recipeId = 1, isInPiP = false)
+}
+
+@ExperimentalTime
+@Preview(showBackground = true)
+@Composable
+fun RecipeTimerPagePreviewPip() {
+    RecipeTimerPage(recipeId = 1, isInPiP = true)
 }
