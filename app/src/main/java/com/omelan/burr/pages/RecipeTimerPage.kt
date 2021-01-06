@@ -72,6 +72,7 @@ fun RecipeTimerPage(
         } else {
             animatedProgressValue.snapTo(0f)
             setCurrentStep(null)
+            isAnimationRunning = false
             onRecipeEnd(recipe.value)
         }
         haptics.progress()
