@@ -23,6 +23,7 @@ import com.omelan.burr.model.dummySteps
 import com.omelan.burr.pages.AddNewRecipePage
 import com.omelan.burr.pages.RecipeList
 import com.omelan.burr.pages.RecipeTimerPage
+import com.omelan.burr.pages.SettingsPage
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.utils.SystemUIHelpers
 import kotlinx.coroutines.launch
@@ -103,22 +104,44 @@ class MainActivity : AppCompatActivity() {
                                         db.recipeDao()
                                             .updateRecipe(recipe.copy(lastFinished = Date().time))
                                     }
-                                }
+                                },
+                                goBack = {
+                                    navController.navigate(
+                                        route = "list",
+                                    )
+                                },
                             )
                         }
                         composable("add_recipe") {
                             mainActivityViewModel.setCanGoToPiP(false)
-                            AddNewRecipePage(steps = dummySteps, saveRecipe = { recipe, steps ->
-                                lifecycleScope.launch {
-                                    val idOfRecipe = db.recipeDao().insertRecipe(recipe)
-                                    db.stepDao()
-                                        .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
+                            AddNewRecipePage(
+                                steps = dummySteps,
+                                saveRecipe = { recipe, steps ->
+                                    lifecycleScope.launch {
+                                        val idOfRecipe = db.recipeDao().insertRecipe(recipe)
+                                        db.stepDao()
+                                            .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
 
-                                }
-                                navController.navigate(
-                                    "list",
-                                )
-                            })
+                                    }
+                                    navController.navigate(
+                                        "list",
+                                    )
+                                },
+                                goBack = {
+                                    navController.navigate(
+                                        route = "list",
+                                    )
+                                },
+                            )
+                        }
+                        composable("settings") {
+                            SettingsPage(
+                                goBack = {
+                                    navController.navigate(
+                                        route = "list",
+                                    )
+                                },
+                            )
                         }
                     }
                 }

@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -39,7 +40,7 @@ fun RecipeList(
             topBar = {
                 PiPAwareAppBar(isInPiP = AmbientPiPState.current, actions = {
                     IconButton(onClick = goToSettings) {
-                        Icon(Icons.Rounded.MoreVert)
+                        Icon(Icons.Rounded.Settings)
                     }
                 })
             },

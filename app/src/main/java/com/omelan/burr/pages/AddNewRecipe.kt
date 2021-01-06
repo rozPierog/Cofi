@@ -30,7 +30,11 @@ import kotlin.time.ExperimentalTime
 @ExperimentalLayout
 @ExperimentalTime
 @Composable
-fun AddNewRecipePage(steps: List<Step> = listOf(), saveRecipe: (Recipe, List<Step>) -> Unit) {
+fun AddNewRecipePage(
+    steps: List<Step> = listOf(),
+    saveRecipe: (Recipe, List<Step>) -> Unit,
+    goBack: () -> Unit = {},
+) {
     val (recipeName, setRecipeName) = remember { mutableStateOf("") }
     val (recipeDescription, setRecipeDescription) = remember { mutableStateOf("") }
     val (editedSteps, setEditedSteps) = remember { mutableStateOf(steps) }
@@ -40,15 +44,7 @@ fun AddNewRecipePage(steps: List<Step> = listOf(), saveRecipe: (Recipe, List<Ste
             PiPAwareAppBar(
                 isInPiP = AmbientPiPState.current,
                 navigationIcon = {
-                    IconButton(onClick = {
-                        saveRecipe(
-                            Recipe(
-                                name = recipeName,
-                                description = recipeDescription,
-                            ),
-                            editedSteps
-                        )
-                    }) {
+                    IconButton(onClick = goBack) {
                         Icon(Icons.Rounded.ArrowBack)
                     }
                 },
