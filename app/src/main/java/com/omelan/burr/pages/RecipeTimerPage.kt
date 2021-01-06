@@ -164,15 +164,17 @@ fun RecipeTimerPage(
                     }
                 }
             }
-            items(steps.value) { step ->
-                val indexOfThisStep = steps.value.indexOf(step)
-                val stepProgress = when {
-                    indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
-                    indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
-                    else -> StepProgress.Upcoming
+            if (!isInPiP) {
+                items(steps.value) { step ->
+                    val indexOfThisStep = steps.value.indexOf(step)
+                    val stepProgress = when {
+                        indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
+                        indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
+                        else -> StepProgress.Upcoming
+                    }
+                    StepListItem(step = step, stepProgress = stepProgress)
+                    Divider(color = Color(0xFFE8EAF6))
                 }
-                StepListItem(step = step, stepProgress = stepProgress)
-                Divider(color = Color(0xFFE8EAF6))
             }
         }
     }
