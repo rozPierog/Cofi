@@ -4,6 +4,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.animatedColor
 import androidx.compose.animation.animatedFloat
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -102,7 +103,8 @@ fun RecipeTimerPage(
     }
     BurrTheme {
         LazyColumn(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+            modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                .background(color = MaterialTheme.colors.background),
             contentPadding = if (isInPiP) {
                 PaddingValues(0.dp)
             } else {

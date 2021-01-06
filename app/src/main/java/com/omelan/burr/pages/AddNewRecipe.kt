@@ -1,15 +1,15 @@
 package com.omelan.burr.pages
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.ScrollableColumn
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.WithConstraints
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,11 +33,17 @@ fun AddNewRecipePage(steps: List<Step> = listOf(), saveRecipe: (Recipe, List<Ste
     val (stepCurrentlyEdited, setStepCurrentlyEdited) = remember { mutableStateOf<Step?>(null) }
     BurrTheme {
         WithConstraints {
-            ScrollableColumn(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-                contentPadding = PaddingValues(bottom = maxHeight / 2)
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                    .background(color = MaterialTheme.colors.background),
+                contentPadding = PaddingValues(
+                    bottom = maxHeight / 2,
+                    top = 16.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                ),
             ) {
-                Column(modifier = Modifier.padding(16.dp).animateContentSize()) {
+                item {
                     OutlinedTextField(
                         value = recipeName,
                         onValueChange = { setRecipeName(it) },
@@ -45,37 +51,41 @@ fun AddNewRecipePage(steps: List<Step> = listOf(), saveRecipe: (Recipe, List<Ste
                         singleLine = true,
                         label = { Text(text = "Name") },
                     )
+                }
+                item {
                     OutlinedTextField(
                         value = recipeDescription,
                         onValueChange = { setRecipeDescription(it) },
                         modifier = Modifier.fillMaxWidth(),
                         label = { Text(text = "Description") },
                     )
-                    editedSteps.forEach { step ->
-                        if (stepCurrentlyEdited == step) {
-                            val indexOfThisStep = editedSteps.indexOf(step)
-                            StepAddCard(stepToEdit = step,
-                                save = { stepToSave ->
-                                    setEditedSteps(
-                                        editedSteps.mapIndexed { index, step ->
-                                            if (index == indexOfThisStep) {
-                                                stepToSave
-                                            } else {
-                                                step
-                                            }
+                }
+                items(editedSteps) { step ->
+                    if (stepCurrentlyEdited == step) {
+                        val indexOfThisStep = editedSteps.indexOf(step)
+                        StepAddCard(stepToEdit = step,
+                            save = { stepToSave ->
+                                setEditedSteps(
+                                    editedSteps.mapIndexed { index, step ->
+                                        if (index == indexOfThisStep) {
+                                            stepToSave
+                                        } else {
+                                            step
                                         }
-                                    )
-                                })
-                        } else {
-                            StepListItem(
-                                step = step,
-                                stepProgress = StepProgress.Upcoming,
-                                onClick = { clickedStep ->
-                                    setStepCurrentlyEdited(clickedStep)
-                                })
-                        }
+                                    }
+                                )
+                            })
+                    } else {
+                        StepListItem(
+                            step = step,
+                            stepProgress = StepProgress.Upcoming,
+                            onClick = { clickedStep ->
+                                setStepCurrentlyEdited(clickedStep)
+                            })
                     }
-                    if (stepCurrentlyEdited == null) {
+                }
+                if (stepCurrentlyEdited == null) {
+                    item {
                         StepAddCard(save = { stepToSave ->
                             setEditedSteps(
                                 listOf(
@@ -85,6 +95,8 @@ fun AddNewRecipePage(steps: List<Step> = listOf(), saveRecipe: (Recipe, List<Ste
                             )
                         })
                     }
+                }
+                item {
                     Button(
                         onClick = {
                             saveRecipe(
@@ -95,17 +107,15 @@ fun AddNewRecipePage(steps: List<Step> = listOf(), saveRecipe: (Recipe, List<Ste
                                 editedSteps
                             )
                         },
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                            .padding(vertical = 5.dp)
+                        modifier = Modifier.padding(vertical = 5.dp)
                     ) {
                         Text(text = "Save this recipe")
                     }
-
                 }
+
             }
         }
     }
-
 }
 
 @ExperimentalLayout
