@@ -69,14 +69,17 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha04"
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    // UI Tests
+    // Jetpack Utils
+    implementation 'dev.chrisbanes.accompanist:accompanist-insets:0.4.1'
+
+    //Room
     def room_version = "2.2.6"
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-
-    // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
+
+    // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

@@ -10,7 +10,7 @@ object SystemUIHelpers {
     fun setSystemBarsColors(view: View, resources: Resources) {
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_NO -> {
-                setLightModeSystemBars(view)
+                setDarkModeSystemBars(view)
             }
             Configuration.UI_MODE_NIGHT_YES -> {
                 setDarkModeSystemBars(view)

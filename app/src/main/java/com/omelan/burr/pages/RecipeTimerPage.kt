@@ -28,6 +28,9 @@ import com.omelan.burr.components.Timer
 import com.omelan.burr.model.*
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.utils.Haptics
+import dev.chrisbanes.accompanist.insets.AmbientWindowInsets
+import dev.chrisbanes.accompanist.insets.add
+import dev.chrisbanes.accompanist.insets.toPaddingValues
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -38,7 +41,6 @@ fun RecipeTimerPage(
     onRecipeEnd: (Recipe) -> Unit = {},
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
-    mainActivityViewModel: MainActivityViewModel = viewModel(),
 ) {
     val (currentStep, setCurrentStep) = remember { mutableStateOf<Step?>(null) }
     val steps = stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
@@ -47,15 +49,6 @@ fun RecipeTimerPage(
     val indexOfCurrentStep = steps.value.indexOf(currentStep)
     val indexOfLastStep = steps.value.lastIndex
     val haptics = Haptics(AmbientContext.current)
-    val navBarHeight = mainActivityViewModel.navBarHeight.observeAsState(48.dp)
-    val paddingValues = remember(navBarHeight) {
-        PaddingValues(
-            bottom = navBarHeight.value,
-            start = 16.dp,
-            end = 16.dp,
-            top = 16.dp
-        )
-    }
     val animatedProgressValue = animatedFloat(0f)
     val animatedProgressColor = animatedColor(Color.DarkGray)
     var isAnimationRunning by remember { mutableStateOf(false) }
@@ -110,7 +103,12 @@ fun RecipeTimerPage(
     BurrTheme {
         LazyColumn(
             modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-            contentPadding = if (isInPiP) PaddingValues(0.dp) else paddingValues
+            contentPadding = if (isInPiP) {
+                PaddingValues(0.dp)
+            } else {
+                AmbientWindowInsets.current.navigationBars.toPaddingValues()
+                    .add(start = 16.dp, end = 16.dp)
+            }
         ) {
             item {
                 Column {
