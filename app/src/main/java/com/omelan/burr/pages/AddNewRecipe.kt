@@ -3,17 +3,21 @@ package com.omelan.burr.pages
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.WithConstraints
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.omelan.burr.AmbientPiPState
+import com.omelan.burr.R
+import com.omelan.burr.components.PiPAwareAppBar
 import com.omelan.burr.components.StepAddCard
 import com.omelan.burr.components.StepListItem
 import com.omelan.burr.components.StepProgress
@@ -32,87 +36,124 @@ fun AddNewRecipePage(steps: List<Step> = listOf(), saveRecipe: (Recipe, List<Ste
     val (editedSteps, setEditedSteps) = remember { mutableStateOf(steps) }
     val (stepCurrentlyEdited, setStepCurrentlyEdited) = remember { mutableStateOf<Step?>(null) }
     BurrTheme {
-        WithConstraints {
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight()
-                    .background(color = MaterialTheme.colors.background),
-                contentPadding = PaddingValues(
-                    bottom = maxHeight / 2,
-                    top = 16.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                ),
-            ) {
-                item {
-                    OutlinedTextField(
-                        value = recipeName,
-                        onValueChange = { setRecipeName(it) },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        label = { Text(text = "Name") },
-                    )
-                }
-                item {
-                    OutlinedTextField(
-                        value = recipeDescription,
-                        onValueChange = { setRecipeDescription(it) },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = { Text(text = "Description") },
-                    )
-                }
-                items(editedSteps) { step ->
-                    if (stepCurrentlyEdited == step) {
-                        val indexOfThisStep = editedSteps.indexOf(step)
-                        StepAddCard(stepToEdit = step,
-                            save = { stepToSave ->
-                                setEditedSteps(
-                                    editedSteps.mapIndexed { index, step ->
-                                        if (index == indexOfThisStep) {
-                                            stepToSave
-                                        } else {
-                                            step
-                                        }
-                                    }
-                                )
-                            })
-                    } else {
-                        StepListItem(
-                            step = step,
-                            stepProgress = StepProgress.Upcoming,
-                            onClick = { clickedStep ->
-                                setStepCurrentlyEdited(clickedStep)
-                            })
+        Scaffold(topBar = {
+            PiPAwareAppBar(
+                isInPiP = AmbientPiPState.current,
+                navigationIcon = {
+                    IconButton(onClick = {
+                        saveRecipe(
+                            Recipe(
+                                name = recipeName,
+                                description = recipeDescription,
+                            ),
+                            editedSteps
+                        )
+                    }) {
+                        Icon(Icons.Rounded.ArrowBack)
                     }
-                }
-                if (stepCurrentlyEdited == null) {
+                },
+                actions = {
+                    IconButton(onClick = {
+                        saveRecipe(
+                            Recipe(
+                                name = recipeName,
+                                description = recipeDescription,
+                            ),
+                            editedSteps
+                        )
+                    }) {
+                        Icon(Icons.Rounded.Delete)
+                    }
+                    IconButton(onClick = {
+                        saveRecipe(
+                            Recipe(
+                                name = recipeName,
+                                description = recipeDescription,
+                            ),
+                            editedSteps
+                        )
+                    }) {
+                        Icon(vectorResource(id = R.drawable.ic_close))
+                    }
+                    IconButton(onClick = {
+                        saveRecipe(
+                            Recipe(
+                                name = recipeName,
+                                description = recipeDescription,
+                            ),
+                            editedSteps
+                        )
+                    }) {
+                        Icon(vectorResource(id = R.drawable.ic_save))
+                    }
+                },
+                title = { Text(text = "Create new recipe") })
+        }) {
+            WithConstraints {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                        .background(color = MaterialTheme.colors.background),
+                    contentPadding = PaddingValues(
+                        bottom = maxHeight / 2,
+                        top = 16.dp,
+                        start = 16.dp,
+                        end = 16.dp
+                    ),
+                ) {
                     item {
-                        StepAddCard(save = { stepToSave ->
-                            setEditedSteps(
-                                listOf(
-                                    *editedSteps.toTypedArray(),
-                                    stepToSave
+                        OutlinedTextField(
+                            value = recipeName,
+                            onValueChange = { setRecipeName(it) },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+                            label = { Text(text = "Name") },
+                        )
+                    }
+                    item {
+                        OutlinedTextField(
+                            value = recipeDescription,
+                            onValueChange = { setRecipeDescription(it) },
+                            modifier = Modifier.fillMaxWidth(),
+                            label = { Text(text = "Description") },
+                        )
+                    }
+                    items(editedSteps) { step ->
+                        if (stepCurrentlyEdited == step) {
+                            val indexOfThisStep = editedSteps.indexOf(step)
+                            StepAddCard(stepToEdit = step,
+                                save = { stepToSave ->
+                                    setEditedSteps(
+                                        editedSteps.mapIndexed { index, step ->
+                                            if (index == indexOfThisStep) {
+                                                stepToSave
+                                            } else {
+                                                step
+                                            }
+                                        }
+                                    )
+                                })
+                        } else {
+                            StepListItem(
+                                step = step,
+                                stepProgress = StepProgress.Upcoming,
+                                onClick = { clickedStep ->
+                                    setStepCurrentlyEdited(clickedStep)
+                                })
+                        }
+                    }
+                    if (stepCurrentlyEdited == null) {
+                        item {
+                            StepAddCard(save = { stepToSave ->
+                                setEditedSteps(
+                                    listOf(
+                                        *editedSteps.toTypedArray(),
+                                        stepToSave
+                                    )
                                 )
-                            )
-                        })
+                            })
+                        }
                     }
                 }
-                item {
-                    Button(
-                        onClick = {
-                            saveRecipe(
-                                Recipe(
-                                    name = recipeName,
-                                    description = recipeDescription,
-                                ),
-                                editedSteps
-                            )
-                        },
-                        modifier = Modifier.padding(vertical = 5.dp)
-                    ) {
-                        Text(text = "Save this recipe")
-                    }
-                }
-
             }
         }
     }

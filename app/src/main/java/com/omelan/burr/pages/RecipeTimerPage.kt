@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -20,12 +22,9 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
-import com.omelan.burr.MainActivityViewModel
+import com.omelan.burr.AmbientPiPState
 import com.omelan.burr.R
-import com.omelan.burr.components.Description
-import com.omelan.burr.components.StepListItem
-import com.omelan.burr.components.StepProgress
-import com.omelan.burr.components.Timer
+import com.omelan.burr.components.*
 import com.omelan.burr.model.*
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.utils.Haptics
@@ -38,8 +37,9 @@ import kotlin.time.ExperimentalTime
 @Composable
 fun RecipeTimerPage(
     recipeId: Int,
-    isInPiP: Boolean = false,
+    isInPiP: Boolean = AmbientPiPState.current,
     onRecipeEnd: (Recipe) -> Unit = {},
+    goToEdit: (Recipe) -> Unit = {},
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
 ) {
@@ -102,78 +102,99 @@ fun RecipeTimerPage(
         startAnimations()
     }
     BurrTheme {
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight()
-                .background(color = MaterialTheme.colors.background),
-            contentPadding = if (isInPiP) {
-                PaddingValues(0.dp)
-            } else {
-                AmbientWindowInsets.current.navigationBars.toPaddingValues()
-                    .add(start = 16.dp, end = 16.dp)
-            }
-        ) {
-            item {
-                Column {
-                    if (!isInPiP) {
-                        Text(
-                            text = recipe.value.name,
-                            color = MaterialTheme.colors.onSurface,
-                            style = MaterialTheme.typography.h6
-                        )
-                        Spacer(modifier = Modifier.height(15.dp))
-                        if (recipe.value.description.isNotBlank()) {
-                            Description(
-                                modifier = Modifier.fillMaxWidth(),
-                                descriptionText = recipe.value.description
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(15.dp))
+        Scaffold(topBar = {
+            PiPAwareAppBar(
+                isInPiP = AmbientPiPState.current,
+                title = {
+                    Text(text = recipe.value.name)
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+
+                    }) {
+                        Icon(Icons.Rounded.ArrowBack)
                     }
-                    Timer(
-                        modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
-                        currentStep = currentStep,
-                        animatedProgressValue = animatedProgressValue,
-                        animatedProgressColor = animatedProgressColor,
-                        isInPiP = isInPiP,
-                    )
-                    if (!isInPiP) {
-                        Spacer(modifier = Modifier.height(15.dp))
-                        Button(
-                            modifier = Modifier.animateContentSize()
-                                .align(Alignment.CenterHorizontally),
-                            onClick = if (currentStep != null) {
-                                if (isAnimationRunning) {
-                                    { pauseAnimations() }
-                                } else {
-                                    { startAnimations() }
-                                }
-                            } else {
-                                { setCurrentStep(steps.value.first()) }
+                },
+                actions = {
+                    IconButton(onClick = {  goToEdit(recipe.value) }) {
+                        Icon(Icons.Rounded.Edit)
+                    }
+                },
+            )
+        }) {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                    .background(color = MaterialTheme.colors.background),
+                contentPadding = if (isInPiP) {
+                    PaddingValues(0.dp)
+                } else {
+                    AmbientWindowInsets.current.navigationBars.toPaddingValues()
+                        .add(start = 16.dp, end = 16.dp)
+                }
+            ) {
+                item {
+                    Column {
+                        if (!isInPiP) {
+//                            Text(
+//                                text = recipe.value.name,
+//                                color = MaterialTheme.colors.onSurface,
+//                                style = MaterialTheme.typography.h6
+//                            )
+                            Spacer(modifier = Modifier.height(15.dp))
+                            if (recipe.value.description.isNotBlank()) {
+                                Description(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    descriptionText = recipe.value.description
+                                )
                             }
-                        ) {
-                            Icon(
-                                imageVector = if (isAnimationRunning) {
-                                    vectorResource(id = R.drawable.ic_pause)
-                                } else {
-                                    Icons.Rounded.PlayArrow
-                                }
-                            )
-                            Text(text = if (isAnimationRunning) "Pause" else "Start")
+                            Spacer(modifier = Modifier.height(15.dp))
                         }
-                        Spacer(modifier = Modifier.height(25.dp))
+                        Timer(
+                            modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
+                            currentStep = currentStep,
+                            animatedProgressValue = animatedProgressValue,
+                            animatedProgressColor = animatedProgressColor,
+                            isInPiP = isInPiP,
+                        )
+                        if (!isInPiP) {
+                            Spacer(modifier = Modifier.height(15.dp))
+                            Button(
+                                modifier = Modifier.animateContentSize()
+                                    .align(Alignment.CenterHorizontally),
+                                onClick = if (currentStep != null) {
+                                    if (isAnimationRunning) {
+                                        { pauseAnimations() }
+                                    } else {
+                                        { startAnimations() }
+                                    }
+                                } else {
+                                    { setCurrentStep(steps.value.first()) }
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = if (isAnimationRunning) {
+                                        vectorResource(id = R.drawable.ic_pause)
+                                    } else {
+                                        Icons.Rounded.PlayArrow
+                                    }
+                                )
+                                Text(text = if (isAnimationRunning) "Pause" else "Start")
+                            }
+                            Spacer(modifier = Modifier.height(25.dp))
+                        }
                     }
                 }
-            }
-            if (!isInPiP) {
-                items(steps.value) { step ->
-                    val indexOfThisStep = steps.value.indexOf(step)
-                    val stepProgress = when {
-                        indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
-                        indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
-                        else -> StepProgress.Upcoming
+                if (!isInPiP) {
+                    items(steps.value) { step ->
+                        val indexOfThisStep = steps.value.indexOf(step)
+                        val stepProgress = when {
+                            indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
+                            indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
+                            else -> StepProgress.Upcoming
+                        }
+                        StepListItem(step = step, stepProgress = stepProgress)
+                        Divider(color = Color(0xFFE8EAF6))
                     }
-                    StepListItem(step = step, stepProgress = stepProgress)
-                    Divider(color = Color(0xFFE8EAF6))
                 }
             }
         }

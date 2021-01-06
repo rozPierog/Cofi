@@ -10,13 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayout
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Providers
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.staticAmbientOf
 import androidx.compose.ui.platform.setContent
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
-import com.omelan.burr.components.PiPAwareAppBar
 import com.omelan.burr.model.AppDatabase
 import com.omelan.burr.model.dummySteps
 import com.omelan.burr.pages.AddNewRecipePage
@@ -28,6 +29,11 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.time.ExperimentalTime
 
+val AmbientPiPState = staticAmbientOf<Boolean> {
+    error("AmbientPiPState value not available.")
+}
+
+
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
@@ -36,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor
         SystemUIHelpers.setSystemBarsColors(view = window.decorView, resources)
         setContent {
             MainNavigation()
@@ -59,55 +66,60 @@ class MainActivity : AppCompatActivity() {
         //     }
         // }
         BurrTheme {
-            Column {
-                PiPAwareAppBar(isInPiP = isInPiP.value)
-                NavHost(navController, startDestination = "list") {
-                    composable("list") {
-                        mainActivityViewModel.setCanGoToPiP(false)
-                        RecipeList(
-                            navigateToRecipe = { recipeId ->
-                                navController.navigate(
-                                    route = "recipe/${recipeId}",
-                                )
-                            },
-                            addNewRecipe = {
-                                navController.navigate(
-                                    "add_recipe",
-                                )
-                            },
-                        )
-                    }
-                    composable(
-                        "recipe/{recipeId}",
-                        arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
-                    ) { backStackEntry ->
-                        val recipeId = backStackEntry.arguments?.getInt("recipeId")
-                            ?: throw IllegalStateException("No Recipe ID")
-                        mainActivityViewModel.setCanGoToPiP(true)
-                        RecipeTimerPage(
-                            recipeId = recipeId,
-                            isInPiP = isInPiP.value,
-                            onRecipeEnd = { recipe ->
-                                lifecycleScope.launch {
-                                    db.recipeDao()
-                                        .updateRecipe(recipe.copy(lastFinished = Date().time))
+            Providers(AmbientPiPState provides isInPiP.value) {
+                Column {
+                    NavHost(navController, startDestination = "list") {
+                        composable("list") {
+                            mainActivityViewModel.setCanGoToPiP(false)
+                            RecipeList(
+                                navigateToRecipe = { recipeId ->
+                                    navController.navigate(
+                                        route = "recipe/${recipeId}",
+                                    )
+                                },
+                                addNewRecipe = {
+                                    navController.navigate(
+                                        route = "add_recipe",
+                                    )
+                                },
+                                goToSettings = {
+                                    navController.navigate(
+                                        route = "settings"
+                                    )
                                 }
-                            }
-                        )
-                    }
-                    composable("add_recipe") {
-                        mainActivityViewModel.setCanGoToPiP(false)
-                        AddNewRecipePage(steps = dummySteps, saveRecipe = { recipe, steps ->
-                            lifecycleScope.launch {
-                                val idOfRecipe = db.recipeDao().insertRecipe(recipe)
-                                db.stepDao()
-                                    .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
-
-                            }
-                            navController.navigate(
-                                "list",
                             )
-                        })
+                        }
+                        composable(
+                            "recipe/{recipeId}",
+                            arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
+                        ) { backStackEntry ->
+                            val recipeId = backStackEntry.arguments?.getInt("recipeId")
+                                ?: throw IllegalStateException("No Recipe ID")
+                            mainActivityViewModel.setCanGoToPiP(true)
+                            RecipeTimerPage(
+                                recipeId = recipeId,
+                                onRecipeEnd = { recipe ->
+                                    lifecycleScope.launch {
+                                        db.recipeDao()
+                                            .updateRecipe(recipe.copy(lastFinished = Date().time))
+                                    }
+                                }
+                            )
+                        }
+                        composable("add_recipe") {
+                            mainActivityViewModel.setCanGoToPiP(false)
+                            AddNewRecipePage(steps = dummySteps, saveRecipe = { recipe, steps ->
+                                lifecycleScope.launch {
+                                    val idOfRecipe = db.recipeDao().insertRecipe(recipe)
+                                    db.stepDao()
+                                        .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
+
+                                }
+                                navController.navigate(
+                                    "list",
+                                )
+                            })
+                        }
                     }
                 }
             }
