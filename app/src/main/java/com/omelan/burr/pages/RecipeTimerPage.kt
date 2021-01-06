@@ -7,16 +7,20 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import com.omelan.burr.MainActivityViewModel
+import com.omelan.burr.R
 import com.omelan.burr.components.Description
 import com.omelan.burr.components.StepListItem
 import com.omelan.burr.components.StepProgress
@@ -54,10 +58,12 @@ fun RecipeTimerPage(
     }
     val animatedProgressValue = animatedFloat(0f)
     val animatedProgressColor = animatedColor(Color.DarkGray)
+    var isAnimationRunning by remember { mutableStateOf(false) }
 
     fun pauseAnimations() {
         animatedProgressColor.stop()
         animatedProgressValue.stop()
+        isAnimationRunning = false
     }
 
     fun changeToNextStep() {
@@ -76,6 +82,7 @@ fun RecipeTimerPage(
         if (currentStep == null) {
             return
         }
+        isAnimationRunning = true
         val duration = (currentStep.time - (currentStep.time * animatedProgressValue.value)).toInt()
         animatedProgressColor.animateTo(
             targetValue = currentStep.type.getColor(),
@@ -134,21 +141,24 @@ fun RecipeTimerPage(
                         Button(
                             modifier = Modifier.animateContentSize()
                                 .align(Alignment.CenterHorizontally),
-                            onClick = {
-                                if (currentStep != null) {
-                                    if (animatedProgressColor.isRunning &&
-                                        animatedProgressValue.isRunning
-                                    ) {
-                                        pauseAnimations()
-                                    } else {
-                                        startAnimations()
-                                    }
+                            onClick = if (currentStep != null) {
+                                if (isAnimationRunning) {
+                                    { pauseAnimations() }
                                 } else {
-                                    setCurrentStep(steps.value.first())
+                                    { startAnimations() }
                                 }
-                            },
+                            } else {
+                                { setCurrentStep(steps.value.first()) }
+                            }
                         ) {
-                            Text(text = "Start")
+                            Icon(
+                                imageVector = if (isAnimationRunning) {
+                                    vectorResource(id = R.drawable.ic_pause)
+                                } else {
+                                    Icons.Rounded.PlayArrow
+                                }
+                            )
+                            Text(text = if (isAnimationRunning) "Pause" else "Start")
                         }
                         Spacer(modifier = Modifier.height(25.dp))
                     }
