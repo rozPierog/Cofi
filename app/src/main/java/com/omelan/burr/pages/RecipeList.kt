@@ -1,5 +1,6 @@
 package com.omelan.burr.pages
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.FloatingActionButton
@@ -10,6 +11,7 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.viewModel
 import com.omelan.burr.components.RecipeItem
@@ -33,7 +35,14 @@ fun RecipeList(
                     onClick = addNewRecipe,
                     modifier = Modifier.navigationBarsPadding()
                 ) {
-                    Icon(Icons.Rounded.Add)
+                    Icon(
+                        imageVector = Icons.Rounded.Add,
+                        tint = if (isSystemInDarkTheme()) {
+                            Color.Black
+                        } else {
+                            Color.White
+                        }
+                    )
                 }
             },
         ) {

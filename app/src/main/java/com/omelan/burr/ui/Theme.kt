@@ -5,19 +5,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import dev.chrisbanes.accompanist.insets.ExperimentalAnimatedInsets
 import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 
 private val DarkColorPalette = darkColors(
-    primary = brown200,
+    primary = brown300,
     primaryVariant = brown700,
-    secondary = teal200
+    secondary = greyBlue600
 )
 
 private val LightColorPalette = lightColors(
     primary = brown500,
     primaryVariant = brown700,
-    secondary = teal200
+    secondary = greyBlue600
 
     /* Other default colors to override
     background = Color.White,
@@ -31,7 +30,7 @@ private val LightColorPalette = lightColors(
 
 
 @Composable
-fun BurrTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+fun BurrTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
