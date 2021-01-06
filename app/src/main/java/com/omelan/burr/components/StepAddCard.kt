@@ -16,7 +16,6 @@ import com.omelan.burr.model.StepType
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.ui.full
 import com.omelan.burr.ui.shapes
-import kotlin.random.Random
 
 @ExperimentalLayout
 @Composable

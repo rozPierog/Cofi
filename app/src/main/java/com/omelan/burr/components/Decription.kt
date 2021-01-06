@@ -24,6 +24,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.burr.ui.BurrTheme
+import com.omelan.burr.ui.card
+import com.omelan.burr.ui.shapes
 
 
 @Composable
@@ -44,7 +46,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
         )
     }
     BurrTheme {
-        Card(modifier = modifier) {
+        Card(modifier = modifier, shape = shapes.card) {
             Column(
                 modifier = Modifier.animateContentSize().clickable(
                     onClick = if (isExpanded) {

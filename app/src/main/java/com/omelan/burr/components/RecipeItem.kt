@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import com.omelan.burr.R
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.ui.BurrTheme
+import com.omelan.burr.ui.card
+import com.omelan.burr.ui.shapes
 
 @Composable
 fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
@@ -23,8 +25,9 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
     }
     BurrTheme {
         Card(
-            elevation = 5.dp,
-            modifier = Modifier.padding(10.dp),
+            elevation = 2.dp,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+            shape = shapes.card,
         )
         {
             Row(

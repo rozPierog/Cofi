@@ -12,3 +12,6 @@ val shapes = Shapes(
 
 val Shapes.full: RoundedCornerShape
     get() = RoundedCornerShape(percent = 50)
+
+val Shapes.card: RoundedCornerShape
+    get() = RoundedCornerShape(14.dp)

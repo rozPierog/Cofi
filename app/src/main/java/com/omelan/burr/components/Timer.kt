@@ -33,7 +33,11 @@ fun Timer(
     animatedProgressColor: AnimatedValue<Color, AnimationVector4D>,
     isInPiP: Boolean,
 ) {
-    val strokeWidth = if (isInPiP) 15.dp else 25.dp
+    val strokeWidth = if (isInPiP) {
+        15.dp
+    } else {
+        25.dp
+    }
     BurrTheme {
 
         Box(
@@ -74,7 +78,11 @@ fun Timer(
                     }
                     Text(
                         text = durationInString,
-                        style = MaterialTheme.typography.h6,
+                        style = if (isInPiP) {
+                            MaterialTheme.typography.subtitle1
+                        } else {
+                            MaterialTheme.typography.h6
+                        },
                         color = MaterialTheme.colors.onSurface,
                         modifier = Modifier.align(
                             Alignment.CenterHorizontally
@@ -86,7 +94,11 @@ fun Timer(
                     Text(
                         text = "${currentStep.name} (${currentStep.time / 1000}s)",
                         color = MaterialTheme.colors.onSurface,
-                        style = MaterialTheme.typography.subtitle1,
+                        style = if (isInPiP) {
+                            MaterialTheme.typography.subtitle2
+                        } else {
+                            MaterialTheme.typography.subtitle1
+                        },
                         modifier = Modifier.align(
                             Alignment.CenterHorizontally
                         )
@@ -102,7 +114,12 @@ fun Timer(
                             color = MaterialTheme.colors.onSurface,
                             modifier = Modifier.align(
                                 Alignment.CenterHorizontally
-                            ), style = MaterialTheme.typography.h5
+                            ),
+                            style = if (isInPiP) {
+                                MaterialTheme.typography.h6
+                            } else {
+                                MaterialTheme.typography.h5
+                            },
                         )
                     }
 
@@ -121,5 +138,23 @@ fun TimerPreview() {
         animatedProgressValue = animatedFloat(initVal = 0.5f),
         animatedProgressColor = animatedColor(initVal = green600),
         isInPiP = false,
+    )
+}
+
+@ExperimentalTime
+@Preview
+@Composable
+fun TimerPreviewPiP() {
+    Timer(
+        currentStep = Step(
+            id = 1,
+            name = "Stir",
+            time = 5 * 1000,
+            type = StepType.WATER,
+            value = 300
+        ),
+        animatedProgressValue = animatedFloat(initVal = 0.5f),
+        animatedProgressColor = animatedColor(initVal = green600),
+        isInPiP = true,
     )
 }
