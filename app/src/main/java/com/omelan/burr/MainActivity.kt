@@ -5,47 +5,26 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Rational
-import android.view.View
-import android.view.WindowInsetsController
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayout
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.omelan.burr.components.PiPAwareAppBar
-import com.omelan.burr.components.RecipeList
 import com.omelan.burr.model.AppDatabase
 import com.omelan.burr.model.dummySteps
 import com.omelan.burr.pages.AddNewRecipePage
+import com.omelan.burr.pages.RecipeList
 import com.omelan.burr.pages.RecipeTimerPage
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.utils.SystemUIHelpers
-import com.omelan.burr.utils.pixelsToDp
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.time.ExperimentalTime
 
@@ -56,19 +35,7 @@ class MainActivity : AppCompatActivity() {
     @ExperimentalLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setOnApplyWindowInsetsListener(window.decorView) { _, insets ->
-            mainActivityViewModel.setStatusBarHeight(
-                insets.systemWindowInsetTop.pixelsToDp(
-                    resources
-                )
-            )
-            mainActivityViewModel.setNavBarHeight(
-                insets.systemWindowInsetBottom.pixelsToDp(
-                    resources
-                )
-            )
-            insets.consumeSystemWindowInsets()
-        }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         SystemUIHelpers.setSystemBarsColors(view = window.decorView, resources)
         setContent {
             MainNavigation()
