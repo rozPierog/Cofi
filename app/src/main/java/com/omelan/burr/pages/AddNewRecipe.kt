@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.WithConstraints
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.burr.components.StepAddCard
@@ -31,68 +32,76 @@ fun AddNewRecipePage(steps: List<Step> = listOf(), saveRecipe: (Recipe, List<Ste
     val (editedSteps, setEditedSteps) = remember { mutableStateOf(steps) }
     val (stepCurrentlyEdited, setStepCurrentlyEdited) = remember { mutableStateOf<Step?>(null) }
     BurrTheme {
-        ScrollableColumn(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
-            Column(modifier = Modifier.padding(16.dp).animateContentSize()) {
-                OutlinedTextField(
-                    value = recipeName,
-                    onValueChange = { setRecipeName(it) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    label = { Text(text = "Name") },
-                )
-                OutlinedTextField(
-                    value = recipeDescription,
-                    onValueChange = { setRecipeDescription(it) },
-                    modifier = Modifier.fillMaxWidth(),
-                    label = { Text(text = "Description") },
-                )
-                editedSteps.forEach { step ->
-                    if (stepCurrentlyEdited == step) {
-                        val indexOfThisStep = editedSteps.indexOf(step)
-                        StepAddCard(stepToEdit = step,
-                            save = { stepToSave ->
-                                setEditedSteps(
-                                    editedSteps.mapIndexed { index, step ->
-                                        if (index == indexOfThisStep) {
-                                            stepToSave
-                                        } else {
-                                            step
-                                        }
-                                    }
-                                )
-                            })
-                    } else {
-                        StepListItem(
-                            step = step,
-                            stepProgress = StepProgress.Upcoming,
-                            onClick = { clickedStep ->
-                                setStepCurrentlyEdited(clickedStep)
-                            })
-                    }
-                }
-                if (stepCurrentlyEdited == null) {
-                    StepAddCard(save = { stepToSave ->
-                        setEditedSteps(
-                            listOf(
-                                *editedSteps.toTypedArray(),
-                                stepToSave
-                            )
-                        )
-                    })
-                }
-                Button(onClick = {
-                    saveRecipe(
-                        Recipe(
-                            name = recipeName,
-                            description = recipeDescription,
-                        ),
-                        editedSteps
+        WithConstraints {
+            ScrollableColumn(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                contentPadding = PaddingValues(bottom = maxHeight / 2)
+            ) {
+                Column(modifier = Modifier.padding(16.dp).animateContentSize()) {
+                    OutlinedTextField(
+                        value = recipeName,
+                        onValueChange = { setRecipeName(it) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        label = { Text(text = "Name") },
                     )
-                },
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 5.dp)) {
-                    Text(text = "Save this recipe")
-                }
+                    OutlinedTextField(
+                        value = recipeDescription,
+                        onValueChange = { setRecipeDescription(it) },
+                        modifier = Modifier.fillMaxWidth(),
+                        label = { Text(text = "Description") },
+                    )
+                    editedSteps.forEach { step ->
+                        if (stepCurrentlyEdited == step) {
+                            val indexOfThisStep = editedSteps.indexOf(step)
+                            StepAddCard(stepToEdit = step,
+                                save = { stepToSave ->
+                                    setEditedSteps(
+                                        editedSteps.mapIndexed { index, step ->
+                                            if (index == indexOfThisStep) {
+                                                stepToSave
+                                            } else {
+                                                step
+                                            }
+                                        }
+                                    )
+                                })
+                        } else {
+                            StepListItem(
+                                step = step,
+                                stepProgress = StepProgress.Upcoming,
+                                onClick = { clickedStep ->
+                                    setStepCurrentlyEdited(clickedStep)
+                                })
+                        }
+                    }
+                    if (stepCurrentlyEdited == null) {
+                        StepAddCard(save = { stepToSave ->
+                            setEditedSteps(
+                                listOf(
+                                    *editedSteps.toTypedArray(),
+                                    stepToSave
+                                )
+                            )
+                        })
+                    }
+                    Button(
+                        onClick = {
+                            saveRecipe(
+                                Recipe(
+                                    name = recipeName,
+                                    description = recipeDescription,
+                                ),
+                                editedSteps
+                            )
+                        },
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                            .padding(vertical = 5.dp)
+                    ) {
+                        Text(text = "Save this recipe")
+                    }
 
+                }
             }
         }
     }
