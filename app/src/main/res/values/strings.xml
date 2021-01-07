@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Burr</string>
-    <string name="title_activity_main2">My Compose App</string>
     <string name="step_type_add_coffee">Add coffee</string>
     <string name="step_type_water">Add water</string>
     <string name="step_type_wait">Wait</string>
@@ -13,4 +12,6 @@
     <string name="recipe_edit_description">Description</string>
     <string name="recipe_edit_title">Edit recipe</string>
     <string name="recipe_add_new_title">Create new recipe</string>
+    <string name="recipe_details_button_start">Start</string>
+    <string name="recipe_details_button_pause">Stop</string>
 </resources>
