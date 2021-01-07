@@ -66,10 +66,8 @@ class MainActivity : AppCompatActivity() {
         //         popExit = android.R.anim.fade_out
         //     }
         // }
-        val goBack = {
-            navController.navigate(
-                route = "list",
-            )
+        val goBack: () -> Unit = {
+            navController.popBackStack()
         }
         BurrTheme {
             Providers(AmbientPiPState provides isInPiP.value) {
@@ -144,9 +142,7 @@ class MainActivity : AppCompatActivity() {
                                         db.recipeDao().updateRecipe(_recipe)
                                         db.stepDao().updateSteps(_steps)
                                     }
-                                    navController.navigate(
-                                        route = "recipe/${recipeId}",
-                                    )
+                                    goBack()
                                 },
                                 deleteRecipe = {
                                     lifecycleScope.launch {
@@ -167,9 +163,7 @@ class MainActivity : AppCompatActivity() {
                                             .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
 
                                     }
-                                    navController.navigate(
-                                        "list",
-                                    )
+                                    goBack()
                                 },
                                 stepsToEdit = dummySteps,
                                 goBack = goBack,
