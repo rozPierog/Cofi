@@ -14,4 +14,6 @@
     <string name="recipe_add_new_title">Create new recipe</string>
     <string name="recipe_details_button_start">Start</string>
     <string name="recipe_details_button_pause">Stop</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
 </resources>

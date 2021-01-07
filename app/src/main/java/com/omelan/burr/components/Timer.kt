@@ -15,11 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.omelan.burr.R
 import com.omelan.burr.model.Step
 import com.omelan.burr.model.StepType
-import com.omelan.burr.ui.*
+import com.omelan.burr.ui.BurrTheme
+import com.omelan.burr.ui.green600
+import com.omelan.burr.ui.grey300
+import com.omelan.burr.ui.grey600
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
@@ -92,7 +97,11 @@ fun Timer(
                         color = MaterialTheme.colors.onSurface,
                     )
                     Text(
-                        text = "${currentStep.name} (${currentStep.time / 1000}s)",
+                        text = stringResource(
+                            id = R.string.timer_step_name_time,
+                            currentStep.name,
+                            currentStep.time / 1000
+                        ),
                         color = MaterialTheme.colors.onSurface,
                         style = if (isInPiP) {
                             MaterialTheme.typography.subtitle2
@@ -110,7 +119,11 @@ fun Timer(
                             color = MaterialTheme.colors.onSurface,
                         )
                         Text(
-                            text = "${currentValueFromProgress}g/${it}g",
+                            text = stringResource(
+                                id = R.string.timer_progress_weight,
+                                currentValueFromProgress,
+                                it
+                            ),
                             color = MaterialTheme.colors.onSurface,
                             modifier = Modifier.align(
                                 Alignment.CenterHorizontally
