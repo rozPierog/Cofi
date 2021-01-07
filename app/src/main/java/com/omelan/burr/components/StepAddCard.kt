@@ -17,6 +17,7 @@ import com.omelan.burr.model.StepType
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.ui.full
 import com.omelan.burr.ui.shapes
+import com.omelan.burr.R
 
 @ExperimentalLayout
 @Composable
@@ -61,11 +62,11 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                 }
                 if (pickedType != null) {
                     OutlinedTextField(
-                        label = { Text(text = "Name") },
+                        label = { Text(text = stringResource(id = R.string.step_add_name)) },
                         value = stepName,
                         onValueChange = { setStepName(it) })
                     OutlinedTextField(
-                        label = { Text(text = "Time") },
+                        label = { Text(text = stringResource(id = R.string.step_add_duration)) },
                         value = stepTime.toStringFromMillis(),
                         onValueChange = { setStepTime(it.toMillisValue()) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -77,7 +78,7 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                         ).contains(pickedType)
                     ) {
                         OutlinedTextField(
-                            label = { Text(text = "Value") },
+                            label = { Text(text = stringResource(id = R.string.step_add_weight)) },
                             value = stepValue.toString(),
                             onValueChange = { setStepValue(it.safeToInt()) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -97,7 +98,7 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                         },
                         modifier = Modifier.padding(vertical = 15.dp)
                     ) {
-                        Text(text = "Save and add next")
+                        Text(text = stringResource(id = R.string.step_add_save))
                     }
                 }
             }
