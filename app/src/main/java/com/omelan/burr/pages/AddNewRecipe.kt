@@ -18,7 +18,6 @@ import androidx.compose.ui.layout.WithConstraints
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.omelan.burr.AmbientPiPState
 import com.omelan.burr.R
 import com.omelan.burr.components.PiPAwareAppBar
 import com.omelan.burr.components.StepAddCard
@@ -39,9 +38,13 @@ fun AddNewRecipePage(
     recipeToEdit: Recipe = Recipe(name = "", description = ""),
     deleteRecipe: () -> Unit = {},
 ) {
-    val (recipeName, setRecipeName) = remember { mutableStateOf(recipeToEdit.name) }
-    val (recipeDescription, setRecipeDescription) = remember { mutableStateOf(recipeToEdit.description) }
-    val (editedSteps, setEditedSteps) = remember { mutableStateOf(stepsToEdit) }
+    val (recipeName, setRecipeName) = remember(v1 = recipeToEdit) { mutableStateOf(recipeToEdit.name) }
+    val (recipeDescription, setRecipeDescription) = remember(recipeToEdit) {
+        mutableStateOf(
+            recipeToEdit.description
+        )
+    }
+    val (editedSteps, setEditedSteps) = remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     val (stepCurrentlyEdited, setStepCurrentlyEdited) = remember { mutableStateOf<Step?>(null) }
     BurrTheme {
         Scaffold(topBar = {
@@ -57,10 +60,7 @@ fun AddNewRecipePage(
                     }
                     IconButton(onClick = {
                         saveRecipe(
-                            Recipe(
-                                name = recipeName,
-                                description = recipeDescription,
-                            ),
+                            recipeToEdit.copy(name = recipeName, description = recipeDescription),
                             editedSteps
                         )
                     }) {
