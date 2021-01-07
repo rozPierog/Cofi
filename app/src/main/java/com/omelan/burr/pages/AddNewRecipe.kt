@@ -46,7 +46,6 @@ fun AddNewRecipePage(
     BurrTheme {
         Scaffold(topBar = {
             PiPAwareAppBar(
-                isInPiP = AmbientPiPState.current,
                 navigationIcon = {
                     IconButton(onClick = goBack) {
                         Icon(Icons.Rounded.ArrowBack)

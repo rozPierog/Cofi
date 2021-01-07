@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.omelan.burr.AmbientPiPState
 import com.omelan.burr.R
 import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
@@ -17,7 +18,6 @@ import dev.chrisbanes.accompanist.insets.statusBarsPadding
 @Composable
 fun PiPAwareAppBar(
     modifier: Modifier = Modifier,
-    isInPiP: Boolean,
     title: @Composable () -> Unit = { Text(text = stringResource(id = R.string.app_name)) },
     navigationIcon: @Composable (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
@@ -25,7 +25,7 @@ fun PiPAwareAppBar(
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = 4.dp
 ) {
-    if (!isInPiP) {
+    if (!AmbientPiPState.current) {
         InsetAwareTopAppBar(
             title = title,
             modifier = modifier,
@@ -68,5 +68,5 @@ fun InsetAwareTopAppBar(
 @Composable
 @Preview
 fun PiPAwareAppBarPreview() {
-    PiPAwareAppBar(isInPiP = false)
+    PiPAwareAppBar()
 }

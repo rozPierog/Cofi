@@ -105,7 +105,6 @@ fun RecipeTimerPage(
     BurrTheme {
         Scaffold(topBar = {
             PiPAwareAppBar(
-                isInPiP = AmbientPiPState.current,
                 title = {
                     Text(text = recipe.value.name)
                 },
