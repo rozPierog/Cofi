@@ -20,10 +20,22 @@ import com.omelan.burr.ui.shapes
 @ExperimentalLayout
 @Composable
 fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
-    val (pickedType, setPickedType) = remember { mutableStateOf<StepType?>(stepToEdit?.type) }
-    val (stepName, setStepName) = remember { mutableStateOf<String>(stepToEdit?.name ?: "") }
-    val (stepTime, setStepTime) = remember { mutableStateOf<Int>(stepToEdit?.time ?: 0) }
-    val (stepValue, setStepValue) = remember { mutableStateOf<Int>(stepToEdit?.value ?: 0) }
+    val (pickedType, setPickedType) = remember(stepToEdit) { mutableStateOf<StepType?>(stepToEdit?.type) }
+    val (stepName, setStepName) = remember(stepToEdit) {
+        mutableStateOf<String>(
+            stepToEdit?.name ?: ""
+        )
+    }
+    val (stepTime, setStepTime) = remember(stepToEdit) {
+        mutableStateOf<Int>(
+            stepToEdit?.time ?: 0
+        )
+    }
+    val (stepValue, setStepValue) = remember(stepToEdit) {
+        mutableStateOf<Int>(
+            stepToEdit?.value ?: 0
+        )
+    }
     BurrTheme {
         Card(
             shape = MaterialTheme.shapes.medium,
