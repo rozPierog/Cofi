@@ -39,7 +39,7 @@ fun RecipeTimerPage(
     recipeId: Int,
     isInPiP: Boolean = AmbientPiPState.current,
     onRecipeEnd: (Recipe) -> Unit = {},
-    goToEdit: (Recipe) -> Unit = {},
+    goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
@@ -115,7 +115,7 @@ fun RecipeTimerPage(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {  goToEdit(recipe.value) }) {
+                    IconButton(onClick = goToEdit) {
                         Icon(Icons.Rounded.Edit)
                     }
                 },

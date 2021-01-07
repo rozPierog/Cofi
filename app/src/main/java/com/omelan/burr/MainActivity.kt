@@ -14,12 +14,12 @@ import androidx.compose.runtime.Providers
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.staticAmbientOf
 import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.viewinterop.viewModel
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
-import com.omelan.burr.model.AppDatabase
-import com.omelan.burr.model.dummySteps
+import com.omelan.burr.model.*
 import com.omelan.burr.pages.AddNewRecipePage
 import com.omelan.burr.pages.RecipeList
 import com.omelan.burr.pages.RecipeTimerPage
@@ -66,6 +66,11 @@ class MainActivity : AppCompatActivity() {
         //         popExit = android.R.anim.fade_out
         //     }
         // }
+        val goBack = {
+            navController.navigate(
+                route = "list",
+            )
+        }
         BurrTheme {
             Providers(AmbientPiPState provides isInPiP.value) {
                 Column {
@@ -105,17 +110,56 @@ class MainActivity : AppCompatActivity() {
                                             .updateRecipe(recipe.copy(lastFinished = Date().time))
                                     }
                                 },
+                                goBack = goBack,
+                                goToEdit = {
+                                    navController.navigate(
+                                        route = "edit/${recipeId}",
+                                    )
+                                }
+                            )
+                        }
+                        composable(
+                            "edit/{recipeId}",
+                            arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
+                        ) { backStackEntry ->
+                            val recipeId = backStackEntry.arguments?.getInt("recipeId")
+                                ?: throw IllegalStateException("No Recipe ID")
+                            mainActivityViewModel.setCanGoToPiP(false)
+                            val recipeViewModel: RecipeViewModel = viewModel()
+                            val stepsViewModel: StepsViewModel = viewModel()
+                            val recipe = recipeViewModel.getRecipe(recipeId)
+                                .observeAsState(Recipe(name = "", description = ""))
+                            val steps = stepsViewModel.getAllStepsForRecipe(recipeId)
+                                .observeAsState(listOf())
+                            AddNewRecipePage(
                                 goBack = {
                                     navController.navigate(
-                                        route = "list",
+                                        route = "recipe/${recipeId}",
                                     )
                                 },
+                                recipeToEdit = recipe.value,
+                                stepsToEdit = steps.value,
+                                saveRecipe = { _recipe, _steps ->
+                                    lifecycleScope.launch {
+                                        db.recipeDao().updateRecipe(_recipe)
+                                        db.stepDao().updateSteps(_steps)
+                                    }
+                                    navController.navigate(
+                                        route = "recipe/${recipeId}",
+                                    )
+                                },
+                                deleteRecipe = {
+                                    lifecycleScope.launch {
+                                        db.recipeDao().deleteById(recipeId = recipeId)
+                                        db.stepDao().deleteAllStepsForRecipe(recipeId = recipeId)
+                                    }
+                                    goBack()
+                                }
                             )
                         }
                         composable("add_recipe") {
                             mainActivityViewModel.setCanGoToPiP(false)
                             AddNewRecipePage(
-                                steps = dummySteps,
                                 saveRecipe = { recipe, steps ->
                                     lifecycleScope.launch {
                                         val idOfRecipe = db.recipeDao().insertRecipe(recipe)
@@ -127,11 +171,8 @@ class MainActivity : AppCompatActivity() {
                                         "list",
                                     )
                                 },
-                                goBack = {
-                                    navController.navigate(
-                                        route = "list",
-                                    )
-                                },
+                                stepsToEdit = dummySteps,
+                                goBack = goBack,
                             )
                         }
                         composable("settings") {

@@ -41,7 +41,7 @@ class StepTypeConverter {
     }
 
     @TypeConverter
-    fun stringToStepType(type:String): StepType {
+    fun stringToStepType(type: String): StepType {
         return when (type) {
             StepType.ADD_COFFEE.name -> StepType.ADD_COFFEE
             StepType.WATER.name -> StepType.WATER
@@ -55,7 +55,7 @@ class StepTypeConverter {
 @Entity
 data class Step(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val recipeId: Int = 0,
+    @ColumnInfo(name = "recipe_id") val recipeId: Int = 0,
     val name: String,
     val time: Int,
     val type: StepType,
@@ -71,7 +71,7 @@ interface StepDao {
     suspend fun getAll(): List<Step>
 
     @WorkerThread
-    @Query("SELECT * FROM step WHERE recipeId IS :recipeId")
+    @Query("SELECT * FROM step WHERE recipe_id IS :recipeId")
     fun getStepsForRecipe(recipeId: Int): LiveData<List<Step>>
 
     @WorkerThread
@@ -85,6 +85,12 @@ interface StepDao {
     @WorkerThread
     @Delete
     suspend fun delete(step: Step)
+
+    @Update
+    suspend fun updateSteps(steps: List<Step>)
+
+    @Query("DELETE FROM step WHERE recipe_id = :recipeId")
+    suspend fun deleteAllStepsForRecipe(recipeId: Int)
 }
 
 class StepsViewModel(application: Application) : AndroidViewModel(application) {

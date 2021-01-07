@@ -1,7 +1,10 @@
 package com.omelan.burr.pages
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.ExperimentalLayout
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -23,7 +26,6 @@ import com.omelan.burr.components.StepListItem
 import com.omelan.burr.components.StepProgress
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.model.Step
-import com.omelan.burr.model.dummySteps
 import com.omelan.burr.ui.BurrTheme
 import kotlin.time.ExperimentalTime
 
@@ -31,13 +33,15 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 @Composable
 fun AddNewRecipePage(
-    steps: List<Step> = listOf(),
     saveRecipe: (Recipe, List<Step>) -> Unit,
     goBack: () -> Unit = {},
+    stepsToEdit: List<Step> = listOf(),
+    recipeToEdit: Recipe = Recipe(name = "", description = ""),
+    deleteRecipe: () -> Unit = {},
 ) {
-    val (recipeName, setRecipeName) = remember { mutableStateOf("") }
-    val (recipeDescription, setRecipeDescription) = remember { mutableStateOf("") }
-    val (editedSteps, setEditedSteps) = remember { mutableStateOf(steps) }
+    val (recipeName, setRecipeName) = remember { mutableStateOf(recipeToEdit.name) }
+    val (recipeDescription, setRecipeDescription) = remember { mutableStateOf(recipeToEdit.description) }
+    val (editedSteps, setEditedSteps) = remember { mutableStateOf(stepsToEdit) }
     val (stepCurrentlyEdited, setStepCurrentlyEdited) = remember { mutableStateOf<Step?>(null) }
     BurrTheme {
         Scaffold(topBar = {
@@ -49,27 +53,8 @@ fun AddNewRecipePage(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {
-                        saveRecipe(
-                            Recipe(
-                                name = recipeName,
-                                description = recipeDescription,
-                            ),
-                            editedSteps
-                        )
-                    }) {
+                    IconButton(onClick = deleteRecipe) {
                         Icon(Icons.Rounded.Delete)
-                    }
-                    IconButton(onClick = {
-                        saveRecipe(
-                            Recipe(
-                                name = recipeName,
-                                description = recipeDescription,
-                            ),
-                            editedSteps
-                        )
-                    }) {
-                        Icon(vectorResource(id = R.drawable.ic_close))
                     }
                     IconButton(onClick = {
                         saveRecipe(
@@ -160,5 +145,5 @@ fun AddNewRecipePage(
 @Preview
 @Composable
 fun AddNewRecipePreview() {
-    AddNewRecipePage(steps = dummySteps, saveRecipe = { _, _ -> })
+    AddNewRecipePage(saveRecipe = { _, _ -> })
 }

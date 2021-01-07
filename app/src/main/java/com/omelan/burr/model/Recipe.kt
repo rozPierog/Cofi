@@ -81,8 +81,8 @@ interface RecipeDao {
     @Update
     suspend fun updateRecipe(recipe: Recipe)
 
-    @Delete
-    suspend fun delete(recipe: Recipe)
+    @Query("DELETE FROM recipe WHERE id = :recipeId")
+    suspend fun deleteById(recipeId: Int)
 }
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
