@@ -1,10 +1,7 @@
 package com.omelan.burr.pages
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.ExperimentalLayout
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -27,6 +24,8 @@ import com.omelan.burr.components.StepProgress
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.model.Step
 import com.omelan.burr.ui.BurrTheme
+import com.omelan.burr.ui.card
+import com.omelan.burr.ui.shapes
 import kotlin.time.ExperimentalTime
 
 @ExperimentalLayout
@@ -40,6 +39,7 @@ fun RecipeEdit(
     deleteRecipe: () -> Unit = {},
     isEditing: Boolean = false,
 ) {
+    val showDeleteModal = remember { mutableStateOf(false) }
     val name = remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
     val description = remember(recipeToEdit) {
         mutableStateOf(
@@ -58,7 +58,7 @@ fun RecipeEdit(
                 },
                 actions = {
                     if (isEditing) {
-                        IconButton(onClick = deleteRecipe) {
+                        IconButton(onClick = { showDeleteModal.value = true }) {
                             Icon(Icons.Rounded.Delete)
                         }
                     }
@@ -152,6 +152,36 @@ fun RecipeEdit(
                         }
                     }
                 }
+            }
+            if (showDeleteModal.value && isEditing) {
+                AlertDialog(
+                    onDismissRequest = { showDeleteModal.value = false },
+                    shape = shapes.card,
+                    buttons = {
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(15.dp)
+                        ) {
+                            TextButton(onClick = { showDeleteModal.value = false }) {
+                                Text(text = stringResource(id =R.string.button_cancel))
+                            }
+                            TextButton(onClick = {
+                                deleteRecipe()
+                            }) {
+                                Text(text = stringResource(id =R.string.button_delete))
+                            }
+
+                        }
+                    },
+                    title = {
+                        Text(text = stringResource(id =R.string.step_delete_title))
+                    },
+                    text = {
+                        Text(text = stringResource(id = R.string.step_delete_text))
+                    },
+                )
             }
         }
     }

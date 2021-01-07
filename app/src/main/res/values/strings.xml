@@ -8,6 +8,8 @@
     <string name="step_add_duration">Duration (s)</string>
     <string name="step_add_weight">Weight (g)</string>
     <string name="step_add_save">Save and add next</string>
+    <string name="step_delete_title">Are you sure?</string>
+    <string name="step_delete_text">This will remove this recipe permanatly</string>
     <string name="recipe_edit_name">Name</string>
     <string name="recipe_edit_description">Description</string>
     <string name="recipe_edit_title">Edit recipe</string>
@@ -16,4 +18,6 @@
     <string name="recipe_details_button_pause">Stop</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_delete">Delete</string>
 </resources>
