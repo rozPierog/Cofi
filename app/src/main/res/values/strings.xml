@@ -9,4 +9,8 @@
     <string name="step_add_duration">Duration</string>
     <string name="step_add_weight">Weight</string>
     <string name="step_add_save">Save and add next</string>
+    <string name="recipe_edit_name">Name</string>
+    <string name="recipe_edit_description">Description</string>
+    <string name="recipe_edit_title">Edit recipe</string>
+    <string name="recipe_add_new_title">Create new recipe</string>
 </resources>

@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.WithConstraints
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -67,7 +68,15 @@ fun RecipeEdit(
                         Icon(vectorResource(id = R.drawable.ic_save))
                     }
                 },
-                title = { Text(text = "Create new recipe") })
+                title = {
+                    Text(
+                        text = if (recipeToEdit.id != 0) {
+                            stringResource(id = R.string.recipe_edit_title)
+                        } else {
+                            stringResource(id = R.string.recipe_add_new_title)
+                        }
+                    )
+                })
         }) {
             WithConstraints {
                 LazyColumn(
@@ -86,7 +95,7 @@ fun RecipeEdit(
                             onValueChange = { setRecipeName(it) },
                             modifier = Modifier.fillMaxWidth(),
                             singleLine = true,
-                            label = { Text(text = "Name") },
+                            label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
                         )
                     }
                     item {
@@ -94,7 +103,9 @@ fun RecipeEdit(
                             value = recipeDescription,
                             onValueChange = { setRecipeDescription(it) },
                             modifier = Modifier.fillMaxWidth(),
-                            label = { Text(text = "Description") },
+                            label = {
+                                Text(text = stringResource(id = R.string.recipe_edit_description))
+                            },
                         )
                     }
                     items(editedSteps) { step ->
