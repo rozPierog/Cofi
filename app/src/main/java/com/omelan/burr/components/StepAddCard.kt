@@ -32,7 +32,7 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
     }
     val stepTime = remember(stepToEdit) {
         mutableStateOf<String>(
-            (stepToEdit?.time ?: 0).toString()
+            ((stepToEdit?.time ?: 0) / 1000).toString()
         )
     }
     val stepValue = remember(stepToEdit) {
