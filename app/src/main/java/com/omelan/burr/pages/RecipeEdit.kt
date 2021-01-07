@@ -39,14 +39,14 @@ fun RecipeEdit(
     recipeToEdit: Recipe = Recipe(name = "", description = ""),
     deleteRecipe: () -> Unit = {},
 ) {
-    val (recipeName, setRecipeName) = remember(v1 = recipeToEdit) { mutableStateOf(recipeToEdit.name) }
-    val (recipeDescription, setRecipeDescription) = remember(recipeToEdit) {
+    val name = remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
+    val description = remember(recipeToEdit) {
         mutableStateOf(
             recipeToEdit.description
         )
     }
-    val (editedSteps, setEditedSteps) = remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
-    val (stepCurrentlyEdited, setStepCurrentlyEdited) = remember { mutableStateOf<Step?>(null) }
+    val steps = remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
+    val stepWithOpenEditor = remember { mutableStateOf<Step?>(null) }
     BurrTheme {
         Scaffold(topBar = {
             PiPAwareAppBar(
@@ -61,8 +61,11 @@ fun RecipeEdit(
                     }
                     IconButton(onClick = {
                         saveRecipe(
-                            recipeToEdit.copy(name = recipeName, description = recipeDescription),
-                            editedSteps
+                            recipeToEdit.copy(
+                                name = name.value,
+                                description = description.value
+                            ),
+                            steps.value
                         )
                     }) {
                         Icon(vectorResource(id = R.drawable.ic_save))
@@ -80,7 +83,9 @@ fun RecipeEdit(
         }) {
             WithConstraints {
                 LazyColumn(
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
                         .background(color = MaterialTheme.colors.background),
                     contentPadding = PaddingValues(
                         bottom = maxHeight / 2,
@@ -91,8 +96,8 @@ fun RecipeEdit(
                 ) {
                     item {
                         OutlinedTextField(
-                            value = recipeName,
-                            onValueChange = { setRecipeName(it) },
+                            value = name.value,
+                            onValueChange = { name.value = it },
                             modifier = Modifier.fillMaxWidth(),
                             singleLine = true,
                             label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
@@ -100,47 +105,46 @@ fun RecipeEdit(
                     }
                     item {
                         OutlinedTextField(
-                            value = recipeDescription,
-                            onValueChange = { setRecipeDescription(it) },
+                            value = description.value,
+                            onValueChange = { description.value = it },
                             modifier = Modifier.fillMaxWidth(),
                             label = {
                                 Text(text = stringResource(id = R.string.recipe_edit_description))
                             },
                         )
                     }
-                    items(editedSteps) { step ->
-                        if (stepCurrentlyEdited == step) {
-                            val indexOfThisStep = editedSteps.indexOf(step)
+                    items(steps.value) { step ->
+                        if (stepWithOpenEditor.value == step) {
+                            val indexOfThisStep = steps.value.indexOf(step)
                             StepAddCard(stepToEdit = step,
                                 save = { stepToSave ->
-                                    setEditedSteps(
-                                        editedSteps.mapIndexed { index, step ->
+                                    steps.value =
+                                        steps.value.mapIndexed { index, step ->
                                             if (index == indexOfThisStep) {
                                                 stepToSave
                                             } else {
                                                 step
                                             }
                                         }
-                                    )
+
                                 })
                         } else {
                             StepListItem(
                                 step = step,
                                 stepProgress = StepProgress.Upcoming,
                                 onClick = { clickedStep ->
-                                    setStepCurrentlyEdited(clickedStep)
+                                    stepWithOpenEditor.value = clickedStep
                                 })
                         }
                     }
-                    if (stepCurrentlyEdited == null) {
+                    if (stepWithOpenEditor.value == null) {
                         item {
                             StepAddCard(save = { stepToSave ->
-                                setEditedSteps(
-                                    listOf(
-                                        *editedSteps.toTypedArray(),
-                                        stepToSave
-                                    )
+                                steps.value = listOf(
+                                    *steps.value.toTypedArray(),
+                                    stepToSave
                                 )
+
                             })
                         }
                     }
