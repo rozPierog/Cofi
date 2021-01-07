@@ -6,32 +6,45 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.omelan.burr.ui.*
+import com.omelan.burr.R
+import com.omelan.burr.ui.blue600
+import com.omelan.burr.ui.brown500
+import com.omelan.burr.ui.green600
+import com.omelan.burr.ui.greyBlue900
 
 
 enum class StepType {
     ADD_COFFEE {
-        override fun getColor(): Color {
-            return brown500
-        }
+        override val color: Color
+            get() = brown500
+
+        override val stringRes: Int
+            get() = R.string.step_type_add_coffee
     },
     WATER {
-        override fun getColor(): Color {
-            return blue600
-        }
+        override val color: Color
+            get() = blue600
+
+        override val stringRes: Int
+            get() = R.string.step_type_water
     },
     WAIT {
-        override fun getColor(): Color {
-            return green600
-        }
+        override val color: Color
+            get() = green600
+
+        override val stringRes: Int
+            get() = R.string.step_type_wait
     },
     OTHER {
-        override fun getColor(): Color {
-            return greyBlue900
-        }
+        override val color: Color
+            get() = greyBlue900
+
+        override val stringRes: Int
+            get() = R.string.step_type_other
     };
 
-    abstract fun getColor(): Color
+    abstract val color: Color
+    abstract val stringRes: Int
 }
 
 class StepTypeConverter {

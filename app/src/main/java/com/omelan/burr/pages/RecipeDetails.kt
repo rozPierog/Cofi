@@ -81,7 +81,7 @@ fun RecipeDetails(
         isAnimationRunning = true
         val duration = (currentStep.time - (currentStep.time * animatedProgressValue.value)).toInt()
         animatedProgressColor.animateTo(
-            targetValue = currentStep.type.getColor(),
+            targetValue = currentStep.type.color,
             anim = tween(durationMillis = duration, easing = LinearEasing),
         )
         animatedProgressValue.animateTo(
