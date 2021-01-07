@@ -5,8 +5,8 @@
     <string name="step_type_wait">Wait</string>
     <string name="step_type_other">Other</string>
     <string name="step_add_name">Name</string>
-    <string name="step_add_duration">Duration</string>
-    <string name="step_add_weight">Weight</string>
+    <string name="step_add_duration">Duration (s)</string>
+    <string name="step_add_weight">Weight (g)</string>
     <string name="step_add_save">Save and add next</string>
     <string name="recipe_edit_name">Name</string>
     <string name="recipe_edit_description">Description</string>
