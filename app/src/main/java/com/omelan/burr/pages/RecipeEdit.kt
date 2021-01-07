@@ -38,6 +38,7 @@ fun RecipeEdit(
     stepsToEdit: List<Step> = listOf(),
     recipeToEdit: Recipe = Recipe(name = "", description = ""),
     deleteRecipe: () -> Unit = {},
+    isEditing: Boolean = false,
 ) {
     val name = remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
     val description = remember(recipeToEdit) {
@@ -56,8 +57,10 @@ fun RecipeEdit(
                     }
                 },
                 actions = {
-                    IconButton(onClick = deleteRecipe) {
-                        Icon(Icons.Rounded.Delete)
+                    if (isEditing) {
+                        IconButton(onClick = deleteRecipe) {
+                            Icon(Icons.Rounded.Delete)
+                        }
                     }
                     IconButton(onClick = {
                         saveRecipe(
@@ -73,7 +76,7 @@ fun RecipeEdit(
                 },
                 title = {
                     Text(
-                        text = if (recipeToEdit.id != 0) {
+                        text = if (isEditing) {
                             stringResource(id = R.string.recipe_edit_title)
                         } else {
                             stringResource(id = R.string.recipe_add_new_title)

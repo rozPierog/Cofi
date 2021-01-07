@@ -130,11 +130,8 @@ class MainActivity : AppCompatActivity() {
                             val steps = stepsViewModel.getAllStepsForRecipe(recipeId)
                                 .observeAsState(listOf())
                             RecipeEdit(
-                                goBack = {
-                                    navController.navigate(
-                                        route = "recipe/${recipeId}",
-                                    )
-                                },
+                                goBack = goBack,
+                                isEditing = true,
                                 recipeToEdit = recipe.value,
                                 stepsToEdit = steps.value,
                                 saveRecipe = { _recipe, _steps ->
@@ -149,7 +146,11 @@ class MainActivity : AppCompatActivity() {
                                         db.recipeDao().deleteById(recipeId = recipeId)
                                         db.stepDao().deleteAllStepsForRecipe(recipeId = recipeId)
                                     }
-                                    goBack()
+                                    navController.navigate("list") {
+                                        this.popUpTo("list") {
+                                            inclusive = true
+                                        }
+                                    }
                                 }
                             )
                         }
