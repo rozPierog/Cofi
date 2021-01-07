@@ -35,7 +35,7 @@ import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 @Composable
-fun RecipeTimerPage(
+fun RecipeDetails(
     recipeId: Int,
     isInPiP: Boolean = AmbientPiPState.current,
     onRecipeEnd: (Recipe) -> Unit = {},
@@ -203,13 +203,13 @@ fun RecipeTimerPage(
 @ExperimentalTime
 @Preview(showBackground = true)
 @Composable
-fun RecipeTimerPagePreview() {
-    RecipeTimerPage(recipeId = 1, isInPiP = false)
+fun RecipeDetailsPreview() {
+    RecipeDetails(recipeId = 1, isInPiP = false)
 }
 
 @ExperimentalTime
 @Preview(showBackground = true)
 @Composable
-fun RecipeTimerPagePreviewPip() {
-    RecipeTimerPage(recipeId = 1, isInPiP = true)
+fun RecipeDetailsPreviewPip() {
+    RecipeDetails(recipeId = 1, isInPiP = true)
 }

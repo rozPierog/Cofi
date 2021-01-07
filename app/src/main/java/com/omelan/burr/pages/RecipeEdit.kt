@@ -31,7 +31,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalLayout
 @ExperimentalTime
 @Composable
-fun AddNewRecipePage(
+fun RecipeEdit(
     saveRecipe: (Recipe, List<Step>) -> Unit,
     goBack: () -> Unit = {},
     stepsToEdit: List<Step> = listOf(),
@@ -143,6 +143,6 @@ fun AddNewRecipePage(
 @ExperimentalTime
 @Preview
 @Composable
-fun AddNewRecipePreview() {
-    AddNewRecipePage(saveRecipe = { _, _ -> })
+fun RecipeEditPreview() {
+    RecipeEdit(saveRecipe = { _, _ -> })
 }

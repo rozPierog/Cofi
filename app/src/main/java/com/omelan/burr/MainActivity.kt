@@ -20,10 +20,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.omelan.burr.model.*
-import com.omelan.burr.pages.AddNewRecipePage
+import com.omelan.burr.pages.RecipeEdit
 import com.omelan.burr.pages.RecipeList
-import com.omelan.burr.pages.RecipeTimerPage
-import com.omelan.burr.pages.SettingsPage
+import com.omelan.burr.pages.RecipeDetails
+import com.omelan.burr.pages.AppSettings
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.utils.SystemUIHelpers
 import kotlinx.coroutines.launch
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                             val recipeId = backStackEntry.arguments?.getInt("recipeId")
                                 ?: throw IllegalStateException("No Recipe ID")
                             mainActivityViewModel.setCanGoToPiP(true)
-                            RecipeTimerPage(
+                            RecipeDetails(
                                 recipeId = recipeId,
                                 onRecipeEnd = { recipe ->
                                     lifecycleScope.launch {
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
                                 .observeAsState(Recipe(name = "", description = ""))
                             val steps = stepsViewModel.getAllStepsForRecipe(recipeId)
                                 .observeAsState(listOf())
-                            AddNewRecipePage(
+                            RecipeEdit(
                                 goBack = {
                                     navController.navigate(
                                         route = "recipe/${recipeId}",
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         composable("add_recipe") {
                             mainActivityViewModel.setCanGoToPiP(false)
-                            AddNewRecipePage(
+                            RecipeEdit(
                                 saveRecipe = { recipe, steps ->
                                     lifecycleScope.launch {
                                         val idOfRecipe = db.recipeDao().insertRecipe(recipe)
@@ -165,12 +165,11 @@ class MainActivity : AppCompatActivity() {
                                     }
                                     goBack()
                                 },
-                                stepsToEdit = dummySteps,
                                 goBack = goBack,
                             )
                         }
                         composable("settings") {
-                            SettingsPage(
+                            AppSettings(
                                 goBack = {
                                     navController.navigate(
                                         route = "list",
