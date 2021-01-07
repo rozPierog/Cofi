@@ -36,7 +36,7 @@ fun RecipeList(
     BurrTheme {
         Scaffold(
             topBar = {
-                PiPAwareAppBar(isInPiP = AmbientPiPState.current, actions = {
+                PiPAwareAppBar(actions = {
                     IconButton(onClick = goToSettings) {
                         Icon(Icons.Rounded.Settings)
                     }
