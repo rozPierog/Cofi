@@ -19,8 +19,13 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
-import com.omelan.burr.model.*
-import com.omelan.burr.pages.*
+import com.omelan.burr.model.AppDatabase
+import com.omelan.burr.model.Recipe
+import com.omelan.burr.model.RecipeViewModel
+import com.omelan.burr.model.StepsViewModel
+import com.omelan.burr.pages.RecipeDetails
+import com.omelan.burr.pages.RecipeEdit
+import com.omelan.burr.pages.RecipeList
 import com.omelan.burr.pages.settings.AppSettings
 import com.omelan.burr.pages.settings.AppSettingsAbout
 import com.omelan.burr.pages.settings.Licenses
@@ -38,7 +43,6 @@ val AmbientPiPState = staticAmbientOf<Boolean> {
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
-
     @ExperimentalLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

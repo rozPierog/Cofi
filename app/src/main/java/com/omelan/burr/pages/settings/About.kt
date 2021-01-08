@@ -32,7 +32,6 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                 }
             })
     }) {
-        val commonModifier = Modifier.preferredHeight(56.dp)
         LazyColumn {
             item {
                 ListItem(
@@ -42,7 +41,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     icon = {
                         Icon(Icons.Rounded.Share)
                     },
-                    modifier = commonModifier.clickable(onClick = {
+                    modifier = settingsItemModifier.clickable(onClick = {
                         val browserIntent =
                             Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/rozPierog/Burr/"))
                         ContextCompat.startActivity(context, browserIntent, null)
@@ -57,7 +56,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     icon = {
                         Icon(Icons.Rounded.Build)
                     },
-                    modifier = commonModifier.clickable(onClick = openLicenses)
+                    modifier = settingsItemModifier.clickable(onClick = openLicenses)
                 )
             }
         }
