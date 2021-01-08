@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
@@ -107,7 +108,7 @@ fun RecipeDetails(
         Scaffold(topBar = {
             PiPAwareAppBar(
                 title = {
-                    Text(text = recipe.value.name)
+                    Text(text = recipe.value.name, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
@@ -122,7 +123,9 @@ fun RecipeDetails(
             )
         }) {
             LazyColumn(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
                     .background(color = MaterialTheme.colors.background),
                 contentPadding = if (isInPiP) {
                     PaddingValues(0.dp)
@@ -149,7 +152,9 @@ fun RecipeDetails(
                             Spacer(modifier = Modifier.height(15.dp))
                         }
                         Timer(
-                            modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.CenterHorizontally),
                             currentStep = currentStep,
                             animatedProgressValue = animatedProgressValue,
                             animatedProgressColor = animatedProgressColor,
@@ -158,7 +163,8 @@ fun RecipeDetails(
                         if (!isInPiP) {
                             Spacer(modifier = Modifier.height(15.dp))
                             Button(
-                                modifier = Modifier.animateContentSize()
+                                modifier = Modifier
+                                    .animateContentSize()
                                     .align(Alignment.CenterHorizontally),
                                 onClick = if (currentStep != null) {
                                     if (isAnimationRunning) {

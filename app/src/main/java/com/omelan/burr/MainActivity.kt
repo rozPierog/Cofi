@@ -9,6 +9,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayout
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.livedata.observeAsState
@@ -25,6 +28,8 @@ import com.omelan.burr.pages.RecipeList
 import com.omelan.burr.pages.RecipeDetails
 import com.omelan.burr.pages.AppSettings
 import com.omelan.burr.ui.BurrTheme
+import com.omelan.burr.ui.card
+import com.omelan.burr.ui.shapes
 import com.omelan.burr.utils.SystemUIHelpers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -144,22 +149,23 @@ class MainActivity : AppCompatActivity() {
                                 deleteRecipe = {
                                     lifecycleScope.launch {
                                         db.recipeDao().deleteById(recipeId = recipeId)
-                                        db.stepDao().deleteAllStepsForRecipe(recipeId = recipeId)
+                                        db.stepDao()
+                                            .deleteAllStepsForRecipe(recipeId = recipeId)
                                     }
                                     navController.navigate("list") {
                                         this.popUpTo("list") {
                                             inclusive = true
                                         }
                                     }
-                                }
-                            )
+                                })
                         }
                         composable("add_recipe") {
                             mainActivityViewModel.setCanGoToPiP(false)
                             RecipeEdit(
                                 saveRecipe = { recipe, steps ->
                                     lifecycleScope.launch {
-                                        val idOfRecipe = db.recipeDao().insertRecipe(recipe)
+                                        val idOfRecipe =
+                                            db.recipeDao().insertRecipe(recipe)
                                         db.stepDao()
                                             .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
 

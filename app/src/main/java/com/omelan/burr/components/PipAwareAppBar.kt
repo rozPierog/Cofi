@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -18,7 +19,13 @@ import dev.chrisbanes.accompanist.insets.statusBarsPadding
 @Composable
 fun PiPAwareAppBar(
     modifier: Modifier = Modifier,
-    title: @Composable () -> Unit = { Text(text = stringResource(id = R.string.app_name)) },
+    title: @Composable () -> Unit = {
+        Text(
+            text = stringResource(id = R.string.app_name),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    },
     navigationIcon: @Composable (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.primarySurface,

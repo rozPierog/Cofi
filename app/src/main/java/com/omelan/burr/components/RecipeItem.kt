@@ -1,5 +1,6 @@
 package com.omelan.burr.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -9,7 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.burr.R
@@ -31,18 +35,39 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
         )
         {
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .clickable(onClick = { onClickRecipe() })
-                    .padding(horizontal = 10.dp),
+                    .padding(horizontal = 10.dp)
+                    .preferredHeight(75.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
                     vectorResource(id = R.drawable.ic_coffee_grinder),
-                    modifier = Modifier.height(25.dp).aspectRatio(1f)
+                    modifier = Modifier
+                        .height(25.dp)
+                        .aspectRatio(1f)
                         .align(Alignment.CenterVertically)
                 )
-                Column(modifier = Modifier.padding(15.dp)) {
-                    Text(text = recipe.name, maxLines = 1, style = MaterialTheme.typography.subtitle1)
-                    Text(text = recipe.description, maxLines = 1, style = MaterialTheme.typography.body2)
+                Column(
+                    modifier = Modifier.padding(15.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = recipe.name,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.SemiBold,
+                        style = MaterialTheme.typography.subtitle1,
+                    )
+                    if (recipe.description.isNotBlank()) {
+                        Text(
+                            text = recipe.description,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.body2,
+                        )
+                    }
                 }
             }
         }

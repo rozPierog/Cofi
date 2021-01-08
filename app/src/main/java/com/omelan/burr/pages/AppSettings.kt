@@ -10,6 +10,7 @@ import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.burr.components.PiPAwareAppBar
@@ -18,7 +19,7 @@ import com.omelan.burr.components.PiPAwareAppBar
 fun AppSettings(goBack: () -> Unit) {
     Scaffold(topBar = {
         PiPAwareAppBar(
-            title = { Text(text = "Settings") },
+            title = { Text(text = "Settings", maxLines = 1, overflow = TextOverflow.Ellipsis) },
             navigationIcon = {
                 IconButton(onClick = goBack) {
                     Icon(imageVector = Icons.Rounded.ArrowBack)
@@ -71,4 +72,16 @@ fun AppSettings(goBack: () -> Unit) {
 @Composable
 fun SettingsPagePreview() {
     AppSettings(goBack = {})
+}
+
+
+@Composable
+fun AboutAppSettings() {
+    LazyColumn(content = { /*TODO*/ })
+}
+
+@Preview
+@Composable
+fun AboutAppSettingsPreview() {
+    AboutAppSettings()
 }

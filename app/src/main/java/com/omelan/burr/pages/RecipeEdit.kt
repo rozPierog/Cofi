@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.WithConstraints
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.burr.R
@@ -80,7 +81,9 @@ fun RecipeEdit(
                             stringResource(id = R.string.recipe_edit_title)
                         } else {
                             stringResource(id = R.string.recipe_add_new_title)
-                        }
+                        },
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 })
         }) {
@@ -165,18 +168,18 @@ fun RecipeEdit(
                                 .padding(15.dp)
                         ) {
                             TextButton(onClick = { showDeleteModal.value = false }) {
-                                Text(text = stringResource(id =R.string.button_cancel))
+                                Text(text = stringResource(id = R.string.button_cancel))
                             }
                             TextButton(onClick = {
                                 deleteRecipe()
                             }) {
-                                Text(text = stringResource(id =R.string.button_delete))
+                                Text(text = stringResource(id = R.string.button_delete))
                             }
 
                         }
                     },
                     title = {
-                        Text(text = stringResource(id =R.string.step_delete_title))
+                        Text(text = stringResource(id = R.string.step_delete_title))
                     },
                     text = {
                         Text(text = stringResource(id = R.string.step_delete_text))
