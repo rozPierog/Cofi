@@ -9,9 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayout
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.livedata.observeAsState
@@ -23,13 +20,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.omelan.burr.model.*
-import com.omelan.burr.pages.RecipeEdit
-import com.omelan.burr.pages.RecipeList
-import com.omelan.burr.pages.RecipeDetails
-import com.omelan.burr.pages.AppSettings
+import com.omelan.burr.pages.*
+import com.omelan.burr.pages.settings.AppSettings
+import com.omelan.burr.pages.settings.AppSettingsAbout
+import com.omelan.burr.pages.settings.Licenses
 import com.omelan.burr.ui.BurrTheme
-import com.omelan.burr.ui.card
-import com.omelan.burr.ui.shapes
 import com.omelan.burr.utils.SystemUIHelpers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -175,14 +170,27 @@ class MainActivity : AppCompatActivity() {
                                 goBack = goBack,
                             )
                         }
-                        composable("settings") {
-                            AppSettings(
-                                goBack = {
-                                    navController.navigate(
-                                        route = "list",
-                                    )
-                                },
-                            )
+                        navigation(startDestination = "list", route = "settings") {
+                            composable("list") {
+                                AppSettings(
+                                    goBack = {
+                                        navController.navigate(
+                                            route = "list",
+                                        )
+                                    },
+                                    goToAbout = {
+                                        navController.navigate("about")
+                                    },
+                                )
+                            }
+                            composable("about") {
+                                AppSettingsAbout(goBack = goBack, openLicenses = {
+                                    navController.navigate("licenses")
+                                })
+                            }
+                            composable("licenses") {
+                                Licenses(goBack = goBack)
+                            }
                         }
                     }
                 }

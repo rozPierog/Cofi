@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.jaredsburrows.license'
 }
 
 android {
@@ -51,6 +52,16 @@ android {
         kotlinCompilerVersion "$kotlin_version"
         kotlinCompilerExtensionVersion "$compose_version"
     }
+}
+
+licenseReport {
+    generateCsvReport = false
+    generateHtmlReport = true
+    generateJsonReport = false
+    // These options are ignored for Java projects
+    copyHtmlReportToAssets = false
+    copyHtmlReportToAssets = true
+    copyJsonReportToAssets = false
 }
 
 dependencies {
