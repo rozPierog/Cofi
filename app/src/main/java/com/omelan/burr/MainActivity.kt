@@ -45,10 +45,10 @@ class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
     @ExperimentalLayout
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_Burr)
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.statusBarColor
-        SystemUIHelpers.setSystemBarsColors(view = window.decorView, resources)
+        SystemUIHelpers.setStatusBarIconsTheme(window = window, darkIcons = false)
         setContent {
             MainNavigation()
         }
@@ -204,7 +204,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        SystemUIHelpers.setSystemBarsColors(view = window.decorView, resources)
+        SystemUIHelpers.setStatusBarIconsTheme(window = window, darkIcons = false)
     }
 
     override fun onPictureInPictureModeChanged(
