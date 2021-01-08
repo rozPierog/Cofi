@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayout
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.livedata.observeAsState
@@ -19,6 +20,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import androidx.navigation.navDeepLink
 import com.omelan.burr.model.AppDatabase
 import com.omelan.burr.model.Recipe
 import com.omelan.burr.model.RecipeViewModel
@@ -39,10 +41,12 @@ val AmbientPiPState = staticAmbientOf<Boolean> {
     error("AmbientPiPState value not available.")
 }
 
+const val appDeepLinkUrl = "https://burr.omelan.com"
 
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
+    @ExperimentalMaterialApi
     @ExperimentalLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Burr)
@@ -54,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @ExperimentalMaterialApi
     @ExperimentalLayout
     @Composable
     fun MainNavigation() {
@@ -100,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                         composable(
                             "recipe/{recipeId}",
                             arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
+                            deepLinks = listOf(navDeepLink { uriPattern = "$appDeepLinkUrl/recipe/{recipeId}" }),
                         ) { backStackEntry ->
                             val recipeId = backStackEntry.arguments?.getInt("recipeId")
                                 ?: throw IllegalStateException("No Recipe ID")

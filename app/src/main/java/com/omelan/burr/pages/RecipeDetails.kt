@@ -9,32 +9,35 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.AmbientClipboardManager
 import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import com.omelan.burr.AmbientPiPState
 import com.omelan.burr.R
+import com.omelan.burr.appDeepLinkUrl
 import com.omelan.burr.components.*
 import com.omelan.burr.model.*
 import com.omelan.burr.ui.BurrTheme
+import com.omelan.burr.ui.card
+import com.omelan.burr.ui.shapes
 import com.omelan.burr.utils.Haptics
-import dev.chrisbanes.accompanist.insets.AmbientWindowInsets
-import dev.chrisbanes.accompanist.insets.add
-import dev.chrisbanes.accompanist.insets.toPaddingValues
+import dev.chrisbanes.accompanist.insets.*
+import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
 
+@ExperimentalMaterialApi
 @ExperimentalTime
 @Composable
 fun RecipeDetails(
@@ -56,7 +59,17 @@ fun RecipeDetails(
     val animatedProgressValue = animatedFloat(0f)
     val animatedProgressColor = animatedColor(Color.DarkGray)
     var isAnimationRunning by remember { mutableStateOf(false) }
-
+    val clipboardManager = AmbientClipboardManager.current
+    var showAutomateLinkDialog by remember { mutableStateOf(false) }
+    val snackbarState = SnackbarHostState()
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarMessage = stringResource(id = R.string.snackbar_copied)
+    fun copyAutomateLink() {
+        clipboardManager.setText(AnnotatedString(text = "$appDeepLinkUrl/recipe/${recipeId}"))
+        coroutineScope.launch {
+            snackbarState.showSnackbar(message = snackbarMessage)
+        }
+    }
     fun pauseAnimations() {
         animatedProgressColor.stop()
         animatedProgressValue.stop()
@@ -105,23 +118,44 @@ fun RecipeDetails(
         startAnimations()
     }
     BurrTheme {
-        Scaffold(topBar = {
-            PiPAwareAppBar(
-                title = {
-                    Text(text = recipe.value.name, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                },
-                navigationIcon = {
-                    IconButton(onClick = goBack) {
-                        Icon(Icons.Rounded.ArrowBack)
-                    }
-                },
-                actions = {
-                    IconButton(onClick = goToEdit) {
-                        Icon(Icons.Rounded.Edit)
-                    }
-                },
-            )
-        }) {
+        Scaffold(snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarState,
+                modifier = Modifier
+                    .navigationBarsPadding()
+                    .padding(5.dp)
+            ) {
+                Snackbar {
+                    Text(text = it.message)
+                }
+            }
+        },
+            topBar = {
+                PiPAwareAppBar(
+                    title = {
+                        Text(
+                            text = recipe.value.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = goBack) {
+                            Icon(Icons.Rounded.ArrowBack)
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = {
+                            showAutomateLinkDialog = true
+                        }) {
+                            Icon(Icons.Rounded.Share)
+                        }
+                        IconButton(onClick = goToEdit) {
+                            Icon(Icons.Rounded.Edit)
+                        }
+                    },
+                )
+            }) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -209,10 +243,42 @@ fun RecipeDetails(
                 }
             }
         }
+        if (showAutomateLinkDialog) {
+            AlertDialog(
+                onDismissRequest = { showAutomateLinkDialog = false },
+                shape = shapes.card,
+                buttons = {
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(15.dp)
+                    ) {
+                        TextButton(onClick = { showAutomateLinkDialog = false }) {
+                            Text(text = stringResource(id = R.string.button_cancel))
+                        }
+                        TextButton(onClick = {
+                            copyAutomateLink()
+                            showAutomateLinkDialog = false
+                        }) {
+                            Text(text = stringResource(id = R.string.button_copy))
+                        }
+
+                    }
+                },
+                title = {
+                    Text(text = stringResource(id = R.string.recipe_details_automation_dialog_title))
+                },
+                text = {
+                    Text(text = stringResource(id = R.string.recipe_details_automation_dialog_text))
+                },
+            )
+        }
     }
 }
 
 
+@ExperimentalMaterialApi
 @ExperimentalTime
 @Preview(showBackground = true)
 @Composable
@@ -220,6 +286,7 @@ fun RecipeDetailsPreview() {
     RecipeDetails(recipeId = 1, isInPiP = false)
 }
 
+@ExperimentalMaterialApi
 @ExperimentalTime
 @Preview(showBackground = true)
 @Composable
