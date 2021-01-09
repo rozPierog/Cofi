@@ -7,10 +7,12 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.burr.components.PiPAwareAppBar
 import com.omelan.burr.components.WebView
+import com.omelan.burr.R
 
 @Composable
 fun Licenses(goBack: () -> Unit) {
@@ -19,7 +21,7 @@ fun Licenses(goBack: () -> Unit) {
             PiPAwareAppBar(
                 title = {
                     Text(
-                        text = "Open source licenses",
+                        text = stringResource(id = R.string.settings_licenses_title),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )

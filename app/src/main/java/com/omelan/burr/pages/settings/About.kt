@@ -11,9 +11,11 @@ import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
+import com.omelan.burr.R
 import com.omelan.burr.components.PiPAwareAppBar
 
 @Composable
@@ -23,7 +25,13 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
     Scaffold(
         topBar = {
             PiPAwareAppBar(
-                title = { Text(text = "About", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.settings_about_title),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
                         Icon(imageVector = Icons.Rounded.ArrowBack)
@@ -36,7 +44,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             item {
                 ListItem(
                     text = {
-                        Text(text = "Github Repository")
+                        Text(text = stringResource(id = R.string.settings_github_item))
                     },
                     icon = {
                         Icon(Icons.Rounded.Share)
@@ -56,7 +64,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             item {
                 ListItem(
                     text = {
-                        Text(text = "Acknowledgments")
+                        Text(text = stringResource(id = R.string.settings_licenses_item))
                     },
                     icon = {
                         Icon(Icons.Rounded.Build)
