@@ -17,6 +17,9 @@ import androidx.compose.runtime.staticAmbientOf
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.core.view.WindowCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
@@ -33,7 +36,11 @@ import com.omelan.burr.pages.settings.AppSettingsAbout
 import com.omelan.burr.pages.settings.Licenses
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.utils.SystemUIHelpers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.time.ExperimentalTime
 
@@ -41,11 +48,18 @@ val AmbientPiPState = staticAmbientOf<Boolean> {
     error("AmbientPiPState value not available.")
 }
 
+val AmbientSettingsDataStore = staticAmbientOf<DataStore<Preferences>> {
+    error("AmbientSettingsDataStore value not available.")
+}
+
 const val appDeepLinkUrl = "https://burr.omelan.com"
 
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
+    private val dataStore: DataStore<Preferences> = createDataStore(
+        name = "settings"
+    )
 
     @ExperimentalMaterialApi
     @ExperimentalLayout
@@ -80,7 +94,10 @@ class MainActivity : AppCompatActivity() {
             navController.popBackStack()
         }
         BurrTheme {
-            Providers(AmbientPiPState provides isInPiP.value) {
+            Providers(
+                AmbientPiPState provides isInPiP.value,
+                AmbientSettingsDataStore provides dataStore,
+            ) {
                 Column {
                     NavHost(navController, startDestination = "list") {
                         composable("list") {
@@ -233,8 +250,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onUserLeaveHint() {
+        val isPiPEnabledFlow: Flow<Boolean> = dataStore.data.map { preferences ->
+            preferences[PIP_ENABLED] ?: false
+        }
+        var isPiPEnabled: Boolean
+        runBlocking {
+            isPiPEnabled = isPiPEnabledFlow.first()
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
-            mainActivityViewModel.canGoToPiP.value == true
+            mainActivityViewModel.canGoToPiP.value == true &&
+            isPiPEnabled
         ) {
             enterPictureInPictureMode(
                 PictureInPictureParams.Builder().setAspectRatio(Rational(1, 1)).build()

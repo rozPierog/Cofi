@@ -87,6 +87,8 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     // Jetpack Utils
     implementation 'dev.chrisbanes.accompanist:accompanist-insets:0.4.1'
+
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha05"
     //Room
     def room_version = "2.2.6"
 
