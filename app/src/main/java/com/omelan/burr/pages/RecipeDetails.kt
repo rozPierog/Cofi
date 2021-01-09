@@ -123,7 +123,7 @@ fun RecipeDetails(
                 hostState = snackbarState,
                 modifier = Modifier
                     .navigationBarsPadding()
-                    .padding(5.dp)
+                    .padding(10.dp)
             ) {
                 Snackbar {
                     Text(text = it.message)
