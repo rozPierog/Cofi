@@ -132,7 +132,7 @@ fun RecipeEdit(
                                                 step
                                             }
                                         }
-
+                                    stepWithOpenEditor.value = null
                                 })
                         } else {
                             StepListItem(
