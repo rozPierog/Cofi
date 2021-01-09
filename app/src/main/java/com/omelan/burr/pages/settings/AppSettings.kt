@@ -66,17 +66,22 @@ fun AppSettings(
                     icon = {
                         Icon(painterResource(id = R.drawable.ic_picture_in_picture))
                     },
-                    modifier = settingsItemModifier.clickable(onClick = {
-                        coroutineScope.launch {
-                            togglePiPSetting()
-                        }
-                    }),
-                    trailing = {
-                        Checkbox(checked = isPiPEnabled.value, onCheckedChange = {
+                    modifier = settingsItemModifier.clickable(
+                        onClick = {
                             coroutineScope.launch {
                                 togglePiPSetting()
                             }
-                        })
+                        }
+                    ),
+                    trailing = {
+                        Checkbox(
+                            checked = isPiPEnabled.value,
+                            onCheckedChange = {
+                                coroutineScope.launch {
+                                    togglePiPSetting()
+                                }
+                            }
+                        )
                     }
                 )
             }
