@@ -8,9 +8,9 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Build
-import androidx.compose.material.icons.rounded.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,7 +47,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Text(text = stringResource(id = R.string.settings_github_item))
                     },
                     icon = {
-                        Icon(Icons.Rounded.Share)
+                        Icon(painterResource(id = R.drawable.ic_github_icon))
                     },
                     modifier = settingsItemModifier.clickable(
                         onClick = {
@@ -67,7 +67,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Text(text = stringResource(id = R.string.settings_licenses_item))
                     },
                     icon = {
-                        Icon(Icons.Rounded.Build)
+                        Icon(painterResource(id = R.drawable.ic_book))
                     },
                     modifier = settingsItemModifier.clickable(onClick = openLicenses)
                 )

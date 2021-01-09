@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.omelan.burr.R
 import com.omelan.burr.components.PiPAwareAppBar
 import com.omelan.burr.components.WebView
-import com.omelan.burr.R
 
 @Composable
 fun Licenses(goBack: () -> Unit) {

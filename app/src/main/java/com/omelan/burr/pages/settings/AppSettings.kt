@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +38,20 @@ fun AppSettings(
         }
     ) {
         LazyColumn {
+            item {
+                ListItem(
+                    text = {
+                        Text(text = "Picture in picture")
+                    },
+                    icon = {
+                        Icon(painterResource(id = R.drawable.ic_picture_in_picture))
+                    },
+                    modifier = settingsItemModifier.clickable(onClick = { /*TODO*/ }),
+                    trailing = {
+                        Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
+                    }
+                )
+            }
             item {
                 ListItem(
                     text = {
