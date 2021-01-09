@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Burr</string>
+    <string name="step_type_add_coffee">Dodaj kawę</string>
+    <string name="step_type_water">Dodaj wodę</string>
+    <string name="step_type_wait">Czekaj</string>
+    <string name="step_type_other">Inne</string>
+    <string name="step_add_name">Nazwa</string>
+    <string name="step_add_duration">Czas trwania (s)</string>
+    <string name="step_add_weight">Waga (g)</string>
+    <string name="step_add_save">Zapisz i dodaj kolejny</string>
+    <string name="step_delete_title">Jesteś pewien?</string>
+    <string name="step_delete_text">Nie będzie można przywrócić tego przepisu</string>
+    <string name="recipe_edit_name">Nazwa</string>
+    <string name="recipe_edit_description">Opis</string>
+    <string name="recipe_edit_title">Edytuj przepis</string>
+    <string name="recipe_add_new_title">Dodaj nowy przepis</string>
+    <string name="recipe_details_automation_dialog_title">Bezpośredni link</string>
+    <string name="recipe_details_automation_dialog_text">Użyj linku aby przejść do bezpośrednio tego przepisu. Zapisz go na tagu NFC albo użyj automatyzacji w aplikacji takiej jak Tasker żeby ułatwić robienie porannej kawy.\nUWAGA: ten link nie służy do dzielenia się przepisem z innymi</string>
+    <string name="recipe_details_button_start">Start</string>
+    <string name="recipe_details_button_pause">Zatrzymaj</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="button_cancel">Anuluj</string>
+    <string name="button_delete">Usuń</string>
+    <string name="button_copy">Kopiuj</string>
+    <string name="snackbar_copied">Skopiowane!</string>
+    <string name="settings_licenses_title">Licencje open source</string>
+    <string name="settings_title">Ustawienia</string>
+    <string name="settings_about_item">O aplikacji</string>
+    <string name="settings_about_title">O aplikacji</string>
+    <string name="settings_licenses_item">Licencje</string>
+    <string name="settings_github_item">Repozytorium na Github</string>
+</resources>
