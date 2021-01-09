@@ -50,43 +50,48 @@ fun RecipeEdit(
     val steps = remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     val stepWithOpenEditor = remember { mutableStateOf<Step?>(null) }
     BurrTheme {
-        Scaffold(topBar = {
-            PiPAwareAppBar(
-                navigationIcon = {
-                    IconButton(onClick = goBack) {
-                        Icon(Icons.Rounded.ArrowBack)
-                    }
-                },
-                actions = {
-                    if (isEditing) {
-                        IconButton(onClick = { showDeleteModal.value = true }) {
-                            Icon(Icons.Rounded.Delete)
+        Scaffold(
+            topBar = {
+                PiPAwareAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = goBack) {
+                            Icon(Icons.Rounded.ArrowBack)
                         }
-                    }
-                    IconButton(onClick = {
-                        saveRecipe(
-                            recipeToEdit.copy(
-                                name = name.value,
-                                description = description.value
-                            ),
-                            steps.value
+                    },
+                    actions = {
+                        if (isEditing) {
+                            IconButton(onClick = { showDeleteModal.value = true }) {
+                                Icon(Icons.Rounded.Delete)
+                            }
+                        }
+                        IconButton(
+                            onClick = {
+                                saveRecipe(
+                                    recipeToEdit.copy(
+                                        name = name.value,
+                                        description = description.value
+                                    ),
+                                    steps.value
+                                )
+                            }
+                        ) {
+                            Icon(vectorResource(id = R.drawable.ic_save))
+                        }
+                    },
+                    title = {
+                        Text(
+                            text = if (isEditing) {
+                                stringResource(id = R.string.recipe_edit_title)
+                            } else {
+                                stringResource(id = R.string.recipe_add_new_title)
+                            },
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
-                    }) {
-                        Icon(vectorResource(id = R.drawable.ic_save))
                     }
-                },
-                title = {
-                    Text(
-                        text = if (isEditing) {
-                            stringResource(id = R.string.recipe_edit_title)
-                        } else {
-                            stringResource(id = R.string.recipe_add_new_title)
-                        },
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                })
-        }) {
+                )
+            }
+        ) {
             WithConstraints {
                 LazyColumn(
                     modifier = Modifier
@@ -122,7 +127,8 @@ fun RecipeEdit(
                     items(steps.value) { step ->
                         if (stepWithOpenEditor.value == step) {
                             val indexOfThisStep = steps.value.indexOf(step)
-                            StepAddCard(stepToEdit = step,
+                            StepAddCard(
+                                stepToEdit = step,
                                 save = { stepToSave ->
                                     steps.value =
                                         steps.value.mapIndexed { index, step ->
@@ -133,25 +139,28 @@ fun RecipeEdit(
                                             }
                                         }
                                     stepWithOpenEditor.value = null
-                                })
+                                }
+                            )
                         } else {
                             StepListItem(
                                 step = step,
                                 stepProgress = StepProgress.Upcoming,
                                 onClick = { clickedStep ->
                                     stepWithOpenEditor.value = clickedStep
-                                })
+                                }
+                            )
                         }
                     }
                     if (stepWithOpenEditor.value == null) {
                         item {
-                            StepAddCard(save = { stepToSave ->
-                                steps.value = listOf(
-                                    *steps.value.toTypedArray(),
-                                    stepToSave
-                                )
-
-                            })
+                            StepAddCard(
+                                save = { stepToSave ->
+                                    steps.value = listOf(
+                                        *steps.value.toTypedArray(),
+                                        stepToSave
+                                    )
+                                }
+                            )
                         }
                     }
                 }
@@ -170,12 +179,13 @@ fun RecipeEdit(
                             TextButton(onClick = { showDeleteModal.value = false }) {
                                 Text(text = stringResource(id = R.string.button_cancel))
                             }
-                            TextButton(onClick = {
-                                deleteRecipe()
-                            }) {
+                            TextButton(
+                                onClick = {
+                                    deleteRecipe()
+                                }
+                            ) {
                                 Text(text = stringResource(id = R.string.button_delete))
                             }
-
                         }
                     },
                     title = {

@@ -65,7 +65,7 @@ fun RecipeDetails(
     val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
     fun copyAutomateLink() {
-        clipboardManager.setText(AnnotatedString(text = "$appDeepLinkUrl/recipe/${recipeId}"))
+        clipboardManager.setText(AnnotatedString(text = "$appDeepLinkUrl/recipe/$recipeId"))
         coroutineScope.launch {
             snackbarState.showSnackbar(message = snackbarMessage)
         }
@@ -87,7 +87,6 @@ fun RecipeDetails(
         }
         haptics.progress()
     }
-
 
     fun startAnimations() {
         if (currentStep == null) {
@@ -118,18 +117,19 @@ fun RecipeDetails(
         startAnimations()
     }
     BurrTheme {
-        Scaffold(snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarState,
-                modifier = Modifier
-                    .navigationBarsPadding()
-                    .padding(10.dp)
-            ) {
-                Snackbar {
-                    Text(text = it.message)
+        Scaffold(
+            snackbarHost = {
+                SnackbarHost(
+                    hostState = snackbarState,
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .padding(10.dp)
+                ) {
+                    Snackbar {
+                        Text(text = it.message)
+                    }
                 }
-            }
-        },
+            },
             topBar = {
                 PiPAwareAppBar(
                     title = {
@@ -145,9 +145,11 @@ fun RecipeDetails(
                         }
                     },
                     actions = {
-                        IconButton(onClick = {
-                            showAutomateLinkDialog = true
-                        }) {
+                        IconButton(
+                            onClick = {
+                                showAutomateLinkDialog = true
+                            }
+                        ) {
                             Icon(Icons.Rounded.Share)
                         }
                         IconButton(onClick = goToEdit) {
@@ -155,7 +157,8 @@ fun RecipeDetails(
                         }
                     },
                 )
-            }) {
+            }
+        ) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -257,26 +260,26 @@ fun RecipeDetails(
                         TextButton(onClick = { showAutomateLinkDialog = false }) {
                             Text(text = stringResource(id = R.string.button_cancel))
                         }
-                        TextButton(onClick = {
-                            copyAutomateLink()
-                            showAutomateLinkDialog = false
-                        }) {
+                        TextButton(
+                            onClick = {
+                                copyAutomateLink()
+                                showAutomateLinkDialog = false
+                            }
+                        ) {
                             Text(text = stringResource(id = R.string.button_copy))
                         }
-
                     }
                 },
                 title = {
-                    Text(text = stringResource(id = R.string.recipe_details_automation_dialog_title))
+                    Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
                 },
                 text = {
-                    Text(text = stringResource(id = R.string.recipe_details_automation_dialog_text))
+                    Text(text = stringResource(R.string.recipe_details_automation_dialog_text))
                 },
             )
         }
     }
 }
-
 
 @ExperimentalMaterialApi
 @ExperimentalTime

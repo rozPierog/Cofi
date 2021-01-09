@@ -68,6 +68,5 @@ class Haptics(context: Context) {
             }
         else ->
             this.vibrate(300)
-
     }
 }

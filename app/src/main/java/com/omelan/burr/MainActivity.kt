@@ -46,6 +46,7 @@ const val appDeepLinkUrl = "https://burr.omelan.com"
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
+
     @ExperimentalMaterialApi
     @ExperimentalLayout
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                             RecipeList(
                                 navigateToRecipe = { recipeId ->
                                     navController.navigate(
-                                        route = "recipe/${recipeId}",
+                                        route = "recipe/$recipeId",
                                     )
                                 },
                                 addNewRecipe = {
@@ -105,7 +106,11 @@ class MainActivity : AppCompatActivity() {
                         composable(
                             "recipe/{recipeId}",
                             arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
-                            deepLinks = listOf(navDeepLink { uriPattern = "$appDeepLinkUrl/recipe/{recipeId}" }),
+                            deepLinks = listOf(
+                                navDeepLink {
+                                    uriPattern = "$appDeepLinkUrl/recipe/{recipeId}"
+                                }
+                            ),
                         ) { backStackEntry ->
                             val recipeId = backStackEntry.arguments?.getInt("recipeId")
                                 ?: throw IllegalStateException("No Recipe ID")
@@ -121,7 +126,7 @@ class MainActivity : AppCompatActivity() {
                                 goBack = goBack,
                                 goToEdit = {
                                     navController.navigate(
-                                        route = "edit/${recipeId}",
+                                        route = "edit/$recipeId",
                                     )
                                 }
                             )
@@ -162,7 +167,8 @@ class MainActivity : AppCompatActivity() {
                                             inclusive = true
                                         }
                                     }
-                                })
+                                }
+                            )
                         }
                         composable("add_recipe") {
                             mainActivityViewModel.setCanGoToPiP(false)
@@ -172,8 +178,11 @@ class MainActivity : AppCompatActivity() {
                                         val idOfRecipe =
                                             db.recipeDao().insertRecipe(recipe)
                                         db.stepDao()
-                                            .insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
-
+                                            .insertAll(
+                                                steps.map {
+                                                    it.copy(recipeId = idOfRecipe.toInt())
+                                                }
+                                            )
                                     }
                                     goBack()
                                 },
@@ -194,9 +203,12 @@ class MainActivity : AppCompatActivity() {
                                 )
                             }
                             composable("about") {
-                                AppSettingsAbout(goBack = goBack, openLicenses = {
-                                    navController.navigate("licenses")
-                                })
+                                AppSettingsAbout(
+                                    goBack = goBack,
+                                    openLicenses = {
+                                        navController.navigate("licenses")
+                                    }
+                                )
                             }
                             composable("licenses") {
                                 Licenses(goBack = goBack)

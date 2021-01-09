@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.viewModel
-import com.omelan.burr.AmbientPiPState
 import com.omelan.burr.components.PiPAwareAppBar
 import com.omelan.burr.components.RecipeItem
 import com.omelan.burr.model.RecipeViewModel
@@ -36,11 +35,13 @@ fun RecipeList(
     BurrTheme {
         Scaffold(
             topBar = {
-                PiPAwareAppBar(actions = {
-                    IconButton(onClick = goToSettings) {
-                        Icon(Icons.Rounded.Settings)
+                PiPAwareAppBar(
+                    actions = {
+                        IconButton(onClick = goToSettings) {
+                            Icon(Icons.Rounded.Settings)
+                        }
                     }
-                })
+                )
             },
             floatingActionButton = {
                 FloatingActionButton(
@@ -71,8 +72,6 @@ fun RecipeList(
             }
         }
     }
-
-
 }
 
 @Preview

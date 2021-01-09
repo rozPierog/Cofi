@@ -9,7 +9,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 @Composable
 fun WebView(urlToRender: String) {
     AndroidView(viewBlock = ::WebView) { webView ->
-        with(webView){
+        with(webView) {
             webViewClient = WebViewClient()
             loadUrl(urlToRender)
         }

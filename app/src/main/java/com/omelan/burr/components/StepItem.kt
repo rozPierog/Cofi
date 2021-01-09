@@ -9,18 +9,17 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.omelan.burr.R
 import com.omelan.burr.model.Step
 import com.omelan.burr.model.StepType
 import com.omelan.burr.ui.BurrTheme
 import com.omelan.burr.utils.toMillis
 import com.omelan.burr.utils.toStringDuration
 import kotlin.time.ExperimentalTime
-import com.omelan.burr.R
 
 enum class StepProgress { Current, Done, Upcoming }
 
@@ -92,7 +91,6 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
                 }
 
             )
-
         }
     }
 }

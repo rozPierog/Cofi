@@ -12,7 +12,6 @@ import com.omelan.burr.ui.brown500
 import com.omelan.burr.ui.green600
 import com.omelan.burr.ui.greyBlue900
 
-
 enum class StepType {
     ADD_COFFEE {
         override val color: Color

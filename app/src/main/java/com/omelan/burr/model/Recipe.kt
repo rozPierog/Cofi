@@ -2,14 +2,10 @@ package com.omelan.burr.model
 
 import android.app.Application
 import androidx.annotation.DrawableRes
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import androidx.room.*
 import com.omelan.burr.R
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 val dummySteps = listOf(
     Step(
@@ -61,7 +57,6 @@ data class RecipesWithSteps(
     )
     val steps: List<Step>
 )
-
 
 @Dao
 interface RecipeDao {

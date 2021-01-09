@@ -14,15 +14,24 @@ import com.omelan.burr.components.WebView
 
 @Composable
 fun Licenses(goBack: () -> Unit) {
-    Scaffold(topBar = {
-        PiPAwareAppBar(
-            title = { Text(text = "Open source licenses", maxLines = 1, overflow = TextOverflow.Ellipsis) },
-            navigationIcon = {
-                IconButton(onClick = goBack) {
-                    Icon(imageVector = Icons.Rounded.ArrowBack)
+    Scaffold(
+        topBar = {
+            PiPAwareAppBar(
+                title = {
+                    Text(
+                        text = "Open source licenses",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = goBack) {
+                        Icon(imageVector = Icons.Rounded.ArrowBack)
+                    }
                 }
-            })
-    }) {
+            )
+        }
+    ) {
         WebView(urlToRender = "file:///android_asset/open_source_licenses.html")
     }
 }

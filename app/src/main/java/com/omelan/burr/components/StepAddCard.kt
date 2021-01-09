@@ -71,7 +71,8 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                         label = { Text(text = stringResource(id = R.string.step_add_name)) },
                         value = stepName.value,
                         singleLine = true,
-                        onValueChange = { stepName.value = it })
+                        onValueChange = { stepName.value = it }
+                    )
                     OutlinedTextField(
                         label = { Text(text = stringResource(id = R.string.step_add_duration)) },
                         value = stepTime.value,
@@ -104,7 +105,9 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                                     name = stepName.value,
                                     time = stepTime.value.safeToInt().toMillis(),
                                     type = pickedType.value ?: StepType.OTHER,
-                                    value = if (stepValue.value.isNotBlank() || stepValue.value != "0") {
+                                    value = if (stepValue.value.isNotBlank() ||
+                                        stepValue.value != "0"
+                                    ) {
                                         stepValue.value.safeToInt()
                                     } else {
                                         null

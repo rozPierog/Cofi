@@ -1,6 +1,5 @@
 package com.omelan.burr.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -10,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -32,8 +30,7 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
             elevation = 2.dp,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
             shape = shapes.card,
-        )
-        {
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -73,7 +70,6 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
         }
     }
 }
-
 
 @Preview
 @Composable

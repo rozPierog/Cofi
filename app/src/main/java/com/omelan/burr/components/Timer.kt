@@ -71,13 +71,13 @@ fun Timer(
                     val duration = (currentStep.time * animatedProgressValue.value).toInt()
                         .toDuration(DurationUnit.MILLISECONDS)
                     val durationInString = "${
-                        duration.inMinutes.toInt().toString().padStart(2, '0')
+                    duration.inMinutes.toInt().toString().padStart(2, '0')
                     }:${
-                        duration.inSeconds.toInt().toString().padStart(2, '0')
+                    duration.inSeconds.toInt().toString().padStart(2, '0')
                     }".also {
                         if (!isInPiP) {
                             it + ":${
-                                duration.inMilliseconds.toInt().toString().padStart(4, '0')
+                            duration.inMilliseconds.toInt().toString().padStart(4, '0')
                             }"
                         }
                     }
@@ -135,7 +135,6 @@ fun Timer(
                             },
                         )
                     }
-
                 }
             }
         }
