@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Burr</string>
+    <string name="app_name">Cofi</string>
     <string name="step_type_add_coffee">Add coffee</string>
     <string name="step_type_water">Add water</string>
     <string name="step_type_wait">Wait</string>

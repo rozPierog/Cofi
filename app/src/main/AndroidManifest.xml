@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.omelan.burr">
+        package="com.omelan.cofi">
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:launchMode="singleInstance"
-        android:theme="@style/Theme.Burr">
-        <activity
-            android:name=".MainActivity"
-            android:configChanges="keyboard|keyboardHidden|screenSize|smallestScreenSize|screenLayout|orientation"
+            android:allowBackup="true"
+            android:fullBackupOnly="true"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Burr"
-            android:supportsPictureInPicture="true"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="adjustResize">
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.Cofi">
+        <activity
+                android:name=".MainActivity"
+                android:configChanges="keyboard|keyboardHidden|screenSize|smallestScreenSize|screenLayout|orientation"
+                android:label="@string/app_name"
+                android:launchMode="singleInstance"
+                android:supportsPictureInPicture="true"
+                android:theme="@style/Theme.Cofi"
+                android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,10 +31,10 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="burr.omelan.com"
-                    android:pathPattern=".*"
-                    android:pathPrefix="/"
-                    android:scheme="https" />
+                        android:host="cofi.omelan.com"
+                        android:pathPattern=".*"
+                        android:pathPrefix="/"
+                        android:scheme="https" />
             </intent-filter>
         </activity>
     </application>

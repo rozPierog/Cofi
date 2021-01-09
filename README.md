@@ -1,2 +1,2 @@
-# Burr
+# Cofi
 Simple coffee timer 

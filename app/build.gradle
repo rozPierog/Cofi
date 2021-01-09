@@ -28,7 +28,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.omelan.burr"
+        applicationId "com.omelan.cofi"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1

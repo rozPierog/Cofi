@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Burr</string>
+    <string name="app_name">Cofi</string>
     <string name="step_type_add_coffee">Dodaj kawę</string>
     <string name="step_type_water">Dodaj wodę</string>
     <string name="step_type_wait">Czekaj</string>
