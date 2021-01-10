@@ -20,7 +20,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Create empty keystore
-      run: cat > keystore.properties
+      run: echo "storeFile=/" > keystore.properties
     - name: KTLint
       run: ./gradlew ktlint
     - name: Unit Tests
