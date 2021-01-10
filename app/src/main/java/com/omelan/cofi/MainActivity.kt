@@ -42,7 +42,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
-import kotlin.time.ExperimentalTime
 
 val AmbientPiPState = staticAmbientOf<Boolean> {
     error("AmbientPiPState value not available.")

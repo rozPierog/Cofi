@@ -67,9 +67,11 @@ fun Timer(
                 color = animatedProgressColor.value,
                 strokeWidth = strokeWidth
             )
-            Column(modifier = Modifier
-                .padding(strokeWidth)
-                .animateContentSize()) {
+            Column(
+                modifier = Modifier
+                    .padding(strokeWidth)
+                    .animateContentSize()
+            ) {
 
                 if (currentStep != null) {
                     val duration = (currentStep.time * animatedProgressValue.value).toInt()
