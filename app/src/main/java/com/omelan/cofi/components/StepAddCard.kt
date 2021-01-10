@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,7 +54,13 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                 Box {
                     FlowRow(mainAxisSpacing = 5.dp, crossAxisSpacing = 5.dp) {
                         StepType.values().forEach { stepType ->
-                            Button(onClick = { pickedType.value = stepType }, shape = shapes.full) {
+                            Button(
+                                onClick = { pickedType.value = stepType },
+                                shape = shapes.full,
+                                modifier = Modifier.testTag(
+                                    "step_type_button_${stepType.name.toLowerCase()}"
+                                )
+                            ) {
                                 Text(
                                     text = if (pickedType.value == stepType) {
                                         "✓ "
@@ -71,7 +78,10 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                         label = { Text(text = stringResource(id = R.string.step_add_name)) },
                         value = stepName.value,
                         singleLine = true,
-                        onValueChange = { stepName.value = it }
+                        onValueChange = { stepName.value = it },
+                        modifier = Modifier.testTag(
+                            "step_name"
+                        ),
                     )
                     OutlinedTextField(
                         label = { Text(text = stringResource(id = R.string.step_add_duration)) },
@@ -80,7 +90,10 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                             stepTime.value = ensureNumbersOnly(it) ?: stepTime.value
                         },
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.testTag(
+                            "step_value"
+                        ),
                     )
                     if (listOf<StepType>(
                             StepType.WATER,

@@ -1,7 +1,5 @@
 package com.omelan.cofi.components
 
-import androidx.compose.ui.semantics.SemanticsProperties
-import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.omelan.cofi.ui.CofiTheme
@@ -46,11 +44,7 @@ class DescriptionTest {
         }
         val descriptionNode = composeTestRule.onNodeWithText(testDescription)
         descriptionNode.assertIsDisplayed().assertIsToggleable()
-        descriptionNode.assert(
-            SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.Off)
-        )
-        descriptionNode.performClick().assert(
-            SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.On)
-        )
+        descriptionNode.assertIsOff()
+        descriptionNode.performClick().assertIsOn()
     }
 }
