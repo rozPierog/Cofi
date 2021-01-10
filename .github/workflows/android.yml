@@ -28,4 +28,4 @@ jobs:
 #     - name: Android Instrumantation Tests
 #       run: ./gradlew connectedDebugAndroidTest
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew buildDebug
