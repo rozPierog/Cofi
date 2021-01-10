@@ -55,6 +55,13 @@ class StepAddCardTest {
                 .targetContext.resources.getString(stepType.stringRes)
 
             nameNode.assertTextEquals("$expectedName, $expectedLabel")
+//            when (stepType) {
+//                StepType.WAIT ->
+//                    composeTestRule.onNodeWithTag("step_value").assertDoesNotExist()
+//                StepType.ADD_COFFEE, StepType.OTHER, StepType.WATER ->
+//                    composeTestRule.onNodeWithTag("step_value").assertExists()
+//
+//            }
         }
 
     }
