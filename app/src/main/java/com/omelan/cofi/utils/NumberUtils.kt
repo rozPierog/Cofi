@@ -1,17 +1,40 @@
 package com.omelan.cofi.utils
 
-import android.content.res.Resources
-import androidx.compose.ui.unit.dp
-import kotlin.time.DurationUnit
-import kotlin.time.ExperimentalTime
-import kotlin.time.toDuration
-
 fun Int.toMillis() = this * 1000
 
-@ExperimentalTime
-fun Int.toStringDuration(): String {
-    val duration = this.toDuration(DurationUnit.MILLISECONDS)
-    return "${duration.inMinutes.toInt()}:${duration.inSeconds.toInt().toString().padStart(2, '0')}"
-}
+fun Int.toStringDuration(
+    padMinutes: Boolean = false,
+    padSeconds: Boolean = true,
+    showMillis: Boolean = false,
+    padMillis: Boolean = true
+): String {
+    val minutes = this / 1000 / 60
+    val seconds = this / 1000 % 60
+    val millis = this % 1000 / 10
+    val minutesString: String = if (padMinutes) {
+        minutes.toString().padStart(2, '0')
+    } else {
+        minutes.toString()
+    }
+    val secondsString: String = if (padSeconds) {
+        seconds.toString().padStart(2, '0')
+    } else {
+        seconds.toString()
+    }
 
-fun Int.pixelsToDp(resources: Resources?) = (this / (resources?.displayMetrics?.density ?: 1f)).dp
+    val millisString: String = if (showMillis) {
+        if (padMillis) {
+            millis.toString().padStart(2, '0')
+        } else {
+            millis.toString()
+        }
+    } else ""
+
+    return "${minutesString}:${secondsString}${
+        if (millisString.isNotBlank()) {
+            ":${millisString}"
+        } else {
+            ""
+        }
+    }"
+}

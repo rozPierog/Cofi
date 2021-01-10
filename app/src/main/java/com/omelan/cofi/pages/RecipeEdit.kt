@@ -30,7 +30,6 @@ import com.omelan.cofi.ui.shapes
 import kotlin.time.ExperimentalTime
 
 @ExperimentalLayout
-@ExperimentalTime
 @Composable
 fun RecipeEdit(
     saveRecipe: (Recipe, List<Step>) -> Unit,

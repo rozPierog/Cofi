@@ -23,7 +23,6 @@ import kotlin.time.ExperimentalTime
 
 enum class StepProgress { Current, Done, Upcoming }
 
-@ExperimentalTime
 @Composable
 fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Unit)? = null) {
     val constraintModifier = Modifier.animateContentSize()

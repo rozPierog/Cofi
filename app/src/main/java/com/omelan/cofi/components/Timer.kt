@@ -25,11 +25,9 @@ import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.green600
 import com.omelan.cofi.ui.grey300
 import com.omelan.cofi.ui.grey600
-import kotlin.time.DurationUnit
+import com.omelan.cofi.utils.toStringDuration
 import kotlin.time.ExperimentalTime
-import kotlin.time.toDuration
 
-@ExperimentalTime
 @Composable
 fun Timer(
     modifier: Modifier = Modifier,
@@ -51,7 +49,9 @@ fun Timer(
         ) {
             CircularProgressIndicator(
                 progress = 1f,
-                modifier = Modifier.fillMaxWidth().aspectRatio(1f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f),
                 color = if (MaterialTheme.colors.isLight) {
                     grey300
                 } else {
@@ -61,26 +61,25 @@ fun Timer(
             )
             CircularProgressIndicator(
                 progress = animatedProgressValue.value,
-                modifier = Modifier.fillMaxWidth().aspectRatio(1f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f),
                 color = animatedProgressColor.value,
                 strokeWidth = strokeWidth
             )
-            Column(modifier = Modifier.padding(strokeWidth).animateContentSize()) {
+            Column(modifier = Modifier
+                .padding(strokeWidth)
+                .animateContentSize()) {
 
                 if (currentStep != null) {
                     val duration = (currentStep.time * animatedProgressValue.value).toInt()
-                        .toDuration(DurationUnit.MILLISECONDS)
-                    val durationInString = "${
-                    duration.inMinutes.toInt().toString().padStart(2, '0')
-                    }:${
-                    duration.inSeconds.toInt().toString().padStart(2, '0')
-                    }".also {
-                        if (!isInPiP) {
-                            it + ":${
-                            duration.inMilliseconds.toInt().toString().padStart(4, '0')
-                            }"
-                        }
-                    }
+
+                    val durationInString = duration.toStringDuration(
+                        padMillis = true,
+                        padMinutes = true,
+                        padSeconds = true,
+                        showMillis = !isInPiP
+                    )
                     Text(
                         text = durationInString,
                         style = if (isInPiP) {

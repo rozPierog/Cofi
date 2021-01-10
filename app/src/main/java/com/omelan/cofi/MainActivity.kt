@@ -54,7 +54,6 @@ val AmbientSettingsDataStore = staticAmbientOf<DataStore<Preferences>> {
 
 const val appDeepLinkUrl = "https://cofi.omelan.com"
 
-@ExperimentalTime
 class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
     private val dataStore: DataStore<Preferences> = createDataStore(

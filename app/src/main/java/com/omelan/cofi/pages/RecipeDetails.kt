@@ -39,7 +39,6 @@ import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
 
 @ExperimentalMaterialApi
-@ExperimentalTime
 @Composable
 fun RecipeDetails(
     recipeId: Int,
