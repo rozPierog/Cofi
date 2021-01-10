@@ -37,6 +37,50 @@ val dummySteps = listOf(
     Step(name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
 )
 
+enum class RecipeIcon {
+    V60 {
+        override val icon: Int
+            get() = TODO("Not yet implemented")
+    },
+    FrenchPress {
+        override val icon: Int
+            get() = TODO("Not yet implemented")
+    },
+    Grinder {
+        override val icon: Int
+            get() = TODO("Not yet implemented")
+    },
+    Chemex {
+        override val icon: Int
+            get() = TODO("Not yet implemented")
+    },
+    Areopress {
+        override val icon: Int
+            get() = TODO("Not yet implemented")
+    };
+
+    abstract val icon: Int
+}
+
+class RecipeIconTypeConverter {
+    @TypeConverter
+    fun recipeIconToString(type: RecipeIcon): String {
+        return type.name
+    }
+
+    @TypeConverter
+    fun stringToRecipeIcon(type: String): RecipeIcon {
+        return when (type) {
+            RecipeIcon.V60.name -> RecipeIcon.V60
+            RecipeIcon.FrenchPress.name -> RecipeIcon.FrenchPress
+            RecipeIcon.Grinder.name -> RecipeIcon.Grinder
+            RecipeIcon.Chemex.name -> RecipeIcon.Chemex
+            RecipeIcon.Areopress.name -> RecipeIcon.Areopress
+            else -> RecipeIcon.Grinder
+        }
+    }
+}
+
 @Entity
 data class Recipe(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
@@ -45,9 +89,8 @@ data class Recipe(
 //    @Ignore
 //    val steps: List<Step> = listOf(),
     @ColumnInfo(name = "last_finished") val lastFinished: Long = 0L,
-    @DrawableRes
-    @ColumnInfo(name = "icon_name") val iconName: Int = R.drawable.ic_coffee,
-)
+    @ColumnInfo(name = "icon") val recipeIcon: RecipeIcon = RecipeIcon.Grinder,
+    )
 
 data class RecipesWithSteps(
     @Embedded val recipe: Recipe,

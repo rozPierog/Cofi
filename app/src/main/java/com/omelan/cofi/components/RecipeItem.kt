@@ -79,7 +79,6 @@ fun PreviewRecipeItem() {
             id = 0,
             name = "Ultimate V60",
             description = "Recipe by Hoffman",
-            iconName = R.drawable.ic_coffee
         ),
         onPress = {}
     )
