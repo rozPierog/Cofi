@@ -58,10 +58,22 @@ class AppDatabaseTest {
         val firstRecipe = allRecipes.getOrAwaitValue().first()
         val lastRecipe = allRecipes.getOrAwaitValue().last()
         val stepsForFirst = StepType.values().mapIndexed { index, type ->
-            Step(name = "$index", recipeId = firstRecipe.id, time = 5000, type = type)
+            Step(
+                name = "$index",
+                recipeId = firstRecipe.id,
+                time = 5000,
+                type = type,
+                orderInRecipe = index
+            )
         }
         val stepsForSecond = StepType.values().mapIndexed { index, type ->
-            Step(name = "$index", recipeId = lastRecipe.id, time = 5000, type = type)
+            Step(
+                name = "$index",
+                recipeId = lastRecipe.id,
+                time = 5000,
+                type = type,
+                orderInRecipe = index
+            )
         }
         runBlocking {
             stepDao.insertAll(stepsForFirst + stepsForSecond)

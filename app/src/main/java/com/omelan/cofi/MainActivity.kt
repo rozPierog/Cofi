@@ -167,7 +167,11 @@ class MainActivity : AppCompatActivity() {
                                 saveRecipe = { _recipe, _steps ->
                                     lifecycleScope.launch {
                                         db.recipeDao().updateRecipe(_recipe)
-                                        db.stepDao().updateSteps(_steps)
+                                        db.stepDao().deleteAllStepsForRecipe(_recipe.id)
+                                        db.stepDao()
+                                            .insertAll(_steps.map {
+                                                it.copy(recipeId = _recipe.id)
+                                            })
                                     }
                                     goBack()
                                 },

@@ -104,7 +104,8 @@ fun StepListItemPreview() {
             name = "Add water",
             time = 35.toMillis(),
             type = StepType.WATER,
-            value = 60
+            value = 60,
+            orderInRecipe = 0,
         ),
         stepProgress = StepProgress.Current,
     )

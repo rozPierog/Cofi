@@ -71,8 +71,7 @@ data class Step(
     val name: String,
     val time: Int,
     val type: StepType,
-    // TODO: Add ordering of steps
-//    val order: Int,
+    @ColumnInfo(name = "order_in_recipe") val orderInRecipe: Int?,
     val value: Int? = null
 )
 
@@ -83,7 +82,7 @@ interface StepDao {
     suspend fun getAll(): List<Step>
 
     @WorkerThread
-    @Query("SELECT * FROM step WHERE recipe_id IS :recipeId")
+    @Query("SELECT * FROM step WHERE recipe_id IS :recipeId ORDER BY order_in_recipe ASC")
     fun getStepsForRecipe(recipeId: Int): LiveData<List<Step>>
 
     @WorkerThread
@@ -97,9 +96,6 @@ interface StepDao {
     @WorkerThread
     @Delete
     suspend fun delete(step: Step)
-
-    @Update
-    suspend fun updateSteps(steps: List<Step>)
 
     @Query("DELETE FROM step WHERE recipe_id = :recipeId")
     suspend fun deleteAllStepsForRecipe(recipeId: Int)

@@ -23,7 +23,7 @@ import com.omelan.cofi.utils.toMillis
 
 @ExperimentalLayout
 @Composable
-fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
+fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit, orderInRecipe: Int) {
     val pickedType = remember(stepToEdit) { mutableStateOf<StepType?>(stepToEdit?.type) }
     val pickedTypeName = pickedType.value?.stringRes?.let { stringResource(id = it) } ?: ""
     val stepName = remember(stepToEdit, pickedTypeName) {
@@ -125,8 +125,8 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                                         stepValue.value.toInt()
                                     } else {
                                         null
-                                    }
-
+                                    },
+                                    orderInRecipe = orderInRecipe,
                                 )
                             )
                         },
@@ -163,5 +163,5 @@ private fun ensureNumbersOnly(string: String): String? {
 @Composable
 @Preview
 fun StepAddCardPreview() {
-    StepAddCard(save = {})
+    StepAddCard(save = {}, orderInRecipe = 0)
 }

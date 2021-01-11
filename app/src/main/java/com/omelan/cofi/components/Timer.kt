@@ -154,7 +154,13 @@ fun Timer(
 @Composable
 fun TimerPreview() {
     Timer(
-        currentStep = Step(id = 1, name = "Stir", time = 5 * 1000, type = StepType.OTHER),
+        currentStep = Step(
+            id = 1,
+            name = "Stir",
+            time = 5 * 1000,
+            type = StepType.OTHER,
+            orderInRecipe = 0,
+        ),
         animatedProgressValue = animatedFloat(initVal = 0.5f),
         animatedProgressColor = animatedColor(initVal = green600),
         isInPiP = false,
@@ -171,7 +177,8 @@ fun TimerPreviewPiP() {
             name = "Stir",
             time = 5 * 1000,
             type = StepType.WATER,
-            value = 300
+            value = 300,
+            orderInRecipe = 0,
         ),
         animatedProgressValue = animatedFloat(initVal = 0.5f),
         animatedProgressColor = animatedColor(initVal = green600),

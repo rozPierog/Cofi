@@ -140,7 +140,8 @@ fun RecipeEdit(
                                             }
                                         }
                                     stepWithOpenEditor.value = null
-                                }
+                                },
+                                orderInRecipe = steps.value.indexOf(step)
                             )
                         } else {
                             StepListItem(
@@ -160,7 +161,8 @@ fun RecipeEdit(
                                         *steps.value.toTypedArray(),
                                         stepToSave
                                     )
-                                }
+                                },
+                                orderInRecipe = steps.value.size
                             )
                         }
                     }

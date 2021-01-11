@@ -24,7 +24,7 @@ class StepAddCardTest {
     fun testRender() {
         composeTestRule.setContent {
             CofiTheme {
-                StepAddCard(save = {}, stepToEdit = null)
+                StepAddCard(save = {}, stepToEdit = null, orderInRecipe = 0)
             }
         }
         composeTestRule.onNodeWithTag("step_type_button_${StepType.WAIT.name.toLowerCase()}")
@@ -36,7 +36,7 @@ class StepAddCardTest {
     fun testFillName() {
         composeTestRule.setContent {
             CofiTheme {
-                StepAddCard(save = {}, stepToEdit = null)
+                StepAddCard(save = {}, stepToEdit = null, orderInRecipe = 0)
             }
         }
         composeTestRule.onNodeWithTag("step_name").assertDoesNotExist()

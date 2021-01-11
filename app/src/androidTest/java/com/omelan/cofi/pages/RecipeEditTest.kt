@@ -23,7 +23,8 @@ class RecipeEditTest {
     @Test
     fun testAddingNameAndDescription() {
         val expectedRecipe = Recipe(name = "Name of test recipe", description = "Test test test")
-        val expectedStep = Step(name = "Step 1", time = 5000, type = StepType.WAIT)
+        val expectedStep =
+            Step(name = "Step 1", time = 5000, type = StepType.WAIT, orderInRecipe = 0)
         composeTestRule.setContent {
             CofiTheme {
                 Providers(
@@ -70,8 +71,10 @@ class RecipeEditTest {
     fun testEditRecipe() {
         val expectedRecipe = Recipe(name = "Name of recipe", description = "Test test test")
         val startingRecipe = Recipe(name = "of Name test recipe", description = "no no no no")
-        val expectedStep = Step(name = "Step 1", time = 5000, type = StepType.WAIT)
-        val startingStep = Step(name = "Step 0", time = 2000, type = StepType.ADD_COFFEE)
+        val expectedStep =
+            Step(name = "Step 1", time = 5000, type = StepType.WAIT, orderInRecipe = 0)
+        val startingStep =
+            Step(name = "Step 0", time = 2000, type = StepType.ADD_COFFEE, orderInRecipe = 0)
         composeTestRule.setContent {
             CofiTheme {
                 Providers(

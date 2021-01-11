@@ -5,35 +5,35 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-val dummySteps = listOf(
-    Step(
-        name = "Add Coffee",
-        value = 30,
-        time = 5 * 1000,
-        type = StepType.ADD_COFFEE
-    ),
-    Step(
-        name = "Add water",
-        value = 60,
-        time = 5 * 1000,
-        type = StepType.WATER
-    ),
-    Step(name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
-    Step(name = "Wait", time = 35 * 1000, type = StepType.WAIT),
-    Step(
-        name = "Add Water",
-        time = 30 * 1000,
-        type = StepType.WATER,
-        value = 300
-    ),
-    Step(
-        name = "Add Water",
-        time = 30 * 1000,
-        type = StepType.WATER,
-        value = 200
-    ),
-    Step(name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
-)
+// val dummySteps = listOf(
+//    Step(
+//        name = "Add Coffee",
+//        value = 30,
+//        time = 5 * 1000,
+//        type = StepType.ADD_COFFEE
+//    ),
+//    Step(
+//        name = "Add water",
+//        value = 60,
+//        time = 5 * 1000,
+//        type = StepType.WATER
+//    ),
+//    Step(name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
+//    Step(name = "Wait", time = 35 * 1000, type = StepType.WAIT),
+//    Step(
+//        name = "Add Water",
+//        time = 30 * 1000,
+//        type = StepType.WATER,
+//        value = 300
+//    ),
+//    Step(
+//        name = "Add Water",
+//        time = 30 * 1000,
+//        type = StepType.WATER,
+//        value = 200
+//    ),
+//    Step(name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
+// )
 
 enum class RecipeIcon {
     V60 {
