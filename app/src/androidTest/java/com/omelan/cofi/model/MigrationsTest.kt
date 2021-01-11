@@ -11,35 +11,26 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-class MigrationTest {
-    val TEST_DB = "migration-test"
-
-    // Array of all migrations
-    val ALL_MIGRATIONS = arrayOf(
-        MIGRATION_1_2
-    )
+class MigrationsTest {
+    val testDBName = "migration-test"
 
     @get:Rule
     val helper: MigrationTestHelper = MigrationTestHelper(
         InstrumentationRegistry.getInstrumentation(),
         AppDatabase::class.java.canonicalName,
-        FrameworkSQLiteOpenHelperFactory()
+        FrameworkSQLiteOpenHelperFactory(),
     )
 
     @Test
     @Throws(IOException::class)
     fun migrateAll() {
-        // Create earliest version of the database.
-        helper.createDatabase(TEST_DB, 1).apply {
+        helper.createDatabase(testDBName, 1).apply {
             close()
         }
-
-        // Open latest version of the database. Room will validate the schema
-        // once all migrations execute.
         Room.databaseBuilder(
             InstrumentationRegistry.getInstrumentation().targetContext,
             AppDatabase::class.java,
-            TEST_DB
+            testDBName,
         ).addMigrations(*ALL_MIGRATIONS).build().apply {
             openHelper.writableDatabase
             close()

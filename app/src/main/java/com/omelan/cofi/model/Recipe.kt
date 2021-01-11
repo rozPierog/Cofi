@@ -1,11 +1,9 @@
 package com.omelan.cofi.model
 
 import android.app.Application
-import androidx.annotation.DrawableRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.omelan.cofi.R
 
 val dummySteps = listOf(
     Step(
@@ -90,7 +88,7 @@ data class Recipe(
 //    val steps: List<Step> = listOf(),
     @ColumnInfo(name = "last_finished") val lastFinished: Long = 0L,
     @ColumnInfo(name = "icon") val recipeIcon: RecipeIcon = RecipeIcon.Grinder,
-    )
+)
 
 data class RecipesWithSteps(
     @Embedded val recipe: Recipe,

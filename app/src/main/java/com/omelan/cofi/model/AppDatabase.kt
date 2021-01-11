@@ -8,30 +8,33 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-//REMEMBER TO ADD MIGRATIONS TO LIST OF MIGRATION IN TESTS
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         // SQLite supports a limited operations for ALTER.
         // Create the new table
         database.execSQL(
-            "CREATE TABLE recipe_new ("
-                    + "id INTEGER NOT NULL,"
-                    + "name TEXT NOT NULL,"
-                    + "description TEXT NOT NULL,"
-                    + "last_finished INTEGER NOT NULL,"
-                    + "icon TEXT NOT NULL,"
-                    + "PRIMARY KEY(id))");
+            "CREATE TABLE recipe_new (" +
+                "id INTEGER NOT NULL," +
+                "name TEXT NOT NULL," +
+                "description TEXT NOT NULL," +
+                "last_finished INTEGER NOT NULL," +
+                "icon TEXT NOT NULL," +
+                "PRIMARY KEY(id))"
+        )
         // Copy the data
-        database.execSQL("INSERT INTO recipe_new (id, name, description, last_finished) "
-                + "SELECT id, name, description, last_finished "
-                + "FROM recipe");
+        database.execSQL(
+            "INSERT INTO recipe_new (id, name, description, last_finished) " +
+                "SELECT id, name, description, last_finished " +
+                "FROM recipe"
+        )
         // Remove the old table
-        database.execSQL("DROP TABLE recipe");
+        database.execSQL("DROP TABLE recipe")
         // Change the table name to the correct one
-        database.execSQL("ALTER TABLE recipe_new RENAME TO recipe");
+        database.execSQL("ALTER TABLE recipe_new RENAME TO recipe")
     }
 }
 
+val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2)
 
 @Database(entities = [Recipe::class, Step::class], version = 2)
 @TypeConverters(StepTypeConverter::class, RecipeIconTypeConverter::class)
@@ -51,7 +54,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "cofi-database.db"
                 )
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(*ALL_MIGRATIONS)
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
@@ -59,6 +62,5 @@ abstract class AppDatabase : RoomDatabase() {
                 return instance
             }
         }
-
     }
 }

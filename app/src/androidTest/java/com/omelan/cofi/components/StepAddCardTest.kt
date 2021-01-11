@@ -18,12 +18,10 @@ import org.junit.runners.JUnit4
 class StepAddCardTest {
     @get:Rule
     val composeTestRule = createComposeRule()
-    // createComposeRule() if you don't need access to the activityTestRule
 
     @ExperimentalLayout
     @Test
     fun testRender() {
-        // Start the app
         composeTestRule.setContent {
             CofiTheme {
                 StepAddCard(save = {}, stepToEdit = null)
