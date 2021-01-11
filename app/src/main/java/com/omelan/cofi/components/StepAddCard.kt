@@ -20,10 +20,11 @@ import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.full
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.toMillis
+import java.util.*
 
 @ExperimentalLayout
 @Composable
-fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit, orderInRecipe: Int) {
+fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit, orderInRecipe: Int, recipeId: Int) {
     val pickedType = remember(stepToEdit) { mutableStateOf<StepType?>(stepToEdit?.type) }
     val pickedTypeName = pickedType.value?.stringRes?.let { stringResource(id = it) } ?: ""
     val stepName = remember(stepToEdit, pickedTypeName) {
@@ -58,7 +59,7 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit, orderInRecipe: I
                                 onClick = { pickedType.value = stepType },
                                 shape = shapes.full,
                                 modifier = Modifier.testTag(
-                                    "step_type_button_${stepType.name.toLowerCase()}"
+                                    "step_type_button_${stepType.name.toLowerCase(Locale.ROOT)}"
                                 )
                             ) {
                                 Text(
@@ -126,11 +127,14 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit, orderInRecipe: I
                                     } else {
                                         null
                                     },
+                                    recipeId = recipeId,
                                     orderInRecipe = orderInRecipe,
                                 )
                             )
                         },
-                        modifier = Modifier.padding(vertical = 15.dp).testTag("step_save"),
+                        modifier = Modifier
+                            .padding(vertical = 15.dp)
+                            .testTag("step_save"),
                     ) {
                         Text(text = stringResource(id = R.string.step_add_save))
                     }
@@ -163,5 +167,5 @@ private fun ensureNumbersOnly(string: String): String? {
 @Composable
 @Preview
 fun StepAddCardPreview() {
-    StepAddCard(save = {}, orderInRecipe = 0)
+    StepAddCard(save = {}, orderInRecipe = 0, recipeId = 0)
 }
