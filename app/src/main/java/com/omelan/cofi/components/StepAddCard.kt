@@ -92,7 +92,7 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.testTag(
-                            "step_value"
+                            "step_time"
                         ),
                     )
                     if (listOf<StepType>(
@@ -108,7 +108,8 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                                 stepValue.value = ensureNumbersOnly(it) ?: stepValue.value
                             },
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier.testTag("step_value")
                         )
                     }
                     Button(
@@ -118,10 +119,10 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                                     name = stepName.value,
                                     time = stepTime.value.safeToInt().toMillis(),
                                     type = pickedType.value ?: StepType.OTHER,
-                                    value = if (stepValue.value.isNotBlank() ||
-                                        stepValue.value != "0"
+                                    value = if (stepValue.value.isNotBlank() &&
+                                        stepValue.value.toInt() != 0
                                     ) {
-                                        stepValue.value.safeToInt()
+                                        stepValue.value.toInt()
                                     } else {
                                         null
                                     }
@@ -129,7 +130,7 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit) {
                                 )
                             )
                         },
-                        modifier = Modifier.padding(vertical = 15.dp)
+                        modifier = Modifier.padding(vertical = 15.dp).testTag("step_save"),
                     ) {
                         Text(text = stringResource(id = R.string.step_add_save))
                     }
