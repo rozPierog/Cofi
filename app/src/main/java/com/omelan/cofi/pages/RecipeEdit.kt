@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.WithConstraints
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -64,6 +65,7 @@ fun RecipeEdit(
                             }
                         }
                         IconButton(
+                            modifier = Modifier.testTag("recipe_edit_save"),
                             onClick = {
                                 saveRecipe(
                                     recipeToEdit.copy(
@@ -108,7 +110,7 @@ fun RecipeEdit(
                         OutlinedTextField(
                             value = name.value,
                             onValueChange = { name.value = it },
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().testTag("recipe_edit_name"),
                             singleLine = true,
                             label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
                         )
@@ -117,7 +119,7 @@ fun RecipeEdit(
                         OutlinedTextField(
                             value = description.value,
                             onValueChange = { description.value = it },
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().testTag("recipe_edit_description"),
                             label = {
                                 Text(text = stringResource(id = R.string.recipe_edit_description))
                             },
