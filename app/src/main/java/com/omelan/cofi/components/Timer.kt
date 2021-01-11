@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -90,9 +91,11 @@ fun Timer(
                             MaterialTheme.typography.h6
                         },
                         color = MaterialTheme.colors.onSurface,
-                        modifier = Modifier.align(
-                            Alignment.CenterHorizontally
-                        )
+                        modifier = Modifier
+                            .align(
+                                Alignment.CenterHorizontally
+                            )
+                            .testTag("timer_duration")
                     )
                     Divider(
                         color = MaterialTheme.colors.onSurface,
@@ -109,9 +112,11 @@ fun Timer(
                         } else {
                             MaterialTheme.typography.subtitle1
                         },
-                        modifier = Modifier.align(
-                            Alignment.CenterHorizontally
-                        )
+                        modifier = Modifier
+                            .align(
+                                Alignment.CenterHorizontally
+                            )
+                            .testTag("timer_name")
                     )
                     currentStep.value?.let {
                         val currentValueFromProgress =
@@ -126,9 +131,11 @@ fun Timer(
                                 it
                             ),
                             color = MaterialTheme.colors.onSurface,
-                            modifier = Modifier.align(
-                                Alignment.CenterHorizontally
-                            ),
+                            modifier = Modifier
+                                .align(
+                                    Alignment.CenterHorizontally
+                                )
+                                .testTag("timer_value"),
                             style = if (isInPiP) {
                                 MaterialTheme.typography.h6
                             } else {
