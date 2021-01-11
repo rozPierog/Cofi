@@ -20,7 +20,7 @@ class TimerTest {
 
     @Test
     fun testOnWait() {
-        val step = Step(name = "Test", time = 5000, type = StepType.WAIT)
+        val step = Step(name = "Test", time = 5000, type = StepType.WAIT, orderInRecipe = 0)
         composeTestRule.setContent {
             CofiTheme {
                 Timer(
@@ -38,7 +38,13 @@ class TimerTest {
 
     @Test
     fun testOnCoffee() {
-        val step = Step(name = "Test", time = 5000, type = StepType.ADD_COFFEE, value = 500)
+        val step = Step(
+            name = "Test",
+            time = 5000,
+            type = StepType.ADD_COFFEE,
+            value = 500,
+            orderInRecipe = 0
+        )
         composeTestRule.setContent {
             CofiTheme {
                 Timer(

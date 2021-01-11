@@ -22,9 +22,16 @@ class RecipeEditTest {
     @ExperimentalLayout
     @Test
     fun testAddingNameAndDescription() {
-        val expectedRecipe = Recipe(name = "Name of test recipe", description = "Test test test")
+        val expectedRecipe =
+            Recipe(id = 0, name = "Name of test recipe", description = "Test test test")
         val expectedStep =
-            Step(name = "Step 1", time = 5000, type = StepType.WAIT, orderInRecipe = 0)
+            Step(
+                name = "Step 1",
+                time = 5000,
+                type = StepType.WAIT,
+                orderInRecipe = 0,
+                recipeId = 0
+            )
         composeTestRule.setContent {
             CofiTheme {
                 Providers(
@@ -35,7 +42,7 @@ class RecipeEditTest {
                             assert(
                                 expectedRecipe == recipe
                             ) {
-                                "Expected recipe do not equal saved recipe"
+                                "Expected: $expectedRecipe \ngot: $recipe"
                             }
                             assert(
                                 steps.first() == expectedStep
@@ -69,12 +76,25 @@ class RecipeEditTest {
     @ExperimentalLayout
     @Test
     fun testEditRecipe() {
-        val expectedRecipe = Recipe(name = "Name of recipe", description = "Test test test")
-        val startingRecipe = Recipe(name = "of Name test recipe", description = "no no no no")
+        val expectedRecipe = Recipe(id = 3, name = "Name of recipe", description = "Test test test")
+        val startingRecipe =
+            Recipe(id = 3, name = "of Name test recipe", description = "no no no no")
         val expectedStep =
-            Step(name = "Step 1", time = 5000, type = StepType.WAIT, orderInRecipe = 0)
+            Step(
+                name = "Step 1",
+                time = 5000,
+                type = StepType.WAIT,
+                orderInRecipe = 0,
+                recipeId = 3
+            )
         val startingStep =
-            Step(name = "Step 0", time = 2000, type = StepType.ADD_COFFEE, orderInRecipe = 0)
+            Step(
+                name = "Step 0",
+                time = 2000,
+                type = StepType.ADD_COFFEE,
+                orderInRecipe = 0,
+                recipeId = 3
+            )
         composeTestRule.setContent {
             CofiTheme {
                 Providers(
