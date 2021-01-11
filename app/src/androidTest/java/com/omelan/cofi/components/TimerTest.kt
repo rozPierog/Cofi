@@ -2,7 +2,6 @@ package com.omelan.cofi.components
 
 import androidx.compose.animation.animatedColor
 import androidx.compose.animation.animatedFloat
-import androidx.compose.foundation.layout.ExperimentalLayout
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.omelan.cofi.model.Step

@@ -29,18 +29,20 @@ class RecipeEditTest {
                 Providers(
                     AmbientPiPState provides false,
                 ) {
-                    RecipeEdit(saveRecipe = { recipe: Recipe, steps: List<Step> ->
-                        assert(
-                            expectedRecipe == recipe
-                        ) {
-                            "Expected recipe do not equal saved recipe"
+                    RecipeEdit(
+                        saveRecipe = { recipe: Recipe, steps: List<Step> ->
+                            assert(
+                                expectedRecipe == recipe
+                            ) {
+                                "Expected recipe do not equal saved recipe"
+                            }
+                            assert(
+                                steps.first() == expectedStep
+                            ) {
+                                "expected: $expectedStep \ngot: ${steps.first()}"
+                            }
                         }
-                        assert(
-                            steps.first() == expectedStep
-                        ) {
-                            "expected: $expectedStep \ngot: ${steps.first()}"
-                        }
-                    })
+                    )
                 }
             }
         }
@@ -114,6 +116,4 @@ class RecipeEditTest {
 
         composeTestRule.onNodeWithTag("recipe_edit_save").performClick()
     }
-
-
 }

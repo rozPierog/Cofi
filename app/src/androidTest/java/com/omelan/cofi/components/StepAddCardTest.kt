@@ -58,7 +58,6 @@ class StepAddCardTest {
                     composeTestRule.onNodeWithTag("step_value").assertDoesNotExist()
                 StepType.ADD_COFFEE, StepType.OTHER, StepType.WATER ->
                     composeTestRule.onNodeWithTag("step_value").assertExists()
-
             }
         }
     }
