@@ -29,4 +29,33 @@ class NumberUtilsKtTest : TestCase() {
             )
         )
     }
+
+    fun testSafeToInt() {
+        mapOf(
+            "0" to 0,
+            "a" to 0,
+            "-" to 0,
+            "1" to 1,
+            "23 " to 23,
+            " 17" to 17,
+            "2!" to 0,
+        ).forEach { entry: Map.Entry<String, Int> ->
+            assertEquals(entry.value, entry.key.safeToInt())
+        }
+    }
+
+    fun testEnsureNumbersOnly() {
+        mapOf(
+            "" to "",
+            " " to null,
+            "a" to null,
+            "-" to null,
+            "1" to "1",
+            "23 " to "23",
+            " 17" to "17",
+            "2!" to null,
+        ).forEach {
+            assertEquals(it.value, ensureNumbersOnly(it.key))
+        }
+    }
 }

@@ -38,3 +38,27 @@ fun Int.toStringDuration(
     }
     }"
 }
+
+fun ensureNumbersOnly(string: String): String? {
+    if (string.isEmpty()) {
+        return string
+    }
+    return try {
+        string.trim().toInt().toString()
+    } catch (e: NumberFormatException) {
+        null
+    }
+}
+
+fun String.safeToInt(): Int {
+    return when {
+        this.isBlank() -> 0
+        else -> {
+            try {
+                this.trim().toInt()
+            } catch (e: Exception) {
+                0
+            }
+        }
+    }
+}

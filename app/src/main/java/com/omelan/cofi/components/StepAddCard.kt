@@ -19,6 +19,8 @@ import com.omelan.cofi.model.StepType
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.full
 import com.omelan.cofi.ui.shapes
+import com.omelan.cofi.utils.ensureNumbersOnly
+import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
 import java.util.*
 
@@ -141,25 +143,6 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit, orderInRecipe: I
                 }
             }
         }
-    }
-}
-
-private fun String.safeToInt(): Int {
-    return when {
-        this.isEmpty() -> 0
-        else -> this.toInt()
-    }
-}
-
-private fun ensureNumbersOnly(string: String): String? {
-    if (string.isEmpty()) {
-        return string
-    }
-    return try {
-        string.toInt()
-        string
-    } catch (e: NumberFormatException) {
-        null
     }
 }
 
