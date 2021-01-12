@@ -29,7 +29,12 @@ import java.util.*
 
 @ExperimentalLayout
 @Composable
-fun StepAddCard(stepToEdit: Step? = null, save: (Step?) -> Unit, orderInRecipe: Int, recipeId: Int) {
+fun StepAddCard(
+    stepToEdit: Step? = null,
+    save: (Step?) -> Unit,
+    orderInRecipe: Int,
+    recipeId: Int
+) {
     val pickedType = remember(stepToEdit) { mutableStateOf<StepType?>(stepToEdit?.type) }
     val pickedTypeName = pickedType.value?.stringRes?.let { stringResource(id = it) } ?: ""
     val stepName = remember(stepToEdit, pickedTypeName) {
@@ -118,7 +123,10 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step?) -> Unit, orderInRecipe: 
                             modifier = Modifier.testTag("step_value")
                         )
                     }
-                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Button(
                             onClick = {
                                 save(
