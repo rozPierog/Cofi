@@ -1,5 +1,6 @@
 package com.omelan.cofi.components
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animatedColor
 import androidx.compose.animation.animatedFloat
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -13,6 +14,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
+@ExperimentalAnimationApi
 @RunWith(JUnit4::class)
 class TimerTest {
     @get:Rule

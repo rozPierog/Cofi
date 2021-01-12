@@ -1,8 +1,6 @@
 package com.omelan.cofi.components
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.animatedColor
-import androidx.compose.animation.animatedFloat
+import androidx.compose.animation.*
 import androidx.compose.animation.core.AnimatedFloat
 import androidx.compose.animation.core.AnimatedValue
 import androidx.compose.animation.core.AnimationVector4D
@@ -27,8 +25,8 @@ import com.omelan.cofi.ui.green600
 import com.omelan.cofi.ui.grey300
 import com.omelan.cofi.ui.grey600
 import com.omelan.cofi.utils.toStringDuration
-import kotlin.time.ExperimentalTime
 
+@ExperimentalAnimationApi
 @Composable
 fun Timer(
     modifier: Modifier = Modifier,
@@ -36,6 +34,7 @@ fun Timer(
     animatedProgressValue: AnimatedFloat,
     animatedProgressColor: AnimatedValue<Color, AnimationVector4D>,
     isInPiP: Boolean,
+    isDone: Boolean = false,
 ) {
     val strokeWidth = if (isInPiP) {
         15.dp
@@ -68,23 +67,15 @@ fun Timer(
                 color = animatedProgressColor.value,
                 strokeWidth = strokeWidth
             )
-            Column(
-                modifier = Modifier
-                    .padding(strokeWidth)
-                    .animateContentSize()
-            ) {
 
-                if (currentStep != null) {
-                    val duration = (currentStep.time * animatedProgressValue.value).toInt()
-
-                    val durationInString = duration.toStringDuration(
-                        padMillis = true,
-                        padMinutes = true,
-                        padSeconds = true,
-                        showMillis = !isInPiP
-                    )
+            AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
+                Column(
+                    modifier = Modifier
+                        .padding(strokeWidth)
+                        .animateContentSize()
+                ) {
                     Text(
-                        text = durationInString,
+                        text = stringResource(id = R.string.timer_enjoy),
                         style = if (isInPiP) {
                             MaterialTheme.typography.subtitle1
                         } else {
@@ -95,53 +86,89 @@ fun Timer(
                             .align(
                                 Alignment.CenterHorizontally
                             )
-                            .testTag("timer_duration")
+                            .testTag("timer_enjoy")
                     )
-                    Divider(
-                        color = MaterialTheme.colors.onSurface,
-                    )
-                    Text(
-                        text = stringResource(
-                            id = R.string.timer_step_name_time,
-                            currentStep.name,
-                            currentStep.time / 1000
-                        ),
-                        color = MaterialTheme.colors.onSurface,
-                        style = if (isInPiP) {
-                            MaterialTheme.typography.subtitle2
-                        } else {
-                            MaterialTheme.typography.subtitle1
-                        },
-                        modifier = Modifier
-                            .align(
-                                Alignment.CenterHorizontally
-                            )
-                            .testTag("timer_name")
-                    )
-                    currentStep.value?.let {
-                        val currentValueFromProgress =
-                            (currentStep.value * animatedProgressValue.value).toInt()
-                        Divider(
-                            color = MaterialTheme.colors.onSurface,
+                }
+            }
+            AnimatedVisibility(
+                visible = currentStep != null && !isDone,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(strokeWidth)
+                        .animateContentSize()
+                ) {
+                    if (currentStep != null) {
+                        val duration = (currentStep.time * animatedProgressValue.value).toInt()
+
+                        val durationInString = duration.toStringDuration(
+                            padMillis = true,
+                            padMinutes = true,
+                            padSeconds = true,
+                            showMillis = !isInPiP
                         )
                         Text(
-                            text = stringResource(
-                                id = R.string.timer_progress_weight,
-                                currentValueFromProgress,
-                                it
-                            ),
+                            text = durationInString,
+                            style = if (isInPiP) {
+                                MaterialTheme.typography.subtitle1
+                            } else {
+                                MaterialTheme.typography.h6
+                            },
                             color = MaterialTheme.colors.onSurface,
                             modifier = Modifier
                                 .align(
                                     Alignment.CenterHorizontally
                                 )
-                                .testTag("timer_value"),
-                            style = if (isInPiP) {
-                                MaterialTheme.typography.h6
-                            } else {
-                                MaterialTheme.typography.h5
-                            },
+                                .testTag("timer_duration")
                         )
+                        Divider(
+                            color = MaterialTheme.colors.onSurface,
+                        )
+                        Text(
+                            text = stringResource(
+                                id = R.string.timer_step_name_time,
+                                currentStep.name,
+                                currentStep.time / 1000
+                            ),
+                            color = MaterialTheme.colors.onSurface,
+                            style = if (isInPiP) {
+                                MaterialTheme.typography.subtitle2
+                            } else {
+                                MaterialTheme.typography.subtitle1
+                            },
+                            modifier = Modifier
+                                .align(
+                                    Alignment.CenterHorizontally
+                                )
+                                .testTag("timer_name")
+                        )
+                        currentStep.value?.let {
+                            val currentValueFromProgress =
+                                (currentStep.value * animatedProgressValue.value).toInt()
+                            Divider(
+                                color = MaterialTheme.colors.onSurface,
+                            )
+                            Text(
+                                text = stringResource(
+                                    id = R.string.timer_progress_weight,
+                                    currentValueFromProgress,
+                                    it
+                                ),
+                                color = MaterialTheme.colors.onSurface,
+                                modifier = Modifier
+                                    .align(
+                                        Alignment.CenterHorizontally
+                                    )
+                                    .testTag("timer_value"),
+                                style = if (isInPiP) {
+                                    MaterialTheme.typography.h6
+                                } else {
+                                    MaterialTheme.typography.h5
+                                },
+                            )
+                        }
                     }
                 }
             }
@@ -149,7 +176,8 @@ fun Timer(
     }
 }
 
-@ExperimentalTime
+
+@ExperimentalAnimationApi
 @Preview
 @Composable
 fun TimerPreview() {
@@ -164,10 +192,11 @@ fun TimerPreview() {
         animatedProgressValue = animatedFloat(initVal = 0.5f),
         animatedProgressColor = animatedColor(initVal = green600),
         isInPiP = false,
+        isDone = false
     )
 }
 
-@ExperimentalTime
+@ExperimentalAnimationApi
 @Preview
 @Composable
 fun TimerPreviewPiP() {
@@ -183,5 +212,19 @@ fun TimerPreviewPiP() {
         animatedProgressValue = animatedFloat(initVal = 0.5f),
         animatedProgressColor = animatedColor(initVal = green600),
         isInPiP = true,
+        isDone = false
+    )
+}
+
+@ExperimentalAnimationApi
+@Preview
+@Composable
+fun TimerPreviewDone() {
+    Timer(
+        currentStep = null,
+        animatedProgressValue = animatedFloat(initVal = 0.5f),
+        animatedProgressColor = animatedColor(initVal = green600),
+        isInPiP = false,
+        isDone = true
     )
 }

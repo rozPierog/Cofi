@@ -1,5 +1,6 @@
 package com.omelan.cofi.pages
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.animatedColor
 import androidx.compose.animation.animatedFloat
@@ -38,6 +39,7 @@ import dev.chrisbanes.accompanist.insets.*
 import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun RecipeDetails(
@@ -50,6 +52,9 @@ fun RecipeDetails(
     recipeViewModel: RecipeViewModel = viewModel(),
 ) {
     val (currentStep, setCurrentStep) = remember { mutableStateOf<Step?>(null) }
+    var isAnimationRunning by remember { mutableStateOf(false) }
+    var isDone by remember { mutableStateOf(false) }
+    var showAutomateLinkDialog by remember { mutableStateOf(false) }
     val steps = stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
     val recipe =
         recipeViewModel.getRecipe(recipeId).observeAsState(Recipe(name = "", description = ""))
@@ -58,9 +63,8 @@ fun RecipeDetails(
     val haptics = Haptics(AmbientContext.current)
     val animatedProgressValue = animatedFloat(0f)
     val animatedProgressColor = animatedColor(Color.DarkGray)
-    var isAnimationRunning by remember { mutableStateOf(false) }
+
     val clipboardManager = AmbientClipboardManager.current
-    var showAutomateLinkDialog by remember { mutableStateOf(false) }
     val snackbarState = SnackbarHostState()
     val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
@@ -70,6 +74,7 @@ fun RecipeDetails(
             snackbarState.showSnackbar(message = snackbarMessage)
         }
     }
+
     fun pauseAnimations() {
         animatedProgressColor.stop()
         animatedProgressValue.stop()
@@ -83,6 +88,7 @@ fun RecipeDetails(
             animatedProgressValue.snapTo(0f)
             setCurrentStep(null)
             isAnimationRunning = false
+            isDone = true
             onRecipeEnd(recipe.value)
         }
         haptics.progress()
@@ -92,6 +98,7 @@ fun RecipeDetails(
         if (currentStep == null) {
             return
         }
+        isDone = false
         isAnimationRunning = true
         val duration = (currentStep.time - (currentStep.time * animatedProgressValue.value)).toInt()
         animatedProgressColor.animateTo(
@@ -174,12 +181,6 @@ fun RecipeDetails(
                 item {
                     Column {
                         if (!isInPiP) {
-//                            Text(
-//                                text = recipe.value.name,
-//                                color = MaterialTheme.colors.onSurface,
-//                                style = MaterialTheme.typography.h6
-//                            )
-                            Spacer(modifier = Modifier.height(15.dp))
                             if (recipe.value.description.isNotBlank()) {
                                 Description(
                                     modifier = Modifier.fillMaxWidth(),
@@ -196,6 +197,7 @@ fun RecipeDetails(
                             animatedProgressValue = animatedProgressValue,
                             animatedProgressColor = animatedProgressColor,
                             isInPiP = isInPiP,
+                            isDone = isDone,
                         )
                         if (!isInPiP) {
                             Spacer(modifier = Modifier.height(15.dp))
@@ -281,6 +283,7 @@ fun RecipeDetails(
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalTime
 @Preview(showBackground = true)
@@ -289,6 +292,7 @@ fun RecipeDetailsPreview() {
     RecipeDetails(recipeId = 1, isInPiP = false)
 }
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalTime
 @Preview(showBackground = true)
