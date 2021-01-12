@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Rational
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayout
 import androidx.compose.material.ExperimentalMaterialApi
@@ -53,14 +54,15 @@ val AmbientSettingsDataStore = staticAmbientOf<DataStore<Preferences>> {
 
 const val appDeepLinkUrl = "https://cofi.omelan.com"
 
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
+@ExperimentalLayout
 class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
     private val dataStore: DataStore<Preferences> = createDataStore(
         name = "settings"
     )
 
-    @ExperimentalMaterialApi
-    @ExperimentalLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Cofi)
         super.onCreate(savedInstanceState)
@@ -71,8 +73,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @ExperimentalMaterialApi
-    @ExperimentalLayout
     @Composable
     fun MainNavigation() {
         val navController = rememberNavController()
