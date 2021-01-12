@@ -7,7 +7,7 @@
     <string name="step_add_name">Name</string>
     <string name="step_add_duration">Duration (s)</string>
     <string name="step_add_weight">Weight (g)</string>
-    <string name="step_add_save">Save and add next</string>
+    <string name="step_add_save">Save</string>
     <string name="step_delete_title">Are you sure?</string>
     <string name="step_delete_text">This will remove this recipe permanatly</string>
     <string name="recipe_edit_name">Name</string>
@@ -30,4 +30,5 @@
     <string name="settings_about_title">About</string>
     <string name="settings_licenses_item">Acknowledgments</string>
     <string name="settings_github_item">Github Repository</string>
+    <string name="step_add_remove">Remove</string>
 </resources>

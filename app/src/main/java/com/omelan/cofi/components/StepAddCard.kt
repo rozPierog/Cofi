@@ -4,6 +4,9 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,7 +29,7 @@ import java.util.*
 
 @ExperimentalLayout
 @Composable
-fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit, orderInRecipe: Int, recipeId: Int) {
+fun StepAddCard(stepToEdit: Step? = null, save: (Step?) -> Unit, orderInRecipe: Int, recipeId: Int) {
     val pickedType = remember(stepToEdit) { mutableStateOf<StepType?>(stepToEdit?.type) }
     val pickedTypeName = pickedType.value?.stringRes?.let { stringResource(id = it) } ?: ""
     val stepName = remember(stepToEdit, pickedTypeName) {
@@ -115,30 +118,48 @@ fun StepAddCard(stepToEdit: Step? = null, save: (Step) -> Unit, orderInRecipe: I
                             modifier = Modifier.testTag("step_value")
                         )
                     }
-                    Button(
-                        onClick = {
-                            save(
-                                Step(
-                                    name = stepName.value,
-                                    time = stepTime.value.safeToInt().toMillis(),
-                                    type = pickedType.value ?: StepType.OTHER,
-                                    value = if (stepValue.value.isNotBlank() &&
-                                        stepValue.value.toInt() != 0
-                                    ) {
-                                        stepValue.value.toInt()
-                                    } else {
-                                        null
-                                    },
-                                    recipeId = recipeId,
-                                    orderInRecipe = orderInRecipe,
+                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                        Button(
+                            onClick = {
+                                save(
+                                    Step(
+                                        name = stepName.value,
+                                        time = stepTime.value.safeToInt().toMillis(),
+                                        type = pickedType.value ?: StepType.OTHER,
+                                        value = if (stepValue.value.isNotBlank() &&
+                                            stepValue.value.toInt() != 0
+                                        ) {
+                                            stepValue.value.toInt()
+                                        } else {
+                                            null
+                                        },
+                                        recipeId = recipeId,
+                                        orderInRecipe = orderInRecipe,
+                                    )
                                 )
-                            )
-                        },
-                        modifier = Modifier
-                            .padding(vertical = 15.dp)
-                            .testTag("step_save"),
-                    ) {
-                        Text(text = stringResource(id = R.string.step_add_save))
+                            },
+                            modifier = Modifier
+                                .padding(vertical = 15.dp)
+                                .testTag("step_save"),
+                        ) {
+                            Icon(imageVector = Icons.Rounded.Add)
+                            Spacer(modifier = Modifier.width(5.dp))
+                            Text(text = stringResource(id = R.string.step_add_save))
+                        }
+                        if (stepToEdit != null) {
+                            Button(
+                                onClick = {
+                                    save(null)
+                                },
+                                modifier = Modifier
+                                    .padding(vertical = 15.dp)
+                                    .testTag("step_remove"),
+                            ) {
+                                Icon(imageVector = Icons.Rounded.Delete)
+                                Spacer(modifier = Modifier.width(5.dp))
+                                Text(text = stringResource(id = R.string.step_add_remove))
+                            }
+                        }
                     }
                 }
             }

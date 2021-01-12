@@ -8,7 +8,7 @@
     <string name="step_add_name">Nazwa</string>
     <string name="step_add_duration">Czas trwania (s)</string>
     <string name="step_add_weight">Waga (g)</string>
-    <string name="step_add_save">Zapisz i dodaj kolejny</string>
+    <string name="step_add_save">Zapisz</string>
     <string name="step_delete_title">Jesteś pewien?</string>
     <string name="step_delete_text">Nie będzie można przywrócić tego przepisu</string>
     <string name="recipe_edit_name">Nazwa</string>
@@ -31,4 +31,5 @@
     <string name="settings_about_title">O aplikacji</string>
     <string name="settings_licenses_item">Licencje</string>
     <string name="settings_github_item">Repozytorium na Github</string>
+    <string name="step_add_remove">Usuń</string>
 </resources>

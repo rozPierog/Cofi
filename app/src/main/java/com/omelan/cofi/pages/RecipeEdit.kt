@@ -143,14 +143,18 @@ fun RecipeEdit(
                             StepAddCard(
                                 stepToEdit = step,
                                 save = { stepToSave ->
-                                    steps.value =
-                                        steps.value.mapIndexed { index, step ->
-                                            if (index == indexOfThisStep) {
-                                                stepToSave
-                                            } else {
-                                                step
+                                    if (stepToSave == null) {
+                                        steps.value = steps.value.minus(step)
+                                    } else {
+                                        steps.value =
+                                            steps.value.mapIndexed { index, step ->
+                                                if (index == indexOfThisStep) {
+                                                    stepToSave
+                                                } else {
+                                                    step
+                                                }
                                             }
-                                        }
+                                    }
                                     stepWithOpenEditor.value = null
                                 },
                                 orderInRecipe = steps.value.indexOf(step),
@@ -180,10 +184,12 @@ fun RecipeEdit(
                         ) {
                             StepAddCard(
                                 save = { stepToSave ->
-                                    steps.value = listOf(
-                                        *steps.value.toTypedArray(),
-                                        stepToSave
-                                    )
+                                    if (stepToSave != null) {
+                                        steps.value = listOf(
+                                            *steps.value.toTypedArray(),
+                                            stepToSave
+                                        )
+                                    }
                                 },
                                 orderInRecipe = steps.value.size,
                                 recipeId = recipeToEdit.id,
