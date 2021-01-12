@@ -127,6 +127,7 @@ fun RecipeEdit(
                             onValueChange = { description.value = it },
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .padding(bottom = 15.dp)
                                 .testTag("recipe_edit_description"),
                             label = {
                                 Text(text = stringResource(id = R.string.recipe_edit_description))
@@ -138,6 +139,7 @@ fun RecipeEdit(
                             visible = stepWithOpenEditor.value == step,
                             enter = expandVertically(),
                             exit = shrinkVertically(),
+
                         ) {
                             val indexOfThisStep = steps.value.indexOf(step)
                             StepAddCard(
@@ -181,6 +183,7 @@ fun RecipeEdit(
                             visible = stepWithOpenEditor.value == null,
                             enter = expandVertically(),
                             exit = shrinkVertically(),
+                            modifier = Modifier.padding(top = 15.dp)
                         ) {
                             StepAddCard(
                                 save = { stepToSave ->
