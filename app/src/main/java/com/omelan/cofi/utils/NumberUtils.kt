@@ -30,21 +30,28 @@ fun Int.toStringDuration(
         }
     } else ""
 
-    return "$minutesString:${secondsString}${
-    if (millisString.isNotBlank()) {
-        ":$millisString"
-    } else {
-        ""
-    }
-    }"
+    return "$minutesString:$secondsString" +
+        "${
+        if (millisString.isNotBlank()) {
+            ":$millisString"
+        } else {
+            ""
+        }
+        }"
 }
 
 fun ensureNumbersOnly(string: String): String? {
     if (string.isEmpty()) {
         return string
     }
+    val maxInt: Int = Int.MAX_VALUE / 1000
     return try {
-        string.trim().toInt().toString()
+        val stringValue = string.trim().toInt()
+        if (stringValue > maxInt) {
+            null
+        } else {
+            stringValue.toString()
+        }
     } catch (e: NumberFormatException) {
         null
     }

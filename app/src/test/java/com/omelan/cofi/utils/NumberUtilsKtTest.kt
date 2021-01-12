@@ -54,6 +54,9 @@ class NumberUtilsKtTest : TestCase() {
             "23 " to "23",
             " 17" to "17",
             "2!" to null,
+            "2147483647" to null,
+            "1073741822" to null,
+            "2147483" to "2147483",
         ).forEach {
             assertEquals(it.value, ensureNumbersOnly(it.key))
         }
