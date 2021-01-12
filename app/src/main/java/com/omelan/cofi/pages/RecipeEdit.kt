@@ -1,5 +1,9 @@
 package com.omelan.cofi.pages
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,8 +32,8 @@ import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
-import kotlin.time.ExperimentalTime
 
+@ExperimentalAnimationApi
 @ExperimentalLayout
 @Composable
 fun RecipeEdit(
@@ -110,7 +114,9 @@ fun RecipeEdit(
                         OutlinedTextField(
                             value = name.value,
                             onValueChange = { name.value = it },
-                            modifier = Modifier.fillMaxWidth().testTag("recipe_edit_name"),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .testTag("recipe_edit_name"),
                             singleLine = true,
                             label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
                         )
@@ -119,14 +125,20 @@ fun RecipeEdit(
                         OutlinedTextField(
                             value = description.value,
                             onValueChange = { description.value = it },
-                            modifier = Modifier.fillMaxWidth().testTag("recipe_edit_description"),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .testTag("recipe_edit_description"),
                             label = {
                                 Text(text = stringResource(id = R.string.recipe_edit_description))
                             },
                         )
                     }
                     items(steps.value) { step ->
-                        if (stepWithOpenEditor.value == step) {
+                        AnimatedVisibility(
+                            visible = stepWithOpenEditor.value == step,
+                            enter = expandVertically(),
+                            exit = shrinkVertically(),
+                        ) {
                             val indexOfThisStep = steps.value.indexOf(step)
                             StepAddCard(
                                 stepToEdit = step,
@@ -144,7 +156,12 @@ fun RecipeEdit(
                                 orderInRecipe = steps.value.indexOf(step),
                                 recipeId = recipeToEdit.id,
                             )
-                        } else {
+                        }
+                        AnimatedVisibility(
+                            visible = stepWithOpenEditor.value != step,
+                            enter = expandVertically(),
+                            exit = shrinkVertically(),
+                        ) {
                             StepListItem(
                                 step = step,
                                 stepProgress = StepProgress.Upcoming,
@@ -154,8 +171,13 @@ fun RecipeEdit(
                             )
                         }
                     }
-                    if (stepWithOpenEditor.value == null) {
-                        item {
+
+                    item {
+                        AnimatedVisibility(
+                            visible = stepWithOpenEditor.value == null,
+                            enter = expandVertically(),
+                            exit = shrinkVertically(),
+                        ) {
                             StepAddCard(
                                 save = { stepToSave ->
                                     steps.value = listOf(
@@ -205,8 +227,8 @@ fun RecipeEdit(
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalLayout
-@ExperimentalTime
 @Preview
 @Composable
 fun RecipeEditPreview() {

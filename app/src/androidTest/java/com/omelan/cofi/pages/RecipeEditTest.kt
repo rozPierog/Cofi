@@ -1,5 +1,6 @@
 package com.omelan.cofi.pages
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.ExperimentalLayout
 import androidx.compose.runtime.Providers
 import androidx.compose.ui.test.*
@@ -14,6 +15,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
+@ExperimentalAnimationApi
 @RunWith(JUnit4::class)
 class RecipeEditTest {
     @get:Rule
