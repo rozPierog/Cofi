@@ -30,14 +30,11 @@ fun Int.toStringDuration(
         }
     } else ""
 
-    return "$minutesString:$secondsString" +
-        "${
-        if (millisString.isNotBlank()) {
-            ":$millisString"
-        } else {
-            ""
-        }
-        }"
+    return "$minutesString:$secondsString" + if (millisString.isNotBlank()) {
+        ":$millisString"
+    } else {
+        ""
+    }
 }
 
 fun ensureNumbersOnly(string: String): String? {
