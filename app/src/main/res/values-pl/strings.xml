@@ -33,4 +33,6 @@
     <string name="settings_github_item">Repozytorium na Github</string>
     <string name="step_add_remove">Usuń</string>
     <string name="timer_enjoy">Czas na kawę</string>
+    <string name="settings_pip_item">Obraz w obrazie</string>
+    <string name="settings_bug_item">Zgłoś błąd albo zasugeruj zmianę</string>
 </resources>

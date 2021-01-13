@@ -27,6 +27,9 @@
     <string name="settings_licenses_title">Open source licenses</string>
     <string name="settings_title">Settings</string>
     <string name="settings_about_item">About App</string>
+    <string name="settings_pip_item">Picture in picture</string>
+    <string name="settings_bug_item">Report a bug or suggest a feature</string>
+    <string name="bug_report_title" translatable="false">Cofi - Bug Report/Feature Request</string>
     <string name="settings_about_title">About</string>
     <string name="settings_licenses_item">Acknowledgments</string>
     <string name="settings_github_item">Github Repository</string>

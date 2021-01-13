@@ -2,6 +2,7 @@ package com.omelan.cofi.pages.settings
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -66,7 +67,7 @@ fun AppSettings(
             item {
                 ListItem(
                     text = {
-                        Text(text = "Picture in picture")
+                        Text(text = stringResource(id = R.string.settings_pip_item))
                     },
                     icon = {
                         Icon(painterResource(id = R.drawable.ic_picture_in_picture))
@@ -76,7 +77,8 @@ fun AppSettings(
                             coroutineScope.launch {
                                 togglePiPSetting()
                             }
-                        }
+                        },
+                        enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                     ),
                     trailing = {
                         Checkbox(
@@ -93,7 +95,7 @@ fun AppSettings(
             item {
                 ListItem(
                     text = {
-                        Text(text = "Report a bug or suggest a feature")
+                        Text(text = stringResource(id = R.string.settings_bug_item))
                     },
                     icon = {
                         Icon(painterResource(id = R.drawable.ic_bug_report))
@@ -103,7 +105,10 @@ fun AppSettings(
                             val intent = Intent(Intent.ACTION_SENDTO).apply {
                                 data = Uri.parse("mailto:")
                                 putExtra(Intent.EXTRA_EMAIL, arrayOf("rozPierog@Gmail.com"))
-                                putExtra(Intent.EXTRA_SUBJECT, "Cofi FR/Bug")
+                                putExtra(
+                                    Intent.EXTRA_SUBJECT,
+                                    context.resources.getString(R.string.bug_report_title)
+                                )
                             }
                             if (intent.resolveActivity(context.packageManager) != null) {
                                 startActivity(context, intent, null)
