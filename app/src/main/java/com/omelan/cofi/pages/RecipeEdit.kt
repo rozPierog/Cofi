@@ -21,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.StepAddCard
@@ -32,6 +31,7 @@ import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
+import com.omelan.cofi.ui.spacingDefault
 
 @ExperimentalAnimationApi
 @ExperimentalLayout
@@ -105,9 +105,9 @@ fun RecipeEdit(
                         .background(color = MaterialTheme.colors.background),
                     contentPadding = PaddingValues(
                         bottom = maxHeight / 2,
-                        top = 16.dp,
-                        start = 16.dp,
-                        end = 16.dp
+                        top = spacingDefault,
+                        start = spacingDefault,
+                        end = spacingDefault,
                     ),
                 ) {
                     item {
@@ -127,7 +127,7 @@ fun RecipeEdit(
                             onValueChange = { description.value = it },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 15.dp)
+                                .padding(bottom = spacingDefault)
                                 .testTag("recipe_edit_description"),
                             label = {
                                 Text(text = stringResource(id = R.string.recipe_edit_description))
@@ -204,7 +204,7 @@ fun RecipeEdit(
                             horizontalArrangement = Arrangement.End,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(15.dp)
+                                .padding(spacingDefault)
                         ) {
                             TextButton(onClick = { showDeleteModal.value = false }) {
                                 Text(text = stringResource(id = R.string.button_cancel))
