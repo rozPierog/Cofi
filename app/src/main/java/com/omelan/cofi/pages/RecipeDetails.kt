@@ -34,6 +34,7 @@ import com.omelan.cofi.model.*
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
+import com.omelan.cofi.ui.spacingDefault
 import com.omelan.cofi.utils.Haptics
 import dev.chrisbanes.accompanist.insets.*
 import kotlinx.coroutines.launch
@@ -175,63 +176,63 @@ fun RecipeDetails(
                     PaddingValues(0.dp)
                 } else {
                     AmbientWindowInsets.current.navigationBars.toPaddingValues()
-                        .add(start = 16.dp, end = 16.dp)
-                }
+                        .add(start = spacingDefault, end = spacingDefault, top = spacingDefault)
+                },
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                if (!isInPiP) {
+                    item {
+                        if (recipe.value.description.isNotBlank()) {
+                            Description(
+                                modifier = Modifier.fillMaxWidth(),
+                                descriptionText = recipe.value.description
+                            )
+                        }
+                    }
+                }
                 item {
-                    Column {
-                        if (!isInPiP) {
-                            if (recipe.value.description.isNotBlank()) {
-                                Description(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    descriptionText = recipe.value.description
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(15.dp))
-                        }
-                        Timer(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.CenterHorizontally),
-                            currentStep = currentStep,
-                            animatedProgressValue = animatedProgressValue,
-                            animatedProgressColor = animatedProgressColor,
-                            isInPiP = isInPiP,
-                            isDone = isDone,
-                        )
-                        if (!isInPiP) {
-                            Spacer(modifier = Modifier.height(15.dp))
-                            Button(
-                                modifier = Modifier
-                                    .animateContentSize()
-                                    .align(Alignment.CenterHorizontally),
-                                onClick = if (currentStep != null) {
-                                    if (isAnimationRunning) {
-                                        { pauseAnimations() }
-                                    } else {
-                                        { startAnimations() }
-                                    }
+                    Spacer(modifier = Modifier.height(spacingDefault))
+
+
+                    Timer(
+                        currentStep = currentStep,
+                        animatedProgressValue = animatedProgressValue,
+                        animatedProgressColor = animatedProgressColor,
+                        isInPiP = isInPiP,
+                        isDone = isDone,
+                    )
+                }
+                item {
+                    if (!isInPiP) {
+                        Spacer(modifier = Modifier.height(spacingDefault))
+                        Button(
+                            modifier = Modifier.animateContentSize(),
+                            onClick = if (currentStep != null) {
+                                if (isAnimationRunning) {
+                                    { pauseAnimations() }
                                 } else {
-                                    { setCurrentStep(steps.value.first()) }
+                                    { startAnimations() }
                                 }
-                            ) {
-                                Icon(
-                                    imageVector = if (isAnimationRunning) {
-                                        vectorResource(id = R.drawable.ic_pause)
-                                    } else {
-                                        Icons.Rounded.PlayArrow
-                                    }
-                                )
-                                Text(
-                                    text = if (isAnimationRunning) {
-                                        stringResource(id = R.string.recipe_details_button_pause)
-                                    } else {
-                                        stringResource(id = R.string.recipe_details_button_start)
-                                    }
-                                )
+                            } else {
+                                { setCurrentStep(steps.value.first()) }
                             }
-                            Spacer(modifier = Modifier.height(25.dp))
+                        ) {
+                            Icon(
+                                imageVector = if (isAnimationRunning) {
+                                    vectorResource(id = R.drawable.ic_pause)
+                                } else {
+                                    Icons.Rounded.PlayArrow
+                                }
+                            )
+                            Text(
+                                text = if (isAnimationRunning) {
+                                    stringResource(id = R.string.recipe_details_button_pause)
+                                } else {
+                                    stringResource(id = R.string.recipe_details_button_start)
+                                }
+                            )
                         }
+                        Spacer(modifier = Modifier.height(spacingDefault))
                     }
                 }
                 if (!isInPiP) {
@@ -247,38 +248,38 @@ fun RecipeDetails(
                     }
                 }
             }
-        }
-        if (showAutomateLinkDialog) {
-            AlertDialog(
-                onDismissRequest = { showAutomateLinkDialog = false },
-                shape = shapes.card,
-                buttons = {
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(15.dp)
-                    ) {
-                        TextButton(onClick = { showAutomateLinkDialog = false }) {
-                            Text(text = stringResource(id = R.string.button_cancel))
-                        }
-                        TextButton(
-                            onClick = {
-                                copyAutomateLink()
-                                showAutomateLinkDialog = false
-                            }
+            if (showAutomateLinkDialog) {
+                AlertDialog(
+                    onDismissRequest = { showAutomateLinkDialog = false },
+                    shape = shapes.card,
+                    buttons = {
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(15.dp)
                         ) {
-                            Text(text = stringResource(id = R.string.button_copy))
+                            TextButton(onClick = { showAutomateLinkDialog = false }) {
+                                Text(text = stringResource(id = R.string.button_cancel))
+                            }
+                            TextButton(
+                                onClick = {
+                                    copyAutomateLink()
+                                    showAutomateLinkDialog = false
+                                }
+                            ) {
+                                Text(text = stringResource(id = R.string.button_copy))
+                            }
                         }
-                    }
-                },
-                title = {
-                    Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
-                },
-                text = {
-                    Text(text = stringResource(R.string.recipe_details_automation_dialog_text))
-                },
-            )
+                    },
+                    title = {
+                        Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
+                    },
+                    text = {
+                        Text(text = stringResource(R.string.recipe_details_automation_dialog_text))
+                    },
+                )
+            }
         }
     }
 }

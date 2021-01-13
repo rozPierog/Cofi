@@ -42,7 +42,6 @@ fun Timer(
         25.dp
     }
     CofiTheme {
-
         Box(
             contentAlignment = Alignment.Center,
             modifier = modifier,
