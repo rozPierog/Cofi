@@ -140,7 +140,7 @@ fun RecipeEdit(
                             enter = expandVertically(),
                             exit = shrinkVertically(),
 
-                        ) {
+                            ) {
                             val indexOfThisStep = steps.value.indexOf(step)
                             StepAddCard(
                                 stepToEdit = step,
@@ -177,14 +177,8 @@ fun RecipeEdit(
                             )
                         }
                     }
-
-                    item {
-                        AnimatedVisibility(
-                            visible = stepWithOpenEditor.value == null,
-                            enter = expandVertically(),
-                            exit = shrinkVertically(),
-                            modifier = Modifier.padding(top = 15.dp)
-                        ) {
+                    if (stepWithOpenEditor.value == null) {
+                        item {
                             StepAddCard(
                                 save = { stepToSave ->
                                     if (stepToSave != null) {
