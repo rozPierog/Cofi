@@ -1,5 +1,7 @@
 package com.omelan.cofi.pages.settings
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -9,10 +11,12 @@ import androidx.compose.material.icons.rounded.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat.startActivity
 import androidx.datastore.preferences.core.edit
 import com.omelan.cofi.AmbientSettingsDataStore
 import com.omelan.cofi.PIP_ENABLED
@@ -39,6 +43,7 @@ fun AppSettings(
     }
     val isPiPEnabled = isPiPEnabledFlow.collectAsState(initial = true)
     val coroutineScope = rememberCoroutineScope()
+    val context = AmbientContext.current
     Scaffold(
         topBar = {
             PiPAwareAppBar(
@@ -83,6 +88,28 @@ fun AppSettings(
                             }
                         )
                     }
+                )
+            }
+            item {
+                ListItem(
+                    text = {
+                        Text(text = "Report a bug or suggest a feature")
+                    },
+                    icon = {
+                        Icon(painterResource(id = R.drawable.ic_bug_report))
+                    },
+                    modifier = settingsItemModifier.clickable(
+                        onClick = {
+                            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                                data = Uri.parse("mailto:")
+                                putExtra(Intent.EXTRA_EMAIL, arrayOf("rozPierog@Gmail.com"))
+                                putExtra(Intent.EXTRA_SUBJECT, "Cofi FR/Bug")
+                            }
+                            if (intent.resolveActivity(context.packageManager) != null) {
+                                startActivity(context, intent, null)
+                            }
+                        }
+                    ),
                 )
             }
             item {
