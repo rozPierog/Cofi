@@ -193,7 +193,6 @@ fun RecipeDetails(
                 item {
                     Spacer(modifier = Modifier.height(spacingDefault))
 
-
                     Timer(
                         currentStep = currentStep,
                         animatedProgressValue = animatedProgressValue,
