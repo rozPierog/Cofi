@@ -19,7 +19,7 @@
             android:theme="@style/Theme.Cofi">
         <activity
                 android:name=".MainActivity"
-                android:configChanges="keyboard|keyboardHidden|screenSize|smallestScreenSize|screenLayout|orientation"
+                android:configChanges="keyboard|keyboardHidden|screenSize|smallestScreenSize|screenLayout|orientation|uiMode"
                 android:label="@string/app_name"
                 android:launchMode="singleInstance"
                 android:supportsPictureInPicture="true"
