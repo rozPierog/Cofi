@@ -59,14 +59,13 @@ fun Timer(
                 strokeWidth = strokeWidth
             )
             CircularProgressIndicator(
-                progress = animatedProgressValue.value,
+                progress = if (isDone) 1f else animatedProgressValue.value,
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f),
                 color = animatedProgressColor.value,
                 strokeWidth = strokeWidth
             )
-
             AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
                 Column(
                     modifier = Modifier
