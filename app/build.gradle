@@ -31,7 +31,7 @@ android {
         applicationId "com.omelan.cofi"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 1
+        versionCode 2
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -55,6 +55,20 @@ android {
             debuggable true
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
+        }
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+        instant {
+            dimension "version"
+            versionNameSuffix "-instant"
+            versionCode 1
+            minSdkVersion 26
+        }
+        full {
+            dimension "version"
+            versionCode 2
         }
     }
 
@@ -117,6 +131,8 @@ configurations {
 
 dependencies {
     ktlint "com.pinterest:ktlint:0.40.0"
+
+    instantImplementation('com.google.android.gms:play-services-instantapps:17.0.0')
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation "androidx.compose.ui:ui:$compose_version"
