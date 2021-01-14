@@ -76,22 +76,7 @@ fun RecipeDetails(
     }
     val combineWeightState = combineWeightFlow.collectAsState(initial = CombineWeight.WATER.name)
 
-    val combinedWeight = remember(combineWeightState.value) {
-        return@remember when (combineWeightState.value) {
-            CombineWeight.ALL.name -> steps.value.sumOf { it.value ?: 0 }
-            CombineWeight.WATER.name -> steps.value.sumOf {
-                if (it.type === StepType.WATER) {
-                    it.value ?: 0
-                } else {
-                    0
-                }
-            }
-            CombineWeight.NONE.name -> null
-            else -> null
-        }
-    }
-
-    val combinedDoneWeight = remember(combineWeightState.value, currentStep) {
+    val alreadyDoneWeight = remember(combineWeightState.value, currentStep) {
         val doneSteps = if (indexOfCurrentStep == -1) {
             listOf()
         } else {
@@ -240,8 +225,7 @@ fun RecipeDetails(
                         animatedProgressValue = animatedProgressValue,
                         animatedProgressColor = animatedProgressColor,
                         isInPiP = isInPiP,
-                        combinedWeight = combinedWeight,
-                        alreadyDoneWeight = combinedDoneWeight,
+                        alreadyDoneWeight = alreadyDoneWeight,
                         isDone = isDone,
                     )
                 }
