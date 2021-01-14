@@ -33,6 +33,7 @@ jobs:
         # API level of the platform and system image - e.g. 23 for Android Marshmallow, 29 for Android 10
           api-level: 30
           arch: x86_64
+          target: google_apis
         # custom script to run - e.g. `./gradlew connectedCheck`
           script: './gradlew connectedCheck'
       - name: Grant execute permission for gradlew
