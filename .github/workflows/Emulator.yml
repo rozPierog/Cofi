@@ -24,7 +24,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Create empty keystore
+        run: echo "storeFile=/" > keystore.properties
       - name: Android Emulator Runner
       # You may pin to the exact commit or the version.
       # uses: ReactiveCircus/android-emulator-runner@08b092e904025fada32a01b711af1e7ff7b7a4a3
@@ -35,10 +38,6 @@ jobs:
           arch: x86_64
           target: google_apis
         # custom script to run - e.g. `./gradlew connectedCheck`
-          script: './gradlew connectedCheck'
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Create empty keystore
-        run: echo "storeFile=/" > keystore.properties
+          script: './gradlew connectedFullDebugAndroidTest'
       - name: Android Instrumantation Tests
-        run: ./gradlew connectedFullDebugAndroidTest
+        run: ./gradlew 
