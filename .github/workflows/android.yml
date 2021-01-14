@@ -24,8 +24,8 @@ jobs:
     - name: KTLint
       run: ./gradlew ktlint
     - name: Unit Tests
-      run: ./gradlew testDebugUnitTest
+      run: ./gradlew testFullDebugUnitTest
 #     - name: Android Instrumantation Tests
-#       run: ./gradlew connectedDebugAndroidTest
+#       run: ./gradlew connectedFullDebugAndroidTest
     - name: Build with Gradle
-      run: ./gradlew buildDebug
+      run: ./gradlew buildFullDebug
