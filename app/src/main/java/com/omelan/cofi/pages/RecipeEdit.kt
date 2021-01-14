@@ -29,7 +29,6 @@ import com.omelan.cofi.components.StepProgress
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.CofiTheme
-import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
 
@@ -198,7 +197,7 @@ fun RecipeEdit(
             if (showDeleteModal.value && isEditing) {
                 AlertDialog(
                     onDismissRequest = { showDeleteModal.value = false },
-                    shape = shapes.card,
+                    shape = shapes.medium,
                     buttons = {
                         Row(
                             horizontalArrangement = Arrangement.End,

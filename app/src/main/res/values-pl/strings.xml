@@ -35,4 +35,8 @@
     <string name="timer_enjoy">Czas na kawę</string>
     <string name="settings_pip_item">Obraz w obrazie</string>
     <string name="settings_bug_item">Zgłoś błąd albo zasugeruj zmianę</string>
+    <string name="settings_combine_weight_item">Sumowanie wagi</string>
+    <string name="settings_combine_weight_all">Sumuj całą wagę</string>
+    <string name="settings_combine_weight_water">Sumuj wagę wody</string>
+    <string name="settings_combine_weight_none">Nie sumuj wagi</string>
 </resources>

@@ -3,26 +3,33 @@ package com.omelan.cofi.pages.settings
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Info
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.icons.rounded.List
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.window.AndroidDialogProperties
+import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat.startActivity
 import androidx.datastore.preferences.core.edit
-import com.omelan.cofi.AmbientSettingsDataStore
-import com.omelan.cofi.PIP_ENABLED
+import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
+import com.omelan.cofi.ui.shapes
+import com.omelan.cofi.ui.spacingDefault
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -39,10 +46,21 @@ fun AppSettings(
         }
     }
 
+    suspend fun selectCombineMethod(combineMethod: CombineWeight) {
+        dataStore.edit {
+            it[COMBINE_WEIGHT] = combineMethod.name
+        }
+    }
+
     val isPiPEnabledFlow = dataStore.data.map { preferences ->
         preferences[PIP_ENABLED] ?: true
     }
+    val combineWeightFlow = dataStore.data.map { preferences ->
+        preferences[COMBINE_WEIGHT] ?: CombineWeight.WATER.name
+    }
     val isPiPEnabled = isPiPEnabledFlow.collectAsState(initial = true)
+    val combineWeightState = combineWeightFlow.collectAsState(initial = CombineWeight.WATER.name)
+    val showCombineWeightDialog = remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val context = AmbientContext.current
     Scaffold(
@@ -91,6 +109,73 @@ fun AppSettings(
                         )
                     }
                 )
+            }
+            item {
+                ListItem(
+                    text = {
+                        Text(
+                            text =
+                            stringResource(
+                                id =
+                                stringToCombineWeight(combineWeightState.value).settingsStringId
+                            )
+                        )
+                    },
+                    overlineText = {
+                        Text(text = stringResource(id = R.string.settings_combine_weight_item))
+                    },
+
+                    icon = {
+                        Icon(Icons.Rounded.List)
+                    },
+                    modifier = settingsItemModifier.clickable(
+                        onClick = {
+                            showCombineWeightDialog.value = true
+                        },
+                    ),
+                )
+                if (showCombineWeightDialog.value) {
+                    fun hideDialog() {
+                        showCombineWeightDialog.value = false
+                    }
+                    Dialog(
+                        onDismissRequest = { hideDialog() },
+                        properties = AndroidDialogProperties(),
+                    ) {
+                        Column(
+                            modifier = Modifier.background(
+                                shape = shapes.medium,
+                                color = MaterialTheme.colors.surface
+                            ).padding(top = spacingDefault, bottom = spacingDefault)
+                        ) {
+                            CombineWeight.values().forEach {
+                                ListItem(
+                                    text = { Text(stringResource(id = it.settingsStringId)) },
+                                    modifier = Modifier.selectable(
+                                        selected = combineWeightState.value == it.name,
+                                        onClick = {
+                                            coroutineScope.launch {
+                                                selectCombineMethod(it)
+                                                hideDialog()
+                                            }
+                                        },
+                                    ),
+                                    icon = {
+                                        RadioButton(
+                                            selected = combineWeightState.value == it.name,
+                                            onClick = {
+                                                coroutineScope.launch {
+                                                    selectCombineMethod(it)
+                                                    hideDialog()
+                                                }
+                                            }
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
             }
             item {
                 ListItem(

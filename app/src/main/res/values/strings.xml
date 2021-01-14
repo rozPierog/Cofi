@@ -29,6 +29,10 @@
     <string name="settings_about_item">About App</string>
     <string name="settings_pip_item">Picture in picture</string>
     <string name="settings_bug_item">Report a bug or suggest a feature</string>
+    <string name="settings_combine_weight_item">Combine weight</string>
+    <string name="settings_combine_weight_all">Combine every weight</string>
+    <string name="settings_combine_weight_water">Combine only water weight</string>
+    <string name="settings_combine_weight_none">Do not combine weight</string>
     <string name="bug_report_title" translatable="false">Cofi - Bug Report/Feature Request</string>
     <string name="settings_about_title">About</string>
     <string name="settings_licenses_item">Acknowledgments</string>

@@ -26,17 +26,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
-import com.omelan.cofi.AmbientPiPState
+import com.omelan.cofi.*
 import com.omelan.cofi.R
-import com.omelan.cofi.appDeepLinkUrl
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.*
 import com.omelan.cofi.ui.CofiTheme
-import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
 import com.omelan.cofi.utils.Haptics
 import dev.chrisbanes.accompanist.insets.*
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
 
@@ -69,6 +68,49 @@ fun RecipeDetails(
     val snackbarState = SnackbarHostState()
     val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
+
+    val dataStore = AmbientSettingsDataStore.current
+
+    val combineWeightFlow = dataStore.data.map { preferences ->
+        preferences[COMBINE_WEIGHT] ?: CombineWeight.WATER.name
+    }
+    val combineWeightState = combineWeightFlow.collectAsState(initial = CombineWeight.WATER.name)
+
+    val combinedWeight = remember(combineWeightState.value) {
+        return@remember when (combineWeightState.value) {
+            CombineWeight.ALL.name -> steps.value.sumOf { it.value ?: 0 }
+            CombineWeight.WATER.name -> steps.value.sumOf {
+                if (it.type === StepType.WATER) {
+                    it.value ?: 0
+                } else {
+                    0
+                }
+            }
+            CombineWeight.NONE.name -> null
+            else -> null
+        }
+    }
+
+    val combinedDoneWeight = remember(combineWeightState.value, currentStep) {
+        val doneSteps = if (indexOfCurrentStep == -1) {
+            listOf()
+        } else {
+            steps.value.subList(0, indexOfCurrentStep)
+        }
+        return@remember when (combineWeightState.value) {
+            CombineWeight.ALL.name -> doneSteps.sumOf { it.value ?: 0 }
+            CombineWeight.WATER.name -> doneSteps.sumOf {
+                if (it.type === StepType.WATER) {
+                    it.value ?: 0
+                } else {
+                    0
+                }
+            }
+            CombineWeight.NONE.name -> 0
+            else -> 0
+        }
+    }
+
     fun copyAutomateLink() {
         clipboardManager.setText(AnnotatedString(text = "$appDeepLinkUrl/recipe/$recipeId"))
         coroutineScope.launch {
@@ -198,6 +240,8 @@ fun RecipeDetails(
                         animatedProgressValue = animatedProgressValue,
                         animatedProgressColor = animatedProgressColor,
                         isInPiP = isInPiP,
+                        combinedWeight = combinedWeight,
+                        alreadyDoneWeight = combinedDoneWeight,
                         isDone = isDone,
                     )
                 }
@@ -250,7 +294,7 @@ fun RecipeDetails(
             if (showAutomateLinkDialog) {
                 AlertDialog(
                     onDismissRequest = { showAutomateLinkDialog = false },
-                    shape = shapes.card,
+                    shape = shapes.medium,
                     buttons = {
                         Row(
                             horizontalArrangement = Arrangement.End,

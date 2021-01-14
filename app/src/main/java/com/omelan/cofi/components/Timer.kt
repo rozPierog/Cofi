@@ -31,6 +31,7 @@ import com.omelan.cofi.utils.toStringDuration
 fun Timer(
     modifier: Modifier = Modifier,
     currentStep: Step?,
+    alreadyDoneWeight: Int = 0,
     animatedProgressValue: AnimatedFloat,
     animatedProgressColor: AnimatedValue<Color, AnimationVector4D>,
     isInPiP: Boolean,
@@ -41,6 +42,7 @@ fun Timer(
     } else {
         25.dp
     }
+
     CofiTheme {
         Box(
             contentAlignment = Alignment.Center,
@@ -151,8 +153,8 @@ fun Timer(
                             Text(
                                 text = stringResource(
                                     id = R.string.timer_progress_weight,
-                                    currentValueFromProgress,
-                                    it
+                                    currentValueFromProgress + alreadyDoneWeight,
+                                    it + alreadyDoneWeight,
                                 ),
                                 color = MaterialTheme.colors.onSurface,
                                 modifier = Modifier
