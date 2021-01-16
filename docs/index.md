@@ -1,37 +1,17 @@
-## Welcome to GitHub Pages
+# Why Cofi?
 
-You can use the [editor on GitHub](https://github.com/rozPierog/Cofi/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+I've built Cofi after getting frustrated with the lack of privacy-respecting, small, and fast, timers. None of the apps in the Play Store could be used in the way, that I want to use them. Additionally, it was a great way to try out _new_ Android development ways, like: **Jetpack Compose**, **DataStore**, and build features that I've never done before.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Features:
 
-### Markdown
+- **No artificial limits** - create any recipe you want, no matter how outrageous it might seem,
+- **Deeplinks to recipes** - you can add it to automation software or NFC tag to open your favorite recipe with one tap,
+- **Picture in Picture** - need to respond to a text while brewing? The timer will pop into small movable windows that will stay with you for the entire brew,
+- **Absolutely no tracking** - not even a crash report will make its way back to me. Everything you do in the app stays with you,
+- **Smallest footprint possible** - I'm going to be surprised if it ever breaks 7MB on your device
+- **Instant app (Google Play Store only)** - the whole app is accessible as an Instant Experience, no need to install anything if you don't want it.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Contribute to Cofi
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/rozPierog/Cofi/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+- **Bug fixing, new features** - if you have any way to contribute to Cofi I encourage you to open a pull request and ping me in it.
+- **Translating the app** - If you don't know how to open a pull request and just want to contribute a new language to the app, use the app's built-in contact button in the setting to get in touch with me. I'll send you strings and help you with all the questions.
