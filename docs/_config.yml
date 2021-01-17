@@ -1,3 +1,4 @@
 theme: jekyll-theme-cayman
 title: [Cofi ☕️]
 description: [A free and open brew timer]
+include: [".well-known"]

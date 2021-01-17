@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.omelan.cofi",
+    "sha256_cert_fingerprints":
+    ["80:51:9F:F1:17:9B:8B:6F:FB:2F:FC:F6:3F:CB:92:C7:6C:3A:AE:AC:1A:2E:90:DB:F8:F7:EE:FC:A5:9A:55:BD"]
+  }
+}]
