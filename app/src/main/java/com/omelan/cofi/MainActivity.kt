@@ -52,7 +52,7 @@ val AmbientSettingsDataStore = staticAmbientOf<DataStore<Preferences>> {
     error("AmbientSettingsDataStore value not available.")
 }
 
-const val appDeepLinkUrl = "https://rozpierog.github.io/Cofi"
+const val appDeepLinkUrl = "https://rozpierog.github.io"
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi

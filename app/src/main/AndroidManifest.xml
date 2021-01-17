@@ -44,12 +44,12 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                        android:host="rozpierog.github.io/cofi"
+                        android:host="rozpierog.github.io"
                         android:pathPattern=".*"
                         android:pathPrefix="/"
                         android:scheme="https" />
                 <data
-                        android:host="rozpierog.github.io/cofi"
+                        android:host="rozpierog.github.io"
                         android:pathPattern=".*"
                         android:pathPrefix="/"
                         android:scheme="http" />
