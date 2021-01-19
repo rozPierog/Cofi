@@ -39,4 +39,10 @@
     <string name="settings_combine_weight_all">Sumuj całą wagę</string>
     <string name="settings_combine_weight_water">Sumuj wagę wody</string>
     <string name="settings_combine_weight_none">Nie sumuj wagi</string>
+    <string name="prepopulate_v60_name">V60</string>
+    <string name="prepopulate_v60_description">Przepis od: James Hoffman</string>
+    <string name="prepopulate_step_coffee">Dodaj kawę</string>
+    <string name="prepopulate_step_water">Dodaj wodę</string>
+    <string name="prepopulate_step_swirl">Zamieszaj</string>
+    <string name="prepopulate_step_wait">Czekaj</string>
 </resources>

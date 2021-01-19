@@ -39,4 +39,10 @@
     <string name="settings_github_item">Github Repository</string>
     <string name="step_add_remove">Remove</string>
     <string name="timer_enjoy">Enjoy your coffee</string>
+    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_description"> Recipe by James Hoffman</string>
+    <string name="prepopulate_step_coffee">Add coffee</string>
+    <string name="prepopulate_step_water">Add water</string>
+    <string name="prepopulate_step_swirl">Swirl</string>
+    <string name="prepopulate_step_wait">Wait</string>
 </resources>

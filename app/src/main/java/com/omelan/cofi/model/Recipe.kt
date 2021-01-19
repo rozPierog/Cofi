@@ -7,33 +7,53 @@ import androidx.room.*
 
 // val dummySteps = listOf(
 //    Step(
+//        id = 1,
 //        name = "Add Coffee",
 //        value = 30,
 //        time = 5 * 1000,
-//        type = StepType.ADD_COFFEE
+//        type = StepType.ADD_COFFEE,
+//        orderInRecipe = 0
 //    ),
 //    Step(
+//        id = 2,
 //        name = "Add water",
 //        value = 60,
 //        time = 5 * 1000,
-//        type = StepType.WATER
+//        type = StepType.WATER,
+//        orderInRecipe = 1
 //    ),
-//    Step(name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
-//    Step(name = "Wait", time = 35 * 1000, type = StepType.WAIT),
 //    Step(
+//        id = 3,
+//        name = "Swirl", time = 5 * 1000, type = StepType.OTHER,
+//        orderInRecipe = 2
+//    ),
+//    Step(
+//        id = 4,
+//        name = "Wait", time = 35 * 1000, type = StepType.WAIT,
+//        orderInRecipe = 3
+//    ),
+//    Step(
+//        id = 5,
 //        name = "Add Water",
 //        time = 30 * 1000,
 //        type = StepType.WATER,
-//        value = 300
+//        value = 300,
+//        orderInRecipe = 4
 //    ),
 //    Step(
+//        id = 6,
 //        name = "Add Water",
 //        time = 30 * 1000,
 //        type = StepType.WATER,
-//        value = 200
+//        value = 200,
+//        orderInRecipe = 5
 //    ),
-//    Step(name = "Swirl", time = 5 * 1000, type = StepType.OTHER),
-// )
+//    Step(
+//        id = 7,
+//        name = "Swirl", time = 5 * 1000, type = StepType.OTHER,
+//        orderInRecipe = 6
+//    ),
+//)
 
 enum class RecipeIcon {
     V60 {
