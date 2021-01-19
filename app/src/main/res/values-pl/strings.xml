@@ -40,7 +40,7 @@
     <string name="settings_combine_weight_water">Sumuj wagę wody</string>
     <string name="settings_combine_weight_none">Nie sumuj wagi</string>
     <string name="prepopulate_v60_name">V60</string>
-    <string name="prepopulate_v60_description">Przepis od: James Hoffman</string>
+    <string name="prepopulate_v60_description">Przepis od: James Hoffmann\nŹródło: https://www.youtube.com/watch?v=AI4ynXzkSQo\nGrubość mielenia: średnio\nTemperature: im cieplej tym lepiej (szczególnie z jasno paloną kawą)</string>
     <string name="prepopulate_step_coffee">Dodaj kawę</string>
     <string name="prepopulate_step_water">Dodaj wodę</string>
     <string name="prepopulate_step_swirl">Zamieszaj</string>

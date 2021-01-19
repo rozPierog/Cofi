@@ -40,7 +40,7 @@
     <string name="step_add_remove">Remove</string>
     <string name="timer_enjoy">Enjoy your coffee</string>
     <string name="prepopulate_v60_name">Ultimate V60</string>
-    <string name="prepopulate_v60_description"> Recipe by James Hoffman</string>
+    <string name="prepopulate_v60_description">Recipe created by: James Hoffmann\nSource: https://www.youtube.com/watch?v=AI4ynXzkSQo\nGrind size: medium fine\nTemperature: the hotter, the better (especially with lighter roasts)</string>
     <string name="prepopulate_step_coffee">Add coffee</string>
     <string name="prepopulate_step_water">Add water</string>
     <string name="prepopulate_step_swirl">Swirl</string>
