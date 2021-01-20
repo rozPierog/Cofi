@@ -1,5 +1,6 @@
 package com.omelan.cofi.pages
 
+import android.view.WindowManager
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.animatedColor
@@ -18,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.AmbientClipboardManager
 import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.AmbientUriHandler
+import androidx.compose.ui.platform.AmbientView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -48,6 +51,7 @@ fun RecipeDetails(
     onRecipeEnd: (Recipe) -> Unit = {},
     goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
+    setKeepScreenAwake: (Boolean) -> Unit = {},
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
 ) {
@@ -150,6 +154,10 @@ fun RecipeDetails(
         }
         animatedProgressValue.snapTo(0f)
         startAnimations()
+    }
+
+    onCommit(isAnimationRunning) {
+        setKeepScreenAwake(isAnimationRunning)
     }
     CofiTheme {
         Scaffold(

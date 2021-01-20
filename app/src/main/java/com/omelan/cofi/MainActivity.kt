@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Rational
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -70,6 +71,14 @@ class MainActivity : AppCompatActivity() {
         SystemUIHelpers.setStatusBarIconsTheme(window = window, darkIcons = false)
         setContent {
             MainNavigation()
+        }
+    }
+
+    private fun toggleKeepScreenAwake(keepAwake: Boolean) {
+        if (keepAwake) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
     }
 
@@ -143,7 +152,8 @@ class MainActivity : AppCompatActivity() {
                                     navController.navigate(
                                         route = "edit/$recipeId",
                                     )
-                                }
+                                },
+                                setKeepScreenAwake = { toggleKeepScreenAwake(it) },
                             )
                         }
                         composable(
