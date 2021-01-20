@@ -16,7 +16,8 @@
     <string name="recipe_edit_title">Edytuj przepis</string>
     <string name="recipe_add_new_title">Dodaj nowy przepis</string>
     <string name="recipe_details_automation_dialog_title">Bezpośredni link</string>
-    <string name="recipe_details_automation_dialog_text">Użyj linku aby przejść do bezpośrednio tego przepisu. Zapisz go na tagu NFC albo użyj automatyzacji w aplikacji takiej jak Tasker żeby ułatwić robienie porannej kawy.\nUWAGA: ten link nie służy do dzielenia się przepisem z innymi</string>
+    <string name="recipe_details_automation_dialog_text">Użyj linku aby przejść do bezpośrednio tego przepisu. Zapisz go na tagu NFC albo użyj automatyzacji w aplikacji takiej jak Tasker żeby ułatwić robienie porannej kawy.
+        UWAGA: ten link nie służy do dzielenia się przepisem z innymi</string>
     <string name="recipe_details_button_start">Start</string>
     <string name="recipe_details_button_pause">Zatrzymaj</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
@@ -40,13 +41,19 @@
     <string name="settings_combine_weight_water">Sumuj wagę wody</string>
     <string name="settings_combine_weight_none">Nie sumuj wagi</string>
     <string name="prepopulate_v60_name">V60</string>
-    <string name="prepopulate_v60_description">Przepis od: James Hoffmann\nŹródło: https://www.youtube.com/watch?v=AI4ynXzkSQo\nGrubość mielenia: średnio\nTemperature: im cieplej tym lepiej (szczególnie z jasno paloną kawą)</string>
+    <string name="prepopulate_v60_description">Przepis od: James Hoffmann
+        Źródło: https://www.youtube.com/watch?v=AI4ynXzkSQo
+        Grubość mielenia: średnio
+        Temperature: im cieplej tym lepiej (szczególnie z jasno paloną kawą)</string>
     <string name="prepopulate_step_coffee">Dodaj kawę</string>
     <string name="prepopulate_step_water">Dodaj wodę</string>
     <string name="prepopulate_step_swirl">Zamieszaj</string>
     <string name="prepopulate_step_wait">Czekaj</string>
     <string name="prepopulate_frenchPress_name">Prasa Francuska</string>
-    <string name="prepopulate_frenchPress_description">"Przepis od: James Hoffmann\nŹródło: https://www.youtube.com/watch?v=st571DYYTR8\nGrubość mielenia: średnio/grubo\nPrzelać można już po 5minutach ostatniego kroku, ale im dłużej poczekasz tym lepszy będzie smak "</string>
+    <string name="prepopulate_frenchPress_description">"Przepis od: James Hoffmann
+        Źródło: https://www.youtube.com/watch?v=st571DYYTR8
+        Grubość mielenia: średnio/grubo
+        Przelać można już po 5minutach ostatniego kroku, ale im dłużej poczekasz tym lepszy będzie smak "</string>
     <string name="prepopulate_step_scoop_coffee">Wyłów pływające kawałki kawy</string>
     <string name="prepopulate_step_stir_crust">Zamieszaj powierzchnie</string>
     <string name="prepopulate_step_plunge">Wciśnij prasę zaraz pod powierzchnie i przelej</string>
