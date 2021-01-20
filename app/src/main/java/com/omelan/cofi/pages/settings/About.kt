@@ -1,7 +1,5 @@
 package com.omelan.cofi.pages.settings
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -13,9 +11,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.content.ContextCompat
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
+import com.omelan.cofi.utils.IntentHelpers
 
 @Composable
 fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
@@ -50,12 +48,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     },
                     modifier = settingsItemModifier.clickable(
                         onClick = {
-                            val browserIntent =
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse("https://github.com/rozPierog/Cofi/")
-                                )
-                            ContextCompat.startActivity(context, browserIntent, null)
+                            IntentHelpers.openUri(context, "https://github.com/rozPierog/Cofi/")
                         }
                     ),
                 )
@@ -69,6 +62,22 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Icon(painterResource(id = R.drawable.ic_book))
                     },
                     modifier = settingsItemModifier.clickable(onClick = openLicenses)
+                )
+            }
+            item {
+                ListItem(
+                    text = {
+                        Text(text = "Default recipes by James Hoffmann" )
+                    },
+                    secondaryText = {
+                        Text(text = "https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ")
+                    },
+                    icon = {
+                        Icon(painterResource(id = R.drawable.ic_coffee))
+                    },
+                    modifier = settingsItemModifier.clickable(onClick = {
+                        IntentHelpers.openUri(context, "https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ")
+                    })
                 )
             }
         }
