@@ -45,4 +45,9 @@
     <string name="prepopulate_step_water">Add water</string>
     <string name="prepopulate_step_swirl">Swirl</string>
     <string name="prepopulate_step_wait">Wait</string>
+    <string name="prepopulate_step_plunge">Plunge just to underneath the surface and pour</string>
+    <string name="prepopulate_step_stir_crust">Stir crust</string>
+    <string name="prepopulate_step_scoop_coffee">Scoop up foam and coffee bits off the top</string>
+    <string name="prepopulate_frenchPress_name">French Press</string>
+    <string name="prepopulate_frenchPress_description" >Recipe created by: James Hoffmann\nSource: https://www.youtube.com/watch?v=st571DYYTR8\nGrind size: medium\nYou can pour after 5min of last step, but the longer you keep it the better it gets</string>
 </resources>

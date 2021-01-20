@@ -45,4 +45,9 @@
     <string name="prepopulate_step_water">Dodaj wodę</string>
     <string name="prepopulate_step_swirl">Zamieszaj</string>
     <string name="prepopulate_step_wait">Czekaj</string>
+    <string name="prepopulate_frenchPress_name">Prasa Francuska</string>
+    <string name="prepopulate_frenchPress_description">"Przepis od: James Hoffmann\nŹródło: https://www.youtube.com/watch?v=st571DYYTR8\nGrubość mielenia: średnio/grubo\nPrzelać można już po 5minutach ostatniego kroku, ale im dłużej poczekasz tym lepszy będzie smak "</string>
+    <string name="prepopulate_step_scoop_coffee">Wyłów pływające kawałki kawy</string>
+    <string name="prepopulate_step_stir_crust">Zamieszaj powierzchnie</string>
+    <string name="prepopulate_step_plunge">Wciśnij prasę zaraz pod powierzchnie i przelej</string>
 </resources>
