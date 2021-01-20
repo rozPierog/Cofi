@@ -1,9 +1,10 @@
 package com.omelan.cofi
 
-import androidx.datastore.preferences.core.preferencesKey
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 
-val PIP_ENABLED = preferencesKey<Boolean>("pip_enabled")
-val COMBINE_WEIGHT = preferencesKey<String>("combine_weight")
+val PIP_ENABLED = booleanPreferencesKey("pip_enabled")
+val COMBINE_WEIGHT = stringPreferencesKey("combine_weight")
 
 enum class CombineWeight {
     ALL {
