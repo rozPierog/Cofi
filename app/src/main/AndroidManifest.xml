@@ -54,6 +54,9 @@
                         android:pathPrefix="/"
                         android:scheme="http" />
             </intent-filter>
+            <meta-data
+                    android:name="default-url"
+                    android:value="https://rozpierog.github.io/cofi" />
         </activity>
     </application>
 
