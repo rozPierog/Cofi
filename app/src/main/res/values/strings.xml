@@ -15,8 +15,8 @@
     <string name="recipe_edit_title">Edit recipe</string>
     <string name="recipe_add_new_title">Create new recipe</string>
     <string name="recipe_details_automation_dialog_title">Direct link</string>
-    <string name="recipe_details_automation_dialog_text">Use this link to go directly into this recipe. Write it to NFC tag or create automation task in Tasker to make your morning coffee easier.
-        WARNING: You cannot share recipe this way!</string>
+    <string name="recipe_details_automation_dialog_text">"Use this link to go directly into this recipe. Write it to NFC tag or create automation task in Tasker to make your morning coffee easier.
+WARNING: You cannot share recipe this way!"</string>
     <string name="recipe_details_button_start">Start</string>
     <string name="recipe_details_button_pause">Pause</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
@@ -41,10 +41,10 @@
     <string name="step_add_remove">Remove</string>
     <string name="timer_enjoy">Enjoy your coffee</string>
     <string name="prepopulate_v60_name">Ultimate V60</string>
-    <string name="prepopulate_v60_description">Recipe created by: James Hoffmann
-        Source: https://www.youtube.com/watch?v=AI4ynXzkSQo
-        Grind size: medium fine
-        Temperature: the hotter, the better (especially with lighter roasts)</string>
+    <string name="prepopulate_v60_description">"Recipe created by: James Hoffmann
+Source: https://www.youtube.com/watch?v=AI4ynXzkSQo
+Grind size: medium fine
+Temperature: the hotter, the better (especially with lighter roasts)"</string>
     <string name="prepopulate_step_coffee">Add coffee</string>
     <string name="prepopulate_step_water">Add water</string>
     <string name="prepopulate_step_swirl">Swirl</string>
@@ -53,8 +53,8 @@
     <string name="prepopulate_step_stir_crust">Stir crust</string>
     <string name="prepopulate_step_scoop_coffee">Scoop up foam and coffee bits off the top</string>
     <string name="prepopulate_frenchPress_name">French Press</string>
-    <string name="prepopulate_frenchPress_description" >Recipe created by: James Hoffmann
-        Source: https://www.youtube.com/watch?v=st571DYYTR8
-        Grind size: medium
-        You can pour after 5min of last step, but the longer you keep it the better it gets</string>
+    <string name="prepopulate_frenchPress_description">"Recipe created by: James Hoffmann
+Source: https://www.youtube.com/watch?v=st571DYYTR8
+Grind size: medium
+You can pour after 5min of last step, but the longer you keep it the better it gets"</string>
 </resources>
