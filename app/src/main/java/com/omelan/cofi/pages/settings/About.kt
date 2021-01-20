@@ -6,18 +6,17 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.AmbientUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
-import com.omelan.cofi.utils.IntentHelpers
 
 @Composable
 fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
-    val context = AmbientContext.current
+    val uriHandler = AmbientUriHandler.current
 
     Scaffold(
         topBar = {
@@ -48,7 +47,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     },
                     modifier = settingsItemModifier.clickable(
                         onClick = {
-                            IntentHelpers.openUri(context, "https://github.com/rozPierog/Cofi/")
+                            uriHandler.openUri("https://github.com/rozPierog/Cofi/")
                         }
                     ),
                 )
@@ -67,7 +66,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             item {
                 ListItem(
                     text = {
-                        Text(text = "Default recipes by James Hoffmann" )
+                        Text(text = "Default recipes by James Hoffmann")
                     },
                     secondaryText = {
                         Text(text = "https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ")
@@ -75,9 +74,13 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     icon = {
                         Icon(painterResource(id = R.drawable.ic_coffee))
                     },
-                    modifier = settingsItemModifier.clickable(onClick = {
-                        IntentHelpers.openUri(context, "https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ")
-                    })
+                    modifier = settingsItemModifier.clickable(
+                        onClick = {
+                            uriHandler.openUri(
+                                "https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ"
+                            )
+                        }
+                    )
                 )
             }
         }

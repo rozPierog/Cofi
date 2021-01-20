@@ -70,11 +70,13 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
                         width = Dimension.fillToConstraints
                     }
             )
-            Row(Modifier.constrainAs(valueAndTimeBox) {
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                end.linkTo(parent.end)
-            }) {
+            Row(
+                Modifier.constrainAs(valueAndTimeBox) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(parent.end)
+                }
+            ) {
                 if (step.value != null) {
                     Text(
                         text = "${step.value}g",
@@ -94,7 +96,6 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
 
                 )
             }
-
         }
     }
 }
@@ -106,7 +107,9 @@ fun StepListItemPreview() {
     StepListItem(
         step = Step(
             id = 0,
-            name = "Somebody once told me the world is gonna roll me I ain't the sharpest tool in the shed She was looking kind of dumb with her finger and her thumb In the shape of an \"L\" on her forehead",
+            name = "Somebody once told me the world is gonna roll me I ain't the sharpest " +
+                "tool in the shed She was looking kind of dumb with her finger and her thumb " +
+                "In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
             value = 60,

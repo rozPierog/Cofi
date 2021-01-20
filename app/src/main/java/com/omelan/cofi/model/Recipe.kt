@@ -53,7 +53,7 @@ import androidx.room.*
 //        name = "Swirl", time = 5 * 1000, type = StepType.OTHER,
 //        orderInRecipe = 6
 //    ),
-//)
+// )
 
 enum class RecipeIcon {
     V60 {
