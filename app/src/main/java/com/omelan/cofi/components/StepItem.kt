@@ -7,7 +7,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.vectorResource
@@ -25,15 +26,17 @@ enum class StepProgress { Current, Done, Upcoming }
 
 @Composable
 fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Unit)? = null) {
-    val constraintModifier = Modifier.animateContentSize()
+    val constraintModifier = Modifier
+        .animateContentSize()
         .fillMaxWidth()
-        .padding(vertical = 5.dp).clickable(onClick = { onClick?.let { it(step) } })
+        .padding(vertical = 5.dp)
+        .clickable(onClick = { onClick?.let { it(step) } }, enabled = onClick != null)
 
     CofiTheme {
         ConstraintLayout(
             modifier = constraintModifier
         ) {
-            val (icon, name, value, time) = createRefs()
+            val (icon, name, valueAndTimeBox) = createRefs()
             val imageVector = when (stepProgress) {
                 StepProgress.Current -> Icons.Rounded.PlayArrow
                 StepProgress.Done -> Icons.Rounded.CheckCircle
@@ -47,11 +50,11 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
             Icon(
                 imageVector = imageVector,
                 tint = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 5.dp).constrainAs(icon) {
-                    start.linkTo(parent.start)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                }
+                modifier = Modifier
+                    .constrainAs(icon) {
+                        start.linkTo(parent.start, 5.dp)
+                        centerVerticallyTo(parent)
+                    }
 
             )
 
@@ -59,37 +62,39 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
                 text = step.name,
                 style = MaterialTheme.typography.subtitle1,
                 color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 5.dp).constrainAs(name) {
-                    start.linkTo(icon.end)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                }
+                modifier = Modifier
+                    .constrainAs(name) {
+                        start.linkTo(icon.end, 5.dp)
+                        centerVerticallyTo(parent)
+                        end.linkTo(valueAndTimeBox.start, 5.dp)
+                        width = Dimension.fillToConstraints
+                    }
             )
+            Row(Modifier.constrainAs(valueAndTimeBox) {
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                end.linkTo(parent.end)
+            }) {
+                if (step.value != null) {
+                    Text(
+                        text = "${step.value}g",
+                        style = MaterialTheme.typography.subtitle2,
+                        color = MaterialTheme.colors.onSurface,
+                        modifier = Modifier
+                            .padding(horizontal = 5.dp)
 
-            if (step.value != null) {
+                    )
+                }
                 Text(
-                    text = "${step.value}g",
+                    text = step.time.toStringDuration(),
                     style = MaterialTheme.typography.subtitle2,
                     color = MaterialTheme.colors.onSurface,
-                    modifier = Modifier.padding(horizontal = 5.dp).constrainAs(value) {
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                        end.linkTo(time.start)
-                    }
+                    modifier = Modifier
+                        .padding(horizontal = 5.dp)
 
                 )
             }
-            Text(
-                text = step.time.toStringDuration(),
-                style = MaterialTheme.typography.subtitle2,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 5.dp).constrainAs(time) {
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                }
 
-            )
         }
     }
 }
@@ -101,10 +106,25 @@ fun StepListItemPreview() {
     StepListItem(
         step = Step(
             id = 0,
-            name = "Add water",
+            name = "Somebody once told me the world is gonna roll me I ain't the sharpest tool in the shed She was looking kind of dumb with her finger and her thumb In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
             value = 60,
+            orderInRecipe = 0,
+        ),
+        stepProgress = StepProgress.Current,
+    )
+}
+@ExperimentalTime
+@Preview
+@Composable
+fun StepListItemPreviewShort() {
+    StepListItem(
+        step = Step(
+            id = 0,
+            name = "Somebody once told",
+            time = 35.toMillis(),
+            type = StepType.WAIT,
             orderInRecipe = 0,
         ),
         stepProgress = StepProgress.Current,
