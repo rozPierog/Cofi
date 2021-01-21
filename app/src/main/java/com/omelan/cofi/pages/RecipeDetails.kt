@@ -1,5 +1,6 @@
 package com.omelan.cofi.pages
 
+import android.media.MediaPlayer
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.animatedColor
@@ -61,7 +62,6 @@ fun RecipeDetails(
         recipeViewModel.getRecipe(recipeId).observeAsState(Recipe(name = "", description = ""))
     val indexOfCurrentStep = steps.value.indexOf(currentStep)
     val indexOfLastStep = steps.value.lastIndex
-    val haptics = Haptics(AmbientContext.current)
     val animatedProgressValue = animatedFloat(0f)
     val animatedProgressColor = animatedColor(Color.DarkGray)
 
@@ -109,7 +109,9 @@ fun RecipeDetails(
         animatedProgressValue.stop()
         isAnimationRunning = false
     }
-
+    val context = AmbientContext.current
+    val haptics = Haptics(context)
+    val mediaPlayer = MediaPlayer.create(context, R.raw.ding)
     fun changeToNextStep() {
         if (indexOfCurrentStep != indexOfLastStep) {
             setCurrentStep(steps.value[indexOfCurrentStep + 1])
@@ -121,6 +123,7 @@ fun RecipeDetails(
             onRecipeEnd(recipe.value)
         }
         haptics.progress()
+        mediaPlayer.start()
     }
 
     fun startAnimations() {
