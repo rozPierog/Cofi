@@ -66,10 +66,10 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             item {
                 ListItem(
                     text = {
-                        Text(text = "Default recipes by James Hoffmann")
+                        Text(text = stringResource(id = R.string.hoffmann_credits_title))
                     },
                     secondaryText = {
-                        Text(text = "https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ")
+                        Text(text = stringResource(id = R.string.hoffmann_credits_subtitle))
                     },
                     icon = {
                         Icon(painterResource(id = R.drawable.ic_coffee))

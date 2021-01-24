@@ -57,4 +57,6 @@ Przelać można już po 5minutach ostatniego kroku, ale im dłużej poczekasz ty
     <string name="prepopulate_step_scoop_coffee">Wyłów pływające kawałki kawy</string>
     <string name="prepopulate_step_stir_crust">Zamieszaj powierzchnie</string>
     <string name="prepopulate_step_plunge">Wciśnij prasę zaraz pod powierzchnie i przelej</string>
+    <string name="hoffmann_credits_subtitle">Przejdź do jego kanału na Youtube</string>
+    <string name="hoffmann_credits_title">Początkowe przepisy od James Hoffmann</string>
 </resources>

@@ -57,4 +57,6 @@ Temperature: the hotter, the better (especially with lighter roasts)"</string>
 Source: https://www.youtube.com/watch?v=st571DYYTR8
 Grind size: medium
 You can pour after 5min of last step, but the longer you keep it the better it gets"</string>
+    <string name="hoffmann_credits_title">Default recipes by James Hoffmann</string>
+    <string name="hoffmann_credits_subtitle">Go to his Youtube channel</string>
 </resources>
