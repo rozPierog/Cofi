@@ -1,0 +1,45 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    codes = %w{production beta alpha internal}
+      .map { |track| google_play_track_version_codes(
+        # json_key_data: get_play_store_json_key,
+        track: track,
+        package_name: 'com.omelan.cofi',
+      ) }
+      .flatten
+    newest_code = codes.map { |c| c % 10000 }.max
+    version_code = newest_code + 2
+    set_value_in_build(
+      key: 'versionCode',
+      value: version_code.to_s,
+      app_project_dir: '**/app',
+    )
+    gradle(task: "clean bundleFullRelease")
+    upload_to_play_store(
+      track: 'internal',
+    )
+  end
+end

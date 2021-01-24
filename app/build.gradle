@@ -31,6 +31,7 @@ android {
         applicationId "com.omelan.cofi"
         minSdkVersion 23
         targetSdkVersion 30
+        versionCode 12
         versionName "0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -62,13 +63,12 @@ android {
     productFlavors {
         instant {
             dimension "version"
-            versionCode 9
+            versionCode android.defaultConfig.versionCode - 1
             versionNameSuffix ".$versionCode-instant"
             minSdkVersion 26
         }
         full {
             dimension "version"
-            versionCode 10
             versionNameSuffix ".$versionCode"
         }
     }
