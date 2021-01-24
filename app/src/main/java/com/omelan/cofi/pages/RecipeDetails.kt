@@ -109,6 +109,7 @@ fun RecipeDetails(
         animatedProgressValue.stop()
         isAnimationRunning = false
     }
+
     val context = AmbientContext.current
     val haptics = Haptics(context)
     val mediaPlayer = MediaPlayer.create(context, R.raw.ding)
@@ -215,19 +216,20 @@ fun RecipeDetails(
                 },
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                if (!isInPiP && recipe.value.description.isNotBlank()) {
+                    item {
+                        Description(
+                            modifier = Modifier.fillMaxWidth(),
+                            descriptionText = recipe.value.description
+                        )
+                    }
+                }
                 if (!isInPiP) {
                     item {
-                        if (recipe.value.description.isNotBlank()) {
-                            Description(
-                                modifier = Modifier.fillMaxWidth(),
-                                descriptionText = recipe.value.description
-                            )
-                        }
+                        Spacer(modifier = Modifier.height(spacingDefault))
                     }
                 }
                 item {
-                    Spacer(modifier = Modifier.height(spacingDefault))
-
                     Timer(
                         currentStep = currentStep,
                         animatedProgressValue = animatedProgressValue,
