@@ -69,7 +69,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_water),
             time = 30.toMillis(),
             type = StepType.WATER,
-            value = 300,
+            value = 240,
             orderInRecipe = 4
         ),
         Step(
