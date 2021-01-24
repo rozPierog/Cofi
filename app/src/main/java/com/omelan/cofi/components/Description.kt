@@ -112,7 +112,9 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                             .getStringAnnotations("URL", it, it)
                             .firstOrNull()?.let { stringAnnotation ->
                                 IntentHelpers.openUri(context, stringAnnotation.item)
+                                return@ClickableText
                             }
+                        setIsExpanded(!isExpanded)
                     }
                 )
                 Icon(
