@@ -23,6 +23,7 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
+    # Add tests here!
     codes = %w{production beta alpha internal}
       .map { |track| google_play_track_version_codes(
         # json_key_data: get_play_store_json_key,
@@ -37,10 +38,16 @@ platform :android do
       value: version_code.to_s,
       app_project_dir: '**/app',
     )
+    increment_version_name(
+      app_project_dir: '**/app',
+      bump_type: 'minor',
+    )
     gradle(task: "clean licenseFullReleaseReport")
     gradle(task: "clean bundleFullRelease")
     upload_to_play_store(
       track: 'internal',
     )
   end
+
+  # Create github release lane https://docs.fastlane.tools/actions/set_github_release/
 end
