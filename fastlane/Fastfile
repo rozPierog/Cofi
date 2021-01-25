@@ -22,8 +22,7 @@ platform :android do
   end
 
   desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    # Add tests here!
+  lane :deploy_gps do
     codes = %w{production beta alpha internal}
       .map { |track| google_play_track_version_codes(
         # json_key_data: get_play_store_json_key,
@@ -49,5 +48,28 @@ platform :android do
     )
   end
 
-  # Create github release lane https://docs.fastlane.tools/actions/set_github_release/
+  desc "Deploy a new version to Github Releases"
+  lane :deploy_github do
+    gradle(task: "clean assembleFullRelease")
+    versionName = get_version_name(
+      app_project_dir: '**/app',
+    )
+    set_github_release(
+      repository_name: "rozPierog/Cofi",
+      api_token: ENV["GITHUB_TOKEN_COFI"],
+      name: "Cofi " + versionName,
+      tag_name: "v" + versionName,
+      is_prerelease: true,
+      description: (File.read("fastlane/metadata/android/release_notes.txt") rescue "No changelog provided"),
+      # commitish: "master",
+      upload_assets: ["app/build/outputs/apk/full/release/app-full-release.apk"]
+    )
+  end
+
+  desc "Perform deploy for all"
+  lane :deploy do
+    test
+    deploy_gps
+    deploy_github
+  end
 end
