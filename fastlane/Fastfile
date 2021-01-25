@@ -21,15 +21,20 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy_gps do
+  desc "Generate licenses"
+  lane :licenses do
+    gradle(task: "licenseFullReleaseReport")
+  end
+
+  desc "Bump version codes and name"
+  lane :bump_version do |options|
     codes = %w{production beta alpha internal}
-      .map { |track| google_play_track_version_codes(
-        # json_key_data: get_play_store_json_key,
-        track: track,
-        package_name: 'com.omelan.cofi',
-      ) }
-      .flatten
+    .map { |track| google_play_track_version_codes(
+      # json_key_data: get_play_store_json_key,
+      track: track,
+      package_name: 'com.omelan.cofi',
+    ) }
+    .flatten
     newest_code = codes.map { |c| c % 10000 }.max
     version_code = newest_code + 2
     set_value_in_build(
@@ -39,17 +44,20 @@ platform :android do
     )
     increment_version_name(
       app_project_dir: '**/app',
-      bump_type: 'minor',
+      bump_type: options[:bump_type],
     )
-    gradle(task: "clean licenseFullReleaseReport")
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy_gps do
     gradle(task: "clean bundleFullRelease")
     upload_to_play_store(
-      track: 'internal',
+      track: options[:prerelease] ? 'internal' : 'production',
     )
   end
 
   desc "Deploy a new version to Github Releases"
-  lane :deploy_github do
+  lane :deploy_github do |options|
     gradle(task: "clean assembleFullRelease")
     versionName = get_version_name(
       app_project_dir: '**/app',
@@ -59,17 +67,32 @@ platform :android do
       api_token: ENV["GITHUB_TOKEN_COFI"],
       name: "Cofi " + versionName,
       tag_name: "v" + versionName,
-      is_prerelease: true,
+      is_prerelease: options[:prerelease],
       description: (File.read("fastlane/metadata/android/release_notes.txt") rescue "No changelog provided"),
       # commitish: "master",
       upload_assets: ["app/build/outputs/apk/full/release/app-full-release.apk"]
     )
   end
 
+  desc "Builds an Instant App"
+  lane :build_intstant do
+    gradle(task: "clean bundleInstantRelease")
+    UI.warning "Fastlane does not support uploading instant apps to google play console"
+    UI.important "Remember to upload instant app bundle to Play Console!"
+  end
+
   desc "Perform deploy for all"
   lane :deploy do
+    bump_type = UI.select "How to bump version:", %w{major minor patch}
+    prerelease = prompt(
+      text: "is this a prerelease: ",
+      boolean: true
+    )
     test
-    deploy_gps
-    deploy_github
+    licenses
+    bump_version(bump_type: bump_type)
+    deploy_gps(prerelease: prerelease)
+    deploy_github(prerelease: prerelease)
+    build_intstant
   end
 end
