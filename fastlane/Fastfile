@@ -49,7 +49,7 @@ platform :android do
   end
 
   desc "Deploy a new version to the Google Play"
-  lane :deploy_gps do
+  lane :deploy_gps do |options|
     gradle(task: "clean bundleFullRelease")
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
@@ -75,8 +75,8 @@ platform :android do
   end
 
   desc "Builds an Instant App"
-  lane :build_intstant do
-    gradle(task: "clean bundleInstantRelease")
+  lane :build_instant do
+    gradle(task: "clean assembleInstantRelease")
     UI.warning "Fastlane does not support uploading instant apps to google play console"
     UI.important "Remember to upload instant app bundle to Play Console!"
   end
@@ -91,8 +91,10 @@ platform :android do
     test
     licenses
     bump_version(bump_type: bump_type)
+    git_commit(path: ["./*.gradle"], message: "Version bump")
+    push_to_git_remote
     deploy_gps(prerelease: prerelease)
     deploy_github(prerelease: prerelease)
-    build_intstant
+    build_instant
   end
 end
