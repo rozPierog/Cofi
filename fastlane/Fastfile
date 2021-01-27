@@ -76,9 +76,9 @@ platform :android do
 
   desc "Builds an Instant App"
   lane :build_instant do
-    gradle(task: "clean assembleInstantRelease")
-    UI.warning "Fastlane does not support uploading instant apps to google play console"
-    UI.important "Remember to upload instant app bundle to Play Console!"
+    gradle(task: "clean bundleInstantRelease")
+    UI.important "⚠️ Fastlane does not support uploading instant apps to google play console ⚠️"
+    UI.important "⚠️ Remember to upload instant app bundle to Play Console! ⚠️"
   end
 
   desc "Perform deploy for all"
