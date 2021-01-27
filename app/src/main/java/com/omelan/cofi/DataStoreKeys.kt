@@ -6,6 +6,9 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 val PIP_ENABLED = booleanPreferencesKey("pip_enabled")
 val COMBINE_WEIGHT = stringPreferencesKey("combine_weight")
 
+const val PIP_DEFAULT_VALUE = true
+val COMBINE_WEIGHT_DEFAULT_VALUE = CombineWeight.WATER.name
+
 enum class CombineWeight {
     ALL {
         override val settingsStringId: Int

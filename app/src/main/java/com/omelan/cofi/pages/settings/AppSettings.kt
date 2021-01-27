@@ -41,7 +41,7 @@ fun AppSettings(
     val dataStore = AmbientSettingsDataStore.current
     suspend fun togglePiPSetting() {
         dataStore.edit { settings ->
-            val currentPiPState = settings[PIP_ENABLED] ?: true
+            val currentPiPState = settings[PIP_ENABLED] ?: PIP_DEFAULT_VALUE
             settings[PIP_ENABLED] = !currentPiPState
         }
     }
@@ -53,13 +53,14 @@ fun AppSettings(
     }
 
     val isPiPEnabledFlow = dataStore.data.map { preferences ->
-        preferences[PIP_ENABLED] ?: true
+        preferences[PIP_ENABLED] ?: PIP_DEFAULT_VALUE
     }
     val combineWeightFlow = dataStore.data.map { preferences ->
-        preferences[COMBINE_WEIGHT] ?: CombineWeight.WATER.name
+        preferences[COMBINE_WEIGHT] ?: COMBINE_WEIGHT_DEFAULT_VALUE
     }
-    val isPiPEnabled = isPiPEnabledFlow.collectAsState(initial = true)
-    val combineWeightState = combineWeightFlow.collectAsState(initial = CombineWeight.WATER.name)
+    val isPiPEnabled = isPiPEnabledFlow.collectAsState(initial = PIP_DEFAULT_VALUE)
+    val combineWeightState =
+        combineWeightFlow.collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
     val showCombineWeightDialog = remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val context = AmbientContext.current

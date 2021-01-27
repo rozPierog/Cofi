@@ -73,9 +73,10 @@ fun RecipeDetails(
     val dataStore = AmbientSettingsDataStore.current
 
     val combineWeightFlow = dataStore.data.map { preferences ->
-        preferences[COMBINE_WEIGHT] ?: CombineWeight.WATER.name
+        preferences[COMBINE_WEIGHT] ?: COMBINE_WEIGHT_DEFAULT_VALUE
     }
-    val combineWeightState = combineWeightFlow.collectAsState(initial = CombineWeight.WATER.name)
+    val combineWeightState =
+        combineWeightFlow.collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
 
     val alreadyDoneWeight = remember(combineWeightState.value, currentStep) {
         val doneSteps = if (indexOfCurrentStep == -1) {

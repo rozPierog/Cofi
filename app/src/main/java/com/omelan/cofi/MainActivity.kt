@@ -260,7 +260,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onUserLeaveHint() {
         val isPiPEnabledFlow: Flow<Boolean> = dataStore.data.map { preferences ->
-            preferences[PIP_ENABLED] ?: false
+            preferences[PIP_ENABLED] ?: PIP_DEFAULT_VALUE
         }
         var isPiPEnabled: Boolean
         runBlocking {
