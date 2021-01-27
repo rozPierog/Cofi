@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Cofi" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="Theme.Cofi" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/navigationBar</item>
         <item name="android:colorAccent">@color/teal_200</item>
@@ -12,8 +12,4 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
-    <style name="Theme.Cofi.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.Cofi.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
