@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.omelan.cofi.R
 
 // val dummySteps = listOf(
 //    Step(
@@ -58,23 +59,23 @@ import androidx.room.*
 enum class RecipeIcon {
     V60 {
         override val icon: Int
-            get() = TODO("Not yet implemented")
+            get() = R.drawable.ic_drip
     },
     FrenchPress {
         override val icon: Int
-            get() = TODO("Not yet implemented")
+            get() = R.drawable.ic_french_press
     },
     Grinder {
         override val icon: Int
-            get() = TODO("Not yet implemented")
+            get() = R.drawable.ic_coffee_grinder
     },
     Chemex {
         override val icon: Int
-            get() = TODO("Not yet implemented")
+            get() = R.drawable.ic_chemex
     },
-    Areopress {
+    Aeropress {
         override val icon: Int
-            get() = TODO("Not yet implemented")
+            get() = R.drawable.ic_aeropress
     };
 
     abstract val icon: Int
@@ -93,7 +94,7 @@ class RecipeIconTypeConverter {
             RecipeIcon.FrenchPress.name -> RecipeIcon.FrenchPress
             RecipeIcon.Grinder.name -> RecipeIcon.Grinder
             RecipeIcon.Chemex.name -> RecipeIcon.Chemex
-            RecipeIcon.Areopress.name -> RecipeIcon.Areopress
+            RecipeIcon.Aeropress.name -> RecipeIcon.Aeropress
             else -> RecipeIcon.Grinder
         }
     }
