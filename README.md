@@ -35,6 +35,6 @@
 
 - [New language](docs/Contribute/Language.md)
 - [New default recipe](docs/Contribute/Recipe.md)
-- [New feature](docs/Contribute/Feature-Bugfix.md#Features/Improvements)
-- [Bugfix](docs/Contribute/feature-bugfix.md#Bugfixes)
+- [New feature](docs/Contribute/Feature-Bugfix.md#featuresimprovements)
+- [Bugfix](docs/Contribute/Feature-Bugfix.md#bugfixes)
 
