@@ -1,16 +1,40 @@
-# Cofi
-![Build status](https://github.com/rozPierog/Cofi/workflows/Android%20CI/badge.svg)
-![Supported Android APIs](https://img.shields.io/badge/API-23%2B-blue?logo=android-studio)
-![F-droid Version](https://img.shields.io/f-droid/v/com.omelan.cofi.svg)
-![Current release](https://img.shields.io/github/tag/rozPierog/Cofi.svg?include_prereleases?logo=github)
+<img src="fastlane/metadata/android/en-US/images/featureGraphic.jpg" width="100%">
 
-## [Read more](https://rozpierog.github.io/Cofi)
+<p align="center">
+  <img src="https://github.com/rozPierog/Cofi/workflows/Android%20CI/badge.svg">
+  <img src="https://img.shields.io/badge/API-23%2B-blue?logo=android-studio">
+  <!-- <img src="https://img.shields.io/f-droid/v/com.omelan.cofi.svg"> -->
+  <img src="https://img.shields.io/github/tag/rozPierog/Cofi.svg?include_prereleases?logo=github">
+</p>
 
 # Download
-<a href="https://play.google.com/store/apps/details?id=com.omelan.cofi"><img src="https://user-images.githubusercontent.com/23499434/105481420-4f9e4b80-5ca7-11eb-93a8-68ec63e55d00.png" height="75"></a>
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.omelan.cofi">
+    <img src="https://user-images.githubusercontent.com/23499434/105481420-4f9e4b80-5ca7-11eb-93a8-68ec63e55d00.png" height="75">
+  </a>
+  <a href="https://github.com/rozPierog/Cofi/releases">
+    <img src="docs/assets/get-github.png" height="75">
+  </a>
+  <!-- <a href="">
+    <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75">
+  </a> -->
+</p>
 
-<a href="">
-<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75">
-</a>
+# Screenshots
+<p align="center">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" width="20%">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" width="20%">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" width="20%">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/7_en-US.png" width="20%">
+</p>
 
-[APK](https://github.com/rozPierog/Cofi/releases)
+# [Read more](https://rozpierog.github.io/Cofi)
+
+
+# Contribute
+
+- [New language](docs/Contribute/Language.md)
+- [New default recipe](docs/Contribute/Recipe.md)
+- [New feature](docs/Contribute/Feature-Bugfix.md#Features/Improvements)
+- [Bugfix](docs/Contribute/feature-bugfix.md#Bugfixes)
+

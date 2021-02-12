@@ -87,3 +87,5 @@ lint/tmp/
 
 # fastlane secrets
 fastlane/Appfile
+
+.DS_Store
