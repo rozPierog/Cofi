@@ -48,11 +48,21 @@ platform :android do
     )
   end
 
-  desc "Deploy a new version to the Google Play"
+  desc "Deploy a new version to the Google Play Store"
   lane :deploy_gps do |options|
     gradle(task: "clean bundleFullRelease")
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
+    )
+  end
+
+  desc "Upload metadata to Google Play Store"
+  lane :meta_gps do
+    upload_to_play_store(
+      track: 'internal',
+      skip_upload_apk: true,
+      skip_upload_changelogs: true,
+      skip_upload_aab: true,
     )
   end
 
