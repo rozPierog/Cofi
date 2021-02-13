@@ -30,7 +30,6 @@
 
 # [Read more](https://rozpierog.github.io/Cofi)
 
-
 # Contribute
 
 - [New language](docs/Contribute/Language.md)
@@ -38,3 +37,7 @@
 - [New feature](docs/Contribute/CONTRIBUTING.md#featuresimprovements)
 - [Bugfix](docs/Contribute/CONTRIBUTING.md#bugfixes)
 
+
+# License
+
+[GNU GENERAL PUBLIC LICENSE Version 3](License)

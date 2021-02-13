@@ -1,3 +1,8 @@
+---
+layout: page
+permalink: /contribute/recipe.html
+
+---
 # Add new Default Recipe
 
 Every fresh install of Cofi comes with few **default recipes** just to get users started. The first few _(V60, French Press, and Chemex)_ are taken from [James Hoffmann](https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ) with his permission to do so.

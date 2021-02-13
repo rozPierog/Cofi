@@ -1,3 +1,8 @@
+---
+layout: page
+permalink: /contribute/language.html
+
+---
 # Contribute new language
 
 If you are familiar with the Android resource structure I'll be happy to accept Pull Request with a new language to Cofi!
