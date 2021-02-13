@@ -8,10 +8,22 @@ class PrepopulateData(context: Context) {
     private val resources = context.resources
     private val v60Id = 1
     private val frenchPressId = 2
-    private var stepId = 0
+    private val chemexId = 3
+    private var _stepId = 0
     private fun autoStepId(): Int {
-        stepId += 1
-        return stepId
+        _stepId += 1
+        return _stepId
+    }
+
+    private val _orderInRecipeMap = mutableMapOf(
+        v60Id to 0,
+        frenchPressId to 0,
+        chemexId to 0,
+    )
+    private fun autoOrderInRecipe(recipeId: Int): Int {
+        val currentOrder = _orderInRecipeMap[recipeId] ?: 0
+        _orderInRecipeMap[recipeId] = currentOrder + 1
+        return currentOrder
     }
 
     val recipes = arrayOf(
@@ -26,9 +38,16 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_frenchPress_name),
             description = resources.getString(R.string.prepopulate_frenchPress_description),
             recipeIcon = RecipeIcon.FrenchPress,
+        ),
+        Recipe(
+            id = chemexId,
+            name = resources.getString(R.string.prepopulate_chemex_name),
+            description = resources.getString(R.string.prepopulate_chemex_description),
+            recipeIcon = RecipeIcon.Chemex,
         )
     )
     val steps = listOf(
+        // V60
         Step(
             id = autoStepId(),
             recipeId = v60Id,
@@ -36,7 +55,7 @@ class PrepopulateData(context: Context) {
             value = 30,
             time = 5.toMillis(),
             type = StepType.ADD_COFFEE,
-            orderInRecipe = 0
+            orderInRecipe = autoOrderInRecipe(v60Id)
         ),
         Step(
             id = autoStepId(),
@@ -45,7 +64,7 @@ class PrepopulateData(context: Context) {
             value = 60,
             time = 5.toMillis(),
             type = StepType.WATER,
-            orderInRecipe = 1
+            orderInRecipe = autoOrderInRecipe(v60Id)
         ),
         Step(
             id = autoStepId(),
@@ -53,7 +72,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_swirl),
             time = 5.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = 2
+            orderInRecipe = autoOrderInRecipe(v60Id)
         ),
         Step(
             id = autoStepId(),
@@ -61,7 +80,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_wait),
             time = 35.toMillis(),
             type = StepType.WAIT,
-            orderInRecipe = 3
+            orderInRecipe = autoOrderInRecipe(v60Id)
         ),
         Step(
             id = autoStepId(),
@@ -70,7 +89,7 @@ class PrepopulateData(context: Context) {
             time = 30.toMillis(),
             type = StepType.WATER,
             value = 240,
-            orderInRecipe = 4
+            orderInRecipe = autoOrderInRecipe(v60Id)
         ),
         Step(
             id = autoStepId(),
@@ -79,7 +98,7 @@ class PrepopulateData(context: Context) {
             time = 30.toMillis(),
             type = StepType.WATER,
             value = 200,
-            orderInRecipe = 5
+            orderInRecipe = autoOrderInRecipe(v60Id)
         ),
         Step(
             id = autoStepId(),
@@ -87,8 +106,9 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_swirl),
             time = 5.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = 6
+            orderInRecipe = autoOrderInRecipe(v60Id)
         ),
+        // French Press
         Step(
             id = autoStepId(),
             recipeId = frenchPressId,
@@ -96,7 +116,7 @@ class PrepopulateData(context: Context) {
             time = 5.toMillis(),
             type = StepType.ADD_COFFEE,
             value = 30,
-            orderInRecipe = 1,
+            orderInRecipe = autoOrderInRecipe(frenchPressId),
         ),
         Step(
             id = autoStepId(),
@@ -105,7 +125,7 @@ class PrepopulateData(context: Context) {
             time = 30.toMillis(),
             type = StepType.WATER,
             value = 500,
-            orderInRecipe = 2,
+            orderInRecipe = autoOrderInRecipe(frenchPressId),
         ),
         Step(
             id = autoStepId(),
@@ -113,7 +133,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_wait),
             time = (4 * 60).toMillis(),
             type = StepType.WAIT,
-            orderInRecipe = 3,
+            orderInRecipe = autoOrderInRecipe(frenchPressId),
         ),
         Step(
             id = autoStepId(),
@@ -121,7 +141,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_stir_crust),
             time = 5.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = 4,
+            orderInRecipe = autoOrderInRecipe(frenchPressId),
         ),
         Step(
             id = autoStepId(),
@@ -129,7 +149,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_scoop_coffee),
             time = 15.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = 5,
+            orderInRecipe = autoOrderInRecipe(frenchPressId),
         ),
         Step(
             id = autoStepId(),
@@ -137,7 +157,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_wait),
             time = (7 * 60).toMillis(),
             type = StepType.WAIT,
-            orderInRecipe = 6,
+            orderInRecipe = autoOrderInRecipe(frenchPressId),
         ),
         Step(
             id = autoStepId(),
@@ -145,7 +165,68 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_plunge),
             time = 10.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = 6,
+            orderInRecipe = autoOrderInRecipe(frenchPressId),
+        ),
+        // Chemex
+        Step(
+            id = autoStepId(),
+            recipeId = chemexId,
+            orderInRecipe = autoOrderInRecipe(chemexId),
+            name = resources.getString(R.string.prepopulate_step_coffee),
+            type = StepType.ADD_COFFEE,
+            time = 5.toMillis(),
+            value = 30,
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = chemexId,
+            orderInRecipe = autoOrderInRecipe(chemexId),
+            name = resources.getString(R.string.prepopulate_step_water),
+            type = StepType.WATER,
+            time = 5.toMillis(),
+            value = 60,
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = chemexId,
+            name = resources.getString(R.string.prepopulate_step_swirl),
+            time = 5.toMillis(),
+            type = StepType.OTHER,
+            orderInRecipe = autoOrderInRecipe(chemexId)
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = chemexId,
+            orderInRecipe = autoOrderInRecipe(chemexId),
+            name = resources.getString(R.string.prepopulate_step_wait),
+            type = StepType.WAIT,
+            time = 45.toMillis(),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = chemexId,
+            name = resources.getString(R.string.prepopulate_step_water),
+            time = 30.toMillis(),
+            type = StepType.WATER,
+            value = 240,
+            orderInRecipe = autoOrderInRecipe(chemexId)
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = chemexId,
+            name = resources.getString(R.string.prepopulate_step_water),
+            time = 30.toMillis(),
+            type = StepType.WATER,
+            value = 200,
+            orderInRecipe = autoOrderInRecipe(chemexId)
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = chemexId,
+            name = resources.getString(R.string.prepopulate_step_swirl),
+            time = 5.toMillis(),
+            type = StepType.OTHER,
+            orderInRecipe = autoOrderInRecipe(chemexId)
         ),
     )
 }

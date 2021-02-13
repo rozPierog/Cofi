@@ -42,7 +42,7 @@ UWAGA: ten link nie służy do dzielenia się przepisem z innymi"</string>
     <string name="settings_combine_weight_none">Nie sumuj wagi</string>
     <string name="prepopulate_v60_name">V60</string>
     <string name="prepopulate_v60_description">"Przepis od: James Hoffmann
-Źródło: https://www.youtube.com/watch?v=AI4ynXzkSQo
+Źródło: https://youtu.be/AI4ynXzkSQo
 Grubość mielenia: średnio
 Temperature: im cieplej tym lepiej (szczególnie z jasno paloną kawą)"</string>
     <string name="prepopulate_step_coffee">Dodaj kawę</string>
@@ -51,7 +51,7 @@ Temperature: im cieplej tym lepiej (szczególnie z jasno paloną kawą)"</string
     <string name="prepopulate_step_wait">Czekaj</string>
     <string name="prepopulate_frenchPress_name">Prasa Francuska</string>
     <string name="prepopulate_frenchPress_description">"Przepis od: James Hoffmann
-Źródło: https://www.youtube.com/watch?v=st571DYYTR8
+Źródło: https://youtu.be/st571DYYTR8
 Grubość mielenia: średnio/grubo
 Przelać można już po 5minutach ostatniego kroku, ale im dłużej poczekasz tym lepszy będzie smak"</string>
     <string name="prepopulate_step_scoop_coffee">Wyłów pływające kawałki kawy</string>
@@ -59,4 +59,11 @@ Przelać można już po 5minutach ostatniego kroku, ale im dłużej poczekasz ty
     <string name="prepopulate_step_plunge">Wciśnij prasę zaraz pod powierzchnie i przelej</string>
     <string name="hoffmann_credits_subtitle">Przejdź do jego kanału na Youtube</string>
     <string name="hoffmann_credits_title">Początkowe przepisy od James Hoffmann</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_chemex_description">"Przepis od: James Hoffmann
+Źródło: https://youtu.be/ikt-X5x7yoc
+Grubość mielenia: średnio
+Temperature: im cieplej tym lepiej (szczególnie z jasno paloną kawą)
+Upewnij się, że najgrubsza strona filtra jest po stronie lejka
+Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze musie gdzieś uciekać"</string>
 </resources>

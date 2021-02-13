@@ -42,7 +42,7 @@ WARNING: You cannot share recipe this way!"</string>
     <string name="timer_enjoy">Enjoy your coffee</string>
     <string name="prepopulate_v60_name">Ultimate V60</string>
     <string name="prepopulate_v60_description">"Recipe created by: James Hoffmann
-Source: https://www.youtube.com/watch?v=AI4ynXzkSQo
+Source: https://youtu.be/AI4ynXzkSQo
 Grind size: medium fine
 Temperature: the hotter, the better (especially with lighter roasts)"</string>
     <string name="prepopulate_step_coffee">Add coffee</string>
@@ -54,9 +54,16 @@ Temperature: the hotter, the better (especially with lighter roasts)"</string>
     <string name="prepopulate_step_scoop_coffee">Scoop up foam and coffee bits off the top</string>
     <string name="prepopulate_frenchPress_name">French Press</string>
     <string name="prepopulate_frenchPress_description">"Recipe created by: James Hoffmann
-Source: https://www.youtube.com/watch?v=st571DYYTR8
+Source: https://youtu.be/st571DYYTR8
 Grind size: medium
 You can pour after 5min of last step, but the longer you keep it the better it gets"</string>
     <string name="hoffmann_credits_title">Default recipes by James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Go to his Youtube channel</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_chemex_description">"Recipe created by: James Hoffmann
+Source: https://youtu.be/ikt-X5x7yoc
+Grind size: medium fine
+Temperature: the hotter, the better (especially with lighter roasts)
+Make sure that stiffest part of filter is at the drainage side
+Keep an eye out not to block air moving out of the brewer"</string>
 </resources>
