@@ -1,5 +1,6 @@
 ---
 layout: home
+title: Home
 ---
 <!-- <p align="center">
   <img src="assets/icon.png" width="90px" height="90px" />

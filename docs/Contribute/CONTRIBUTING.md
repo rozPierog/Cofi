@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /contribute/code.html
-
+title: Contribute code
 ---
 ## Contributing Code
 

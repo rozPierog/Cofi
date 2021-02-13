@@ -22,6 +22,9 @@ include: [".well-known"]
 # Build settings
 markdown: kramdown
 theme: minima
+header_pages:
+  - Contribute/CONTRIBUTING.md
+  - index.md
 # author:
 #   name: Leon Omelan
 #   email: "rozpierog@gmail.com"
