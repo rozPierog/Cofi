@@ -53,6 +53,7 @@ platform :android do
     gradle(task: "clean bundleFullRelease")
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
+      skip_upload_apk: true,
     )
   end
 
