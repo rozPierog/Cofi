@@ -4,7 +4,7 @@
   <img src="https://github.com/rozPierog/Cofi/workflows/Android%20CI/badge.svg">
   <img src="https://img.shields.io/badge/API-23%2B-blue?logo=android-studio">
   <!-- <img src="https://img.shields.io/f-droid/v/com.omelan.cofi.svg"> -->
-  <img src="https://img.shields.io/github/tag/rozPierog/Cofi.svg?include_prereleases?logo=github">
+  <img src="https://img.shields.io/github/v/release/rozPierog/Cofi.svg?include_prereleases?logo=github">
 </p>
 
 # Download
