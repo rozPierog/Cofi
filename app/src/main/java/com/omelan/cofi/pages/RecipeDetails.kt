@@ -19,12 +19,11 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.viewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
@@ -265,9 +264,9 @@ fun RecipeDetails(
                         ) {
                             Icon(
                                 if (animatedProgressValue.isRunning) {
-                                    vectorResource(id = R.drawable.ic_pause)
+                                    painterResource(id = R.drawable.ic_pause)
                                 } else {
-                                    Icons.Rounded.PlayArrow
+                                    painterResource(id = R.drawable.ic_play_arrow)
                                 },
                                 contentDescription = null
                             )

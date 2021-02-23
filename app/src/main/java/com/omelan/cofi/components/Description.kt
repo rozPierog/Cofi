@@ -138,7 +138,7 @@ fun DescriptionPreview() {
 
 @Preview
 @Composable
-fun DecriptionLongPreivew() {
+fun DescriptionLongPreview() {
     val longDesc = " ULTIMATE V60 TECHNIQUE\n" +
         "https://www.youtube.com/watch?v=AI4ynXzkSQo\n" +
         "Brew ratio: 60 g/L (e.g. 30 g per 500 mL)\n" +

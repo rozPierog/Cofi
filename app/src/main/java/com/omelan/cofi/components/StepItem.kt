@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -41,18 +38,18 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
             modifier = constraintModifier
         ) {
             val (icon, name, valueAndTimeBox) = createRefs()
-            val imageVector = when (stepProgress) {
-                StepProgress.Current -> Icons.Rounded.PlayArrow
-                StepProgress.Done -> Icons.Rounded.CheckCircle
+            val painter = when (stepProgress) {
+                StepProgress.Current -> painterResource(id = R.drawable.ic_play_arrow)
+                StepProgress.Done -> painterResource(id = R.drawable.ic_check_circle)
                 StepProgress.Upcoming -> when (step.type) {
-                    StepType.WATER -> vectorResource(id = R.drawable.ic_water_plus)
-                    StepType.ADD_COFFEE -> vectorResource(id = R.drawable.ic_coffee)
-                    StepType.WAIT -> vectorResource(id = R.drawable.ic_progress_clock)
-                    StepType.OTHER -> vectorResource(id = R.drawable.ic_playlist_edit)
+                    StepType.WATER -> painterResource(id = R.drawable.ic_water_plus)
+                    StepType.ADD_COFFEE -> painterResource(id = R.drawable.ic_coffee)
+                    StepType.WAIT -> painterResource(id = R.drawable.ic_progress_clock)
+                    StepType.OTHER -> painterResource(id = R.drawable.ic_playlist_edit)
                 }
             }
             Icon(
-                imageVector = imageVector,
+                painter = painter,
                 tint = MaterialTheme.colors.onSurface,
                 contentDescription = null,
                 modifier = Modifier
