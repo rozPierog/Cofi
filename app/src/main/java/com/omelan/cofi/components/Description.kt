@@ -1,7 +1,7 @@
 package com.omelan.cofi.components
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.animatedFloat
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ClickableText
@@ -13,14 +13,11 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.onCommit
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
@@ -53,7 +50,7 @@ private fun extractUrls(text: String): List<String> {
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     val (isExpanded, setIsExpanded) = remember { mutableStateOf(false) }
-    val context = AmbientContext.current
+    val context = LocalContext.current
     val descriptionWithLinks = buildAnnotatedString {
         val urlsInDescription = extractUrls(descriptionText)
         append(descriptionText)
@@ -82,11 +79,11 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
             )
         }
     }
-    val rotationDegree = animatedFloat(initVal = 0f)
-    onCommit(v1 = isExpanded) {
+    val rotationDegree = remember { Animatable(initialValue = 0f) }
+    LaunchedEffect(isExpanded) {
         rotationDegree.animateTo(
             targetValue = if (isExpanded) 180f else 0f,
-            anim = tween(durationMillis = 500, easing = FastOutSlowInEasing)
+            animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
         )
     }
     CofiTheme {
@@ -119,6 +116,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                 )
                 Icon(
                     imageVector = Icons.Rounded.KeyboardArrowDown,
+                    contentDescription = "Expand",
                     modifier = Modifier
                         .padding(5.dp)
                         .align(Alignment.CenterHorizontally)

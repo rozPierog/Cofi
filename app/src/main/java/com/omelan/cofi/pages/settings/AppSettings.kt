@@ -16,12 +16,11 @@ import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.window.AndroidDialogProperties
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat.startActivity
 import androidx.datastore.preferences.core.edit
@@ -33,12 +32,13 @@ import com.omelan.cofi.ui.spacingDefault
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @Composable
 fun AppSettings(
     goBack: () -> Unit,
     goToAbout: () -> Unit,
 ) {
-    val dataStore = AmbientSettingsDataStore.current
+    val dataStore = LocalSettingsDataStore.current
     suspend fun togglePiPSetting() {
         dataStore.edit { settings ->
             val currentPiPState = settings[PIP_ENABLED] ?: PIP_DEFAULT_VALUE
@@ -63,7 +63,7 @@ fun AppSettings(
         combineWeightFlow.collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
     val showCombineWeightDialog = remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
-    val context = AmbientContext.current
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             PiPAwareAppBar(
@@ -76,7 +76,7 @@ fun AppSettings(
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack)
+                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
                     }
                 }
             )
@@ -89,7 +89,10 @@ fun AppSettings(
                         Text(text = stringResource(id = R.string.settings_pip_item))
                     },
                     icon = {
-                        Icon(painterResource(id = R.drawable.ic_picture_in_picture))
+                        Icon(
+                            painterResource(id = R.drawable.ic_picture_in_picture),
+                            contentDescription = null
+                        )
                     },
                     modifier = settingsItemModifier.clickable(
                         onClick = {
@@ -127,7 +130,7 @@ fun AppSettings(
                     },
 
                     icon = {
-                        Icon(Icons.Rounded.List)
+                        Icon(Icons.Rounded.List, contentDescription = null)
                     },
                     modifier = settingsItemModifier.clickable(
                         onClick = {
@@ -141,7 +144,6 @@ fun AppSettings(
                     }
                     Dialog(
                         onDismissRequest = { hideDialog() },
-                        properties = AndroidDialogProperties(),
                     ) {
                         Column(
                             modifier = Modifier.background(
@@ -184,7 +186,10 @@ fun AppSettings(
                         Text(text = stringResource(id = R.string.settings_bug_item))
                     },
                     icon = {
-                        Icon(painterResource(id = R.drawable.ic_bug_report))
+                        Icon(
+                            painterResource(id = R.drawable.ic_bug_report),
+                            contentDescription = null
+                        )
                     },
                     modifier = settingsItemModifier.clickable(
                         onClick = {
@@ -209,7 +214,7 @@ fun AppSettings(
                         Text(text = stringResource(id = R.string.settings_about_item))
                     },
                     icon = {
-                        Icon(Icons.Rounded.Info)
+                        Icon(Icons.Rounded.Info, contentDescription = null)
                     },
                     modifier = settingsItemModifier.clickable(onClick = goToAbout)
                 )
@@ -218,6 +223,7 @@ fun AppSettings(
     }
 }
 
+@ExperimentalMaterialApi
 @Preview
 @Composable
 fun SettingsPagePreview() {

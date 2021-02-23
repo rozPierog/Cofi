@@ -1,8 +1,8 @@
 package com.omelan.cofi.components
 
+import androidx.compose.animation.Animatable
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animatedColor
-import androidx.compose.animation.animatedFloat
+import androidx.compose.animation.core.Animatable
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.omelan.cofi.model.Step
@@ -28,8 +28,8 @@ class TimerTest {
                 Timer(
                     isInPiP = false,
                     currentStep = step,
-                    animatedProgressValue = animatedFloat(initVal = 0.5f),
-                    animatedProgressColor = animatedColor(initVal = green600),
+                    animatedProgressValue = Animatable(0.5f),
+                    animatedProgressColor = Animatable(green600),
                 )
             }
         }
@@ -52,8 +52,8 @@ class TimerTest {
                 Timer(
                     isInPiP = false,
                     currentStep = step,
-                    animatedProgressValue = animatedFloat(initVal = 0.5f),
-                    animatedProgressColor = animatedColor(initVal = green600),
+                    animatedProgressValue = Animatable(0.5f),
+                    animatedProgressColor = Animatable(green600),
                 )
             }
         }
@@ -69,8 +69,8 @@ class TimerTest {
                 Timer(
                     isInPiP = false,
                     currentStep = null,
-                    animatedProgressValue = animatedFloat(initVal = 0.5f),
-                    animatedProgressColor = animatedColor(initVal = green600),
+                    animatedProgressValue = Animatable(0.5f),
+                    animatedProgressColor = Animatable(green600),
                 )
             }
         }

@@ -7,6 +7,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -15,10 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.WithConstraints
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.cofi.R
@@ -58,13 +58,13 @@ fun RecipeEdit(
                 PiPAwareAppBar(
                     navigationIcon = {
                         IconButton(onClick = goBack) {
-                            Icon(Icons.Rounded.ArrowBack)
+                            Icon(Icons.Rounded.ArrowBack, contentDescription = null)
                         }
                     },
                     actions = {
                         if (isEditing) {
                             IconButton(onClick = { showDeleteModal.value = true }) {
-                                Icon(Icons.Rounded.Delete)
+                                Icon(Icons.Rounded.Delete, contentDescription = null)
                             }
                         }
                         IconButton(
@@ -79,7 +79,10 @@ fun RecipeEdit(
                                 )
                             }
                         ) {
-                            Icon(vectorResource(id = R.drawable.ic_save))
+                            Icon(
+                                painterResource(id = R.drawable.ic_save),
+                                contentDescription = null
+                            )
                         }
                     },
                     title = {
@@ -96,7 +99,7 @@ fun RecipeEdit(
                 )
             }
         ) {
-            WithConstraints {
+            BoxWithConstraints {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()

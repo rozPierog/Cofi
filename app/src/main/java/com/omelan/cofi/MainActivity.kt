@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Rational
 import android.view.WindowManager
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -15,14 +16,13 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.staticAmbientOf
-import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.viewinterop.viewModel
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.core.view.WindowCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navDeepLink
@@ -45,11 +45,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
-val AmbientPiPState = staticAmbientOf<Boolean> {
+val LocalPiPState = staticCompositionLocalOf<Boolean> {
     error("AmbientPiPState value not available.")
 }
 
-val AmbientSettingsDataStore = staticAmbientOf<DataStore<Preferences>> {
+val LocalSettingsDataStore = staticCompositionLocalOf<DataStore<Preferences>> {
     error("AmbientSettingsDataStore value not available.")
 }
 
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         SystemUIHelpers.setStatusBarIconsTheme(window = window, darkIcons = false)
-        setContent {
+        this.setContent(null) {
             MainNavigation()
         }
     }
@@ -102,8 +102,8 @@ class MainActivity : AppCompatActivity() {
         }
         CofiTheme {
             Providers(
-                AmbientPiPState provides isInPiP.value,
-                AmbientSettingsDataStore provides dataStore,
+                LocalPiPState provides isInPiP.value,
+                LocalSettingsDataStore provides dataStore,
             ) {
                 Column {
                     NavHost(navController, startDestination = "list") {

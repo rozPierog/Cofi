@@ -1,14 +1,12 @@
 package com.omelan.cofi.pages
 
 import android.media.MediaPlayer
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.animatedColor
-import androidx.compose.animation.animatedFloat
+import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -17,8 +15,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.AmbientClipboardManager
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -45,7 +43,7 @@ import kotlin.time.ExperimentalTime
 @Composable
 fun RecipeDetails(
     recipeId: Int,
-    isInPiP: Boolean = AmbientPiPState.current,
+    isInPiP: Boolean = LocalPiPState.current,
     onRecipeEnd: (Recipe) -> Unit = {},
     goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
@@ -62,15 +60,15 @@ fun RecipeDetails(
         recipeViewModel.getRecipe(recipeId).observeAsState(Recipe(name = "", description = ""))
     val indexOfCurrentStep = steps.value.indexOf(currentStep)
     val indexOfLastStep = steps.value.lastIndex
-    val animatedProgressValue = animatedFloat(0f)
-    val animatedProgressColor = animatedColor(Color.DarkGray)
+    val animatedProgressValue = remember { Animatable(0f) }
+    val animatedProgressColor = remember { Animatable(Color.DarkGray) }
 
-    val clipboardManager = AmbientClipboardManager.current
+    val clipboardManager = LocalClipboardManager.current
     val snackbarState = SnackbarHostState()
     val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
 
-    val dataStore = AmbientSettingsDataStore.current
+    val dataStore = LocalSettingsDataStore.current
 
     val combineWeightFlow = dataStore.data.map { preferences ->
         preferences[COMBINE_WEIGHT] ?: COMBINE_WEIGHT_DEFAULT_VALUE
@@ -105,16 +103,16 @@ fun RecipeDetails(
         }
     }
 
-    fun pauseAnimations() {
+    suspend fun pauseAnimations() {
         animatedProgressColor.stop()
         animatedProgressValue.stop()
         isAnimationRunning = false
     }
 
-    val context = AmbientContext.current
+    val context = LocalContext.current
     val haptics = Haptics(context)
     val mediaPlayer = MediaPlayer.create(context, R.raw.ding)
-    fun changeToNextStep() {
+    suspend fun changeToNextStep() {
         if (indexOfCurrentStep != indexOfLastStep) {
             setCurrentStep(steps.value[indexOfCurrentStep + 1])
         } else {
@@ -128,7 +126,7 @@ fun RecipeDetails(
         mediaPlayer.start()
     }
 
-    fun startAnimations() {
+    suspend fun startAnimations() {
         if (currentStep == null) {
             return
         }
@@ -137,28 +135,21 @@ fun RecipeDetails(
         val duration = (currentStep.time - (currentStep.time * animatedProgressValue.value)).toInt()
         animatedProgressColor.animateTo(
             targetValue = currentStep.type.color,
-            anim = tween(durationMillis = duration, easing = LinearEasing),
+            animationSpec = tween(durationMillis = duration, easing = LinearEasing),
         )
-        animatedProgressValue.animateTo(
+        val result = animatedProgressValue.animateTo(
             targetValue = 1f,
-            anim = tween(durationMillis = duration, easing = LinearEasing),
-            onEnd = { _, endValue ->
-                if (endValue != 1f) {
-                    return@animateTo
-                }
-                changeToNextStep()
-            }
+            animationSpec = tween(durationMillis = duration, easing = LinearEasing),
         )
     }
-    onCommit(currentStep) {
-        if (currentStep == null) {
-            return@onCommit
+    LaunchedEffect(currentStep) {
+        if (currentStep != null) {
+            animatedProgressValue.snapTo(0f)
+            startAnimations()
         }
-        animatedProgressValue.snapTo(0f)
-        startAnimations()
     }
 
-    onCommit(isAnimationRunning) {
+    LaunchedEffect(isAnimationRunning) {
         setKeepScreenAwake(isAnimationRunning)
     }
     CofiTheme {
@@ -186,7 +177,7 @@ fun RecipeDetails(
                     },
                     navigationIcon = {
                         IconButton(onClick = goBack) {
-                            Icon(Icons.Rounded.ArrowBack)
+                            Icon(Icons.Rounded.ArrowBack, contentDescription = null)
                         }
                     },
                     actions = {
@@ -195,10 +186,13 @@ fun RecipeDetails(
                                 showAutomateLinkDialog = true
                             }
                         ) {
-                            Icon(painterResource(id = R.drawable.ic_link))
+                            Icon(
+                                painterResource(id = R.drawable.ic_link),
+                                contentDescription = null
+                            )
                         }
                         IconButton(onClick = goToEdit) {
-                            Icon(Icons.Rounded.Edit)
+                            Icon(Icons.Rounded.Edit, contentDescription = null)
                         }
                     },
                 )
@@ -212,8 +206,11 @@ fun RecipeDetails(
                 contentPadding = if (isInPiP) {
                     PaddingValues(0.dp)
                 } else {
-                    AmbientWindowInsets.current.navigationBars.toPaddingValues()
-                        .add(start = spacingDefault, end = spacingDefault, top = spacingDefault)
+                    LocalWindowInsets.current.navigationBars.toPaddingValues(
+                        additionalStart = spacingDefault,
+                        additionalTop = spacingDefault,
+                        additionalEnd = spacingDefault
+                    )
                 },
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -247,20 +244,21 @@ fun RecipeDetails(
                             modifier = Modifier.animateContentSize(),
                             onClick = if (currentStep != null) {
                                 if (isAnimationRunning) {
-                                    { pauseAnimations() }
+                                    { coroutineScope.launch { pauseAnimations() } }
                                 } else {
-                                    { startAnimations() }
+                                    { coroutineScope.launch { startAnimations() } }
                                 }
                             } else {
                                 { setCurrentStep(steps.value.first()) }
                             }
                         ) {
                             Icon(
-                                imageVector = if (isAnimationRunning) {
+                                if (isAnimationRunning) {
                                     vectorResource(id = R.drawable.ic_pause)
                                 } else {
                                     Icons.Rounded.PlayArrow
-                                }
+                                },
+                                contentDescription = null
                             )
                             Text(
                                 text = if (isAnimationRunning) {
@@ -274,7 +272,10 @@ fun RecipeDetails(
                     }
                 }
                 if (!isInPiP) {
-                    items(steps.value) { step ->
+                    this.itemsIndexed(
+                        items = steps.value,
+                        key = { _, step -> step.id }
+                    ) { _, step ->
                         val indexOfThisStep = steps.value.indexOf(step)
                         val stepProgress = when {
                             indexOfThisStep < indexOfCurrentStep -> StepProgress.Done

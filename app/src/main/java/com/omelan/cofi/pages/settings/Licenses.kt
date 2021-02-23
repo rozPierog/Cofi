@@ -28,7 +28,7 @@ fun Licenses(goBack: () -> Unit) {
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack)
+                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
                     }
                 }
             )

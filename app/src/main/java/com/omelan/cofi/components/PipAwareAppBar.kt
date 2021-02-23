@@ -10,7 +10,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.omelan.cofi.AmbientPiPState
+import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
@@ -30,7 +30,7 @@ fun PiPAwareAppBar(
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = 4.dp
 ) {
-    if (!AmbientPiPState.current) {
+    if (!LocalPiPState.current) {
         InsetAwareTopAppBar(
             title = title,
             modifier = modifier,

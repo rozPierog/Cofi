@@ -1,8 +1,8 @@
 package com.omelan.cofi.components
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.AnimatedFloat
-import androidx.compose.animation.core.AnimatedValue
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
@@ -32,8 +32,8 @@ fun Timer(
     modifier: Modifier = Modifier,
     currentStep: Step?,
     alreadyDoneWeight: Int = 0,
-    animatedProgressValue: AnimatedFloat,
-    animatedProgressColor: AnimatedValue<Color, AnimationVector4D>,
+    animatedProgressValue: Animatable<Float, AnimationVector1D>,
+    animatedProgressColor: Animatable<Color, AnimationVector4D>,
     isInPiP: Boolean,
     isDone: Boolean = false,
 ) {
@@ -188,8 +188,8 @@ fun TimerPreview() {
             type = StepType.OTHER,
             orderInRecipe = 0,
         ),
-        animatedProgressValue = animatedFloat(initVal = 0.5f),
-        animatedProgressColor = animatedColor(initVal = green600),
+        animatedProgressValue = Animatable(0.5f),
+        animatedProgressColor = Animatable(green600),
         isInPiP = false,
         isDone = false
     )
@@ -208,8 +208,8 @@ fun TimerPreviewPiP() {
             value = 300,
             orderInRecipe = 0,
         ),
-        animatedProgressValue = animatedFloat(initVal = 0.5f),
-        animatedProgressColor = animatedColor(initVal = green600),
+        animatedProgressValue = Animatable(0.5f),
+        animatedProgressColor = Animatable(green600),
         isInPiP = true,
         isDone = false
     )
@@ -221,8 +221,8 @@ fun TimerPreviewPiP() {
 fun TimerPreviewDone() {
     Timer(
         currentStep = null,
-        animatedProgressValue = animatedFloat(initVal = 0.5f),
-        animatedProgressColor = animatedColor(initVal = green600),
+        animatedProgressValue = Animatable(0.5f),
+        animatedProgressColor = Animatable(green600),
         isInPiP = false,
         isDone = true
     )

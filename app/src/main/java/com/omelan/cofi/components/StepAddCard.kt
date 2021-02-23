@@ -35,20 +35,20 @@ fun StepAddCard(
     orderInRecipe: Int,
     recipeId: Int
 ) {
-    val pickedType = remember(stepToEdit) { mutableStateOf<StepType?>(stepToEdit?.type) }
+    val pickedType = remember(stepToEdit) { mutableStateOf(stepToEdit?.type) }
     val pickedTypeName = pickedType.value?.stringRes?.let { stringResource(id = it) } ?: ""
     val stepName = remember(stepToEdit, pickedTypeName) {
-        mutableStateOf<String>(
+        mutableStateOf(
             stepToEdit?.name ?: pickedTypeName
         )
     }
     val stepTime = remember(stepToEdit) {
-        mutableStateOf<String>(
+        mutableStateOf(
             ((stepToEdit?.time ?: 0) / 1000).toString()
         )
     }
     val stepValue = remember(stepToEdit) {
-        mutableStateOf<String>(
+        mutableStateOf(
             (stepToEdit?.value ?: 0).toString()
         )
     }
@@ -106,7 +106,7 @@ fun StepAddCard(
                             "step_time"
                         ),
                     )
-                    if (listOf<StepType>(
+                    if (listOf(
                             StepType.WATER,
                             StepType.ADD_COFFEE,
                             StepType.OTHER
@@ -150,7 +150,7 @@ fun StepAddCard(
                                 .padding(vertical = 15.dp)
                                 .testTag("step_save"),
                         ) {
-                            Icon(imageVector = Icons.Rounded.Add)
+                            Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
                             Spacer(modifier = Modifier.width(5.dp))
                             Text(text = stringResource(id = R.string.step_add_save))
                         }
@@ -163,7 +163,7 @@ fun StepAddCard(
                                     .padding(vertical = 15.dp)
                                     .testTag("step_remove"),
                             ) {
-                                Icon(imageVector = Icons.Rounded.Delete)
+                                Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
                                 Spacer(modifier = Modifier.width(5.dp))
                                 Text(text = stringResource(id = R.string.step_add_remove))
                             }

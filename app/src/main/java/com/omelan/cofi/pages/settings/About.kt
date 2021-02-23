@@ -6,7 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.AmbientUriHandler
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -14,9 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 
+@ExperimentalMaterialApi
 @Composable
 fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
-    val uriHandler = AmbientUriHandler.current
+    val uriHandler = LocalUriHandler.current
 
     Scaffold(
         topBar = {
@@ -30,7 +31,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack)
+                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
                     }
                 }
             )
@@ -43,7 +44,10 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Text(text = stringResource(id = R.string.settings_github_item))
                     },
                     icon = {
-                        Icon(painterResource(id = R.drawable.ic_github_icon))
+                        Icon(
+                            painterResource(id = R.drawable.ic_github_icon),
+                            contentDescription = null
+                        )
                     },
                     modifier = settingsItemModifier.clickable(
                         onClick = {
@@ -58,7 +62,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Text(text = stringResource(id = R.string.settings_licenses_item))
                     },
                     icon = {
-                        Icon(painterResource(id = R.drawable.ic_book))
+                        Icon(painterResource(id = R.drawable.ic_book), contentDescription = null)
                     },
                     modifier = settingsItemModifier.clickable(onClick = openLicenses)
                 )
@@ -72,7 +76,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Text(text = stringResource(id = R.string.hoffmann_credits_subtitle))
                     },
                     icon = {
-                        Icon(painterResource(id = R.drawable.ic_coffee))
+                        Icon(painterResource(id = R.drawable.ic_coffee), contentDescription = null)
                     },
                     modifier = settingsItemModifier.clickable(
                         onClick = {
@@ -87,6 +91,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
     }
 }
 
+@ExperimentalMaterialApi
 @Preview
 @Composable
 fun AboutAppSettingsPreview() {

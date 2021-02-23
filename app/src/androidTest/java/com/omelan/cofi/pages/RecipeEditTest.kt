@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.ExperimentalLayout
 import androidx.compose.runtime.Providers
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import com.omelan.cofi.AmbientPiPState
+import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
@@ -37,7 +37,7 @@ class RecipeEditTest {
         composeTestRule.setContent {
             CofiTheme {
                 Providers(
-                    AmbientPiPState provides false,
+                    LocalPiPState provides false,
                 ) {
                     RecipeEdit(
                         saveRecipe = { recipe: Recipe, steps: List<Step> ->
@@ -100,7 +100,7 @@ class RecipeEditTest {
         composeTestRule.setContent {
             CofiTheme {
                 Providers(
-                    AmbientPiPState provides false,
+                    LocalPiPState provides false,
                 ) {
                     RecipeEdit(
                         saveRecipe = { recipe: Recipe, steps: List<Step> ->

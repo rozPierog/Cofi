@@ -2,7 +2,9 @@ package com.omelan.cofi.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
@@ -50,6 +54,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
             Icon(
                 imageVector = imageVector,
                 tint = MaterialTheme.colors.onSurface,
+                contentDescription = null,
                 modifier = Modifier
                     .constrainAs(icon) {
                         start.linkTo(parent.start, 5.dp)
@@ -82,8 +87,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
                         text = "${step.value}g",
                         style = MaterialTheme.typography.subtitle2,
                         color = MaterialTheme.colors.onSurface,
-                        modifier = Modifier
-                            .padding(horizontal = 5.dp)
+                        modifier = Modifier.padding(horizontal = 5.dp)
 
                     )
                 }
@@ -91,9 +95,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
                     text = step.time.toStringDuration(),
                     style = MaterialTheme.typography.subtitle2,
                     color = MaterialTheme.colors.onSurface,
-                    modifier = Modifier
-                        .padding(horizontal = 5.dp)
-
+                    modifier = Modifier.padding(horizontal = 5.dp)
                 )
             }
         }
