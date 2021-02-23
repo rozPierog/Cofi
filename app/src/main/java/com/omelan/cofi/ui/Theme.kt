@@ -11,13 +11,14 @@ import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 private val DarkColorPalette = darkColors(
     primary = brown300,
     primaryVariant = brown700,
-    secondary = iconBackground
+    secondary = iconBackground,
 )
 
 private val LightColorPalette = lightColors(
     primary = brown500,
     primaryVariant = brown700,
-    secondary = iconBackground
+    secondary = iconBackground,
+    secondaryVariant = iconBackground,
 
     /* Other default colors to override
     background = Color.White,

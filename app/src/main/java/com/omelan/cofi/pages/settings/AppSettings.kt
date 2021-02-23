@@ -103,13 +103,13 @@ fun AppSettings(
                         enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                     ),
                     trailing = {
-                        Checkbox(
+                        Switch(
                             checked = isPiPEnabled.value,
                             onCheckedChange = {
                                 coroutineScope.launch {
                                     togglePiPSetting()
                                 }
-                            }
+                            },
                         )
                     }
                 )
