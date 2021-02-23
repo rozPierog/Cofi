@@ -87,6 +87,29 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     )
                 )
             }
+            item {
+                ListItem(
+                    text = {
+                        Text(text = stringResource(id = R.string.tereszkiewicz_credits_title))
+                    },
+                    secondaryText = {
+                        Text(text = stringResource(id = R.string.tereszkiewicz_credits_subtitle))
+                    },
+                    icon = {
+                        Icon(
+                            painterResource(id = R.drawable.ic_coffee_grinder),
+                            contentDescription = null
+                        )
+                    },
+                    modifier = settingsItemModifier.clickable(
+                        onClick = {
+                            uriHandler.openUri(
+                                "https://dribbble.com/hubert-tereszkiewicz"
+                            )
+                        }
+                    )
+                )
+            }
         }
     }
 }
