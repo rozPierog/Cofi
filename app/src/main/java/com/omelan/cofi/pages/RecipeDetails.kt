@@ -51,8 +51,7 @@ fun RecipeDetails(
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
 ) {
-    val (currentStep, setCurrentStep) = remember { mutableStateOf<Step?>(null) }
-    var isAnimationRunning by remember { mutableStateOf(false) }
+    var currentStep by remember { mutableStateOf<Step?>(null) }
     var isDone by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
     val steps = stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
@@ -106,51 +105,61 @@ fun RecipeDetails(
     suspend fun pauseAnimations() {
         animatedProgressColor.stop()
         animatedProgressValue.stop()
-        isAnimationRunning = false
+        setKeepScreenAwake(false)
     }
 
     val context = LocalContext.current
     val haptics = Haptics(context)
     val mediaPlayer = MediaPlayer.create(context, R.raw.ding)
-    suspend fun changeToNextStep() {
+    suspend fun changeToNextStep(silent: Boolean = false) {
+        animatedProgressValue.snapTo(0f)
         if (indexOfCurrentStep != indexOfLastStep) {
-            setCurrentStep(steps.value[indexOfCurrentStep + 1])
+            currentStep = steps.value[indexOfCurrentStep + 1]
         } else {
             animatedProgressValue.snapTo(0f)
-            setCurrentStep(null)
-            isAnimationRunning = false
+            currentStep = null
+            setKeepScreenAwake(false)
             isDone = true
             onRecipeEnd(recipe.value)
         }
-        haptics.progress()
-        mediaPlayer.start()
+        if (!silent) {
+            haptics.progress()
+            mediaPlayer.start()
+        }
     }
 
-    suspend fun startAnimations() {
-        if (currentStep == null) {
-            return
-        }
+    suspend fun progressAnimation() {
+        val safeCurrentStep = currentStep ?: return
         isDone = false
-        isAnimationRunning = true
-        val duration = (currentStep.time - (currentStep.time * animatedProgressValue.value)).toInt()
-        animatedProgressColor.animateTo(
-            targetValue = currentStep.type.color,
-            animationSpec = tween(durationMillis = duration, easing = LinearEasing),
-        )
+        setKeepScreenAwake(true)
+        val duration =
+            (safeCurrentStep.time - (safeCurrentStep.time * animatedProgressValue.value)).toInt()
         val result = animatedProgressValue.animateTo(
             targetValue = 1f,
             animationSpec = tween(durationMillis = duration, easing = LinearEasing),
         )
-    }
-    LaunchedEffect(currentStep) {
-        if (currentStep != null) {
-            animatedProgressValue.snapTo(0f)
-            startAnimations()
+        if (result.endReason != AnimationEndReason.Finished) {
+            return
         }
+        changeToNextStep()
     }
 
-    LaunchedEffect(isAnimationRunning) {
-        setKeepScreenAwake(isAnimationRunning)
+    suspend fun colorAnimation() {
+        val safeCurrentStep = currentStep ?: return
+        val duration =
+            (safeCurrentStep.time - (safeCurrentStep.time * animatedProgressValue.value)).toInt()
+        animatedProgressColor.animateTo(
+            targetValue = safeCurrentStep.type.color,
+            animationSpec = tween(durationMillis = duration, easing = LinearEasing),
+        )
+    }
+
+    suspend fun startAnimations() {
+        coroutineScope.launch { progressAnimation() }
+        coroutineScope.launch { colorAnimation() }
+    }
+    LaunchedEffect(currentStep) {
+        progressAnimation()
     }
     CofiTheme {
         Scaffold(
@@ -243,17 +252,19 @@ fun RecipeDetails(
                         Button(
                             modifier = Modifier.animateContentSize(),
                             onClick = if (currentStep != null) {
-                                if (isAnimationRunning) {
+                                if (animatedProgressValue.isRunning) {
                                     { coroutineScope.launch { pauseAnimations() } }
                                 } else {
-                                    { coroutineScope.launch { startAnimations() } }
+                                    {
+                                        coroutineScope.launch { startAnimations() }
+                                    }
                                 }
                             } else {
-                                { setCurrentStep(steps.value.first()) }
+                                { coroutineScope.launch { changeToNextStep(silent = true) } }
                             }
                         ) {
                             Icon(
-                                if (isAnimationRunning) {
+                                if (animatedProgressValue.isRunning) {
                                     vectorResource(id = R.drawable.ic_pause)
                                 } else {
                                     Icons.Rounded.PlayArrow
@@ -261,7 +272,7 @@ fun RecipeDetails(
                                 contentDescription = null
                             )
                             Text(
-                                text = if (isAnimationRunning) {
+                                text = if (animatedProgressValue.isRunning) {
                                     stringResource(id = R.string.recipe_details_button_pause)
                                 } else {
                                     stringResource(id = R.string.recipe_details_button_start)
