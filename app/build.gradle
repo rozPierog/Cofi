@@ -145,15 +145,15 @@ dependencies {
     // Material Design
     implementation "androidx.compose.material:material:$compose_version"
     // Navigation
-    implementation "androidx.navigation:navigation-compose:1.0.0-alpha07"
+    implementation "androidx.navigation:navigation-compose:1.0.0-alpha08"
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     // Jetpack Utils
-    implementation 'dev.chrisbanes.accompanist:accompanist-insets:0.5.1'
+    implementation 'dev.chrisbanes.accompanist:accompanist-insets:0.6.0'
 
-    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha06"
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha02"
-    implementation "androidx.activity:activity-compose:1.3.0-alpha02"
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha07"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha03"
+    implementation "androidx.activity:activity-compose:1.3.0-alpha03"
     //Room
     def room_version = "2.2.6"
 

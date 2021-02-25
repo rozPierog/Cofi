@@ -33,7 +33,6 @@ import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
 
 @ExperimentalAnimationApi
-@ExperimentalLayout
 @Composable
 fun RecipeEdit(
     saveRecipe: (Recipe, List<Step>) -> Unit,
@@ -233,7 +232,6 @@ fun RecipeEdit(
 }
 
 @ExperimentalAnimationApi
-@ExperimentalLayout
 @Preview
 @Composable
 fun RecipeEditPreview() {

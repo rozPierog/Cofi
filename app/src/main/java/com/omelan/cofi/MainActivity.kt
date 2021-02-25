@@ -1,6 +1,7 @@
 package com.omelan.cofi
 
 import android.app.PictureInPictureParams
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -11,16 +12,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayout
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Providers
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.core.view.WindowCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.createDataStore
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
@@ -57,10 +57,9 @@ const val appDeepLinkUrl = "https://rozpierog.github.io"
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
-@ExperimentalLayout
 class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
-    private val dataStore: DataStore<Preferences> = createDataStore(
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
         name = "settings"
     )
 
@@ -101,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             navController.popBackStack()
         }
         CofiTheme {
-            Providers(
+            CompositionLocalProvider(
                 LocalPiPState provides isInPiP.value,
                 LocalSettingsDataStore provides dataStore,
             ) {

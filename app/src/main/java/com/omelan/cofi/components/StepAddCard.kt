@@ -27,7 +27,6 @@ import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
 import java.util.*
 
-@ExperimentalLayout
 @Composable
 fun StepAddCard(
     stepToEdit: Step? = null,
@@ -175,7 +174,6 @@ fun StepAddCard(
     }
 }
 
-@ExperimentalLayout
 @Composable
 @Preview
 fun StepAddCardPreview() {

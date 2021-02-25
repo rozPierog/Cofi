@@ -1,8 +1,7 @@
 package com.omelan.cofi.pages
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.ExperimentalLayout
-import androidx.compose.runtime.Providers
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.omelan.cofi.LocalPiPState
@@ -21,7 +20,6 @@ class RecipeEditTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @ExperimentalLayout
     @Test
     fun testAddingNameAndDescription() {
         val expectedRecipe =
@@ -36,7 +34,7 @@ class RecipeEditTest {
             )
         composeTestRule.setContent {
             CofiTheme {
-                Providers(
+                CompositionLocalProvider(
                     LocalPiPState provides false,
                 ) {
                     RecipeEdit(
@@ -60,7 +58,7 @@ class RecipeEditTest {
             .performTextInput(expectedRecipe.name)
         composeTestRule.onNodeWithTag("recipe_edit_description")
             .performTextInput(expectedRecipe.description)
-
+        composeTestRule.onRoot().captureToImage()
         composeTestRule.onNodeWithTag("step_type_button_${expectedStep.type.name.toLowerCase()}")
             .performClick()
         val stepNameNode = composeTestRule.onNodeWithTag("step_name")
@@ -75,7 +73,6 @@ class RecipeEditTest {
         composeTestRule.onNodeWithTag("recipe_edit_save").performClick()
     }
 
-    @ExperimentalLayout
     @Test
     fun testEditRecipe() {
         val expectedRecipe = Recipe(id = 3, name = "Name of recipe", description = "Test test test")
@@ -99,7 +96,7 @@ class RecipeEditTest {
             )
         composeTestRule.setContent {
             CofiTheme {
-                Providers(
+                CompositionLocalProvider(
                     LocalPiPState provides false,
                 ) {
                     RecipeEdit(
