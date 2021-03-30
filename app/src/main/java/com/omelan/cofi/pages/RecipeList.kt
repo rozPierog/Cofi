@@ -22,9 +22,9 @@ import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.RecipeItem
 import com.omelan.cofi.model.RecipeViewModel
 import com.omelan.cofi.ui.CofiTheme
-import dev.chrisbanes.accompanist.insets.LocalWindowInsets
-import dev.chrisbanes.accompanist.insets.navigationBarsPadding
-import dev.chrisbanes.accompanist.insets.toPaddingValues
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.navigationBarsPadding
+import com.google.accompanist.insets.toPaddingValues
 
 @Composable
 fun RecipeList(

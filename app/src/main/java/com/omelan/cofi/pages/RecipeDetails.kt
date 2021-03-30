@@ -32,7 +32,7 @@ import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
 import com.omelan.cofi.utils.Haptics
-import dev.chrisbanes.accompanist.insets.*
+import com.google.accompanist.insets.*
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime

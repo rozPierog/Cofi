@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
-import dev.chrisbanes.accompanist.insets.statusBarsPadding
+import com.google.accompanist.insets.statusBarsPadding
 
 @Composable
 fun PiPAwareAppBar(
