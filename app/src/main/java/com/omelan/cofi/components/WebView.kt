@@ -8,12 +8,14 @@ import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
 fun WebView(urlToRender: String) {
-    AndroidView(viewBlock = ::WebView) { webView ->
-        with(webView) {
-            webViewClient = WebViewClient()
-            loadUrl(urlToRender)
+    AndroidView(
+        factory = { context ->
+            val webView = WebView(context)
+            webView.webViewClient = WebViewClient()
+            webView.loadUrl(urlToRender)
+            return@AndroidView webView
         }
-    }
+    )
 }
 
 @Preview

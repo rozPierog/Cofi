@@ -36,7 +36,7 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
                     .fillMaxWidth()
                     .clickable(onClick = { onClickRecipe() })
                     .padding(horizontal = 10.dp)
-                    .preferredHeight(75.dp),
+                    .height(75.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
@@ -44,7 +44,7 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
                     contentDescription = null,
                     modifier = Modifier
                         .padding(horizontal = 5.dp)
-                        .preferredHeight(25.dp)
+                        .height(25.dp)
                         .scale(1.2f)
                         .align(Alignment.CenterVertically)
                 )

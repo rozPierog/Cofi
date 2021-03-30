@@ -1,6 +1,5 @@
 package com.omelan.cofi.components
 
-import androidx.compose.foundation.layout.ExperimentalLayout
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -18,7 +17,6 @@ class StepAddCardTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @ExperimentalLayout
     @Test
     fun testRender() {
         composeTestRule.setContent {
@@ -30,7 +28,6 @@ class StepAddCardTest {
             .assertExists()
     }
 
-    @ExperimentalLayout
     @Test
     fun testFillName() {
         composeTestRule.setContent {
