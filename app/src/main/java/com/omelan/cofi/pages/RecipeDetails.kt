@@ -177,11 +177,19 @@ fun RecipeDetails(
             topBar = {
                 PiPAwareAppBar(
                     title = {
-                        Text(
-                            text = recipe.value.name,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
+                        Row {
+                            Icon(
+                                painter = painterResource(id = recipe.value.recipeIcon.icon),
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 4.dp)
+                            )
+                            Text(
+                                text = recipe.value.name,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+
                     },
                     navigationIcon = {
                         IconButton(onClick = goBack) {
