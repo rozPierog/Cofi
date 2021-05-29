@@ -72,6 +72,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         SystemUIHelpers.setStatusBarIconsTheme(window = window, darkIcons = false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            setPictureInPictureParams(
+                PictureInPictureParams.Builder()
+                    .setAspectRatio(Rational(1, 1)).apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            setAutoEnterEnabled(true)
+                            setSeamlessResizeEnabled(true)
+                        }
+                    }
+                    .build()
+            )
+        }
         this.setContent(null) {
             MainNavigation()
         }
@@ -273,9 +285,7 @@ class MainActivity : AppCompatActivity() {
             mainActivityViewModel.canGoToPiP.value == true &&
             isPiPEnabled
         ) {
-            enterPictureInPictureMode(
-                PictureInPictureParams.Builder().setAspectRatio(Rational(1, 1)).build()
-            )
+            enterPictureInPictureMode(PictureInPictureParams.Builder().build())
         }
     }
 }
