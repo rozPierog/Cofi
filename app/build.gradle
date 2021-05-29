@@ -25,12 +25,12 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
-    compileSdkVersion "android-S"
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.omelan.cofi"
         minSdkVersion 23
-        targetSdkVersion "S"
+        targetSdkVersion 30
         versionCode 36
         versionName "1.1.0"
 
@@ -81,8 +81,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
 
     }
 

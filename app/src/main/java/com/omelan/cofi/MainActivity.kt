@@ -78,10 +78,10 @@ class MainActivity : AppCompatActivity() {
             setPictureInPictureParams(
                 PictureInPictureParams.Builder()
                     .setAspectRatio(Rational(1, 1)).apply {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            setAutoEnterEnabled(true)
-                            setSeamlessResizeEnabled(true)
-                        }
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//                            setAutoEnterEnabled(true)
+//                            setSeamlessResizeEnabled(true)
+//                        }
                     }
                     .build()
             )
