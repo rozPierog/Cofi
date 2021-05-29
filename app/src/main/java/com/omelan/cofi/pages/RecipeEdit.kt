@@ -15,34 +15,47 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.StepAddCard
 import com.omelan.cofi.components.StepListItem
 import com.omelan.cofi.components.StepProgress
 import com.omelan.cofi.model.Recipe
+import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.CofiTheme
+import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
+import kotlinx.coroutines.launch
 
+@ExperimentalComposeUiApi
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
 fun RecipeEdit(
     saveRecipe: (Recipe, List<Step>) -> Unit,
     goBack: () -> Unit = {},
     stepsToEdit: List<Step> = listOf(),
-    recipeToEdit: Recipe = Recipe(name = "", description = ""),
+    recipeToEdit: Recipe = Recipe(name = "", description = "", recipeIcon = RecipeIcon.Grinder),
     deleteRecipe: () -> Unit = {},
     isEditing: Boolean = false,
 ) {
     val showDeleteModal = remember { mutableStateOf(false) }
+    val pickedIcon = remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
     val name = remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
     val description = remember(recipeToEdit) {
         mutableStateOf(
@@ -51,8 +64,43 @@ fun RecipeEdit(
     }
     val steps = remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     val stepWithOpenEditor = remember { mutableStateOf<Step?>(null) }
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+    )
+    val coroutineScope = rememberCoroutineScope()
+    val keyboardController = LocalSoftwareKeyboardController.current
+    fun pickIcon(icon: RecipeIcon) {
+        coroutineScope.launch {
+            bottomSheetScaffoldState.bottomSheetState.collapse()
+            pickedIcon.value = icon
+        }
+    }
     CofiTheme {
-        Scaffold(
+        BottomSheetScaffold(
+            scaffoldState = bottomSheetScaffoldState,
+            sheetPeekHeight = 0.dp,
+            sheetShape = shapes.card,
+            sheetContent = {
+                FlowRow(
+                    modifier = Modifier
+                        .navigationBarsWithImePadding()
+                        .fillMaxWidth(),
+                ) {
+                    RecipeIcon.values().map {
+                        IconButton(
+                            onClick = { pickIcon(it) },
+                            modifier = Modifier
+                                .fillMaxWidth(0.2F)
+                                .aspectRatio(1f)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = it.icon),
+                                contentDescription = "Coffee grinder"
+                            )
+                        }
+                    }
+                }
+            },
             topBar = {
                 PiPAwareAppBar(
                     navigationIcon = {
@@ -72,7 +120,8 @@ fun RecipeEdit(
                                 saveRecipe(
                                     recipeToEdit.copy(
                                         name = name.value,
-                                        description = description.value
+                                        description = description.value,
+                                        recipeIcon = pickedIcon.value,
                                     ),
                                     steps.value
                                 )
@@ -112,15 +161,32 @@ fun RecipeEdit(
                     ),
                 ) {
                     item {
-                        OutlinedTextField(
-                            value = name.value,
-                            onValueChange = { name.value = it },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .testTag("recipe_edit_name"),
-                            singleLine = true,
-                            label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            IconButton(onClick = {
+                                coroutineScope.launch {
+                                    if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
+                                        bottomSheetScaffoldState.bottomSheetState.collapse()
+                                    } else {
+                                        bottomSheetScaffoldState.bottomSheetState.expand()
+                                    }
+                                    keyboardController?.hide()
+                                }
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = pickedIcon.value.icon),
+                                    contentDescription = null
+                                )
+                            }
+                            OutlinedTextField(
+                                value = name.value,
+                                onValueChange = { name.value = it },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .testTag("recipe_edit_name"),
+                                singleLine = true,
+                                label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
+                            )
+                        }
                     }
                     item {
                         OutlinedTextField(
@@ -141,7 +207,7 @@ fun RecipeEdit(
                             enter = expandVertically(),
                             exit = shrinkVertically(),
 
-                        ) {
+                            ) {
                             val indexOfThisStep = steps.value.indexOf(step)
                             StepAddCard(
                                 stepToEdit = step,
@@ -196,6 +262,7 @@ fun RecipeEdit(
                     }
                 }
             }
+
             if (showDeleteModal.value && isEditing) {
                 AlertDialog(
                     onDismissRequest = { showDeleteModal.value = false },
@@ -231,6 +298,8 @@ fun RecipeEdit(
     }
 }
 
+@ExperimentalComposeUiApi
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Preview
 @Composable

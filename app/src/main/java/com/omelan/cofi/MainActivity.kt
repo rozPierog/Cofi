@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.core.view.WindowCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -60,6 +61,7 @@ val LocalSettingsDataStore = staticCompositionLocalOf<DataStore<Preferences>> {
 const val appDeepLinkUrl = "https://rozpierog.github.io"
 
 @ExperimentalAnimationApi
+@ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
