@@ -90,3 +90,4 @@ lint/tmp/
 fastlane/Appfile
 
 .DS_Store
+/.idea/deploymentTargetDropDown.xml

@@ -37,7 +37,7 @@ import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.CofiTheme
-import com.omelan.cofi.ui.card
+import com.omelan.cofi.ui.modal
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
 import kotlinx.coroutines.launch
@@ -79,7 +79,8 @@ fun RecipeEdit(
         BottomSheetScaffold(
             scaffoldState = bottomSheetScaffoldState,
             sheetPeekHeight = 0.dp,
-            sheetShape = shapes.card,
+            sheetElevation = 30.dp,
+            sheetShape = shapes.modal,
             sheetContent = {
                 FlowRow(
                     modifier = Modifier
