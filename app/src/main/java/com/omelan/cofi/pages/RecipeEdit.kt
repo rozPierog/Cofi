@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
@@ -42,6 +43,7 @@ import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
 import kotlinx.coroutines.launch
 
+@ExperimentalAnimatedInsets
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -299,6 +301,7 @@ fun RecipeEdit(
     }
 }
 
+@ExperimentalAnimatedInsets
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi

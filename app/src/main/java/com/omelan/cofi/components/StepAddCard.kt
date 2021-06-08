@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
@@ -28,6 +29,7 @@ import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
 import java.util.*
 
+@ExperimentalAnimatedInsets
 @Composable
 fun StepAddCard(
     stepToEdit: Step? = null,
@@ -175,6 +177,7 @@ fun StepAddCard(
     }
 }
 
+@ExperimentalAnimatedInsets
 @Composable
 @Preview
 fun StepAddCardPreview() {

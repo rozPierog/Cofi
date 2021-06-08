@@ -1,5 +1,6 @@
 package com.omelan.cofi.components
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
@@ -17,6 +18,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
@@ -26,6 +28,7 @@ import com.omelan.cofi.ui.grey300
 import com.omelan.cofi.ui.grey600
 import com.omelan.cofi.utils.toStringDuration
 
+@ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @Composable
 fun Timer(
@@ -176,6 +179,8 @@ fun Timer(
     }
 }
 
+@SuppressLint("UnrememberedAnimatable")
+@ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @Preview
 @Composable
@@ -195,6 +200,8 @@ fun TimerPreview() {
     )
 }
 
+@SuppressLint("UnrememberedAnimatable")
+@ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @Preview
 @Composable
@@ -215,6 +222,8 @@ fun TimerPreviewPiP() {
     )
 }
 
+@SuppressLint("UnrememberedAnimatable")
+@ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @Preview
 @Composable

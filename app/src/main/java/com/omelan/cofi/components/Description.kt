@@ -23,6 +23,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
@@ -47,6 +48,7 @@ private fun extractUrls(text: String): List<String> {
     return containedUrls
 }
 
+@ExperimentalAnimatedInsets
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     val (isExpanded, setIsExpanded) = remember { mutableStateOf(false) }
@@ -127,6 +129,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     }
 }
 
+@ExperimentalAnimatedInsets
 @Preview
 @Composable
 fun DescriptionPreview() {
@@ -136,6 +139,7 @@ fun DescriptionPreview() {
     )
 }
 
+@ExperimentalAnimatedInsets
 @Preview
 @Composable
 fun DescriptionLongPreview() {

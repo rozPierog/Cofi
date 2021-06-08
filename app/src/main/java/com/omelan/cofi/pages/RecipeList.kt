@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.toPaddingValues
@@ -26,6 +27,7 @@ import com.omelan.cofi.components.RecipeItem
 import com.omelan.cofi.model.RecipeViewModel
 import com.omelan.cofi.ui.CofiTheme
 
+@ExperimentalAnimatedInsets
 @Composable
 fun RecipeList(
     navigateToRecipe: (recipeId: Int) -> Unit,
@@ -79,6 +81,7 @@ fun RecipeList(
     }
 }
 
+@ExperimentalAnimatedInsets
 @Preview
 @Composable
 fun RecipeListPreview() {

@@ -15,11 +15,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 
+@ExperimentalAnimatedInsets
 @Composable
 fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
     fun onClickRecipe() {
@@ -73,6 +75,7 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
     }
 }
 
+@ExperimentalAnimatedInsets
 @Preview
 @Composable
 fun PreviewRecipeItem() {

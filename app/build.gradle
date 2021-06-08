@@ -133,7 +133,7 @@ configurations {
 }
 
 dependencies {
-    ktlint "com.pinterest:ktlint:0.40.0"
+    ktlint "com.pinterest:ktlint:0.41.0"
 
     instantImplementation('com.google.android.gms:play-services-instantapps:17.0.0')
 
@@ -146,16 +146,17 @@ dependencies {
     // Material Design
     implementation "androidx.compose.material:material:$compose_version"
     // Navigation
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha01"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha02"
+//    implementation 'com.github.fornewid:material-motion-compose:0.4.7'
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     // Jetpack Utils
-    implementation 'com.google.accompanist:accompanist-insets:0.10.0'
-    implementation "com.google.accompanist:accompanist-flowlayout:0.10.0"
+    implementation 'com.google.accompanist:accompanist-insets:0.11.1'
+    implementation "com.google.accompanist:accompanist-flowlayout:0.11.1"
 
     implementation "androidx.datastore:datastore-preferences:1.0.0-beta01"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha07"
-    implementation "androidx.activity:activity-compose:1.3.0-alpha08"
+    implementation "androidx.activity:activity-compose:1.3.0-beta01"
     //Room
     def room_version = "2.3.0"
 

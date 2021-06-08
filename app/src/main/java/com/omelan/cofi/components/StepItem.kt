@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
@@ -25,6 +26,7 @@ import kotlin.time.ExperimentalTime
 
 enum class StepProgress { Current, Done, Upcoming }
 
+@ExperimentalAnimatedInsets
 @Composable
 fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Unit)? = null) {
     val constraintModifier = Modifier
@@ -99,6 +101,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
     }
 }
 
+@ExperimentalAnimatedInsets
 @ExperimentalTime
 @Preview
 @Composable
@@ -117,6 +120,7 @@ fun StepListItemPreview() {
         stepProgress = StepProgress.Current,
     )
 }
+@ExperimentalAnimatedInsets
 @ExperimentalTime
 @Preview
 @Composable

@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
 
+@ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
@@ -341,6 +342,7 @@ fun RecipeDetails(
     }
 }
 
+@ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalTime
@@ -350,6 +352,7 @@ fun RecipeDetailsPreview() {
     RecipeDetails(recipeId = 1, isInPiP = false)
 }
 
+@ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalTime
