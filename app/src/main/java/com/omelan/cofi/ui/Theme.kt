@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 
+
 private val DarkColorPalette = darkColors(
     primary = brown300,
     primaryVariant = brown700,
@@ -80,9 +81,9 @@ fun CofiTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable (
         Pair(LightColorPalette, DarkColorPalette)
     }
     val colors = if (darkTheme) {
-        DarkColorPalette
+        darkColors
     } else {
-        LightColorPalette
+        lightColors
     }
 
     MaterialTheme(

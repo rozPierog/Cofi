@@ -23,4 +23,6 @@
     <color name="navigationBar">@color/white</color>
     <color name="cardBackground">@color/white</color>
     <color name="textPrimary">#000000</color>
+    <color name="background">?android:attr/colorBackground</color>
+    <color name="accent">?android:attr/colorAccent</color>
 </resources>

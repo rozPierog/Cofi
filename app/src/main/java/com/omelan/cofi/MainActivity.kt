@@ -258,8 +258,12 @@ class MainActivity : AppCompatActivity() {
                     startDestination = "list",
                     modifier = Modifier.animateContentSize()
                 ) {
-                    composable("list") {
-                        MainList(navController = navController)
+                    composable("list_color") {
+                        ColorPicker(goToList = {
+                            navController.navigate(
+                                route = "list",
+                            )
+                        })
                     }
                     composable("list") {
                         MainList(navController = navController)
