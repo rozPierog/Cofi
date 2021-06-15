@@ -13,12 +13,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -31,10 +34,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.omelan.cofi.model.AppDatabase
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeViewModel
 import com.omelan.cofi.model.StepsViewModel
+import com.omelan.cofi.pages.ColorPicker
 import com.omelan.cofi.pages.RecipeDetails
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
@@ -233,7 +238,17 @@ class MainActivity : AppCompatActivity() {
         val goBack: () -> Unit = {
             navController.popBackStack()
         }
+        val systemUiController = rememberSystemUiController()
+
         CofiTheme {
+            val useDarkIcons = MaterialTheme.colors.isLight
+            SideEffect {
+                systemUiController.setSystemBarsColor(
+                    color = Color.Transparent,
+                    darkIcons = useDarkIcons
+                )
+            }
+
             CompositionLocalProvider(
                 LocalPiPState provides isInPiP.value,
                 LocalSettingsDataStore provides dataStore,
@@ -243,6 +258,9 @@ class MainActivity : AppCompatActivity() {
                     startDestination = "list",
                     modifier = Modifier.animateContentSize()
                 ) {
+                    composable("list") {
+                        MainList(navController = navController)
+                    }
                     composable("list") {
                         MainList(navController = navController)
                     }
