@@ -21,7 +21,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.toPaddingValues
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.RecipeItem
 import com.omelan.cofi.model.RecipeViewModel
@@ -65,7 +65,8 @@ fun RecipeList(
             },
         ) {
             LazyColumn(
-                contentPadding = LocalWindowInsets.current.navigationBars.toPaddingValues(
+                contentPadding = rememberInsetsPaddingValues(
+                    insets = LocalWindowInsets.current.navigationBars,
                     additionalTop = 5.dp
                 ),
                 modifier = Modifier.fillMaxSize()

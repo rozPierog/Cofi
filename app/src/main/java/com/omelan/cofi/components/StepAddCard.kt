@@ -27,7 +27,6 @@ import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
-import java.util.*
 
 @ExperimentalAnimatedInsets
 @Composable
@@ -71,7 +70,7 @@ fun StepAddCard(
                                 onClick = { pickedType.value = stepType },
                                 shape = shapes.full,
                                 modifier = Modifier.testTag(
-                                    "step_type_button_${stepType.name.toLowerCase(Locale.ROOT)}"
+                                    "step_type_button_${stepType.name.lowercase()}"
                                 )
                             ) {
                                 Text(
