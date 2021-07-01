@@ -37,7 +37,6 @@ import com.omelan.cofi.components.StepProgress
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
-import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.modal
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
@@ -77,226 +76,224 @@ fun RecipeEdit(
             pickedIcon.value = icon
         }
     }
-    CofiTheme {
-        BottomSheetScaffold(
-            scaffoldState = bottomSheetScaffoldState,
-            sheetPeekHeight = 0.dp,
-            sheetElevation = 30.dp,
-            sheetShape = shapes.modal,
-            sheetContent = {
-                FlowRow(
-                    modifier = Modifier
-                        .navigationBarsWithImePadding()
-                        .fillMaxWidth(),
-                ) {
-                    RecipeIcon.values().map {
-                        IconButton(
-                            onClick = { pickIcon(it) },
-                            modifier = Modifier
-                                .fillMaxWidth(0.2F)
-                                .aspectRatio(1f)
-                        ) {
-                            Icon(
-                                painter = painterResource(id = it.icon),
-                                contentDescription = "Coffee grinder"
-                            )
-                        }
+    BottomSheetScaffold(
+        scaffoldState = bottomSheetScaffoldState,
+        sheetPeekHeight = 0.dp,
+        sheetElevation = 30.dp,
+        sheetShape = shapes.modal,
+        sheetContent = {
+            FlowRow(
+                modifier = Modifier
+                    .navigationBarsWithImePadding()
+                    .fillMaxWidth(),
+            ) {
+                RecipeIcon.values().map {
+                    IconButton(
+                        onClick = { pickIcon(it) },
+                        modifier = Modifier
+                            .fillMaxWidth(0.2F)
+                            .aspectRatio(1f)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = it.icon),
+                            contentDescription = "Coffee grinder"
+                        )
                     }
                 }
-            },
-            topBar = {
-                PiPAwareAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = goBack) {
-                            Icon(Icons.Rounded.ArrowBack, contentDescription = null)
+            }
+        },
+        topBar = {
+            PiPAwareAppBar(
+                navigationIcon = {
+                    IconButton(onClick = goBack) {
+                        Icon(Icons.Rounded.ArrowBack, contentDescription = null)
+                    }
+                },
+                actions = {
+                    if (isEditing) {
+                        IconButton(onClick = { showDeleteModal.value = true }) {
+                            Icon(Icons.Rounded.Delete, contentDescription = null)
                         }
-                    },
-                    actions = {
-                        if (isEditing) {
-                            IconButton(onClick = { showDeleteModal.value = true }) {
-                                Icon(Icons.Rounded.Delete, contentDescription = null)
-                            }
+                    }
+                    IconButton(
+                        modifier = Modifier.testTag("recipe_edit_save"),
+                        onClick = {
+                            saveRecipe(
+                                recipeToEdit.copy(
+                                    name = name.value,
+                                    description = description.value,
+                                    recipeIcon = pickedIcon.value,
+                                ),
+                                steps.value
+                            )
                         }
-                        IconButton(
-                            modifier = Modifier.testTag("recipe_edit_save"),
-                            onClick = {
-                                saveRecipe(
-                                    recipeToEdit.copy(
-                                        name = name.value,
-                                        description = description.value,
-                                        recipeIcon = pickedIcon.value,
-                                    ),
-                                    steps.value
-                                )
+                    ) {
+                        Icon(
+                            painterResource(id = R.drawable.ic_save),
+                            contentDescription = null
+                        )
+                    }
+                },
+                title = {
+                    Text(
+                        text = if (isEditing) {
+                            stringResource(id = R.string.recipe_edit_title)
+                        } else {
+                            stringResource(id = R.string.recipe_add_new_title)
+                        },
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            )
+        }
+    ) {
+        BoxWithConstraints {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .background(color = MaterialTheme.colors.background),
+                contentPadding = PaddingValues(
+                    bottom = maxHeight / 2,
+                    top = spacingDefault,
+                    start = spacingDefault,
+                    end = spacingDefault,
+                ),
+            ) {
+                item {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        IconButton(onClick = {
+                            coroutineScope.launch {
+                                if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
+                                    bottomSheetScaffoldState.bottomSheetState.collapse()
+                                } else {
+                                    bottomSheetScaffoldState.bottomSheetState.expand()
+                                }
+                                keyboardController?.hide()
                             }
-                        ) {
+                        }) {
                             Icon(
-                                painterResource(id = R.drawable.ic_save),
+                                painter = painterResource(id = pickedIcon.value.icon),
                                 contentDescription = null
                             )
                         }
-                    },
-                    title = {
-                        Text(
-                            text = if (isEditing) {
-                                stringResource(id = R.string.recipe_edit_title)
-                            } else {
-                                stringResource(id = R.string.recipe_add_new_title)
-                            },
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-                )
-            }
-        ) {
-            BoxWithConstraints {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .background(color = MaterialTheme.colors.background),
-                    contentPadding = PaddingValues(
-                        bottom = maxHeight / 2,
-                        top = spacingDefault,
-                        start = spacingDefault,
-                        end = spacingDefault,
-                    ),
-                ) {
-                    item {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(onClick = {
-                                coroutineScope.launch {
-                                    if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
-                                        bottomSheetScaffoldState.bottomSheetState.collapse()
-                                    } else {
-                                        bottomSheetScaffoldState.bottomSheetState.expand()
-                                    }
-                                    keyboardController?.hide()
-                                }
-                            }) {
-                                Icon(
-                                    painter = painterResource(id = pickedIcon.value.icon),
-                                    contentDescription = null
-                                )
-                            }
-                            OutlinedTextField(
-                                value = name.value,
-                                onValueChange = { name.value = it },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .testTag("recipe_edit_name"),
-                                singleLine = true,
-                                label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
-                            )
-                        }
-                    }
-                    item {
                         OutlinedTextField(
-                            value = description.value,
-                            onValueChange = { description.value = it },
+                            value = name.value,
+                            onValueChange = { name.value = it },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = spacingDefault)
-                                .testTag("recipe_edit_description"),
-                            label = {
-                                Text(text = stringResource(id = R.string.recipe_edit_description))
-                            },
+                                .testTag("recipe_edit_name"),
+                            singleLine = true,
+                            label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
                         )
                     }
-                    items(steps.value) { step ->
-                        AnimatedVisibility(
-                            visible = stepWithOpenEditor.value == step,
-                            enter = expandVertically(),
-                            exit = shrinkVertically(),
+                }
+                item {
+                    OutlinedTextField(
+                        value = description.value,
+                        onValueChange = { description.value = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = spacingDefault)
+                            .testTag("recipe_edit_description"),
+                        label = {
+                            Text(text = stringResource(id = R.string.recipe_edit_description))
+                        },
+                    )
+                }
+                items(steps.value) { step ->
+                    AnimatedVisibility(
+                        visible = stepWithOpenEditor.value == step,
+                        enter = expandVertically(),
+                        exit = shrinkVertically(),
 
-                            ) {
-                            val indexOfThisStep = steps.value.indexOf(step)
-                            StepAddCard(
-                                stepToEdit = step,
-                                save = { stepToSave ->
-                                    if (stepToSave == null) {
-                                        steps.value = steps.value.minus(step)
-                                    } else {
-                                        steps.value =
-                                            steps.value.mapIndexed { index, step ->
-                                                if (index == indexOfThisStep) {
-                                                    stepToSave
-                                                } else {
-                                                    step
-                                                }
-                                            }
-                                    }
-                                    stepWithOpenEditor.value = null
-                                },
-                                orderInRecipe = steps.value.indexOf(step),
-                                recipeId = recipeToEdit.id,
-                            )
-                        }
-                        AnimatedVisibility(
-                            visible = stepWithOpenEditor.value != step,
-                            enter = expandVertically(),
-                            exit = shrinkVertically(),
                         ) {
-                            StepListItem(
-                                step = step,
-                                stepProgress = StepProgress.Upcoming,
-                                onClick = { clickedStep ->
-                                    stepWithOpenEditor.value = clickedStep
+                        val indexOfThisStep = steps.value.indexOf(step)
+                        StepAddCard(
+                            stepToEdit = step,
+                            save = { stepToSave ->
+                                if (stepToSave == null) {
+                                    steps.value = steps.value.minus(step)
+                                } else {
+                                    steps.value =
+                                        steps.value.mapIndexed { index, step ->
+                                            if (index == indexOfThisStep) {
+                                                stepToSave
+                                            } else {
+                                                step
+                                            }
+                                        }
                                 }
-                            )
-                        }
+                                stepWithOpenEditor.value = null
+                            },
+                            orderInRecipe = steps.value.indexOf(step),
+                            recipeId = recipeToEdit.id,
+                        )
                     }
-                    if (stepWithOpenEditor.value == null) {
-                        item {
-                            StepAddCard(
-                                save = { stepToSave ->
-                                    if (stepToSave != null) {
-                                        steps.value = listOf(
-                                            *steps.value.toTypedArray(),
-                                            stepToSave
-                                        )
-                                    }
-                                },
-                                orderInRecipe = steps.value.size,
-                                recipeId = recipeToEdit.id,
-                            )
-                        }
+                    AnimatedVisibility(
+                        visible = stepWithOpenEditor.value != step,
+                        enter = expandVertically(),
+                        exit = shrinkVertically(),
+                    ) {
+                        StepListItem(
+                            step = step,
+                            stepProgress = StepProgress.Upcoming,
+                            onClick = { clickedStep ->
+                                stepWithOpenEditor.value = clickedStep
+                            }
+                        )
+                    }
+                }
+                if (stepWithOpenEditor.value == null) {
+                    item {
+                        StepAddCard(
+                            save = { stepToSave ->
+                                if (stepToSave != null) {
+                                    steps.value = listOf(
+                                        *steps.value.toTypedArray(),
+                                        stepToSave
+                                    )
+                                }
+                            },
+                            orderInRecipe = steps.value.size,
+                            recipeId = recipeToEdit.id,
+                        )
                     }
                 }
             }
+        }
 
-            if (showDeleteModal.value && isEditing) {
-                AlertDialog(
-                    onDismissRequest = { showDeleteModal.value = false },
-                    shape = shapes.medium,
-                    buttons = {
-                        Row(
-                            horizontalArrangement = Arrangement.End,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(spacingDefault)
-                        ) {
-                            TextButton(onClick = { showDeleteModal.value = false }) {
-                                Text(text = stringResource(id = R.string.button_cancel))
-                            }
-                            TextButton(
-                                onClick = {
-                                    deleteRecipe()
-                                }
-                            ) {
-                                Text(text = stringResource(id = R.string.button_delete))
-                            }
+        if (showDeleteModal.value && isEditing) {
+            AlertDialog(
+                onDismissRequest = { showDeleteModal.value = false },
+                shape = shapes.medium,
+                buttons = {
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(spacingDefault)
+                    ) {
+                        TextButton(onClick = { showDeleteModal.value = false }) {
+                            Text(text = stringResource(id = R.string.button_cancel))
                         }
-                    },
-                    title = {
-                        Text(text = stringResource(id = R.string.step_delete_title))
-                    },
-                    text = {
-                        Text(text = stringResource(id = R.string.step_delete_text))
-                    },
-                )
-            }
+                        TextButton(
+                            onClick = {
+                                deleteRecipe()
+                            }
+                        ) {
+                            Text(text = stringResource(id = R.string.button_delete))
+                        }
+                    }
+                },
+                title = {
+                    Text(text = stringResource(id = R.string.step_delete_title))
+                },
+                text = {
+                    Text(text = stringResource(id = R.string.step_delete_text))
+                },
+            )
         }
     }
 }

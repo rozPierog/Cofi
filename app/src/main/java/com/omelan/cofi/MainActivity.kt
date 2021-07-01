@@ -9,7 +9,6 @@ import android.util.Rational
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -33,6 +32,7 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.model.AppDatabase
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeViewModel
@@ -67,7 +67,7 @@ const val appDeepLinkUrl = "https://rozpierog.github.io"
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
-class MainActivity : AppCompatActivity() {
+class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
         name = "settings"
@@ -90,7 +90,10 @@ class MainActivity : AppCompatActivity() {
                     .build()
             )
         }
-        this.setContent(null) {
+        lifecycleScope.launchWhenCreated {
+            monet.awaitMonetReady()
+        }
+            this.setContent(null) {
             MainNavigation()
         }
     }
@@ -238,7 +241,7 @@ class MainActivity : AppCompatActivity() {
         }
         val systemUiController = rememberSystemUiController()
 
-        CofiTheme {
+        CofiTheme(monet) {
             val useDarkIcons = MaterialTheme.colors.isLight
             SideEffect {
                 systemUiController.setSystemBarsColor(

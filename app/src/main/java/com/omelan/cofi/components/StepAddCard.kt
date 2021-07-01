@@ -21,7 +21,6 @@ import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
-import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.full
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.ensureNumbersOnly
@@ -53,121 +52,119 @@ fun StepAddCard(
             (stepToEdit?.value ?: 0).toString()
         )
     }
-    CofiTheme {
-        Card(
-            shape = MaterialTheme.shapes.medium,
-            modifier = Modifier.fillMaxWidth()
+    Card(
+        shape = MaterialTheme.shapes.medium,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(15.dp)
+                .animateContentSize()
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(15.dp)
-                    .animateContentSize()
-            ) {
-                Box {
-                    FlowRow(mainAxisSpacing = 5.dp, crossAxisSpacing = 5.dp) {
-                        StepType.values().forEach { stepType ->
-                            Button(
-                                onClick = { pickedType.value = stepType },
-                                shape = shapes.full,
-                                modifier = Modifier.testTag(
-                                    "step_type_button_${stepType.name.lowercase()}"
-                                )
-                            ) {
-                                Text(
-                                    text = if (pickedType.value == stepType) {
-                                        "✓ "
-                                    } else {
-                                        ""
-                                    } + stringResource(id = stepType.stringRes),
-                                    modifier = Modifier.animateContentSize(),
-                                )
-                            }
+            Box {
+                FlowRow(mainAxisSpacing = 5.dp, crossAxisSpacing = 5.dp) {
+                    StepType.values().forEach { stepType ->
+                        Button(
+                            onClick = { pickedType.value = stepType },
+                            shape = shapes.full,
+                            modifier = Modifier.testTag(
+                                "step_type_button_${stepType.name.lowercase()}"
+                            )
+                        ) {
+                            Text(
+                                text = if (pickedType.value == stepType) {
+                                    "✓ "
+                                } else {
+                                    ""
+                                } + stringResource(id = stepType.stringRes),
+                                modifier = Modifier.animateContentSize(),
+                            )
                         }
                     }
                 }
-                if (pickedType.value != null) {
+            }
+            if (pickedType.value != null) {
+                OutlinedTextField(
+                    label = { Text(text = stringResource(id = R.string.step_add_name)) },
+                    value = stepName.value,
+                    singleLine = true,
+                    onValueChange = { stepName.value = it },
+                    modifier = Modifier.testTag(
+                        "step_name"
+                    ),
+                )
+                OutlinedTextField(
+                    label = { Text(text = stringResource(id = R.string.step_add_duration)) },
+                    value = stepTime.value,
+                    onValueChange = {
+                        stepTime.value = ensureNumbersOnly(it) ?: stepTime.value
+                    },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.testTag(
+                        "step_time"
+                    ),
+                )
+                if (listOf(
+                        StepType.WATER,
+                        StepType.ADD_COFFEE,
+                        StepType.OTHER
+                    ).contains(pickedType.value)
+                ) {
                     OutlinedTextField(
-                        label = { Text(text = stringResource(id = R.string.step_add_name)) },
-                        value = stepName.value,
-                        singleLine = true,
-                        onValueChange = { stepName.value = it },
-                        modifier = Modifier.testTag(
-                            "step_name"
-                        ),
-                    )
-                    OutlinedTextField(
-                        label = { Text(text = stringResource(id = R.string.step_add_duration)) },
-                        value = stepTime.value,
+                        label = { Text(text = stringResource(id = R.string.step_add_weight)) },
+                        value = stepValue.value,
                         onValueChange = {
-                            stepTime.value = ensureNumbersOnly(it) ?: stepTime.value
+                            stepValue.value = ensureNumbersOnly(it) ?: stepValue.value
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        modifier = Modifier.testTag(
-                            "step_time"
-                        ),
+                        modifier = Modifier.testTag("step_value")
                     )
-                    if (listOf(
-                            StepType.WATER,
-                            StepType.ADD_COFFEE,
-                            StepType.OTHER
-                        ).contains(pickedType.value)
+                }
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(
+                        onClick = {
+                            save(
+                                Step(
+                                    name = stepName.value,
+                                    time = stepTime.value.safeToInt().toMillis(),
+                                    type = pickedType.value ?: StepType.OTHER,
+                                    value = if (stepValue.value.isNotBlank() &&
+                                        stepValue.value.toInt() != 0
+                                    ) {
+                                        stepValue.value.toInt()
+                                    } else {
+                                        null
+                                    },
+                                    recipeId = recipeId,
+                                    orderInRecipe = orderInRecipe,
+                                )
+                            )
+                        },
+                        modifier = Modifier
+                            .padding(vertical = 15.dp)
+                            .testTag("step_save"),
                     ) {
-                        OutlinedTextField(
-                            label = { Text(text = stringResource(id = R.string.step_add_weight)) },
-                            value = stepValue.value,
-                            onValueChange = {
-                                stepValue.value = ensureNumbersOnly(it) ?: stepValue.value
-                            },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            modifier = Modifier.testTag("step_value")
-                        )
+                        Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text(text = stringResource(id = R.string.step_add_save))
                     }
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
+                    if (stepToEdit != null) {
                         Button(
                             onClick = {
-                                save(
-                                    Step(
-                                        name = stepName.value,
-                                        time = stepTime.value.safeToInt().toMillis(),
-                                        type = pickedType.value ?: StepType.OTHER,
-                                        value = if (stepValue.value.isNotBlank() &&
-                                            stepValue.value.toInt() != 0
-                                        ) {
-                                            stepValue.value.toInt()
-                                        } else {
-                                            null
-                                        },
-                                        recipeId = recipeId,
-                                        orderInRecipe = orderInRecipe,
-                                    )
-                                )
+                                save(null)
                             },
                             modifier = Modifier
                                 .padding(vertical = 15.dp)
-                                .testTag("step_save"),
+                                .testTag("step_remove"),
                         ) {
-                            Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                            Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
                             Spacer(modifier = Modifier.width(5.dp))
-                            Text(text = stringResource(id = R.string.step_add_save))
-                        }
-                        if (stepToEdit != null) {
-                            Button(
-                                onClick = {
-                                    save(null)
-                                },
-                                modifier = Modifier
-                                    .padding(vertical = 15.dp)
-                                    .testTag("step_remove"),
-                            ) {
-                                Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
-                                Spacer(modifier = Modifier.width(5.dp))
-                                Text(text = stringResource(id = R.string.step_add_remove))
-                            }
+                            Text(text = stringResource(id = R.string.step_add_remove))
                         }
                     }
                 }

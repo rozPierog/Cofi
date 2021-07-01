@@ -28,7 +28,7 @@ fun PiPAwareAppBar(
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.background,
     contentColor: Color = contentColorFor(backgroundColor),
-    elevation: Dp = 4.dp
+    elevation: Dp = 0.dp
 ) {
     if (!LocalPiPState.current) {
         InsetAwareTopAppBar(
