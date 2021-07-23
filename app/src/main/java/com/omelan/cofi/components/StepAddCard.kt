@@ -54,11 +54,12 @@ fun StepAddCard(
     }
     Card(
         shape = MaterialTheme.shapes.medium,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        backgroundColor = MaterialTheme.colors.background,
     ) {
         Column(
             modifier = Modifier
-                .padding(15.dp)
+                .padding(13.dp)
                 .animateContentSize()
         ) {
             Box {
@@ -67,9 +68,11 @@ fun StepAddCard(
                         Button(
                             onClick = { pickedType.value = stepType },
                             shape = shapes.full,
-                            modifier = Modifier.testTag(
-                                "step_type_button_${stepType.name.lowercase()}"
-                            )
+                            modifier = Modifier
+                                .testTag(
+                                    "step_type_button_${stepType.name.lowercase()}"
+                                )
+                                .padding(2.dp)
                         ) {
                             Text(
                                 text = if (pickedType.value == stepType) {
@@ -89,9 +92,11 @@ fun StepAddCard(
                     value = stepName.value,
                     singleLine = true,
                     onValueChange = { stepName.value = it },
-                    modifier = Modifier.testTag(
-                        "step_name"
-                    ),
+                    modifier = Modifier
+                        .testTag(
+                            "step_name"
+                        )
+                        .padding(2.dp),
                 )
                 OutlinedTextField(
                     label = { Text(text = stringResource(id = R.string.step_add_duration)) },
@@ -101,9 +106,11 @@ fun StepAddCard(
                     },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.testTag(
-                        "step_time"
-                    ),
+                    modifier = Modifier
+                        .testTag(
+                            "step_time"
+                        )
+                        .padding(2.dp),
                 )
                 if (listOf(
                         StepType.WATER,
@@ -119,13 +126,16 @@ fun StepAddCard(
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        modifier = Modifier.testTag("step_value")
+                        modifier = Modifier
+                            .testTag("step_value")
+                            .padding(2.dp),
                     )
                 }
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
+                    modifier = Modifier
+                        .fillMaxWidth()
+                    ) {
                     Button(
                         onClick = {
                             save(
@@ -146,7 +156,7 @@ fun StepAddCard(
                             )
                         },
                         modifier = Modifier
-                            .padding(vertical = 15.dp)
+                            .padding(vertical = 15.dp, horizontal = 2.dp)
                             .testTag("step_save"),
                     ) {
                         Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
@@ -159,7 +169,7 @@ fun StepAddCard(
                                 save(null)
                             },
                             modifier = Modifier
-                                .padding(vertical = 15.dp)
+                                .padding(vertical = 15.dp, horizontal = 2.dp)
                                 .testTag("step_remove"),
                         ) {
                             Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
@@ -178,4 +188,23 @@ fun StepAddCard(
 @Preview
 fun StepAddCardPreview() {
     StepAddCard(save = {}, orderInRecipe = 0, recipeId = 0)
+}
+
+@ExperimentalAnimatedInsets
+@Composable
+@Preview
+fun StepAddCardPreviewExpanded() {
+    StepAddCard(
+        save = {},
+        orderInRecipe = 0,
+        recipeId = 0,
+        stepToEdit = Step(
+            id = 0,
+            recipeId = 0,
+            name = "Add Water",
+            time = 0,
+            type = StepType.WATER,
+            orderInRecipe = 0
+        ),
+    )
 }

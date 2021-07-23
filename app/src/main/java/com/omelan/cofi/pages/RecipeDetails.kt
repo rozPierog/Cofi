@@ -256,7 +256,7 @@ fun RecipeDetails(
                 if (!isInPiP) {
                     Spacer(modifier = Modifier.height(spacingDefault))
                     Button(
-                        modifier = Modifier.animateContentSize(),
+                        modifier = Modifier.animateContentSize().padding(2.dp),
                         onClick = if (currentStep != null) {
                             if (animatedProgressValue.isRunning) {
                                 { coroutineScope.launch { pauseAnimations() } }
