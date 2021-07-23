@@ -16,14 +16,13 @@ import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.kieronquinn.monetcompat.core.MonetCompat
 
-
-//private val DarkColorPalette = darkColors(
+// private val DarkColorPalette = darkColors(
 //    primary = brown300,
 //    primaryVariant = brown700,
 //    secondary = iconBackground,
-//)
+// )
 //
-//private val LightColorPalette = lightColors(
+// private val LightColorPalette = lightColors(
 //    primary = brown500,
 //    primaryVariant = brown700,
 //    secondary = iconBackground,
@@ -37,8 +36,7 @@ import com.kieronquinn.monetcompat.core.MonetCompat
 //    onBackground = Color.Black,
 //    onSurface = Color.Black,
 //    */
-//)
-
+// )
 
 @Composable
 fun createMaterialYouPallets(monet: MonetCompat): Pair<Colors, Colors> {
@@ -65,7 +63,8 @@ fun createMaterialYouPallets(monet: MonetCompat): Pair<Colors, Colors> {
             onSecondary = getMonetNeutral1Color(700) ?: Color.Black,
             onBackground = Color.Black,
             onSurface = getMonetNeutral1Color(900) ?: Color.White,
-        ), darkColors(
+        ),
+        darkColors(
             primary = Color(monet.getPrimaryColor(context = context, darkMode = true)),
 //            primaryVariant = colorResource(id = android.R.color.system_accent1_400),
             secondary = Color(monet.getSecondaryColor(context = context, darkMode = true)),
@@ -89,10 +88,10 @@ fun getMaterialYouPallets(): Pair<Colors, Colors> {
     return Pair(
         lightColors(
             primary = colorResource(id = android.R.color.system_accent2_100),
-            primaryVariant = colorResource(id = android.R.color.system_accent1_400),//
+            primaryVariant = colorResource(id = android.R.color.system_accent1_400), //
             secondary = colorResource(id = android.R.color.system_accent2_300),
 
-            secondaryVariant = colorResource(id = android.R.color.system_accent1_600),//
+            secondaryVariant = colorResource(id = android.R.color.system_accent1_600), //
 
             background = colorResource(id = android.R.color.system_neutral1_50),
             surface = colorResource(id = android.R.color.system_neutral1_100),
@@ -100,7 +99,8 @@ fun getMaterialYouPallets(): Pair<Colors, Colors> {
             onSecondary = colorResource(id = android.R.color.system_neutral2_700), //
             onBackground = Color.Black, //
             onSurface = colorResource(id = android.R.color.system_neutral1_900), //
-        ), darkColors(
+        ),
+        darkColors(
             primary = colorResource(id = android.R.color.system_accent2_600),
 //            primaryVariant = colorResource(id = android.R.color.system_accent1_400),
             secondary = colorResource(id = android.R.color.system_accent2_400),

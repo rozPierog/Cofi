@@ -93,7 +93,7 @@ fun StepAddCard(
                     value = stepName.value,
                     singleLine = true,
                     onValueChange = { stepName.value = it },
-                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                    keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                     modifier = Modifier
                         .testTag(
                             "step_name"
@@ -137,7 +137,7 @@ fun StepAddCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier
                         .fillMaxWidth()
-                    ) {
+                ) {
                     Button(
                         onClick = {
                             save(

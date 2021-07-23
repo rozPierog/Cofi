@@ -188,7 +188,6 @@ fun RecipeDetails(
                             overflow = TextOverflow.Ellipsis
                         )
                     }
-
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {

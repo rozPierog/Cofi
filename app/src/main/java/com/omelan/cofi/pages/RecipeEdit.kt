@@ -165,16 +165,18 @@ fun RecipeEdit(
             ) {
                 item {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        IconButton(onClick = {
-                            coroutineScope.launch {
-                                if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
-                                    bottomSheetScaffoldState.bottomSheetState.collapse()
-                                } else {
-                                    bottomSheetScaffoldState.bottomSheetState.expand()
+                        IconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
+                                        bottomSheetScaffoldState.bottomSheetState.collapse()
+                                    } else {
+                                        bottomSheetScaffoldState.bottomSheetState.expand()
+                                    }
+                                    keyboardController?.hide()
                                 }
-                                keyboardController?.hide()
                             }
-                        }) {
+                        ) {
                             Icon(
                                 painter = painterResource(id = pickedIcon.value.icon),
                                 contentDescription = null
@@ -187,7 +189,7 @@ fun RecipeEdit(
                                 .fillMaxWidth()
                                 .testTag("recipe_edit_name"),
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                            keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                             label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
                         )
                     }
@@ -200,7 +202,7 @@ fun RecipeEdit(
                             .fillMaxWidth()
                             .padding(bottom = spacingDefault)
                             .testTag("recipe_edit_description"),
-                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                        keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                         label = {
                             Text(text = stringResource(id = R.string.recipe_edit_description))
                         },
@@ -212,7 +214,7 @@ fun RecipeEdit(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
 
-                        ) {
+                    ) {
                         val indexOfThisStep = steps.value.indexOf(step)
                         StepAddCard(
                             stepToEdit = step,

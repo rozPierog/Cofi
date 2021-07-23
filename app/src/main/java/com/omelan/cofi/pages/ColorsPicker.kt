@@ -92,15 +92,17 @@ private val colors = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
 
 @Composable
 fun ColorPicker(goToList: () -> Unit) {
-    Scaffold(topBar = {
-        PiPAwareAppBar(
-            navigationIcon = {
-                IconButton(onClick = goToList) {
-                    Icon(Icons.Rounded.ArrowBack, contentDescription = null)
-                }
-            },
-        )
-    }) {
+    Scaffold(
+        topBar = {
+            PiPAwareAppBar(
+                navigationIcon = {
+                    IconButton(onClick = goToList) {
+                        Icon(Icons.Rounded.ArrowBack, contentDescription = null)
+                    }
+                },
+            )
+        }
+    ) {
         LazyColumn {
             colors.forEach { (colorId, colorName) ->
                 item {
@@ -110,7 +112,8 @@ fun ColorPicker(goToList: () -> Unit) {
                             .height(50.dp)
                             .fillMaxWidth()
                             .padding(15.dp)
-                            .clickable { Log.e("color", colorName) }) {
+                            .clickable { Log.e("color", colorName) }
+                    ) {
                         Text(text = colorName)
                     }
                 }
