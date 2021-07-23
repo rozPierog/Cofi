@@ -46,7 +46,7 @@ fun RecipeDetails(
     onRecipeEnd: (Recipe) -> Unit = {},
     goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
-    setKeepScreenAwake: (Boolean) -> Unit = {},
+    onTimerRunning: (Boolean) -> Unit = {},
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
 ) {
@@ -104,7 +104,7 @@ fun RecipeDetails(
     suspend fun pauseAnimations() {
         animatedProgressColor.stop()
         animatedProgressValue.stop()
-        setKeepScreenAwake(false)
+        onTimerRunning(false)
     }
 
     val context = LocalContext.current
@@ -117,7 +117,7 @@ fun RecipeDetails(
         } else {
             animatedProgressValue.snapTo(0f)
             currentStep = null
-            setKeepScreenAwake(false)
+            onTimerRunning(false)
             isDone = true
             onRecipeEnd(recipe.value)
         }
@@ -130,7 +130,7 @@ fun RecipeDetails(
     suspend fun progressAnimation() {
         val safeCurrentStep = currentStep ?: return
         isDone = false
-        setKeepScreenAwake(true)
+        onTimerRunning(true)
         val duration =
             (safeCurrentStep.time - (safeCurrentStep.time * animatedProgressValue.value)).toInt()
         val result = animatedProgressValue.animateTo(

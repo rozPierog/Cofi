@@ -72,24 +72,13 @@ class MainActivity : MonetCompatActivity() {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
         name = "settings"
     )
+    override val recreateMode: Boolean
+        get() = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Cofi)
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            setPictureInPictureParams(
-                PictureInPictureParams.Builder()
-                    .setAspectRatio(Rational(1, 1))
-                    .apply {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            setAutoEnterEnabled(true)
-                            setSeamlessResizeEnabled(true)
-                        }
-                    }
-                    .build()
-            )
-        }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
             lifecycleScope.launchWhenCreated {
                 monet.awaitMonetReady()
@@ -100,8 +89,23 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-    private fun toggleKeepScreenAwake(keepAwake: Boolean) {
-        if (keepAwake) {
+    private fun onTimerRunning(isRunning: Boolean) {
+        mainActivityViewModel.setCanGoToPiP(isRunning)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            setPictureInPictureParams(
+                PictureInPictureParams.Builder()
+                    .setAspectRatio(Rational(1, 1))
+                    .apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            setAutoEnterEnabled(isRunning)
+                            setSeamlessResizeEnabled(true)
+                        }
+                    }
+                    .build()
+            )
+        }
+        if (isRunning) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -110,7 +114,6 @@ class MainActivity : MonetCompatActivity() {
 
     @Composable
     fun MainList(navController: NavController) {
-        mainActivityViewModel.setCanGoToPiP(false)
         RecipeList(
             navigateToRecipe = { recipeId ->
                 navController.navigate(
@@ -139,7 +142,6 @@ class MainActivity : MonetCompatActivity() {
     ) {
         val recipeId = backStackEntry.arguments?.getInt("recipeId")
             ?: throw IllegalStateException("No Recipe ID")
-        mainActivityViewModel.setCanGoToPiP(true)
         RecipeDetails(
             recipeId = recipeId,
             onRecipeEnd = { recipe ->
@@ -154,7 +156,7 @@ class MainActivity : MonetCompatActivity() {
                     route = "edit/$recipeId",
                 )
             },
-            setKeepScreenAwake = { toggleKeepScreenAwake(it) },
+            onTimerRunning = { onTimerRunning(it) },
         )
     }
 
@@ -167,7 +169,6 @@ class MainActivity : MonetCompatActivity() {
     ) {
         val recipeId = backStackEntry.arguments?.getInt("recipeId")
             ?: throw IllegalStateException("No Recipe ID")
-        mainActivityViewModel.setCanGoToPiP(false)
         val recipeViewModel: RecipeViewModel = viewModel()
         val stepsViewModel: StepsViewModel = viewModel()
         val recipe = recipeViewModel.getRecipe(recipeId)
@@ -204,7 +205,6 @@ class MainActivity : MonetCompatActivity() {
 
     @Composable
     fun MainAddRecipe(goBack: () -> Unit, db: AppDatabase) {
-        mainActivityViewModel.setCanGoToPiP(false)
         RecipeEdit(
             saveRecipe = { recipe, steps ->
                 lifecycleScope.launch {
