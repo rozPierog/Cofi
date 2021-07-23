@@ -63,15 +63,17 @@ val LocalSettingsDataStore = staticCompositionLocalOf<DataStore<Preferences>> {
 
 const val appDeepLinkUrl = "https://rozpierog.github.io"
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+    name = "settings"
+)
+
 @ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-        name = "settings"
-    )
+
     override val recreateMode: Boolean
         get() = false
 
