@@ -301,11 +301,7 @@ class MainActivity : MonetCompatActivity() {
                     navigation(startDestination = "settings_list", route = "settings") {
                         composable("settings_list") {
                             AppSettings(
-                                goBack = {
-                                    navController.navigate(
-                                        route = "list",
-                                    )
-                                },
+                                goBack = goBack,
                                 goToAbout = {
                                     navController.navigate("about")
                                 },
