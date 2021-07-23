@@ -246,6 +246,10 @@ class MainActivity : MonetCompatActivity() {
         CofiTheme(monet) {
             val darkIcons = MaterialTheme.colors.background.luminance() > 0.5
             SystemUIHelpers.setStatusBarIconsTheme(activity = this, darkIcons = darkIcons)
+            SystemUIHelpers.setNavigationBarColor(
+                color = MaterialTheme.colors.background.copy(alpha = 0.8F),
+                activity = this
+            )
             val useDarkIcons = MaterialTheme.colors.isLight
             SideEffect {
                 systemUiController.setSystemBarsColor(
