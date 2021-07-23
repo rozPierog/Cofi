@@ -51,6 +51,7 @@ private fun extractUrls(text: String): List<String> {
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     val (isExpanded, setIsExpanded) = remember { mutableStateOf(false) }
+    val (showExpandButton, setShowExpandButton) = remember { mutableStateOf(false) }
     val context = LocalContext.current
     val descriptionWithLinks = buildAnnotatedString {
         val urlsInDescription = extractUrls(descriptionText)
@@ -91,7 +92,14 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
         Column(
             modifier = Modifier
                 .animateContentSize()
-                .toggleable(value = isExpanded, onValueChange = { setIsExpanded(it) })
+                .toggleable(
+                    value = isExpanded,
+                    onValueChange = {
+                        if (showExpandButton) {
+                            setIsExpanded(it)
+                        }
+                    })
+                .padding(15.dp)
         ) {
             ClickableText(
                 text = descriptionWithLinks,
@@ -101,9 +109,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     2
                 },
                 style = MaterialTheme.typography.body1,
-                modifier = Modifier
-                    .padding(start = 15.dp, end = 15.dp, top = 15.dp)
-                    .animateContentSize(),
+                modifier = Modifier.animateContentSize(),
                 onClick = {
                     descriptionWithLinks
                         .getStringAnnotations("URL", it, it)
@@ -111,17 +117,26 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                             IntentHelpers.openUri(context, stringAnnotation.item)
                             return@ClickableText
                         }
-                    setIsExpanded(!isExpanded)
+                    if (showExpandButton) {
+                        setIsExpanded(!isExpanded)
+                    }
+                },
+                onTextLayout = { textLayoutResult ->
+                    if (!isExpanded) {
+                        setShowExpandButton(textLayoutResult.didOverflowHeight)
+                    }
                 }
             )
-            Icon(
-                imageVector = Icons.Rounded.KeyboardArrowDown,
-                contentDescription = "Expand",
-                modifier = Modifier
-                    .padding(5.dp)
-                    .align(Alignment.CenterHorizontally)
-                    .rotate(rotationDegree.value)
-            )
+            if (showExpandButton || isExpanded) {
+                Icon(
+                    imageVector = Icons.Rounded.KeyboardArrowDown,
+                    contentDescription = "Expand",
+                    modifier = Modifier
+                        .padding(top = 5.dp)
+                        .align(Alignment.CenterHorizontally)
+                        .rotate(rotationDegree.value)
+                )
+            }
         }
     }
 }
