@@ -19,6 +19,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.core.view.WindowCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -37,7 +38,6 @@ import com.omelan.cofi.model.AppDatabase
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeViewModel
 import com.omelan.cofi.model.StepsViewModel
-import com.omelan.cofi.pages.ColorPicker
 import com.omelan.cofi.pages.RecipeDetails
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
@@ -77,23 +77,25 @@ class MainActivity : MonetCompatActivity() {
         setTheme(R.style.Theme_Cofi)
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        SystemUIHelpers.setStatusBarIconsTheme(window = window, darkIcons = false)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setPictureInPictureParams(
                 PictureInPictureParams.Builder()
-                    .setAspectRatio(Rational(1, 1)).apply {
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-//                            setAutoEnterEnabled(true)
-//                            setSeamlessResizeEnabled(true)
-//                        }
+                    .setAspectRatio(Rational(1, 1))
+                    .apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            setAutoEnterEnabled(true)
+                            setSeamlessResizeEnabled(true)
+                        }
                     }
                     .build()
             )
         }
-        lifecycleScope.launchWhenCreated {
-            monet.awaitMonetReady()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            lifecycleScope.launchWhenCreated {
+                monet.awaitMonetReady()
+            }
         }
-            this.setContent(null) {
+        this.setContent(null) {
             MainNavigation()
         }
     }
@@ -242,6 +244,8 @@ class MainActivity : MonetCompatActivity() {
         val systemUiController = rememberSystemUiController()
 
         CofiTheme(monet) {
+            val darkIcons = MaterialTheme.colors.background.luminance() > 0.5
+            SystemUIHelpers.setStatusBarIconsTheme(activity = this, darkIcons = darkIcons)
             val useDarkIcons = MaterialTheme.colors.isLight
             SideEffect {
                 systemUiController.setSystemBarsColor(
@@ -256,15 +260,15 @@ class MainActivity : MonetCompatActivity() {
             ) {
                 NavHost(
                     navController,
-                    startDestination = "list_color",
+                    startDestination = "list",
                 ) {
-                    composable("list_color") {
-                        ColorPicker(goToList = {
-                            navController.navigate(
-                                route = "list",
-                            )
-                        })
-                    }
+//                    composable("list_color") {
+//                        ColorPicker(goToList = {
+//                            navController.navigate(
+//                                route = "list",
+//                            )
+//                        })
+//                    }
                     composable("list") {
                         MainList(navController = navController)
                     }
@@ -318,10 +322,10 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        SystemUIHelpers.setStatusBarIconsTheme(window = window, darkIcons = false)
-    }
+//    override fun onConfigurationChanged(newConfig: Configuration) {
+//        super.onConfigurationChanged(newConfig)
+//        SystemUIHelpers.setStatusBarIconsTheme(activity = this, darkIcons = false)
+//    }
 
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,

@@ -1,20 +1,16 @@
 package com.omelan.cofi.utils
 
-import android.view.View
-import android.view.Window
+import android.app.Activity
+import androidx.core.view.WindowInsetsControllerCompat
 
 object SystemUIHelpers {
     fun setStatusBarIconsTheme(
-        window: Window,
+        activity: Activity,
         darkIcons: Boolean,
     ) {
-        @Suppress("DEPRECATION")
-        if (darkIcons) {
-            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
-                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        } else {
-            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and
-                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-        }
+        WindowInsetsControllerCompat(
+            activity.window,
+            activity.window.decorView
+        ).isAppearanceLightStatusBars = darkIcons
     }
 }
