@@ -9,28 +9,31 @@ import android.util.Rational
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.core.view.WindowCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navDeepLink
-import androidx.navigation.navigation
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.model.AppDatabase
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeViewModel
@@ -60,43 +63,164 @@ val LocalSettingsDataStore = staticCompositionLocalOf<DataStore<Preferences>> {
 
 const val appDeepLinkUrl = "https://rozpierog.github.io"
 
+@ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
-class MainActivity : AppCompatActivity() {
+class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
         name = "settings"
     )
+    override val recreateMode: Boolean
+        get() = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Cofi)
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        SystemUIHelpers.setStatusBarIconsTheme(window = window, darkIcons = false)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            setPictureInPictureParams(
-                PictureInPictureParams.Builder()
-                    .setAspectRatio(Rational(1, 1)).apply {
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-//                            setAutoEnterEnabled(true)
-//                            setSeamlessResizeEnabled(true)
-//                        }
-                    }
-                    .build()
-            )
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            lifecycleScope.launchWhenCreated {
+                monet.awaitMonetReady()
+            }
         }
         this.setContent(null) {
             MainNavigation()
         }
     }
 
-    private fun toggleKeepScreenAwake(keepAwake: Boolean) {
-        if (keepAwake) {
+    private fun onTimerRunning(isRunning: Boolean) {
+        mainActivityViewModel.setCanGoToPiP(isRunning)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            setPictureInPictureParams(
+                PictureInPictureParams.Builder()
+                    .setAspectRatio(Rational(1, 1))
+                    .apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            setAutoEnterEnabled(isRunning)
+                            setSeamlessResizeEnabled(true)
+                        }
+                    }
+                    .build()
+            )
+        }
+        if (isRunning) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
+    }
+
+    @Composable
+    fun MainList(navController: NavController) {
+        RecipeList(
+            navigateToRecipe = { recipeId ->
+                navController.navigate(
+                    route = "recipe/$recipeId",
+                )
+            },
+            addNewRecipe = {
+                navController.navigate(
+                    route = "add_recipe",
+                )
+            },
+            goToSettings = {
+                navController.navigate(
+                    route = "settings"
+                )
+            }
+        )
+    }
+
+    @Composable
+    fun MainRecipeDetails(
+        navController: NavController,
+        backStackEntry: NavBackStackEntry,
+        goBack: () -> Unit,
+        db: AppDatabase
+    ) {
+        val recipeId = backStackEntry.arguments?.getInt("recipeId")
+            ?: throw IllegalStateException("No Recipe ID")
+        RecipeDetails(
+            recipeId = recipeId,
+            onRecipeEnd = { recipe ->
+                lifecycleScope.launch {
+                    db.recipeDao()
+                        .updateRecipe(recipe.copy(lastFinished = Date().time))
+                }
+            },
+            goBack = goBack,
+            goToEdit = {
+                navController.navigate(
+                    route = "edit/$recipeId",
+                )
+            },
+            onTimerRunning = { onTimerRunning(it) },
+        )
+    }
+
+    @Composable
+    fun MainEditRecipe(
+        navController: NavController,
+        backStackEntry: NavBackStackEntry,
+        goBack: () -> Unit,
+        db: AppDatabase
+    ) {
+        val recipeId = backStackEntry.arguments?.getInt("recipeId")
+            ?: throw IllegalStateException("No Recipe ID")
+        val recipeViewModel: RecipeViewModel = viewModel()
+        val stepsViewModel: StepsViewModel = viewModel()
+        val recipe = recipeViewModel.getRecipe(recipeId)
+            .observeAsState(Recipe(name = "", description = ""))
+        val steps = stepsViewModel.getAllStepsForRecipe(recipeId)
+            .observeAsState(listOf())
+        RecipeEdit(
+            goBack = goBack,
+            isEditing = true,
+            recipeToEdit = recipe.value,
+            stepsToEdit = steps.value,
+            saveRecipe = { _recipe, _steps ->
+                lifecycleScope.launch {
+                    db.recipeDao().updateRecipe(_recipe)
+                    db.stepDao().deleteAllStepsForRecipe(_recipe.id)
+                    db.stepDao().insertAll(_steps)
+                }
+                goBack()
+            },
+            deleteRecipe = {
+                lifecycleScope.launch {
+                    db.recipeDao().deleteById(recipeId = recipeId)
+                    db.stepDao()
+                        .deleteAllStepsForRecipe(recipeId = recipeId)
+                }
+                navController.navigate("list") {
+                    this.popUpTo("list") {
+                        inclusive = true
+                    }
+                }
+            }
+        )
+    }
+
+    @Composable
+    fun MainAddRecipe(goBack: () -> Unit, db: AppDatabase) {
+        RecipeEdit(
+            saveRecipe = { recipe, steps ->
+                lifecycleScope.launch {
+                    val idOfRecipe =
+                        db.recipeDao().insertRecipe(recipe)
+                    db.stepDao()
+                        .insertAll(
+                            steps.map {
+                                it.copy(recipeId = idOfRecipe.toInt())
+                            }
+                        )
+                }
+                goBack()
+            },
+            goBack = goBack,
+        )
     }
 
     @Composable
@@ -117,145 +241,84 @@ class MainActivity : AppCompatActivity() {
         val goBack: () -> Unit = {
             navController.popBackStack()
         }
-        CofiTheme {
+        val systemUiController = rememberSystemUiController()
+
+        CofiTheme(monet) {
+            val darkIcons = MaterialTheme.colors.background.luminance() > 0.5
+            SystemUIHelpers.setStatusBarIconsTheme(activity = this, darkIcons = darkIcons)
+            SystemUIHelpers.setNavigationBarColor(
+                color = MaterialTheme.colors.background.copy(alpha = 0.8F),
+                activity = this
+            )
+            val useDarkIcons = MaterialTheme.colors.isLight
+            SideEffect {
+                systemUiController.setSystemBarsColor(
+                    color = Color.Transparent,
+                    darkIcons = useDarkIcons
+                )
+            }
+
             CompositionLocalProvider(
                 LocalPiPState provides isInPiP.value,
                 LocalSettingsDataStore provides dataStore,
             ) {
-                Column {
-                    NavHost(navController, startDestination = "list") {
-                        composable("list") {
-                            mainActivityViewModel.setCanGoToPiP(false)
-                            RecipeList(
-                                navigateToRecipe = { recipeId ->
+                NavHost(
+                    navController,
+                    startDestination = "list",
+                ) {
+//                    composable("list_color") {
+//                        ColorPicker(goToList = {
+//                            navController.navigate(
+//                                route = "list",
+//                            )
+//                        })
+//                    }
+                    composable("list") {
+                        MainList(navController = navController)
+                    }
+                    composable(
+                        "recipe/{recipeId}",
+                        arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
+                        deepLinks = listOf(
+                            navDeepLink {
+                                uriPattern = "$appDeepLinkUrl/recipe/{recipeId}"
+                            }
+                        ),
+                    ) { backStackEntry ->
+                        MainRecipeDetails(navController, backStackEntry, goBack, db)
+                    }
+                    composable(
+                        "edit/{recipeId}",
+                        arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
+                    ) { backStackEntry ->
+                        MainEditRecipe(navController, backStackEntry, goBack, db)
+                    }
+                    composable("add_recipe") {
+                        MainAddRecipe(goBack, db)
+                    }
+                    navigation(startDestination = "settings_list", route = "settings") {
+                        composable("settings_list") {
+                            AppSettings(
+                                goBack = {
                                     navController.navigate(
-                                        route = "recipe/$recipeId",
+                                        route = "list",
                                     )
                                 },
-                                addNewRecipe = {
-                                    navController.navigate(
-                                        route = "add_recipe",
-                                    )
+                                goToAbout = {
+                                    navController.navigate("about")
                                 },
-                                goToSettings = {
-                                    navController.navigate(
-                                        route = "settings"
-                                    )
+                            )
+                        }
+                        composable("about") {
+                            AppSettingsAbout(
+                                goBack = goBack,
+                                openLicenses = {
+                                    navController.navigate("licenses")
                                 }
                             )
                         }
-                        composable(
-                            "recipe/{recipeId}",
-                            arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
-                            deepLinks = listOf(
-                                navDeepLink {
-                                    uriPattern = "$appDeepLinkUrl/recipe/{recipeId}"
-                                }
-                            ),
-                        ) { backStackEntry ->
-                            val recipeId = backStackEntry.arguments?.getInt("recipeId")
-                                ?: throw IllegalStateException("No Recipe ID")
-                            mainActivityViewModel.setCanGoToPiP(true)
-                            RecipeDetails(
-                                recipeId = recipeId,
-                                onRecipeEnd = { recipe ->
-                                    lifecycleScope.launch {
-                                        db.recipeDao()
-                                            .updateRecipe(recipe.copy(lastFinished = Date().time))
-                                    }
-                                },
-                                goBack = goBack,
-                                goToEdit = {
-                                    navController.navigate(
-                                        route = "edit/$recipeId",
-                                    )
-                                },
-                                setKeepScreenAwake = { toggleKeepScreenAwake(it) },
-                            )
-                        }
-                        composable(
-                            "edit/{recipeId}",
-                            arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
-                        ) { backStackEntry ->
-                            val recipeId = backStackEntry.arguments?.getInt("recipeId")
-                                ?: throw IllegalStateException("No Recipe ID")
-                            mainActivityViewModel.setCanGoToPiP(false)
-                            val recipeViewModel: RecipeViewModel = viewModel()
-                            val stepsViewModel: StepsViewModel = viewModel()
-                            val recipe = recipeViewModel.getRecipe(recipeId)
-                                .observeAsState(Recipe(name = "", description = ""))
-                            val steps = stepsViewModel.getAllStepsForRecipe(recipeId)
-                                .observeAsState(listOf())
-                            RecipeEdit(
-                                goBack = goBack,
-                                isEditing = true,
-                                recipeToEdit = recipe.value,
-                                stepsToEdit = steps.value,
-                                saveRecipe = { _recipe, _steps ->
-                                    lifecycleScope.launch {
-                                        db.recipeDao().updateRecipe(_recipe)
-                                        db.stepDao().deleteAllStepsForRecipe(_recipe.id)
-                                        db.stepDao().insertAll(_steps)
-                                    }
-                                    goBack()
-                                },
-                                deleteRecipe = {
-                                    lifecycleScope.launch {
-                                        db.recipeDao().deleteById(recipeId = recipeId)
-                                        db.stepDao()
-                                            .deleteAllStepsForRecipe(recipeId = recipeId)
-                                    }
-                                    navController.navigate("list") {
-                                        this.popUpTo("list") {
-                                            inclusive = true
-                                        }
-                                    }
-                                }
-                            )
-                        }
-                        composable("add_recipe") {
-                            mainActivityViewModel.setCanGoToPiP(false)
-                            RecipeEdit(
-                                saveRecipe = { recipe, steps ->
-                                    lifecycleScope.launch {
-                                        val idOfRecipe =
-                                            db.recipeDao().insertRecipe(recipe)
-                                        db.stepDao()
-                                            .insertAll(
-                                                steps.map {
-                                                    it.copy(recipeId = idOfRecipe.toInt())
-                                                }
-                                            )
-                                    }
-                                    goBack()
-                                },
-                                goBack = goBack,
-                            )
-                        }
-                        navigation(startDestination = "settings_list", route = "settings") {
-                            composable("settings_list") {
-                                AppSettings(
-                                    goBack = {
-                                        navController.navigate(
-                                            route = "list",
-                                        )
-                                    },
-                                    goToAbout = {
-                                        navController.navigate("about")
-                                    },
-                                )
-                            }
-                            composable("about") {
-                                AppSettingsAbout(
-                                    goBack = goBack,
-                                    openLicenses = {
-                                        navController.navigate("licenses")
-                                    }
-                                )
-                            }
-                            composable("licenses") {
-                                Licenses(goBack = goBack)
-                            }
+                        composable("licenses") {
+                            Licenses(goBack = goBack)
                         }
                     }
                 }
@@ -263,10 +326,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        SystemUIHelpers.setStatusBarIconsTheme(window = window, darkIcons = false)
-    }
+//    override fun onConfigurationChanged(newConfig: Configuration) {
+//        super.onConfigurationChanged(newConfig)
+//        SystemUIHelpers.setStatusBarIconsTheme(activity = this, darkIcons = false)
+//    }
 
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,

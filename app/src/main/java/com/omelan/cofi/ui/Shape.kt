@@ -15,3 +15,11 @@ val Shapes.full: RoundedCornerShape
 
 val Shapes.card: RoundedCornerShape
     get() = RoundedCornerShape(14.dp)
+
+val Shapes.modal: RoundedCornerShape
+    get() = RoundedCornerShape(
+        topStart = 14.dp,
+        topEnd = 14.dp,
+        bottomEnd = 0.dp,
+        bottomStart = 0.dp
+    )

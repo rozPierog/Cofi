@@ -1,9 +1,10 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Cofi" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Theme.Cofi" parent="android:style/Theme.DeviceDefault.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/navigationBar</item>
-        <item name="android:colorAccent">@color/teal_200</item>
+        <item name="android:colorAccent">?android:attr/colorAccent</item>
+        <item name="android:background">?android:attr/colorBackground</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>

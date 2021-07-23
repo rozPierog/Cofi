@@ -27,7 +27,7 @@ import androidx.datastore.preferences.core.edit
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
-import com.omelan.cofi.ui.shapes
+import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.spacingDefault
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -147,7 +147,7 @@ fun AppSettings(
                     ) {
                         Column(
                             modifier = Modifier.background(
-                                shape = shapes.medium,
+                                shape = MaterialTheme.shapes.card,
                                 color = MaterialTheme.colors.surface
                             ).padding(top = spacingDefault, bottom = spacingDefault)
                         ) {

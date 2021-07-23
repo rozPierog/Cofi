@@ -23,7 +23,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.omelan.cofi.ui.CofiTheme
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.IntentHelpers
@@ -47,9 +47,11 @@ private fun extractUrls(text: String): List<String> {
     return containedUrls
 }
 
+@ExperimentalAnimatedInsets
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     val (isExpanded, setIsExpanded) = remember { mutableStateOf(false) }
+    val (showExpandButton, setShowExpandButton) = remember { mutableStateOf(false) }
     val context = LocalContext.current
     val descriptionWithLinks = buildAnnotatedString {
         val urlsInDescription = extractUrls(descriptionText)
@@ -86,39 +88,52 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
             animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
         )
     }
-    CofiTheme {
-        Card(modifier = modifier, shape = shapes.card) {
-            Column(
-                modifier = Modifier
-                    .animateContentSize()
-                    .toggleable(value = isExpanded, onValueChange = { setIsExpanded(it) })
-            ) {
-                ClickableText(
-                    text = descriptionWithLinks,
-                    maxLines = if (isExpanded) {
-                        Int.MAX_VALUE
-                    } else {
-                        2
-                    },
-                    style = MaterialTheme.typography.body1,
-                    modifier = Modifier
-                        .padding(start = 15.dp, end = 15.dp, top = 15.dp)
-                        .animateContentSize(),
-                    onClick = {
-                        descriptionWithLinks
-                            .getStringAnnotations("URL", it, it)
-                            .firstOrNull()?.let { stringAnnotation ->
-                                IntentHelpers.openUri(context, stringAnnotation.item)
-                                return@ClickableText
-                            }
-                        setIsExpanded(!isExpanded)
+    Card(modifier = modifier, shape = shapes.card) {
+        Column(
+            modifier = Modifier
+                .animateContentSize()
+                .toggleable(
+                    value = isExpanded,
+                    onValueChange = {
+                        if (showExpandButton) {
+                            setIsExpanded(it)
+                        }
                     }
                 )
+                .padding(15.dp)
+        ) {
+            ClickableText(
+                text = descriptionWithLinks,
+                maxLines = if (isExpanded) {
+                    Int.MAX_VALUE
+                } else {
+                    2
+                },
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier.animateContentSize(),
+                onClick = {
+                    descriptionWithLinks
+                        .getStringAnnotations("URL", it, it)
+                        .firstOrNull()?.let { stringAnnotation ->
+                            IntentHelpers.openUri(context, stringAnnotation.item)
+                            return@ClickableText
+                        }
+                    if (showExpandButton) {
+                        setIsExpanded(!isExpanded)
+                    }
+                },
+                onTextLayout = { textLayoutResult ->
+                    if (!isExpanded) {
+                        setShowExpandButton(textLayoutResult.didOverflowHeight)
+                    }
+                }
+            )
+            if (showExpandButton || isExpanded) {
                 Icon(
                     imageVector = Icons.Rounded.KeyboardArrowDown,
                     contentDescription = "Expand",
                     modifier = Modifier
-                        .padding(5.dp)
+                        .padding(top = 5.dp)
                         .align(Alignment.CenterHorizontally)
                         .rotate(rotationDegree.value)
                 )
@@ -127,6 +142,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     }
 }
 
+@ExperimentalAnimatedInsets
 @Preview
 @Composable
 fun DescriptionPreview() {
@@ -136,6 +152,7 @@ fun DescriptionPreview() {
     )
 }
 
+@ExperimentalAnimatedInsets
 @Preview
 @Composable
 fun DescriptionLongPreview() {
