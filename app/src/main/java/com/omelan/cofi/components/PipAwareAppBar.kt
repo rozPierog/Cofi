@@ -1,7 +1,10 @@
 package com.omelan.cofi.components
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,8 +31,9 @@ fun PiPAwareAppBar(
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.background,
     contentColor: Color = contentColorFor(backgroundColor),
-    elevation: Dp = 0.dp
-) {
+    elevation: Dp = 0.dp,
+    firstItemOffset: Dp = 0.dp,
+    ) {
     if (!LocalPiPState.current) {
         InsetAwareTopAppBar(
             title = title,
@@ -39,6 +43,7 @@ fun PiPAwareAppBar(
             backgroundColor = backgroundColor,
             contentColor = contentColor,
             elevation = elevation,
+            firstItemOffset = firstItemOffset,
         )
     }
 }
@@ -51,21 +56,23 @@ fun InsetAwareTopAppBar(
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.surface,
     contentColor: Color = contentColorFor(backgroundColor),
-    elevation: Dp = 4.dp
-) {
+    elevation: Dp = 4.dp,
+    firstItemOffset: Dp = 0.dp,
+    ) {
     Surface(
         color = backgroundColor,
         elevation = elevation,
         modifier = modifier
     ) {
-        TopAppBar(
+        MaterialYouHeader(
             title = title,
             navigationIcon = navigationIcon,
             actions = actions,
             backgroundColor = Color.Transparent,
             contentColor = contentColor,
             elevation = 0.dp,
-            modifier = Modifier.statusBarsPadding()
+            modifier = Modifier.statusBarsPadding(),
+            firstItemOffset = firstItemOffset,
         )
     }
 }

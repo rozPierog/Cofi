@@ -16,27 +16,27 @@ import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.kieronquinn.monetcompat.core.MonetCompat
 
-// private val DarkColorPalette = darkColors(
-//    primary = brown300,
-//    primaryVariant = brown700,
-//    secondary = iconBackground,
-// )
-//
-// private val LightColorPalette = lightColors(
-//    primary = brown500,
-//    primaryVariant = brown700,
-//    secondary = iconBackground,
-//    secondaryVariant = iconBackground,
-//
-//    /* Other default colors to override
-//    background = Color.White,
-//    surface = Color.White,
-//    onPrimary = Color.White,
-//    onSecondary = Color.Black,
-//    onBackground = Color.Black,
-//    onSurface = Color.Black,
-//    */
-// )
+ private val DarkColorPalette = darkColors(
+    primary = brown300,
+    primaryVariant = brown700,
+    secondary = iconBackground,
+ )
+
+ private val LightColorPalette = lightColors(
+    primary = brown500,
+    primaryVariant = brown700,
+    secondary = iconBackground,
+    secondaryVariant = iconBackground,
+
+    /* Other default colors to override
+    background = Color.White,
+    surface = Color.White,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
+    */
+ )
 
 @Composable
 fun createMaterialYouPallets(monet: MonetCompat): Pair<Colors, Colors> {
@@ -117,6 +117,17 @@ fun getMaterialYouPallets(): Pair<Colors, Colors> {
 
 val spacingDefault = 16.dp
 
+@Composable
+private fun getPalette(monet: MonetCompat?): Pair<Colors, Colors> {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        return  getMaterialYouPallets()
+    }
+    if (monet != null) {
+        return createMaterialYouPallets(monet)
+    }
+    return Pair(LightColorPalette, DarkColorPalette)
+}
+
 @SuppressLint("NewApi")
 @ExperimentalAnimatedInsets
 @Composable
@@ -125,13 +136,8 @@ fun CofiTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val (lightColors, darkColors) = if (monet != null &&
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.S
-    ) {
-        createMaterialYouPallets(monet)
-    } else {
-        getMaterialYouPallets()
-    }
+    val (lightColors, darkColors) = getPalette(monet)
+
     val colors = if (darkTheme) {
         darkColors
     } else {

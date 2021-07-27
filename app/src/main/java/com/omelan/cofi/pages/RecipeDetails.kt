@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -35,6 +36,8 @@ import com.omelan.cofi.utils.Haptics
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
+
+const val first_key = "first_item"
 
 @ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
@@ -160,6 +163,7 @@ fun RecipeDetails(
     LaunchedEffect(currentStep) {
         progressAnimation()
     }
+    val lazyListState = rememberLazyListState()
     Scaffold(
         snackbarHost = {
             SnackbarHost(
@@ -176,18 +180,19 @@ fun RecipeDetails(
         topBar = {
             PiPAwareAppBar(
                 title = {
-                    Row {
-                        Icon(
-                            painter = painterResource(id = recipe.value.recipeIcon.icon),
-                            contentDescription = null,
-                            modifier = Modifier.padding(end = 4.dp)
-                        )
+//                    Row {
+//                        Icon(
+//                            painter = painterResource(id = recipe.value.recipeIcon.icon),
+//                            contentDescription = null,
+//                            modifier = Modifier
+//                                .padding(end = 4.dp),
+//                        )
                         Text(
                             text = recipe.value.name,
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
                         )
-                    }
+//                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
@@ -209,6 +214,11 @@ fun RecipeDetails(
                         Icon(Icons.Rounded.Edit, contentDescription = null)
                     }
                 },
+                firstItemOffset = lazyListState
+                    .layoutInfo
+                    .visibleItemsInfo
+                    .firstOrNull { it.key == first_key }?.offset?.dp ?: (-9999).dp
+
             )
         }
     ) {
@@ -217,6 +227,7 @@ fun RecipeDetails(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .background(color = MaterialTheme.colors.background),
+            state = lazyListState,
             contentPadding = if (isInPiP) {
                 PaddingValues(0.dp)
             } else {
@@ -229,7 +240,7 @@ fun RecipeDetails(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (!isInPiP && recipe.value.description.isNotBlank()) {
-                item {
+                item(key = first_key) {
                     Description(
                         modifier = Modifier.fillMaxWidth(),
                         descriptionText = recipe.value.description
@@ -241,7 +252,7 @@ fun RecipeDetails(
                     Spacer(modifier = Modifier.height(spacingDefault))
                 }
             }
-            item {
+            item(key = if (recipe.value.description.isBlank()) first_key else null) {
                 Timer(
                     currentStep = currentStep,
                     animatedProgressValue = animatedProgressValue,
@@ -255,7 +266,9 @@ fun RecipeDetails(
                 if (!isInPiP) {
                     Spacer(modifier = Modifier.height(spacingDefault))
                     Button(
-                        modifier = Modifier.animateContentSize().padding(2.dp),
+                        modifier = Modifier
+                            .animateContentSize()
+                            .padding(2.dp),
                         onClick = if (currentStep != null) {
                             if (animatedProgressValue.isRunning) {
                                 { coroutineScope.launch { pauseAnimations() } }
