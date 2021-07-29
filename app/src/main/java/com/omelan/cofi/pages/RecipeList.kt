@@ -15,25 +15,16 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.omelan.cofi.components.AppBarHeight
-import com.omelan.cofi.components.MaterialYouHeaderTotalHeight
-import com.omelan.cofi.components.PiPAwareAppBar
-import com.omelan.cofi.components.RecipeItem
+import com.omelan.cofi.components.*
 import com.omelan.cofi.model.RecipeViewModel
 
 @ExperimentalAnimatedInsets
@@ -45,22 +36,7 @@ fun RecipeList(
     recipeViewModel: RecipeViewModel = viewModel(),
 ) {
     val recipes = recipeViewModel.getAllRecipes().observeAsState(initial = listOf())
-    val toolbarHeightPx =
-        with(LocalDensity.current) { MaterialYouHeaderTotalHeight.roundToPx().toFloat() }
-    val toolbarOffsetHeightPx = remember { mutableStateOf(0f) }
-
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                val delta = available.y
-                val newOffset = toolbarOffsetHeightPx.value + delta
-                if (newOffset <= toolbarHeightPx) {
-                    toolbarOffsetHeightPx.value = newOffset.coerceIn(-Float.MAX_VALUE, 0f)
-                }
-                return Offset.Zero
-            }
-        }
-    }
+    val (toolbarOffsetHeightPx, nestedScrollConnection) = createValues()
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -91,7 +67,7 @@ fun RecipeList(
                         Icon(Icons.Rounded.Settings, contentDescription = null)
                     }
                 },
-                firstItemOffset = toolbarOffsetHeightPx.value
+                firstItemOffset = toolbarOffsetHeightPx
             )
             LazyColumn(
                 contentPadding = rememberInsetsPaddingValues(
@@ -100,10 +76,12 @@ fun RecipeList(
                 ),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(rememberInsetsPaddingValues(
-                        insets = LocalWindowInsets.current.statusBars,
-                        additionalTop = AppBarHeight
-                    )),
+                    .padding(
+                        rememberInsetsPaddingValues(
+                            insets = LocalWindowInsets.current.statusBars,
+                            additionalTop = AppBarHeight
+                        )
+                    ),
                 
             ) {
                 items(

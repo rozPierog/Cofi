@@ -4,10 +4,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +33,26 @@ private val TitleIconModifier = Modifier
 private const val bigMultiplier = 2
 
 val MaterialYouHeaderTotalHeight = AppBarHeight * (bigMultiplier + 1)
+
+@Composable
+fun createValues(): Pair<Float, NestedScrollConnection> {
+    val toolbarHeightPx =
+        with(LocalDensity.current) { MaterialYouHeaderTotalHeight.roundToPx().toFloat() }
+    val toolbarOffsetHeightPx = remember { mutableStateOf(0f) }
+    val nestedScrollConnection = remember<NestedScrollConnection> {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val delta = available.y
+                val newOffset = toolbarOffsetHeightPx.value + delta
+                if (newOffset <= toolbarHeightPx) {
+                    toolbarOffsetHeightPx.value = newOffset.coerceIn(-Float.MAX_VALUE, 0f)
+                }
+                return Offset.Zero
+            }
+        }
+    }
+    return Pair(toolbarOffsetHeightPx.value, nestedScrollConnection)
+}
 
 @Composable
 fun MaterialYouHeader(
