@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.omelan.cofi.R
 import kotlin.math.roundToInt
 
@@ -55,6 +57,26 @@ fun createValues(): Pair<Float, NestedScrollConnection> {
 }
 
 @Composable
+fun createLazyColumnPaddings(
+    additionalContentStart: Dp = 0.dp,
+    additionalContentBottom: Dp = 0.dp,
+    additionalContentEnd: Dp = 0.dp ,
+): Pair<PaddingValues, PaddingValues> {
+    val contentPadding = rememberInsetsPaddingValues(
+        insets = LocalWindowInsets.current.systemBars,
+        additionalTop = MaterialYouHeaderTotalHeight - AppBarHeight,
+        additionalStart = additionalContentStart,
+        additionalBottom = additionalContentBottom,
+        additionalEnd = additionalContentEnd ,
+    )
+    val padding = rememberInsetsPaddingValues(
+        insets = LocalWindowInsets.current.statusBars,
+        additionalTop = AppBarHeight
+    )
+    return Pair(contentPadding, padding)
+}
+
+@Composable
 fun MaterialYouHeader(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit = {
@@ -66,7 +88,7 @@ fun MaterialYouHeader(
     },
     navigationIcon: @Composable (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
-    backgroundColor: Color = MaterialTheme.colors.background,
+    backgroundColor: Color = MaterialTheme.colors.error,
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = 0.dp,
     firstItemOffset: Float = 0f,

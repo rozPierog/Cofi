@@ -21,10 +21,11 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
-import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.omelan.cofi.components.*
+import com.omelan.cofi.components.PiPAwareAppBar
+import com.omelan.cofi.components.RecipeItem
+import com.omelan.cofi.components.createLazyColumnPaddings
+import com.omelan.cofi.components.createValues
 import com.omelan.cofi.model.RecipeViewModel
 
 @ExperimentalAnimatedInsets
@@ -37,6 +38,8 @@ fun RecipeList(
 ) {
     val recipes = recipeViewModel.getAllRecipes().observeAsState(initial = listOf())
     val (toolbarOffsetHeightPx, nestedScrollConnection) = createValues()
+    val (contentPadding, listPadding) = createLazyColumnPaddings()
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -58,7 +61,6 @@ fun RecipeList(
         Box(
             Modifier
                 .fillMaxSize()
-                // attach as a parent to the nested scroll system
                 .nestedScroll(nestedScrollConnection)
         ) {
             PiPAwareAppBar(
@@ -67,23 +69,14 @@ fun RecipeList(
                         Icon(Icons.Rounded.Settings, contentDescription = null)
                     }
                 },
-                firstItemOffset = toolbarOffsetHeightPx
+                firstItemOffset = toolbarOffsetHeightPx,
             )
             LazyColumn(
-                contentPadding = rememberInsetsPaddingValues(
-                    insets = LocalWindowInsets.current.systemBars,
-                    additionalTop = MaterialYouHeaderTotalHeight - AppBarHeight
-                ),
+                contentPadding = contentPadding,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(
-                        rememberInsetsPaddingValues(
-                            insets = LocalWindowInsets.current.statusBars,
-                            additionalTop = AppBarHeight
-                        )
-                    ),
-                
-            ) {
+                    .padding(listPadding),
+                ) {
                 items(
                     recipes.value.plus(
                         recipes.value.plus(

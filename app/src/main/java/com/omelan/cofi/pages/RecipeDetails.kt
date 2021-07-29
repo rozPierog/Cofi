@@ -3,11 +3,9 @@ package com.omelan.cofi.pages
 import android.media.MediaPlayer
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -16,6 +14,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -163,7 +162,12 @@ fun RecipeDetails(
     LaunchedEffect(currentStep) {
         progressAnimation()
     }
-    val lazyListState = rememberLazyListState()
+    val (toolbarOffsetHeightPx, nestedScrollConnection) = createValues()
+    val (contentPadding, listPadding) = createLazyColumnPaddings(
+        spacingDefault,
+        spacingDefault,
+        spacingDefault
+    )
     Scaffold(
         snackbarHost = {
             SnackbarHost(
@@ -177,22 +181,19 @@ fun RecipeDetails(
                 }
             }
         },
-        topBar = {
+    ) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .nestedScroll(nestedScrollConnection)
+        ) {
             PiPAwareAppBar(
                 title = {
-//                    Row {
-//                        Icon(
-//                            painter = painterResource(id = recipe.value.recipeIcon.icon),
-//                            contentDescription = null,
-//                            modifier = Modifier
-//                                .padding(end = 4.dp),
-//                        )
-                        Text(
-                            text = recipe.value.name,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-//                    }
+                    Text(
+                        text = recipe.value.name,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
@@ -214,136 +215,128 @@ fun RecipeDetails(
                         Icon(Icons.Rounded.Edit, contentDescription = null)
                     }
                 },
-
-
+                firstItemOffset = toolbarOffsetHeightPx,
             )
-        }
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(color = MaterialTheme.colors.background),
-            state = lazyListState,
-            contentPadding = if (isInPiP) {
-                PaddingValues(0.dp)
-            } else {
-                LocalWindowInsets.current.navigationBars.toPaddingValues(
-                    additionalStart = spacingDefault,
-                    additionalTop = spacingDefault,
-                    additionalEnd = spacingDefault
-                )
-            },
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            if (!isInPiP && recipe.value.description.isNotBlank()) {
-                item(key = first_key) {
-                    Description(
-                        modifier = Modifier.fillMaxWidth(),
-                        descriptionText = recipe.value.description
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(listPadding),
+                contentPadding = if (isInPiP) {
+                    PaddingValues(0.dp)
+                } else {
+                    contentPadding
+                },
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                if (!isInPiP && recipe.value.description.isNotBlank()) {
+                    item(key = first_key) {
+                        Description(
+                            modifier = Modifier.fillMaxWidth(),
+                            descriptionText = recipe.value.description
+                        )
+                    }
+                }
+                if (!isInPiP) {
+                    item {
+                        Spacer(modifier = Modifier.height(spacingDefault))
+                    }
+                }
+                item(key = if (recipe.value.description.isBlank()) first_key else null) {
+                    Timer(
+                        currentStep = currentStep,
+                        animatedProgressValue = animatedProgressValue,
+                        animatedProgressColor = animatedProgressColor,
+                        isInPiP = isInPiP,
+                        alreadyDoneWeight = alreadyDoneWeight,
+                        isDone = isDone,
                     )
                 }
-            }
-            if (!isInPiP) {
                 item {
-                    Spacer(modifier = Modifier.height(spacingDefault))
-                }
-            }
-            item(key = if (recipe.value.description.isBlank()) first_key else null) {
-                Timer(
-                    currentStep = currentStep,
-                    animatedProgressValue = animatedProgressValue,
-                    animatedProgressColor = animatedProgressColor,
-                    isInPiP = isInPiP,
-                    alreadyDoneWeight = alreadyDoneWeight,
-                    isDone = isDone,
-                )
-            }
-            item {
-                if (!isInPiP) {
-                    Spacer(modifier = Modifier.height(spacingDefault))
-                    Button(
-                        modifier = Modifier
-                            .animateContentSize()
-                            .padding(2.dp),
-                        onClick = if (currentStep != null) {
-                            if (animatedProgressValue.isRunning) {
-                                { coroutineScope.launch { pauseAnimations() } }
-                            } else {
-                                {
-                                    coroutineScope.launch { startAnimations() }
+                    if (!isInPiP) {
+                        Spacer(modifier = Modifier.height(spacingDefault))
+                        Button(
+                            modifier = Modifier
+                                .animateContentSize()
+                                .padding(2.dp),
+                            onClick = if (currentStep != null) {
+                                if (animatedProgressValue.isRunning) {
+                                    { coroutineScope.launch { pauseAnimations() } }
+                                } else {
+                                    {
+                                        coroutineScope.launch { startAnimations() }
+                                    }
                                 }
-                            }
-                        } else {
-                            { coroutineScope.launch { changeToNextStep(silent = true) } }
-                        }
-                    ) {
-                        Icon(
-                            if (animatedProgressValue.isRunning) {
-                                painterResource(id = R.drawable.ic_pause)
                             } else {
-                                painterResource(id = R.drawable.ic_play_arrow)
-                            },
-                            contentDescription = null
-                        )
-                        Text(
-                            text = if (animatedProgressValue.isRunning) {
-                                stringResource(id = R.string.recipe_details_button_pause)
-                            } else {
-                                stringResource(id = R.string.recipe_details_button_start)
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(spacingDefault))
-                }
-            }
-            if (!isInPiP) {
-                this.itemsIndexed(
-                    items = steps.value,
-                    key = { _, step -> step.id }
-                ) { _, step ->
-                    val indexOfThisStep = steps.value.indexOf(step)
-                    val stepProgress = when {
-                        indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
-                        indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
-                        else -> StepProgress.Upcoming
-                    }
-                    StepListItem(step = step, stepProgress = stepProgress)
-                    Divider(color = Color(0xFFE8EAF6))
-                }
-            }
-        }
-        if (showAutomateLinkDialog) {
-            AlertDialog(
-                onDismissRequest = { showAutomateLinkDialog = false },
-                shape = shapes.medium,
-                buttons = {
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(15.dp)
-                    ) {
-                        TextButton(onClick = { showAutomateLinkDialog = false }) {
-                            Text(text = stringResource(id = R.string.button_cancel))
-                        }
-                        TextButton(
-                            onClick = {
-                                copyAutomateLink()
-                                showAutomateLinkDialog = false
+                                { coroutineScope.launch { changeToNextStep(silent = true) } }
                             }
                         ) {
-                            Text(text = stringResource(id = R.string.button_copy))
+                            Icon(
+                                if (animatedProgressValue.isRunning) {
+                                    painterResource(id = R.drawable.ic_pause)
+                                } else {
+                                    painterResource(id = R.drawable.ic_play_arrow)
+                                },
+                                contentDescription = null
+                            )
+                            Text(
+                                text = if (animatedProgressValue.isRunning) {
+                                    stringResource(id = R.string.recipe_details_button_pause)
+                                } else {
+                                    stringResource(id = R.string.recipe_details_button_start)
+                                }
+                            )
                         }
+                        Spacer(modifier = Modifier.height(spacingDefault))
                     }
-                },
-                title = {
-                    Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
-                },
-                text = {
-                    Text(text = stringResource(R.string.recipe_details_automation_dialog_text))
-                },
-            )
+                }
+                if (!isInPiP) {
+                    this.itemsIndexed(
+                        items = steps.value,
+                        key = { _, step -> step.id }
+                    ) { _, step ->
+                        val indexOfThisStep = steps.value.indexOf(step)
+                        val stepProgress = when {
+                            indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
+                            indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
+                            else -> StepProgress.Upcoming
+                        }
+                        StepListItem(step = step, stepProgress = stepProgress)
+                        Divider(color = Color(0xFFE8EAF6))
+                    }
+                }
+            }
+            if (showAutomateLinkDialog) {
+                AlertDialog(
+                    onDismissRequest = { showAutomateLinkDialog = false },
+                    shape = shapes.medium,
+                    buttons = {
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(15.dp)
+                        ) {
+                            TextButton(onClick = { showAutomateLinkDialog = false }) {
+                                Text(text = stringResource(id = R.string.button_cancel))
+                            }
+                            TextButton(
+                                onClick = {
+                                    copyAutomateLink()
+                                    showAutomateLinkDialog = false
+                                }
+                            ) {
+                                Text(text = stringResource(id = R.string.button_copy))
+                            }
+                        }
+                    },
+                    title = {
+                        Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
+                    },
+                    text = {
+                        Text(text = stringResource(R.string.recipe_details_automation_dialog_text))
+                    },
+                )
+            }
         }
     }
 }
