@@ -7,6 +7,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        //noinspection JcenterRepositoryObsolete
         jcenter() // remove me after https://issues.sonatype.org/browse/OSSRH-64436 is
     }
     dependencies {
@@ -22,6 +23,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        //noinspection JcenterRepositoryObsolete
         jcenter()
         maven { url "https://jitpack.io" }
     }
