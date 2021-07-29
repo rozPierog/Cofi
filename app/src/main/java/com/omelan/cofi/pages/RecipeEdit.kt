@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -32,10 +32,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.omelan.cofi.R
-import com.omelan.cofi.components.PiPAwareAppBar
-import com.omelan.cofi.components.StepAddCard
-import com.omelan.cofi.components.StepListItem
-import com.omelan.cofi.components.StepProgress
+import com.omelan.cofi.components.*
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
@@ -78,6 +75,7 @@ fun RecipeEdit(
             pickedIcon.value = icon
         }
     }
+    val (toolbarOffsetHeightPx, nestedScrollConnection) = createValues()
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         sheetPeekHeight = 0.dp,
@@ -104,7 +102,12 @@ fun RecipeEdit(
                 }
             }
         },
-        topBar = {
+    ) {
+        BoxWithConstraints(
+            Modifier
+                .fillMaxSize()
+                .nestedScroll(nestedScrollConnection)
+        ) {
             PiPAwareAppBar(
                 navigationIcon = {
                     IconButton(onClick = goBack) {
@@ -146,22 +149,18 @@ fun RecipeEdit(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                }
+                },
+                firstItemOffset = toolbarOffsetHeightPx,
             )
-        }
-    ) {
-        BoxWithConstraints {
+            val (contentPadding, listPadding) = createLazyColumnPaddings(
+                spacingDefault,
+                maxHeight / 2,
+                spacingDefault
+            )
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .background(color = MaterialTheme.colors.background),
-                contentPadding = PaddingValues(
-                    bottom = maxHeight / 2,
-                    top = spacingDefault,
-                    start = spacingDefault,
-                    end = spacingDefault,
-                ),
+                    .fillMaxSize().padding(listPadding),
+                contentPadding = contentPadding,
             ) {
                 item {
                     Row(verticalAlignment = Alignment.CenterVertically) {
