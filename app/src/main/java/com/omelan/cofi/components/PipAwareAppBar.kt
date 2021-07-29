@@ -32,7 +32,7 @@ fun PiPAwareAppBar(
     backgroundColor: Color = MaterialTheme.colors.background,
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = 0.dp,
-    firstItemOffset: Dp = 0.dp,
+    firstItemOffset: Float = 0f,
     ) {
     if (!LocalPiPState.current) {
         InsetAwareTopAppBar(
@@ -57,7 +57,7 @@ fun InsetAwareTopAppBar(
     backgroundColor: Color = MaterialTheme.colors.surface,
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = 4.dp,
-    firstItemOffset: Dp = 0.dp,
+    firstItemOffset: Float = 0f,
     ) {
     Surface(
         color = backgroundColor,

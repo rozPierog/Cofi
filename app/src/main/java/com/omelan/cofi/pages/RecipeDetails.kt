@@ -214,10 +214,7 @@ fun RecipeDetails(
                         Icon(Icons.Rounded.Edit, contentDescription = null)
                     }
                 },
-                firstItemOffset = lazyListState
-                    .layoutInfo
-                    .visibleItemsInfo
-                    .firstOrNull { it.key == first_key }?.offset?.dp ?: (-9999).dp
+
 
             )
         }

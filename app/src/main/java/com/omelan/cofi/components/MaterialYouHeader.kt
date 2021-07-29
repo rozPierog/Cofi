@@ -12,17 +12,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
+import kotlin.math.roundToInt
 
 
 private val AppBarHorizontalPadding = 4.dp
-private val AppBarHeight = 56.dp
+val AppBarHeight = 56.dp
 private val TitleIconModifier = Modifier
     .fillMaxHeight()
     .width(72.dp - AppBarHorizontalPadding)
 
 private const val bigMultiplier = 2
+
+val MaterialYouHeaderTotalHeight = AppBarHeight * (bigMultiplier + 1)
 
 @Composable
 fun MaterialYouHeader(
@@ -39,94 +43,97 @@ fun MaterialYouHeader(
     backgroundColor: Color = MaterialTheme.colors.background,
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = 0.dp,
-    firstItemOffset: Dp = 0.dp,
+    firstItemOffset: Float = 0f,
 ) {
     val firstItemModified = firstItemOffset / 4
-    val textAlpha = -firstItemModified.value / AppBarHeight.value * bigMultiplier
-    Surface(
-        color = backgroundColor,
-        modifier = Modifier,
-    ) {
-        Column {
-            Surface(
-                color = backgroundColor,
-                contentColor = contentColor,
-                elevation = elevation,
-                modifier = modifier
+    val textAlpha = -firstItemModified / AppBarHeight.value * bigMultiplier
+
+    Box {
+        Surface(
+            color = backgroundColor,
+            contentColor = contentColor,
+            elevation = elevation,
+            modifier = modifier
+                .padding(top = AppBarHeight.times(bigMultiplier))
+                .absoluteOffset {
+                    IntOffset(
+                        x = 0,
+                        y = firstItemOffset.roundToInt()
+                    )
+                },
+        ) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = AppBarHorizontalPadding * bigMultiplier)
+                    .alpha(1 - textAlpha),
+                verticalAlignment = Alignment.Bottom,
             ) {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            PaddingValues(
-                                start = AppBarHorizontalPadding,
-                                end = AppBarHorizontalPadding
-                            )
+                ProvideTextStyle(value = MaterialTheme.typography.h3) {
+                    CompositionLocalProvider(
+                        LocalContentAlpha provides ContentAlpha.high,
+                        content = title
+                    )
+                }
+            }
+        }
+        Surface(
+            color = backgroundColor,
+            contentColor = contentColor,
+            elevation = elevation,
+            modifier = modifier
+        ) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        PaddingValues(
+                            start = AppBarHorizontalPadding,
+                            end = AppBarHorizontalPadding
                         )
-                        .height(AppBarHeight),
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    if (navigationIcon == null) {
-                        Spacer(Modifier.width(16.dp - AppBarHorizontalPadding))
-                    } else {
-                        Row(TitleIconModifier, verticalAlignment = Alignment.CenterVertically) {
-                            CompositionLocalProvider(
-                                LocalContentAlpha provides ContentAlpha.high,
-                                content = navigationIcon
-                            )
-                        }
-                    }
-
-                    Row(
-                        Modifier
-                            .fillMaxHeight()
-                            .weight(1f)
-                            .alpha(textAlpha),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ProvideTextStyle(value = MaterialTheme.typography.h6) {
-                            CompositionLocalProvider(
-                                LocalContentAlpha provides ContentAlpha.high,
-                                content = title
-                            )
-                        }
-                    }
-
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Row(
-                            Modifier.fillMaxHeight(),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically,
-                            content = actions
+                    )
+                    .height(AppBarHeight),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                if (navigationIcon == null) {
+                    Spacer(Modifier.width(16.dp - AppBarHorizontalPadding))
+                } else {
+                    Row(TitleIconModifier, verticalAlignment = Alignment.CenterVertically) {
+                        CompositionLocalProvider(
+                            LocalContentAlpha provides ContentAlpha.high,
+                            content = navigationIcon
                         )
                     }
                 }
-            }
-            Surface(
-                color = backgroundColor,
-                contentColor = contentColor,
-                elevation = elevation,
-                modifier = Modifier.height(AppBarHeight * bigMultiplier + firstItemModified)
-            ) {
-                Spacer(modifier = Modifier.height(AppBarHeight.times(bigMultiplier)))
+
                 Row(
                     Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = AppBarHorizontalPadding * bigMultiplier)
-                        .alpha(1 - textAlpha),
-                    verticalAlignment = Alignment.Bottom,
+                        .fillMaxHeight()
+                        .weight(1f)
+                        .alpha(textAlpha),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    ProvideTextStyle(value = MaterialTheme.typography.h3) {
+                    ProvideTextStyle(value = MaterialTheme.typography.h6) {
                         CompositionLocalProvider(
                             LocalContentAlpha provides ContentAlpha.high,
                             content = title
                         )
                     }
                 }
+
+                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                    Row(
+                        Modifier.fillMaxHeight(),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically,
+                        content = actions
+                    )
+                }
             }
         }
     }
+
 }
 
 @Composable
