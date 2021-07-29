@@ -22,6 +22,8 @@ private val TitleIconModifier = Modifier
     .fillMaxHeight()
     .width(72.dp - AppBarHorizontalPadding)
 
+private const val bigMultiplier = 2
+
 @Composable
 fun MaterialYouHeader(
     modifier: Modifier = Modifier,
@@ -39,6 +41,8 @@ fun MaterialYouHeader(
     elevation: Dp = 0.dp,
     firstItemOffset: Dp = 0.dp,
 ) {
+    val firstItemModified = firstItemOffset / 4
+    val textAlpha = -firstItemModified.value / AppBarHeight.value * bigMultiplier
     Surface(
         color = backgroundColor,
         modifier = Modifier,
@@ -78,7 +82,7 @@ fun MaterialYouHeader(
                         Modifier
                             .fillMaxHeight()
                             .weight(1f)
-                            .alpha(-firstItemOffset.value / AppBarHeight.value * 2),
+                            .alpha(textAlpha),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ProvideTextStyle(value = MaterialTheme.typography.h6) {
@@ -103,14 +107,14 @@ fun MaterialYouHeader(
                 color = backgroundColor,
                 contentColor = contentColor,
                 elevation = elevation,
-                modifier = Modifier.height(AppBarHeight * 2 + firstItemOffset)
+                modifier = Modifier.height(AppBarHeight * bigMultiplier + firstItemModified)
             ) {
-                Spacer(modifier = Modifier.height(AppBarHeight.times(2)))
+                Spacer(modifier = Modifier.height(AppBarHeight.times(bigMultiplier)))
                 Row(
                     Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = AppBarHorizontalPadding * 2)
-                        .alpha(1 - (-firstItemOffset.value / AppBarHeight.value * 2)),
+                        .padding(horizontal = AppBarHorizontalPadding * bigMultiplier)
+                        .alpha(1 - textAlpha),
                     verticalAlignment = Alignment.Bottom,
                 ) {
                     ProvideTextStyle(value = MaterialTheme.typography.h3) {
