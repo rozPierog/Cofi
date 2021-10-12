@@ -25,7 +25,11 @@ class StepAddCardTest {
                 StepAddCard(save = {}, stepToEdit = null, orderInRecipe = 0, recipeId = 0)
             }
         }
-        composeTestRule.onNodeWithTag("step_type_button_${StepType.WAIT.name.lowercase(Locale.getDefault())}")
+        composeTestRule.onNodeWithTag(
+            "step_type_button_${
+            StepType.WAIT.name.lowercase(Locale.getDefault())
+            }"
+        )
             .assertExists()
     }
 

@@ -67,7 +67,7 @@ class RecipeEditTest {
             .performTextInput(expectedRecipe.description)
         composeTestRule.onNodeWithTag(
             "step_type_button_${
-                expectedStep.type.name.lowercase(Locale.getDefault())
+            expectedStep.type.name.lowercase(Locale.getDefault())
             }"
         )
             .performClick()
@@ -137,7 +137,11 @@ class RecipeEditTest {
             .performTextReplacement(expectedRecipe.description)
         composeTestRule.onNodeWithText(startingStep.name, useUnmergedTree = true).performClick()
 
-        composeTestRule.onNodeWithTag("step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}")
+        composeTestRule.onNodeWithTag(
+            "step_type_button_${
+            expectedStep.type.name.lowercase(Locale.getDefault())
+            }"
+        )
             .performClick()
         val stepNameNode = composeTestRule.onNodeWithTag("step_name")
         stepNameNode.assertExists().performTextClearance()
