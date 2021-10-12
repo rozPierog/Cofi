@@ -10,6 +10,7 @@ import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.core.view.WindowCompat
@@ -266,6 +268,7 @@ class MainActivity : MonetCompatActivity() {
                 NavHost(
                     navController,
                     startDestination = "list",
+                    modifier = Modifier.background(MaterialTheme.colors.background)
                 ) {
 //                    composable("list_color") {
 //                        ColorPicker(goToList = {
