@@ -1,9 +1,12 @@
 package com.omelan.cofi.pages
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.Step
@@ -13,13 +16,17 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import java.util.*
 
+@OptIn(ExperimentalAnimatedInsets::class)
 @ExperimentalAnimationApi
 @RunWith(JUnit4::class)
 class RecipeEditTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    @ExperimentalMaterialApi
+    @ExperimentalComposeUiApi
     @Test
     fun testAddingNameAndDescription() {
         val expectedRecipe =
@@ -58,8 +65,11 @@ class RecipeEditTest {
             .performTextInput(expectedRecipe.name)
         composeTestRule.onNodeWithTag("recipe_edit_description")
             .performTextInput(expectedRecipe.description)
-        composeTestRule.onRoot().captureToImage()
-        composeTestRule.onNodeWithTag("step_type_button_${expectedStep.type.name.toLowerCase()}")
+        composeTestRule.onNodeWithTag(
+            "step_type_button_${
+                expectedStep.type.name.lowercase(Locale.getDefault())
+            }"
+        )
             .performClick()
         val stepNameNode = composeTestRule.onNodeWithTag("step_name")
         stepNameNode.assertExists().performTextClearance()
@@ -73,6 +83,8 @@ class RecipeEditTest {
         composeTestRule.onNodeWithTag("recipe_edit_save").performClick()
     }
 
+    @ExperimentalMaterialApi
+    @ExperimentalComposeUiApi
     @Test
     fun testEditRecipe() {
         val expectedRecipe = Recipe(id = 3, name = "Name of recipe", description = "Test test test")
@@ -125,7 +137,7 @@ class RecipeEditTest {
             .performTextReplacement(expectedRecipe.description)
         composeTestRule.onNodeWithText(startingStep.name, useUnmergedTree = true).performClick()
 
-        composeTestRule.onNodeWithTag("step_type_button_${expectedStep.type.name.toLowerCase()}")
+        composeTestRule.onNodeWithTag("step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}")
             .performClick()
         val stepNameNode = composeTestRule.onNodeWithTag("step_name")
         stepNameNode.assertExists().performTextClearance()
