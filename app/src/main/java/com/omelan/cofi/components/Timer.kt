@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
@@ -139,6 +140,7 @@ fun Timer(
                         } else {
                             MaterialTheme.typography.subtitle1
                         },
+                        textAlign = TextAlign.Center,
                         modifier = Modifier
                             .align(
                                 Alignment.CenterHorizontally
@@ -185,7 +187,8 @@ fun TimerPreview() {
     Timer(
         currentStep = Step(
             id = 1,
-            name = "Stir",
+            name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,
