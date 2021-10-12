@@ -29,7 +29,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -63,15 +62,17 @@ val LocalSettingsDataStore = staticCompositionLocalOf<DataStore<Preferences>> {
 
 const val appDeepLinkUrl = "https://rozpierog.github.io"
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+    name = "settings"
+)
+
 @ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-        name = "settings"
-    )
+
     override val recreateMode: Boolean
         get() = false
 
@@ -299,11 +300,7 @@ class MainActivity : MonetCompatActivity() {
                     navigation(startDestination = "settings_list", route = "settings") {
                         composable("settings_list") {
                             AppSettings(
-                                goBack = {
-                                    navController.navigate(
-                                        route = "list",
-                                    )
-                                },
+                                goBack = goBack,
                                 goToAbout = {
                                     navController.navigate("about")
                                 },

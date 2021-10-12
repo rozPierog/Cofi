@@ -220,7 +220,8 @@ fun RecipeDetails(
             contentPadding = if (isInPiP) {
                 PaddingValues(0.dp)
             } else {
-                LocalWindowInsets.current.navigationBars.toPaddingValues(
+                rememberInsetsPaddingValues(
+                    insets = LocalWindowInsets.current.navigationBars,
                     additionalStart = spacingDefault,
                     additionalTop = spacingDefault,
                     additionalEnd = spacingDefault
