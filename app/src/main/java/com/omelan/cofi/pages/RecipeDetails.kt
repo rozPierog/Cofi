@@ -210,7 +210,36 @@ fun RecipeDetails(
                     }
                 },
             )
-        }
+        },
+        floatingActionButton = {
+            if (!isInPiP) {
+                FloatingActionButton(
+                    onClick = if (currentStep != null) {
+                        if (animatedProgressValue.isRunning) {
+                            { coroutineScope.launch { pauseAnimations() } }
+                        } else {
+                            {
+                                coroutineScope.launch { startAnimations() }
+                            }
+                        }
+                    } else {
+                        { coroutineScope.launch { changeToNextStep(silent = true) } }
+                    },
+                    modifier = Modifier.navigationBarsPadding(),
+                ) {
+                    Icon(
+                        painter = if (animatedProgressValue.isRunning) {
+                            painterResource(id = R.drawable.ic_pause)
+                        } else {
+                            painterResource(id = R.drawable.ic_play_arrow)
+                        },
+                        tint = MaterialTheme.colors.onBackground,
+                        contentDescription = null,
+                    )
+                }
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Center,
     ) {
         LazyColumn(
             modifier = Modifier
@@ -224,7 +253,8 @@ fun RecipeDetails(
                     insets = LocalWindowInsets.current.navigationBars,
                     additionalStart = spacingDefault,
                     additionalTop = spacingDefault,
-                    additionalEnd = spacingDefault
+                    additionalEnd = spacingDefault,
+                    additionalBottom = 86.dp,
                 )
             },
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -254,37 +284,6 @@ fun RecipeDetails(
             }
             item {
                 if (!isInPiP) {
-                    Spacer(modifier = Modifier.height(spacingDefault))
-                    Button(
-                        modifier = Modifier.animateContentSize().padding(2.dp),
-                        onClick = if (currentStep != null) {
-                            if (animatedProgressValue.isRunning) {
-                                { coroutineScope.launch { pauseAnimations() } }
-                            } else {
-                                {
-                                    coroutineScope.launch { startAnimations() }
-                                }
-                            }
-                        } else {
-                            { coroutineScope.launch { changeToNextStep(silent = true) } }
-                        }
-                    ) {
-                        Icon(
-                            if (animatedProgressValue.isRunning) {
-                                painterResource(id = R.drawable.ic_pause)
-                            } else {
-                                painterResource(id = R.drawable.ic_play_arrow)
-                            },
-                            contentDescription = null
-                        )
-                        Text(
-                            text = if (animatedProgressValue.isRunning) {
-                                stringResource(id = R.string.recipe_details_button_pause)
-                            } else {
-                                stringResource(id = R.string.recipe_details_button_start)
-                            }
-                        )
-                    }
                     Spacer(modifier = Modifier.height(spacingDefault))
                 }
             }
