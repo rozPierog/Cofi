@@ -28,17 +28,11 @@ class Haptics(context: Context) {
 
     fun progress() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrateCompat(vibrationEffect = stepProgressVibration)
+            vibrator.vibrateCompat(vibrationEffect = VibrationEffect.createOneShot(300, -1))
+            return
         }
         vibrator.vibrateCompat()
     }
-
-    private val stepProgressVibration: VibrationEffect? =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            VibrationEffect.createOneShot(300, -1)
-        } else {
-            null
-        }
 
     private fun Vibrator.vibrateCompat(
         effectId: Int? = null,
