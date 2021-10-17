@@ -68,6 +68,10 @@ fun RecipeDetails(
 
     val dataStore = LocalSettingsDataStore.current
 
+    val isDingEnabled by dataStore.data.map { preferences ->
+        preferences[DING_ENABLED] ?: DING_DEFAULT_VALUE
+    }.collectAsState(initial = DING_DEFAULT_VALUE)
+
     val combineWeightFlow = dataStore.data.map { preferences ->
         preferences[COMBINE_WEIGHT] ?: COMBINE_WEIGHT_DEFAULT_VALUE
     }
@@ -121,7 +125,7 @@ fun RecipeDetails(
             isDone = true
             onRecipeEnd(recipe.value)
         }
-        if (!silent) {
+        if (!silent && isDingEnabled) {
             haptics.progress()
             mediaPlayer.start()
         }
