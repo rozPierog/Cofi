@@ -46,6 +46,13 @@ fun AppSettings(
         }
     }
 
+    suspend fun toggleDingSetting() {
+        dataStore.edit { settings ->
+            val currentDingState = settings[DING_ENABLED] ?: DING_DEFAULT_VALUE
+            settings[DING_ENABLED] = !currentDingState
+        }
+    }
+
     suspend fun selectCombineMethod(combineMethod: CombineWeight) {
         dataStore.edit {
             it[COMBINE_WEIGHT] = combineMethod.name
@@ -58,6 +65,9 @@ fun AppSettings(
     val combineWeightFlow = dataStore.data.map { preferences ->
         preferences[COMBINE_WEIGHT] ?: COMBINE_WEIGHT_DEFAULT_VALUE
     }
+    val isDingEnabled = dataStore.data.map { preferences ->
+        preferences[DING_ENABLED] ?: DING_DEFAULT_VALUE
+    }.collectAsState(initial = DING_DEFAULT_VALUE)
     val isPiPEnabled = isPiPEnabledFlow.collectAsState(initial = PIP_DEFAULT_VALUE)
     val combineWeightState =
         combineWeightFlow.collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
@@ -108,6 +118,36 @@ fun AppSettings(
                             onCheckedChange = {
                                 coroutineScope.launch {
                                     togglePiPSetting()
+                                }
+                            },
+                        )
+                    }
+                )
+            }
+            item {
+                ListItem(
+                    text = {
+                        Text(text = stringResource(id = R.string.settings_ding_item))
+                    },
+                    icon = {
+                        Icon(
+                            painterResource(id = R.drawable.ic_sound),
+                            contentDescription = null
+                        )
+                    },
+                    modifier = settingsItemModifier.clickable(
+                        onClick = {
+                            coroutineScope.launch {
+                                toggleDingSetting()
+                            }
+                        },
+                    ),
+                    trailing = {
+                        Switch(
+                            checked = isDingEnabled.value,
+                            onCheckedChange = {
+                                coroutineScope.launch {
+                                    toggleDingSetting()
                                 }
                             },
                         )
