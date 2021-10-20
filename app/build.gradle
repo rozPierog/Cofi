@@ -41,7 +41,7 @@ android {
                                       "$projectDir/schemas".toString()]
             }
         }
-        resConfigs "en", "pl"
+        resConfigs "en", "pl", "it"
 
     }
 
