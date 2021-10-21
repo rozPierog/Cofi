@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cofi</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="step_type_add_coffee">Aggiungi il caffè</string>
+    <string name="step_type_water">Aggiungi l\'acqua</string>
+    <string name="step_type_wait">Attendi</string>
+    <string name="step_type_other">Altro</string>
+    <string name="step_add_name">Nome</string>
+    <string name="step_add_duration">Durata (s)</string>
+    <string name="step_add_weight">Peso (g)</string>
+    <string name="step_add_save">Salva</string>
+    <string name="step_delete_title">Sei sicuro?</string>
+    <string name="step_delete_text">Questo rimuoverà la ricetta permanentemente</string>
+    <string name="recipe_edit_name">Nome</string>
+    <string name="recipe_edit_description">Descrizione</string>
+    <string name="recipe_edit_title">Modifica ricetta</string>
+    <string name="recipe_add_new_title">Crea nuova ricetta</string>
+    <string name="recipe_details_automation_dialog_title">Link diretto</string>
+    <string name="recipe_details_automation_dialog_text">"Usa questo link per andare direttamente a questa ricetta. Scrivilo nel tag NFC o crea un'attività di automazione in Tasker per rendere più facile il tuo caffè mattutino. ATTENZIONE: non puoi condividere la ricetta in questo modo!"</string>
+    <string name="recipe_details_button_start">Inizia</string>
+    <string name="recipe_details_button_pause">Pausa</string>
+    <string name="button_cancel">Annulla</string>
+    <string name="button_delete">Elimina</string>
+    <string name="button_copy">Copia</string>
+    <string name="snackbar_copied">Copiato!</string>
+    <string name="settings_licenses_title">Apri licenze</string>
+    <string name="settings_title">Impostazioni</string>
+    <string name="settings_about_item">A proposito dell\'app</string>
+    <string name="settings_pip_item">Picture in picture</string>
+    <string name="settings_bug_item">Segnala un bug o suggerisci una funzionalità</string>
+    <string name="settings_combine_weight_item">Combina il peso</string>
+    <string name="settings_combine_weight_all">Combina ogni peso</string>
+    <string name="settings_combine_weight_water">Combina solo il peso dell\'acqua</string>
+    <string name="settings_combine_weight_none">Non combinare il peso</string>
+    <string name="settings_about_title">A proposito</string>
+    <string name="settings_licenses_item">Ringraziamenti</string>
+    <string name="settings_github_item">Repository Github</string>
+    <string name="step_add_remove">Rimuovi</string>
+    <string name="timer_enjoy">Goditi il caffè</string>
+    <string name="prepopulate_v60_name">V60</string>
+    <string name="prepopulate_v60_description">"Ricetta creata da: James Hoffmann
+Fonte: https://youtu.be/AI4ynXzkSQo
+Granulometria: medio fine
+Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</string>
+    <string name="prepopulate_step_coffee">Aggiungi caffè</string>
+    <string name="prepopulate_step_water">Aggiungi acqua</string>
+    <string name="prepopulate_step_swirl">Gira</string>
+    <string name="prepopulate_frenchPress_description">"Ricetta creata da: James Hoffmann
+Fonte: https://youtu.be/st571DYYTR8
+Granulometria: media
+Puoi versare dopo 5 minuti dell'ultimo passaggio, ma più a lungo lo tieni meglio è"</string>
+    <string name="prepopulate_chemex_description">"Ricetta creata da: James Hoffmann
+Fonte: https://youtu.be/ikt-X5x7yoc
+Granulometria: medio fine
+Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)
+Assicurarsi che la parte più rigida del filtro sia sul lato di scarico
+Occhio a non bloccare la fuoriuscita dell'aria dal coffee brewer"</string>
+    <string name="prepopulate_step_wait">Attendi</string>
+    <string name="prepopulate_step_plunge">Immergi appena sotto la superficie e versa</string>
+    <string name="prepopulate_step_stir_crust">mescolare la superfice</string>
+    <string name="prepopulate_step_scoop_coffee">Raccogli schiuma e pezzetti di caffè dalla parte superiore</string>
+    <string name="prepopulate_frenchPress_name">Pressa Francese</string>
+    <string name="hoffmann_credits_subtitle">Vai sul suo canale Youtube</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="hoffmann_credits_title">Ricette predefinite di James Hoffmann</string>
+    <string name="tereszkiewicz_credits_title">Icona dell\'app di: Hubert Tereszkiewicz</string>
+    <string name="tereszkiewicz_credits_subtitle">Guarda il suo Dribbble</string>
+    <string name="settings_ding_item">Emetti un suono tra i passaggi</string>
+</resources>

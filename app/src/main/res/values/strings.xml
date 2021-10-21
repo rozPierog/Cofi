@@ -29,7 +29,7 @@ WARNING: You cannot share recipe this way!"</string>
     <string name="settings_title">Settings</string>
     <string name="settings_about_item">About App</string>
     <string name="settings_pip_item">Picture in picture</string>
-    <string name="settings_ding_item">"Ding" sound</string>
+    <string name="settings_ding_item">Step change sound</string>
     <string name="settings_bug_item">Report a bug or suggest a feature</string>
     <string name="settings_combine_weight_item">Combine weight</string>
     <string name="settings_combine_weight_all">Combine every weight</string>
