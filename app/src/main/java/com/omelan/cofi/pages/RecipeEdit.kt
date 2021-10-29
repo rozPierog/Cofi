@@ -92,7 +92,7 @@ fun RecipeEdit(
         sheetPeekHeight = 0.dp,
         sheetElevation = 30.dp,
         sheetShape = shapes.modal,
-        sheetBackgroundColor = MaterialTheme.colorScheme.surface,
+        sheetBackgroundColor = MaterialTheme.colorScheme.surfaceVariant,
         sheetContent = {
             FlowRow(
                 modifier = Modifier
@@ -289,6 +289,11 @@ fun RecipeEdit(
             DeleteDialog(onConfirm = deleteRecipe, dismiss = { showDeleteModal.value = false })
         }
     }
+}
+
+@Composable
+fun TopBar() {
+
 }
 
 @Composable
