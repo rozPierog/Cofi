@@ -11,15 +11,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
-import androidx.compose.material.RadioButton
-import androidx.compose.material.Switch
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -136,6 +137,10 @@ fun AppSettings(
                                     togglePiPSetting()
                                 }
                             },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = MaterialTheme.colorScheme.secondary,
+                                checkedTrackColor = MaterialTheme.colorScheme.secondary,
+                            )
                         )
                     }
                 )
@@ -166,6 +171,10 @@ fun AppSettings(
                                     toggleDingSetting()
                                 }
                             },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = MaterialTheme.colorScheme.secondary,
+                                checkedTrackColor = MaterialTheme.colorScheme.secondary,
+                            )
                         )
                     }
                 )
@@ -195,47 +204,16 @@ fun AppSettings(
                     ),
                 )
                 if (showCombineWeightDialog.value) {
-                    fun hideDialog() {
-                        showCombineWeightDialog.value = false
-                    }
-                    Dialog(
-                        onDismissRequest = { hideDialog() },
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .background(
-                                    shape = RoundedCornerShape(28.0.dp),
-                                    color = MaterialTheme.colorScheme.surface
-                                )
-                                .padding(top = spacingDefault, bottom = spacingDefault)
-                        ) {
-                            CombineWeight.values().forEach {
-                                ListItem(
-                                    text = { Text(stringResource(id = it.settingsStringId)) },
-                                    modifier = Modifier.selectable(
-                                        selected = combineWeightState.value == it.name,
-                                        onClick = {
-                                            coroutineScope.launch {
-                                                selectCombineMethod(it)
-                                                hideDialog()
-                                            }
-                                        },
-                                    ),
-                                    icon = {
-                                        RadioButton(
-                                            selected = combineWeightState.value == it.name,
-                                            onClick = {
-                                                coroutineScope.launch {
-                                                    selectCombineMethod(it)
-                                                    hideDialog()
-                                                }
-                                            }
-                                        )
-                                    }
-                                )
+                    CombineWeightDialog(
+                        dismiss = { showCombineWeightDialog.value = false },
+                        selectCombineMethod = {
+                            coroutineScope.launch {
+                                selectCombineMethod(it)
+                                showCombineWeightDialog.value = false
                             }
-                        }
-                    }
+                        },
+                        combineWeightState = combineWeightState.value
+                    )
                 }
             }
             item {
@@ -275,6 +253,46 @@ fun AppSettings(
                         Icon(Icons.Rounded.Info, contentDescription = null)
                     },
                     modifier = settingsItemModifier.clickable(onClick = goToAbout)
+                )
+            }
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun CombineWeightDialog(
+    dismiss: () -> Unit,
+    selectCombineMethod: (CombineWeight) -> Unit,
+    combineWeightState: String
+) {
+    Dialog(
+        onDismissRequest = dismiss
+    ) {
+        Column(
+            modifier = Modifier
+                .background(
+                    shape = RoundedCornerShape(28.0.dp),
+                    color = MaterialTheme.colorScheme.surface
+                )
+                .padding(top = spacingDefault, bottom = spacingDefault)
+        ) {
+            CombineWeight.values().forEach {
+                ListItem(
+                    text = { Text(stringResource(id = it.settingsStringId)) },
+                    modifier = Modifier.selectable(
+                        selected = combineWeightState == it.name,
+                        onClick = { selectCombineMethod(it) },
+                    ),
+                    icon = {
+                        RadioButton(
+                            selected = combineWeightState == it.name,
+                            onClick = { selectCombineMethod(it) },
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = MaterialTheme.colorScheme.secondary,
+                            )
+                        )
+                    }
                 )
             }
         }
