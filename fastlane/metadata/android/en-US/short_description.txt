@@ -1,1 +1,1 @@
-Completly free and open timer that does only what it needs and nothing more.
+Open source coffee brew timer

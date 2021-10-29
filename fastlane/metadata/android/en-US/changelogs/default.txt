@@ -1,0 +1,3 @@
+- Added settings to disable step change sound - Thanks @Tgo1014
+- Added Italian translation - Thanks @alsd4git
+- fixed issues with statusbar color - Thanks  @iamyajat

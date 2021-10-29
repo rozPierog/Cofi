@@ -1,0 +1,10 @@
+Dlaczego Cofi?
+
+Cofi jest dla ciebie. Nie zbiera o tobie żadnych danych, zajmuje jak najmniej miejsca, i ma jeden cel.
+
+Czym się wyróżnia:
+
+- Wyobraźnia twoim limitem - możesz tworzyć przepisy takie jakie ci się podobają, bez ograniczeń wagi, czasu, czy ilości kroków,
+- Obraz w obrazie - jeśli musisz zrobić coś innego podczas gdy minutnik leci, Cofi zminimalizuje się do małego okienka które będzie zawsze widoczne.
+- Zero zbierania danych - wszystkie dane zostają u ciebie, ja nic z tego nie mam,
+- Aplikacja tak mała jak to możliwe - szanuje miejsce na twoim telefonie i wiem, że minutnik nie powinien zajmować więcej niż parę MB,
