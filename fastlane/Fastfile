@@ -62,7 +62,7 @@ platform :android do
     upload_to_play_store(
       track: 'internal',
       skip_upload_apk: true,
-      skip_upload_changelogs: true,
+      skip_upload_changelogs: false,
       skip_upload_aab: true,
     )
   end
@@ -79,7 +79,7 @@ platform :android do
       name: "Cofi " + versionName,
       tag_name: "v" + versionName,
       is_prerelease: options[:prerelease],
-      description: (File.read("fastlane/metadata/android/release_notes.txt") rescue "No changelog provided"),
+      description: (File.read("fastlane/metadata/android/en-US/changelogs/default.txt") rescue "No changelog provided"),
       # commitish: "master",
       upload_assets: ["app/build/outputs/apk/full/release/app-full-release.apk"]
     )
