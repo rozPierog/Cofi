@@ -13,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -192,7 +193,7 @@ fun RecipeDetails(
         topBar = {
             PiPAwareAppBar(
                 title = {
-                    Row {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             painter = painterResource(id = recipe.value.recipeIcon.icon),
                             contentDescription = null,
@@ -252,6 +253,7 @@ fun RecipeDetails(
                             painterResource(id = R.drawable.ic_play_arrow)
                         },
                         tint = androidx.compose.material3.MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize),
                         contentDescription = null,
                     )
                 }
