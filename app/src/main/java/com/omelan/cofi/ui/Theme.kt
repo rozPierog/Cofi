@@ -17,13 +17,13 @@ import com.kieronquinn.monetcompat.core.MonetCompat
 
 @Composable
 fun MaterialTheme.createTextFieldColors() = TextFieldDefaults.outlinedTextFieldColors(
-textColor = this.colorScheme.onBackground,
-focusedBorderColor = this.colorScheme.secondary,
-focusedLabelColor = this.colorScheme.onBackground,
-placeholderColor = this.colorScheme.onBackground,
-unfocusedLabelColor = this.colorScheme.onBackground,
-cursorColor = this.colorScheme.secondary,
-unfocusedBorderColor = this.colorScheme.outline,
+    textColor = this.colorScheme.onBackground,
+    focusedBorderColor = this.colorScheme.secondary,
+    focusedLabelColor = this.colorScheme.onBackground,
+    placeholderColor = this.colorScheme.onBackground,
+    unfocusedLabelColor = this.colorScheme.onBackground,
+    cursorColor = this.colorScheme.secondary,
+    unfocusedBorderColor = this.colorScheme.outline,
 )
 
 @Composable
@@ -105,7 +105,6 @@ fun CofiTheme(
 
     MaterialTheme(
         colorScheme = colors,
-        typography = typography,
     ) {
         ProvideWindowInsets(windowInsetsAnimationsEnabled = false, content = content)
     }
