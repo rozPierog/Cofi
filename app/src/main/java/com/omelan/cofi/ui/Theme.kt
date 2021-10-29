@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -14,27 +15,16 @@ import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.kieronquinn.monetcompat.core.MonetCompat
 
-// private val DarkColorPalette = darkColors(
-//    primary = brown300,
-//    primaryVariant = brown700,
-//    secondary = iconBackground,
-// )
-//
-// private val LightColorPalette = lightColors(
-//    primary = brown500,
-//    primaryVariant = brown700,
-//    secondary = iconBackground,
-//    secondaryVariant = iconBackground,
-//
-//    /* Other default colors to override
-//    background = Color.White,
-//    surface = Color.White,
-//    onPrimary = Color.White,
-//    onSecondary = Color.Black,
-//    onBackground = Color.Black,
-//    onSurface = Color.Black,
-//    */
-// )
+@Composable
+fun MaterialTheme.createTextFieldColors() = TextFieldDefaults.outlinedTextFieldColors(
+textColor = this.colorScheme.onBackground,
+focusedBorderColor = this.colorScheme.secondary,
+focusedLabelColor = this.colorScheme.onBackground,
+placeholderColor = this.colorScheme.onBackground,
+unfocusedLabelColor = this.colorScheme.onBackground,
+cursorColor = this.colorScheme.secondary,
+unfocusedBorderColor = this.colorScheme.outline,
+)
 
 @Composable
 fun createMaterialYouPallets(monet: MonetCompat): Pair<ColorScheme, ColorScheme> {

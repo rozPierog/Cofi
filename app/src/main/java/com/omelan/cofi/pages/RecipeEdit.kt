@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Delete
@@ -17,7 +18,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -43,6 +43,7 @@ import com.omelan.cofi.components.*
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
+import com.omelan.cofi.ui.createTextFieldColors
 import com.omelan.cofi.ui.modal
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
@@ -82,6 +83,8 @@ fun RecipeEdit(
             pickedIcon.value = icon
         }
     }
+
+    val textFieldColors = MaterialTheme.createTextFieldColors()
     val appBarBehavior = createAppBarBehavior()
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
@@ -145,7 +148,7 @@ fun RecipeEdit(
                     }
                 },
                 title = {
-                    Text(
+                    androidx.compose.material3.Text(
                         text = if (isEditing) {
                             stringResource(id = R.string.recipe_edit_title)
                         } else {
@@ -201,6 +204,7 @@ fun RecipeEdit(
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                             label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
+                            colors = textFieldColors,
                         )
                     }
                 }
@@ -216,6 +220,7 @@ fun RecipeEdit(
                         label = {
                             Text(text = stringResource(id = R.string.recipe_edit_description))
                         },
+                        colors = textFieldColors,
                     )
                 }
                 items(steps.value) { step ->
@@ -224,7 +229,7 @@ fun RecipeEdit(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
 
-                    ) {
+                        ) {
                         val indexOfThisStep = steps.value.indexOf(step)
                         StepAddCard(
                             stepToEdit = step,
@@ -281,31 +286,34 @@ fun RecipeEdit(
         }
 
         if (showDeleteModal.value && isEditing) {
-            AlertDialog(
-                onDismissRequest = { showDeleteModal.value = false },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            deleteRecipe()
-                        }
-                    ) {
-                        Text(text = stringResource(id = R.string.button_delete))
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { showDeleteModal.value = false }) {
-                        Text(text = stringResource(id = R.string.button_cancel))
-                    }
-                },
-                title = {
-                    Text(text = stringResource(id = R.string.step_delete_title))
-                },
-                text = {
-                    Text(text = stringResource(id = R.string.step_delete_text))
-                },
-            )
+            DeleteDialog(onConfirm = deleteRecipe, dismiss = { showDeleteModal.value = false })
         }
     }
+}
+
+@Composable
+fun DeleteDialog(onConfirm: () -> Unit, dismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = dismiss,
+        confirmButton = {
+            TextButton(
+                onClick = onConfirm
+            ) {
+                androidx.compose.material3.Text(text = stringResource(id = R.string.button_delete))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = dismiss) {
+                androidx.compose.material3.Text(text = stringResource(id = R.string.button_cancel))
+            }
+        },
+        title = {
+            androidx.compose.material3.Text(text = stringResource(id = R.string.step_delete_title))
+        },
+        text = {
+            androidx.compose.material3.Text(text = stringResource(id = R.string.step_delete_text))
+        },
+    )
 }
 
 @ExperimentalAnimatedInsets
