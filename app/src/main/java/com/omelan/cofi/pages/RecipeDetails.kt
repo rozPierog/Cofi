@@ -274,7 +274,7 @@ fun RecipeDetails(
                     additionalStart = spacingDefault,
                     additionalTop = spacingDefault,
                     additionalEnd = spacingDefault,
-                    additionalBottom = 86.dp,
+                    additionalBottom = 112.0.dp,
                 )
             },
             horizontalAlignment = Alignment.CenterHorizontally,
