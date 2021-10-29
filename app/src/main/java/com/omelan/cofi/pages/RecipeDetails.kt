@@ -166,7 +166,6 @@ fun RecipeDetails(
         changeToNextStep()
     }
 
-
     suspend fun startAnimations() {
         coroutineScope.launch {
             progressAnimation()
