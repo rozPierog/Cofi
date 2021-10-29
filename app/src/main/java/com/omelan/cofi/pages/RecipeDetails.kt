@@ -70,10 +70,6 @@ fun RecipeDetails(
     val indexOfLastStep = steps.value.lastIndex
     val animatedProgressValue = remember { Animatable(0f) }
     val animatedProgressColor = remember { Animatable(Color.DarkGray) }
-    val fabShape by animateDpAsState(
-        targetValue = if (animatedProgressValue.isRunning) 28.0.dp else 100.dp,
-        animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
-    )
     val clipboardManager = LocalClipboardManager.current
     val snackbarState = SnackbarHostState()
     val coroutineScope = rememberCoroutineScope()
@@ -230,9 +226,10 @@ fun RecipeDetails(
         },
         floatingActionButton = {
             if (!isInPiP) {
-                LargeFloatingActionButton(
-                    shape = RoundedCornerShape(fabShape),
-                    onClick = if (currentStep != null) {
+                StartFAB(
+                    isAnimationRunning = animatedProgressValue.isRunning,
+                    onClick =
+                    if (currentStep != null) {
                         if (animatedProgressValue.isRunning) {
                             { coroutineScope.launch { pauseAnimations() } }
                         } else {
@@ -243,19 +240,7 @@ fun RecipeDetails(
                     } else {
                         { coroutineScope.launch { changeToNextStep(silent = true) } }
                     },
-                    modifier = Modifier.navigationBarsPadding(),
-                ) {
-                    Icon(
-                        painter = if (animatedProgressValue.isRunning) {
-                            painterResource(id = R.drawable.ic_pause)
-                        } else {
-                            painterResource(id = R.drawable.ic_play_arrow)
-                        },
-                        tint = androidx.compose.material3.MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize),
-                        contentDescription = null,
-                    )
-                }
+                )
             }
         },
         floatingActionButtonPosition = androidx.compose.material.FabPosition.Center,
@@ -323,31 +308,62 @@ fun RecipeDetails(
             }
         }
         if (showAutomateLinkDialog) {
-            androidx.compose.material3.AlertDialog(
-                onDismissRequest = { showAutomateLinkDialog = false },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            copyAutomateLink()
-                            showAutomateLinkDialog = false
-                        }
-                    ) {
-                        Text(text = stringResource(id = R.string.button_copy))
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { showAutomateLinkDialog = false }) {
-                        Text(text = stringResource(id = R.string.button_cancel))
-                    }
-                },
-                title = {
-                    Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
-                },
-                text = {
-                    Text(text = stringResource(R.string.recipe_details_automation_dialog_text))
-                },
-            )
+            DirectLinkDialog(dismiss = { showAutomateLinkDialog = false }, onConfirm = {
+                copyAutomateLink()
+                showAutomateLinkDialog = false
+            })
         }
+    }
+}
+
+@Composable
+fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
+    androidx.compose.material3.AlertDialog(
+        onDismissRequest = dismiss,
+        confirmButton = {
+            TextButton(
+                onClick = {
+
+                }
+            ) {
+                Text(text = stringResource(id = R.string.button_copy))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = dismiss) {
+                Text(text = stringResource(id = R.string.button_cancel))
+            }
+        },
+        title = {
+            Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
+        },
+        text = {
+            Text(text = stringResource(R.string.recipe_details_automation_dialog_text))
+        },
+    )
+}
+
+@Composable
+fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
+    val fabShape by animateDpAsState(
+        targetValue = if (isAnimationRunning) 28.0.dp else 100.dp,
+        animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
+    )
+    LargeFloatingActionButton(
+        shape = RoundedCornerShape(fabShape),
+        onClick = onClick,
+        modifier = Modifier.navigationBarsPadding(),
+    ) {
+        Icon(
+            painter = if (isAnimationRunning) {
+                painterResource(id = R.drawable.ic_pause)
+            } else {
+                painterResource(id = R.drawable.ic_play_arrow)
+            },
+            tint = androidx.compose.material3.MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize),
+            contentDescription = null,
+        )
     }
 }
 

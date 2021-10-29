@@ -292,11 +292,6 @@ fun RecipeEdit(
 }
 
 @Composable
-fun TopBar() {
-
-}
-
-@Composable
 fun DeleteDialog(onConfirm: () -> Unit, dismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = dismiss,
