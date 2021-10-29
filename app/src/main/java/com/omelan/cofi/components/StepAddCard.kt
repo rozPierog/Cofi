@@ -3,10 +3,15 @@ package com.omelan.cofi.components
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,7 +28,6 @@ import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
 import com.omelan.cofi.ui.full
-import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
@@ -53,10 +57,10 @@ fun StepAddCard(
             (stepToEdit?.value ?: 0).toString()
         )
     }
-    Card(
+    Surface(
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier.fillMaxWidth(),
-        backgroundColor = MaterialTheme.colors.background,
+        tonalElevation = 2.dp
     ) {
         Column(
             modifier = Modifier
@@ -68,7 +72,7 @@ fun StepAddCard(
                     StepType.values().forEach { stepType ->
                         Button(
                             onClick = { pickedType.value = stepType },
-                            shape = shapes.full,
+                            shape = MaterialTheme.shapes.full,
                             modifier = Modifier
                                 .testTag(
                                     "step_type_button_${stepType.name.lowercase()}"

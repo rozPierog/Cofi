@@ -5,9 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -50,7 +50,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
         }
         Icon(
             painter = painter,
-            tint = MaterialTheme.colors.onSurface,
+            tint = MaterialTheme.colorScheme.onBackground,
             contentDescription = null,
             modifier = Modifier
                 .constrainAs(icon) {
@@ -62,8 +62,8 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
 
         Text(
             text = step.name,
-            style = MaterialTheme.typography.subtitle1,
-            color = MaterialTheme.colors.onSurface,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .constrainAs(name) {
                     start.linkTo(icon.end, 5.dp)
@@ -82,16 +82,16 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
             if (step.value != null) {
                 Text(
                     text = "${step.value}g",
-                    style = MaterialTheme.typography.subtitle2,
-                    color = MaterialTheme.colors.onSurface,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(horizontal = 5.dp)
 
                 )
             }
             Text(
                 text = step.time.toStringDuration(),
-                style = MaterialTheme.typography.subtitle2,
-                color = MaterialTheme.colors.onSurface,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(horizontal = 5.dp)
             )
         }

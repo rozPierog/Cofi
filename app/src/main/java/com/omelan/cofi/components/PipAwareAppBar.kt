@@ -2,12 +2,7 @@ package com.omelan.cofi.components
 
 import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -74,7 +69,7 @@ fun InsetAwareTopAppBar(
     val appBarContainerColor by colors.containerColor(scrollFraction)
     Surface(
         color = appBarContainerColor,
-        elevation = elevation,
+        shadowElevation = elevation * scrollFraction,
         modifier = modifier
     ) {
         LargeTopAppBar(
