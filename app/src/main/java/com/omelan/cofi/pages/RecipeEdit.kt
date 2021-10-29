@@ -13,6 +13,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,6 +26,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -32,10 +39,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.omelan.cofi.R
-import com.omelan.cofi.components.PiPAwareAppBar
-import com.omelan.cofi.components.StepAddCard
-import com.omelan.cofi.components.StepListItem
-import com.omelan.cofi.components.StepProgress
+import com.omelan.cofi.components.*
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
@@ -78,11 +82,14 @@ fun RecipeEdit(
             pickedIcon.value = icon
         }
     }
+    val appBarBehavior = createAppBarBehavior()
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
+        modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         sheetPeekHeight = 0.dp,
         sheetElevation = 30.dp,
         sheetShape = shapes.modal,
+        sheetBackgroundColor = MaterialTheme.colorScheme.surface,
         sheetContent = {
             FlowRow(
                 modifier = Modifier
@@ -98,7 +105,8 @@ fun RecipeEdit(
                     ) {
                         Icon(
                             painter = painterResource(id = it.icon),
-                            contentDescription = "Coffee grinder"
+                            tint = MaterialTheme.colorScheme.onSurface,
+                            contentDescription = "Coffee grinder",
                         )
                     }
                 }
@@ -132,7 +140,7 @@ fun RecipeEdit(
                     ) {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 },
@@ -146,7 +154,8 @@ fun RecipeEdit(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                }
+                },
+                scrollBehavior = appBarBehavior,
             )
         }
     ) {
@@ -155,7 +164,7 @@ fun RecipeEdit(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .background(color = MaterialTheme.colors.background),
+                    .background(color = MaterialTheme.colorScheme.background),
                 contentPadding = PaddingValues(
                     bottom = maxHeight / 2,
                     top = spacingDefault,
@@ -179,6 +188,7 @@ fun RecipeEdit(
                         ) {
                             Icon(
                                 painter = painterResource(id = pickedIcon.value.icon),
+                                tint = MaterialTheme.colorScheme.onBackground,
                                 contentDescription = null
                             )
                         }
@@ -273,24 +283,18 @@ fun RecipeEdit(
         if (showDeleteModal.value && isEditing) {
             AlertDialog(
                 onDismissRequest = { showDeleteModal.value = false },
-                shape = shapes.medium,
-                buttons = {
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(spacingDefault)
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            deleteRecipe()
+                        }
                     ) {
-                        TextButton(onClick = { showDeleteModal.value = false }) {
-                            Text(text = stringResource(id = R.string.button_cancel))
-                        }
-                        TextButton(
-                            onClick = {
-                                deleteRecipe()
-                            }
-                        ) {
-                            Text(text = stringResource(id = R.string.button_delete))
-                        }
+                        Text(text = stringResource(id = R.string.button_delete))
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDeleteModal.value = false }) {
+                        Text(text = stringResource(id = R.string.button_cancel))
                     }
                 },
                 title = {

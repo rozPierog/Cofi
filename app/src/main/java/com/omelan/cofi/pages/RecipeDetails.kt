@@ -36,7 +36,6 @@ import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.*
-import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
 import com.omelan.cofi.utils.Haptics
 import kotlinx.coroutines.flow.map
@@ -320,27 +319,21 @@ fun RecipeDetails(
             }
         }
         if (showAutomateLinkDialog) {
-            AlertDialog(
+            androidx.compose.material3.AlertDialog(
                 onDismissRequest = { showAutomateLinkDialog = false },
-                shape = shapes.medium,
-                buttons = {
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(15.dp)
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            copyAutomateLink()
+                            showAutomateLinkDialog = false
+                        }
                     ) {
-                        TextButton(onClick = { showAutomateLinkDialog = false }) {
-                            Text(text = stringResource(id = R.string.button_cancel))
-                        }
-                        TextButton(
-                            onClick = {
-                                copyAutomateLink()
-                                showAutomateLinkDialog = false
-                            }
-                        ) {
-                            Text(text = stringResource(id = R.string.button_copy))
-                        }
+                        Text(text = stringResource(id = R.string.button_copy))
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showAutomateLinkDialog = false }) {
+                        Text(text = stringResource(id = R.string.button_cancel))
                     }
                 },
                 title = {
