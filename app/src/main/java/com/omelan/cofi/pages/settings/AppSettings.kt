@@ -14,8 +14,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.List
+import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,11 +33,13 @@ import androidx.datastore.preferences.core.edit
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
+import com.omelan.cofi.components.createAppBarBehavior
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.spacingDefault
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+@ExperimentalMaterial3Api
 @ExperimentalMaterialApi
 @Composable
 fun AppSettings(
@@ -74,6 +82,8 @@ fun AppSettings(
     val showCombineWeightDialog = remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+    val appBarBehavior = createAppBarBehavior()
+
     Scaffold(
         topBar = {
             PiPAwareAppBar(
@@ -88,11 +98,12 @@ fun AppSettings(
                     IconButton(onClick = goBack) {
                         Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
                     }
-                }
+                },
+                scrollBehavior = appBarBehavior,
             )
         }
     ) {
-        LazyColumn {
+        LazyColumn(modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection)) {
             item {
                 ListItem(
                     text = {
@@ -186,10 +197,12 @@ fun AppSettings(
                         onDismissRequest = { hideDialog() },
                     ) {
                         Column(
-                            modifier = Modifier.background(
-                                shape = MaterialTheme.shapes.card,
-                                color = MaterialTheme.colors.surface
-                            ).padding(top = spacingDefault, bottom = spacingDefault)
+                            modifier = Modifier
+                                .background(
+                                    shape = androidx.compose.material.MaterialTheme.shapes.card,
+                                    color = MaterialTheme.colorScheme.surface
+                                )
+                                .padding(top = spacingDefault, bottom = spacingDefault)
                         ) {
                             CombineWeight.values().forEach {
                                 ListItem(
@@ -263,6 +276,7 @@ fun AppSettings(
     }
 }
 
+@ExperimentalMaterial3Api
 @ExperimentalMaterialApi
 @Preview
 @Composable

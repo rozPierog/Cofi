@@ -2,10 +2,14 @@ package com.omelan.cofi.pages.settings
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -13,12 +17,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
+import com.omelan.cofi.components.createAppBarBehavior
 
+@ExperimentalMaterial3Api
 @ExperimentalMaterialApi
 @Composable
 fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
     val uriHandler = LocalUriHandler.current
-
+    val appBarBehavior = createAppBarBehavior()
     Scaffold(
         topBar = {
             PiPAwareAppBar(
@@ -33,11 +39,12 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     IconButton(onClick = goBack) {
                         Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
                     }
-                }
+                },
+                scrollBehavior = appBarBehavior,
             )
         }
     ) {
-        LazyColumn {
+        LazyColumn(modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection)) {
             item {
                 ListItem(
                     text = {
@@ -114,6 +121,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
     }
 }
 
+@ExperimentalMaterial3Api
 @ExperimentalMaterialApi
 @Preview
 @Composable
