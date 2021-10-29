@@ -5,7 +5,6 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.AnimationVector4D
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
@@ -25,8 +24,6 @@ import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
 import com.omelan.cofi.ui.green600
-import com.omelan.cofi.ui.grey300
-import com.omelan.cofi.ui.grey600
 import com.omelan.cofi.utils.toStringDuration
 
 @ExperimentalAnimatedInsets
@@ -44,7 +41,7 @@ fun Timer(
     val strokeWidth = if (isInPiP) {
         15.dp
     } else {
-        25.dp
+        20.dp
     }
 
     Box(
@@ -56,11 +53,7 @@ fun Timer(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f),
-            color = if (isSystemInDarkTheme()) {
-                grey300
-            } else {
-                grey600
-            },
+            color = MaterialTheme.colorScheme.surfaceVariant,
             strokeWidth = strokeWidth
         )
         CircularProgressIndicator(
@@ -69,7 +62,7 @@ fun Timer(
                 .fillMaxWidth()
                 .aspectRatio(1f),
             color = animatedProgressColor.value,
-            strokeWidth = strokeWidth
+            strokeWidth = strokeWidth,
         )
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
             Column(

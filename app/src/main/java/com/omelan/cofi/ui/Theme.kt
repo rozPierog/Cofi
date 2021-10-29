@@ -38,7 +38,7 @@ import com.kieronquinn.monetcompat.core.MonetCompat
 
 @Composable
 fun createMaterialYouPallets(monet: MonetCompat): Pair<ColorScheme, ColorScheme> {
-    val context = androidx.compose.ui.platform.LocalContext.current
+    val context = LocalContext.current
     fun getMonetNeutral1Color(level: Int): Color? {
         val monetColor = monet.getMonetColors().neutral1[level]?.toLinearSrgb() ?: return null
         val red = monetColor.r.toFloat()

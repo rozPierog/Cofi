@@ -16,7 +16,6 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun createAppBarBehavior(): TopAppBarScrollBehavior {
@@ -85,5 +84,5 @@ fun InsetAwareTopAppBar(
 @Composable
 @Preview
 fun PiPAwareAppBarPreview() {
-    InsetAwareTopAppBar(title = { Text(text = "test")})
+    InsetAwareTopAppBar(title = { Text(text = "test") })
 }

@@ -1,6 +1,7 @@
 package com.omelan.cofi.pages.settings
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
@@ -44,7 +45,11 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             )
         }
     ) {
-        LazyColumn(modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection)) {
+        LazyColumn(
+            modifier = Modifier
+                .nestedScroll(appBarBehavior.nestedScrollConnection)
+                .fillMaxSize()
+        ) {
             item {
                 ListItem(
                     text = {

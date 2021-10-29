@@ -149,6 +149,12 @@ fun RecipeDetails(
         onTimerRunning(true)
         val duration =
             (safeCurrentStep.time - (safeCurrentStep.time * animatedProgressValue.value)).toInt()
+        coroutineScope.launch {
+            animatedProgressColor.animateTo(
+                targetValue = safeCurrentStep.type.color,
+                animationSpec = tween(durationMillis = duration, easing = LinearEasing),
+            )
+        }
         val result = animatedProgressValue.animateTo(
             targetValue = 1f,
             animationSpec = tween(durationMillis = duration, easing = LinearEasing),
@@ -159,19 +165,11 @@ fun RecipeDetails(
         changeToNextStep()
     }
 
-    suspend fun colorAnimation() {
-        val safeCurrentStep = currentStep ?: return
-        val duration =
-            (safeCurrentStep.time - (safeCurrentStep.time * animatedProgressValue.value)).toInt()
-        animatedProgressColor.animateTo(
-            targetValue = safeCurrentStep.type.color,
-            animationSpec = tween(durationMillis = duration, easing = LinearEasing),
-        )
-    }
 
     suspend fun startAnimations() {
-        coroutineScope.launch { progressAnimation() }
-        coroutineScope.launch { colorAnimation() }
+        coroutineScope.launch {
+            progressAnimation()
+        }
     }
     LaunchedEffect(currentStep) {
         progressAnimation()

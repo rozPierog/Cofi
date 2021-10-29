@@ -6,19 +6,20 @@ import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ListItem
+import androidx.compose.material.RadioButton
+import androidx.compose.material.Switch
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.material3.*
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -27,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat.startActivity
 import androidx.datastore.preferences.core.edit
@@ -34,7 +36,6 @@ import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
-import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.spacingDefault
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -103,7 +104,11 @@ fun AppSettings(
             )
         }
     ) {
-        LazyColumn(modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection)) {
+        LazyColumn(
+            modifier = Modifier
+                .nestedScroll(appBarBehavior.nestedScrollConnection)
+                .fillMaxSize()
+        ) {
             item {
                 ListItem(
                     text = {
@@ -199,7 +204,7 @@ fun AppSettings(
                         Column(
                             modifier = Modifier
                                 .background(
-                                    shape = androidx.compose.material.MaterialTheme.shapes.card,
+                                    shape = RoundedCornerShape(28.0.dp),
                                     color = MaterialTheme.colorScheme.surface
                                 )
                                 .padding(top = spacingDefault, bottom = spacingDefault)
