@@ -1,20 +1,23 @@
 package com.omelan.cofi.pages
 
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -36,6 +39,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
 
+@SuppressLint("FlowOperatorInvokedInComposition")
+@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -164,7 +169,9 @@ fun RecipeDetails(
     LaunchedEffect(currentStep) {
         progressAnimation()
     }
+    val appBarBehavior = createAppBarBehavior()
     Scaffold(
+        modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarState,
@@ -213,11 +220,12 @@ fun RecipeDetails(
                         Icon(Icons.Rounded.Edit, contentDescription = null)
                     }
                 },
+                scrollBehavior = appBarBehavior,
             )
         },
         floatingActionButton = {
             if (!isInPiP) {
-                FloatingActionButton(
+                LargeFloatingActionButton(
                     onClick = if (currentStep != null) {
                         if (animatedProgressValue.isRunning) {
                             { coroutineScope.launch { pauseAnimations() } }
@@ -248,8 +256,7 @@ fun RecipeDetails(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight()
-                .background(color = MaterialTheme.colors.background),
+                .fillMaxHeight(),
             contentPadding = if (isInPiP) {
                 PaddingValues(0.dp)
             } else {
