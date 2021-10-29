@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -68,7 +69,10 @@ fun RecipeDetails(
     val indexOfLastStep = steps.value.lastIndex
     val animatedProgressValue = remember { Animatable(0f) }
     val animatedProgressColor = remember { Animatable(Color.DarkGray) }
-
+    val fabShape by animateDpAsState(
+        targetValue = if (animatedProgressValue.isRunning) 28.0.dp else 100.dp,
+        animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
+    )
     val clipboardManager = LocalClipboardManager.current
     val snackbarState = SnackbarHostState()
     val coroutineScope = rememberCoroutineScope()
@@ -229,6 +233,7 @@ fun RecipeDetails(
         floatingActionButton = {
             if (!isInPiP) {
                 LargeFloatingActionButton(
+                    shape = RoundedCornerShape(fabShape),
                     onClick = if (currentStep != null) {
                         if (animatedProgressValue.isRunning) {
                             { coroutineScope.launch { pauseAnimations() } }
