@@ -46,14 +46,10 @@ class RecipeEditTest {
                 ) {
                     RecipeEdit(
                         saveRecipe = { recipe: Recipe, steps: List<Step> ->
-                            assert(
-                                expectedRecipe == recipe
-                            ) {
+                            assert(expectedRecipe == recipe) {
                                 "Expected: $expectedRecipe \ngot: $recipe"
                             }
-                            assert(
-                                steps.first() == expectedStep
-                            ) {
+                            assert(steps.first() == expectedStep) {
                                 "expected: $expectedStep \ngot: ${steps.first()}"
                             }
                         }
@@ -66,11 +62,8 @@ class RecipeEditTest {
         composeTestRule.onNodeWithTag("recipe_edit_description")
             .performTextInput(expectedRecipe.description)
         composeTestRule.onNodeWithTag(
-            "step_type_button_${
-            expectedStep.type.name.lowercase(Locale.getDefault())
-            }"
-        )
-            .performClick()
+            "step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}"
+        ).performClick()
         val stepNameNode = composeTestRule.onNodeWithTag("step_name")
         stepNameNode.assertExists().performTextClearance()
         stepNameNode.performTextInput(expectedStep.name)
@@ -113,14 +106,10 @@ class RecipeEditTest {
                 ) {
                     RecipeEdit(
                         saveRecipe = { recipe: Recipe, steps: List<Step> ->
-                            assert(
-                                expectedRecipe == recipe
-                            ) {
+                            assert(expectedRecipe == recipe) {
                                 "Expected recipe do not equal saved recipe"
                             }
-                            assert(
-                                steps.first() == expectedStep
-                            ) {
+                            assert(steps.first() == expectedStep) {
                                 "expected: $expectedStep \ngot: ${steps.first()}"
                             }
                         },
@@ -138,11 +127,8 @@ class RecipeEditTest {
         composeTestRule.onNodeWithText(startingStep.name, useUnmergedTree = true).performClick()
 
         composeTestRule.onNodeWithTag(
-            "step_type_button_${
-            expectedStep.type.name.lowercase(Locale.getDefault())
-            }"
-        )
-            .performClick()
+            "step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}"
+        ).performClick()
         val stepNameNode = composeTestRule.onNodeWithTag("step_name")
         stepNameNode.assertExists().performTextClearance()
         stepNameNode.performTextInput(expectedStep.name)
@@ -151,7 +137,6 @@ class RecipeEditTest {
         stepValueNode.assertExists()
         stepValueNode.performTextReplacement((expectedStep.time / 1000).toString())
         composeTestRule.onNodeWithTag("step_save").performClick()
-
         composeTestRule.onNodeWithTag("recipe_edit_save").performClick()
     }
 }
