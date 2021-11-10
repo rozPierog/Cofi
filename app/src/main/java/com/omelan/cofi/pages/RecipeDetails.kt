@@ -308,10 +308,13 @@ fun RecipeDetails(
             }
         }
         if (showAutomateLinkDialog) {
-            DirectLinkDialog(dismiss = { showAutomateLinkDialog = false }, onConfirm = {
-                copyAutomateLink()
-                showAutomateLinkDialog = false
-            })
+            DirectLinkDialog(
+                dismiss = { showAutomateLinkDialog = false },
+                onConfirm = {
+                    copyAutomateLink()
+                    showAutomateLinkDialog = false
+                }
+            )
         }
     }
 }
@@ -323,7 +326,6 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
         confirmButton = {
             TextButton(
                 onClick = {
-
                 }
             ) {
                 Text(text = stringResource(id = R.string.button_copy))
