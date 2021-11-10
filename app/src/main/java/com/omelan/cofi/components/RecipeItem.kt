@@ -2,10 +2,10 @@ package com.omelan.cofi.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,9 +26,11 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
     fun onClickRecipe() {
         onPress(recipe.id)
     }
-    Card(
-        elevation = 2.dp,
-        modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+    Surface(
+        tonalElevation = 2.dp,
+        shadowElevation = 2.dp,
+        modifier = Modifier
+            .padding(horizontal = 10.dp, vertical = 5.dp),
         shape = shapes.card,
     ) {
         Row(
@@ -57,14 +59,14 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     fontWeight = FontWeight.SemiBold,
-                    style = MaterialTheme.typography.subtitle1,
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 if (recipe.description.isNotBlank()) {
                     Text(
                         text = recipe.description,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
             }

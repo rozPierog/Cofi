@@ -1,5 +1,6 @@
 package com.omelan.cofi.pages
 
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -7,14 +8,22 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
+import androidx.compose.material3.*
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -29,13 +38,14 @@ import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.*
-import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.ui.spacingDefault
 import com.omelan.cofi.utils.Haptics
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
 
+@SuppressLint("FlowOperatorInvokedInComposition")
+@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -60,7 +70,6 @@ fun RecipeDetails(
     val indexOfLastStep = steps.value.lastIndex
     val animatedProgressValue = remember { Animatable(0f) }
     val animatedProgressColor = remember { Animatable(Color.DarkGray) }
-
     val clipboardManager = LocalClipboardManager.current
     val snackbarState = SnackbarHostState()
     val coroutineScope = rememberCoroutineScope()
@@ -137,6 +146,12 @@ fun RecipeDetails(
         onTimerRunning(true)
         val duration =
             (safeCurrentStep.time - (safeCurrentStep.time * animatedProgressValue.value)).toInt()
+        coroutineScope.launch {
+            animatedProgressColor.animateTo(
+                targetValue = safeCurrentStep.type.color,
+                animationSpec = tween(durationMillis = duration, easing = LinearEasing),
+            )
+        }
         val result = animatedProgressValue.animateTo(
             targetValue = 1f,
             animationSpec = tween(durationMillis = duration, easing = LinearEasing),
@@ -147,24 +162,17 @@ fun RecipeDetails(
         changeToNextStep()
     }
 
-    suspend fun colorAnimation() {
-        val safeCurrentStep = currentStep ?: return
-        val duration =
-            (safeCurrentStep.time - (safeCurrentStep.time * animatedProgressValue.value)).toInt()
-        animatedProgressColor.animateTo(
-            targetValue = safeCurrentStep.type.color,
-            animationSpec = tween(durationMillis = duration, easing = LinearEasing),
-        )
-    }
-
     suspend fun startAnimations() {
-        coroutineScope.launch { progressAnimation() }
-        coroutineScope.launch { colorAnimation() }
+        coroutineScope.launch {
+            progressAnimation()
+        }
     }
     LaunchedEffect(currentStep) {
         progressAnimation()
     }
+    val appBarBehavior = createAppBarBehavior()
     Scaffold(
+        modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarState,
@@ -180,7 +188,7 @@ fun RecipeDetails(
         topBar = {
             PiPAwareAppBar(
                 title = {
-                    Row {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             painter = painterResource(id = recipe.value.recipeIcon.icon),
                             contentDescription = null,
@@ -213,12 +221,15 @@ fun RecipeDetails(
                         Icon(Icons.Rounded.Edit, contentDescription = null)
                     }
                 },
+                scrollBehavior = appBarBehavior,
             )
         },
         floatingActionButton = {
             if (!isInPiP) {
-                FloatingActionButton(
-                    onClick = if (currentStep != null) {
+                StartFAB(
+                    isAnimationRunning = animatedProgressValue.isRunning,
+                    onClick =
+                    if (currentStep != null) {
                         if (animatedProgressValue.isRunning) {
                             { coroutineScope.launch { pauseAnimations() } }
                         } else {
@@ -229,27 +240,16 @@ fun RecipeDetails(
                     } else {
                         { coroutineScope.launch { changeToNextStep(silent = true) } }
                     },
-                    modifier = Modifier.navigationBarsPadding(),
-                ) {
-                    Icon(
-                        painter = if (animatedProgressValue.isRunning) {
-                            painterResource(id = R.drawable.ic_pause)
-                        } else {
-                            painterResource(id = R.drawable.ic_play_arrow)
-                        },
-                        tint = MaterialTheme.colors.onBackground,
-                        contentDescription = null,
-                    )
-                }
+                )
             }
         },
-        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButtonPosition = androidx.compose.material.FabPosition.Center,
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(color = MaterialTheme.colors.background),
+                .background(androidx.compose.material3.MaterialTheme.colorScheme.background),
             contentPadding = if (isInPiP) {
                 PaddingValues(0.dp)
             } else {
@@ -258,7 +258,7 @@ fun RecipeDetails(
                     additionalStart = spacingDefault,
                     additionalTop = spacingDefault,
                     additionalEnd = spacingDefault,
-                    additionalBottom = 86.dp,
+                    additionalBottom = 112.0.dp,
                 )
             },
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -308,37 +308,64 @@ fun RecipeDetails(
             }
         }
         if (showAutomateLinkDialog) {
-            AlertDialog(
-                onDismissRequest = { showAutomateLinkDialog = false },
-                shape = shapes.medium,
-                buttons = {
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(15.dp)
-                    ) {
-                        TextButton(onClick = { showAutomateLinkDialog = false }) {
-                            Text(text = stringResource(id = R.string.button_cancel))
-                        }
-                        TextButton(
-                            onClick = {
-                                copyAutomateLink()
-                                showAutomateLinkDialog = false
-                            }
-                        ) {
-                            Text(text = stringResource(id = R.string.button_copy))
-                        }
-                    }
-                },
-                title = {
-                    Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
-                },
-                text = {
-                    Text(text = stringResource(R.string.recipe_details_automation_dialog_text))
-                },
+            DirectLinkDialog(
+                dismiss = { showAutomateLinkDialog = false },
+                onConfirm = {
+                    copyAutomateLink()
+                    showAutomateLinkDialog = false
+                }
             )
         }
+    }
+}
+
+@Composable
+fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
+    androidx.compose.material3.AlertDialog(
+        onDismissRequest = dismiss,
+        confirmButton = {
+            TextButton(
+                onClick = {
+                }
+            ) {
+                Text(text = stringResource(id = R.string.button_copy))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = dismiss) {
+                Text(text = stringResource(id = R.string.button_cancel))
+            }
+        },
+        title = {
+            Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
+        },
+        text = {
+            Text(text = stringResource(R.string.recipe_details_automation_dialog_text))
+        },
+    )
+}
+
+@Composable
+fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
+    val fabShape by animateDpAsState(
+        targetValue = if (isAnimationRunning) 28.0.dp else 100.dp,
+        animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
+    )
+    LargeFloatingActionButton(
+        shape = RoundedCornerShape(fabShape),
+        onClick = onClick,
+        modifier = Modifier.navigationBarsPadding(),
+    ) {
+        Icon(
+            painter = if (isAnimationRunning) {
+                painterResource(id = R.drawable.ic_pause)
+            } else {
+                painterResource(id = R.drawable.ic_play_arrow)
+            },
+            tint = androidx.compose.material3.MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize),
+            contentDescription = null,
+        )
     }
 }
 

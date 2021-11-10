@@ -3,10 +3,15 @@ package com.omelan.cofi.components
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.shapes
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,8 +27,8 @@ import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
+import com.omelan.cofi.ui.createTextFieldColors
 import com.omelan.cofi.ui.full
-import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
@@ -53,10 +58,11 @@ fun StepAddCard(
             (stepToEdit?.value ?: 0).toString()
         )
     }
-    Card(
-        shape = MaterialTheme.shapes.medium,
+    val textFieldColors = androidx.compose.material3.MaterialTheme.createTextFieldColors()
+    Surface(
+        shape = shapes.medium,
         modifier = Modifier.fillMaxWidth(),
-        backgroundColor = MaterialTheme.colors.background,
+        tonalElevation = 2.dp
     ) {
         Column(
             modifier = Modifier
@@ -94,11 +100,13 @@ fun StepAddCard(
                     singleLine = true,
                     onValueChange = { stepName.value = it },
                     keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
+                    colors = textFieldColors,
                     modifier = Modifier
                         .testTag(
                             "step_name"
                         )
-                        .padding(2.dp),
+                        .padding(2.dp)
+                        .fillMaxWidth(),
                 )
                 OutlinedTextField(
                     label = { Text(text = stringResource(id = R.string.step_add_duration)) },
@@ -108,11 +116,13 @@ fun StepAddCard(
                     },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    colors = textFieldColors,
                     modifier = Modifier
                         .testTag(
                             "step_time"
                         )
-                        .padding(2.dp),
+                        .padding(2.dp)
+                        .fillMaxWidth(),
                 )
                 if (listOf(
                         StepType.WATER,
@@ -128,9 +138,11 @@ fun StepAddCard(
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        colors = textFieldColors,
                         modifier = Modifier
                             .testTag("step_value")
-                            .padding(2.dp),
+                            .padding(2.dp)
+                            .fillMaxWidth(),
                     )
                 }
                 Row(
@@ -146,7 +158,8 @@ fun StepAddCard(
                                     time = stepTime.value.safeToInt().toMillis(),
                                     type = pickedType.value ?: StepType.OTHER,
                                     value = if (stepValue.value.isNotBlank() &&
-                                        stepValue.value.toInt() != 0
+                                        stepValue.value.toInt() != 0 &&
+                                        pickedType.value != StepType.WAIT
                                     ) {
                                         stepValue.value.toInt()
                                     } else {

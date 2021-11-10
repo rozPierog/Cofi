@@ -1,5 +1,6 @@
 package com.omelan.cofi.components
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -8,11 +9,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,7 +58,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
         val urlsInDescription = extractUrls(descriptionText)
         append(descriptionText)
         addStyle(
-            SpanStyle(color = MaterialTheme.colors.onBackground),
+            SpanStyle(color = MaterialTheme.colorScheme.onSurface),
             0,
             descriptionText.length
         )
@@ -73,7 +74,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
             )
             addStyle(
                 SpanStyle(
-                    color = MaterialTheme.colors.secondary,
+                    color = MaterialTheme.colorScheme.secondary,
                     textDecoration = TextDecoration.Underline
                 ),
                 positionOfUrl,
@@ -88,7 +89,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
             animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
         )
     }
-    Card(modifier = modifier, shape = shapes.card) {
+    Surface(modifier = modifier, shape = shapes.card, tonalElevation = 2.dp) {
         Column(
             modifier = Modifier
                 .animateContentSize()
@@ -109,7 +110,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                 } else {
                     2
                 },
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.animateContentSize(),
                 onClick = {
                     descriptionWithLinks
@@ -143,7 +144,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
 }
 
 @ExperimentalAnimatedInsets
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun DescriptionPreview() {
     Description(
