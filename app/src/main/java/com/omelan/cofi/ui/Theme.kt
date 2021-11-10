@@ -1,6 +1,5 @@
 package com.omelan.cofi.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -81,31 +80,26 @@ fun getMaterialYouPallets(context: Context): Pair<ColorScheme, ColorScheme> {
 
 val spacingDefault = 16.dp
 
-@SuppressLint("NewApi")
 @ExperimentalAnimatedInsets
 @Composable
 fun CofiTheme(
     monet: MonetCompat? = null,
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
-    val (lightColors, darkColors) = if (monet != null &&
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.S
+    val (lightColors, darkColors) = if (
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     ) {
-        createMaterialYouPallets(monet)
-    } else {
         getMaterialYouPallets(context)
-    }
-    val colors = if (darkTheme) {
-        darkColors
     } else {
-        lightColors
+        if (monet != null) {
+            createMaterialYouPallets(monet)
+        } else {
+            Pair(lightColorScheme(), darkColorScheme())
+        }
     }
-
-    MaterialTheme(
-        colorScheme = colors,
-    ) {
+    val colors = if (isSystemInDarkTheme()) darkColors else lightColors
+    MaterialTheme(colorScheme = colors) {
         ProvideWindowInsets(windowInsetsAnimationsEnabled = false, content = content)
     }
 }
