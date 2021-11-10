@@ -79,7 +79,7 @@ platform :android do
       name: "Cofi " + versionName,
       tag_name: "v" + versionName,
       is_prerelease: options[:prerelease],
-      description: (File.read("fastlane/metadata/android/en-US/changelogs/default.txt") rescue "No changelog provided"),
+      description: (File.read("metadata/android/en-US/changelogs/default.txt") rescue "No changelog provided"),
       # commitish: "master",
       upload_assets: ["app/build/outputs/apk/full/release/app-full-release.apk"]
     )
