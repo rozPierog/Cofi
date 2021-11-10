@@ -8,8 +8,8 @@ import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,8 +24,6 @@ import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
 import com.omelan.cofi.ui.green600
-import com.omelan.cofi.ui.grey300
-import com.omelan.cofi.ui.grey600
 import com.omelan.cofi.utils.toStringDuration
 
 @ExperimentalAnimatedInsets
@@ -43,7 +41,7 @@ fun Timer(
     val strokeWidth = if (isInPiP) {
         15.dp
     } else {
-        25.dp
+        20.dp
     }
 
     Box(
@@ -55,11 +53,7 @@ fun Timer(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f),
-            color = if (MaterialTheme.colors.isLight) {
-                grey300
-            } else {
-                grey600
-            },
+            color = MaterialTheme.colorScheme.surfaceVariant,
             strokeWidth = strokeWidth
         )
         CircularProgressIndicator(
@@ -68,7 +62,7 @@ fun Timer(
                 .fillMaxWidth()
                 .aspectRatio(1f),
             color = animatedProgressColor.value,
-            strokeWidth = strokeWidth
+            strokeWidth = strokeWidth,
         )
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
             Column(
@@ -79,11 +73,11 @@ fun Timer(
                 Text(
                     text = stringResource(id = R.string.timer_enjoy),
                     style = if (isInPiP) {
-                        MaterialTheme.typography.subtitle1
+                        MaterialTheme.typography.titleMedium
                     } else {
-                        MaterialTheme.typography.h6
+                        MaterialTheme.typography.headlineMedium
                     },
-                    color = MaterialTheme.colors.onSurface,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier
                         .align(
                             Alignment.CenterHorizontally
@@ -114,11 +108,11 @@ fun Timer(
                     Text(
                         text = durationInString,
                         style = if (isInPiP) {
-                            MaterialTheme.typography.subtitle1
+                            MaterialTheme.typography.titleMedium
                         } else {
-                            MaterialTheme.typography.h6
+                            MaterialTheme.typography.headlineMedium
                         },
-                        color = MaterialTheme.colors.onSurface,
+                        color = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier
                             .align(
                                 Alignment.CenterHorizontally
@@ -126,7 +120,7 @@ fun Timer(
                             .testTag("timer_duration")
                     )
                     Divider(
-                        color = MaterialTheme.colors.onSurface,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
                         text = stringResource(
@@ -134,11 +128,11 @@ fun Timer(
                             currentStep.name,
                             currentStep.time / 1000
                         ),
-                        color = MaterialTheme.colors.onSurface,
+                        color = MaterialTheme.colorScheme.onSurface,
                         style = if (isInPiP) {
-                            MaterialTheme.typography.subtitle2
+                            MaterialTheme.typography.titleSmall
                         } else {
-                            MaterialTheme.typography.subtitle1
+                            MaterialTheme.typography.titleMedium
                         },
                         textAlign = TextAlign.Center,
                         modifier = Modifier
@@ -151,7 +145,7 @@ fun Timer(
                         val currentValueFromProgress =
                             (currentStep.value * animatedProgressValue.value).toInt()
                         Divider(
-                            color = MaterialTheme.colors.onSurface,
+                            color = MaterialTheme.colorScheme.onSurface,
                         )
                         Text(
                             text = stringResource(
@@ -159,16 +153,16 @@ fun Timer(
                                 currentValueFromProgress + alreadyDoneWeight,
                                 it + alreadyDoneWeight,
                             ),
-                            color = MaterialTheme.colors.onSurface,
+                            color = MaterialTheme.colorScheme.onSurface,
                             modifier = Modifier
                                 .align(
                                     Alignment.CenterHorizontally
                                 )
                                 .testTag("timer_value"),
                             style = if (isInPiP) {
-                                MaterialTheme.typography.h6
+                                MaterialTheme.typography.titleLarge
                             } else {
-                                MaterialTheme.typography.h5
+                                MaterialTheme.typography.headlineMedium
                             },
                         )
                     }

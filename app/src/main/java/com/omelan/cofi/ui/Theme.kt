@@ -1,46 +1,33 @@
 package com.omelan.cofi.ui
 
-import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.kieronquinn.monetcompat.core.MonetCompat
 
-// private val DarkColorPalette = darkColors(
-//    primary = brown300,
-//    primaryVariant = brown700,
-//    secondary = iconBackground,
-// )
-//
-// private val LightColorPalette = lightColors(
-//    primary = brown500,
-//    primaryVariant = brown700,
-//    secondary = iconBackground,
-//    secondaryVariant = iconBackground,
-//
-//    /* Other default colors to override
-//    background = Color.White,
-//    surface = Color.White,
-//    onPrimary = Color.White,
-//    onSecondary = Color.Black,
-//    onBackground = Color.Black,
-//    onSurface = Color.Black,
-//    */
-// )
+@Composable
+fun MaterialTheme.createTextFieldColors() = TextFieldDefaults.outlinedTextFieldColors(
+    textColor = this.colorScheme.onBackground,
+    focusedBorderColor = this.colorScheme.secondary,
+    focusedLabelColor = this.colorScheme.onBackground,
+    placeholderColor = this.colorScheme.onBackground,
+    unfocusedLabelColor = this.colorScheme.onBackground,
+    cursorColor = this.colorScheme.secondary,
+    unfocusedBorderColor = this.colorScheme.outline,
+)
 
 @Composable
-fun createMaterialYouPallets(monet: MonetCompat): Pair<Colors, Colors> {
-    val context = androidx.compose.ui.platform.LocalContext.current
+fun createMaterialYouPallets(monet: MonetCompat): Pair<ColorScheme, ColorScheme> {
+    val context = LocalContext.current
     fun getMonetNeutral1Color(level: Int): Color? {
         val monetColor = monet.getMonetColors().neutral1[level]?.toLinearSrgb() ?: return null
         val red = monetColor.r.toFloat()
@@ -49,7 +36,7 @@ fun createMaterialYouPallets(monet: MonetCompat): Pair<Colors, Colors> {
         return Color(red, green, blue)
     }
     return Pair(
-        lightColors(
+        lightColorScheme(
             primary = Color(monet.getPrimaryColor(context = context, darkMode = false)),
 //            primaryVariant = colorResource(id = android.R.color.system_accent1_400),
             secondary = Color(monet.getSecondaryColor(context = context, darkMode = false)),
@@ -64,7 +51,7 @@ fun createMaterialYouPallets(monet: MonetCompat): Pair<Colors, Colors> {
             onBackground = Color.Black,
             onSurface = getMonetNeutral1Color(900) ?: Color.White,
         ),
-        darkColors(
+        darkColorScheme(
             primary = Color(monet.getPrimaryColor(context = context, darkMode = true)),
 //            primaryVariant = colorResource(id = android.R.color.system_accent1_400),
             secondary = Color(monet.getSecondaryColor(context = context, darkMode = true)),
@@ -84,65 +71,35 @@ fun createMaterialYouPallets(monet: MonetCompat): Pair<Colors, Colors> {
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
-fun getMaterialYouPallets(): Pair<Colors, Colors> {
+fun getMaterialYouPallets(context: Context): Pair<ColorScheme, ColorScheme> {
     return Pair(
-        lightColors(
-            primary = colorResource(id = android.R.color.system_accent2_100),
-            primaryVariant = colorResource(id = android.R.color.system_accent1_400), //
-            secondary = colorResource(id = android.R.color.system_accent2_300),
-
-            secondaryVariant = colorResource(id = android.R.color.system_accent1_600), //
-
-            background = colorResource(id = android.R.color.system_neutral1_50),
-            surface = colorResource(id = android.R.color.system_neutral1_100),
-            onPrimary = colorResource(id = android.R.color.system_neutral1_900), //
-            onSecondary = colorResource(id = android.R.color.system_neutral2_700), //
-            onBackground = Color.Black, //
-            onSurface = colorResource(id = android.R.color.system_neutral1_900), //
-        ),
-        darkColors(
-            primary = colorResource(id = android.R.color.system_accent2_600),
-//            primaryVariant = colorResource(id = android.R.color.system_accent1_400),
-            secondary = colorResource(id = android.R.color.system_accent2_400),
-//            secondaryVariant = colorResource(id = android.R.color.system_accent1_600),
-            background = colorResource(id = android.R.color.system_neutral1_900),
-            surface = colorResource(id = android.R.color.system_neutral1_700),
-            onPrimary = colorResource(id = android.R.color.system_neutral1_100), //
-            onSecondary = colorResource(id = android.R.color.system_neutral1_100), //
-            onBackground = Color.White, //
-            onSurface = colorResource(id = android.R.color.system_neutral1_100), //
-        )
+        dynamicLightColorScheme(context),
+        dynamicDarkColorScheme(context)
     )
 }
 
 val spacingDefault = 16.dp
 
-@SuppressLint("NewApi")
 @ExperimentalAnimatedInsets
 @Composable
 fun CofiTheme(
     monet: MonetCompat? = null,
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val (lightColors, darkColors) = if (monet != null &&
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.S
+    val context = LocalContext.current
+    val (lightColors, darkColors) = if (
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     ) {
-        createMaterialYouPallets(monet)
+        getMaterialYouPallets(context)
     } else {
-        getMaterialYouPallets()
+        if (monet != null) {
+            createMaterialYouPallets(monet)
+        } else {
+            Pair(lightColorScheme(), darkColorScheme())
+        }
     }
-    val colors = if (darkTheme) {
-        darkColors
-    } else {
-        lightColors
-    }
-
-    MaterialTheme(
-        colors = colors,
-        typography = typography,
-        shapes = shapes,
-    ) {
+    val colors = if (isSystemInDarkTheme()) darkColors else lightColors
+    MaterialTheme(colorScheme = colors) {
         ProvideWindowInsets(windowInsetsAnimationsEnabled = false, content = content)
     }
 }

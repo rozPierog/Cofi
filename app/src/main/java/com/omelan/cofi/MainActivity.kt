@@ -12,10 +12,10 @@ import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -46,7 +46,6 @@ import com.omelan.cofi.pages.settings.AppSettings
 import com.omelan.cofi.pages.settings.AppSettingsAbout
 import com.omelan.cofi.pages.settings.Licenses
 import com.omelan.cofi.ui.CofiTheme
-import com.omelan.cofi.utils.SystemUIHelpers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -72,6 +71,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
+@ExperimentalMaterial3Api
 class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
@@ -247,19 +247,15 @@ class MainActivity : MonetCompatActivity() {
         val systemUiController = rememberSystemUiController()
 
         CofiTheme(monet) {
-            val darkIcons = MaterialTheme.colors.background.luminance() > 0.5
-            SystemUIHelpers.setStatusBarIconsTheme(activity = this, darkIcons = darkIcons)
-            SystemUIHelpers.setNavigationBarColor(
-                color = MaterialTheme.colors.background.copy(alpha = 0.8F),
-                activity = this
+            val darkIcons = MaterialTheme.colorScheme.background.luminance() > 0.5
+            systemUiController.setStatusBarColor(
+                color = Color.Transparent,
+                darkIcons = darkIcons
             )
-            val useDarkIcons = MaterialTheme.colors.isLight
-            SideEffect {
-                systemUiController.setSystemBarsColor(
-                    color = Color.Transparent,
-                    darkIcons = useDarkIcons
-                )
-            }
+            systemUiController.setNavigationBarColor(
+                color = MaterialTheme.colorScheme.background.copy(alpha = 0.8F),
+                darkIcons = darkIcons
+            )
 
             CompositionLocalProvider(
                 LocalPiPState provides isInPiP.value,
@@ -268,7 +264,7 @@ class MainActivity : MonetCompatActivity() {
                 NavHost(
                     navController,
                     startDestination = "list",
-                    modifier = Modifier.background(MaterialTheme.colors.background)
+                    modifier = Modifier.background(MaterialTheme.colorScheme.background)
                 ) {
 //                    composable("list_color") {
 //                        ColorPicker(goToList = {

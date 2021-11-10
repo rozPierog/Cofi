@@ -1,10 +1,12 @@
 package com.omelan.cofi.components
 
+import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -13,6 +15,17 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsPadding
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun createAppBarBehavior(): TopAppBarScrollBehavior {
+    val decayAnimationSpec = rememberSplineBasedDecay<Float>()
+
+    val scrollBehavior = remember(decayAnimationSpec) {
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec)
+    }
+    return scrollBehavior
+}
 
 @Composable
 fun PiPAwareAppBar(
@@ -24,10 +37,9 @@ fun PiPAwareAppBar(
             overflow = TextOverflow.Ellipsis,
         )
     },
-    navigationIcon: @Composable (() -> Unit)? = null,
+    navigationIcon: @Composable (() -> Unit) = {},
     actions: @Composable RowScope.() -> Unit = {},
-    backgroundColor: Color = MaterialTheme.colors.background,
-    contentColor: Color = contentColorFor(backgroundColor),
+    scrollBehavior: TopAppBarScrollBehavior? = null,
     elevation: Dp = 0.dp
 ) {
     if (!LocalPiPState.current) {
@@ -36,9 +48,8 @@ fun PiPAwareAppBar(
             modifier = modifier,
             navigationIcon = navigationIcon,
             actions = actions,
-            backgroundColor = backgroundColor,
-            contentColor = contentColor,
             elevation = elevation,
+            scrollBehavior = scrollBehavior,
         )
     }
 }
@@ -47,25 +58,25 @@ fun PiPAwareAppBar(
 fun InsetAwareTopAppBar(
     title: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    navigationIcon: @Composable (() -> Unit)? = null,
+    navigationIcon: @Composable (() -> Unit) = {},
     actions: @Composable RowScope.() -> Unit = {},
-    backgroundColor: Color = MaterialTheme.colors.surface,
-    contentColor: Color = contentColorFor(backgroundColor),
+    scrollBehavior: TopAppBarScrollBehavior? = null,
     elevation: Dp = 4.dp
 ) {
+    val scrollFraction = scrollBehavior?.scrollFraction ?: 0f
+    val colors = TopAppBarDefaults.largeTopAppBarColors()
+    val appBarContainerColor by colors.containerColor(scrollFraction)
     Surface(
-        color = backgroundColor,
-        elevation = elevation,
+        color = appBarContainerColor,
+        shadowElevation = elevation * scrollFraction,
         modifier = modifier
     ) {
-        TopAppBar(
+        LargeTopAppBar(
             title = title,
             navigationIcon = navigationIcon,
             actions = actions,
-            backgroundColor = Color.Transparent,
-            contentColor = contentColor,
-            elevation = 0.dp,
-            modifier = Modifier.statusBarsPadding()
+            modifier = Modifier.statusBarsPadding(),
+            scrollBehavior = scrollBehavior,
         )
     }
 }
@@ -73,5 +84,5 @@ fun InsetAwareTopAppBar(
 @Composable
 @Preview
 fun PiPAwareAppBarPreview() {
-    PiPAwareAppBar()
+    InsetAwareTopAppBar(title = { Text(text = "test") })
 }

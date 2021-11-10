@@ -1,15 +1,17 @@
 package com.omelan.cofi.pages
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,8 +21,10 @@ import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.RecipeItem
+import com.omelan.cofi.components.createAppBarBehavior
 import com.omelan.cofi.model.RecipeViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalAnimatedInsets
 @Composable
 fun RecipeList(
@@ -30,27 +34,34 @@ fun RecipeList(
     recipeViewModel: RecipeViewModel = viewModel(),
 ) {
     val recipes = recipeViewModel.getAllRecipes().observeAsState(initial = listOf())
+    val scrollBehavior = createAppBarBehavior()
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             PiPAwareAppBar(
                 actions = {
                     IconButton(onClick = goToSettings) {
                         Icon(Icons.Rounded.Settings, contentDescription = null)
                     }
-                }
+                },
+                scrollBehavior = scrollBehavior,
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
+            ExtendedFloatingActionButton(
                 onClick = addNewRecipe,
-                modifier = Modifier.navigationBarsPadding()
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    tint = MaterialTheme.colors.onBackground,
-                    contentDescription = null,
-                )
-            }
+                modifier = Modifier.navigationBarsPadding(),
+                icon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Add,
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        contentDescription = null,
+                    )
+                },
+                text = {
+                    Text(text = "Add Recipe")
+                }
+            )
         },
     ) {
         LazyColumn(
@@ -58,7 +69,9 @@ fun RecipeList(
                 insets = LocalWindowInsets.current.navigationBars,
                 additionalTop = 5.dp
             ),
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = MaterialTheme.colorScheme.background),
         ) {
             items(recipes.value) { recipe ->
                 RecipeItem(
