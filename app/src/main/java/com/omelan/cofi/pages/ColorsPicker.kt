@@ -1,7 +1,7 @@
 package com.omelan.cofi.pages
 
-import android.os.Build
 import android.util.Log
+import androidx.annotation.IntRange
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -15,83 +15,72 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.kieronquinn.monetcompat.core.MonetCompat
+import com.kieronquinn.monetcompat.extensions.toArgb
 import com.omelan.cofi.components.PiPAwareAppBar
 
-private val colors = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-    listOf(
-        Pair(android.R.color.system_accent1_0, "system_accent1_0"),
-        Pair(android.R.color.system_accent1_50, "system_accent1_50"),
-        Pair(android.R.color.system_accent1_100, "system_accent1_100"),
-        Pair(android.R.color.system_accent1_200, "system_accent1_200"),
-        Pair(android.R.color.system_accent1_300, "system_accent1_300"),
-        Pair(android.R.color.system_accent1_400, "system_accent1_400"),
-        Pair(android.R.color.system_accent1_500, "system_accent1_500"),
-        Pair(android.R.color.system_accent1_600, "system_accent1_600"),
-        Pair(android.R.color.system_accent1_700, "system_accent1_700"),
-        Pair(android.R.color.system_accent1_800, "system_accent1_800"),
-        Pair(android.R.color.system_accent1_900, "system_accent1_900"),
-        Pair(android.R.color.system_accent1_1000, "system_accent1_1000"),
-        Pair(android.R.color.system_accent2_0, "system_accent2_0"),
-        Pair(android.R.color.system_accent2_50, "system_accent2_50"),
-        Pair(android.R.color.system_accent2_100, "system_accent2_100"),
-        Pair(android.R.color.system_accent2_200, "system_accent2_200"),
-        Pair(android.R.color.system_accent2_300, "system_accent2_300"),
-        Pair(android.R.color.system_accent2_400, "system_accent2_400"),
-        Pair(android.R.color.system_accent2_500, "system_accent2_500"),
-        Pair(android.R.color.system_accent2_600, "system_accent2_600"),
-        Pair(android.R.color.system_accent2_700, "system_accent2_700"),
-        Pair(android.R.color.system_accent2_800, "system_accent2_800"),
-        Pair(android.R.color.system_accent2_900, "system_accent2_900"),
-        Pair(android.R.color.system_accent2_1000, "system_accent2_1000"),
-        Pair(android.R.color.system_accent3_0, "system_accent3_0"),
-        Pair(android.R.color.system_accent3_50, "system_accent3_50"),
-        Pair(android.R.color.system_accent3_100, "system_accent3_100"),
-        Pair(android.R.color.system_accent3_200, "system_accent3_200"),
-        Pair(android.R.color.system_accent3_300, "system_accent3_300"),
-        Pair(android.R.color.system_accent3_400, "system_accent3_400"),
-        Pair(android.R.color.system_accent3_500, "system_accent3_500"),
-        Pair(android.R.color.system_accent3_600, "system_accent3_600"),
-        Pair(android.R.color.system_accent3_700, "system_accent3_700"),
-        Pair(android.R.color.system_accent3_800, "system_accent3_800"),
-        Pair(android.R.color.system_accent3_900, "system_accent3_900"),
-        Pair(android.R.color.system_accent3_1000, "system_accent3_1000"),
-        Pair(android.R.color.system_neutral1_0, "system_neutral1_0"),
-        Pair(android.R.color.system_neutral1_50, "system_neutral1_50"),
-        Pair(android.R.color.system_neutral1_100, "system_neutral1_100"),
-        Pair(android.R.color.system_neutral1_200, "system_neutral1_200"),
-        Pair(android.R.color.system_neutral1_300, "system_neutral1_300"),
-        Pair(android.R.color.system_neutral1_400, "system_neutral1_400"),
-        Pair(android.R.color.system_neutral1_500, "system_neutral1_500"),
-        Pair(android.R.color.system_neutral1_600, "system_neutral1_600"),
-        Pair(android.R.color.system_neutral1_700, "system_neutral1_700"),
-        Pair(android.R.color.system_neutral1_800, "system_neutral1_800"),
-        Pair(android.R.color.system_neutral1_900, "system_neutral1_900"),
-        Pair(android.R.color.system_neutral1_1000, "system_neutral1_1000"),
-        Pair(android.R.color.system_neutral2_0, "system_neutral2_0"),
-        Pair(android.R.color.system_neutral2_50, "system_neutral2_50"),
-        Pair(android.R.color.system_neutral2_100, "system_neutral2_100"),
-        Pair(android.R.color.system_neutral2_200, "system_neutral2_200"),
-        Pair(android.R.color.system_neutral2_300, "system_neutral2_300"),
-        Pair(android.R.color.system_neutral2_400, "system_neutral2_400"),
-        Pair(android.R.color.system_neutral2_500, "system_neutral2_500"),
-        Pair(android.R.color.system_neutral2_600, "system_neutral2_600"),
-        Pair(android.R.color.system_neutral2_700, "system_neutral2_700"),
-        Pair(android.R.color.system_neutral2_800, "system_neutral2_800"),
-        Pair(android.R.color.system_neutral2_900, "system_neutral2_900"),
-        Pair(android.R.color.system_neutral2_1000, "system_neutral2_1000"),
-    )
-} else {
-    listOf(
-        Pair(android.R.color.holo_red_light, "holo_red")
-    )
-}
 
 @Composable
-fun ColorPicker(goToList: () -> Unit) {
+fun ColorPicker(goToList: () -> Unit, monet: MonetCompat) {
+    val colors = listOf(
+        Pair("primary", MaterialTheme.colorScheme.primary),
+        Pair("onPrimary", MaterialTheme.colorScheme.onPrimary),
+        Pair("primaryContainer", MaterialTheme.colorScheme.primaryContainer),
+        Pair("onPrimaryContainer", MaterialTheme.colorScheme.onPrimaryContainer),
+        Pair("inversePrimary", MaterialTheme.colorScheme.inversePrimary),
+        Pair("secondary", MaterialTheme.colorScheme.secondary),
+        Pair("onSecondary", MaterialTheme.colorScheme.onSecondary),
+        Pair("secondaryContainer", MaterialTheme.colorScheme.secondaryContainer),
+        Pair("onSecondaryContainer", MaterialTheme.colorScheme.onSecondaryContainer),
+        Pair("tertiary", MaterialTheme.colorScheme.tertiary),
+        Pair("onTertiary", MaterialTheme.colorScheme.onTertiary),
+        Pair("tertiaryContainer", MaterialTheme.colorScheme.tertiaryContainer),
+        Pair("onTertiaryContainer", MaterialTheme.colorScheme.onTertiaryContainer),
+        Pair("background", MaterialTheme.colorScheme.background),
+        Pair("onBackground", MaterialTheme.colorScheme.onBackground),
+        Pair("surface", MaterialTheme.colorScheme.surface),
+        Pair("onSurface", MaterialTheme.colorScheme.onSurface),
+        Pair("surfaceVariant", MaterialTheme.colorScheme.surfaceVariant),
+        Pair("onSurfaceVariant", MaterialTheme.colorScheme.onSurfaceVariant),
+        Pair("inverseSurface", MaterialTheme.colorScheme.inverseSurface),
+        Pair("inverseOnSurface", MaterialTheme.colorScheme.inverseOnSurface),
+        Pair("error", MaterialTheme.colorScheme.error),
+        Pair("onError", MaterialTheme.colorScheme.onError),
+        Pair("errorContainer", MaterialTheme.colorScheme.errorContainer),
+        Pair("onErrorContainer", MaterialTheme.colorScheme.onErrorContainer),
+        Pair("outline", MaterialTheme.colorScheme.outline),
+    )
+
+    fun getMonetNeutralColor(
+        @IntRange(from = 1, to = 2) type: Int,
+        @IntRange(from = 50, to = 900) level: Int
+    ): Color? {
+        val monetColor = when (type) {
+            1 -> monet.getMonetColors().neutral1[level]
+            else -> monet.getMonetColors().neutral2[level]
+        }?.toArgb() ?: return null
+
+        return Color(monetColor)
+    }
+
+    fun getMonetAccentColor(
+        @IntRange(from = 1, to = 2) type: Int,
+        @IntRange(from = 50, to = 900) level: Int
+    ): Color? {
+        val monetColor = when (type) {
+            1 -> monet.getMonetColors().accent1[level]
+            2 -> monet.getMonetColors().accent2[level]
+            else -> monet.getMonetColors().accent3[level]
+        }?.toArgb() ?: return null
+        return Color(monetColor)
+    }
+
+    val shades = listOf(50, 100, 200, 300, 400, 500, 600, 700, 800, 900)
     Scaffold(
         topBar = {
             PiPAwareAppBar(
@@ -104,11 +93,81 @@ fun ColorPicker(goToList: () -> Unit) {
         }
     ) {
         LazyColumn {
-            colors.forEach { (colorId, colorName) ->
+//            shades.forEach { shade ->
+//                item {
+//                    Box(
+//                        modifier = Modifier
+//                            .background(color = getMonetAccentColor(1, shade) ?: Color.Cyan)
+//                            .height(50.dp)
+//                            .fillMaxWidth()
+//                            .padding(15.dp)
+//                            .clickable { Log.e("color", "accent1$shade") }
+//                    ) {
+//                        Text(text = "accent1$shade")
+//                    }
+//                }
+//            }
+//            shades.forEach { shade ->
+//                item {
+//                    Box(
+//                        modifier = Modifier
+//                            .background(color = getMonetAccentColor(2, shade) ?: Color.Cyan)
+//                            .height(50.dp)
+//                            .fillMaxWidth()
+//                            .padding(15.dp)
+//                            .clickable { Log.e("color", "accent2$shade") }
+//                    ) {
+//                        Text(text = "accent2$shade")
+//                    }
+//                }
+//            }
+//            shades.forEach { shade ->
+//                item {
+//                    Box(
+//                        modifier = Modifier
+//                            .background(color = getMonetAccentColor(3, shade) ?: Color.Cyan)
+//                            .height(50.dp)
+//                            .fillMaxWidth()
+//                            .padding(15.dp)
+//                            .clickable { Log.e("color", "accent3$shade") }
+//                    ) {
+//                        Text(text = "accent3$shade")
+//                    }
+//                }
+//            }
+//            shades.forEach { shade ->
+//                item {
+//                    Box(
+//                        modifier = Modifier
+//                            .background(color = getMonetNeutralColor(1, shade) ?: Color.Cyan)
+//                            .height(50.dp)
+//                            .fillMaxWidth()
+//                            .padding(15.dp)
+//                            .clickable { Log.e("color", "neutral1$shade") }
+//                    ) {
+//                        Text(text = "neutral1$shade")
+//                    }
+//                }
+//            }
+//            shades.forEach { shade ->
+//                item {
+//                    Box(
+//                        modifier = Modifier
+//                            .background(color = getMonetNeutralColor(2, shade) ?: Color.Cyan)
+//                            .height(50.dp)
+//                            .fillMaxWidth()
+//                            .padding(15.dp)
+//                            .clickable { Log.e("color", "neutral2$shade") }
+//                    ) {
+//                        Text(text = "neutral2$shade")
+//                    }
+//                }
+//            }
+            colors.forEach { (colorName, color) ->
                 item {
                     Box(
                         modifier = Modifier
-                            .background(color = colorResource(id = colorId))
+                            .background(color = color)
                             .height(50.dp)
                             .fillMaxWidth()
                             .padding(15.dp)

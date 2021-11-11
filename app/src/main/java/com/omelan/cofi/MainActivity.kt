@@ -39,6 +39,7 @@ import com.omelan.cofi.model.AppDatabase
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeViewModel
 import com.omelan.cofi.model.StepsViewModel
+import com.omelan.cofi.pages.ColorPicker
 import com.omelan.cofi.pages.RecipeDetails
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
@@ -75,8 +76,8 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
 class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
-    override val recreateMode: Boolean
-        get() = false
+//    override val recreateMode: Boolean
+//        get() = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Cofi)
@@ -104,8 +105,7 @@ class MainActivity : MonetCompatActivity() {
                             setAutoEnterEnabled(isRunning)
                             setSeamlessResizeEnabled(true)
                         }
-                    }
-                    .build()
+                    }.build()
             )
         }
         if (isRunning) {
@@ -263,16 +263,16 @@ class MainActivity : MonetCompatActivity() {
             ) {
                 NavHost(
                     navController,
-                    startDestination = "list",
+                    startDestination = "list_color",
                     modifier = Modifier.background(MaterialTheme.colorScheme.background)
                 ) {
-//                    composable("list_color") {
-//                        ColorPicker(goToList = {
-//                            navController.navigate(
-//                                route = "list",
-//                            )
-//                        })
-//                    }
+                    composable("list_color") {
+                        ColorPicker(goToList = {
+                            navController.navigate(
+                                route = "list",
+                            )
+                        }, monet)
+                    }
                     composable("list") {
                         MainList(navController = navController)
                     }
