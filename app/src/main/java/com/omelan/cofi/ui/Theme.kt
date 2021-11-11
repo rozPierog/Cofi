@@ -28,7 +28,7 @@ fun MaterialTheme.createTextFieldColors() = TextFieldDefaults.outlinedTextFieldC
 )
 
 @Composable
-fun createMonetCompatColorSheme(monet: MonetCompat, darkMode: Boolean): ColorScheme {
+fun createMonetCompatColorScheme(monet: MonetCompat, darkMode: Boolean): ColorScheme {
     fun getMonetNeutralColor(
         @IntRange(from = 1, to = 2) type: Int,
         @IntRange(from = 50, to = 900) shade: Int
@@ -128,7 +128,7 @@ fun CofiTheme(monet: MonetCompat? = null, content: @Composable () -> Unit) {
         getMaterialYouPallets(context, isDarkMode)
     } else {
         if (monet != null) {
-            createMonetCompatColorSheme(monet, isDarkMode)
+            createMonetCompatColorScheme(monet, isDarkMode)
         } else {
             if (isDarkMode) darkColorScheme() else lightColorScheme()
         }
