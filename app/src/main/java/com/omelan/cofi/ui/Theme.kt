@@ -28,7 +28,7 @@ fun MaterialTheme.createTextFieldColors() = TextFieldDefaults.outlinedTextFieldC
 )
 
 @Composable
-fun createMaterialYouPallets(monet: MonetCompat): Pair<ColorScheme, ColorScheme> {
+fun createMonetCompatColorSheme(monet: MonetCompat, darkMode: Boolean): ColorScheme {
     fun getMonetNeutralColor(
         @IntRange(from = 1, to = 2) type: Int,
         @IntRange(from = 50, to = 900) shade: Int
@@ -37,7 +37,6 @@ fun createMaterialYouPallets(monet: MonetCompat): Pair<ColorScheme, ColorScheme>
             1 -> monet.getMonetColors().neutral1[shade]
             else -> monet.getMonetColors().neutral2[shade]
         }?.toArgb() ?: throw Exception("Neutral$type shade $shade doesn't exist")
-
         return Color(monetColor)
     }
 
@@ -52,7 +51,7 @@ fun createMaterialYouPallets(monet: MonetCompat): Pair<ColorScheme, ColorScheme>
         }?.toArgb() ?: throw Exception("Accent$type shade $shade doesn't exist")
         return Color(monetColor)
     }
-    return Pair(
+    return if (!darkMode) {
         lightColorScheme(
             primary = getMonetAccentColor(1, 700),
             onPrimary = getMonetNeutralColor(1, 50),
@@ -80,7 +79,8 @@ fun createMaterialYouPallets(monet: MonetCompat): Pair<ColorScheme, ColorScheme>
 //            errorContainer = getMonetAccentColor(),
 //            onErrorContainer = getMonetAccentColor(),
             outline = getMonetAccentColor(2, 500),
-        ),
+        )
+    } else {
         darkColorScheme(
             primary = getMonetAccentColor(1, 200),
             onPrimary = getMonetAccentColor(1, 800),
@@ -109,39 +109,30 @@ fun createMaterialYouPallets(monet: MonetCompat): Pair<ColorScheme, ColorScheme>
 //            onErrorContainer = getMonetAccentColor(),
             outline = getMonetNeutralColor(2, 500),
         )
-    )
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
-fun getMaterialYouPallets(context: Context): Pair<ColorScheme, ColorScheme> {
-    return Pair(
-        dynamicLightColorScheme(context),
-        dynamicDarkColorScheme(context)
-    )
-}
+fun getMaterialYouPallets(context: Context, darkMode: Boolean) =
+    if (darkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
 
 val spacingDefault = 16.dp
 
 @ExperimentalAnimatedInsets
 @Composable
-fun CofiTheme(
-    monet: MonetCompat? = null,
-    content: @Composable () -> Unit
-) {
+fun CofiTheme(monet: MonetCompat? = null, content: @Composable () -> Unit) {
     val context = LocalContext.current
-    val (lightColors, darkColors) = if (
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-    ) {
-        getMaterialYouPallets(context)
+    val isDarkMode = isSystemInDarkTheme()
+    val colors = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        getMaterialYouPallets(context, isDarkMode)
     } else {
         if (monet != null) {
-            createMaterialYouPallets(monet)
+            createMonetCompatColorSheme(monet, isDarkMode)
         } else {
-            Pair(lightColorScheme(), darkColorScheme())
+            if (isDarkMode) darkColorScheme() else lightColorScheme()
         }
     }
-    val colors = if (isSystemInDarkTheme()) darkColors else lightColors
     MaterialTheme(colorScheme = colors) {
         ProvideWindowInsets(windowInsetsAnimationsEnabled = false, content = content)
     }
