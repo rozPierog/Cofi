@@ -179,12 +179,14 @@ fun RecipeDetails(
                 modifier = Modifier.padding(10.dp)
             ) {
                 Snackbar(
-                    backgroundColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceVariant,
+                    backgroundColor =
+                    androidx.compose.material3.MaterialTheme.colorScheme.surfaceVariant,
                     shape = RoundedCornerShape(50)
                 ) {
                     Text(
                         text = it.message,
-                        color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant
+                        color =
+                        androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }

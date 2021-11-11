@@ -24,7 +24,6 @@ import com.kieronquinn.monetcompat.core.MonetCompat
 import com.kieronquinn.monetcompat.extensions.toArgb
 import com.omelan.cofi.components.PiPAwareAppBar
 
-
 @Composable
 fun ColorPicker(goToList: () -> Unit, monet: MonetCompat) {
     val colors = listOf(
