@@ -176,12 +176,16 @@ fun RecipeDetails(
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarState,
-                modifier = Modifier
-                    .navigationBarsPadding()
-                    .padding(10.dp)
+                modifier = Modifier.padding(10.dp)
             ) {
-                Snackbar {
-                    Text(text = it.message)
+                Snackbar(
+                    backgroundColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceVariant,
+                    shape = RoundedCornerShape(50)
+                ) {
+                    Text(
+                        text = it.message,
+                        color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             }
         },
@@ -207,11 +211,7 @@ fun RecipeDetails(
                     }
                 },
                 actions = {
-                    IconButton(
-                        onClick = {
-                            showAutomateLinkDialog = true
-                        }
-                    ) {
+                    IconButton(onClick = { showAutomateLinkDialog = true }) {
                         Icon(
                             painterResource(id = R.drawable.ic_link),
                             contentDescription = null
@@ -324,10 +324,7 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
     androidx.compose.material3.AlertDialog(
         onDismissRequest = dismiss,
         confirmButton = {
-            TextButton(
-                onClick = {
-                }
-            ) {
+            TextButton(onClick = onConfirm) {
                 Text(text = stringResource(id = R.string.button_copy))
             }
         },
