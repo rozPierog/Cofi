@@ -29,28 +29,27 @@ fun MaterialTheme.createTextFieldColors() = TextFieldDefaults.outlinedTextFieldC
 
 @Composable
 fun createMaterialYouPallets(monet: MonetCompat): Pair<ColorScheme, ColorScheme> {
-    val context = LocalContext.current
     fun getMonetNeutralColor(
         @IntRange(from = 1, to = 2) type: Int,
-        @IntRange(from = 50, to = 900) level: Int
+        @IntRange(from = 50, to = 900) shade: Int
     ): Color {
         val monetColor = when (type) {
-            1 -> monet.getMonetColors().neutral1[level]
-            else -> monet.getMonetColors().neutral2[level]
-        }?.toArgb() ?: throw Exception("wrong color buddy")
+            1 -> monet.getMonetColors().neutral1[shade]
+            else -> monet.getMonetColors().neutral2[shade]
+        }?.toArgb() ?: throw Exception("Neutral$type shade $shade doesn't exist")
 
         return Color(monetColor)
     }
 
     fun getMonetAccentColor(
         @IntRange(from = 1, to = 2) type: Int,
-        @IntRange(from = 50, to = 900) level: Int
+        @IntRange(from = 50, to = 900) shade: Int
     ): Color {
         val monetColor = when (type) {
-            1 -> monet.getMonetColors().accent1[level]
-            2 -> monet.getMonetColors().accent2[level]
-            else -> monet.getMonetColors().accent3[level]
-        }?.toArgb() ?: throw Exception("wrong color buddy")
+            1 -> monet.getMonetColors().accent1[shade]
+            2 -> monet.getMonetColors().accent2[shade]
+            else -> monet.getMonetColors().accent3[shade]
+        }?.toArgb() ?: throw Exception("Accent$type shade $shade doesn't exist")
         return Color(monetColor)
     }
     return Pair(
@@ -83,19 +82,32 @@ fun createMaterialYouPallets(monet: MonetCompat): Pair<ColorScheme, ColorScheme>
             outline = getMonetAccentColor(2, 500),
         ),
         darkColorScheme(
-            primary = Color(monet.getPrimaryColor(context = context, darkMode = true)),
-//            primaryVariant = colorResource(id = android.R.color.system_accent1_400),
-            secondary = Color(monet.getSecondaryColor(context = context, darkMode = true)),
-//            secondaryVariant = colorResource(id = android.R.color.system_accent1_600),
-            background = Color(monet.getBackgroundColor(context = context, darkMode = true)),
-            surface = Color(
-                monet.getBackgroundColorSecondary(context = context, darkMode = true)
-                    ?: monet.getBackgroundColor(context = context, darkMode = true)
-            ),
-            onPrimary = getMonetNeutralColor(1, 100) ?: Color.Black,
-            onSecondary = getMonetNeutralColor(1, 100) ?: Color.Black,
-            onBackground = Color.White,
-            onSurface = getMonetNeutralColor(1, 100) ?: Color.White,
+            primary = getMonetAccentColor(1, 200),
+            onPrimary = getMonetAccentColor(1, 800),
+            primaryContainer = getMonetAccentColor(1, 600),
+            onPrimaryContainer = getMonetAccentColor(2, 100),
+            inversePrimary = getMonetAccentColor(1, 600),
+            secondary = getMonetAccentColor(2, 200),
+            onSecondary = getMonetAccentColor(2, 800),
+            secondaryContainer = getMonetAccentColor(2, 700),
+            onSecondaryContainer = getMonetAccentColor(2, 100),
+            tertiary = getMonetAccentColor(3, 200),
+            onTertiary = getMonetAccentColor(3, 700),
+            tertiaryContainer = getMonetAccentColor(3, 700),
+            onTertiaryContainer = getMonetAccentColor(3, 100),
+            background = getMonetNeutralColor(1, 900),
+            onBackground = getMonetNeutralColor(1, 100),
+            surface = getMonetNeutralColor(1, 900),
+            onSurface = getMonetNeutralColor(1, 100),
+            surfaceVariant = getMonetNeutralColor(2, 700),
+            onSurfaceVariant = getMonetNeutralColor(2, 200),
+            inverseSurface = getMonetNeutralColor(1, 100),
+            inverseOnSurface = getMonetNeutralColor(1, 800),
+//            error = getMonetAccentColor(),
+//            onError = getMonetAccentColor(),
+//            errorContainer = getMonetAccentColor(),
+//            onErrorContainer = getMonetAccentColor(),
+            outline = getMonetNeutralColor(2, 500),
         )
     )
 }
