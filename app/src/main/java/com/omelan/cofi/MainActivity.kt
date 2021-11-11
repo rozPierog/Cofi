@@ -39,7 +39,6 @@ import com.omelan.cofi.model.AppDatabase
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeViewModel
 import com.omelan.cofi.model.StepsViewModel
-import com.omelan.cofi.pages.ColorPicker
 import com.omelan.cofi.pages.RecipeDetails
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
@@ -263,16 +262,16 @@ class MainActivity : MonetCompatActivity() {
             ) {
                 NavHost(
                     navController,
-                    startDestination = "list_color",
+                    startDestination = "list",
                     modifier = Modifier.background(MaterialTheme.colorScheme.background)
                 ) {
-                    composable("list_color") {
-                        ColorPicker(goToList = {
-                            navController.navigate(
-                                route = "list",
-                            )
-                        }, monet)
-                    }
+//                    composable("list_color") {
+//                        ColorPicker(goToList = {
+//                            navController.navigate(
+//                                route = "list",
+//                            )
+//                        }, monet)
+//                    }
                     composable("list") {
                         MainList(navController = navController)
                     }
