@@ -121,9 +121,12 @@ val spacingDefault = 16.dp
 
 @ExperimentalAnimatedInsets
 @Composable
-fun CofiTheme(monet: MonetCompat? = null, content: @Composable () -> Unit) {
+fun CofiTheme(
+    monet: MonetCompat? = null,
+    isDarkMode: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
     val context = LocalContext.current
-    val isDarkMode = isSystemInDarkTheme()
     val colors = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         getMaterialYouPallets(context, isDarkMode)
     } else {

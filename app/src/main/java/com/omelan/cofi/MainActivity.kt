@@ -63,7 +63,7 @@ val LocalSettingsDataStore = staticCompositionLocalOf<DataStore<Preferences>> {
 
 const val appDeepLinkUrl = "https://rozpierog.github.io"
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = "settings"
 )
 
@@ -196,8 +196,7 @@ class MainActivity : MonetCompatActivity() {
             deleteRecipe = {
                 lifecycleScope.launch {
                     db.recipeDao().deleteById(recipeId = recipeId)
-                    db.stepDao()
-                        .deleteAllStepsForRecipe(recipeId = recipeId)
+                    db.stepDao().deleteAllStepsForRecipe(recipeId = recipeId)
                 }
                 navController.navigate("list") {
                     this.popUpTo("list") {
