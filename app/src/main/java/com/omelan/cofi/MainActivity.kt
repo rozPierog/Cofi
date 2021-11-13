@@ -148,12 +148,15 @@ class MainActivity : MonetCompatActivity() {
             recipeId = recipeId,
             onRecipeEnd = { recipe ->
                 lifecycleScope.launch {
-                    db.recipeDao()
-                        .updateRecipe(recipe.copy(lastFinished = Date().time))
+                    db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
                 }
             },
-            goBack = goBack,
+            goBack = {
+                onTimerRunning(false)
+                goBack()
+            },
             goToEdit = {
+                onTimerRunning(false)
                 navController.navigate(
                     route = "edit/$recipeId",
                 )
