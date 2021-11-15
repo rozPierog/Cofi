@@ -72,7 +72,8 @@ class ScreenshotCreator {
                     RecipeList(
                         navigateToRecipe = {},
                         addNewRecipe = { },
-                        goToSettings = { })
+                        goToSettings = { }
+                    )
                 }
             }
         }
@@ -90,7 +91,8 @@ class ScreenshotCreator {
                     RecipeList(
                         navigateToRecipe = {},
                         addNewRecipe = { },
-                        goToSettings = { })
+                        goToSettings = { }
+                    )
                 }
             }
         }
@@ -142,7 +144,6 @@ class ScreenshotCreator {
         }
         saveScreenshot("4_en-US")
     }
-
 
     @Test
     fun recipeEditScreenshot() {

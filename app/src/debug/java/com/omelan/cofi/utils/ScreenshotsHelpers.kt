@@ -20,7 +20,7 @@ object ScreenshotsHelpers {
         searchedDisplayName: String
     ): Uri? {
         val selection = "${MediaStore.MediaColumns.RELATIVE_PATH}='Pictures/' AND " +
-                "${MediaStore.MediaColumns.DISPLAY_NAME}='${searchedDisplayName}.png' "
+            "${MediaStore.MediaColumns.DISPLAY_NAME}='$searchedDisplayName.png' "
         with(contentResolver) {
             query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, arrayOf(MediaStore.MediaColumns._ID),
@@ -37,7 +37,6 @@ object ScreenshotsHelpers {
         }
         return null
     }
-
 
     @RequiresApi(Build.VERSION_CODES.S)
     @Throws(IOException::class)
