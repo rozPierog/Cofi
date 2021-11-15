@@ -1,18 +1,23 @@
 package com.omelan.cofi
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.Color.parseColor
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onRoot
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeViewModel
 import com.omelan.cofi.model.StepsViewModel
@@ -36,6 +41,15 @@ class ScreenshotCreator {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
+    @SuppressLint("ComposableNaming")
+    @Composable
+    private fun setNavigationBarColor(darkMode: Boolean) {
+        rememberSystemUiController().setNavigationBarColor(
+            color = if (darkMode) Color(parseColor("#121212")) else Color.White,
+            darkIcons = darkMode
+        )
+    }
+
     private fun saveScreenshot(name: String) {
         val screenShot = composeTestRule.onRoot().captureToImage().asAndroidBitmap()
         ScreenshotsHelpers.saveBitmap(
@@ -51,6 +65,7 @@ class ScreenshotCreator {
     fun recipeListScreenshot() {
         composeTestRule.setContent {
             CofiTheme(isDarkMode = false) {
+                setNavigationBarColor(false)
                 CompositionLocalProvider(
                     LocalPiPState provides false,
                 ) {
@@ -67,6 +82,7 @@ class ScreenshotCreator {
     @Test
     fun recipeListScreenshotDark() {
         composeTestRule.setContent {
+            setNavigationBarColor(true)
             CofiTheme(isDarkMode = true) {
                 CompositionLocalProvider(
                     LocalPiPState provides false,
@@ -84,6 +100,7 @@ class ScreenshotCreator {
     @Test
     fun recipeDetailsScreenshot() {
         composeTestRule.setContent {
+            setNavigationBarColor(false)
             val stepsViewModel: StepsViewModel = viewModel()
             val recipeViewModel: RecipeViewModel = viewModel()
 
@@ -106,6 +123,7 @@ class ScreenshotCreator {
     @Test
     fun recipeDetailsScreenshotDark() {
         composeTestRule.setContent {
+            setNavigationBarColor(true)
             val stepsViewModel: StepsViewModel = viewModel()
             val recipeViewModel: RecipeViewModel = viewModel()
 
@@ -129,6 +147,7 @@ class ScreenshotCreator {
     @Test
     fun recipeEditScreenshot() {
         composeTestRule.setContent {
+            setNavigationBarColor(false)
             val recipeViewModel: RecipeViewModel = viewModel()
             val stepsViewModel: StepsViewModel = viewModel()
             val recipe = recipeViewModel.getRecipe(1)
@@ -153,6 +172,7 @@ class ScreenshotCreator {
     @Test
     fun recipeEditScreenshotDark() {
         composeTestRule.setContent {
+            setNavigationBarColor(true)
             val recipeViewModel: RecipeViewModel = viewModel()
             val stepsViewModel: StepsViewModel = viewModel()
             val recipe = recipeViewModel.getRecipe(1)

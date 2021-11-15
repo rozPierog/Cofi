@@ -153,9 +153,9 @@ dependencies {
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     // Jetpack Utils
-    implementation 'com.google.accompanist:accompanist-insets:0.19.0'
-    implementation "com.google.accompanist:accompanist-flowlayout:0.19.0"
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.19.0"
+    implementation 'com.google.accompanist:accompanist-insets:0.20.2'
+    implementation "com.google.accompanist:accompanist-flowlayout:0.20.2"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.20.2"
 
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01"
@@ -169,10 +169,9 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$room_version"
 
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-
     // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 task ktlint(type: JavaExec, group: "verification") {
