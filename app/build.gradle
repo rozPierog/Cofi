@@ -12,17 +12,20 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 // Initialize a new Properties() object called keystoreProperties.
 def keystoreProperties = new Properties()
 
+if (keystorePropertiesFile.exists()) {
 // Load your keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 android {
-    signingConfigs {
-        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+    if (keystoreProperties.containsKey('storeFile')) {
+        signingConfigs {
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
         }
     }
     compileSdkVersion 31
@@ -65,13 +68,12 @@ android {
         instant {
             dimension "version"
             versionCode android.defaultConfig.versionCode - 1
-            versionNameSuffix "-instant ($versionCode)"
+            versionNameSuffix "-instant"
             minSdkVersion 26
         }
         full {
             dimension "version"
             versionCode android.defaultConfig.versionCode
-            versionNameSuffix "($versionCode)"
         }
     }
 
