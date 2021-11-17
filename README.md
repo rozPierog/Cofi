@@ -15,9 +15,9 @@
   <a href="https://github.com/rozPierog/Cofi/releases">
     <img src="docs/assets/get-github.png" height="75">
   </a>
-  <!-- <a href="">
+  <a href="https://www.f-droid.org/en/packages/com.omelan.cofi/">
     <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75">
-  </a> -->
+  </a>
 </p>
 
 # Screenshots
