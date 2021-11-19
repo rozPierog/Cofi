@@ -1,10 +1,16 @@
 <img src="fastlane/metadata/android/en-US/images/featureGraphic.jpg" width="100%">
 
 <p align="center">
-  <img src="https://github.com/rozPierog/Cofi/workflows/Android%20CI/badge.svg">
+  <a href="https://github.com/rozPierog/Cofi/actions">
+    <img src="https://github.com/rozPierog/Cofi/workflows/Android%20CI/badge.svg">
+  </a>
   <img src="https://img.shields.io/badge/API-23%2B-blue?logo=android-studio">
-  <!-- <img src="https://img.shields.io/f-droid/v/com.omelan.cofi.svg"> -->
-  <img src="https://img.shields.io/github/v/release/rozPierog/Cofi.svg?include_prereleases?logo=github">
+  <a href="https://www.f-droid.org/en/packages/com.omelan.cofi/">
+    <img src="https://img.shields.io/f-droid/v/com.omelan.cofi.svg">
+  </a>
+  <a href="https://github.com/rozPierog/Cofi/releases">
+    <img src="https://img.shields.io/github/v/release/rozPierog/Cofi.svg?include_prereleases?logo=github">
+  </a
 </p>
 
 # Download
