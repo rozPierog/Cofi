@@ -81,7 +81,8 @@ fun Timer(
                         MaterialTheme.typography.headlineMedium
                     },
                     color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
+                    maxLines = if (isInPiP) 2 else Int.MAX_VALUE,
+                    textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.testTag("timer_enjoy")
                 )
@@ -136,10 +137,10 @@ fun Timer(
                             MaterialTheme.typography.titleMedium
                         },
                         textAlign = TextAlign.Center,
+                        maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
+                        overflow= TextOverflow.Ellipsis,
                         modifier = Modifier
-                            .align(
-                                Alignment.CenterHorizontally
-                            )
+                            .align(Alignment.CenterHorizontally)
                             .testTag("timer_name")
                     )
                     currentStep.value?.let {
@@ -183,7 +184,7 @@ fun TimerPreview() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,
@@ -198,13 +199,14 @@ fun TimerPreview() {
 @SuppressLint("UnrememberedAnimatable")
 @ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
-@Preview
+@Preview(widthDp = 150, showBackground = true)
 @Composable
 fun TimerPreviewPiP() {
     Timer(
         currentStep = Step(
             id = 1,
-            name = "Stir",
+            name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
+                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.WATER,
             value = 300,
