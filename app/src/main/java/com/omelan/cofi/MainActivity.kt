@@ -1,7 +1,6 @@
 package com.omelan.cofi
 
 import android.app.PictureInPictureParams
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -23,9 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.core.view.WindowCompat
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
@@ -48,7 +44,6 @@ import com.omelan.cofi.pages.settings.Licenses
 import com.omelan.cofi.ui.CofiTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -57,15 +52,7 @@ val LocalPiPState = staticCompositionLocalOf<Boolean> {
     error("AmbientPiPState value not available.")
 }
 
-val LocalSettingsDataStore = staticCompositionLocalOf<DataStore<Preferences>> {
-    error("AmbientSettingsDataStore value not available.")
-}
-
 const val appDeepLinkUrl = "https://rozpierog.github.io"
-
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-    name = "settings"
-)
 
 @ExperimentalAnimatedInsets
 @ExperimentalAnimationApi
@@ -74,9 +61,6 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
 @ExperimentalMaterial3Api
 class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
-
-//    override val recreateMode: Boolean
-//        get() = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Cofi)
@@ -260,7 +244,6 @@ class MainActivity : MonetCompatActivity() {
 
             CompositionLocalProvider(
                 LocalPiPState provides isInPiP.value,
-                LocalSettingsDataStore provides dataStore,
             ) {
                 NavHost(
                     navController,
@@ -336,9 +319,8 @@ class MainActivity : MonetCompatActivity() {
     }
 
     override fun onUserLeaveHint() {
-        val isPiPEnabledFlow: Flow<Boolean> = dataStore.data.map { preferences ->
-            preferences[PIP_ENABLED] ?: PIP_DEFAULT_VALUE
-        }
+
+        val isPiPEnabledFlow: Flow<Boolean> = DataStore(this).getPiPSetting()
         var isPiPEnabled: Boolean
         runBlocking {
             isPiPEnabled = isPiPEnabledFlow.first()

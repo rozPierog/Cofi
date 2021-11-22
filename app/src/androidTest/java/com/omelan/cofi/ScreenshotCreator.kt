@@ -109,7 +109,6 @@ class ScreenshotCreator {
             CofiTheme(isDarkMode = false) {
                 CompositionLocalProvider(
                     LocalPiPState provides false,
-                    LocalSettingsDataStore provides composeTestRule.activity.dataStore,
                 ) {
                     RecipeDetails(
                         recipeId = 1,
@@ -132,7 +131,6 @@ class ScreenshotCreator {
             CofiTheme(isDarkMode = true) {
                 CompositionLocalProvider(
                     LocalPiPState provides false,
-                    LocalSettingsDataStore provides composeTestRule.activity.dataStore,
                 ) {
                     RecipeDetails(
                         recipeId = 1,

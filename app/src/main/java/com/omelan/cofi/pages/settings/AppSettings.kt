@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,10 +15,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.List
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -32,13 +32,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat.startActivity
-import androidx.datastore.preferences.core.edit
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
 import com.omelan.cofi.ui.spacingDefault
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterial3Api
@@ -48,44 +46,16 @@ fun AppSettings(
     goBack: () -> Unit,
     goToAbout: () -> Unit,
 ) {
-    val dataStore = LocalSettingsDataStore.current
-    suspend fun togglePiPSetting() {
-        dataStore.edit { settings ->
-            val currentPiPState = settings[PIP_ENABLED] ?: PIP_DEFAULT_VALUE
-            settings[PIP_ENABLED] = !currentPiPState
-        }
-    }
-
-    suspend fun toggleDingSetting() {
-        dataStore.edit { settings ->
-            val currentDingState = settings[DING_ENABLED] ?: DING_DEFAULT_VALUE
-            settings[DING_ENABLED] = !currentDingState
-        }
-    }
-
-    suspend fun selectCombineMethod(combineMethod: CombineWeight) {
-        dataStore.edit {
-            it[COMBINE_WEIGHT] = combineMethod.name
-        }
-    }
-
-    val isPiPEnabledFlow = dataStore.data.map { preferences ->
-        preferences[PIP_ENABLED] ?: PIP_DEFAULT_VALUE
-    }
-    val combineWeightFlow = dataStore.data.map { preferences ->
-        preferences[COMBINE_WEIGHT] ?: COMBINE_WEIGHT_DEFAULT_VALUE
-    }
-    val isDingEnabled = dataStore.data.map { preferences ->
-        preferences[DING_ENABLED] ?: DING_DEFAULT_VALUE
-    }.collectAsState(initial = DING_DEFAULT_VALUE)
-    val isPiPEnabled = isPiPEnabledFlow.collectAsState(initial = PIP_DEFAULT_VALUE)
-    val combineWeightState =
-        combineWeightFlow.collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+    val context = LocalContext.current
+    val dataStore = DataStore(context)
+    val isDingEnabled by dataStore.getStepChangeSetting()
+        .collectAsState(initial = DING_DEFAULT_VALUE)
+    val isPiPEnabled by dataStore.getPiPSetting().collectAsState(initial = PIP_DEFAULT_VALUE)
+    val combineWeightState by dataStore.getWeightSetting()
+        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
     val showCombineWeightDialog = remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
     val appBarBehavior = createAppBarBehavior()
-
     Scaffold(
         topBar = {
             PiPAwareAppBar(
@@ -124,17 +94,17 @@ fun AppSettings(
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
                             coroutineScope.launch {
-                                togglePiPSetting()
+                                dataStore.togglePipSetting()
                             }
                         },
                         enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                     ),
                     trailing = {
                         Switch(
-                            checked = isPiPEnabled.value,
+                            checked = isPiPEnabled,
                             onCheckedChange = {
                                 coroutineScope.launch {
-                                    togglePiPSetting()
+                                    dataStore.togglePipSetting()
                                 }
                             },
                             colors = SwitchDefaults.colors(
@@ -159,16 +129,16 @@ fun AppSettings(
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
                             coroutineScope.launch {
-                                toggleDingSetting()
+                                dataStore.toggleStepChangeSound()
                             }
                         },
                     ),
                     trailing = {
                         Switch(
-                            checked = isDingEnabled.value,
+                            checked = isDingEnabled,
                             onCheckedChange = {
                                 coroutineScope.launch {
-                                    toggleDingSetting()
+                                    dataStore.toggleStepChangeSound()
                                 }
                             },
                             colors = SwitchDefaults.colors(
@@ -186,7 +156,7 @@ fun AppSettings(
                             text =
                             stringResource(
                                 id =
-                                stringToCombineWeight(combineWeightState.value).settingsStringId
+                                stringToCombineWeight(combineWeightState).settingsStringId
                             )
                         )
                     },
@@ -208,11 +178,11 @@ fun AppSettings(
                         dismiss = { showCombineWeightDialog.value = false },
                         selectCombineMethod = {
                             coroutineScope.launch {
-                                selectCombineMethod(it)
+                                dataStore.selectCombineMethod(it)
                                 showCombineWeightDialog.value = false
                             }
                         },
-                        combineWeightState = combineWeightState.value
+                        combineWeightState = combineWeightState
                     )
                 }
             }

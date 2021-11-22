@@ -40,7 +40,6 @@ import com.omelan.cofi.components.*
 import com.omelan.cofi.model.*
 import com.omelan.cofi.ui.spacingDefault
 import com.omelan.cofi.utils.Haptics
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
 
@@ -75,25 +74,20 @@ fun RecipeDetails(
     val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
 
-    val dataStore = LocalSettingsDataStore.current
+    val dataStore = DataStore(LocalContext.current)
 
-    val isDingEnabled by dataStore.data.map { preferences ->
-        preferences[DING_ENABLED] ?: DING_DEFAULT_VALUE
-    }.collectAsState(initial = DING_DEFAULT_VALUE)
+    val isDingEnabled by dataStore.getStepChangeSetting()
+        .collectAsState(initial = DING_DEFAULT_VALUE)
+    val combineWeightState by dataStore.getWeightSetting()
+        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
 
-    val combineWeightFlow = dataStore.data.map { preferences ->
-        preferences[COMBINE_WEIGHT] ?: COMBINE_WEIGHT_DEFAULT_VALUE
-    }
-    val combineWeightState =
-        combineWeightFlow.collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
-
-    val alreadyDoneWeight = remember(combineWeightState.value, currentStep) {
+    val alreadyDoneWeight = remember(combineWeightState, currentStep) {
         val doneSteps = if (indexOfCurrentStep == -1) {
             listOf()
         } else {
             steps.value.subList(0, indexOfCurrentStep)
         }
-        return@remember when (combineWeightState.value) {
+        return@remember when (combineWeightState) {
             CombineWeight.ALL.name -> doneSteps.sumOf { it.value ?: 0 }
             CombineWeight.WATER.name -> doneSteps.sumOf {
                 if (it.type === StepType.WATER) {
