@@ -235,9 +235,7 @@ fun RecipeDetails(
                         if (animatedProgressValue.isRunning) {
                             { coroutineScope.launch { pauseAnimations() } }
                         } else {
-                            {
-                                coroutineScope.launch { startAnimations() }
-                            }
+                            { coroutineScope.launch { startAnimations() } }
                         }
                     } else {
                         { coroutineScope.launch { changeToNextStep(silent = true) } }
@@ -294,7 +292,7 @@ fun RecipeDetails(
                 }
             }
             if (!isInPiP) {
-                this.itemsIndexed(
+                itemsIndexed(
                     items = steps.value,
                     key = { _, step -> step.id }
                 ) { _, step ->

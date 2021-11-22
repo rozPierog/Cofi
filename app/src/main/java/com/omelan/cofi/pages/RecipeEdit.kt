@@ -94,11 +94,9 @@ fun RecipeEdit(
         sheetShape = shapes.modal,
         sheetBackgroundColor = MaterialTheme.colorScheme.surfaceVariant,
         sheetContent = {
-            FlowRow(
-                modifier = Modifier
-                    .navigationBarsWithImePadding()
-                    .fillMaxWidth(),
-            ) {
+            FlowRow(modifier = Modifier
+                .navigationBarsWithImePadding()
+                .fillMaxWidth()) {
                 RecipeIcon.values().map {
                     IconButton(
                         onClick = { pickIcon(it) },
@@ -109,7 +107,7 @@ fun RecipeEdit(
                         Icon(
                             painter = painterResource(id = it.icon),
                             tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = "Coffee grinder",
+                            contentDescription = it.name,
                         )
                     }
                 }
@@ -229,7 +227,7 @@ fun RecipeEdit(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
 
-                    ) {
+                        ) {
                         val indexOfThisStep = steps.value.indexOf(step)
                         StepAddCard(
                             stepToEdit = step,

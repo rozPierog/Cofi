@@ -121,7 +121,7 @@ fun AppSettings(
                             contentDescription = null
                         )
                     },
-                    modifier = settingsItemModifier.clickable(
+                    modifier = Modifier.settingsItemModifier(
                         onClick = {
                             coroutineScope.launch {
                                 togglePiPSetting()
@@ -156,7 +156,7 @@ fun AppSettings(
                             contentDescription = null
                         )
                     },
-                    modifier = settingsItemModifier.clickable(
+                    modifier = Modifier.settingsItemModifier(
                         onClick = {
                             coroutineScope.launch {
                                 toggleDingSetting()
@@ -197,7 +197,7 @@ fun AppSettings(
                     icon = {
                         Icon(Icons.Rounded.List, contentDescription = null)
                     },
-                    modifier = settingsItemModifier.clickable(
+                    modifier = Modifier.settingsItemModifier(
                         onClick = {
                             showCombineWeightDialog.value = true
                         },
@@ -227,7 +227,7 @@ fun AppSettings(
                             contentDescription = null
                         )
                     },
-                    modifier = settingsItemModifier.clickable(
+                    modifier = Modifier.settingsItemModifier(
                         onClick = {
                             val intent = Intent(Intent.ACTION_SENDTO).apply {
                                 data = Uri.parse("mailto:")
@@ -252,7 +252,7 @@ fun AppSettings(
                     icon = {
                         Icon(Icons.Rounded.Info, contentDescription = null)
                     },
-                    modifier = settingsItemModifier.clickable(onClick = goToAbout)
+                    modifier = Modifier.settingsItemModifier(onClick = goToAbout)
                 )
             }
         }

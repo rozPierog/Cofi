@@ -1,6 +1,5 @@
 package com.omelan.cofi.pages.settings
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
@@ -61,7 +60,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                             contentDescription = null
                         )
                     },
-                    modifier = settingsItemModifier.clickable(
+                    modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri("https://github.com/rozPierog/Cofi/")
                         }
@@ -76,7 +75,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     icon = {
                         Icon(painterResource(id = R.drawable.ic_book), contentDescription = null)
                     },
-                    modifier = settingsItemModifier.clickable(onClick = openLicenses)
+                    modifier = Modifier.settingsItemModifier(onClick = openLicenses)
                 )
             }
             item {
@@ -90,7 +89,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     icon = {
                         Icon(painterResource(id = R.drawable.ic_coffee), contentDescription = null)
                     },
-                    modifier = settingsItemModifier.clickable(
+                    modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri(
                                 "https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ"
@@ -113,7 +112,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                             contentDescription = null
                         )
                     },
-                    modifier = settingsItemModifier.clickable(
+                    modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri(
                                 "https://dribbble.com/hubert-tereszkiewicz"
