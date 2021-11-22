@@ -12,9 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -41,8 +39,8 @@ fun StepAddCard(
     orderInRecipe: Int,
     recipeId: Int
 ) {
-    val pickedType = remember(stepToEdit) { mutableStateOf(stepToEdit?.type) }
-    val pickedTypeName = pickedType.value?.stringRes?.let { stringResource(id = it) } ?: ""
+    var pickedType by remember(stepToEdit) { mutableStateOf(stepToEdit?.type) }
+    val pickedTypeName = pickedType?.stringRes?.let { stringResource(id = it) } ?: ""
     val stepName = remember(stepToEdit, pickedTypeName) {
         mutableStateOf(
             stepToEdit?.name ?: pickedTypeName
@@ -73,7 +71,7 @@ fun StepAddCard(
                 FlowRow(mainAxisSpacing = 5.dp, crossAxisSpacing = 5.dp) {
                     StepType.values().forEach { stepType ->
                         Button(
-                            onClick = { pickedType.value = stepType },
+                            onClick = { pickedType = stepType },
                             shape = shapes.full,
                             modifier = Modifier
                                 .testTag(
@@ -82,7 +80,7 @@ fun StepAddCard(
                                 .padding(2.dp)
                         ) {
                             Text(
-                                text = if (pickedType.value == stepType) {
+                                text = if (pickedType == stepType) {
                                     "✓ "
                                 } else {
                                     ""
@@ -93,7 +91,7 @@ fun StepAddCard(
                     }
                 }
             }
-            if (pickedType.value != null) {
+            if (pickedType != null) {
                 OutlinedTextField(
                     label = { Text(text = stringResource(id = R.string.step_add_name)) },
                     value = stepName.value,
@@ -128,7 +126,7 @@ fun StepAddCard(
                         StepType.WATER,
                         StepType.ADD_COFFEE,
                         StepType.OTHER
-                    ).contains(pickedType.value)
+                    ).contains(pickedType)
                 ) {
                     OutlinedTextField(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
@@ -156,10 +154,10 @@ fun StepAddCard(
                                 Step(
                                     name = stepName.value,
                                     time = stepTime.value.safeToInt().toMillis(),
-                                    type = pickedType.value ?: StepType.OTHER,
+                                    type = pickedType ?: StepType.OTHER,
                                     value = if (stepValue.value.isNotBlank() &&
                                         stepValue.value.toInt() != 0 &&
-                                        pickedType.value != StepType.WAIT
+                                        pickedType != StepType.WAIT
                                     ) {
                                         stepValue.value.toInt()
                                     } else {

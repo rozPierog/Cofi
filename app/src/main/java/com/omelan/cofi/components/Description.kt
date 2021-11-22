@@ -54,8 +54,9 @@ private fun extractUrls(text: String): List<String> {
 @ExperimentalAnimatedInsets
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
-    val (isExpanded, setIsExpanded) = remember { mutableStateOf(false) }
-    val (showExpandButton, setShowExpandButton) = remember { mutableStateOf(false) }
+    var isExpanded by remember { mutableStateOf(false) }
+    var showExpandButton by remember { mutableStateOf(false) }
+    val rotationDegree = remember { Animatable(initialValue = 0f) }
     val context = LocalContext.current
     val descriptionWithLinks = buildAnnotatedString {
         val urlsInDescription = extractUrls(descriptionText)
@@ -85,7 +86,6 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
             )
         }
     }
-    val rotationDegree = remember { Animatable(initialValue = 0f) }
     LaunchedEffect(isExpanded) {
         rotationDegree.animateTo(
             targetValue = if (isExpanded) 180f else 0f,
@@ -100,7 +100,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     value = isExpanded,
                     onValueChange = {
                         if (showExpandButton) {
-                            setIsExpanded(it)
+                            isExpanded = it
                         }
                     },
                     role = Role.Switch,
@@ -126,12 +126,12 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                             return@ClickableText
                         }
                     if (showExpandButton) {
-                        setIsExpanded(!isExpanded)
+                        isExpanded = !isExpanded
                     }
                 },
                 onTextLayout = { textLayoutResult ->
                     if (!isExpanded) {
-                        setShowExpandButton(textLayoutResult.didOverflowHeight)
+                        showExpandButton = textLayoutResult.didOverflowHeight
                     }
                 }
             )

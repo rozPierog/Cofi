@@ -19,10 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -62,16 +59,12 @@ fun RecipeEdit(
     deleteRecipe: () -> Unit = {},
     isEditing: Boolean = false,
 ) {
-    val showDeleteModal = remember { mutableStateOf(false) }
-    val pickedIcon = remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
-    val name = remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
-    val description = remember(recipeToEdit) {
-        mutableStateOf(
-            recipeToEdit.description
-        )
-    }
-    val steps = remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
-    val stepWithOpenEditor = remember { mutableStateOf<Step?>(null) }
+    var showDeleteModal by remember { mutableStateOf(false) }
+    var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
+    var name by remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
+    var description by remember(recipeToEdit) { mutableStateOf(recipeToEdit.description) }
+    var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
+    var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
     )
@@ -80,7 +73,7 @@ fun RecipeEdit(
     fun pickIcon(icon: RecipeIcon) {
         coroutineScope.launch {
             bottomSheetScaffoldState.bottomSheetState.collapse()
-            pickedIcon.value = icon
+            pickedIcon = icon
         }
     }
 
@@ -122,7 +115,7 @@ fun RecipeEdit(
                 },
                 actions = {
                     if (isEditing) {
-                        IconButton(onClick = { showDeleteModal.value = true }) {
+                        IconButton(onClick = { showDeleteModal = true }) {
                             Icon(Icons.Rounded.Delete, contentDescription = null)
                         }
                     }
@@ -131,11 +124,11 @@ fun RecipeEdit(
                         onClick = {
                             saveRecipe(
                                 recipeToEdit.copy(
-                                    name = name.value,
-                                    description = description.value,
-                                    recipeIcon = pickedIcon.value,
+                                    name = name,
+                                    description = description,
+                                    recipeIcon = pickedIcon,
                                 ),
-                                steps.value
+                                steps
                             )
                         }
                     ) {
@@ -188,14 +181,14 @@ fun RecipeEdit(
                             }
                         ) {
                             Icon(
-                                painter = painterResource(id = pickedIcon.value.icon),
+                                painter = painterResource(id = pickedIcon.icon),
                                 tint = MaterialTheme.colorScheme.onBackground,
                                 contentDescription = null
                             )
                         }
                         OutlinedTextField(
-                            value = name.value,
-                            onValueChange = { name.value = it },
+                            value = name,
+                            onValueChange = { name = it },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .testTag("recipe_edit_name"),
@@ -208,8 +201,8 @@ fun RecipeEdit(
                 }
                 item {
                     OutlinedTextField(
-                        value = description.value,
-                        onValueChange = { description.value = it },
+                        value = description,
+                        onValueChange = { description = it },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = spacingDefault)
@@ -221,61 +214,58 @@ fun RecipeEdit(
                         colors = textFieldColors,
                     )
                 }
-                items(steps.value) { step ->
+                items(steps) { step ->
                     AnimatedVisibility(
-                        visible = stepWithOpenEditor.value == step,
+                        visible = stepWithOpenEditor == step,
                         enter = expandVertically(),
                         exit = shrinkVertically(),
 
                         ) {
-                        val indexOfThisStep = steps.value.indexOf(step)
+                        val indexOfThisStep = steps.indexOf(step)
                         StepAddCard(
                             stepToEdit = step,
                             save = { stepToSave ->
-                                if (stepToSave == null) {
-                                    steps.value = steps.value.minus(step)
+                                steps = if (stepToSave == null) {
+                                    steps.minus(step)
                                 } else {
-                                    steps.value =
-                                        steps.value.mapIndexed { index, step ->
-                                            if (index == indexOfThisStep) {
-                                                stepToSave
-                                            } else {
-                                                step
-                                            }
+                                    steps.mapIndexed { index, step ->
+                                        if (index == indexOfThisStep) {
+                                            stepToSave
+                                        } else {
+                                            step
                                         }
+                                    }
                                 }
-                                stepWithOpenEditor.value = null
+                                stepWithOpenEditor = null
                             },
-                            orderInRecipe = steps.value.indexOf(step),
+                            orderInRecipe = steps.indexOf(step),
                             recipeId = recipeToEdit.id,
                         )
                     }
                     AnimatedVisibility(
-                        visible = stepWithOpenEditor.value != step,
+                        visible = stepWithOpenEditor != step,
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
                         StepListItem(
                             step = step,
                             stepProgress = StepProgress.Upcoming,
-                            onClick = { clickedStep ->
-                                stepWithOpenEditor.value = clickedStep
-                            }
+                            onClick = { stepWithOpenEditor = it }
                         )
                     }
                 }
-                if (stepWithOpenEditor.value == null) {
+                if (stepWithOpenEditor == null) {
                     item {
                         StepAddCard(
                             save = { stepToSave ->
                                 if (stepToSave != null) {
-                                    steps.value = listOf(
-                                        *steps.value.toTypedArray(),
+                                    steps = listOf(
+                                        *steps.toTypedArray(),
                                         stepToSave
                                     )
                                 }
                             },
-                            orderInRecipe = steps.value.size,
+                            orderInRecipe = steps.size,
                             recipeId = recipeToEdit.id,
                         )
                     }
@@ -283,8 +273,8 @@ fun RecipeEdit(
             }
         }
 
-        if (showDeleteModal.value && isEditing) {
-            DeleteDialog(onConfirm = deleteRecipe, dismiss = { showDeleteModal.value = false })
+        if (showDeleteModal && isEditing) {
+            DeleteDialog(onConfirm = deleteRecipe, dismiss = { showDeleteModal = false })
         }
     }
 }

@@ -53,7 +53,7 @@ fun AppSettings(
     val isPiPEnabled by dataStore.getPiPSetting().collectAsState(initial = PIP_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
-    val showCombineWeightDialog = remember { mutableStateOf(false) }
+    var showCombineWeightDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val appBarBehavior = createAppBarBehavior()
     Scaffold(
@@ -169,17 +169,17 @@ fun AppSettings(
                     },
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
-                            showCombineWeightDialog.value = true
+                            showCombineWeightDialog = true
                         },
                     ),
                 )
-                if (showCombineWeightDialog.value) {
+                if (showCombineWeightDialog) {
                     CombineWeightDialog(
-                        dismiss = { showCombineWeightDialog.value = false },
+                        dismiss = { showCombineWeightDialog = false },
                         selectCombineMethod = {
                             coroutineScope.launch {
                                 dataStore.selectCombineMethod(it)
-                                showCombineWeightDialog.value = false
+                                showCombineWeightDialog = false
                             }
                         },
                         combineWeightState = combineWeightState

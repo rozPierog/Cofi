@@ -62,11 +62,11 @@ fun RecipeDetails(
     var currentStep by remember { mutableStateOf<Step?>(null) }
     var isDone by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
-    val steps = stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
-    val recipe =
-        recipeViewModel.getRecipe(recipeId).observeAsState(Recipe(name = "", description = ""))
-    val indexOfCurrentStep = steps.value.indexOf(currentStep)
-    val indexOfLastStep = steps.value.lastIndex
+    val steps by stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
+    val recipe by recipeViewModel.getRecipe(recipeId)
+        .observeAsState(Recipe(name = "", description = ""))
+    val indexOfCurrentStep = steps.indexOf(currentStep)
+    val indexOfLastStep = steps.lastIndex
     val animatedProgressValue = remember { Animatable(0f) }
     val animatedProgressColor = remember { Animatable(Color.DarkGray) }
     val clipboardManager = LocalClipboardManager.current
@@ -85,7 +85,7 @@ fun RecipeDetails(
         val doneSteps = if (indexOfCurrentStep == -1) {
             listOf()
         } else {
-            steps.value.subList(0, indexOfCurrentStep)
+            steps.subList(0, indexOfCurrentStep)
         }
         return@remember when (combineWeightState) {
             CombineWeight.ALL.name -> doneSteps.sumOf { it.value ?: 0 }
@@ -120,13 +120,13 @@ fun RecipeDetails(
     suspend fun changeToNextStep(silent: Boolean = false) {
         animatedProgressValue.snapTo(0f)
         if (indexOfCurrentStep != indexOfLastStep) {
-            currentStep = steps.value[indexOfCurrentStep + 1]
+            currentStep = steps[indexOfCurrentStep + 1]
         } else {
             animatedProgressValue.snapTo(0f)
             currentStep = null
             onTimerRunning(false)
             isDone = true
-            onRecipeEnd(recipe.value)
+            onRecipeEnd(recipe)
         }
         if (!silent && isDingEnabled) {
             haptics.progress()
@@ -190,12 +190,12 @@ fun RecipeDetails(
                 title = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            painter = painterResource(id = recipe.value.recipeIcon.icon),
+                            painter = painterResource(id = recipe.recipeIcon.icon),
                             contentDescription = null,
                             modifier = Modifier.padding(end = 4.dp)
                         )
                         Text(
-                            text = recipe.value.name,
+                            text = recipe.name,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -257,11 +257,11 @@ fun RecipeDetails(
             },
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if (!isInPiP && recipe.value.description.isNotBlank()) {
+            if (!isInPiP && recipe.description.isNotBlank()) {
                 item {
                     Description(
                         modifier = Modifier.fillMaxWidth(),
-                        descriptionText = recipe.value.description
+                        descriptionText = recipe.description
                     )
                 }
             }
@@ -287,10 +287,10 @@ fun RecipeDetails(
             }
             if (!isInPiP) {
                 itemsIndexed(
-                    items = steps.value,
+                    items = steps,
                     key = { _, step -> step.id }
                 ) { _, step ->
-                    val indexOfThisStep = steps.value.indexOf(step)
+                    val indexOfThisStep = steps.indexOf(step)
                     val stepProgress = when {
                         indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
                         indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
