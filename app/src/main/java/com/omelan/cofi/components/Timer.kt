@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
@@ -68,7 +69,9 @@ fun Timer(
             Column(
                 modifier = Modifier
                     .padding(strokeWidth)
-                    .animateContentSize()
+                    .animateContentSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
                     text = stringResource(id = R.string.timer_enjoy),
@@ -78,11 +81,9 @@ fun Timer(
                         MaterialTheme.typography.headlineMedium
                     },
                     color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .align(
-                            Alignment.CenterHorizontally
-                        )
-                        .testTag("timer_enjoy")
+                    maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.testTag("timer_enjoy")
                 )
             }
         }
@@ -227,6 +228,21 @@ fun TimerPreviewDone() {
         animatedProgressValue = Animatable(0.5f),
         animatedProgressColor = Animatable(green600),
         isInPiP = false,
+        isDone = true
+    )
+}
+
+@SuppressLint("UnrememberedAnimatable")
+@ExperimentalAnimatedInsets
+@ExperimentalAnimationApi
+@Preview(widthDp = 150, showBackground = true)
+@Composable
+fun TimerPreviewDonePip() {
+    Timer(
+        currentStep = null,
+        animatedProgressValue = Animatable(0.5f),
+        animatedProgressColor = Animatable(green600),
+        isInPiP = true,
         isDone = true
     )
 }
