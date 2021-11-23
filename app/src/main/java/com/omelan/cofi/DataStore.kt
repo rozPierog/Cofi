@@ -45,5 +45,4 @@ class DataStore(private val context: Context) {
             it[COMBINE_WEIGHT] = combineMethod.name
         }
     }
-
 }

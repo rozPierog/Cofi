@@ -138,7 +138,7 @@ fun Timer(
                         },
                         textAlign = TextAlign.Center,
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
-                        overflow= TextOverflow.Ellipsis,
+                        overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .testTag("timer_name")
@@ -184,7 +184,7 @@ fun TimerPreview() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,
@@ -206,7 +206,7 @@ fun TimerPreviewPiP() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.WATER,
             value = 300,
