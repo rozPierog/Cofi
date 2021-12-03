@@ -81,10 +81,18 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             item {
                 ListItem(
                     text = {
-                        Text(text = stringResource(id = R.string.hoffmann_credits_title))
+                        Text(
+                            text = stringResource(id = R.string.hoffmann_credits_title),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     },
                     secondaryText = {
-                        Text(text = stringResource(id = R.string.hoffmann_credits_subtitle))
+                        Text(
+                            text = stringResource(id = R.string.hoffmann_credits_subtitle),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     },
                     icon = {
                         Icon(painterResource(id = R.drawable.ic_coffee), contentDescription = null)
@@ -101,10 +109,18 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             item {
                 ListItem(
                     text = {
-                        Text(text = stringResource(id = R.string.tereszkiewicz_credits_title))
+                        Text(
+                            text = stringResource(id = R.string.tereszkiewicz_credits_title),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     },
                     secondaryText = {
-                        Text(text = stringResource(id = R.string.tereszkiewicz_credits_subtitle))
+                        Text(
+                            text = stringResource(id = R.string.tereszkiewicz_credits_subtitle),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     },
                     icon = {
                         Icon(

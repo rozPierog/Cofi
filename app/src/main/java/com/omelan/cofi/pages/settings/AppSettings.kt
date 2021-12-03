@@ -1,7 +1,5 @@
 package com.omelan.cofi.pages.settings
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -25,13 +23,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.core.content.ContextCompat.startActivity
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
@@ -47,6 +45,7 @@ fun AppSettings(
     goToAbout: () -> Unit,
 ) {
     val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     val dataStore = DataStore(context)
     val isDingEnabled by dataStore.getStepChangeSetting()
         .collectAsState(initial = DING_DEFAULT_VALUE)
@@ -199,17 +198,7 @@ fun AppSettings(
                     },
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
-                            val intent = Intent(Intent.ACTION_SENDTO).apply {
-                                data = Uri.parse("mailto:")
-                                putExtra(Intent.EXTRA_EMAIL, arrayOf("rozPierog@Gmail.com"))
-                                putExtra(
-                                    Intent.EXTRA_SUBJECT,
-                                    context.resources.getString(R.string.bug_report_title)
-                                )
-                            }
-                            if (intent.resolveActivity(context.packageManager) != null) {
-                                startActivity(context, intent, null)
-                            }
+                            uriHandler.openUri("https://github.com/rozPierog/Cofi/issues")
                         }
                     ),
                 )
