@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cofi</string>
+    <string name="step_type_add_coffee">Kaffee hinzufügen</string>
+    <string name="step_type_water">Wasser hinzufügen</string>
+    <string name="step_type_wait">Warten</string>
+    <string name="step_add_name">Name</string>
+    <string name="step_add_duration">Dauer (s)</string>
+    <string name="step_add_weight">Gewicht (g)</string>
+    <string name="step_add_save">Speichern</string>
+    <string name="step_delete_title">Bist du sicher?</string>
+    <string name="step_delete_text">Damit wird dieses Rezept dauerhaft entfernt</string>
+    <string name="recipe_edit_name">Name</string>
+    <string name="recipe_edit_description">Beschreibung</string>
+    <string name="recipe_edit_title">Rezept bearbeiten</string>
+    <string name="recipe_add_new_title">Neues Rezept erstellen</string>
+    <string name="recipe_details_automation_dialog_title">Direktlink</string>
+    <string name="recipe_details_automation_dialog_text">Verwenden diesen Link, um direkt zu diesem Rezept zu gelangen. Speicher ihn auf einem NFC-Tag oder erstelle eine Automatisierungsaufgabe in Tasker. WARNUNG: Das Rezept kann auf diese Weise nicht geteilt werden!</string>
+    <string name="recipe_details_button_start">Start</string>
+    <string name="recipe_details_button_pause">Pause</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="button_cancel">Abbrechen</string>
+    <string name="button_delete">Löschen</string>
+    <string name="button_copy">Kopieren</string>
+    <string name="snackbar_copied">Kopiert!</string>
+    <string name="settings_licenses_title">Open-Source-Lizenzen</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_about_item">Über die App</string>
+    <string name="settings_pip_item">Bild-im-Bild</string>
+    <string name="settings_ding_item">Schrittwechsel-Ton</string>
+    <string name="settings_bug_item">Einen Fehler melden oder eine Funktion vorschlagen</string>
+    <string name="settings_combine_weight_item">Gewicht kombinieren</string>
+    <string name="settings_combine_weight_water">Nur Wassergewicht kombinieren</string>
+    <string name="settings_combine_weight_all">Jedes Gewicht kombinieren</string>
+    <string name="settings_combine_weight_none">Gewicht nicht kombinieren</string>
+    <string name="settings_about_title">Über</string>
+    <string name="settings_licenses_item">Danksagungen</string>
+    <string name="settings_github_item">Github Repository</string>
+    <string name="step_add_remove">Entfernen</string>
+    <string name="timer_enjoy">Genieß deinen Kaffee</string>
+    <string name="prepopulate_v60_name">V60</string>
+    <string name="prepopulate_v60_description">"Rezept erstellt von: James Hoffmann
+Quelle: https://youtu.be/AI4ynXzkSQo
+Mahlgrad: mittelfein
+Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</string>
+    <string name="prepopulate_step_coffee">Kaffee hinzufügen</string>
+    <string name="prepopulate_step_water">Wasser hinzufügen</string>
+    <string name="prepopulate_step_wait">Warten</string>
+    <string name="tereszkiewicz_credits_title">App-Icon von: Hubert Tereszkiewicz</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_frenchPress_name">French Press</string>
+    <string name="step_type_other">Sonstige</string>
+    <string name="recipe_create_title">Rezept hinzufügen</string>
+    <string name="hoffmann_credits_title">Standard-Rezepte von James Hoffmann</string>
+    <string name="hoffmann_credits_subtitle">Besuche seinen Youtube-Kanal</string>
+    <string name="prepopulate_step_swirl">Schwenken</string>
+    <string name="prepopulate_frenchPress_description">"Rezept erstellt von: James Hoffmann
+Quelle: https://youtu.be/st571DYYTR8
+Mahlgrad: mittel
+Schenke frühestens 5 Minuten nach dem letzten Schritt ein. Je länger du wartest, desto besser wirds."</string>
+    <string name="prepopulate_chemex_description">"Rezept erstellt von: James Hoffmann
+Quelle: https://youtu.be/ikt-X5x7yoc
+Mahlgrad: mittelfein
+Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)
+Achte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite befindet und die Luft aus dem Brüher strömt."</string>
+    <string name="tereszkiewicz_credits_subtitle">Schaue seine Arbeit auf Dribbble an</string>
+    <string name="prepopulate_step_scoop_coffee">Schaum und Kaffeepulver von der Oberfläche abschöpfen</string>
+    <string name="prepopulate_step_stir_crust">Umrühren</string>
+    <string name="prepopulate_step_plunge">Siebträger bis knapp unter die Wasseroberfläche eintauchen und einschenken</string>
+</resources>
