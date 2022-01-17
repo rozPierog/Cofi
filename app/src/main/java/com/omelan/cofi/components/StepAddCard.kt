@@ -7,6 +7,7 @@ import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -36,6 +37,7 @@ import com.omelan.cofi.utils.toMillis
 fun StepAddCard(
     stepToEdit: Step? = null,
     save: (Step?) -> Unit,
+    cancel: () -> Unit,
     orderInRecipe: Int,
     recipeId: Int
 ) {
@@ -177,17 +179,29 @@ fun StepAddCard(
                         Text(text = stringResource(id = R.string.step_add_save))
                     }
                     if (stepToEdit != null) {
-                        Button(
-                            onClick = {
-                                save(null)
-                            },
-                            modifier = Modifier
-                                .padding(vertical = 15.dp, horizontal = 2.dp)
-                                .testTag("step_remove"),
-                        ) {
-                            Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
-                            Spacer(modifier = Modifier.width(5.dp))
-                            Text(text = stringResource(id = R.string.step_add_remove))
+                        Column {
+                            Button(
+                                onClick = cancel,
+                                modifier = Modifier
+                                    .padding(top = 15.dp, bottom = 5.dp, start = 2.dp, end = 2.dp)
+                                    .testTag("step_cancel"),
+                            ) {
+                                Icon(imageVector = Icons.Rounded.Clear, contentDescription = null)
+                                Spacer(modifier = Modifier.width(5.dp))
+                                Text(text = stringResource(R.string.step_add_cancel))
+                            }
+                            Button(
+                                onClick = {
+                                    save(null)
+                                },
+                                modifier = Modifier
+                                    .padding(bottom = 15.dp, start = 2.dp, end = 2.dp)
+                                    .testTag("step_remove"),
+                            ) {
+                                Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
+                                Spacer(modifier = Modifier.width(5.dp))
+                                Text(text = stringResource(id = R.string.step_add_remove))
+                            }
                         }
                     }
                 }
@@ -200,7 +214,7 @@ fun StepAddCard(
 @Composable
 @Preview
 fun StepAddCardPreview() {
-    StepAddCard(save = {}, orderInRecipe = 0, recipeId = 0)
+    StepAddCard(save = {}, cancel = {}, orderInRecipe = 0, recipeId = 0)
 }
 
 @ExperimentalAnimatedInsets
@@ -209,6 +223,7 @@ fun StepAddCardPreview() {
 fun StepAddCardPreviewExpanded() {
     StepAddCard(
         save = {},
+        cancel = {},
         orderInRecipe = 0,
         recipeId = 0,
         stepToEdit = Step(

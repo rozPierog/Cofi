@@ -240,6 +240,9 @@ fun RecipeEdit(
                                 }
                                 stepWithOpenEditor = null
                             },
+                            cancel = {
+                                stepWithOpenEditor = null
+                            },
                             orderInRecipe = steps.indexOf(step),
                             recipeId = recipeToEdit.id,
                         )
@@ -267,6 +270,7 @@ fun RecipeEdit(
                                     )
                                 }
                             },
+                            cancel = {},
                             orderInRecipe = steps.size,
                             recipeId = recipeToEdit.id,
                         )
