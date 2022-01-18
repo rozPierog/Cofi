@@ -68,4 +68,6 @@ Upewnij się, że najgrubsza strona filtra jest po stronie lejka
 Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze musie gdzieś uciekać"</string>
     <string name="tereszkiewicz_credits_title">Ikona aplikacji: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Sprawdź jego Dribbble!</string>
+    <string name="recipe_create_title">Dodaj przepis</string>
+    <string name="settings_ding_item">Dźwięk zmiany kroku</string>
 </resources>
