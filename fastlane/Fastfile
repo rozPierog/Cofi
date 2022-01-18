@@ -99,7 +99,7 @@ platform :android do
       text: "is this a prerelease: ",
       boolean: true
     )
-    test
+    # test
     licenses
     bump_version(bump_type: bump_type)
     git_commit(path: ["./*.gradle"], message: "Version bump")

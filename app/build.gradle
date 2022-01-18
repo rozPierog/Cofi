@@ -136,7 +136,7 @@ configurations {
 dependencies {
     ktlint "com.pinterest:ktlint:0.43.2"
 
-    instantImplementation('com.google.android.gms:play-services-instantapps:17.0.1')
+    instantImplementation('com.google.android.gms:play-services-instantapps:18.0.1')
 
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation "androidx.compose.ui:ui:$compose_version"
@@ -146,11 +146,11 @@ dependencies {
     implementation "androidx.compose.foundation:foundation:$compose_version"
     // Material Design
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha02"
+    implementation "androidx.compose.material3:material3:1.0.0-alpha03"
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     // Navigation
-    implementation "androidx.navigation:navigation-compose:2.4.0-beta02"
+    implementation "androidx.navigation:navigation-compose:2.4.0-rc01"
 
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
@@ -163,7 +163,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02"
     implementation "androidx.activity:activity-compose:1.4.0"
     //Room
-    def room_version = "2.4.0-rc01"
+    def room_version = "2.4.1"
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
