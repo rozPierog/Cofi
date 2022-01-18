@@ -1,3 +1,4 @@
-- Material You redesign
-- fix issue with transparency
-- update of libraries
+- German language
+- Ability to cancel out of step edit
+- Fixed Polish strings
+- Fixed crash on going back to full screen
