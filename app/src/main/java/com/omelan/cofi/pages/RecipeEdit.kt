@@ -1,5 +1,6 @@
 package com.omelan.cofi.pages
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.expandVertically
@@ -65,6 +66,10 @@ fun RecipeEdit(
     var description by remember(recipeToEdit) { mutableStateOf(recipeToEdit.description) }
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
+    BackHandler(enabled = stepWithOpenEditor != null) {
+        stepWithOpenEditor = null
+    }
+
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
     )
