@@ -57,7 +57,7 @@ fun RecipeList(
                 icon = {
                     Icon(
                         imageVector = Icons.Rounded.Add,
-                        tint = MaterialTheme.colorScheme.onBackground,
+                        tint = LocalContentColor.current,
                         contentDescription = null,
                     )
                 },
