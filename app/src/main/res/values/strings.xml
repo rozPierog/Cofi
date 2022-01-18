@@ -69,4 +69,5 @@ Make sure that stiffest part of filter is at the drainage side
 Keep an eye out not to block air moving out of the brewer"</string>
     <string name="tereszkiewicz_credits_title">App icon by: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Check out his Dribbble</string>
+    <string name="recipe_create_title">Add recipe</string>
 </resources>
