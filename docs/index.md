@@ -34,9 +34,9 @@ I've built Cofi after getting frustrated with the lack of privacy-respecting, sm
   <a href="https://github.com/rozPierog/Cofi/releases">
     <img src="assets/get-github.png" height="75">
   </a>
-  <!-- <a href="">
+  <a href="https://www.f-droid.org/en/packages/com.omelan.cofi/">
     <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75">
-  </a> -->
+  </a>
 </p>
 
 
