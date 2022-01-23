@@ -30,21 +30,20 @@ class Dependency(
     val url: String,
     val year: String?,
     val licenses: List<License>,
-    val dependency: String,
 )
 
-fun JSONArray.toStringList(): List<String>? {
+private fun JSONArray.toAuthorList(): List<String> {
     val list = mutableListOf<String>()
     (0 until this.length()).forEach {
-        list.add(this[it] as String)
+        list.add(this.getString(it))
     }
-    return if (list.isEmpty()) null else list
+    return if (list.isEmpty()) listOf("Original author or authors") else list
 }
 
-fun JSONArray.toLicensesList(): List<License> {
+private fun JSONArray.toLicensesList(): List<License> {
     val list = mutableListOf<License>()
     (0 until this.length()).forEach {
-        val jsonObject = this[it] as JSONObject
+        val jsonObject = this.getJSONObject(it)
         list.add(
             License(
                 license = jsonObject.getString("license"),
@@ -65,12 +64,10 @@ fun String.parseJsonToDependencyList(): List<Dependency> {
                 project = jsonObject.getString("project"),
                 description = jsonObject.getString("description"),
                 version = jsonObject.getString("version"),
-                developers = jsonObject.getJSONArray("developers").toStringList()
-                    ?: listOf("Original author or authors"),
+                developers = jsonObject.getJSONArray("developers").toAuthorList(),
                 url = jsonObject.getString("url"),
                 year = jsonObject.getString("year"),
                 licenses = jsonObject.getJSONArray("licenses").toLicensesList(),
-                dependency = jsonObject.getString("dependency"),
             )
         )
     }
@@ -176,7 +173,6 @@ fun DependencyPreview() {
             url = "jsonObject.getString( url )",
             year = "null",
             licenses = listOf(License(license = "WTFPL", license_url = "http://www.wtfpl.net/")),
-            dependency = "com.omelan.cofi.super.library.of.awesomeness.lorem.impsum ",
         )
     )
 }
