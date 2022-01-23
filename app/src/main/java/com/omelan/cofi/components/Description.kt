@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -30,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
-import com.omelan.cofi.utils.IntentHelpers
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -54,6 +54,7 @@ private fun extractUrls(text: String): List<String> {
 @ExperimentalAnimatedInsets
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
+    val uriHandler = LocalUriHandler.current
     var isExpanded by remember { mutableStateOf(false) }
     var showExpandButton by remember { mutableStateOf(false) }
     val rotationDegree = remember { Animatable(initialValue = 0f) }
@@ -122,7 +123,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     descriptionWithLinks
                         .getStringAnnotations("URL", it, it)
                         .firstOrNull()?.let { stringAnnotation ->
-                            IntentHelpers.openUri(context, stringAnnotation.item)
+                            uriHandler.openUri(stringAnnotation.item)
                             return@ClickableText
                         }
                     if (showExpandButton) {
