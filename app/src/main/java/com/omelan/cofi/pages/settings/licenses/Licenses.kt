@@ -18,14 +18,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
-import com.omelan.cofi.components.WebView
 import com.omelan.cofi.components.createAppBarBehavior
-import com.omelan.cofi.pages.settings.licenses.Dependency
+import com.omelan.cofi.pages.settings.licenses.DependencyItem
 import com.omelan.cofi.pages.settings.licenses.parseJsonToDependencyList
 
 @Composable
@@ -64,7 +62,7 @@ fun Licenses(goBack: () -> Unit) {
             ),
         ) {
             items(dependencyList) {
-                Dependency(dependency = it)
+                DependencyItem(dependency = it)
             }
         }
     }
