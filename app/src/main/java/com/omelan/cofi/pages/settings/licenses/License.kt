@@ -1,14 +1,10 @@
 package com.omelan.cofi.pages.settings.licenses
 
-import android.R
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Divider
-import androidx.compose.material.Shapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,14 +15,10 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.pages.settings.settingsItemModifier
 import org.json.JSONArray
 import org.json.JSONObject
-
 
 class License(val license: String, val license_url: String)
 
@@ -162,7 +154,23 @@ fun DependencyPreview() {
     DependencyItem(
         dependency = Dependency(
             project = "Nice package",
-            description = "Contains Guava\\u0027s com.google.common.util.concurrent.ListenableFuture class,\\n    without any of its other classes -- but is also available in a second\\n    \\\"version\\\" that omits the class to avoid conflicts with the copy in Guava\\n    itself. The idea is:\\n\\n    - If users want only ListenableFuture, they depend on listenablefuture-1.0.\\n\\n    - If users want all of Guava, they depend on guava, which, as of Guava\\n    27.0, depends on\\n    listenablefuture-9999.0-empty-to-avoid-conflict-with-guava. The 9999.0-...\\n    version number is enough for some build systems (notably, Gradle) to select\\n    that empty artifact over the \\\"real\\\" listenablefuture-1.0 -- avoiding a\\n    conflict with the copy of ListenableFuture in guava itself. If users are\\n    using an older version of Guava or a build system other than Gradle, they\\n    may see class conflicts. If so, they can solve them by manually excluding\\n    the listenablefuture artifact or manually forcing their build systems to\\n    use 9999.0-....\",\n",
+            description = "Contains Guava\\u0027s " +
+                "com.google.common.util.concurrent.ListenableFuture" +
+                " class,\\n    without any of its other classes -- but is also available in " +
+                "a second\\n    \\\"version\\\" that omits the class to avoid conflicts with " +
+                "the copy in Guava\\n    itself. The idea is:\\n\\n    - If users want only " +
+                "ListenableFuture, they depend on listenablefuture-1.0.\\n\\n    " +
+                "- If users want all of Guava, they depend on guava, which, as of Guava\\n   " +
+                " 27.0, depends on\\n   " +
+                " listenablefuture-9999.0-empty-to-avoid-conflict-with-guava. " +
+                "The 9999.0-...\\n    version number is enough for some build systems" +
+                " (notably, Gradle) to select\\n    that empty artifact over the " +
+                "\\\"real\\\" listenablefuture-1.0 -- avoiding a\\n    " +
+                "conflict with the copy of ListenableFuture in guava itself. If users are\\n " +
+                "   using an older version of Guava or a build system other than Gradle," +
+                " they\\n    may see class conflicts. If so, they can solve them by manually" +
+                " excluding\\n    the listenablefuture artifact or manually forcing their " +
+                "build systems to\\n    use 9999.0-....\",\n",
             version = "3.2.1",
             developers = listOf("Leon Omelan"),
             url = "jsonObject.getString( url )",
