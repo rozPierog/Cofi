@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
+import com.omelan.cofi.utils.addLink
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -58,7 +59,6 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     var isExpanded by remember { mutableStateOf(false) }
     var showExpandButton by remember { mutableStateOf(false) }
     val rotationDegree = remember { Animatable(initialValue = 0f) }
-    val context = LocalContext.current
     val descriptionWithLinks = buildAnnotatedString {
         val urlsInDescription = extractUrls(descriptionText)
         append(descriptionText)
@@ -71,20 +71,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
         urlsInDescription.forEach {
             val positionOfUrl = descriptionText.indexOf(it, startIndex = lastPosition)
             lastPosition = positionOfUrl
-            addStringAnnotation(
-                tag = "URL",
-                annotation = it,
-                start = positionOfUrl,
-                end = positionOfUrl + it.length,
-            )
-            addStyle(
-                SpanStyle(
-                    color = MaterialTheme.colorScheme.secondary,
-                    textDecoration = TextDecoration.Underline
-                ),
-                positionOfUrl,
-                positionOfUrl + it.length
-            )
+            addLink(positionOfUrl = positionOfUrl, text = it)
         }
     }
     LaunchedEffect(isExpanded) {

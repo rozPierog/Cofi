@@ -18,12 +18,13 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.pages.settings.settingsItemModifier
+import com.omelan.cofi.utils.addLink
 import org.json.JSONArray
 import org.json.JSONObject
 
-class License(val license: String, val license_url: String)
+data class License(val license: String, val license_url: String)
 
-class Dependency(
+data class Dependency(
     val project: String,
     val description: String,
     val version: String,
@@ -85,25 +86,13 @@ fun DependencyItem(dependency: Dependency) {
     }
     val licenses =
         buildAnnotatedString {
-            append(dependency.licenses.joinToString { license -> license.license })
+            val licenses = dependency.licenses.joinToString { license -> license.license }
+            append(licenses)
             var lastPosition = 0
             dependency.licenses.forEach {
-                val positionOfUrl = it.license.indexOf(it.license, startIndex = lastPosition)
+                val positionOfUrl = licenses.indexOf(it.license, startIndex = lastPosition)
                 lastPosition = positionOfUrl
-                addStringAnnotation(
-                    tag = "URL",
-                    annotation = it.license_url,
-                    start = positionOfUrl,
-                    end = positionOfUrl + it.license.length,
-                )
-                addStyle(
-                    SpanStyle(
-                        color = MaterialTheme.colorScheme.secondary,
-                        textDecoration = TextDecoration.Underline
-                    ),
-                    positionOfUrl,
-                    positionOfUrl + it.license.length
-                )
+                addLink(positionOfUrl = positionOfUrl, text = it.license, url = it.license_url)
             }
         }
     Column(
