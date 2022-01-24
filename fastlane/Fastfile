@@ -48,6 +48,33 @@ platform :android do
     )
   end
 
+  desc "Prepare changelog"
+  lane :prepare_changelog do
+    changelog_md_file = File.open("../docs/Changelog.md")
+    unreleased_changelog = changelog_md_file.read.split("\n## ")[1].lines[2..-1].join
+    UI.important unreleased_changelog
+    File.open("metadata/android/en-US/changelogs/default.txt", "w") { |f| f.write unreleased_changelog }
+
+    changelog_md_file = File.open("../docs/Changelog.md")
+    new_changelog = changelog_md_file.read
+    changelog_md_file.close
+    unreleased = " [Unreleased]
+
+### Added
+
+### Changed
+
+### Removed
+
+"
+    date = Time.now.strftime("%F")
+    version = get_version_name(
+      app_project_dir: '**/app',
+    )
+    new_changelog["\n## [Unreleased]\n"] = "\n## [#{version}] - #{date}\n"
+    File.open("../docs/Changelog.md", "w") { |f| f.write new_changelog.split("\n##").insert(1, unreleased).join("\n##") }
+  end
+
   desc "Deploy a new version to the Google Play Store"
   lane :deploy_gps do |options|
     gradle(task: "clean bundleFullRelease")
@@ -102,6 +129,7 @@ platform :android do
     # test
     licenses
     bump_version(bump_type: bump_type)
+    prepare_changelog
     git_commit(path: ["./*.gradle"], message: "Version bump")
     push_to_git_remote
     deploy_gps(prerelease: prerelease)
