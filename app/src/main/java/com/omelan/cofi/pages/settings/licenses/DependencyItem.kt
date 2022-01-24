@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.pages.settings.settingsItemModifier
 import com.omelan.cofi.utils.URL_ANNOTATION
-import com.omelan.cofi.utils.addLink
+import com.omelan.cofi.utils.appendLink
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -87,19 +87,7 @@ fun DependencyItem(dependency: Dependency) {
     }
     val licenses = buildAnnotatedString {
         dependency.licenses.forEachIndexed { index, license ->
-            withStyle(
-                SpanStyle(
-                    color = MaterialTheme.colorScheme.secondary,
-                    textDecoration = TextDecoration.Underline
-                )
-            ) {
-                withAnnotation(
-                    tag = URL_ANNOTATION,
-                    annotation = license.license_url,
-                ) {
-                    append(license.license)
-                }
-            }
+            appendLink(text = license.license, url = license.license_url)
             if (index != dependency.licenses.size - 1) {
                 append(", ")
             }

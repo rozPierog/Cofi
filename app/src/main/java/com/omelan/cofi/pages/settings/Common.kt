@@ -14,8 +14,7 @@ fun Modifier.settingsItemModifier(
     onClick: () -> Unit,
     enabled: Boolean = true,
     unlimitedHeight: Boolean = false
-) =
-    composed {
+) = composed {
         val modifier = this.clickable(
             onClick = onClick,
             role = Role.Button,

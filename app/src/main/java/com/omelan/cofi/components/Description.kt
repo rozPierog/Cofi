@@ -30,7 +30,7 @@ import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.URL_ANNOTATION
-import com.omelan.cofi.utils.addLink
+import com.omelan.cofi.utils.addLinkAnnotation
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -70,7 +70,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
         urlsInDescription.forEach {
             val positionOfUrl = descriptionText.indexOf(it, startIndex = lastPosition)
             lastPosition = positionOfUrl
-            addLink(positionOfUrl = positionOfUrl, text = it)
+            addLinkAnnotation(start = positionOfUrl, text = it)
         }
     }
     LaunchedEffect(isExpanded) {
