@@ -6,10 +6,11 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.style.TextDecoration
 
+const val URL_ANNOTATION = "URL"
 @Composable
 fun AnnotatedString.Builder.addLink(positionOfUrl: Int, text: String, url: String = text) {
     addStringAnnotation(
-        tag = "URL",
+        tag = URL_ANNOTATION,
         annotation = url,
         start = positionOfUrl,
         end = positionOfUrl + text.length,

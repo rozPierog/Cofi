@@ -20,17 +20,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
+import com.omelan.cofi.utils.URL_ANNOTATION
 import com.omelan.cofi.utils.addLink
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -108,7 +107,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                 modifier = Modifier.animateContentSize(),
                 onClick = {
                     descriptionWithLinks
-                        .getStringAnnotations("URL", it, it)
+                        .getStringAnnotations(URL_ANNOTATION, it, it)
                         .firstOrNull()?.let { stringAnnotation ->
                             uriHandler.openUri(stringAnnotation.item)
                             return@ClickableText
