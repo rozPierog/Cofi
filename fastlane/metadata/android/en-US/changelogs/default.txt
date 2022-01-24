@@ -1,4 +1,6 @@
-- German language
-- Ability to cancel out of step edit
-- Fixed Polish strings
-- Fixed crash on going back to full screen
+### Added
+- Proper changelog
+
+### Changed
+
+### Removed
