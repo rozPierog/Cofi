@@ -40,7 +40,7 @@ import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
 import com.omelan.cofi.pages.settings.AppSettings
 import com.omelan.cofi.pages.settings.AppSettingsAbout
-import com.omelan.cofi.pages.settings.licenses.Licenses
+import com.omelan.cofi.pages.settings.licenses.LicensesList
 import com.omelan.cofi.ui.CofiTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -298,7 +298,7 @@ class MainActivity : MonetCompatActivity() {
                             )
                         }
                         composable("licenses") {
-                            Licenses(goBack = goBack)
+                            LicensesList(goBack = goBack)
                         }
                     }
                 }

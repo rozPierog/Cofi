@@ -1,9 +1,7 @@
 package com.omelan.cofi.pages.settings.licenses
 
-import androidx.compose.ui.test.assertHasClickAction
-import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.ui.CofiTheme
 import org.junit.Rule
@@ -55,22 +53,17 @@ class LicenseTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @OptIn(ExperimentalAnimatedInsets::class)
     @Test
     fun testDependency() {
         val dependencies = testJson.parseJsonToDependencyList()
         composeTestRule.setContent {
-            CofiTheme {
-                DependencyItem(dependency = dependencies.first())
-            }
+            DependencyItem(dependency = dependencies.first())
         }
 
-        composeTestRule.onNodeWithTag("dependency_column").assertHasClickAction()
-        composeTestRule.onNodeWithTag("dependency_column")
+        composeTestRule.onNodeWithTag("dependency_column").assertIsEnabled()
+            .assertHasClickAction()
             .assertTextContains("Utilities for Jetpack Compose")
-        composeTestRule.onNodeWithTag("dependency_column")
             .assertTextContains("Copyright © 20XX Google")
-        composeTestRule.onNodeWithTag("dependency_column")
             .assertTextContains("The Apache Software License, Version 2.0")
     }
 }

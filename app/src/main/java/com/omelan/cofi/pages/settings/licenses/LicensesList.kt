@@ -25,7 +25,7 @@ import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
 
 @Composable
-fun Licenses(goBack: () -> Unit) {
+fun LicensesList(goBack: () -> Unit) {
     val context = LocalContext.current
     val appBarBehavior = createAppBarBehavior()
 
@@ -69,5 +69,5 @@ fun Licenses(goBack: () -> Unit) {
 @Preview
 @Composable
 fun LicensesPreview() {
-    Licenses(goBack = {})
+    LicensesList(goBack = {})
 }
