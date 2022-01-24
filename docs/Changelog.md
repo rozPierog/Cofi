@@ -7,13 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Proper changelog
 
 ### Changed
 
 ### Removed
 
-
-## [1.3.4] - 2017-06-20
+## [1.3.4] - 2022-01-18
 
 ### Added
 - German language [@lneugebauer](https://github.com/lneugebauer)
