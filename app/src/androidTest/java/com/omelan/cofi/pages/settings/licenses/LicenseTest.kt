@@ -2,8 +2,6 @@ package com.omelan.cofi.pages.settings.licenses
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
-import com.omelan.cofi.ui.CofiTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
