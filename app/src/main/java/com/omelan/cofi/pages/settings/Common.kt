@@ -15,15 +15,15 @@ fun Modifier.settingsItemModifier(
     enabled: Boolean = true,
     unlimitedHeight: Boolean = false
 ) = composed {
-        val modifier = this.clickable(
-            onClick = onClick,
-            role = Role.Button,
-            interactionSource = remember { MutableInteractionSource() },
-            enabled = enabled,
-            indication = rememberRipple(bounded = true),
-        )
-        if (unlimitedHeight) {
-            return@composed modifier
-        }
-        return@composed modifier.height(56.dp)
+    val modifier = this.clickable(
+        onClick = onClick,
+        role = Role.Button,
+        interactionSource = remember { MutableInteractionSource() },
+        enabled = enabled,
+        indication = rememberRipple(bounded = true),
+    )
+    if (unlimitedHeight) {
+        return@composed modifier
     }
+    return@composed modifier.height(56.dp)
+}
