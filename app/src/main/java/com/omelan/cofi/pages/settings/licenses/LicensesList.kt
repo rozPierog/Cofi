@@ -65,9 +65,3 @@ fun LicensesList(goBack: () -> Unit) {
         }
     }
 }
-
-@Preview
-@Composable
-fun LicensesPreview() {
-    LicensesList(goBack = {})
-}
