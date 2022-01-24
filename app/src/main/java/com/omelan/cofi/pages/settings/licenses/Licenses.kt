@@ -1,4 +1,4 @@
-package com.omelan.cofi.pages.settings
+package com.omelan.cofi.pages.settings.licenses
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,8 +23,6 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
-import com.omelan.cofi.pages.settings.licenses.DependencyItem
-import com.omelan.cofi.pages.settings.licenses.parseJsonToDependencyList
 
 @Composable
 fun Licenses(goBack: () -> Unit) {
