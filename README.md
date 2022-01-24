@@ -34,6 +34,8 @@
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" width="20%">
 </p>
 
+# [Changelog](docs/Changelog.md)
+
 # [Read more](https://rozpierog.github.io/Cofi)
 
 # Contribute
