@@ -193,12 +193,12 @@ class MainActivity : MonetCompatActivity() {
 
     @Composable
     fun MainAddRecipe(goBack: () -> Unit, db: AppDatabase) {
-        var isRecipeSave: Boolean = false
+        var isRecipeSave = false
         RecipeEdit(
             saveRecipe = { recipe, steps ->
                 lifecycleScope.launch {
           
-           if(!recipe.name.isNullOrBlank() and !recipe.description.isNullOrBlank()) {
+           if(recipe.name.isNotBlank() and recipe.description.isNotBlank()) {
                     val idOfRecipe =
                         db.recipeDao().insertRecipe(recipe)
                     db.stepDao()
