@@ -193,7 +193,7 @@ fun RecipeDetails(
                         Icon(
                             painter = painterResource(id = recipe.recipeIcon.icon),
                             contentDescription = null,
-                            modifier = Modifier.padding(end = 4.dp)
+                            modifier = Modifier.padding(end = Spacing.small)
                         )
                         Text(
                             text = recipe.name,
