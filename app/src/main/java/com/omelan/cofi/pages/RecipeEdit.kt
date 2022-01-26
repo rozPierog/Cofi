@@ -41,10 +41,7 @@ import com.omelan.cofi.components.*
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
-import com.omelan.cofi.ui.createTextFieldColors
-import com.omelan.cofi.ui.modal
-import com.omelan.cofi.ui.shapes
-import com.omelan.cofi.ui.spacingDefault
+import com.omelan.cofi.ui.*
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimatedInsets
@@ -168,9 +165,9 @@ fun RecipeEdit(
                     .background(color = MaterialTheme.colorScheme.background),
                 contentPadding = PaddingValues(
                     bottom = maxHeight / 2,
-                    top = spacingDefault,
-                    start = spacingDefault,
-                    end = spacingDefault,
+                    top = Spacing.big,
+                    start = Spacing.big,
+                    end = Spacing.big,
                 ),
             ) {
                 item {
@@ -212,7 +209,7 @@ fun RecipeEdit(
                         onValueChange = { description = it },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = spacingDefault)
+                            .padding(bottom = Spacing.big)
                             .testTag("recipe_edit_description"),
                         keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                         label = {

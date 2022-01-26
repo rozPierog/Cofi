@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.model.Recipe
+import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 
@@ -29,7 +30,7 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
     Surface(
         tonalElevation = 2.dp,
         shadowElevation = 2.dp,
-        modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+        modifier = Modifier.padding(horizontal = Spacing.medium, vertical = Spacing.small),
         shape = shapes.card,
         color = MaterialTheme.colorScheme.surface
     ) {
@@ -42,7 +43,7 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
                     interactionSource = remember { MutableInteractionSource() },
                     indication = rememberRipple(bounded = true),
                 )
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = Spacing.medium)
                 .height(75.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -50,11 +51,11 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
                 painterResource(id = recipe.recipeIcon.icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(horizontal = 5.dp)
+                    .padding(horizontal = Spacing.small)
                     .size(30.dp)
             )
             Column(
-                modifier = Modifier.padding(vertical = 15.dp, horizontal = 10.dp),
+                modifier = Modifier.padding(vertical = Spacing.big, horizontal = Spacing.medium),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(

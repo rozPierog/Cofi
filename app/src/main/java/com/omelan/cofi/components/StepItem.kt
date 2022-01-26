@@ -16,13 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
+import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.toMillis
 import com.omelan.cofi.utils.toStringDuration
 import kotlin.time.ExperimentalTime
@@ -35,7 +35,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
     val constraintModifier = Modifier
         .animateContentSize()
         .fillMaxWidth()
-        .padding(vertical = 5.dp)
+        .padding(vertical = Spacing.small)
         .clickable(
             onClick = { onClick?.let { it(step) } },
             enabled = onClick != null,
@@ -64,7 +64,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
             contentDescription = null,
             modifier = Modifier
                 .constrainAs(icon) {
-                    start.linkTo(parent.start, 5.dp)
+                    start.linkTo(parent.start, Spacing.small)
                     centerVerticallyTo(parent)
                 }
 
@@ -76,9 +76,9 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .constrainAs(name) {
-                    start.linkTo(icon.end, 5.dp)
+                    start.linkTo(icon.end, Spacing.small)
                     centerVerticallyTo(parent)
-                    end.linkTo(valueAndTimeBox.start, 5.dp)
+                    end.linkTo(valueAndTimeBox.start, Spacing.small)
                     width = Dimension.fillToConstraints
                 }
         )
@@ -94,7 +94,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
                     text = "${step.value}g",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(horizontal = 5.dp)
+                    modifier = Modifier.padding(horizontal = Spacing.small)
 
                 )
             }
@@ -102,7 +102,7 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
                 text = step.time.toStringDuration(),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(horizontal = 5.dp)
+                modifier = Modifier.padding(horizontal = Spacing.small)
             )
         }
     }

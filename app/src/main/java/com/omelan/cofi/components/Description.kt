@@ -27,6 +27,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
+import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.URL_ANNOTATION
@@ -94,7 +95,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     interactionSource = remember { MutableInteractionSource() },
                     indication = rememberRipple(bounded = true),
                 )
-                .padding(15.dp)
+                .padding(Spacing.big)
         ) {
             ClickableText(
                 text = descriptionWithLinks,
@@ -127,7 +128,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     imageVector = Icons.Rounded.KeyboardArrowDown,
                     contentDescription = "Expand",
                     modifier = Modifier
-                        .padding(top = 5.dp)
+                        .padding(top = Spacing.small)
                         .align(Alignment.CenterHorizontally)
                         .rotate(rotationDegree.value)
                 )

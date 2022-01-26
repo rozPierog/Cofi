@@ -14,8 +14,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.omelan.cofi.pages.settings.settingsItemModifier
+import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.URL_ANNOTATION
 import com.omelan.cofi.utils.appendLink
 import org.json.JSONArray
@@ -103,7 +103,7 @@ fun DependencyItem(dependency: Dependency) {
                 enabled = !dependency.url.isNullOrBlank() && dependency.url != "null",
                 unlimitedHeight = true
             )
-            .padding(8.dp)
+            .padding(Spacing.normal)
             .fillMaxWidth()
             .testTag("dependency_column")
     ) {
@@ -114,7 +114,7 @@ fun DependencyItem(dependency: Dependency) {
         )
         Text(
             text = dependency.description, color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = Spacing.normal)
         )
         Text(
             text = "Copyright © $year ${dependency.developers.joinToString()}",
@@ -131,7 +131,7 @@ fun DependencyItem(dependency: Dependency) {
                         return@ClickableText
                     }
             },
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = Spacing.normal)
         )
         Divider(color = MaterialTheme.colorScheme.onBackground.copy(0.12f))
     }

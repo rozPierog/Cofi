@@ -25,6 +25,7 @@ import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
+import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.createTextFieldColors
 import com.omelan.cofi.ui.full
 import com.omelan.cofi.utils.ensureNumbersOnly
@@ -68,7 +69,7 @@ fun StepAddCard(
                 .animateContentSize()
         ) {
             Box {
-                FlowRow(mainAxisSpacing = 5.dp, crossAxisSpacing = 5.dp) {
+                FlowRow(mainAxisSpacing = Spacing.small, crossAxisSpacing = Spacing.small) {
                     StepType.values().forEach { stepType ->
                         Button(
                             onClick = { pickedType = stepType },
@@ -169,11 +170,11 @@ fun StepAddCard(
                             )
                         },
                         modifier = Modifier
-                            .padding(vertical = 15.dp, horizontal = 2.dp)
+                            .padding(vertical = Spacing.big, horizontal = Spacing.xSmall)
                             .testTag("step_save"),
                     ) {
                         Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
-                        Spacer(modifier = Modifier.width(5.dp))
+                        Spacer(modifier = Modifier.width(Spacing.small))
                         Text(text = stringResource(id = R.string.step_add_save))
                     }
                     if (stepToEdit != null) {
@@ -182,11 +183,11 @@ fun StepAddCard(
                                 save(null)
                             },
                             modifier = Modifier
-                                .padding(vertical = 15.dp, horizontal = 2.dp)
+                                .padding(vertical = Spacing.big, horizontal = Spacing.xSmall)
                                 .testTag("step_remove"),
                         ) {
                             Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
-                            Spacer(modifier = Modifier.width(5.dp))
+                            Spacer(modifier = Modifier.width(Spacing.small))
                             Text(text = stringResource(id = R.string.step_add_remove))
                         }
                     }
