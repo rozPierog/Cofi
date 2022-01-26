@@ -1,6 +1,7 @@
 package com.omelan.cofi.pages
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -70,8 +71,11 @@ fun RecipeList(
         LazyColumn(
             contentPadding = rememberInsetsPaddingValues(
                 insets = LocalWindowInsets.current.navigationBars,
-                additionalTop = Spacing.small
+                additionalTop = Spacing.small,
+                additionalStart = Spacing.big,
+                additionalEnd = Spacing.big,
             ),
+            verticalArrangement = Arrangement.spacedBy(Spacing.normal),
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.background),

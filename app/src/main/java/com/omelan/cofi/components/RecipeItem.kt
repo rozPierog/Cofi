@@ -30,7 +30,6 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
     Surface(
         tonalElevation = 2.dp,
         shadowElevation = 2.dp,
-        modifier = Modifier.padding(horizontal = Spacing.medium, vertical = Spacing.small),
         shape = shapes.card,
         color = MaterialTheme.colorScheme.surface
     ) {
