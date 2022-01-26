@@ -193,9 +193,12 @@ class MainActivity : MonetCompatActivity() {
 
     @Composable
     fun MainAddRecipe(goBack: () -> Unit, db: AppDatabase) {
+        var isRecipeSave: Boolean = false
         RecipeEdit(
             saveRecipe = { recipe, steps ->
                 lifecycleScope.launch {
+          
+           if(!recipe.name.isNullOrBlank() and !recipe.description.isNullOrBlank()) {
                     val idOfRecipe =
                         db.recipeDao().insertRecipe(recipe)
                     db.stepDao()
@@ -204,9 +207,17 @@ class MainActivity : MonetCompatActivity() {
                                 it.copy(recipeId = idOfRecipe.toInt())
                             }
                         )
+                                    isRecipeSave=true
+                    }else{Toast.makeText(applicationContext,"Name and description can't be empty.",Toast.LENGTH_SHORT).show()  }
+
+                    if(isRecipeSave.equals(true)  ){goBack()}
+
                 }
-                goBack()
+
             },
+            
+            
+            
             goBack = goBack,
         )
     }
