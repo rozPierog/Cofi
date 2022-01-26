@@ -103,7 +103,7 @@ fun DependencyItem(dependency: Dependency) {
                 enabled = !dependency.url.isNullOrBlank() && dependency.url != "null",
                 unlimitedHeight = true
             )
-            .padding(Spacing.normal)
+            .padding(vertical = Spacing.normal, horizontal = Spacing.big)
             .fillMaxWidth()
             .testTag("dependency_column")
     ) {
