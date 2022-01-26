@@ -22,6 +22,7 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
+import com.omelan.cofi.utils.parseJsonToDependencyList
 
 @Composable
 fun LicensesList(goBack: () -> Unit) {
