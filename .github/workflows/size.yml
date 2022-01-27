@@ -33,7 +33,7 @@ jobs:
       run: ./gradlew buildFullRelease
     - name: Copy PR app
       run: cp app/build/outputs/apk/full/release/app-full-release.apk main.apk
-    - uses: microsoft/android-app-size-diff@v1
+    - uses: microsoft/android-app-size-diff@v1.0.5
       name: Run APK size comparision
       with:
        baseAppPath: main.apk
