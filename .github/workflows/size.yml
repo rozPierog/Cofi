@@ -1,0 +1,58 @@
+name: Compare app size
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Create empty keystore
+      run: echo "storeFile=/" > keystore.properties
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build PR app
+      run: ./gradlew buildFullRelease
+    - name: Copy PR app
+      run: cp app/build/outputs/apk/full/release/app-full-release.apk PR.apk
+    - uses: actions/checkout@v2
+      with:
+        ref: main
+    - name: Build main app
+      run: ./gradlew buildFullRelease
+    - name: Copy PR app
+      run: cp app/build/outputs/apk/full/release/app-full-release.apk main.apk
+    - uses: microsoft/android-app-size-diff@v1
+      name: Run APK size comparision
+      with:
+       baseAppPath: main.apk
+       targetAppPath: PR.apk
+       summaryOutputPath: summary.md
+       telemetryEnabled: false
+    - name: Copy summary to env
+      id: comment
+      run: |
+        content=$(cat $1)
+        content="${content//$'\n'/'%0A'}"
+        content="${content//$'\r'/'%0D'}"
+        echo "::set-output name=comment::${content}"
+    - uses: actions/github-script@v5
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: steps.comment.outputs.comment
+          })
