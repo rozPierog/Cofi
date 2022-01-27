@@ -19,20 +19,22 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: gradle
-
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
     - name: Build PR app
       run: ./gradlew buildFullRelease
     - name: Copy PR app
-      run: cp app/build/outputs/apk/full/release/app-full-release.apk PR.apk
+      run: cp ./app/build/outputs/apk/full/release/app-full-release.apk PR.apk
+
     - uses: actions/checkout@v2
       with:
         ref: main
     - name: Build main app
       run: ./gradlew buildFullRelease
     - name: Copy PR app
-      run: cp app/build/outputs/apk/full/release/app-full-release.apk main.apk
+      run: cp ./app/build/outputs/apk/full/release/app-full-release.apk main.apk
+
     - uses: microsoft/android-app-size-diff@v1.0.5
       name: Run APK size comparision
       with:
