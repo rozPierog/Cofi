@@ -5,15 +5,9 @@ plugins {
     id 'com.jaredsburrows.license'
 }
 
-// Create a variable called keystorePropertiesFile, and initialize it to your
-// keystore.properties file, in the rootProject folder.
 def keystorePropertiesFile = rootProject.file("keystore.properties")
-
-// Initialize a new Properties() object called keystoreProperties.
 def keystoreProperties = new Properties()
-
 if (keystorePropertiesFile.exists()) {
-// Load your keystore.properties file into the keystoreProperties object.
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
@@ -28,20 +22,19 @@ android {
             }
         }
     }
-    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.omelan.cofi"
         minSdkVersion 23
         targetSdkVersion 31
+        compileSdkVersion 31
         versionCode 54
         versionName "1.3.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments += ["room.schemaLocation":
-                                      "$projectDir/schemas".toString()]
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
         resConfigs 'en', 'pl', 'it', 'de'
@@ -53,7 +46,8 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig keystoreProperties.containsKey('storeFile') ?
+                    signingConfigs.release : signingConfigs.debug
         }
 
         debug {
@@ -90,7 +84,7 @@ android {
 
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
         useIR = true
     }
 
