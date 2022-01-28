@@ -23,7 +23,10 @@ jobs:
     - name: Build PR app
       run: ./gradlew assembleFullDebug
     - name: Copy PR app
-      run: cp ./app/build/outputs/apk/full/release/app-full-release.apk PR.apk
+      run: |
+        echo $PWD
+        ls
+        cp ./app/build/outputs/apk/full/debug/app-full-release.apk main.apk
 
     - uses: actions/checkout@v2
       with:
@@ -31,7 +34,10 @@ jobs:
     - name: Build main app
       run: ./gradlew assembleFullDebug
     - name: Copy PR app
-      run: cp ./app/build/outputs/apk/full/release/app-full-release.apk main.apk
+      run: |
+        echo $PWD
+        ls
+        cp ./app/build/outputs/apk/full/debug/app-full-release.apk main.apk
 
     - uses: microsoft/android-app-size-diff@v1.0.5
       name: Run APK size comparision
