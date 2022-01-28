@@ -29,9 +29,9 @@ jobs:
                 run: ./gradlew assembleFull${{ steps.type.outputs.capitalized }}
             -   name: Copy PR app
                 run: |
-                    echo $PWD
                     ls
-                    cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk main.apk
+                    cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk ./main.apk
+                    ls
 
             -   uses: actions/checkout@v2
                 with:
@@ -40,15 +40,15 @@ jobs:
                 run: ./gradlew assembleFull${{ steps.type.outputs.capitalized }}
             -   name: Copy PR app
                 run: |
-                    echo $PWD
                     ls
-                    cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk main.apk
+                    cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk ./main.apk
+                    ls
 
             -   uses: microsoft/android-app-size-diff@v1.0.5
                 name: Run APK size comparision
                 with:
-                    baseAppPath: main.apk
-                    targetAppPath: PR.apk
+                    baseAppPath: ./main.apk
+                    targetAppPath: ./PR.apk
                     summaryOutputPath: summary.md
                     telemetryEnabled: false
             -   name: Copy summary to env
