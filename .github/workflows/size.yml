@@ -23,7 +23,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build PR app
-      run: ./gradlew buildFullRelease
+      run: ./gradlew assembleFullRelease
     - name: Copy PR app
       run: cp ./app/build/outputs/apk/full/release/app-full-release.apk PR.apk
 
@@ -31,7 +31,7 @@ jobs:
       with:
         ref: main
     - name: Build main app
-      run: ./gradlew buildFullRelease
+      run: ./gradlew assembleFullRelease
     - name: Copy PR app
       run: cp ./app/build/outputs/apk/full/release/app-full-release.apk main.apk
 
