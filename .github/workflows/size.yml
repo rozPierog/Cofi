@@ -59,11 +59,11 @@ jobs:
                     content="${content//$'\r'/'%0D'}"
                     echo "::set-output name=comment::${content}"
             -   uses: actions/github-script@v5
-                    with:
-                        script: |
-                            github.rest.issues.createComment({
-                              issue_number: context.issue.number,
-                              owner: context.repo.owner,
-                              repo: context.repo.repo,
-                              body: steps.comment.outputs.comment
-                            })
+                with:
+                    script: |
+                        github.rest.issues.createComment({
+                          issue_number: context.issue.number,
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          body: steps.comment.outputs.comment
+                        })
