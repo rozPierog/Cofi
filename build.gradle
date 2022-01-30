@@ -7,10 +7,10 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        jcenter() // remove me after https://issues.sonatype.org/browse/OSSRH-64436 is
+        maven { url 'https://plugins.gradle.org/m2' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:7.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.jaredsburrows:gradle-license-plugin:0.8.90'
     }
@@ -20,7 +20,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter()
         maven { url "https://jitpack.io" }
     }
 }
