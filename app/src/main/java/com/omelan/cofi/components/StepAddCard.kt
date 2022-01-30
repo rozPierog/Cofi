@@ -55,7 +55,7 @@ fun StepAddCard(
     var stepValue by remember(stepToEdit) {
         mutableStateOf((stepToEdit?.value ?: 0).toString())
     }
-    val textFieldColors = androidx.compose.material3.MaterialTheme.createTextFieldColors()
+    val textFieldColors = MaterialTheme.createTextFieldColors()
 //    val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
@@ -161,9 +161,7 @@ fun StepAddCard(
                             keyboardType = KeyboardType.Number,
                             imeAction = ImeAction.Done
                         ),
-                        keyboardActions = KeyboardActions(
-                            onDone = { saveStep() }
-                        ),
+                        keyboardActions = KeyboardActions(onDone = { saveStep() }),
                         colors = textFieldColors,
                         modifier = Modifier
                             .testTag("step_value")
