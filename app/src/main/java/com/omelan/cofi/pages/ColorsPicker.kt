@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.kieronquinn.monetcompat.core.MonetCompat
 import com.kieronquinn.monetcompat.extensions.toArgb
 import com.omelan.cofi.components.PiPAwareAppBar
+import com.omelan.cofi.ui.Spacing
 
 @Composable
 fun ColorPicker(goToList: () -> Unit, monet: MonetCompat) {
@@ -169,7 +170,7 @@ fun ColorPicker(goToList: () -> Unit, monet: MonetCompat) {
                             .background(color = color)
                             .height(50.dp)
                             .fillMaxWidth()
-                            .padding(15.dp)
+                            .padding(Spacing.big)
                             .clickable { Log.e("color", colorName) }
                     ) {
                         Text(text = colorName)

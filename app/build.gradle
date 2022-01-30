@@ -107,12 +107,12 @@ android {
 
 licenseReport {
     generateCsvReport = false
-    generateHtmlReport = true
-    generateJsonReport = false
+    generateHtmlReport = false
+    generateJsonReport = true
     // These options are ignored for Java projects
     copyHtmlReportToAssets = false
-    copyHtmlReportToAssets = true
-    copyJsonReportToAssets = false
+    copyHtmlReportToAssets = false
+    copyJsonReportToAssets = true
 }
 
 configurations {

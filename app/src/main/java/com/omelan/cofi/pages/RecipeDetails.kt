@@ -39,7 +39,7 @@ import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.*
-import com.omelan.cofi.ui.spacingDefault
+import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.Haptics
 import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
@@ -171,7 +171,7 @@ fun RecipeDetails(
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarState,
-                modifier = Modifier.padding(10.dp)
+                modifier = Modifier.padding(Spacing.medium)
             ) {
                 Snackbar(
                     backgroundColor =
@@ -193,7 +193,7 @@ fun RecipeDetails(
                         Icon(
                             painter = painterResource(id = recipe.recipeIcon.icon),
                             contentDescription = null,
-                            modifier = Modifier.padding(end = 4.dp)
+                            modifier = Modifier.padding(end = Spacing.small)
                         )
                         Text(
                             text = recipe.name,
@@ -250,9 +250,9 @@ fun RecipeDetails(
             } else {
                 rememberInsetsPaddingValues(
                     insets = LocalWindowInsets.current.navigationBars,
-                    additionalStart = spacingDefault,
-                    additionalTop = spacingDefault,
-                    additionalEnd = spacingDefault,
+                    additionalStart = Spacing.big,
+                    additionalTop = Spacing.big,
+                    additionalEnd = Spacing.big,
                     additionalBottom = 112.0.dp,
                 )
             },
@@ -268,7 +268,7 @@ fun RecipeDetails(
             }
             if (!isInPiP) {
                 item {
-                    Spacer(modifier = Modifier.height(spacingDefault))
+                    Spacer(modifier = Modifier.height(Spacing.big))
                 }
             }
             item {
@@ -283,7 +283,7 @@ fun RecipeDetails(
             }
             item {
                 if (!isInPiP) {
-                    Spacer(modifier = Modifier.height(spacingDefault))
+                    Spacer(modifier = Modifier.height(Spacing.big))
                 }
             }
             if (!isInPiP) {

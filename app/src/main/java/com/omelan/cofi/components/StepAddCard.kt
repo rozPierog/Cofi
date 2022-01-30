@@ -2,6 +2,7 @@ package com.omelan.cofi.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.OutlinedTextField
@@ -14,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -25,6 +27,7 @@ import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
+import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.createTextFieldColors
 import com.omelan.cofi.ui.full
 import com.omelan.cofi.utils.ensureNumbersOnly
@@ -58,26 +61,24 @@ fun StepAddCard(
     }
     val textFieldColors = androidx.compose.material3.MaterialTheme.createTextFieldColors()
     Surface(
-        shape = shapes.medium,
+        shape = RoundedCornerShape(10.dp),
         modifier = Modifier.fillMaxWidth(),
         tonalElevation = 2.dp
     ) {
         Column(
             modifier = Modifier
-                .padding(13.dp)
+                .padding(Spacing.medium)
                 .animateContentSize()
         ) {
             Box {
-                FlowRow(mainAxisSpacing = 5.dp, crossAxisSpacing = 5.dp) {
+                FlowRow {
                     StepType.values().forEach { stepType ->
                         Button(
                             onClick = { pickedType = stepType },
                             shape = shapes.full,
                             modifier = Modifier
-                                .testTag(
-                                    "step_type_button_${stepType.name.lowercase()}"
-                                )
-                                .padding(2.dp)
+                                .testTag("step_type_button_${stepType.name.lowercase()}")
+                                .padding(Spacing.xSmall)
                         ) {
                             Text(
                                 text = if (pickedType == stepType) {
@@ -100,10 +101,8 @@ fun StepAddCard(
                     keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                     colors = textFieldColors,
                     modifier = Modifier
-                        .testTag(
-                            "step_name"
-                        )
-                        .padding(2.dp)
+                        .testTag("step_name")
+                        .padding(Spacing.xSmall)
                         .fillMaxWidth(),
                 )
                 OutlinedTextField(
@@ -116,16 +115,14 @@ fun StepAddCard(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     colors = textFieldColors,
                     modifier = Modifier
-                        .testTag(
-                            "step_time"
-                        )
-                        .padding(2.dp)
+                        .testTag("step_time")
+                        .padding(Spacing.xSmall)
                         .fillMaxWidth(),
                 )
                 if (listOf(
                         StepType.WATER,
                         StepType.ADD_COFFEE,
-                        StepType.OTHER
+                        StepType.OTHER,
                     ).contains(pickedType)
                 ) {
                     OutlinedTextField(
@@ -139,16 +136,18 @@ fun StepAddCard(
                         colors = textFieldColors,
                         modifier = Modifier
                             .testTag("step_value")
-                            .padding(2.dp)
+                            .padding(Spacing.xSmall)
                             .fillMaxWidth(),
                     )
                 }
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Button(
+                    PillButton(
+                        modifier = Modifier.testTag("step_save"),
+                        text = stringResource(id = R.string.step_add_save),
+                        imageVector = Icons.Rounded.Add,
                         onClick = {
                             save(
                                 Step(
@@ -167,32 +166,36 @@ fun StepAddCard(
                                     orderInRecipe = orderInRecipe,
                                 )
                             )
-                        },
-                        modifier = Modifier
-                            .padding(vertical = 15.dp, horizontal = 2.dp)
-                            .testTag("step_save"),
-                    ) {
-                        Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
-                        Spacer(modifier = Modifier.width(5.dp))
-                        Text(text = stringResource(id = R.string.step_add_save))
-                    }
-                    if (stepToEdit != null) {
-                        Button(
-                            onClick = {
-                                save(null)
-                            },
-                            modifier = Modifier
-                                .padding(vertical = 15.dp, horizontal = 2.dp)
-                                .testTag("step_remove"),
-                        ) {
-                            Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
-                            Spacer(modifier = Modifier.width(5.dp))
-                            Text(text = stringResource(id = R.string.step_add_remove))
                         }
+                    )
+                    if (stepToEdit != null) {
+                        PillButton(
+                            modifier = Modifier.testTag("step_remove"),
+                            text = stringResource(id = R.string.step_add_remove),
+                            imageVector = Icons.Rounded.Delete,
+                            onClick = { save(null) }
+                        )
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun PillButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    imageVector: ImageVector,
+    onClick: () -> Unit,
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier.padding(vertical = Spacing.big, horizontal = Spacing.xSmall),
+    ) {
+        Icon(imageVector = imageVector, contentDescription = null)
+        Spacer(modifier = Modifier.width(Spacing.small))
+        Text(text = text)
     }
 }
 

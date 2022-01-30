@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Proper changelog
 
 ### Changed
+- Replaced webview implementaton of Open Source Licenses with one written in Compose
 
 ### Removed
 

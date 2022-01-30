@@ -10,7 +10,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.kieronquinn.monetcompat.core.MonetCompat
@@ -116,8 +115,6 @@ fun createMonetCompatColorScheme(monet: MonetCompat, darkMode: Boolean): ColorSc
 @Composable
 fun getMaterialYouPallets(context: Context, darkMode: Boolean) =
     if (darkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-
-val spacingDefault = 16.dp
 
 @ExperimentalAnimatedInsets
 @Composable

@@ -20,17 +20,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
+import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
-import com.omelan.cofi.utils.IntentHelpers
+import com.omelan.cofi.utils.URL_ANNOTATION
+import com.omelan.cofi.utils.addLinkAnnotation
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -54,10 +55,10 @@ private fun extractUrls(text: String): List<String> {
 @ExperimentalAnimatedInsets
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
+    val uriHandler = LocalUriHandler.current
     var isExpanded by remember { mutableStateOf(false) }
     var showExpandButton by remember { mutableStateOf(false) }
     val rotationDegree = remember { Animatable(initialValue = 0f) }
-    val context = LocalContext.current
     val descriptionWithLinks = buildAnnotatedString {
         val urlsInDescription = extractUrls(descriptionText)
         append(descriptionText)
@@ -70,20 +71,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
         urlsInDescription.forEach {
             val positionOfUrl = descriptionText.indexOf(it, startIndex = lastPosition)
             lastPosition = positionOfUrl
-            addStringAnnotation(
-                tag = "URL",
-                annotation = it,
-                start = positionOfUrl,
-                end = positionOfUrl + it.length,
-            )
-            addStyle(
-                SpanStyle(
-                    color = MaterialTheme.colorScheme.secondary,
-                    textDecoration = TextDecoration.Underline
-                ),
-                positionOfUrl,
-                positionOfUrl + it.length
-            )
+            addLinkAnnotation(start = positionOfUrl, text = it)
         }
     }
     LaunchedEffect(isExpanded) {
@@ -107,7 +95,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     interactionSource = remember { MutableInteractionSource() },
                     indication = rememberRipple(bounded = true),
                 )
-                .padding(15.dp)
+                .padding(Spacing.big)
         ) {
             ClickableText(
                 text = descriptionWithLinks,
@@ -120,9 +108,9 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                 modifier = Modifier.animateContentSize(),
                 onClick = {
                     descriptionWithLinks
-                        .getStringAnnotations("URL", it, it)
+                        .getStringAnnotations(URL_ANNOTATION, it, it)
                         .firstOrNull()?.let { stringAnnotation ->
-                            IntentHelpers.openUri(context, stringAnnotation.item)
+                            uriHandler.openUri(stringAnnotation.item)
                             return@ClickableText
                         }
                     if (showExpandButton) {
@@ -140,7 +128,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     imageVector = Icons.Rounded.KeyboardArrowDown,
                     contentDescription = "Expand",
                     modifier = Modifier
-                        .padding(top = 5.dp)
+                        .padding(top = Spacing.small)
                         .align(Alignment.CenterHorizontally)
                         .rotate(rotationDegree.value)
                 )
