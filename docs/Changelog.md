@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added rudimentary validation in Recipe Edit page
 
 ### Changed
-- Replaced webview implementaton of Open Source Licenses with one written in Compose
+- Replaced webview implementation of Open Source Licenses with one written in Compose
+- Fixed issue where app would misbehave and/or crash if user revoke PiP permission
 - Changed design on step add card
 
 ### Removed

@@ -42,6 +42,7 @@ import com.omelan.cofi.pages.settings.AppSettings
 import com.omelan.cofi.pages.settings.AppSettingsAbout
 import com.omelan.cofi.pages.settings.licenses.LicensesList
 import com.omelan.cofi.ui.CofiTheme
+import com.omelan.cofi.utils.checkPiPPermission
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -78,8 +79,7 @@ class MainActivity : MonetCompatActivity() {
 
     private fun onTimerRunning(isRunning: Boolean) {
         mainActivityViewModel.setCanGoToPiP(isRunning)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (checkPiPPermission(this)) {
             setPictureInPictureParams(
                 PictureInPictureParams.Builder()
                     .setAspectRatio(Rational(1, 1))
@@ -101,21 +101,9 @@ class MainActivity : MonetCompatActivity() {
     @Composable
     fun MainList(navController: NavController) {
         RecipeList(
-            navigateToRecipe = { recipeId ->
-                navController.navigate(
-                    route = "recipe/$recipeId",
-                )
-            },
-            addNewRecipe = {
-                navController.navigate(
-                    route = "add_recipe",
-                )
-            },
-            goToSettings = {
-                navController.navigate(
-                    route = "settings"
-                )
-            }
+            navigateToRecipe = { recipeId -> navController.navigate(route = "recipe/$recipeId") },
+            addNewRecipe = { navController.navigate(route = "add_recipe") },
+            goToSettings = { navController.navigate(route = "settings") },
         )
     }
 
@@ -196,14 +184,8 @@ class MainActivity : MonetCompatActivity() {
         RecipeEdit(
             saveRecipe = { recipe, steps ->
                 lifecycleScope.launch {
-                    val idOfRecipe =
-                        db.recipeDao().insertRecipe(recipe)
-                    db.stepDao()
-                        .insertAll(
-                            steps.map {
-                                it.copy(recipeId = idOfRecipe.toInt())
-                            }
-                        )
+                    val idOfRecipe = db.recipeDao().insertRecipe(recipe)
+                    db.stepDao().insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
                 }
                 goBack()
             },
@@ -216,16 +198,6 @@ class MainActivity : MonetCompatActivity() {
         val navController = rememberNavController()
         val db = AppDatabase.getInstance(this)
         val isInPiP = mainActivityViewModel.pipState.observeAsState(false)
-        // Transition animations for navController.navigate are not supported right now
-        // monitor this issue https://issuetracker.google.com/issues/172112072
-        // val builder: NavOptionsBuilder.() -> Unit = {
-        //     anim {
-        //         enter = android.R.anim.slide_out_right
-        //         exit = android.R.anim.fade_out
-        //         popEnter = android.R.anim.slide_out_right
-        //         popExit = android.R.anim.fade_out
-        //     }
-        // }
         val goBack: () -> Unit = {
             navController.popBackStack()
         }
@@ -306,11 +278,6 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-//    override fun onConfigurationChanged(newConfig: Configuration) {
-//        super.onConfigurationChanged(newConfig)
-//        SystemUIHelpers.setStatusBarIconsTheme(activity = this, darkIcons = false)
-//    }
-
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration
@@ -319,17 +286,36 @@ class MainActivity : MonetCompatActivity() {
     }
 
     override fun onUserLeaveHint() {
-
         val isPiPEnabledFlow: Flow<Boolean> = DataStore(this).getPiPSetting()
         var isPiPEnabled: Boolean
         runBlocking {
             isPiPEnabled = isPiPEnabledFlow.first()
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
-            mainActivityViewModel.canGoToPiP.value == true &&
-            isPiPEnabled
-        ) {
+        if (mainActivityViewModel.canGoToPiP.value == true && isPiPEnabled) {
             enterPictureInPictureMode(PictureInPictureParams.Builder().build())
+        }
+    }
+
+    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+        onResumedCompat()
+        super.onTopResumedActivityChanged(isTopResumedActivity)
+    }
+
+    override fun onResume() {
+        onResumedCompat()
+        super.onResume()
+    }
+
+    private fun onResumedCompat() {
+        val currentPiPStatus = mainActivityViewModel.canGoToPiP.value ?: false
+        if (
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+            currentPiPStatus &&
+            !checkPiPPermission(this)
+        ) {
+            setPictureInPictureParams(
+                PictureInPictureParams.Builder().setAutoEnterEnabled(false).build()
+            )
         }
     }
 }
