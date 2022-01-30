@@ -173,7 +173,8 @@ fun StepAddCard(
                             modifier = Modifier.testTag("step_remove"),
                             text = stringResource(id = R.string.step_add_remove),
                             imageVector = Icons.Rounded.Delete,
-                            onClick = { save(null) })
+                            onClick = { save(null) }
+                        )
                     }
                 }
             }
