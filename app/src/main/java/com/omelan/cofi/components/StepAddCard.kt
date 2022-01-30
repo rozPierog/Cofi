@@ -94,22 +94,12 @@ fun StepAddCard(
             Box {
                 FlowRow {
                     StepType.values().forEach { stepType ->
-                        Button(
-                            onClick = { pickedType = stepType },
-                            shape = shapes.full,
-                            modifier = Modifier
-                                .testTag("step_type_button_${stepType.name.lowercase()}")
-                                .padding(Spacing.xSmall)
-                        ) {
-                            Text(
-                                text = if (pickedType == stepType) {
-                                    "✓ "
-                                } else {
-                                    ""
-                                } + stringResource(id = stepType.stringRes),
-                                modifier = Modifier.animateContentSize(),
-                            )
-                        }
+                        Chip(
+                            value = stringResource(id = stepType.stringRes),
+                            onCheck = { pickedType = stepType },
+                            isChecked = pickedType == stepType,
+                            modifier = Modifier.testTag("step_type_button_${stepType.name.lowercase()}")
+                        )
                     }
                 }
             }
