@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
@@ -31,7 +30,6 @@ import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.createTextFieldColors
-import com.omelan.cofi.ui.full
 import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
@@ -95,7 +93,9 @@ fun StepAddCard(
                             value = stringResource(id = stepType.stringRes),
                             onCheck = { pickedType = stepType },
                             isChecked = pickedType == stepType,
-                            modifier = Modifier.testTag("step_type_button_${stepType.name.lowercase()}")
+                            modifier = Modifier.testTag(
+                                "step_type_button_${stepType.name.lowercase()}"
+                            )
                         )
                     }
                 }

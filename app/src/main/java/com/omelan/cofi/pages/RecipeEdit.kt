@@ -225,7 +225,7 @@ fun RecipeEdit(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
 
-                        ) {
+                    ) {
                         val indexOfThisStep = steps.indexOf(step)
                         StepAddCard(
                             stepToEdit = step,
