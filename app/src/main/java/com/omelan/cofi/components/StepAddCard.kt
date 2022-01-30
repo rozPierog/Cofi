@@ -10,10 +10,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -109,7 +106,6 @@ fun StepAddCard(
                     value = stepName,
                     singleLine = true,
                     onValueChange = { stepName = it },
-                    isError = stepName.text.isBlank(),
                     keyboardOptions = KeyboardOptions(
                         KeyboardCapitalization.Sentences,
                         imeAction = ImeAction.Next
@@ -132,7 +128,6 @@ fun StepAddCard(
                     onValueChange = { value ->
                         stepTime = ensureNumbersOnly(value) ?: stepTime
                     },
-                    isError = stepTime.isBlank(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
@@ -161,7 +156,6 @@ fun StepAddCard(
                         onValueChange = { value ->
                             stepValue = ensureNumbersOnly(value) ?: stepValue
                         },
-                        isError = stepValue.isBlank(),
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number,
@@ -185,6 +179,7 @@ fun StepAddCard(
                         modifier = Modifier.testTag("step_save"),
                         text = stringResource(id = R.string.step_add_save),
                         imageVector = Icons.Rounded.Add,
+                        enabled = stepName.text.isNotBlank(),
                         onClick = { saveStep() }
                     )
                     if (stepToEdit != null) {
@@ -205,11 +200,17 @@ fun StepAddCard(
 fun PillButton(
     modifier: Modifier = Modifier,
     text: String,
+    enabled: Boolean = true,
     imageVector: ImageVector,
     onClick: () -> Unit,
 ) {
     Button(
         onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        ),
+        enabled = enabled,
         modifier = modifier.padding(vertical = Spacing.big, horizontal = Spacing.xSmall),
     ) {
         Icon(imageVector = imageVector, contentDescription = null)

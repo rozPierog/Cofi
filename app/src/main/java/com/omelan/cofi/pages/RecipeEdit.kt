@@ -134,7 +134,8 @@ fun RecipeEdit(
                                 ),
                                 steps
                             )
-                        }
+                        },
+                        enabled = name.isNotBlank(),
                     ) {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
@@ -196,7 +197,6 @@ fun RecipeEdit(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .testTag("recipe_edit_name"),
-                            isError = name.isBlank(),
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                             label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
@@ -225,7 +225,7 @@ fun RecipeEdit(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
 
-                    ) {
+                        ) {
                         val indexOfThisStep = steps.indexOf(step)
                         StepAddCard(
                             stepToEdit = step,
