@@ -134,7 +134,8 @@ fun RecipeEdit(
                                 ),
                                 steps
                             )
-                        }
+                        },
+                        enabled = name.isNotBlank(),
                     ) {
                         Icon(
                             painterResource(id = R.drawable.ic_save),

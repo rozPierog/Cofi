@@ -43,6 +43,7 @@ import com.omelan.cofi.pages.settings.AppSettingsAbout
 import com.omelan.cofi.pages.settings.licenses.LicensesList
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -79,17 +80,21 @@ class MainActivity : MonetCompatActivity() {
 
     private fun onTimerRunning(isRunning: Boolean) {
         mainActivityViewModel.setCanGoToPiP(isRunning)
-        if (checkPiPPermission(this)) {
-            setPictureInPictureParams(
-                PictureInPictureParams.Builder()
-                    .setAspectRatio(Rational(1, 1))
-                    .apply {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            setAutoEnterEnabled(isRunning)
-                            setSeamlessResizeEnabled(true)
-                        }
-                    }.build()
-            )
+        val isPiPEnabledFlow: Flow<Boolean> = DataStore(this).getPiPSetting()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val isPiPEnabled = isPiPEnabledFlow.first()
+            if (checkPiPPermission(this@MainActivity) && isPiPEnabled) {
+                setPictureInPictureParams(
+                    PictureInPictureParams.Builder()
+                        .setAspectRatio(Rational(1, 1))
+                        .apply {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                                setAutoEnterEnabled(isRunning)
+                                setSeamlessResizeEnabled(true)
+                            }
+                        }.build()
+                )
+            }
         }
         if (isRunning) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
