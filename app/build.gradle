@@ -29,7 +29,7 @@ android {
         targetSdkVersion 31
         compileSdkVersion 31
         versionCode 56
-        versionName "1.5.0"
+        versionName "1.6.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
