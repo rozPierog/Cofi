@@ -1,6 +1,5 @@
 package com.omelan.cofi.pages.settings
 
-import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +32,7 @@ import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
 import com.omelan.cofi.ui.Spacing
+import com.omelan.cofi.utils.checkPiPPermission
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterial3Api
@@ -53,6 +53,11 @@ fun AppSettings(
     var showCombineWeightDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val appBarBehavior = createAppBarBehavior()
+
+    val hasPiPPermission = checkPiPPermission(context)
+    fun enablePip() {
+        coroutineScope.launch { dataStore.togglePipSetting() }
+    }
     Scaffold(
         topBar = {
             PiPAwareAppBar(
@@ -89,25 +94,18 @@ fun AppSettings(
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
-                        onClick = {
-                            coroutineScope.launch {
-                                dataStore.togglePipSetting()
-                            }
-                        },
-                        enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                        onClick = { enablePip() },
+                        enabled = hasPiPPermission
                     ),
                     trailing = {
                         Switch(
                             checked = isPiPEnabled,
-                            onCheckedChange = {
-                                coroutineScope.launch {
-                                    dataStore.togglePipSetting()
-                                }
-                            },
+                            onCheckedChange = { enablePip() },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = MaterialTheme.colorScheme.secondary,
                                 checkedTrackColor = MaterialTheme.colorScheme.secondary,
-                            )
+                            ),
+                            enabled = hasPiPPermission
                         )
                     }
                 )

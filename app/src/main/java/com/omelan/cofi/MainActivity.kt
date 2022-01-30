@@ -1,8 +1,6 @@
 package com.omelan.cofi
 
-import android.app.AppOpsManager
 import android.app.PictureInPictureParams
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -44,6 +42,7 @@ import com.omelan.cofi.pages.settings.AppSettings
 import com.omelan.cofi.pages.settings.AppSettingsAbout
 import com.omelan.cofi.pages.settings.licenses.LicensesList
 import com.omelan.cofi.ui.CofiTheme
+import com.omelan.cofi.utils.checkPiPPermission
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -80,7 +79,7 @@ class MainActivity : MonetCompatActivity() {
 
     private fun onTimerRunning(isRunning: Boolean) {
         mainActivityViewModel.setCanGoToPiP(isRunning)
-        if (checkPiPPermission()) {
+        if (checkPiPPermission(this)) {
             setPictureInPictureParams(
                 PictureInPictureParams.Builder()
                     .setAspectRatio(Rational(1, 1))
@@ -312,28 +311,11 @@ class MainActivity : MonetCompatActivity() {
         if (
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
             currentPiPStatus &&
-            !checkPiPPermission()
+            !checkPiPPermission(this)
         ) {
             setPictureInPictureParams(
                 PictureInPictureParams.Builder().setAutoEnterEnabled(false).build()
             )
-        }
-    }
-
-    private fun checkPiPPermission(): Boolean {
-        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            appOps.unsafeCheckOpNoThrow(
-                AppOpsManager.OPSTR_PICTURE_IN_PICTURE,
-                android.os.Process.myUid(),
-                packageName
-            ) == AppOpsManager.MODE_ALLOWED
-        } else {
-            appOps.checkOpNoThrow(
-                AppOpsManager.OPSTR_PICTURE_IN_PICTURE,
-                android.os.Process.myUid(),
-                packageName
-            ) == AppOpsManager.MODE_ALLOWED
         }
     }
 }
