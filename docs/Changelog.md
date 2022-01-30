@@ -8,9 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Proper changelog
+- Added rudimentary validation in Recipe Edit page
 
 ### Changed
 - Replaced webview implementaton of Open Source Licenses with one written in Compose
+- Changed design on step add card
 
 ### Removed
 
