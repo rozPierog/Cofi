@@ -3,6 +3,7 @@ package com.omelan.cofi.components
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.OutlinedTextField
@@ -15,11 +16,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
@@ -44,22 +49,38 @@ fun StepAddCard(
 ) {
     var pickedType by remember(stepToEdit) { mutableStateOf(stepToEdit?.type) }
     val pickedTypeName = pickedType?.stringRes?.let { stringResource(id = it) } ?: ""
-    val stepName = remember(stepToEdit, pickedTypeName) {
-        mutableStateOf(
-            stepToEdit?.name ?: pickedTypeName
-        )
+    var stepName by remember(stepToEdit, pickedTypeName) {
+        mutableStateOf(TextFieldValue(stepToEdit?.name ?: pickedTypeName))
     }
-    val stepTime = remember(stepToEdit) {
-        mutableStateOf(
-            ((stepToEdit?.time ?: 0) / 1000).toString()
-        )
+    var stepTime by remember(stepToEdit) {
+        mutableStateOf(((stepToEdit?.time ?: 0) / 1000).toString())
     }
-    val stepValue = remember(stepToEdit) {
-        mutableStateOf(
-            (stepToEdit?.value ?: 0).toString()
-        )
+    var stepValue by remember(stepToEdit) {
+        mutableStateOf((stepToEdit?.value ?: 0).toString())
     }
     val textFieldColors = androidx.compose.material3.MaterialTheme.createTextFieldColors()
+//    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
+    fun saveStep() {
+        save(
+            Step(
+                name = stepName.text,
+                time = stepTime.safeToInt().toMillis(),
+                type = pickedType ?: StepType.OTHER,
+                value = if (stepValue.isNotBlank() &&
+                    stepValue.toInt() != 0 &&
+                    pickedType != StepType.WAIT
+                ) {
+                    stepValue.toInt()
+                } else {
+                    null
+                },
+                recipeId = recipeId,
+                orderInRecipe = orderInRecipe,
+            )
+        )
+    }
     Surface(
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier.fillMaxWidth(),
@@ -95,24 +116,43 @@ fun StepAddCard(
             if (pickedType != null) {
                 OutlinedTextField(
                     label = { Text(text = stringResource(id = R.string.step_add_name)) },
-                    value = stepName.value,
+                    value = stepName,
                     singleLine = true,
-                    onValueChange = { stepName.value = it },
-                    keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
+                    onValueChange = { stepName = it },
+                    isError = stepName.text.isBlank(),
+                    keyboardOptions = KeyboardOptions(
+                        KeyboardCapitalization.Sentences,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                     colors = textFieldColors,
                     modifier = Modifier
                         .testTag("step_name")
                         .padding(Spacing.xSmall)
+//                        .focusRequester(focusRequester)
                         .fillMaxWidth(),
                 )
                 OutlinedTextField(
                     label = { Text(text = stringResource(id = R.string.step_add_duration)) },
-                    value = stepTime.value,
-                    onValueChange = {
-                        stepTime.value = ensureNumbersOnly(it) ?: stepTime.value
+                    value = stepTime,
+                    onValueChange = { value ->
+                        stepTime = ensureNumbersOnly(value) ?: stepTime
                     },
+                    isError = stepTime.isBlank(),
                     singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                     colors = textFieldColors,
                     modifier = Modifier
                         .testTag("step_time")
@@ -127,12 +167,19 @@ fun StepAddCard(
                 ) {
                     OutlinedTextField(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
-                        value = stepValue.value,
-                        onValueChange = {
-                            stepValue.value = ensureNumbersOnly(it) ?: stepValue.value
+                        value = stepValue,
+                        onValueChange = { value ->
+                            stepValue = ensureNumbersOnly(value) ?: stepValue
                         },
+                        isError = stepValue.isBlank(),
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = { saveStep() }
+                        ),
                         colors = textFieldColors,
                         modifier = Modifier
                             .testTag("step_value")
@@ -148,25 +195,7 @@ fun StepAddCard(
                         modifier = Modifier.testTag("step_save"),
                         text = stringResource(id = R.string.step_add_save),
                         imageVector = Icons.Rounded.Add,
-                        onClick = {
-                            save(
-                                Step(
-                                    name = stepName.value,
-                                    time = stepTime.value.safeToInt().toMillis(),
-                                    type = pickedType ?: StepType.OTHER,
-                                    value = if (stepValue.value.isNotBlank() &&
-                                        stepValue.value.toInt() != 0 &&
-                                        pickedType != StepType.WAIT
-                                    ) {
-                                        stepValue.value.toInt()
-                                    } else {
-                                        null
-                                    },
-                                    recipeId = recipeId,
-                                    orderInRecipe = orderInRecipe,
-                                )
-                            )
-                        }
+                        onClick = { saveStep() }
                     )
                     if (stepToEdit != null) {
                         PillButton(
