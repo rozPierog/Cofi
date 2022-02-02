@@ -49,13 +49,16 @@ jobs:
                     curl -L https://github.com/JakeWharton/diffuse/releases/download/0.1.0/diffuse-0.1.0-binary.jar --output diffuse.jar
                     chmod +x diffuse.jar
                     COMMENT=$(./diffuse.jar diff ../main.apk ../pr.apk)
-                    echo "::set-output name=comment::${COMMENT}"
+                    echo "::set-output name=comment::```\n${COMMENT}\n```"
             -   uses: actions/github-script@v5
+                env:
+                    COMMENT: ${{ steps.id.outputs.comment }}
                 with:
                     script: |
+                        const { COMMENT } = process.env
                         github.rest.issues.createComment({
                           issue_number: context.issue.number,
                           owner: context.repo.owner,
                           repo: context.repo.repo,
-                          body: steps.id.outputs.comment
+                          body: COMMENT
                         })
