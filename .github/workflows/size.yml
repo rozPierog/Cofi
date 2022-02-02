@@ -49,6 +49,9 @@ jobs:
                     curl -L https://github.com/JakeWharton/diffuse/releases/download/0.1.0/diffuse-0.1.0-binary.jar --output diffuse.jar
                     chmod +x diffuse.jar
                     COMMENT=$(./diffuse.jar diff ../main.apk ../pr.apk)
+                    COMMENT="${COMMENT//'%'/'%25'}"
+                    COMMENT="${COMMENT//$'\n'/'%0A'}"
+                    COMMENT="${COMMENT//$'\r'/'%0D'}"
                     echo "::set-output name=comment::${COMMENT}"
             -   uses: actions/github-script@v3
                 env:
