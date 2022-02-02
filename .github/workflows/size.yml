@@ -49,7 +49,7 @@ jobs:
                     curl -L https://github.com/JakeWharton/diffuse/releases/download/0.1.0/diffuse-0.1.0-binary.jar --output diffuse.jar
                     chmod +x diffuse.jar
                     COMMENT=$(./diffuse.jar diff ../main.apk ../pr.apk)
-                    echo "::set-output name=comment::```\n${COMMENT}\n```"
+                    echo "::set-output name=comment::${COMMENT}"
             -   uses: actions/github-script@v5
                 env:
                     COMMENT: ${{ steps.id.outputs.comment }}
@@ -60,5 +60,5 @@ jobs:
                           issue_number: context.issue.number,
                           owner: context.repo.owner,
                           repo: context.repo.repo,
-                          body: COMMENT
+                          body: "```\n" + COMMENT "\n```"
                         })
