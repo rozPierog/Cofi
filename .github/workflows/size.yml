@@ -30,7 +30,7 @@ jobs:
             -   name: Copy PR app
                 run: |
                     ls
-                    cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk ./main.apk
+                    cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk ./pr.apk
                     ls
 
             -   uses: actions/checkout@v2
@@ -43,21 +43,13 @@ jobs:
                     ls
                     cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk ./main.apk
                     ls
-
-            -   uses: microsoft/android-app-size-diff@v1.0.5
-                name: Run APK size comparision
-                with:
-                    baseAppPath: ./main.apk
-                    targetAppPath: ./PR.apk
-                    summaryOutputPath: summary.md
-                    telemetryEnabled: false
-            -   name: Copy summary to env
-                id: comment
+            -   name: diff between apks
+                id: diff
                 run: |
-                    content=$(cat $1)
-                    content="${content//$'\n'/'%0A'}"
-                    content="${content//$'\r'/'%0D'}"
-                    echo "::set-output name=comment::${content}"
+                    curl -L https://github.com/JakeWharton/diffuse/releases/download/0.1.0/diffuse-0.1.0-binary.jar --output diffuse.jar
+                    chmod +x diffuse.jar
+                    COMMENT=$(./diffuse.jar diff main.apk pr.apk > summary.md)
+                    echo "::set-output name=comment::${COMMENT}"
             -   uses: actions/github-script@v5
                 with:
                     script: |
@@ -65,5 +57,5 @@ jobs:
                           issue_number: context.issue.number,
                           owner: context.repo.owner,
                           repo: context.repo.repo,
-                          body: steps.comment.outputs.comment
+                          body: steps.id.outputs.comment
                         })
