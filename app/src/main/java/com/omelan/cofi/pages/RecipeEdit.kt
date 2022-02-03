@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.*
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -80,6 +81,7 @@ fun RecipeEdit(
     }
 
     val textFieldColors = MaterialTheme.createTextFieldColors()
+    val textSelectionColors = MaterialTheme.createTextSelectionColors()
     val appBarBehavior = createAppBarBehavior()
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
@@ -158,121 +160,123 @@ fun RecipeEdit(
             )
         }
     ) {
-        BoxWithConstraints {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .background(color = MaterialTheme.colorScheme.background),
-                contentPadding = PaddingValues(
-                    bottom = maxHeight / 2,
-                    top = Spacing.big,
-                    start = Spacing.big,
-                    end = Spacing.big,
-                ),
-            ) {
-                item {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        IconButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
-                                        bottomSheetScaffoldState.bottomSheetState.collapse()
-                                    } else {
-                                        bottomSheetScaffoldState.bottomSheetState.expand()
+        CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
+            BoxWithConstraints {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .background(color = MaterialTheme.colorScheme.background),
+                    contentPadding = PaddingValues(
+                        bottom = maxHeight / 2,
+                        top = Spacing.big,
+                        start = Spacing.big,
+                        end = Spacing.big,
+                    ),
+                ) {
+                    item {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            IconButton(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
+                                            bottomSheetScaffoldState.bottomSheetState.collapse()
+                                        } else {
+                                            bottomSheetScaffoldState.bottomSheetState.expand()
+                                        }
+                                        keyboardController?.hide()
                                     }
-                                    keyboardController?.hide()
                                 }
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = pickedIcon.icon),
+                                    tint = MaterialTheme.colorScheme.onBackground,
+                                    contentDescription = null
+                                )
                             }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = pickedIcon.icon),
-                                tint = MaterialTheme.colorScheme.onBackground,
-                                contentDescription = null
+                            OutlinedTextField(
+                                value = name,
+                                onValueChange = { name = it },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .testTag("recipe_edit_name"),
+                                singleLine = true,
+                                keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
+                                label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
+                                colors = textFieldColors,
                             )
                         }
+                    }
+                    item {
                         OutlinedTextField(
-                            value = name,
-                            onValueChange = { name = it },
+                            value = description,
+                            onValueChange = { description = it },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .testTag("recipe_edit_name"),
-                            singleLine = true,
+                                .padding(bottom = Spacing.big)
+                                .testTag("recipe_edit_description"),
                             keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
-                            label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
+                            label = {
+                                Text(text = stringResource(id = R.string.recipe_edit_description))
+                            },
                             colors = textFieldColors,
                         )
                     }
-                }
-                item {
-                    OutlinedTextField(
-                        value = description,
-                        onValueChange = { description = it },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = Spacing.big)
-                            .testTag("recipe_edit_description"),
-                        keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
-                        label = {
-                            Text(text = stringResource(id = R.string.recipe_edit_description))
-                        },
-                        colors = textFieldColors,
-                    )
-                }
-                items(steps) { step ->
-                    AnimatedVisibility(
-                        visible = stepWithOpenEditor == step,
-                        enter = expandVertically(),
-                        exit = shrinkVertically(),
+                    items(steps) { step ->
+                        AnimatedVisibility(
+                            visible = stepWithOpenEditor == step,
+                            enter = expandVertically(),
+                            exit = shrinkVertically(),
 
-                    ) {
-                        val indexOfThisStep = steps.indexOf(step)
-                        StepAddCard(
-                            stepToEdit = step,
-                            save = { stepToSave ->
-                                steps = if (stepToSave == null) {
-                                    steps.minus(step)
-                                } else {
-                                    steps.mapIndexed { index, step ->
-                                        if (index == indexOfThisStep) {
-                                            stepToSave
-                                        } else {
-                                            step
+                            ) {
+                            val indexOfThisStep = steps.indexOf(step)
+                            StepAddCard(
+                                stepToEdit = step,
+                                save = { stepToSave ->
+                                    steps = if (stepToSave == null) {
+                                        steps.minus(step)
+                                    } else {
+                                        steps.mapIndexed { index, step ->
+                                            if (index == indexOfThisStep) {
+                                                stepToSave
+                                            } else {
+                                                step
+                                            }
                                         }
                                     }
-                                }
-                                stepWithOpenEditor = null
-                            },
-                            orderInRecipe = steps.indexOf(step),
-                            recipeId = recipeToEdit.id,
-                        )
+                                    stepWithOpenEditor = null
+                                },
+                                orderInRecipe = steps.indexOf(step),
+                                recipeId = recipeToEdit.id,
+                            )
+                        }
+                        AnimatedVisibility(
+                            visible = stepWithOpenEditor != step,
+                            enter = expandVertically(),
+                            exit = shrinkVertically(),
+                        ) {
+                            StepListItem(
+                                step = step,
+                                stepProgress = StepProgress.Upcoming,
+                                onClick = { stepWithOpenEditor = it }
+                            )
+                        }
                     }
-                    AnimatedVisibility(
-                        visible = stepWithOpenEditor != step,
-                        enter = expandVertically(),
-                        exit = shrinkVertically(),
-                    ) {
-                        StepListItem(
-                            step = step,
-                            stepProgress = StepProgress.Upcoming,
-                            onClick = { stepWithOpenEditor = it }
-                        )
-                    }
-                }
-                if (stepWithOpenEditor == null) {
-                    item {
-                        StepAddCard(
-                            save = { stepToSave ->
-                                if (stepToSave != null) {
-                                    steps = listOf(
-                                        *steps.toTypedArray(),
-                                        stepToSave
-                                    )
-                                }
-                            },
-                            orderInRecipe = steps.size,
-                            recipeId = recipeToEdit.id,
-                        )
+                    if (stepWithOpenEditor == null) {
+                        item {
+                            StepAddCard(
+                                save = { stepToSave ->
+                                    if (stepToSave != null) {
+                                        steps = listOf(
+                                            *steps.toTypedArray(),
+                                            stepToSave
+                                        )
+                                    }
+                                },
+                                orderInRecipe = steps.size,
+                                recipeId = recipeToEdit.id,
+                            )
+                        }
                     }
                 }
             }
