@@ -57,9 +57,9 @@ jobs:
                 with:
                     script: |
                         var comment = `${{ env.COMMENT }}`
-                        comment = comment.replaceAll('%25', '%')
-                        comment = comment.replaceAll('%0A', '\n')
-                        comment = comment.replaceAll('%0D', '\r')
+                        comment = comment.replace(/%25/g, '%')
+                        comment = comment.replace(/%0A/g, '\n')
+                        comment = comment.replace(/%0D/g, '\r')
                         comment = "```" + comment + "```"
                         github.issues.createComment({
                           issue_number: context.issue.number,
