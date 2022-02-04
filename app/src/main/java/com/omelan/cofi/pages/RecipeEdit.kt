@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Delete
@@ -20,6 +19,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -60,14 +60,41 @@ fun RecipeEdit(
     isEditing: Boolean = false,
 ) {
     var showDeleteModal by remember { mutableStateOf(false) }
+    var showSaveModal by remember { mutableStateOf(false) }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
     var name by remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
     var description by remember(recipeToEdit) { mutableStateOf(recipeToEdit.description) }
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
-    BackHandler(enabled = stepWithOpenEditor != null) {
-        stepWithOpenEditor = null
+
+    val safeGoBack: () -> Unit = {
+        if (steps !== stepsToEdit ||
+            name != recipeToEdit.name ||
+            description != recipeToEdit.description ||
+            pickedIcon != recipeToEdit.recipeIcon
+        ) {
+            showSaveModal = true
+        } else {
+            goBack()
+        }
     }
+
+    BackHandler {
+        if (stepWithOpenEditor != null) {
+            stepWithOpenEditor = null
+            return@BackHandler
+        }
+        safeGoBack()
+    }
+
+    fun saveRecipe() = saveRecipe(
+        recipeToEdit.copy(
+            name = name,
+            description = description,
+            recipeIcon = pickedIcon,
+        ),
+        steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
+    )
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
@@ -115,7 +142,7 @@ fun RecipeEdit(
         topBar = {
             PiPAwareAppBar(
                 navigationIcon = {
-                    IconButton(onClick = goBack) {
+                    IconButton(onClick = safeGoBack) {
                         Icon(Icons.Rounded.ArrowBack, contentDescription = null)
                     }
                 },
@@ -127,16 +154,7 @@ fun RecipeEdit(
                     }
                     IconButton(
                         modifier = Modifier.testTag("recipe_edit_save"),
-                        onClick = {
-                            saveRecipe(
-                                recipeToEdit.copy(
-                                    name = name,
-                                    description = description,
-                                    recipeIcon = pickedIcon,
-                                ),
-                                steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
-                            )
-                        },
+                        onClick = { saveRecipe() },
                         enabled = name.isNotBlank(),
                     ) {
                         Icon(
@@ -146,7 +164,7 @@ fun RecipeEdit(
                     }
                 },
                 title = {
-                    androidx.compose.material3.Text(
+                    Text(
                         text = if (isEditing) {
                             stringResource(id = R.string.recipe_edit_title)
                         } else {
@@ -223,7 +241,8 @@ fun RecipeEdit(
                 }
                 itemsIndexed(
                     steps,
-                    { _, step -> if (step.id == 0) step.hashCode() else step.id }) { index, step ->
+                    { _, step -> if (step.id == 0) step.hashCode() else step.id }
+                ) { index, step ->
                     AnimatedVisibility(
                         modifier = Modifier.animateItemPlacement(),
                         visible = stepWithOpenEditor == step,
@@ -296,32 +315,68 @@ fun RecipeEdit(
         }
 
         if (showDeleteModal && isEditing) {
-            DeleteDialog(onConfirm = deleteRecipe, dismiss = { showDeleteModal = false })
+            DeleteDialog(onConfirm = deleteRecipe, onDismiss = { showDeleteModal = false })
+        }
+        if (showSaveModal) {
+            SaveDialog(
+                onSave = { saveRecipe() },
+                onDiscard = goBack,
+                onDismiss = { showSaveModal = false }
+            )
         }
     }
 }
 
 @Composable
-fun DeleteDialog(onConfirm: () -> Unit, dismiss: () -> Unit) {
+fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
-        onDismissRequest = dismiss,
+        onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(
                 onClick = onConfirm
             ) {
-                androidx.compose.material3.Text(text = stringResource(id = R.string.button_delete))
+                Text(text = stringResource(id = R.string.button_delete))
             }
         },
         dismissButton = {
-            TextButton(onClick = dismiss) {
-                androidx.compose.material3.Text(text = stringResource(id = R.string.button_cancel))
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = R.string.button_cancel))
             }
         },
         title = {
-            androidx.compose.material3.Text(text = stringResource(id = R.string.step_delete_title))
+            Text(text = stringResource(id = R.string.step_delete_title))
         },
         text = {
-            androidx.compose.material3.Text(text = stringResource(id = R.string.step_delete_text))
+            Text(text = stringResource(id = R.string.step_delete_text))
+        },
+    )
+}
+
+@Composable
+fun SaveDialog(
+    onSave: () -> Unit,
+    onDiscard: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(
+                onClick = onSave
+            ) {
+                Text(text = stringResource(id = R.string.step_add_save))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDiscard) {
+                Text(text = stringResource(id = R.string.button_discard))
+            }
+        },
+        title = {
+            Text(text = stringResource(id = R.string.step_unsaved_title))
+        },
+        text = {
+            Text(text = stringResource(id = R.string.step_unsaved_text))
         },
     )
 }

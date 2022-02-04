@@ -8,8 +8,10 @@
     <string name="step_add_duration">Duration (s)</string>
     <string name="step_add_weight">Weight (g)</string>
     <string name="step_add_save">Save</string>
+    <string name="step_unsaved_title">You have unsaved changes</string>
+    <string name="step_unsaved_text">Do you want to discard them?</string>
     <string name="step_delete_title">Are you sure?</string>
-    <string name="step_delete_text">This will remove this recipe permanatly</string>
+    <string name="step_delete_text">This will remove this recipe permanently</string>
     <string name="recipe_edit_name">Name</string>
     <string name="recipe_edit_description">Description</string>
     <string name="recipe_edit_title">Edit recipe</string>
@@ -23,6 +25,7 @@ WARNING: You cannot share recipe this way!"</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
+    <string name="button_discard">Discard</string>
     <string name="button_copy">Copy</string>
     <string name="snackbar_copied">Copied!</string>
     <string name="settings_licenses_title">Open source licenses</string>
