@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Ability to change step order
+- Alert dialog when exiting edit/add screen with unsaved changes
 ### Changed
 
 ### Removed
