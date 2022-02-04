@@ -10,7 +10,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.kieronquinn.monetcompat.core.MonetCompat
 import com.kieronquinn.monetcompat.extensions.toArgb
@@ -116,7 +115,6 @@ fun createMonetCompatColorScheme(monet: MonetCompat, darkMode: Boolean): ColorSc
 fun getMaterialYouPallets(context: Context, darkMode: Boolean) =
     if (darkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
 
-@ExperimentalAnimatedInsets
 @Composable
 fun CofiTheme(
     monet: MonetCompat? = null,

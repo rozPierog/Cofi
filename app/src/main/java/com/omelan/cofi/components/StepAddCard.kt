@@ -26,7 +26,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
@@ -36,7 +35,6 @@ import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
 
-@ExperimentalAnimatedInsets
 @Composable
 fun StepAddCard(
     modifier: Modifier = Modifier,
@@ -248,14 +246,12 @@ fun PillButton(
     }
 }
 
-@ExperimentalAnimatedInsets
 @Composable
 @Preview
 fun StepAddCardPreview() {
     StepAddCard(save = {}, orderInRecipe = 0, recipeId = 0, isFirst = true)
 }
 
-@ExperimentalAnimatedInsets
 @Composable
 @Preview
 fun StepAddCardPreviewExpanded() {

@@ -42,13 +42,9 @@ import com.omelan.cofi.model.*
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.Haptics
 import kotlinx.coroutines.launch
-import kotlin.time.ExperimentalTime
 
 @SuppressLint("FlowOperatorInvokedInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
-@ExperimentalAnimatedInsets
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
 @Composable
 fun RecipeDetails(
     recipeId: Int,
@@ -361,20 +357,12 @@ fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
     }
 }
 
-@ExperimentalAnimatedInsets
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
-@ExperimentalTime
 @Preview(showBackground = true)
 @Composable
 fun RecipeDetailsPreview() {
     RecipeDetails(recipeId = 1, isInPiP = false)
 }
 
-@ExperimentalAnimatedInsets
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
-@ExperimentalTime
 @Preview(showBackground = true)
 @Composable
 fun RecipeDetailsPreviewPip() {

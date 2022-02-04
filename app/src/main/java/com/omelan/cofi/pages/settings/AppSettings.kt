@@ -35,8 +35,7 @@ import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.checkPiPPermission
 import kotlinx.coroutines.launch
 
-@ExperimentalMaterial3Api
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun AppSettings(
     goBack: () -> Unit,

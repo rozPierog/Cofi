@@ -45,11 +45,11 @@ import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.*
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
-@ExperimentalAnimatedInsets
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
+@OptIn(
+    ExperimentalMaterialApi::class,
+    ExperimentalComposeUiApi::class,
+    ExperimentalFoundationApi::class
+)
 @Composable
 fun RecipeEdit(
     saveRecipe: (Recipe, List<Step>) -> Unit,
