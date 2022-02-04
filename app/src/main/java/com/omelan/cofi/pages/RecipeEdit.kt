@@ -67,6 +67,16 @@ fun RecipeEdit(
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
 
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+    )
+    val coroutineScope = rememberCoroutineScope()
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val textFieldColors = MaterialTheme.createTextFieldColors()
+    val appBarBehavior = createAppBarBehavior()
+
+    val canSave = name.isNotBlank() && steps.isNotEmpty()
+
     val safeGoBack: () -> Unit = {
         if (steps !== stepsToEdit ||
             name != recipeToEdit.name ||
@@ -96,20 +106,12 @@ fun RecipeEdit(
         steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
     )
 
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
-    )
-    val coroutineScope = rememberCoroutineScope()
-    val keyboardController = LocalSoftwareKeyboardController.current
     fun pickIcon(icon: RecipeIcon) {
         coroutineScope.launch {
             bottomSheetScaffoldState.bottomSheetState.collapse()
             pickedIcon = icon
         }
     }
-
-    val textFieldColors = MaterialTheme.createTextFieldColors()
-    val appBarBehavior = createAppBarBehavior()
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
@@ -155,7 +157,7 @@ fun RecipeEdit(
                     IconButton(
                         modifier = Modifier.testTag("recipe_edit_save"),
                         onClick = { saveRecipe() },
-                        enabled = name.isNotBlank(),
+                        enabled = canSave,
                     ) {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
@@ -319,6 +321,7 @@ fun RecipeEdit(
         }
         if (showSaveModal) {
             SaveDialog(
+                canSave = canSave,
                 onSave = { saveRecipe() },
                 onDiscard = goBack,
                 onDismiss = { showSaveModal = false }
@@ -357,14 +360,23 @@ fun SaveDialog(
     onSave: () -> Unit,
     onDiscard: () -> Unit,
     onDismiss: () -> Unit,
+    canSave: Boolean,
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(
-                onClick = onSave
+                onClick = if (canSave) onSave else onDismiss
             ) {
-                Text(text = stringResource(id = R.string.step_add_save))
+                Text(
+                    stringResource(
+                        if (canSave) {
+                            R.string.step_add_save
+                        } else {
+                            R.string.button_continue_editing
+                        }
+                    )
+                )
             }
         },
         dismissButton = {
