@@ -202,7 +202,11 @@ fun RecipeEdit(
                                     .testTag("recipe_edit_name"),
                                 singleLine = true,
                                 keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
-                                label = { Text(text = stringResource(id = R.string.recipe_edit_name)) },
+                                label = {
+                                    Text(
+                                        text = stringResource(id = R.string.recipe_edit_name)
+                                    )
+                                },
                                 colors = textFieldColors,
                             )
                         }
@@ -227,8 +231,7 @@ fun RecipeEdit(
                             visible = stepWithOpenEditor == step,
                             enter = expandVertically(),
                             exit = shrinkVertically(),
-
-                            ) {
+                        ) {
                             val indexOfThisStep = steps.indexOf(step)
                             StepAddCard(
                                 stepToEdit = step,
