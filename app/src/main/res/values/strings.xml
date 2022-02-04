@@ -67,6 +67,13 @@ Grind size: medium fine
 Temperature: the hotter, the better (especially with lighter roasts)
 Make sure that stiffest part of filter is at the drainage side
 Keep an eye out not to block air moving out of the brewer"</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="prepopulate_aero_step_piston">Place the piston 1cm into the brewer</string>
+    <string name="prepopulate_aero_step_press">Press the piston gently</string>
+    <string name="prepopulate_aero_description">"Recipe created by: James Hoffmann
+Source: https://youtu.be/j6VlT_jUVPc
+Grind size: For light roast - finer end of medium. The darker you go the more you may prefer to increase the dose and coarsen the grind
+Temperature: For light roast - brought to a boil and used immediately. For dark roasts - 85-90℃"</string>
     <string name="tereszkiewicz_credits_title">App icon by: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Check out his Dribbble</string>
     <string name="recipe_create_title">Add recipe</string>
