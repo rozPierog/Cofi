@@ -5,10 +5,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.Text
@@ -44,6 +45,7 @@ import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.*
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalAnimatedInsets
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
@@ -132,7 +134,7 @@ fun RecipeEdit(
                                     description = description,
                                     recipeIcon = pickedIcon,
                                 ),
-                                steps
+                                steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
                             )
                         },
                         enabled = name.isNotBlank(),
@@ -219,22 +221,23 @@ fun RecipeEdit(
                         colors = textFieldColors,
                     )
                 }
-                items(steps) { step ->
+                itemsIndexed(
+                    steps,
+                    { _, step -> if (step.id == 0) step.hashCode() else step.id }) { index, step ->
                     AnimatedVisibility(
+                        modifier = Modifier.animateItemPlacement(),
                         visible = stepWithOpenEditor == step,
                         enter = expandVertically(),
                         exit = shrinkVertically(),
-
                     ) {
-                        val indexOfThisStep = steps.indexOf(step)
                         StepAddCard(
                             stepToEdit = step,
                             save = { stepToSave ->
                                 steps = if (stepToSave == null) {
                                     steps.minus(step)
                                 } else {
-                                    steps.mapIndexed { index, step ->
-                                        if (index == indexOfThisStep) {
+                                    steps.mapIndexed { mapIndex, step ->
+                                        if (index == mapIndex) {
                                             stepToSave
                                         } else {
                                             step
@@ -243,13 +246,21 @@ fun RecipeEdit(
                                 }
                                 stepWithOpenEditor = null
                             },
-                            orderInRecipe = steps.indexOf(step),
+                            isFirst = index == 0,
+                            isLast = index == steps.size - 1,
+                            onPositionChange = { change ->
+                                steps = steps.toMutableList().apply {
+                                    add(index + change, removeAt(index))
+                                }
+                            },
+                            orderInRecipe = index,
                             recipeId = recipeToEdit.id,
                         )
                     }
                     AnimatedVisibility(
                         visible = stepWithOpenEditor != step,
                         enter = expandVertically(),
+                        modifier = Modifier.animateItemPlacement(),
                         exit = shrinkVertically(),
                     ) {
                         StepListItem(
@@ -259,9 +270,15 @@ fun RecipeEdit(
                         )
                     }
                 }
-                if (stepWithOpenEditor == null) {
-                    item {
+                item {
+                    AnimatedVisibility(
+                        visible = stepWithOpenEditor == null,
+                        enter = expandVertically(),
+                        modifier = Modifier.animateItemPlacement(),
+                        exit = shrinkVertically(),
+                    ) {
                         StepAddCard(
+                            modifier = Modifier.animateItemPlacement(),
                             save = { stepToSave ->
                                 if (stepToSave != null) {
                                     steps = listOf(

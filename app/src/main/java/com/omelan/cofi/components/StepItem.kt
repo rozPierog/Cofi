@@ -31,8 +31,8 @@ enum class StepProgress { Current, Done, Upcoming }
 
 @ExperimentalAnimatedInsets
 @Composable
-fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Unit)? = null) {
-    val constraintModifier = Modifier
+fun StepListItem(modifier: Modifier = Modifier, step: Step, stepProgress: StepProgress, onClick: ((Step) -> Unit)? = null) {
+    val constraintModifier = modifier
         .animateContentSize()
         .fillMaxWidth()
         .padding(vertical = Spacing.small)
