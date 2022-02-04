@@ -44,6 +44,7 @@ enum class StepType {
 
     abstract val color: Color
     abstract val stringRes: Int
+    fun isNotWaitStepType(): Boolean = this != WAIT
 }
 
 class StepTypeConverter {

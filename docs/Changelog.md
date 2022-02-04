@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Fix text selection colors
 - Fix about page list item icon alignment
+- Fix wait step ime keyboard action
 
 ### Removed
 
