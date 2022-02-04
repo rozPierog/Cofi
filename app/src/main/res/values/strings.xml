@@ -8,8 +8,10 @@
     <string name="step_add_duration">Duration (s)</string>
     <string name="step_add_weight">Weight (g)</string>
     <string name="step_add_save">Save</string>
+    <string name="step_unsaved_title">You have unsaved changes</string>
+    <string name="step_unsaved_text">Do you want to discard them?</string>
     <string name="step_delete_title">Are you sure?</string>
-    <string name="step_delete_text">This will remove this recipe permanatly</string>
+    <string name="step_delete_text">This will remove this recipe permanently</string>
     <string name="recipe_edit_name">Name</string>
     <string name="recipe_edit_description">Description</string>
     <string name="recipe_edit_title">Edit recipe</string>
@@ -17,12 +19,12 @@
     <string name="recipe_details_automation_dialog_title">Direct link</string>
     <string name="recipe_details_automation_dialog_text">"Use this link to go directly into this recipe. Write it to NFC tag or create automation task in Tasker to make your morning coffee easier.
 WARNING: You cannot share recipe this way!"</string>
-    <string name="recipe_details_button_start">Start</string>
-    <string name="recipe_details_button_pause">Pause</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
+    <string name="button_discard">Discard</string>
+    <string name="button_continue_editing">Continue editing</string>
     <string name="button_copy">Copy</string>
     <string name="snackbar_copied">Copied!</string>
     <string name="settings_licenses_title">Open source licenses</string>
@@ -35,7 +37,6 @@ WARNING: You cannot share recipe this way!"</string>
     <string name="settings_combine_weight_all">Combine every weight</string>
     <string name="settings_combine_weight_water">Combine only water weight</string>
     <string name="settings_combine_weight_none">Do not combine weight</string>
-    <string name="bug_report_title" translatable="false">Cofi - Bug Report/Feature Request</string>
     <string name="settings_about_title">About</string>
     <string name="settings_licenses_item">Acknowledgments</string>
     <string name="settings_github_item">Github Repository</string>

@@ -20,15 +20,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
 import com.omelan.cofi.ui.green600
 import com.omelan.cofi.utils.toStringDuration
 
-@ExperimentalAnimatedInsets
-@ExperimentalAnimationApi
 @Composable
 fun Timer(
     modifier: Modifier = Modifier,
@@ -175,8 +172,6 @@ fun Timer(
 }
 
 @SuppressLint("UnrememberedAnimatable")
-@ExperimentalAnimatedInsets
-@ExperimentalAnimationApi
 @Preview
 @Composable
 fun TimerPreview() {
@@ -197,8 +192,6 @@ fun TimerPreview() {
 }
 
 @SuppressLint("UnrememberedAnimatable")
-@ExperimentalAnimatedInsets
-@ExperimentalAnimationApi
 @Preview(widthDp = 150, showBackground = true)
 @Composable
 fun TimerPreviewPiP() {
@@ -220,8 +213,6 @@ fun TimerPreviewPiP() {
 }
 
 @SuppressLint("UnrememberedAnimatable")
-@ExperimentalAnimatedInsets
-@ExperimentalAnimationApi
 @Preview
 @Composable
 fun TimerPreviewDone() {
@@ -235,8 +226,6 @@ fun TimerPreviewDone() {
 }
 
 @SuppressLint("UnrememberedAnimatable")
-@ExperimentalAnimatedInsets
-@ExperimentalAnimationApi
 @Preview(widthDp = 150, showBackground = true)
 @Composable
 fun TimerPreviewDonePip() {

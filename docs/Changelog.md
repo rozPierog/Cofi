@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-
+- Ability to change step order
+- Alert dialog when exiting edit/add screen with unsaved changes
 ### Changed
 - Fix text selection colors
 - Fix about page list item icon alignment
@@ -16,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
-## [1.8.0] - 2022-01-30
+## [1.8.0] - 2022-01-30 
 
 ### Added
 - Proper changelog

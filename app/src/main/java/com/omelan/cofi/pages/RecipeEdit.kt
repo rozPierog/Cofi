@@ -5,14 +5,14 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.*
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Delete
@@ -20,6 +20,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -45,10 +46,11 @@ import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.*
 import kotlinx.coroutines.launch
 
-@ExperimentalAnimatedInsets
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
+@OptIn(
+    ExperimentalMaterialApi::class,
+    ExperimentalComposeUiApi::class,
+    ExperimentalFoundationApi::class
+)
 @Composable
 fun RecipeEdit(
     saveRecipe: (Recipe, List<Step>) -> Unit,
@@ -59,30 +61,59 @@ fun RecipeEdit(
     isEditing: Boolean = false,
 ) {
     var showDeleteModal by remember { mutableStateOf(false) }
+    var showSaveModal by remember { mutableStateOf(false) }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
     var name by remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
     var description by remember(recipeToEdit) { mutableStateOf(recipeToEdit.description) }
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
-    BackHandler(enabled = stepWithOpenEditor != null) {
-        stepWithOpenEditor = null
-    }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
     )
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
+    val textFieldColors = MaterialTheme.createTextFieldColors()
+    val appBarBehavior = createAppBarBehavior()
+    val textSelectionColors = MaterialTheme.createTextSelectionColors()
+
+    val canSave = name.isNotBlank() && steps.isNotEmpty()
+
+    val safeGoBack: () -> Unit = {
+        if (steps !== stepsToEdit ||
+            name != recipeToEdit.name ||
+            description != recipeToEdit.description ||
+            pickedIcon != recipeToEdit.recipeIcon
+        ) {
+            showSaveModal = true
+        } else {
+            goBack()
+        }
+    }
+
+    BackHandler {
+        if (stepWithOpenEditor != null) {
+            stepWithOpenEditor = null
+            return@BackHandler
+        }
+        safeGoBack()
+    }
+
+    fun saveRecipe() = saveRecipe(
+        recipeToEdit.copy(
+            name = name,
+            description = description,
+            recipeIcon = pickedIcon,
+        ),
+        steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
+    )
+
     fun pickIcon(icon: RecipeIcon) {
         coroutineScope.launch {
             bottomSheetScaffoldState.bottomSheetState.collapse()
             pickedIcon = icon
         }
     }
-
-    val textFieldColors = MaterialTheme.createTextFieldColors()
-    val textSelectionColors = MaterialTheme.createTextSelectionColors()
-    val appBarBehavior = createAppBarBehavior()
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
@@ -115,7 +146,7 @@ fun RecipeEdit(
         topBar = {
             PiPAwareAppBar(
                 navigationIcon = {
-                    IconButton(onClick = goBack) {
+                    IconButton(onClick = safeGoBack) {
                         Icon(Icons.Rounded.ArrowBack, contentDescription = null)
                     }
                 },
@@ -127,17 +158,8 @@ fun RecipeEdit(
                     }
                     IconButton(
                         modifier = Modifier.testTag("recipe_edit_save"),
-                        onClick = {
-                            saveRecipe(
-                                recipeToEdit.copy(
-                                    name = name,
-                                    description = description,
-                                    recipeIcon = pickedIcon,
-                                ),
-                                steps
-                            )
-                        },
-                        enabled = name.isNotBlank(),
+                        onClick = { saveRecipe() },
+                        enabled = canSave,
                     ) {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
@@ -146,7 +168,7 @@ fun RecipeEdit(
                     }
                 },
                 title = {
-                    androidx.compose.material3.Text(
+                    Text(
                         text = if (isEditing) {
                             stringResource(id = R.string.recipe_edit_title)
                         } else {
@@ -226,21 +248,24 @@ fun RecipeEdit(
                             colors = textFieldColors,
                         )
                     }
-                    items(steps) { step ->
+                    itemsIndexed(
+                        steps,
+                        { _, step -> if (step.id == 0) step.hashCode() else step.id }
+                    ) { index, step ->
                         AnimatedVisibility(
+                            modifier = Modifier.animateItemPlacement(),
                             visible = stepWithOpenEditor == step,
                             enter = expandVertically(),
                             exit = shrinkVertically(),
                         ) {
-                            val indexOfThisStep = steps.indexOf(step)
                             StepAddCard(
                                 stepToEdit = step,
                                 save = { stepToSave ->
                                     steps = if (stepToSave == null) {
                                         steps.minus(step)
                                     } else {
-                                        steps.mapIndexed { index, step ->
-                                            if (index == indexOfThisStep) {
+                                        steps.mapIndexed { mapIndex, step ->
+                                            if (index == mapIndex) {
                                                 stepToSave
                                             } else {
                                                 step
@@ -249,13 +274,21 @@ fun RecipeEdit(
                                     }
                                     stepWithOpenEditor = null
                                 },
-                                orderInRecipe = steps.indexOf(step),
+                                isFirst = index == 0,
+                                isLast = index == steps.size - 1,
+                                onPositionChange = { change ->
+                                    steps = steps.toMutableList().apply {
+                                        add(index + change, removeAt(index))
+                                    }
+                                },
+                                orderInRecipe = index,
                                 recipeId = recipeToEdit.id,
                             )
                         }
                         AnimatedVisibility(
                             visible = stepWithOpenEditor != step,
                             enter = expandVertically(),
+                            modifier = Modifier.animateItemPlacement(),
                             exit = shrinkVertically(),
                         ) {
                             StepListItem(
@@ -265,9 +298,15 @@ fun RecipeEdit(
                             )
                         }
                     }
-                    if (stepWithOpenEditor == null) {
-                        item {
+                    item {
+                        AnimatedVisibility(
+                            visible = stepWithOpenEditor == null,
+                            enter = expandVertically(),
+                            modifier = Modifier.animateItemPlacement(),
+                            exit = shrinkVertically(),
+                        ) {
                             StepAddCard(
+                                modifier = Modifier.animateItemPlacement(),
                                 save = { stepToSave ->
                                     if (stepToSave != null) {
                                         steps = listOf(
@@ -286,32 +325,78 @@ fun RecipeEdit(
         }
 
         if (showDeleteModal && isEditing) {
-            DeleteDialog(onConfirm = deleteRecipe, dismiss = { showDeleteModal = false })
+            DeleteDialog(onConfirm = deleteRecipe, onDismiss = { showDeleteModal = false })
+        }
+        if (showSaveModal) {
+            SaveDialog(
+                canSave = canSave,
+                onSave = { saveRecipe() },
+                onDiscard = goBack,
+                onDismiss = { showSaveModal = false }
+            )
         }
     }
 }
 
 @Composable
-fun DeleteDialog(onConfirm: () -> Unit, dismiss: () -> Unit) {
+fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
-        onDismissRequest = dismiss,
+        onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(
                 onClick = onConfirm
             ) {
-                androidx.compose.material3.Text(text = stringResource(id = R.string.button_delete))
+                Text(text = stringResource(id = R.string.button_delete))
             }
         },
         dismissButton = {
-            TextButton(onClick = dismiss) {
-                androidx.compose.material3.Text(text = stringResource(id = R.string.button_cancel))
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = R.string.button_cancel))
             }
         },
         title = {
-            androidx.compose.material3.Text(text = stringResource(id = R.string.step_delete_title))
+            Text(text = stringResource(id = R.string.step_delete_title))
         },
         text = {
-            androidx.compose.material3.Text(text = stringResource(id = R.string.step_delete_text))
+            Text(text = stringResource(id = R.string.step_delete_text))
+        },
+    )
+}
+
+@Composable
+fun SaveDialog(
+    onSave: () -> Unit,
+    onDiscard: () -> Unit,
+    onDismiss: () -> Unit,
+    canSave: Boolean,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(
+                onClick = if (canSave) onSave else onDismiss
+            ) {
+                Text(
+                    stringResource(
+                        if (canSave) {
+                            R.string.step_add_save
+                        } else {
+                            R.string.button_continue_editing
+                        }
+                    )
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDiscard) {
+                Text(text = stringResource(id = R.string.button_discard))
+            }
+        },
+        title = {
+            Text(text = stringResource(id = R.string.step_unsaved_title))
+        },
+        text = {
+            Text(text = stringResource(id = R.string.step_unsaved_text))
         },
     )
 }

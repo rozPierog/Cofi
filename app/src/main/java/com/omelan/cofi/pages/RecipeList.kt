@@ -29,7 +29,6 @@ import com.omelan.cofi.model.RecipeViewModel
 import com.omelan.cofi.ui.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
-@ExperimentalAnimatedInsets
 @Composable
 fun RecipeList(
     navigateToRecipe: (recipeId: Int) -> Unit,

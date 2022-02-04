@@ -8,16 +8,12 @@ import android.util.Rational
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
@@ -28,7 +24,6 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.model.AppDatabase
@@ -56,11 +51,6 @@ val LocalPiPState = staticCompositionLocalOf<Boolean> {
 
 const val appDeepLinkUrl = "https://rozpierog.github.io"
 
-@ExperimentalAnimatedInsets
-@ExperimentalAnimationApi
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
-@ExperimentalMaterial3Api
 class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
@@ -83,7 +73,11 @@ class MainActivity : MonetCompatActivity() {
         val isPiPEnabledFlow: Flow<Boolean> = DataStore(this).getPiPSetting()
         lifecycleScope.launch(Dispatchers.IO) {
             val isPiPEnabled = isPiPEnabledFlow.first()
-            if (checkPiPPermission(this@MainActivity) && isPiPEnabled) {
+            if (
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                checkPiPPermission(this@MainActivity) &&
+                isPiPEnabled
+            ) {
                 setPictureInPictureParams(
                     PictureInPictureParams.Builder()
                         .setAspectRatio(Rational(1, 1))
@@ -297,7 +291,9 @@ class MainActivity : MonetCompatActivity() {
             isPiPEnabled = isPiPEnabledFlow.first()
         }
         if (mainActivityViewModel.canGoToPiP.value == true && isPiPEnabled) {
-            enterPictureInPictureMode(PictureInPictureParams.Builder().build())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                enterPictureInPictureMode(PictureInPictureParams.Builder().build())
+            }
         }
     }
 

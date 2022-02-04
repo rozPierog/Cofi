@@ -9,6 +9,8 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -24,7 +26,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
@@ -34,12 +35,15 @@ import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
 
-@ExperimentalAnimatedInsets
 @Composable
 fun StepAddCard(
+    modifier: Modifier = Modifier,
     stepToEdit: Step? = null,
     save: (Step?) -> Unit,
     orderInRecipe: Int,
+    isLast: Boolean = false,
+    isFirst: Boolean = false,
+    onPositionChange: (Int) -> Unit = {},
     recipeId: Int
 ) {
     var pickedType by remember(stepToEdit) { mutableStateOf(stepToEdit?.type) }
@@ -78,7 +82,7 @@ fun StepAddCard(
     }
     Surface(
         shape = RoundedCornerShape(10.dp),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         tonalElevation = 2.dp
     ) {
         Column(
@@ -173,7 +177,9 @@ fun StepAddCard(
                 }
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = Spacing.big),
                 ) {
                     PillButton(
                         modifier = Modifier.testTag("step_save"),
@@ -191,6 +197,27 @@ fun StepAddCard(
                         )
                     }
                 }
+                if (stepToEdit != null) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        PillButton(
+                            modifier = Modifier.testTag("step_remove"),
+                            imageVector = Icons.Rounded.KeyboardArrowUp,
+                            onClick = { onPositionChange(-1) },
+                            enabled = !isFirst
+                        )
+                        Spacer(modifier = Modifier.width(Spacing.normal))
+                        PillButton(
+                            modifier = Modifier.testTag("step_remove"),
+                            imageVector = Icons.Rounded.KeyboardArrowDown,
+                            onClick = { onPositionChange(1) },
+                            enabled = !isLast
+                        )
+                    }
+                }
             }
         }
     }
@@ -199,7 +226,7 @@ fun StepAddCard(
 @Composable
 fun PillButton(
     modifier: Modifier = Modifier,
-    text: String,
+    text: String? = null,
     enabled: Boolean = true,
     imageVector: ImageVector,
     onClick: () -> Unit,
@@ -211,22 +238,22 @@ fun PillButton(
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
         ),
         enabled = enabled,
-        modifier = modifier.padding(vertical = Spacing.big, horizontal = Spacing.xSmall),
+        modifier = modifier,
     ) {
         Icon(imageVector = imageVector, contentDescription = null)
-        Spacer(modifier = Modifier.width(Spacing.small))
-        Text(text = text)
+        if (!text.isNullOrBlank()) {
+            Spacer(modifier = Modifier.width(Spacing.small))
+            Text(text = text)
+        }
     }
 }
 
-@ExperimentalAnimatedInsets
 @Composable
 @Preview
 fun StepAddCardPreview() {
-    StepAddCard(save = {}, orderInRecipe = 0, recipeId = 0)
+    StepAddCard(save = {}, orderInRecipe = 0, recipeId = 0, isFirst = true)
 }
 
-@ExperimentalAnimatedInsets
 @Composable
 @Preview
 fun StepAddCardPreviewExpanded() {

@@ -26,7 +26,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
@@ -52,7 +51,6 @@ private fun extractUrls(text: String): List<String> {
     return containedUrls
 }
 
-@ExperimentalAnimatedInsets
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     val uriHandler = LocalUriHandler.current
@@ -137,7 +135,6 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     }
 }
 
-@ExperimentalAnimatedInsets
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun DescriptionPreview() {
@@ -147,7 +144,6 @@ fun DescriptionPreview() {
     )
 }
 
-@ExperimentalAnimatedInsets
 @Preview
 @Composable
 fun DescriptionLongPreview() {

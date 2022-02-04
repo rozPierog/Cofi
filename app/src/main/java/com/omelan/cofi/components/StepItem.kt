@@ -18,21 +18,23 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.toMillis
 import com.omelan.cofi.utils.toStringDuration
-import kotlin.time.ExperimentalTime
 
 enum class StepProgress { Current, Done, Upcoming }
 
-@ExperimentalAnimatedInsets
 @Composable
-fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Unit)? = null) {
-    val constraintModifier = Modifier
+fun StepListItem(
+    modifier: Modifier = Modifier,
+    step: Step,
+    stepProgress: StepProgress,
+    onClick: ((Step) -> Unit)? = null
+) {
+    val constraintModifier = modifier
         .animateContentSize()
         .fillMaxWidth()
         .padding(vertical = Spacing.small)
@@ -108,8 +110,6 @@ fun StepListItem(step: Step, stepProgress: StepProgress, onClick: ((Step) -> Uni
     }
 }
 
-@ExperimentalAnimatedInsets
-@ExperimentalTime
 @Preview
 @Composable
 fun StepListItemPreview() {
@@ -128,8 +128,6 @@ fun StepListItemPreview() {
     )
 }
 
-@ExperimentalAnimatedInsets
-@ExperimentalTime
 @Preview
 @Composable
 fun StepListItemPreviewShort() {
