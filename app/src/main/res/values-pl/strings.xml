@@ -18,8 +18,6 @@
     <string name="recipe_details_automation_dialog_title">Bezpośredni link</string>
     <string name="recipe_details_automation_dialog_text">"Użyj linku aby przejść do bezpośrednio tego przepisu. Zapisz go na tagu NFC albo użyj automatyzacji w aplikacji takiej jak Tasker żeby ułatwić robienie porannej kawy.
 UWAGA: ten link nie służy do dzielenia się przepisem z innymi"</string>
-    <string name="recipe_details_button_start">Start</string>
-    <string name="recipe_details_button_pause">Zatrzymaj</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Anuluj</string>

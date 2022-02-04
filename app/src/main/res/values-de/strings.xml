@@ -16,8 +16,6 @@
     <string name="recipe_add_new_title">Neues Rezept erstellen</string>
     <string name="recipe_details_automation_dialog_title">Direktlink</string>
     <string name="recipe_details_automation_dialog_text">Verwenden diesen Link, um direkt zu diesem Rezept zu gelangen. Speicher ihn auf einem NFC-Tag oder erstelle eine Automatisierungsaufgabe in Tasker. WARNUNG: Das Rezept kann auf diese Weise nicht geteilt werden!</string>
-    <string name="recipe_details_button_start">Start</string>
-    <string name="recipe_details_button_pause">Pause</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Abbrechen</string>

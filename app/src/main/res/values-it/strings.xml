@@ -19,8 +19,6 @@
     <string name="recipe_add_new_title">Crea nuova ricetta</string>
     <string name="recipe_details_automation_dialog_title">Link diretto</string>
     <string name="recipe_details_automation_dialog_text">"Usa questo link per andare direttamente a questa ricetta. Scrivilo nel tag NFC o crea un'attività di automazione in Tasker per rendere più facile il tuo caffè mattutino. ATTENZIONE: non puoi condividere la ricetta in questo modo!"</string>
-    <string name="recipe_details_button_start">Inizia</string>
-    <string name="recipe_details_button_pause">Pausa</string>
     <string name="button_cancel">Annulla</string>
     <string name="button_delete">Elimina</string>
     <string name="button_copy">Copia</string>
