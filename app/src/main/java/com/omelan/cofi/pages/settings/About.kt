@@ -79,14 +79,14 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = {
+                    overlineText = {
                         Text(
                             text = stringResource(id = R.string.hoffmann_credits_title),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     },
-                    secondaryText = {
+                    text = {
                         Text(
                             text = stringResource(id = R.string.hoffmann_credits_subtitle),
                             maxLines = 1,
@@ -107,14 +107,14 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = {
+                    overlineText = {
                         Text(
                             text = stringResource(id = R.string.tereszkiewicz_credits_title),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     },
-                    secondaryText = {
+                    text = {
                         Text(
                             text = stringResource(id = R.string.tereszkiewicz_credits_subtitle),
                             maxLines = 1,

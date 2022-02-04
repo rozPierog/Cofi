@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.annotation.IntRange
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -23,6 +24,12 @@ fun MaterialTheme.createTextFieldColors() = TextFieldDefaults.outlinedTextFieldC
     unfocusedLabelColor = this.colorScheme.onBackground,
     cursorColor = this.colorScheme.secondary,
     unfocusedBorderColor = this.colorScheme.outline,
+)
+
+@Composable
+fun MaterialTheme.createTextSelectionColors() = TextSelectionColors(
+    handleColor = this.colorScheme.secondary,
+    backgroundColor = this.colorScheme.secondary.copy(alpha = 0.4f)
 )
 
 @Composable

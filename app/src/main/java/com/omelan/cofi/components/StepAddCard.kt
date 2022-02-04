@@ -135,11 +135,18 @@ fun StepAddCard(
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Next
+                        imeAction = if (pickedType?.isNotWaitStepType() == true) {
+                            ImeAction.Next
+                        } else {
+                            ImeAction.Done
+                        }
                     ),
                     keyboardActions = KeyboardActions(
                         onNext = {
                             focusManager.moveFocus(FocusDirection.Down)
+                        },
+                        onDone = {
+                            saveStep()
                         }
                     ),
                     colors = textFieldColors,
@@ -148,12 +155,7 @@ fun StepAddCard(
                         .padding(Spacing.xSmall)
                         .fillMaxWidth(),
                 )
-                if (listOf(
-                        StepType.WATER,
-                        StepType.ADD_COFFEE,
-                        StepType.OTHER,
-                    ).contains(pickedType)
-                ) {
+                if (pickedType?.isNotWaitStepType() == true) {
                     OutlinedTextField(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
                         value = stepValue,
