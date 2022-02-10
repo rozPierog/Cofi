@@ -13,11 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix text selection colors
 - Fix about page list item icon alignment
 - Fix wait step ime keyboard action
-
+- Removed a few kb from app size
+- Retroactively changed previous release to 1.4.0
 ### Removed
 
 
-## [1.8.0] - 2022-01-30 
+## [1.4.0 (1.8.0 via error)] - 2022-01-30 
 
 ### Added
 - Proper changelog
