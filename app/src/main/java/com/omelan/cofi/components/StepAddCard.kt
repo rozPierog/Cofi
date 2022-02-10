@@ -15,6 +15,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
@@ -58,7 +60,7 @@ fun StepAddCard(
         mutableStateOf((stepToEdit?.value ?: 0).toString())
     }
     val textFieldColors = MaterialTheme.createTextFieldColors()
-//    val focusRequester = remember { FocusRequester() }
+    val nameFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
     fun saveStep() {
@@ -117,13 +119,13 @@ fun StepAddCard(
                     keyboardActions = KeyboardActions(
                         onNext = {
                             focusManager.moveFocus(FocusDirection.Down)
-                        }
+                        },
                     ),
                     colors = textFieldColors,
                     modifier = Modifier
                         .testTag("step_name")
                         .padding(Spacing.xSmall)
-//                        .focusRequester(focusRequester)
+                        .focusRequester(nameFocusRequester)
                         .fillMaxWidth(),
                 )
                 OutlinedTextField(
@@ -138,10 +140,15 @@ fun StepAddCard(
                         imeAction = if (pickedType?.isNotWaitStepType() == true) {
                             ImeAction.Next
                         } else {
-                            ImeAction.Done
+                            if (stepName.text.isNotBlank()) {
+                                ImeAction.Done
+                            } else {
+                                ImeAction.Previous
+                            }
                         }
                     ),
                     keyboardActions = KeyboardActions(
+                        onPrevious = { focusManager.moveFocus(FocusDirection.Up) },
                         onNext = {
                             focusManager.moveFocus(FocusDirection.Down)
                         },
@@ -165,9 +172,14 @@ fun StepAddCard(
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Done
+                            imeAction = if (stepName.text.isNotBlank()) {
+                                ImeAction.Done
+                            } else {
+                                ImeAction.Previous
+                            },
                         ),
-                        keyboardActions = KeyboardActions(onDone = { saveStep() }),
+                        keyboardActions = KeyboardActions(onDone = { saveStep() },
+                            onPrevious = { nameFocusRequester.requestFocus() }),
                         colors = textFieldColors,
                         modifier = Modifier
                             .testTag("step_value")
