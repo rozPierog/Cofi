@@ -18,7 +18,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -177,9 +176,11 @@ class MainActivity : MonetCompatActivity() {
                             )
                         )
                     )
-                    db.stepDao().insertAll(newSteps.map {
-                        it.copy(recipeId = idOfRecipe.toInt(), id = 0)
-                    })
+                    db.stepDao().insertAll(
+                        newSteps.map {
+                            it.copy(recipeId = idOfRecipe.toInt(), id = 0)
+                        }
+                    )
                 }
                 navController.navigate("list") {
                     this.popUpTo("list") {

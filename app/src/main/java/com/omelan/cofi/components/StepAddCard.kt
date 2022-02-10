@@ -178,8 +178,10 @@ fun StepAddCard(
                                 ImeAction.Previous
                             },
                         ),
-                        keyboardActions = KeyboardActions(onDone = { saveStep() },
-                            onPrevious = { nameFocusRequester.requestFocus() }),
+                        keyboardActions = KeyboardActions(
+                            onDone = { saveStep() },
+                            onPrevious = { nameFocusRequester.requestFocus() }
+                        ),
                         colors = textFieldColors,
                         modifier = Modifier
                             .testTag("step_value")
