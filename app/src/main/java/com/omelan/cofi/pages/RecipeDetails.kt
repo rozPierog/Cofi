@@ -1,6 +1,5 @@
 package com.omelan.cofi.pages
 
-import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -9,8 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
@@ -43,7 +40,6 @@ import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.Haptics
 import kotlinx.coroutines.launch
 
-@SuppressLint("FlowOperatorInvokedInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeDetails(
@@ -170,15 +166,9 @@ fun RecipeDetails(
                 modifier = Modifier.padding(Spacing.medium)
             ) {
                 Snackbar(
-                    backgroundColor =
-                    androidx.compose.material3.MaterialTheme.colorScheme.surfaceVariant,
                     shape = RoundedCornerShape(50)
                 ) {
-                    Text(
-                        text = it.message,
-                        color =
-                        androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    Text(text = it.visuals.message)
                 }
             }
         },
@@ -234,13 +224,13 @@ fun RecipeDetails(
                 )
             }
         },
-        floatingActionButtonPosition = androidx.compose.material.FabPosition.Center,
+        floatingActionButtonPosition = FabPosition.Center,
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(androidx.compose.material3.MaterialTheme.colorScheme.background),
+                .background(MaterialTheme.colorScheme.background),
             contentPadding = if (isInPiP) {
                 PaddingValues(0.dp)
             } else {
@@ -312,7 +302,7 @@ fun RecipeDetails(
 
 @Composable
 fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
-    androidx.compose.material3.AlertDialog(
+    AlertDialog(
         onDismissRequest = dismiss,
         confirmButton = {
             TextButton(onClick = onConfirm) {
@@ -323,6 +313,12 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
             TextButton(onClick = dismiss) {
                 Text(text = stringResource(id = R.string.button_cancel))
             }
+        },
+        icon = {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_link),
+                contentDescription = null
+            )
         },
         title = {
             Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
@@ -350,7 +346,7 @@ fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
             } else {
                 painterResource(id = R.drawable.ic_play_arrow)
             },
-            tint = androidx.compose.material3.MaterialTheme.colorScheme.onBackground,
+            tint = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize),
             contentDescription = null,
         )

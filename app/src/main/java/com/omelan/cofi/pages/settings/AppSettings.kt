@@ -213,6 +213,7 @@ fun AppSettings(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalMaterialApi
 @Composable
 fun CombineWeightDialog(

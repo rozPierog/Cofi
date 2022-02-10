@@ -354,6 +354,7 @@ fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
                 Text(text = stringResource(id = R.string.button_cancel))
             }
         },
+        icon = { Icon(Icons.Rounded.Delete, null) },
         title = {
             Text(text = stringResource(id = R.string.step_delete_title))
         },
@@ -392,6 +393,7 @@ fun SaveDialog(
                 Text(text = stringResource(id = R.string.button_discard))
             }
         },
+        icon = { Icon(painterResource(id = R.drawable.ic_save), null) },
         title = {
             Text(text = stringResource(id = R.string.step_unsaved_title))
         },
