@@ -8,6 +8,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
@@ -149,9 +150,9 @@ class ScreenshotCreator {
             setNavigationBarColor(false)
             val recipeViewModel: RecipeViewModel = viewModel()
             val stepsViewModel: StepsViewModel = viewModel()
-            val recipe = recipeViewModel.getRecipe(1)
+            val recipe by recipeViewModel.getRecipe(1)
                 .observeAsState(Recipe(name = "", description = ""))
-            val steps = stepsViewModel.getAllStepsForRecipe(1)
+            val steps by stepsViewModel.getAllStepsForRecipe(1)
                 .observeAsState(listOf())
             CofiTheme(isDarkMode = false) {
                 CompositionLocalProvider(
@@ -159,8 +160,8 @@ class ScreenshotCreator {
                 ) {
                     RecipeEdit(
                         saveRecipe = { _, _ -> },
-                        recipeToEdit = recipe.value,
-                        stepsToEdit = steps.value
+                        recipeToEdit = recipe,
+                        stepsToEdit = steps,
                     )
                 }
             }
@@ -174,9 +175,9 @@ class ScreenshotCreator {
             setNavigationBarColor(true)
             val recipeViewModel: RecipeViewModel = viewModel()
             val stepsViewModel: StepsViewModel = viewModel()
-            val recipe = recipeViewModel.getRecipe(1)
+            val recipe by recipeViewModel.getRecipe(1)
                 .observeAsState(Recipe(name = "", description = ""))
-            val steps = stepsViewModel.getAllStepsForRecipe(1)
+            val steps by stepsViewModel.getAllStepsForRecipe(1)
                 .observeAsState(listOf())
             CofiTheme(isDarkMode = true) {
                 CompositionLocalProvider(
@@ -184,8 +185,8 @@ class ScreenshotCreator {
                 ) {
                     RecipeEdit(
                         saveRecipe = { _, _ -> },
-                        recipeToEdit = recipe.value,
-                        stepsToEdit = steps.value
+                        recipeToEdit = recipe,
+                        stepsToEdit = steps,
                     )
                 }
             }

@@ -58,9 +58,11 @@ fun RecipeEdit(
     stepsToEdit: List<Step> = listOf(),
     recipeToEdit: Recipe = Recipe(name = "", description = "", recipeIcon = RecipeIcon.Grinder),
     deleteRecipe: () -> Unit = {},
+    cloneRecipe: (Recipe, List<Step>) -> Unit = { _, _ -> },
     isEditing: Boolean = false,
 ) {
     var showDeleteModal by remember { mutableStateOf(false) }
+    var showCloneModal by remember { mutableStateOf(false) }
     var showSaveModal by remember { mutableStateOf(false) }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
     var name by remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
@@ -152,6 +154,12 @@ fun RecipeEdit(
                 },
                 actions = {
                     if (isEditing) {
+                        IconButton(onClick = { showCloneModal = true }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_copy),
+                                contentDescription = null
+                            )
+                        }
                         IconButton(onClick = { showDeleteModal = true }) {
                             Icon(Icons.Rounded.Delete, contentDescription = null)
                         }
@@ -335,6 +343,18 @@ fun RecipeEdit(
                 onDismiss = { showSaveModal = false }
             )
         }
+        if (showCloneModal) {
+            CloneDialog(onConfirm = {
+                cloneRecipe(
+                    recipeToEdit.copy(
+                        name = name,
+                        description = description,
+                        recipeIcon = pickedIcon,
+                    ),
+                    steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
+                )
+            }, onDismiss = { showCloneModal = false })
+        }
     }
 }
 
@@ -356,10 +376,10 @@ fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
         },
         icon = { Icon(Icons.Rounded.Delete, null) },
         title = {
-            Text(text = stringResource(id = R.string.step_delete_title))
+            Text(text = stringResource(id = R.string.recipe_delete_title))
         },
         text = {
-            Text(text = stringResource(id = R.string.step_delete_text))
+            Text(text = stringResource(id = R.string.recpie_delete_text))
         },
     )
 }
@@ -395,10 +415,36 @@ fun SaveDialog(
         },
         icon = { Icon(painterResource(id = R.drawable.ic_save), null) },
         title = {
-            Text(text = stringResource(id = R.string.step_unsaved_title))
+            Text(text = stringResource(id = R.string.recipe_unsaved_title))
         },
         text = {
-            Text(text = stringResource(id = R.string.step_unsaved_text))
+            Text(text = stringResource(id = R.string.recipe_unsaved_text))
+        },
+    )
+}
+
+@Composable
+fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(
+                onClick = onConfirm
+            ) {
+                Text(text = stringResource(id = R.string.button_copy))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = R.string.button_cancel))
+            }
+        },
+        icon = { Icon(painterResource(id = R.drawable.ic_copy), null) },
+        title = {
+            Text(text = stringResource(id = R.string.recipe_clone_title))
+        },
+        text = {
+            Text(text = stringResource(id = R.string.recpie_clone_text))
         },
     )
 }

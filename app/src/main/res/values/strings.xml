@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cofi</string>
+    <string name="app_name" translatable="false">Cofi</string>
     <string name="step_type_add_coffee">Add coffee</string>
     <string name="step_type_water">Add water</string>
     <string name="step_type_wait">Wait</string>
@@ -8,10 +8,10 @@
     <string name="step_add_duration">Duration (s)</string>
     <string name="step_add_weight">Weight (g)</string>
     <string name="step_add_save">Save</string>
-    <string name="step_unsaved_title">You have unsaved changes</string>
-    <string name="step_unsaved_text">Do you want to discard them?</string>
-    <string name="step_delete_title">Are you sure?</string>
-    <string name="step_delete_text">This will remove this recipe permanently</string>
+    <string name="recipe_unsaved_title">You have unsaved changes</string>
+    <string name="recipe_unsaved_text">Do you want to discard them?</string>
+    <string name="recipe_delete_title">Are you sure?</string>
+    <string name="recpie_delete_text">This will remove this recipe permanently</string>
     <string name="recipe_edit_name">Name</string>
     <string name="recipe_edit_description">Description</string>
     <string name="recipe_edit_title">Edit recipe</string>
@@ -71,4 +71,7 @@ Keep an eye out not to block air moving out of the brewer"</string>
     <string name="tereszkiewicz_credits_title">App icon by: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Check out his Dribbble</string>
     <string name="recipe_create_title">Add recipe</string>
+    <string name="recipe_clone_title">Clone this recipe?</string>
+    <string name="recpie_clone_text">This will create a duplicate of this recipe</string>
+    <string name="recpie_clone_suffix">%1$s - Copy</string>
 </resources>
