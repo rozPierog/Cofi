@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -145,26 +146,20 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    text = {
-                        Text(
-                            text =
-                            stringResource(
-                                id =
-                                stringToCombineWeight(combineWeightState).settingsStringId
-                            )
-                        )
-                    },
                     overlineText = {
                         Text(text = stringResource(id = R.string.settings_combine_weight_item))
                     },
-
-                    icon = {
-                        Icon(Icons.Rounded.List, contentDescription = null)
+                    text = {
+                        Text(
+                            text = stringResource(
+                                stringToCombineWeight(combineWeightState).settingsStringId
+                            ),
+                            fontWeight = FontWeight.Light
+                        )
                     },
+                    icon = { Icon(Icons.Rounded.List, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(
-                        onClick = {
-                            showCombineWeightDialog = true
-                        },
+                        onClick = { showCombineWeightDialog = true },
                     ),
                 )
                 if (showCombineWeightDialog) {
@@ -224,31 +219,32 @@ fun CombineWeightDialog(
     Dialog(
         onDismissRequest = dismiss
     ) {
-        Column(
-            modifier = Modifier
-                .background(
-                    shape = RoundedCornerShape(28.0.dp),
-                    color = MaterialTheme.colorScheme.surface
-                )
-                .padding(vertical = Spacing.big)
+        Surface(
+            shape = RoundedCornerShape(28.0.dp),
+            color = MaterialTheme.colorScheme.surface,
+            tonalElevation = 6.dp,
         ) {
-            CombineWeight.values().forEach {
-                ListItem(
-                    text = { Text(stringResource(id = it.settingsStringId)) },
-                    modifier = Modifier.selectable(
-                        selected = combineWeightState == it.name,
-                        onClick = { selectCombineMethod(it) },
-                    ),
-                    icon = {
-                        RadioButton(
+            Column(
+                modifier = Modifier.padding(vertical = Spacing.big)
+            ) {
+                CombineWeight.values().forEach {
+                    ListItem(
+                        text = { Text(stringResource(id = it.settingsStringId)) },
+                        modifier = Modifier.selectable(
                             selected = combineWeightState == it.name,
                             onClick = { selectCombineMethod(it) },
-                            colors = RadioButtonDefaults.colors(
-                                selectedColor = MaterialTheme.colorScheme.secondary,
+                        ),
+                        icon = {
+                            RadioButton(
+                                selected = combineWeightState == it.name,
+                                onClick = { selectCombineMethod(it) },
+                                colors = RadioButtonDefaults.colors(
+                                    selectedColor = MaterialTheme.colorScheme.secondary,
+                                )
                             )
-                        )
-                    }
-                )
+                        }
+                    )
+                }
             }
         }
     }
