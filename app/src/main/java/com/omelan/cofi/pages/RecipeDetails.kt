@@ -21,7 +21,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -224,7 +223,8 @@ fun RecipeDetails(
                         {
                             coroutineScope.launch {
                                 lazyListState.animateScrollToItem(
-                                    if (recipe.description.isNotBlank()) 1 else 0)
+                                    if (recipe.description.isNotBlank()) 1 else 0
+                                )
                                 changeToNextStep(silent = true)
                             }
                         }

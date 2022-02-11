@@ -1,6 +1,5 @@
 package com.omelan.cofi.components
 
-import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,10 +36,6 @@ import com.omelan.cofi.ui.createTextFieldColors
 import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import kotlin.coroutines.coroutineContext
 
 @Composable
 fun StepAddCard(
