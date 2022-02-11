@@ -37,14 +37,17 @@ fun StepListItem(
         .animateContentSize()
         .fillMaxWidth()
         .padding(vertical = Spacing.small)
-        .heightIn(min = 42.dp)
         .clickable(
             onClick = { onClick?.let { it(step) } },
             enabled = onClick != null,
             role = Role.Button,
             interactionSource = remember { MutableInteractionSource() },
             indication = rememberRipple(bounded = true),
-        )
+        ).apply {
+            if (onClick != null) {
+                heightIn(min = 42.dp)
+            }
+        }
 
     ConstraintLayout(
         modifier = constraintModifier
