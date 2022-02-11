@@ -236,8 +236,8 @@ fun RecipeEdit(
                                 singleLine = true,
                                 keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                                 label = {
-                                    Text(
-                                        text = stringResource(id = R.string.recipe_edit_name)
+                                    androidx.compose.material.Text(
+                                        stringResource(id = R.string.recipe_edit_name)
                                     )
                                 },
                                 colors = textFieldColors,
@@ -254,7 +254,9 @@ fun RecipeEdit(
                                 .testTag("recipe_edit_description"),
                             keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                             label = {
-                                Text(text = stringResource(id = R.string.recipe_edit_description))
+                                androidx.compose.material.Text(
+                                    stringResource(id = R.string.recipe_edit_description)
+                                )
                             },
                             colors = textFieldColors,
                         )
