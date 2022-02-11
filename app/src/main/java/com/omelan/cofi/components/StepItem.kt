@@ -3,9 +3,7 @@ package com.omelan.cofi.components
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.omelan.cofi.R
@@ -38,6 +37,7 @@ fun StepListItem(
         .animateContentSize()
         .fillMaxWidth()
         .padding(vertical = Spacing.small)
+        .heightIn(min = 42.dp)
         .clickable(
             onClick = { onClick?.let { it(step) } },
             enabled = onClick != null,
@@ -117,8 +117,8 @@ fun StepListItemPreview() {
         step = Step(
             id = 0,
             name = "Somebody once told me the world is gonna roll me I ain't the sharpest " +
-                "tool in the shed She was looking kind of dumb with her finger and her thumb " +
-                "In the shape of an \"L\" on her forehead",
+                    "tool in the shed She was looking kind of dumb with her finger and her thumb " +
+                    "In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
             value = 60,
