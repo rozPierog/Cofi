@@ -7,5 +7,6 @@ pathToScreenshots="sdcard/Pictures/"
 
 for i in "${screenshotsNames[@]}"
 do
-   adb pull "$pathToScreenshots$i$screenshotFormat" "$pathToMetadata$i$screenshotFormat"
+    newestScreenshot=$(adb shell ls -t $pathToScreenshots | grep "$i" | head -1)
+    adb pull "$pathToScreenshots$newestScreenshot" "$pathToMetadata$i$screenshotFormat"
 done
