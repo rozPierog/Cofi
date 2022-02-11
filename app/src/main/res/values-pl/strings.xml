@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cofi</string>
     <string name="step_type_add_coffee">Dodaj kawę</string>
     <string name="step_type_water">Dodaj wodę</string>
     <string name="step_type_wait">Czekaj</string>
@@ -9,8 +8,8 @@
     <string name="step_add_duration">Czas trwania (s)</string>
     <string name="step_add_weight">Waga (g)</string>
     <string name="step_add_save">Zapisz</string>
-    <string name="step_delete_title">Jesteś pewien?</string>
-    <string name="step_delete_text">Nie będzie można przywrócić tego przepisu</string>
+    <string name="recipe_delete_title">Jesteś pewien?</string>
+    <string name="recpie_delete_text">Nie będzie można przywrócić tego przepisu</string>
     <string name="recipe_edit_name">Nazwa</string>
     <string name="recipe_edit_description">Opis</string>
     <string name="recipe_edit_title">Edytuj przepis</string>
@@ -70,6 +69,9 @@ Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze 
     <string name="settings_ding_item">Dźwięk zmiany kroku</string>
     <string name="button_continue_editing">Edytuj dalej</string>
     <string name="button_discard">Porzuć</string>
-    <string name="step_unsaved_text">Chcesz je porzucić?</string>
-    <string name="step_unsaved_title">Masz niezapisane zmiany</string>
+    <string name="recipe_unsaved_text">Chcesz je porzucić?</string>
+    <string name="recipe_unsaved_title">Masz niezapisane zmiany</string>
+    <string name="recipe_clone_title">Skopiować ten przepis?</string>
+    <string name="recpie_clone_text">Stworzy to duplikat tego przepisu</string>
+    <string name="recpie_clone_suffix">%1$s - Kopia</string>
 </resources>

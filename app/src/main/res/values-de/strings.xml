@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cofi</string>
     <string name="step_type_add_coffee">Kaffee hinzufügen</string>
     <string name="step_type_water">Wasser hinzufügen</string>
     <string name="step_type_wait">Warten</string>
@@ -8,8 +7,8 @@
     <string name="step_add_duration">Dauer (s)</string>
     <string name="step_add_weight">Gewicht (g)</string>
     <string name="step_add_save">Speichern</string>
-    <string name="step_delete_title">Bist du sicher?</string>
-    <string name="step_delete_text">Damit wird dieses Rezept dauerhaft entfernt</string>
+    <string name="recipe_delete_title">Bist du sicher?</string>
+    <string name="recpie_delete_text">Damit wird dieses Rezept dauerhaft entfernt</string>
     <string name="recipe_edit_name">Name</string>
     <string name="recipe_edit_description">Beschreibung</string>
     <string name="recipe_edit_title">Rezept bearbeiten</string>

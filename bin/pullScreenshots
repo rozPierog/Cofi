@@ -1,0 +1,12 @@
+#!/bin/bash
+
+screenshotsNames=("1_en-US" "2_en-US" "3_en-US" "4_en-US" "5_en-US" "6_en-US")
+screenshotFormat=".png"
+pathToMetadata="fastlane/metadata/android/en-US/images/phoneScreenshots/"
+pathToScreenshots="sdcard/Pictures/"
+
+for i in "${screenshotsNames[@]}"
+do
+    newestScreenshot=$(adb shell ls -t $pathToScreenshots | grep "$i" | head -1)
+    adb pull "$pathToScreenshots$newestScreenshot" "$pathToMetadata$i$screenshotFormat"
+done

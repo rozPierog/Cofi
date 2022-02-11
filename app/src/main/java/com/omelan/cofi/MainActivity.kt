@@ -12,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
@@ -147,22 +148,45 @@ class MainActivity : MonetCompatActivity() {
             ?: throw IllegalStateException("No Recipe ID")
         val recipeViewModel: RecipeViewModel = viewModel()
         val stepsViewModel: StepsViewModel = viewModel()
-        val recipe = recipeViewModel.getRecipe(recipeId)
+        val recipe by recipeViewModel.getRecipe(recipeId)
             .observeAsState(Recipe(name = "", description = ""))
-        val steps = stepsViewModel.getAllStepsForRecipe(recipeId)
+        val steps by stepsViewModel.getAllStepsForRecipe(recipeId)
             .observeAsState(listOf())
         RecipeEdit(
             goBack = goBack,
             isEditing = true,
-            recipeToEdit = recipe.value,
-            stepsToEdit = steps.value,
-            saveRecipe = { _recipe, _steps ->
+            recipeToEdit = recipe,
+            stepsToEdit = steps,
+            saveRecipe = { newRecipe, newSteps ->
                 lifecycleScope.launch {
-                    db.recipeDao().updateRecipe(_recipe)
-                    db.stepDao().deleteAllStepsForRecipe(_recipe.id)
-                    db.stepDao().insertAll(_steps)
+                    db.recipeDao().updateRecipe(newRecipe)
+                    db.stepDao().deleteAllStepsForRecipe(newRecipe.id)
+                    db.stepDao().insertAll(newSteps)
                 }
                 goBack()
+            },
+            cloneRecipe = { newRecipe, newSteps ->
+                lifecycleScope.launch {
+                    val idOfRecipe = db.recipeDao().insertRecipe(
+                        newRecipe.copy(
+                            id = 0,
+                            name = applicationContext.resources.getString(
+                                R.string.recpie_clone_suffix,
+                                recipe.name
+                            )
+                        )
+                    )
+                    db.stepDao().insertAll(
+                        newSteps.map {
+                            it.copy(recipeId = idOfRecipe.toInt(), id = 0)
+                        }
+                    )
+                }
+                navController.navigate("list") {
+                    this.popUpTo("list") {
+                        inclusive = true
+                    }
+                }
             },
             deleteRecipe = {
                 lifecycleScope.launch {
@@ -196,7 +220,7 @@ class MainActivity : MonetCompatActivity() {
     fun MainNavigation() {
         val navController = rememberNavController()
         val db = AppDatabase.getInstance(this)
-        val isInPiP = mainActivityViewModel.pipState.observeAsState(false)
+        val isInPiP by mainActivityViewModel.pipState.observeAsState(false)
         val goBack: () -> Unit = {
             navController.popBackStack()
         }
@@ -214,7 +238,7 @@ class MainActivity : MonetCompatActivity() {
             )
 
             CompositionLocalProvider(
-                LocalPiPState provides isInPiP.value,
+                LocalPiPState provides isInPiP,
             ) {
                 NavHost(
                     navController,

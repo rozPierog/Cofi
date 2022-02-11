@@ -9,12 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Ability to change step order
 - Alert dialog when exiting edit/add screen with unsaved changes
+- App version in settings
+- Ability to clone recipes
+
 ### Changed
 - Fix text selection colors
 - Fix about page list item icon alignment
 - Fix wait step ime keyboard action
+- Fix saving step without a name
 - Removed a few kb from app size
 - Retroactively changed previous release to 1.4.0
+- Scroll to progress indicator on recipe start
 ### Removed
 
 

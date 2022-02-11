@@ -6,6 +6,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,8 +14,10 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.omelan.cofi.BuildConfig
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
@@ -90,7 +93,8 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Text(
                             text = stringResource(id = R.string.hoffmann_credits_subtitle),
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
+                            fontWeight = FontWeight.Light,
                         )
                     },
                     icon = {
@@ -111,14 +115,15 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Text(
                             text = stringResource(id = R.string.tereszkiewicz_credits_title),
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
                         )
                     },
                     text = {
                         Text(
                             text = stringResource(id = R.string.tereszkiewicz_credits_subtitle),
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
+                            fontWeight = FontWeight.Light,
                         )
                     },
                     icon = {
@@ -131,6 +136,33 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         onClick = {
                             uriHandler.openUri(
                                 "https://dribbble.com/hubert-tereszkiewicz"
+                            )
+                        }
+                    )
+                )
+            }
+            item {
+                ListItem(
+                    overlineText = {
+                        Text(
+                            text = "App version",
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    },
+                    text = {
+                        Text(
+                            text = BuildConfig.VERSION_NAME,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontWeight = FontWeight.Light,
+                        )
+                    },
+                    icon = { Icon(Icons.Rounded.Build, contentDescription = null) },
+                    modifier = Modifier.settingsItemModifier(
+                        onClick = {
+                            uriHandler.openUri(
+                                "https://github.com/rozPierog/Cofi/blob/main/docs/Changelog.md"
                             )
                         }
                     )

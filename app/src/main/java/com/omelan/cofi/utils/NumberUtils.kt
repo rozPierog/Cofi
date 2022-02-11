@@ -44,7 +44,7 @@ fun ensureNumbersOnly(string: String): String? {
     val maxInt: Int = Int.MAX_VALUE / 1000
     return try {
         val stringValue = string.trim().toInt()
-        if (stringValue > maxInt) {
+        if (stringValue > maxInt || stringValue < 0) {
             null
         } else {
             stringValue.toString()

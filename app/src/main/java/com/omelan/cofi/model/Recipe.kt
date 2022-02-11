@@ -105,19 +105,8 @@ data class Recipe(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val description: String,
-//    @Ignore
-//    val steps: List<Step> = listOf(),
     @ColumnInfo(name = "last_finished") val lastFinished: Long = 0L,
     @ColumnInfo(name = "icon") val recipeIcon: RecipeIcon = RecipeIcon.Grinder,
-)
-
-data class RecipesWithSteps(
-    @Embedded val recipe: Recipe,
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "recipeId"
-    )
-    val steps: List<Step>
 )
 
 @Dao

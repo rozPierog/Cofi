@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.*
@@ -58,9 +59,11 @@ fun RecipeEdit(
     stepsToEdit: List<Step> = listOf(),
     recipeToEdit: Recipe = Recipe(name = "", description = "", recipeIcon = RecipeIcon.Grinder),
     deleteRecipe: () -> Unit = {},
+    cloneRecipe: (Recipe, List<Step>) -> Unit = { _, _ -> },
     isEditing: Boolean = false,
 ) {
     var showDeleteModal by remember { mutableStateOf(false) }
+    var showCloneModal by remember { mutableStateOf(false) }
     var showSaveModal by remember { mutableStateOf(false) }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
     var name by remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
@@ -75,6 +78,7 @@ fun RecipeEdit(
     val keyboardController = LocalSoftwareKeyboardController.current
     val textFieldColors = MaterialTheme.createTextFieldColors()
     val appBarBehavior = createAppBarBehavior()
+    val lazyListState = rememberLazyListState()
     val textSelectionColors = MaterialTheme.createTextSelectionColors()
 
     val canSave = name.isNotBlank() && steps.isNotEmpty()
@@ -152,6 +156,12 @@ fun RecipeEdit(
                 },
                 actions = {
                     if (isEditing) {
+                        IconButton(onClick = { showCloneModal = true }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_copy),
+                                contentDescription = null
+                            )
+                        }
                         IconButton(onClick = { showDeleteModal = true }) {
                             Icon(Icons.Rounded.Delete, contentDescription = null)
                         }
@@ -189,6 +199,7 @@ fun RecipeEdit(
                         .fillMaxWidth()
                         .fillMaxHeight()
                         .background(color = MaterialTheme.colorScheme.background),
+                    state = lazyListState,
                     contentPadding = PaddingValues(
                         bottom = maxHeight / 2,
                         top = Spacing.big,
@@ -225,8 +236,8 @@ fun RecipeEdit(
                                 singleLine = true,
                                 keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                                 label = {
-                                    Text(
-                                        text = stringResource(id = R.string.recipe_edit_name)
+                                    androidx.compose.material.Text(
+                                        stringResource(id = R.string.recipe_edit_name)
                                     )
                                 },
                                 colors = textFieldColors,
@@ -243,7 +254,9 @@ fun RecipeEdit(
                                 .testTag("recipe_edit_description"),
                             keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
                             label = {
-                                Text(text = stringResource(id = R.string.recipe_edit_description))
+                                androidx.compose.material.Text(
+                                    stringResource(id = R.string.recipe_edit_description)
+                                )
                             },
                             colors = textFieldColors,
                         )
@@ -306,6 +319,13 @@ fun RecipeEdit(
                             exit = shrinkVertically(),
                         ) {
                             StepAddCard(
+                                onTypeSelect = {
+                                    coroutineScope.launch {
+                                        lazyListState.animateScrollToItem(
+                                            lazyListState.layoutInfo.totalItemsCount - 1
+                                        )
+                                    }
+                                },
                                 modifier = Modifier.animateItemPlacement(),
                                 save = { stepToSave ->
                                     if (stepToSave != null) {
@@ -335,6 +355,18 @@ fun RecipeEdit(
                 onDismiss = { showSaveModal = false }
             )
         }
+        if (showCloneModal) {
+            CloneDialog(onConfirm = {
+                cloneRecipe(
+                    recipeToEdit.copy(
+                        name = name,
+                        description = description,
+                        recipeIcon = pickedIcon,
+                    ),
+                    steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
+                )
+            }, onDismiss = { showCloneModal = false })
+        }
     }
 }
 
@@ -354,11 +386,12 @@ fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
                 Text(text = stringResource(id = R.string.button_cancel))
             }
         },
+        icon = { Icon(Icons.Rounded.Delete, null) },
         title = {
-            Text(text = stringResource(id = R.string.step_delete_title))
+            Text(text = stringResource(id = R.string.recipe_delete_title))
         },
         text = {
-            Text(text = stringResource(id = R.string.step_delete_text))
+            Text(text = stringResource(id = R.string.recpie_delete_text))
         },
     )
 }
@@ -392,11 +425,38 @@ fun SaveDialog(
                 Text(text = stringResource(id = R.string.button_discard))
             }
         },
+        icon = { Icon(painterResource(id = R.drawable.ic_save), null) },
         title = {
-            Text(text = stringResource(id = R.string.step_unsaved_title))
+            Text(text = stringResource(id = R.string.recipe_unsaved_title))
         },
         text = {
-            Text(text = stringResource(id = R.string.step_unsaved_text))
+            Text(text = stringResource(id = R.string.recipe_unsaved_text))
+        },
+    )
+}
+
+@Composable
+fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(
+                onClick = onConfirm
+            ) {
+                Text(text = stringResource(id = R.string.button_copy))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = R.string.button_cancel))
+            }
+        },
+        icon = { Icon(painterResource(id = R.drawable.ic_copy), null) },
+        title = {
+            Text(text = stringResource(id = R.string.recipe_clone_title))
+        },
+        text = {
+            Text(text = stringResource(id = R.string.recpie_clone_text))
         },
     )
 }
