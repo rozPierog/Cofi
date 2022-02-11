@@ -34,6 +34,7 @@ fun StepListItem(
     onClick: ((Step) -> Unit)? = null
 ) {
     val constraintModifier = modifier
+        .heightIn(min = 42.dp)
         .animateContentSize()
         .fillMaxWidth()
         .padding(vertical = Spacing.small)
@@ -43,11 +44,7 @@ fun StepListItem(
             role = Role.Button,
             interactionSource = remember { MutableInteractionSource() },
             indication = rememberRipple(bounded = true),
-        ).apply {
-            if (onClick != null) {
-                heightIn(min = 42.dp)
-            }
-        }
+        )
 
     ConstraintLayout(
         modifier = constraintModifier
@@ -120,8 +117,8 @@ fun StepListItemPreview() {
         step = Step(
             id = 0,
             name = "Somebody once told me the world is gonna roll me I ain't the sharpest " +
-                "tool in the shed She was looking kind of dumb with her finger and her thumb " +
-                "In the shape of an \"L\" on her forehead",
+                    "tool in the shed She was looking kind of dumb with her finger and her thumb " +
+                    "In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
             value = 60,
