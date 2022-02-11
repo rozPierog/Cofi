@@ -73,6 +73,7 @@ fun RecipeList(
                 additionalTop = Spacing.small,
                 additionalStart = Spacing.big,
                 additionalEnd = Spacing.big,
+                additionalBottom = Spacing.small,
             ),
             verticalArrangement = Arrangement.spacedBy(Spacing.normal),
             modifier = Modifier
