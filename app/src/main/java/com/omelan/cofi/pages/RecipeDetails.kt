@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -20,6 +21,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -66,7 +68,7 @@ fun RecipeDetails(
     val snackbarState = SnackbarHostState()
     val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
-
+    val lazyListState = rememberLazyListState()
     val dataStore = DataStore(LocalContext.current)
 
     val isDingEnabled by dataStore.getStepChangeSetting()
@@ -219,7 +221,13 @@ fun RecipeDetails(
                             { coroutineScope.launch { startAnimations() } }
                         }
                     } else {
-                        { coroutineScope.launch { changeToNextStep(silent = true) } }
+                        {
+                            coroutineScope.launch {
+                                lazyListState.animateScrollToItem(
+                                    if (recipe.description.isNotBlank()) 1 else 0)
+                                changeToNextStep(silent = true)
+                            }
+                        }
                     },
                 )
             }
@@ -231,6 +239,7 @@ fun RecipeDetails(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .background(MaterialTheme.colorScheme.background),
+            state = lazyListState,
             contentPadding = if (isInPiP) {
                 PaddingValues(0.dp)
             } else {

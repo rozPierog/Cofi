@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix saving step without a name
 - Removed a few kb from app size
 - Retroactively changed previous release to 1.4.0
-
+- Scroll to progress indicator on recipe start
 ### Removed
 
 
