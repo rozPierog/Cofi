@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.*
@@ -77,6 +78,7 @@ fun RecipeEdit(
     val keyboardController = LocalSoftwareKeyboardController.current
     val textFieldColors = MaterialTheme.createTextFieldColors()
     val appBarBehavior = createAppBarBehavior()
+    val lazyListState = rememberLazyListState()
     val textSelectionColors = MaterialTheme.createTextSelectionColors()
 
     val canSave = name.isNotBlank() && steps.isNotEmpty()
@@ -197,6 +199,7 @@ fun RecipeEdit(
                         .fillMaxWidth()
                         .fillMaxHeight()
                         .background(color = MaterialTheme.colorScheme.background),
+                    state = lazyListState,
                     contentPadding = PaddingValues(
                         bottom = maxHeight / 2,
                         top = Spacing.big,
@@ -314,6 +317,13 @@ fun RecipeEdit(
                             exit = shrinkVertically(),
                         ) {
                             StepAddCard(
+                                onTypeSelect = {
+                                    coroutineScope.launch {
+                                        lazyListState.animateScrollToItem(
+                                            lazyListState.layoutInfo.totalItemsCount - 1
+                                        )
+                                    }
+                                },
                                 modifier = Modifier.animateItemPlacement(),
                                 save = { stepToSave ->
                                     if (stepToSave != null) {

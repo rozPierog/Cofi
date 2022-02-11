@@ -1,5 +1,6 @@
 package com.omelan.cofi.components
 
+import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,12 +37,17 @@ import com.omelan.cofi.ui.createTextFieldColors
 import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.coroutineContext
 
 @Composable
 fun StepAddCard(
     modifier: Modifier = Modifier,
     stepToEdit: Step? = null,
     save: (Step?) -> Unit,
+    onTypeSelect: () -> Unit = {},
     orderInRecipe: Int,
     isLast: Boolean = false,
     isFirst: Boolean = false,
@@ -62,7 +68,12 @@ fun StepAddCard(
     val textFieldColors = MaterialTheme.createTextFieldColors()
     val nameFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
-
+    val isExpanded = pickedType != null
+    LaunchedEffect(key1 = isExpanded) {
+        if (isExpanded) {
+            onTypeSelect()
+        }
+    }
     fun saveStep() {
         save(
             Step(
@@ -97,7 +108,9 @@ fun StepAddCard(
                     StepType.values().forEach { stepType ->
                         Chip(
                             value = stringResource(id = stepType.stringRes),
-                            onCheck = { pickedType = stepType },
+                            onCheck = {
+                                pickedType = stepType
+                            },
                             isChecked = pickedType == stepType,
                             modifier = Modifier.testTag(
                                 "step_type_button_${stepType.name.lowercase()}"
@@ -106,7 +119,7 @@ fun StepAddCard(
                     }
                 }
             }
-            if (pickedType != null) {
+            if (isExpanded) {
                 OutlinedTextField(
                     label = { Text(text = stringResource(id = R.string.step_add_name)) },
                     value = stepName,
