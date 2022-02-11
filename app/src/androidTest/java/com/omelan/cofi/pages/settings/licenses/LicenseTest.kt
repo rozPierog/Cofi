@@ -2,6 +2,7 @@ package com.omelan.cofi.pages.settings.licenses
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
+import com.omelan.cofi.utils.parseJsonToDependencyList
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
