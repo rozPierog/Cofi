@@ -145,7 +145,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                 ListItem(
                     overlineText = {
                         Text(
-                            text = "App version",
+                            text = stringResource(R.string.app_version),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
