@@ -1,6 +1,11 @@
 package com.omelan.cofi.pages
 
+import android.app.Notification
+import android.app.PendingIntent
+import android.content.Intent
 import android.media.MediaPlayer
+import android.os.Build
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -25,12 +30,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.*
 import com.omelan.cofi.*
@@ -40,6 +49,7 @@ import com.omelan.cofi.model.*
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.Haptics
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +63,8 @@ fun RecipeDetails(
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
 ) {
+    val context = LocalContext.current
+    val lifecycle = LocalLifecycleOwner.current
     var currentStep by remember { mutableStateOf<Step?>(null) }
     var isDone by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
@@ -68,7 +80,7 @@ fun RecipeDetails(
     val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
     val lazyListState = rememberLazyListState()
-    val dataStore = DataStore(LocalContext.current)
+    val dataStore = DataStore(context)
 
     val isDingEnabled by dataStore.getStepChangeSetting()
         .collectAsState(initial = DING_DEFAULT_VALUE)
@@ -108,7 +120,6 @@ fun RecipeDetails(
         onTimerRunning(false)
     }
 
-    val context = LocalContext.current
     val haptics = Haptics(context)
     val mediaPlayer = MediaPlayer.create(context, R.raw.ding)
     suspend fun changeToNextStep(silent: Boolean = false) {
@@ -126,6 +137,39 @@ fun RecipeDetails(
             mediaPlayer.start()
         }
     }
+
+    lifecycle.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+        if (event == Lifecycle.Event.ON_START) {
+
+        } else if (event == Lifecycle.Event.ON_STOP) {
+            val pendingIntent: PendingIntent =
+                Intent(context, MainActivity::class.java).let { notificationIntent ->
+                    PendingIntent.getActivity(
+                        context,
+                        0,
+                        notificationIntent,
+                        PendingIntent.FLAG_IMMUTABLE
+                    )
+                }
+
+            val notification: Notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Notification.Builder(context, "background_timer")
+                    .setContentTitle(recipe.name)
+                    .setContentText(currentStep?.name)
+                    .setSmallIcon(recipe.recipeIcon.icon)
+                    .setContentIntent(pendingIntent)
+                    .setProgress(
+                        currentStep?.time ?: 0,
+                        animatedProgressValue.value.roundToInt(),
+                        false
+                    )
+                    .build()
+            } else {
+                TODO("VERSION.SDK_INT < O")
+            }
+            context.applicationContext.startForeground(1, notification)
+        }
+    })
 
     suspend fun progressAnimation() {
         val safeCurrentStep = currentStep ?: return
