@@ -136,7 +136,7 @@ fun RecipeEdit(
                         onClick = { pickIcon(it) },
                         modifier = Modifier
                             .fillMaxWidth(0.2F)
-                            .aspectRatio(1f)
+                            .aspectRatio(1F)
                     ) {
                         Icon(
                             painter = painterResource(id = it.icon),
@@ -196,8 +196,7 @@ fun RecipeEdit(
             BoxWithConstraints {
                 LazyColumn(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
+                        .fillMaxSize()
                         .background(color = MaterialTheme.colorScheme.background),
                     state = lazyListState,
                     contentPadding = PaddingValues(
@@ -329,10 +328,7 @@ fun RecipeEdit(
                                 modifier = Modifier.animateItemPlacement(),
                                 save = { stepToSave ->
                                     if (stepToSave != null) {
-                                        steps = listOf(
-                                            *steps.toTypedArray(),
-                                            stepToSave
-                                        )
+                                        steps = steps.toMutableList().apply { add(stepToSave) }
                                     }
                                 },
                                 orderInRecipe = steps.size,

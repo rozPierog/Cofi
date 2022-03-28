@@ -116,7 +116,6 @@ fun RecipeDetails(
         if (indexOfCurrentStep != indexOfLastStep) {
             currentStep = steps[indexOfCurrentStep + 1]
         } else {
-            animatedProgressValue.snapTo(0f)
             currentStep = null
             onTimerRunning(false)
             isDone = true
@@ -236,8 +235,7 @@ fun RecipeDetails(
     ) {
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
+                .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
             state = lazyListState,
             contentPadding = if (isInPiP) {
@@ -285,11 +283,10 @@ fun RecipeDetails(
                 itemsIndexed(
                     items = steps,
                     key = { _, step -> step.id }
-                ) { _, step ->
-                    val indexOfThisStep = steps.indexOf(step)
+                ) { index, step ->
                     val stepProgress = when {
-                        indexOfThisStep < indexOfCurrentStep -> StepProgress.Done
-                        indexOfCurrentStep == indexOfThisStep -> StepProgress.Current
+                        index < indexOfCurrentStep -> StepProgress.Done
+                        indexOfCurrentStep == index -> StepProgress.Current
                         else -> StepProgress.Upcoming
                     }
                     StepListItem(step = step, stepProgress = stepProgress)

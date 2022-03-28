@@ -98,20 +98,18 @@ fun StepAddCard(
                 .padding(Spacing.medium)
                 .animateContentSize()
         ) {
-            Box {
-                FlowRow {
-                    StepType.values().forEach { stepType ->
-                        Chip(
-                            value = stringResource(id = stepType.stringRes),
-                            onCheck = {
-                                pickedType = stepType
-                            },
-                            isChecked = pickedType == stepType,
-                            modifier = Modifier.testTag(
-                                "step_type_button_${stepType.name.lowercase()}"
-                            )
+            FlowRow {
+                StepType.values().forEach { stepType ->
+                    Chip(
+                        value = stringResource(id = stepType.stringRes),
+                        onCheck = {
+                            pickedType = stepType
+                        },
+                        isChecked = pickedType == stepType,
+                        modifier = Modifier.testTag(
+                            "step_type_button_${stepType.name.lowercase()}"
                         )
-                    }
+                    )
                 }
             }
             if (isExpanded) {
@@ -222,18 +220,15 @@ fun StepAddCard(
                 if (stepToEdit != null) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         PillButton(
-                            modifier = Modifier.testTag("step_remove"),
                             imageVector = Icons.Rounded.KeyboardArrowUp,
                             onClick = { onPositionChange(-1) },
                             enabled = !isFirst
                         )
                         Spacer(modifier = Modifier.width(Spacing.normal))
                         PillButton(
-                            modifier = Modifier.testTag("step_remove"),
                             imageVector = Icons.Rounded.KeyboardArrowDown,
                             onClick = { onPositionChange(1) },
                             enabled = !isLast

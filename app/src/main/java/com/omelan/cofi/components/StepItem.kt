@@ -45,21 +45,20 @@ fun StepListItem(
             interactionSource = remember { MutableInteractionSource() },
             indication = rememberRipple(bounded = true),
         )
-
+    val painter = when (stepProgress) {
+        StepProgress.Current -> painterResource(id = R.drawable.ic_play_arrow)
+        StepProgress.Done -> painterResource(id = R.drawable.ic_check_circle)
+        StepProgress.Upcoming -> when (step.type) {
+            StepType.WATER -> painterResource(id = R.drawable.ic_water_plus)
+            StepType.ADD_COFFEE -> painterResource(id = R.drawable.ic_coffee)
+            StepType.WAIT -> painterResource(id = R.drawable.ic_progress_clock)
+            StepType.OTHER -> painterResource(id = R.drawable.ic_playlist_edit)
+        }
+    }
     ConstraintLayout(
         modifier = constraintModifier
     ) {
         val (icon, name, valueAndTimeBox) = createRefs()
-        val painter = when (stepProgress) {
-            StepProgress.Current -> painterResource(id = R.drawable.ic_play_arrow)
-            StepProgress.Done -> painterResource(id = R.drawable.ic_check_circle)
-            StepProgress.Upcoming -> when (step.type) {
-                StepType.WATER -> painterResource(id = R.drawable.ic_water_plus)
-                StepType.ADD_COFFEE -> painterResource(id = R.drawable.ic_coffee)
-                StepType.WAIT -> painterResource(id = R.drawable.ic_progress_clock)
-                StepType.OTHER -> painterResource(id = R.drawable.ic_playlist_edit)
-            }
-        }
         Icon(
             painter = painter,
             tint = MaterialTheme.colorScheme.onBackground,
