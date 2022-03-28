@@ -74,4 +74,5 @@ Keep an eye out not to block air moving out of the brewer"</string>
     <string name="recipe_clone_title">Clone this recipe?</string>
     <string name="recpie_clone_text">This will create a duplicate of this recipe</string>
     <string name="recpie_clone_suffix">%1$s - Copy</string>
+    <string name="app_version">App version</string>
 </resources>

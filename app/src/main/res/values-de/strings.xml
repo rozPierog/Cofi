@@ -35,7 +35,7 @@
     <string name="settings_licenses_item">Danksagungen</string>
     <string name="settings_github_item">Github Repository</string>
     <string name="step_add_remove">Entfernen</string>
-    <string name="timer_enjoy">Genieß deinen Kaffee</string>
+    <string name="timer_enjoy">Genieße deinen Kaffee</string>
     <string name="prepopulate_v60_name">V60</string>
     <string name="prepopulate_v60_description">"Rezept erstellt von: James Hoffmann
 Quelle: https://youtu.be/AI4ynXzkSQo
@@ -65,4 +65,12 @@ Achte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite bef
     <string name="prepopulate_step_scoop_coffee">Schaum und Kaffeepulver von der Oberfläche abschöpfen</string>
     <string name="prepopulate_step_stir_crust">Umrühren</string>
     <string name="prepopulate_step_plunge">Siebträger bis knapp unter die Wasseroberfläche eintauchen und einschenken</string>
+    <string name="recipe_unsaved_title">Ungespeicherte Änderungen</string>
+    <string name="recipe_unsaved_text">Möchtest du die Änderungen verwerfen?</string>
+    <string name="button_discard">Verwerfen</string>
+    <string name="recipe_clone_title">Dieses Rezept kopieren?</string>
+    <string name="recpie_clone_text">Dadurch wird ein Duplikat dieses Rezepts erstellt</string>
+    <string name="recpie_clone_suffix">%1$s - Kopie</string>
+    <string name="button_continue_editing">Bearbeitung fortsetzen</string>
+    <string name="app_version">App-Version</string>
 </resources>
