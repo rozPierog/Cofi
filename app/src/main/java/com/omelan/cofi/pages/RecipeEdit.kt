@@ -17,10 +17,11 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
@@ -76,7 +77,6 @@ fun RecipeEdit(
     )
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
-    val textFieldColors = MaterialTheme.createTextFieldColors()
     val appBarBehavior = createAppBarBehavior()
     val lazyListState = rememberLazyListState()
     val textSelectionColors = MaterialTheme.createTextSelectionColors()
@@ -234,12 +234,7 @@ fun RecipeEdit(
                                     .testTag("recipe_edit_name"),
                                 singleLine = true,
                                 keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
-                                label = {
-                                    androidx.compose.material.Text(
-                                        stringResource(id = R.string.recipe_edit_name)
-                                    )
-                                },
-                                colors = textFieldColors,
+                                label = { Text(stringResource(id = R.string.recipe_edit_name)) },
                             )
                         }
                     }
@@ -252,12 +247,7 @@ fun RecipeEdit(
                                 .padding(bottom = Spacing.big)
                                 .testTag("recipe_edit_description"),
                             keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
-                            label = {
-                                androidx.compose.material.Text(
-                                    stringResource(id = R.string.recipe_edit_description)
-                                )
-                            },
-                            colors = textFieldColors,
+                            label = { Text(stringResource(id = R.string.recipe_edit_description)) },
                         )
                     }
                     itemsIndexed(

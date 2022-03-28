@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
@@ -32,7 +31,6 @@ import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.ui.createTextFieldColors
 import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
@@ -60,7 +58,6 @@ fun StepAddCard(
     var stepValue by remember(stepToEdit) {
         mutableStateOf((stepToEdit?.value ?: 0).toString())
     }
-    val textFieldColors = MaterialTheme.createTextFieldColors()
     val nameFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     val isExpanded = pickedType != null
@@ -127,7 +124,6 @@ fun StepAddCard(
                             focusManager.moveFocus(FocusDirection.Down)
                         },
                     ),
-                    colors = textFieldColors,
                     modifier = Modifier
                         .testTag("step_name")
                         .padding(Spacing.xSmall)
@@ -162,7 +158,6 @@ fun StepAddCard(
                             saveStep()
                         }
                     ),
-                    colors = textFieldColors,
                     modifier = Modifier
                         .testTag("step_time")
                         .padding(Spacing.xSmall)
@@ -188,7 +183,6 @@ fun StepAddCard(
                             onDone = { saveStep() },
                             onPrevious = { nameFocusRequester.requestFocus() }
                         ),
-                        colors = textFieldColors,
                         modifier = Modifier
                             .testTag("step_value")
                             .padding(Spacing.xSmall)

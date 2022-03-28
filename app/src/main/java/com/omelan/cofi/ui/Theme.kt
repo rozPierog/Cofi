@@ -6,7 +6,6 @@ import androidx.annotation.IntRange
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -14,17 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.kieronquinn.monetcompat.core.MonetCompat
 import com.kieronquinn.monetcompat.extensions.toArgb
-
-@Composable
-fun MaterialTheme.createTextFieldColors() = TextFieldDefaults.outlinedTextFieldColors(
-    textColor = this.colorScheme.onBackground,
-    focusedBorderColor = this.colorScheme.secondary,
-    focusedLabelColor = this.colorScheme.onBackground,
-    placeholderColor = this.colorScheme.onBackground,
-    unfocusedLabelColor = this.colorScheme.onBackground,
-    cursorColor = this.colorScheme.secondary,
-    unfocusedBorderColor = this.colorScheme.outline,
-)
 
 @Composable
 fun MaterialTheme.createTextSelectionColors() = TextSelectionColors(

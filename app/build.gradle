@@ -134,7 +134,7 @@ dependencies {
     implementation "androidx.compose.foundation:foundation:$compose_version"
     // Material Design
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha05"
+    implementation "androidx.compose.material3:material3:1.0.0-alpha08"
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     // Navigation
@@ -151,7 +151,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
     implementation "androidx.activity:activity-compose:1.4.0"
     //Room
-    def room_version = "2.4.1"
+    def room_version = "2.4.2"
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
