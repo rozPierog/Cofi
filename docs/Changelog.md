@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Missing german translations
 
 ### Changed
 
@@ -20,7 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Alert dialog when exiting edit/add screen with unsaved changes
 - App version in settings
 - Ability to clone recipes
-- Missing german translations
 
 ### Changed
 - Fix text selection colors
