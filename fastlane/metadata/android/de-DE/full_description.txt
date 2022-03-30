@@ -1,0 +1,12 @@
+Warum Cofi?
+
+Ich habe Cofi entwickelt, nachdem ich frustriert war über den Mangel an kleinen und schnellen Timern, die die Privatsphäre respektieren. Keiner der anderen Timer konnte auf die Art und Weise benutzt werden, wie ich sie benutzen wollte. Hier ist er also! Cofi ist ein Quelloffener, schneller Timer, der nur das tut, was er muss und nicht mehr.
+
+Funktionen:
+
+- Keine künstlichen Grenzen – Erstelle jedes Rezept, egal wie ausgefallen es ist.
+- Deeplinks zu Rezepten – Füge es zur Automatisierungssoftware oder zum NFC-Tag hinzu, um dein Lieblingsrezept mit einem Fingertipp zu öffnen.
+- Bild-im-Bild – Musst du während des Brühens auf eine Nachricht reagieren? Der Timer wird in einem kleinen, beweglichen Fenster angezeigt, das dich während des gesamten Brühvorgangs begleitet.
+- Absolut kein Tracking – Nicht einmal eine Absturzmeldung wird zu mir gesendet. Alles, was du in der App machst, bleibt bei dir.
+- Kleinstmöglicher Speicherplatzbedarf – Ich werde überrascht sein, wenn die App jemals 7 MB auf deinem Gerät überschreitet.
+- Instant App – Die gesamte App ist sofort verfügbar. Du musst nichts installieren, wenn du nicht willst.
