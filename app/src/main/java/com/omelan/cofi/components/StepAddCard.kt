@@ -144,47 +144,44 @@ fun StepAddCard(
                         .focusRequester(nameFocusRequester)
                         .fillMaxWidth(),
                 )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(Spacing.xSmall).fillMaxWidth()
-                ) {
-                    OutlinedTextField(
-                        label = { Text(text = stringResource(id = R.string.step_add_duration)) },
-                        value = stepTime,
-                        onValueChange = { value ->
-                            stepTime = ensureNumbersOnly(value) ?: stepTime
-                        },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = if (pickedType?.isNotWaitStepType() == true) {
-                                ImeAction.Next
+                OutlinedTextField(
+                    label = { Text(text = stringResource(id = R.string.step_add_duration)) },
+                    value = stepTime,
+                    onValueChange = { value ->
+                        stepTime = ensureNumbersOnly(value) ?: stepTime
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = { timeExplainerIsOpen = true }) {
+                            Icon(Icons.Rounded.Info, contentDescription = "")
+                        }
+                    },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = if (pickedType?.isNotWaitStepType() == true) {
+                            ImeAction.Next
+                        } else {
+                            if (stepName.text.isNotBlank()) {
+                                ImeAction.Done
                             } else {
-                                if (stepName.text.isNotBlank()) {
-                                    ImeAction.Done
-                                } else {
-                                    ImeAction.Previous
-                                }
+                                ImeAction.Previous
                             }
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onPrevious = { focusManager.moveFocus(FocusDirection.Up) },
-                            onNext = {
-                                focusManager.moveFocus(FocusDirection.Down)
-                            },
-                            onDone = {
-                                saveStep()
-                            }
-                        ),
-                        modifier = Modifier
-                            .testTag("step_time")
-                            .padding(end = Spacing.xSmall)
-                            .weight(1f, true)
-                    )
-                    IconButton(onClick = { timeExplainerIsOpen = true }) {
-                        Icon(Icons.Rounded.Info, contentDescription = "")
-                    }
-                }
+                        }
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onPrevious = { focusManager.moveFocus(FocusDirection.Up) },
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        },
+                        onDone = {
+                            saveStep()
+                        }
+                    ),
+                    modifier = Modifier
+                        .testTag("step_time")
+                        .padding(Spacing.xSmall)
+                        .fillMaxWidth(),
+                )
                 if (pickedType?.isNotWaitStepType() == true) {
                     OutlinedTextField(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
