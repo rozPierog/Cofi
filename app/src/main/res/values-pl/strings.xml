@@ -74,4 +74,7 @@ Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze 
     <string name="recipe_clone_title">Skopiować ten przepis?</string>
     <string name="recpie_clone_text">Stworzy to duplikat tego przepisu</string>
     <string name="recpie_clone_suffix">%1$s - Kopia</string>
+    <string name="recipe_details_noTime">Wciśnij start żeby kontunuować</string>
+    <string name="app_version">Wersja aplikacji</string>
+    <string name="step_add_duration_explainer">Czas trwania decyduje ile masz czasu na skończenie tego kroku (w sekundach). Jeśli chcesz stworzyć krok który wstrzymuje przepis do czasu aż jesteś gotowy pozostaw te pole puste</string>
 </resources>

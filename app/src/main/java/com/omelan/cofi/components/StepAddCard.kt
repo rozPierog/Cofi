@@ -6,12 +6,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
@@ -19,6 +17,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -35,6 +34,7 @@ import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun StepAddCard(
     modifier: Modifier = Modifier,
@@ -53,10 +53,21 @@ fun StepAddCard(
         mutableStateOf(TextFieldValue(stepToEdit?.name ?: pickedTypeName))
     }
     var stepTime by remember(stepToEdit) {
-        mutableStateOf(((stepToEdit?.time ?: 0) / 1000).toString())
+        val stepToEditTime = stepToEdit?.time
+        if (stepToEditTime == null) {
+            mutableStateOf("")
+        } else {
+            mutableStateOf((stepToEditTime / 1000).toString())
+        }
     }
     var stepValue by remember(stepToEdit) {
         mutableStateOf((stepToEdit?.value ?: 0).toString())
+    }
+    var timeExplainerIsOpen by remember {
+        mutableStateOf(false)
+    }
+    val dismissTimeExplainer: () -> Unit = {
+        timeExplainerIsOpen = false
     }
     val nameFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -67,10 +78,11 @@ fun StepAddCard(
         }
     }
     fun saveStep() {
+        focusManager.clearFocus()
         save(
             Step(
                 name = stepName.text,
-                time = stepTime.safeToInt().toMillis(),
+                time = if (stepTime.isBlank()) null else stepTime.safeToInt().toMillis(),
                 type = pickedType ?: StepType.OTHER,
                 value = if (stepValue.isNotBlank() &&
                     stepValue.toInt() != 0 &&
@@ -135,6 +147,11 @@ fun StepAddCard(
                     value = stepTime,
                     onValueChange = { value ->
                         stepTime = ensureNumbersOnly(value) ?: stepTime
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = { timeExplainerIsOpen = true }) {
+                            Icon(Icons.Rounded.Info, contentDescription = "")
+                        }
                     },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
@@ -231,6 +248,28 @@ fun StepAddCard(
                 }
             }
         }
+    }
+    if (timeExplainerIsOpen) {
+        AlertDialog(
+            onDismissRequest = dismissTimeExplainer,
+            confirmButton = {
+                TextButton(onClick = dismissTimeExplainer) {
+                    Text(text = stringResource(id = android.R.string.ok))
+                }
+            },
+            icon = {
+                Icon(
+                    painterResource(StepType.WAIT.iconRes),
+                    contentDescription = null
+                )
+            },
+            title = {
+                Text(text = stringResource(id = R.string.step_add_duration))
+            },
+            text = {
+                Text(text = stringResource(id = R.string.step_add_duration_explainer))
+            },
+        )
     }
 }
 

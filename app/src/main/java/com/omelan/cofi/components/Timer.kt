@@ -96,14 +96,17 @@ fun Timer(
                     .animateContentSize()
             ) {
                 if (currentStep != null) {
-                    val duration = (currentStep.time * animatedProgressValue.value).toInt()
-
-                    val durationInString = duration.toStringDuration(
-                        padMillis = true,
-                        padMinutes = true,
-                        padSeconds = true,
-                        showMillis = !isInPiP
-                    )
+                    val durationInString = if (currentStep.time == null) {
+                        stringResource(id = R.string.recipe_details_noTime)
+                    } else {
+                        val duration = (currentStep.time * animatedProgressValue.value).toInt()
+                        duration.toStringDuration(
+                            padMillis = true,
+                            padMinutes = true,
+                            padSeconds = true,
+                            showMillis = !isInPiP
+                        )
+                    }
                     Text(
                         text = durationInString,
                         style = if (isInPiP) {
@@ -112,21 +115,22 @@ fun Timer(
                             MaterialTheme.typography.headlineMedium
                         },
                         color = MaterialTheme.colorScheme.onSurface,
+                        textAlign = TextAlign.Center,
+                        maxLines = if (isInPiP) 2 else Int.MAX_VALUE,
+                        overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
-                            .align(
-                                Alignment.CenterHorizontally
-                            )
+                            .align(Alignment.CenterHorizontally)
                             .testTag("timer_duration")
                     )
                     Divider(
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
-                        text = stringResource(
+                        text = if (currentStep.time != null) stringResource(
                             id = R.string.timer_step_name_time,
                             currentStep.name,
-                            currentStep.time / 1000
-                        ),
+                            currentStep.time / 1000,
+                        ) else currentStep.name,
                         color = MaterialTheme.colorScheme.onSurface,
                         style = if (isInPiP) {
                             MaterialTheme.typography.titleSmall

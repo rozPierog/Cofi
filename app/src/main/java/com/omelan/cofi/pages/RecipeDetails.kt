@@ -131,8 +131,12 @@ fun RecipeDetails(
         val safeCurrentStep = currentStep ?: return
         isDone = false
         onTimerRunning(true)
-        val duration =
-            (safeCurrentStep.time - (safeCurrentStep.time * animatedProgressValue.value)).toInt()
+        val currentStepTime = safeCurrentStep.time
+        if (currentStepTime == null) {
+            animatedProgressValue.snapTo(1f)
+            return
+        }
+        val duration = (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
         coroutineScope.launch {
             animatedProgressColor.animateTo(
                 targetValue = safeCurrentStep.type.color,
@@ -211,12 +215,19 @@ fun RecipeDetails(
             if (!isInPiP) {
                 StartFAB(
                     isAnimationRunning = animatedProgressValue.isRunning,
-                    onClick =
-                    if (currentStep != null) {
+                    onClick = if (currentStep != null) {
                         if (animatedProgressValue.isRunning) {
                             { coroutineScope.launch { pauseAnimations() } }
                         } else {
-                            { coroutineScope.launch { startAnimations() } }
+                            {
+                                coroutineScope.launch {
+                                    if (currentStep?.time == null) {
+                                        changeToNextStep()
+                                    } else {
+                                        startAnimations()
+                                    }
+                                }
+                            }
                         }
                     } else {
                         {

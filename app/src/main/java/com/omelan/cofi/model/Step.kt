@@ -19,6 +19,9 @@ enum class StepType {
 
         override val stringRes: Int
             get() = R.string.step_type_add_coffee
+
+        override val iconRes: Int
+            get() = R.drawable.ic_coffee
     },
     WATER {
         override val color: Color
@@ -26,6 +29,9 @@ enum class StepType {
 
         override val stringRes: Int
             get() = R.string.step_type_water
+
+        override val iconRes: Int
+            get() = R.drawable.ic_water_plus
     },
     WAIT {
         override val color: Color
@@ -33,6 +39,9 @@ enum class StepType {
 
         override val stringRes: Int
             get() = R.string.step_type_wait
+
+        override val iconRes: Int
+            get() = R.drawable.ic_progress_clock
     },
     OTHER {
         override val color: Color
@@ -40,10 +49,14 @@ enum class StepType {
 
         override val stringRes: Int
             get() = R.string.step_type_other
+
+        override val iconRes: Int
+            get() = R.drawable.ic_playlist_edit
     };
 
     abstract val color: Color
     abstract val stringRes: Int
+    abstract val iconRes: Int
     fun isNotWaitStepType(): Boolean = this != WAIT
 }
 
@@ -70,7 +83,7 @@ data class Step(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "recipe_id") val recipeId: Int = 0,
     val name: String,
-    val time: Int,
+    val time: Int?,
     val type: StepType,
     @ColumnInfo(name = "order_in_recipe") val orderInRecipe: Int?,
     val value: Int? = null

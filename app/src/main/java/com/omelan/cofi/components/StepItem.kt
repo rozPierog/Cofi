@@ -48,12 +48,7 @@ fun StepListItem(
     val painter = when (stepProgress) {
         StepProgress.Current -> painterResource(id = R.drawable.ic_play_arrow)
         StepProgress.Done -> painterResource(id = R.drawable.ic_check_circle)
-        StepProgress.Upcoming -> when (step.type) {
-            StepType.WATER -> painterResource(id = R.drawable.ic_water_plus)
-            StepType.ADD_COFFEE -> painterResource(id = R.drawable.ic_coffee)
-            StepType.WAIT -> painterResource(id = R.drawable.ic_progress_clock)
-            StepType.OTHER -> painterResource(id = R.drawable.ic_playlist_edit)
-        }
+        StepProgress.Upcoming -> painterResource(id = step.type.iconRes)
     }
     ConstraintLayout(
         modifier = constraintModifier
@@ -68,7 +63,6 @@ fun StepListItem(
                     start.linkTo(parent.start, Spacing.small)
                     centerVerticallyTo(parent)
                 }
-
         )
 
         Text(
@@ -99,12 +93,14 @@ fun StepListItem(
 
                 )
             }
-            Text(
-                text = step.time.toStringDuration(),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(horizontal = Spacing.small)
-            )
+            if (step.time != null) {
+                Text(
+                    text = step.time.toStringDuration(),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(horizontal = Spacing.small)
+                )
+            }
         }
     }
 }

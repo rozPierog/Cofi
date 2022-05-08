@@ -9,8 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Missing german translations
 - German store translation
+- Ability to create blocking steps that require user input to progress
 
 ### Changed
+- Fixed keyboard not hiding on step being added (and crash when it happens)
+- Updated underlying dependencies,
 
 ### Removed
 
