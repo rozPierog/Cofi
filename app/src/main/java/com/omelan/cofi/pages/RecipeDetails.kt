@@ -215,7 +215,6 @@ fun RecipeDetails(
             if (!isInPiP) {
                 StartFAB(
                     isAnimationRunning = animatedProgressValue.isRunning,
-                    currentStep = currentStep,
                     onClick = if (currentStep != null) {
                         if (animatedProgressValue.isRunning) {
                             { coroutineScope.launch { pauseAnimations() } }
@@ -348,7 +347,7 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
 }
 
 @Composable
-fun StartFAB(isAnimationRunning: Boolean, currentStep: Step?, onClick: () -> Unit) {
+fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
     val fabShape by animateDpAsState(
         targetValue = if (isAnimationRunning) 28.0.dp else 100.dp,
         animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),

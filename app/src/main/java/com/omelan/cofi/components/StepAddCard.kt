@@ -173,7 +173,6 @@ fun StepAddCard(
                             .testTag("step_time")
                             .padding(Spacing.xSmall)
                             .weight(1f, true)
-//                            .fillMaxWidth(),
                     )
                     IconButton(onClick = { timeExplainerIsOpen = true }) {
                         Icon(Icons.Rounded.Info, contentDescription = "")
@@ -258,7 +257,7 @@ fun StepAddCard(
             },
             icon = {
                 Icon(
-                    painterResource(id = R.drawable.ic_progress_clock),
+                    painterResource(StepType.WAIT.iconRes),
                     contentDescription = null
                 )
             },

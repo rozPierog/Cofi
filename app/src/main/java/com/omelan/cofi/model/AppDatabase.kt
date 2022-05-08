@@ -13,18 +13,18 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
         // Create the new table
         database.execSQL(
             "CREATE TABLE recipe_new (" +
-                    "id INTEGER NOT NULL," +
-                    "name TEXT NOT NULL," +
-                    "description TEXT NOT NULL," +
-                    "last_finished INTEGER NOT NULL," +
-                    "icon TEXT NOT NULL," +
-                    "PRIMARY KEY(id))"
+                "id INTEGER NOT NULL," +
+                "name TEXT NOT NULL," +
+                "description TEXT NOT NULL," +
+                "last_finished INTEGER NOT NULL," +
+                "icon TEXT NOT NULL," +
+                "PRIMARY KEY(id))"
         )
         // Copy the data
         database.execSQL(
             "INSERT INTO recipe_new (id, name, description, last_finished) " +
-                    "SELECT id, name, description, last_finished " +
-                    "FROM recipe"
+                "SELECT id, name, description, last_finished " +
+                "FROM recipe"
         )
         // Remove the old table
         database.execSQL("DROP TABLE recipe")

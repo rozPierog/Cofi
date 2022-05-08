@@ -183,7 +183,7 @@ fun TimerPreview() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,
@@ -203,7 +203,7 @@ fun TimerPreviewPiP() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.WATER,
             value = 300,
