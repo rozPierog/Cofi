@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.Switch
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.List
@@ -42,11 +43,10 @@ fun AppSettings(
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     val dataStore = DataStore(context)
-    val isDingEnabled by dataStore.getStepChangeSetting()
-        .collectAsState(initial = DING_DEFAULT_VALUE)
-    val isPiPEnabled by dataStore.getPiPSetting().collectAsState(initial = PIP_DEFAULT_VALUE)
+    val isDingEnabled by dataStore.getStepChangeSetting().collectAsState(DING_DEFAULT_VALUE)
+    val isPiPEnabled by dataStore.getPiPSetting().collectAsState(PIP_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
-        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+        .collectAsState(COMBINE_WEIGHT_DEFAULT_VALUE)
     var showCombineWeightDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val appBarBehavior = createAppBarBehavior()
@@ -55,6 +55,11 @@ fun AppSettings(
     fun enablePip() {
         coroutineScope.launch { dataStore.togglePipSetting() }
     }
+
+    val switchColors = SwitchDefaults.colors(
+        checkedThumbColor = MaterialTheme.colorScheme.secondary,
+        checkedTrackColor = MaterialTheme.colorScheme.secondary,
+    )
     Scaffold(
         topBar = {
             PiPAwareAppBar(
@@ -96,10 +101,12 @@ fun AppSettings(
                         enabled = hasPiPPermission
                     ),
                     trailing = {
+                        // TODO: Material3 Switch - right now it has issue that it's stuck on default after first render
                         Switch(
                             checked = isPiPEnabled,
                             onCheckedChange = { enablePip() },
-                            enabled = hasPiPPermission
+                            enabled = hasPiPPermission,
+                            colors = switchColors,
                         )
                     }
                 )
@@ -130,6 +137,7 @@ fun AppSettings(
                                     dataStore.toggleStepChangeSound()
                                 }
                             },
+                            colors = switchColors,
                         )
                     }
                 )
