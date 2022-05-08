@@ -135,7 +135,7 @@ dependencies {
     // Material Design
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.material3:material3:1.0.0-alpha10"
-    implementation 'com.github.KieronQuinn:MonetCompat:0.4.1'
+    implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     // Navigation
     implementation "androidx.navigation:navigation-compose:2.4.2"
