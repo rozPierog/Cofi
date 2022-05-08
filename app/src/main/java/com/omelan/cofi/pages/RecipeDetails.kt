@@ -244,7 +244,7 @@ fun RecipeDetails(
                 rememberInsetsPaddingValues(
                     insets = LocalWindowInsets.current.navigationBars,
                     additionalStart = Spacing.big,
-                    additionalTop = Spacing.big,
+                    additionalTop = Spacing.big + it.calculateTopPadding(),
                     additionalEnd = Spacing.big,
                     additionalBottom = 112.0.dp,
                 )

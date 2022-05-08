@@ -53,6 +53,7 @@ fun LicensesList(goBack: () -> Unit) {
                 .fillMaxSize(),
             contentPadding = rememberInsetsPaddingValues(
                 insets = LocalWindowInsets.current.navigationBars,
+                additionalTop = it.calculateTopPadding()
             ),
         ) {
             items(dependencyList) {

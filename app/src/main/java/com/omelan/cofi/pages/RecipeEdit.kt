@@ -201,7 +201,7 @@ fun RecipeEdit(
                     state = lazyListState,
                     contentPadding = PaddingValues(
                         bottom = maxHeight / 2,
-                        top = Spacing.big,
+                        top = Spacing.big + it.calculateTopPadding(),
                         start = Spacing.big,
                         end = Spacing.big,
                     ),

@@ -70,7 +70,7 @@ fun RecipeList(
         LazyColumn(
             contentPadding = rememberInsetsPaddingValues(
                 insets = LocalWindowInsets.current.navigationBars,
-                additionalTop = Spacing.small,
+                additionalTop = Spacing.small + it.calculateTopPadding(),
                 additionalStart = Spacing.big,
                 additionalEnd = Spacing.big,
                 additionalBottom = Spacing.small,
