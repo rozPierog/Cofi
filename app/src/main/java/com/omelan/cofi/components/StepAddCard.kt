@@ -144,7 +144,10 @@ fun StepAddCard(
                         .focusRequester(nameFocusRequester)
                         .fillMaxWidth(),
                 )
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(Spacing.xSmall).fillMaxWidth()
+                ) {
                     OutlinedTextField(
                         label = { Text(text = stringResource(id = R.string.step_add_duration)) },
                         value = stepTime,
@@ -175,7 +178,7 @@ fun StepAddCard(
                         ),
                         modifier = Modifier
                             .testTag("step_time")
-                            .padding(Spacing.xSmall)
+                            .padding(end = Spacing.xSmall)
                             .weight(1f, true)
                     )
                     IconButton(onClick = { timeExplainerIsOpen = true }) {
