@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Fixed keyboard not hiding on step being added (and crash when it happens)
-- Updated underlying dependencies
+- Updated underlying dependencies,
 
 ### Removed
 
