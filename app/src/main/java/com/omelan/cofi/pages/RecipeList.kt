@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.LocalWindowInsets
@@ -73,7 +74,7 @@ fun RecipeList(
                 additionalTop = Spacing.small + it.calculateTopPadding(),
                 additionalStart = Spacing.big,
                 additionalEnd = Spacing.big,
-                additionalBottom = Spacing.small,
+                additionalBottom = 76.dp + Spacing.big,
             ),
             verticalArrangement = Arrangement.spacedBy(Spacing.normal),
             modifier = Modifier
