@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.6.0] - 2022-05-08
+
+### Added
 - Missing german translations
 - German store translation
 - Ability to create blocking steps that require user input to progress

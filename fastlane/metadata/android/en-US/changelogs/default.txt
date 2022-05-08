@@ -1,16 +1,11 @@
 ### Added
-- Ability to change step order
-- Alert dialog when exiting edit/add screen with unsaved changes
-- App version in settings
-- Ability to clone recipes
+- Missing german translations
+- German store translation
+- Ability to create blocking steps that require user input to progress
 
 ### Changed
-- Fix text selection colors
-- Fix about page list item icon alignment
-- Fix wait step ime keyboard action
-- Fix saving step without a name
-- Removed a few kb from app size
-- Retroactively changed previous release to 1.4.0
-- Scroll to progress indicator on recipe start
+- Fixed keyboard not hiding on step being added (and crash when it happens)
+- Updated underlying dependencies,
+
 ### Removed
 
