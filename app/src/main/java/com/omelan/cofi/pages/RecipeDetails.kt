@@ -131,9 +131,12 @@ fun RecipeDetails(
         val safeCurrentStep = currentStep ?: return
         isDone = false
         onTimerRunning(true)
-        val currentStepTime = safeCurrentStep.time ?: 1
-        val duration =
-            (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
+        val currentStepTime = safeCurrentStep.time
+        if (currentStepTime == null) {
+            animatedProgressValue.snapTo(1f)
+            return
+        }
+        val duration = (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
         coroutineScope.launch {
             animatedProgressColor.animateTo(
                 targetValue = safeCurrentStep.type.color,
@@ -212,12 +215,20 @@ fun RecipeDetails(
             if (!isInPiP) {
                 StartFAB(
                     isAnimationRunning = animatedProgressValue.isRunning,
-                    onClick =
-                    if (currentStep != null) {
+                    currentStep = currentStep,
+                    onClick = if (currentStep != null) {
                         if (animatedProgressValue.isRunning) {
                             { coroutineScope.launch { pauseAnimations() } }
                         } else {
-                            { coroutineScope.launch { startAnimations() } }
+                            {
+                                coroutineScope.launch {
+                                    if (currentStep?.time == null) {
+                                        changeToNextStep()
+                                    } else {
+                                        startAnimations()
+                                    }
+                                }
+                            }
                         }
                     } else {
                         {
@@ -337,7 +348,7 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
 }
 
 @Composable
-fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
+fun StartFAB(isAnimationRunning: Boolean, currentStep: Step?, onClick: () -> Unit) {
     val fabShape by animateDpAsState(
         targetValue = if (isAnimationRunning) 28.0.dp else 100.dp,
         animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),

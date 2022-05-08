@@ -17,6 +17,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -51,10 +52,21 @@ fun StepAddCard(
         mutableStateOf(TextFieldValue(stepToEdit?.name ?: pickedTypeName))
     }
     var stepTime by remember(stepToEdit) {
-        mutableStateOf(((stepToEdit?.time ?: 0) / 1000).toString())
+        val stepToEditTime = stepToEdit?.time
+        if (stepToEditTime == null) {
+            mutableStateOf("")
+        } else {
+            mutableStateOf((stepToEditTime / 1000).toString())
+        }
     }
     var stepValue by remember(stepToEdit) {
         mutableStateOf((stepToEdit?.value ?: 0).toString())
+    }
+    var timeExplainerIsOpen by remember {
+        mutableStateOf(false)
+    }
+    val dismissTimeExplainer: () -> Unit = {
+        timeExplainerIsOpen = false
     }
     val nameFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -163,7 +175,7 @@ fun StepAddCard(
                             .weight(1f, true)
 //                            .fillMaxWidth(),
                     )
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { timeExplainerIsOpen = true }) {
                         Icon(Icons.Rounded.Info, contentDescription = "")
                     }
                 }
@@ -235,6 +247,28 @@ fun StepAddCard(
                 }
             }
         }
+    }
+    if (timeExplainerIsOpen) {
+        AlertDialog(
+            onDismissRequest = dismissTimeExplainer,
+            confirmButton = {
+                TextButton(onClick = dismissTimeExplainer) {
+                    Text(text = stringResource(id = android.R.string.ok))
+                }
+            },
+            icon = {
+                Icon(
+                    painterResource(id = R.drawable.ic_progress_clock),
+                    contentDescription = null
+                )
+            },
+            title = {
+                Text(text = stringResource(id = R.string.step_add_duration))
+            },
+            text = {
+                Text(text = stringResource(id = R.string.step_add_duration_explainer))
+            },
+        )
     }
 }
 

@@ -75,4 +75,6 @@ Keep an eye out not to block air moving out of the brewer"</string>
     <string name="recpie_clone_text">This will create a duplicate of this recipe</string>
     <string name="recpie_clone_suffix">%1$s - Copy</string>
     <string name="app_version">App version</string>
+    <string name="recipe_details_noTime">Press start to conitinue</string>
+    <string name="step_add_duration_explainer">Step duration determines how long an action will take (in seconds). If you want to create a step that will hold whole recipe till you are read, just leave it empty.</string>
 </resources>
