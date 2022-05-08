@@ -131,8 +131,9 @@ fun RecipeDetails(
         val safeCurrentStep = currentStep ?: return
         isDone = false
         onTimerRunning(true)
+        val currentStepTime = safeCurrentStep.time ?: 1
         val duration =
-            (safeCurrentStep.time - (safeCurrentStep.time * animatedProgressValue.value)).toInt()
+            (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
         coroutineScope.launch {
             animatedProgressColor.animateTo(
                 targetValue = safeCurrentStep.type.color,

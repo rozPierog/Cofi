@@ -99,12 +99,14 @@ fun StepListItem(
 
                 )
             }
-            Text(
-                text = step.time.toStringDuration(),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(horizontal = Spacing.small)
-            )
+            if (step.time != null) {
+                Text(
+                    text = step.time.toStringDuration(),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(horizontal = Spacing.small)
+                )
+            }
         }
     }
 }

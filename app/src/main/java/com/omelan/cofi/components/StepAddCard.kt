@@ -6,12 +6,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
@@ -70,7 +68,7 @@ fun StepAddCard(
         save(
             Step(
                 name = stepName.text,
-                time = stepTime.safeToInt().toMillis(),
+                time = if (stepTime.isBlank()) null else stepTime.safeToInt().toMillis(),
                 type = pickedType ?: StepType.OTHER,
                 value = if (stepValue.isNotBlank() &&
                     stepValue.toInt() != 0 &&
@@ -130,39 +128,45 @@ fun StepAddCard(
                         .focusRequester(nameFocusRequester)
                         .fillMaxWidth(),
                 )
-                OutlinedTextField(
-                    label = { Text(text = stringResource(id = R.string.step_add_duration)) },
-                    value = stepTime,
-                    onValueChange = { value ->
-                        stepTime = ensureNumbersOnly(value) ?: stepTime
-                    },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = if (pickedType?.isNotWaitStepType() == true) {
-                            ImeAction.Next
-                        } else {
-                            if (stepName.text.isNotBlank()) {
-                                ImeAction.Done
-                            } else {
-                                ImeAction.Previous
-                            }
-                        }
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onPrevious = { focusManager.moveFocus(FocusDirection.Up) },
-                        onNext = {
-                            focusManager.moveFocus(FocusDirection.Down)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    OutlinedTextField(
+                        label = { Text(text = stringResource(id = R.string.step_add_duration)) },
+                        value = stepTime,
+                        onValueChange = { value ->
+                            stepTime = ensureNumbersOnly(value) ?: stepTime
                         },
-                        onDone = {
-                            saveStep()
-                        }
-                    ),
-                    modifier = Modifier
-                        .testTag("step_time")
-                        .padding(Spacing.xSmall)
-                        .fillMaxWidth(),
-                )
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = if (pickedType?.isNotWaitStepType() == true) {
+                                ImeAction.Next
+                            } else {
+                                if (stepName.text.isNotBlank()) {
+                                    ImeAction.Done
+                                } else {
+                                    ImeAction.Previous
+                                }
+                            }
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onPrevious = { focusManager.moveFocus(FocusDirection.Up) },
+                            onNext = {
+                                focusManager.moveFocus(FocusDirection.Down)
+                            },
+                            onDone = {
+                                saveStep()
+                            }
+                        ),
+                        modifier = Modifier
+                            .testTag("step_time")
+                            .padding(Spacing.xSmall)
+                            .weight(1f, true)
+//                            .fillMaxWidth(),
+                    )
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Rounded.Info, contentDescription = "")
+                    }
+                }
                 if (pickedType?.isNotWaitStepType() == true) {
                     OutlinedTextField(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },

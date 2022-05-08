@@ -96,7 +96,7 @@ fun Timer(
                     .animateContentSize()
             ) {
                 if (currentStep != null) {
-                    val duration = (currentStep.time * animatedProgressValue.value).toInt()
+                    val duration = (currentStep.time ?: 1 * animatedProgressValue.value).toInt()
 
                     val durationInString = duration.toStringDuration(
                         padMillis = true,
@@ -125,7 +125,7 @@ fun Timer(
                         text = stringResource(
                             id = R.string.timer_step_name_time,
                             currentStep.name,
-                            currentStep.time / 1000
+                            currentStep.time ?: 1 / 1000
                         ),
                         color = MaterialTheme.colorScheme.onSurface,
                         style = if (isInPiP) {
