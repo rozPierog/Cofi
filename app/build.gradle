@@ -38,7 +38,7 @@ android {
             }
         }
         resConfigs 'en', 'pl', 'it', 'de'
-        manifestPlaceholders = [profileable: "false"]
+        manifestPlaceholders = [profileable: false]
 
     }
 
@@ -60,7 +60,7 @@ android {
         benchmark {
             signingConfig signingConfigs.debug
             minifyEnabled true
-            manifestPlaceholders["profileable"] = "true"
+            manifestPlaceholders["profileable"] = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             applicationIdSuffix ".benchmark"
             versionNameSuffix "-benchmark"
