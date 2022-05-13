@@ -26,7 +26,7 @@ android {
     defaultConfig {
         applicationId "com.omelan.cofi"
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 32
         compileSdkVersion 31
         versionCode 62
         versionName "1.6.0"
@@ -144,7 +144,7 @@ dependencies {
     implementation "androidx.compose.foundation:foundation:$compose_version"
     // Material Design
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha10"
+    implementation "androidx.compose.material3:material3:1.0.0-alpha11"
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     // Navigation
