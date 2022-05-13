@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -53,6 +54,7 @@ fun RecipeDetails(
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
 ) {
+    val isDarkMode = isSystemInDarkTheme()
     var currentStep by remember { mutableStateOf<Step?>(null) }
     var isDone by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
@@ -62,7 +64,8 @@ fun RecipeDetails(
     val indexOfCurrentStep = steps.indexOf(currentStep)
     val indexOfLastStep = steps.lastIndex
     val animatedProgressValue = remember { Animatable(0f) }
-    val animatedProgressColor = remember { Animatable(Color.DarkGray) }
+    val animatedProgressColor =
+        remember { Animatable(if (isDarkMode) Color.LightGray else Color.DarkGray) }
     val clipboardManager = LocalClipboardManager.current
     val snackbarState = SnackbarHostState()
     val coroutineScope = rememberCoroutineScope()
@@ -139,7 +142,11 @@ fun RecipeDetails(
         val duration = (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
         coroutineScope.launch {
             animatedProgressColor.animateTo(
-                targetValue = safeCurrentStep.type.color,
+                targetValue = if (isDarkMode) {
+                    safeCurrentStep.type.colorNight
+                } else {
+                    safeCurrentStep.type.color
+                },
                 animationSpec = tween(durationMillis = duration, easing = LinearEasing),
             )
         }

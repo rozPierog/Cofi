@@ -7,15 +7,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.omelan.cofi.R
-import com.omelan.cofi.ui.blue600
-import com.omelan.cofi.ui.brown500
-import com.omelan.cofi.ui.green600
-import com.omelan.cofi.ui.greyBlue900
+import com.omelan.cofi.ui.*
 
 enum class StepType {
     ADD_COFFEE {
         override val color: Color
             get() = brown500
+
+        override val colorNight: Color
+            get() = brown300
 
         override val stringRes: Int
             get() = R.string.step_type_add_coffee
@@ -25,6 +25,9 @@ enum class StepType {
     },
     WATER {
         override val color: Color
+            get() = blue600
+
+        override val colorNight: Color
             get() = blue600
 
         override val stringRes: Int
@@ -37,6 +40,9 @@ enum class StepType {
         override val color: Color
             get() = green600
 
+        override val colorNight: Color
+            get() = green600
+
         override val stringRes: Int
             get() = R.string.step_type_wait
 
@@ -47,6 +53,9 @@ enum class StepType {
         override val color: Color
             get() = greyBlue900
 
+        override val colorNight: Color
+            get() = grey300
+
         override val stringRes: Int
             get() = R.string.step_type_other
 
@@ -55,6 +64,7 @@ enum class StepType {
     };
 
     abstract val color: Color
+    abstract val colorNight: Color
     abstract val stringRes: Int
     abstract val iconRes: Int
     fun isNotWaitStepType(): Boolean = this != WAIT
