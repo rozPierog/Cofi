@@ -8,6 +8,8 @@ import android.util.Rational
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -22,9 +24,9 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.model.AppDatabase
@@ -52,6 +54,9 @@ val LocalPiPState = staticCompositionLocalOf<Boolean> {
 
 const val appDeepLinkUrl = "https://rozpierog.github.io"
 
+const val tweenDuration = 200
+
+@OptIn(ExperimentalAnimationApi::class)
 class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
@@ -218,7 +223,7 @@ class MainActivity : MonetCompatActivity() {
 
     @Composable
     fun MainNavigation() {
-        val navController = rememberNavController()
+        val navController = rememberAnimatedNavController()
         val db = AppDatabase.getInstance(this)
         val isInPiP by mainActivityViewModel.pipState.observeAsState(false)
         val goBack: () -> Unit = {
@@ -236,14 +241,28 @@ class MainActivity : MonetCompatActivity() {
                 color = MaterialTheme.colorScheme.background.copy(alpha = 0.8F),
                 darkIcons = darkIcons
             )
-
             CompositionLocalProvider(
                 LocalPiPState provides isInPiP,
             ) {
-                NavHost(
+                AnimatedNavHost(
                     navController,
                     startDestination = "list",
-                    modifier = Modifier.background(MaterialTheme.colorScheme.background)
+                    modifier = Modifier.background(MaterialTheme.colorScheme.background),
+                    enterTransition = {
+                        fadeIn(tween(tweenDuration)) +
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.End,
+                                    animationSpec = tween(tweenDuration),
+                                    initialOffset = { fullWidth -> -fullWidth / 5 })
+                    },
+                    exitTransition = {
+                        fadeOut(tween(tweenDuration)) +
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Start,
+                                    animationSpec = tween(tweenDuration),
+                                    targetOffset = { fullWidth -> fullWidth / 5 }
+                                )
+                    },
                 ) {
 //                    composable("list_color") {
 //                        ColorPicker(goToList = {
@@ -305,6 +324,7 @@ class MainActivity : MonetCompatActivity() {
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration
     ) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
         mainActivityViewModel.setIsInPiP(isInPictureInPictureMode)
     }
 
