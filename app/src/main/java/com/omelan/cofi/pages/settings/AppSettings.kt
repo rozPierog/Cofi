@@ -42,7 +42,8 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     val dataStore = DataStore(context)
-    val isStepSoundEnabled by dataStore.getStepChangeSetting().collectAsState(STEP_SOUND_DEFAULT_VALUE)
+    val isStepSoundEnabled by dataStore.getStepChangeSetting()
+        .collectAsState(STEP_SOUND_DEFAULT_VALUE)
     val isPiPEnabled by dataStore.getPiPSetting().collectAsState(PIP_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(COMBINE_WEIGHT_DEFAULT_VALUE)

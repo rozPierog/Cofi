@@ -24,8 +24,8 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
-import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
@@ -250,18 +250,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                                slideIntoContainer(
-                                    AnimatedContentScope.SlideDirection.End,
-                                    animationSpec = tween(tweenDuration),
-                                    initialOffset = { fullWidth -> -fullWidth / 5 })
+                            slideIntoContainer(
+                                AnimatedContentScope.SlideDirection.End,
+                                animationSpec = tween(tweenDuration),
+                                initialOffset = { fullWidth -> -fullWidth / 5 }
+                            )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                                slideOutOfContainer(
-                                    AnimatedContentScope.SlideDirection.Start,
-                                    animationSpec = tween(tweenDuration),
-                                    targetOffset = { fullWidth -> fullWidth / 5 }
-                                )
+                            slideOutOfContainer(
+                                AnimatedContentScope.SlideDirection.Start,
+                                animationSpec = tween(tweenDuration),
+                                targetOffset = { fullWidth -> fullWidth / 5 }
+                            )
                     },
                 ) {
 //                    composable("list_color") {
