@@ -53,11 +53,14 @@ fun StepAddCard(
         mutableStateOf(TextFieldValue(stepToEdit?.name ?: pickedTypeName))
     }
     var stepTime by remember(stepToEdit) {
-        val stepToEditTime = stepToEdit?.time
+        if (stepToEdit == null) {
+            return@remember mutableStateOf("0")
+        }
+        val stepToEditTime = stepToEdit.time
         if (stepToEditTime == null) {
-            mutableStateOf("")
+            return@remember mutableStateOf("")
         } else {
-            mutableStateOf((stepToEditTime / 1000).toString())
+            return@remember mutableStateOf((stepToEditTime / 1000).toString())
         }
     }
     var stepValue by remember(stepToEdit) {
