@@ -1,8 +1,6 @@
 package com.omelan.cofi.pages.settings
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
@@ -17,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,6 +38,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
+    val layoutDirection = LocalLayoutDirection.current
+    val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     val dataStore = DataStore(context)
@@ -86,8 +87,17 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
         LazyColumn(
             modifier = Modifier
                 .nestedScroll(appBarBehavior.nestedScrollConnection)
-                .padding(it)
-                .fillMaxSize()
+                .fillMaxSize(),
+            contentPadding = PaddingValues(
+                start = navigationBarPadding.calculateStartPadding(layoutDirection) +
+                        it.calculateStartPadding(layoutDirection) + Spacing.big,
+                top = navigationBarPadding.calculateTopPadding() +
+                        it.calculateTopPadding() + Spacing.small,
+                bottom = navigationBarPadding.calculateBottomPadding() +
+                        it.calculateBottomPadding() + Spacing.big + 76.dp,
+                end = navigationBarPadding.calculateEndPadding(layoutDirection) +
+                        it.calculateEndPadding(layoutDirection) + Spacing.big
+            )
         ) {
             item {
                 ListItem(

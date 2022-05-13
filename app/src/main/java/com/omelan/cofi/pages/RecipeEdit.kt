@@ -38,8 +38,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
-import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.Recipe
@@ -128,7 +126,7 @@ fun RecipeEdit(
         sheetContent = {
             FlowRow(
                 modifier = Modifier
-                    .navigationBarsWithImePadding()
+                    .navigationBarsPadding().imePadding()
                     .fillMaxWidth()
             ) {
                 RecipeIcon.values().map {
@@ -447,7 +445,6 @@ fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     )
 }
 
-@ExperimentalAnimatedInsets
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi

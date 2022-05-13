@@ -1,7 +1,7 @@
 package com.omelan.cofi.components
 
 import androidx.compose.animation.rememberSplineBasedDecay
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,7 +14,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.statusBarsPadding
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 
@@ -79,7 +78,13 @@ fun InsetAwareTopAppBar(
             title = title,
             navigationIcon = navigationIcon,
             actions = actions,
-            modifier = Modifier.statusBarsPadding(),
+            modifier = Modifier
+                .statusBarsPadding()
+                .padding(
+                    WindowInsets.navigationBars
+                        .only(WindowInsetsSides.End + WindowInsetsSides.Start)
+                        .asPaddingValues()
+                ),
             scrollBehavior = scrollBehavior,
         )
     }

@@ -1,8 +1,7 @@
 package com.omelan.cofi.pages
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -14,14 +13,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.RecipeItem
@@ -37,6 +33,8 @@ fun RecipeList(
     goToSettings: () -> Unit,
     recipeViewModel: RecipeViewModel = viewModel(),
 ) {
+    val layoutDirection = LocalLayoutDirection.current
+    val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
     val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = listOf())
     val scrollBehavior = createAppBarBehavior()
     Scaffold(
@@ -69,12 +67,15 @@ fun RecipeList(
         },
     ) {
         LazyColumn(
-            contentPadding = rememberInsetsPaddingValues(
-                insets = LocalWindowInsets.current.navigationBars,
-                additionalTop = Spacing.small + it.calculateTopPadding(),
-                additionalStart = Spacing.big,
-                additionalEnd = Spacing.big,
-                additionalBottom = 76.dp + Spacing.big,
+            contentPadding = PaddingValues(
+                start = navigationBarPadding.calculateStartPadding(layoutDirection) +
+                        it.calculateStartPadding(layoutDirection) + Spacing.big,
+                top = navigationBarPadding.calculateTopPadding() +
+                        it.calculateTopPadding() + Spacing.small,
+                bottom = navigationBarPadding.calculateBottomPadding() +
+                        it.calculateBottomPadding() + Spacing.big + 76.dp,
+                end = navigationBarPadding.calculateEndPadding(layoutDirection) +
+                        it.calculateEndPadding(layoutDirection) + Spacing.big
             ),
             verticalArrangement = Arrangement.spacedBy(Spacing.normal),
             modifier = Modifier
@@ -91,7 +92,6 @@ fun RecipeList(
     }
 }
 
-@ExperimentalAnimatedInsets
 @Preview
 @Composable
 fun RecipeListPreview() {
