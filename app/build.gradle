@@ -12,8 +12,8 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    if (keystoreProperties.containsKey('storeFile')) {
-        signingConfigs {
+    signingConfigs {
+        if (keystoreProperties.containsKey('storeFile')) {
             release {
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
@@ -38,6 +38,7 @@ android {
             }
         }
         resConfigs 'en', 'pl', 'it', 'de'
+        manifestPlaceholders = [profileable: "false"]
 
     }
 
@@ -54,6 +55,15 @@ android {
             debuggable true
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
+        }
+
+        benchmark {
+            signingConfig signingConfigs.debug
+            minifyEnabled true
+            manifestPlaceholders["profileable"] = "true"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            applicationIdSuffix ".benchmark"
+            versionNameSuffix "-benchmark"
         }
     }
 
