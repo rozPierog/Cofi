@@ -73,15 +73,6 @@ fun RecipeDetails(
     val lazyListState = rememberLazyListState()
     val appBarBehavior = createAppBarBehavior()
     val dataStore = DataStore(LocalContext.current)
-    val collapseAppBar: suspend () -> Unit = {
-        animate(
-            initialValue = appBarBehavior.offset,
-            targetValue = appBarBehavior.offsetLimit,
-            block = { value, _ ->
-                appBarBehavior.offset = value
-            })
-    }
-
     val isDingEnabled by dataStore.getStepChangeSetting()
         .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
@@ -181,8 +172,7 @@ fun RecipeDetails(
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         snackbarHost = {
             SnackbarHost(
-                hostState = snackbarState,
-                modifier = Modifier.padding(Spacing.medium)
+                hostState = snackbarState, modifier = Modifier.padding(Spacing.medium)
             ) {
                 Snackbar(
                     shape = RoundedCornerShape(50)
@@ -201,9 +191,7 @@ fun RecipeDetails(
                             modifier = Modifier.padding(end = Spacing.small)
                         )
                         Text(
-                            text = recipe.name,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            text = recipe.name, maxLines = 1, overflow = TextOverflow.Ellipsis
                         )
                     }
                 },
@@ -215,8 +203,7 @@ fun RecipeDetails(
                 actions = {
                     IconButton(onClick = { showAutomateLinkDialog = true }) {
                         Icon(
-                            painterResource(id = R.drawable.ic_link),
-                            contentDescription = null
+                            painterResource(id = R.drawable.ic_link), contentDescription = null
                         )
                     }
                     IconButton(onClick = goToEdit) {
@@ -247,10 +234,18 @@ fun RecipeDetails(
                     } else {
                         {
                             coroutineScope.launch {
+                                animate(initialValue = appBarBehavior.offset,
+                                    targetValue = appBarBehavior.offsetLimit,
+                                    block = { value, _ ->
+                                        appBarBehavior.offset = value
+                                    })
+                            }
+                            coroutineScope.launch {
                                 lazyListState.animateScrollToItem(
                                     if (recipe.description.isNotBlank()) 1 else 0
                                 )
-                                collapseAppBar()
+                            }
+                            coroutineScope.launch {
                                 changeToNextStep(silent = true)
                             }
                         }
@@ -281,8 +276,7 @@ fun RecipeDetails(
             if (!isInPiP && recipe.description.isNotBlank()) {
                 item {
                     Description(
-                        modifier = Modifier.fillMaxWidth(),
-                        descriptionText = recipe.description
+                        modifier = Modifier.fillMaxWidth(), descriptionText = recipe.description
                     )
                 }
             }
@@ -307,10 +301,7 @@ fun RecipeDetails(
                 }
             }
             if (!isInPiP) {
-                itemsIndexed(
-                    items = steps,
-                    key = { _, step -> step.id }
-                ) { index, step ->
+                itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
                     val stepProgress = when {
                         index < indexOfCurrentStep -> StepProgress.Done
                         indexOfCurrentStep == index -> StepProgress.Current
@@ -322,13 +313,10 @@ fun RecipeDetails(
             }
         }
         if (showAutomateLinkDialog) {
-            DirectLinkDialog(
-                dismiss = { showAutomateLinkDialog = false },
-                onConfirm = {
-                    copyAutomateLink()
-                    showAutomateLinkDialog = false
-                }
-            )
+            DirectLinkDialog(dismiss = { showAutomateLinkDialog = false }, onConfirm = {
+                copyAutomateLink()
+                showAutomateLinkDialog = false
+            })
         }
     }
 }
@@ -349,8 +337,7 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
         },
         icon = {
             Icon(
-                painter = painterResource(id = R.drawable.ic_link),
-                contentDescription = null
+                painter = painterResource(id = R.drawable.ic_link), contentDescription = null
             )
         },
         title = {
