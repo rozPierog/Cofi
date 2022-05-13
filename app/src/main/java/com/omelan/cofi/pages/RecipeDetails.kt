@@ -351,12 +351,12 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
 
 @Composable
 fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
-    val fabShape by animateDpAsState(
+    val fabRadii by animateDpAsState(
         targetValue = if (isAnimationRunning) 28.0.dp else 100.dp,
-        animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
+        animationSpec = tween(durationMillis = 500, easing = FastOutLinearInEasing),
     )
     LargeFloatingActionButton(
-        shape = RoundedCornerShape(fabShape),
+        shape = RoundedCornerShape(fabRadii),
         onClick = onClick,
         modifier = Modifier.navigationBarsPadding(),
     ) {
