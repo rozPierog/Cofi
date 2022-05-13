@@ -25,14 +25,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.lifecycleScope
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
+import com.omelan.cofi.model.AppDatabase
 import com.omelan.cofi.model.PrepopulateData
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.checkPiPPermission
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -177,28 +180,19 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    text = {
-                        Text(text = "Add default recipes")
-                    },
-                    icon = {
-                        Icon(
-                            Icons.Rounded.AddCircle,
-                            contentDescription = null
-                        )
-                    },
+                    text = { Text(text = "Add default recipes") },
+                    icon = { Icon(Icons.Rounded.AddCircle, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(
-                        onClick = {
-                            showDefaultRecipeDialog = true
-                        }
+                        onClick = { showDefaultRecipeDialog = true }
                     ),
                 )
-                DefaultRecipesDialog(dismiss = { showDefaultRecipeDialog = false })
+                if (showDefaultRecipeDialog) {
+                    DefaultRecipesDialog(dismiss = { showDefaultRecipeDialog = false })
+                }
             }
             item {
                 ListItem(
-                    text = {
-                        Text(text = stringResource(id = R.string.settings_bug_item))
-                    },
+                    text = { Text(text = stringResource(id = R.string.settings_bug_item)) },
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_bug_report),
@@ -214,12 +208,8 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    text = {
-                        Text(text = stringResource(id = R.string.settings_about_item))
-                    },
-                    icon = {
-                        Icon(Icons.Rounded.Info, contentDescription = null)
-                    },
+                    text = { Text(text = stringResource(id = R.string.settings_about_item)) },
+                    icon = { Icon(Icons.Rounded.Info, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(onClick = goToAbout)
                 )
             }
@@ -230,12 +220,13 @@ fun AppSettings(
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalMaterialApi
-fun DefaultRecipesDialog(
-    dismiss: () -> Unit,
-) {
+fun DefaultRecipesDialog(dismiss: () -> Unit) {
     val recipesToAdd = remember { mutableStateListOf<Recipe>() }
+    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val prepopulateData = PrepopulateData(context)
+    val steps = prepopulateData.steps.groupBy { it.recipeId }
+    val db = AppDatabase.getInstance(context)
     Dialog(
         onDismissRequest = dismiss
     ) {
@@ -244,7 +235,7 @@ fun DefaultRecipesDialog(
             color = MaterialTheme.colorScheme.surface,
             tonalElevation = 6.dp,
         ) {
-            Column {
+            Column(Modifier.padding(vertical = Spacing.big)) {
                 LazyColumn {
                     items(prepopulateData.recipes) {
                         val isSelected = recipesToAdd.contains(it)
@@ -258,18 +249,31 @@ fun DefaultRecipesDialog(
                                 onClick = onCheck
                             ),
                             icon = {
-                                Checkbox(
-                                    checked = isSelected,
-                                    onCheckedChange = { onCheck() })
+                                Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
                             }
                         )
                     }
                 }
                 TextButton(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        recipesToAdd.forEach {
+                            coroutineScope.launch {
+                                val idOfRecipe = db.recipeDao().insertRecipe(it.copy(id = 0))
+                                val stepsOfTheRecipe =
+                                    steps[prepopulateData.recipes.indexOf(it)] ?: return@launch
+                                db.stepDao().insertAll(stepsOfTheRecipe.map {
+                                    it.copy(
+                                        id = 0,
+                                        recipeId = idOfRecipe.toInt()
+                                    )
+                                })
+                            }
+                        }
+                        dismiss()
+                    },
                     modifier = Modifier
                         .align(Alignment.End)
-                        .padding(Spacing.big)
+                        .padding(horizontal = Spacing.big)
                 ) {
                     Text(text = stringResource(id = android.R.string.ok))
                 }
