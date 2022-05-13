@@ -71,7 +71,7 @@ fun RecipeDetails(
     val dataStore = DataStore(LocalContext.current)
 
     val isDingEnabled by dataStore.getStepChangeSetting()
-        .collectAsState(initial = DING_DEFAULT_VALUE)
+        .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
 

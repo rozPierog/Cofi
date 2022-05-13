@@ -23,7 +23,7 @@ class DataStore(private val context: Context) {
     }
 
     fun getStepChangeSetting() = context.dataStore.data.map { preferences ->
-        preferences[DING_ENABLED] ?: DING_DEFAULT_VALUE
+        preferences[STEP_SOUND_ENABLED] ?: STEP_SOUND_DEFAULT_VALUE
     }
 
     suspend fun togglePipSetting() {
@@ -35,8 +35,8 @@ class DataStore(private val context: Context) {
 
     suspend fun toggleStepChangeSound() {
         context.dataStore.edit {
-            val currentDingState = it[DING_ENABLED] ?: DING_DEFAULT_VALUE
-            it[DING_ENABLED] = !currentDingState
+            val currentStepSoundState = it[STEP_SOUND_ENABLED] ?: STEP_SOUND_DEFAULT_VALUE
+            it[STEP_SOUND_ENABLED] = !currentStepSoundState
         }
     }
 

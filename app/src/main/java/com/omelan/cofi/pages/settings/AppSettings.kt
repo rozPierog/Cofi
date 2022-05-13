@@ -34,19 +34,15 @@ import com.omelan.cofi.model.PrepopulateData
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.checkPiPPermission
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
-fun AppSettings(
-    goBack: () -> Unit,
-    goToAbout: () -> Unit,
-) {
+fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     val dataStore = DataStore(context)
-    val isDingEnabled by dataStore.getStepChangeSetting().collectAsState(DING_DEFAULT_VALUE)
+    val isStepSoundEnabled by dataStore.getStepChangeSetting().collectAsState(STEP_SOUND_DEFAULT_VALUE)
     val isPiPEnabled by dataStore.getPiPSetting().collectAsState(PIP_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(COMBINE_WEIGHT_DEFAULT_VALUE)
@@ -56,8 +52,11 @@ fun AppSettings(
     val appBarBehavior = createAppBarBehavior()
 
     val hasPiPPermission = checkPiPPermission(context)
-    fun enablePip() {
+    val togglePiP: () -> Unit = {
         coroutineScope.launch { dataStore.togglePipSetting() }
+    }
+    val toggleStepChangeSound: () -> Unit = {
+        coroutineScope.launch { dataStore.toggleStepChangeSound() }
     }
 
     val switchColors = SwitchDefaults.colors(
@@ -101,14 +100,14 @@ fun AppSettings(
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
-                        onClick = { enablePip() },
+                        onClick = togglePiP,
                         enabled = hasPiPPermission
                     ),
                     trailing = {
                         // TODO: Material3 Switch - right now it has issue that it's stuck on default after first render
                         Switch(
                             checked = isPiPEnabled,
-                            onCheckedChange = { enablePip() },
+                            onCheckedChange = { togglePiP() },
                             enabled = hasPiPPermission,
                             colors = switchColors,
                         )
@@ -126,21 +125,11 @@ fun AppSettings(
                             contentDescription = null
                         )
                     },
-                    modifier = Modifier.settingsItemModifier(
-                        onClick = {
-                            coroutineScope.launch {
-                                dataStore.toggleStepChangeSound()
-                            }
-                        },
-                    ),
+                    modifier = Modifier.settingsItemModifier(onClick = toggleStepChangeSound),
                     trailing = {
                         Switch(
-                            checked = isDingEnabled,
-                            onCheckedChange = {
-                                coroutineScope.launch {
-                                    dataStore.toggleStepChangeSound()
-                                }
-                            },
+                            checked = isStepSoundEnabled,
+                            onCheckedChange = { toggleStepChangeSound() },
                             colors = switchColors,
                         )
                     }
