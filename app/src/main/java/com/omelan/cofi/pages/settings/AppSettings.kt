@@ -260,12 +260,14 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
                                 val idOfRecipe = db.recipeDao().insertRecipe(it.copy(id = 0))
                                 val stepsOfTheRecipe =
                                     steps[prepopulateData.recipes.indexOf(it)] ?: return@launch
-                                db.stepDao().insertAll(stepsOfTheRecipe.map {
-                                    it.copy(
-                                        id = 0,
-                                        recipeId = idOfRecipe.toInt()
-                                    )
-                                })
+                                db.stepDao().insertAll(
+                                    stepsOfTheRecipe.map {
+                                        it.copy(
+                                            id = 0,
+                                            recipeId = idOfRecipe.toInt()
+                                        )
+                                    }
+                                )
                             }
                         }
                         dismiss()
