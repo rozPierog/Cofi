@@ -4,17 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
-import androidx.compose.material.Switch
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.List
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -30,6 +29,8 @@ import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
+import com.omelan.cofi.model.PrepopulateData
+import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.checkPiPPermission
 import kotlinx.coroutines.launch
@@ -48,6 +49,7 @@ fun AppSettings(
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(COMBINE_WEIGHT_DEFAULT_VALUE)
     var showCombineWeightDialog by remember { mutableStateOf(false) }
+    var showDefaultRecipeDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val appBarBehavior = createAppBarBehavior()
 
@@ -176,6 +178,25 @@ fun AppSettings(
             item {
                 ListItem(
                     text = {
+                        Text(text = "Add default recipes")
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Rounded.AddCircle,
+                            contentDescription = null
+                        )
+                    },
+                    modifier = Modifier.settingsItemModifier(
+                        onClick = {
+                            showDefaultRecipeDialog = true
+                        }
+                    ),
+                )
+                DefaultRecipesDialog(dismiss = { showDefaultRecipeDialog = false })
+            }
+            item {
+                ListItem(
+                    text = {
                         Text(text = stringResource(id = R.string.settings_bug_item))
                     },
                     icon = {
@@ -201,6 +222,57 @@ fun AppSettings(
                     },
                     modifier = Modifier.settingsItemModifier(onClick = goToAbout)
                 )
+            }
+        }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterialApi
+fun DefaultRecipesDialog(
+    dismiss: () -> Unit,
+) {
+    val recipesToAdd = remember { mutableStateListOf<Recipe>() }
+    val context = LocalContext.current
+    val prepopulateData = PrepopulateData(context)
+    Dialog(
+        onDismissRequest = dismiss
+    ) {
+        Surface(
+            shape = RoundedCornerShape(28.0.dp),
+            color = MaterialTheme.colorScheme.surface,
+            tonalElevation = 6.dp,
+        ) {
+            Column {
+                LazyColumn {
+                    items(prepopulateData.recipes) {
+                        val isSelected = recipesToAdd.contains(it)
+                        val onCheck: () -> Unit = {
+                            if (isSelected) recipesToAdd.remove(it) else recipesToAdd.add(it)
+                        }
+                        ListItem(
+                            text = { Text(it.name) },
+                            modifier = Modifier.selectable(
+                                selected = isSelected,
+                                onClick = onCheck
+                            ),
+                            icon = {
+                                Checkbox(
+                                    checked = isSelected,
+                                    onCheckedChange = { onCheck() })
+                            }
+                        )
+                    }
+                }
+                TextButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(Spacing.big)
+                ) {
+                    Text(text = stringResource(id = android.R.string.ok))
+                }
             }
         }
     }
