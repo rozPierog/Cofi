@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed issues with layout in Timer if names are too long
 - Fixed visibility issues in Timer in Dark Mode
 - Timer is now prettier, and less square
+- App bar now collapses when starting timer
 
 ### Removed
 
