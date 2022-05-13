@@ -25,7 +25,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.lifecycleScope
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
@@ -63,7 +62,7 @@ fun AppSettings(
 
     val switchColors = SwitchDefaults.colors(
         checkedThumbColor = MaterialTheme.colorScheme.secondary,
-        checkedTrackColor = MaterialTheme.colorScheme.secondary,
+        checkedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
     )
     Scaffold(
         topBar = {
