@@ -1,14 +1,24 @@
+@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+
 package com.omelan.cofi.pages
 
 import android.media.MediaPlayer
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -18,6 +28,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -31,6 +45,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.*
@@ -41,6 +56,8 @@ import com.omelan.cofi.model.*
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.Haptics
 import kotlinx.coroutines.launch
+
+val fabSpacing = 112.0.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +70,7 @@ fun RecipeDetails(
     onTimerRunning: (Boolean) -> Unit = {},
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
+    windowSizeClass: WindowSizeClass,
 ) {
     val isDarkMode = isSystemInDarkTheme()
     var currentStep by remember { mutableStateOf<Step?>(null) }
@@ -70,7 +88,7 @@ fun RecipeDetails(
     val snackbarState = SnackbarHostState()
     val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
-    val lazyListState = rememberLazyListState()
+    val lazyListState = rememberLazyGridState()
     val appBarBehavior = createAppBarBehavior()
     val dataStore = DataStore(LocalContext.current)
     val isDingEnabled by dataStore.getStepChangeSetting()
@@ -168,6 +186,37 @@ fun RecipeDetails(
     LaunchedEffect(currentStep) {
         progressAnimation()
     }
+    val isPhone by remember(windowSizeClass.widthSizeClass) {
+        derivedStateOf { windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact }
+    }
+
+    val Description: @Composable () -> Unit = {
+        Description(
+            modifier = Modifier.fillMaxWidth(), descriptionText = recipe.description
+        )
+        Spacer(modifier = Modifier.height(Spacing.big))
+    }
+    val Timer: @Composable (Modifier) -> Unit = {
+        Timer(
+            modifier = it,
+            currentStep = currentStep,
+            animatedProgressValue = animatedProgressValue,
+            animatedProgressColor = animatedProgressColor,
+            isInPiP = isInPiP,
+            alreadyDoneWeight = alreadyDoneWeight,
+            isDone = isDone,
+        )
+        if (!isInPiP) {
+            Spacer(modifier = Modifier.height(Spacing.big))
+        }
+    }
+    val getCurrentStepProgress: (Int) -> StepProgress = { index ->
+        when {
+            index < indexOfCurrentStep -> StepProgress.Done
+            indexOfCurrentStep == index -> StepProgress.Current
+            else -> StepProgress.Upcoming
+        }
+    }
     Scaffold(
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         snackbarHost = {
@@ -253,70 +302,113 @@ fun RecipeDetails(
                 )
             }
         },
-        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButtonPosition = if (isPhone) FabPosition.Center else FabPosition.End,
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-            state = lazyListState,
-            contentPadding = if (isInPiP) {
-                PaddingValues(0.dp)
-            } else {
-                rememberInsetsPaddingValues(
-                    insets = LocalWindowInsets.current.navigationBars,
-                    additionalStart = Spacing.big,
-                    additionalTop = Spacing.big + it.calculateTopPadding(),
-                    additionalEnd = Spacing.big,
-                    additionalBottom = 112.0.dp,
-                )
-            },
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            if (!isInPiP && recipe.description.isNotBlank()) {
-                item {
-                    Description(
-                        modifier = Modifier.fillMaxWidth(), descriptionText = recipe.description
+        if (isPhone) {
+            PhoneLayout(it, Description, Timer, steps, isInPiP, getCurrentStepProgress)
+        } else {
+            TabletLayout(it, Description, Timer, steps, isInPiP, getCurrentStepProgress)
+        }
+    }
+
+    if (showAutomateLinkDialog) {
+        DirectLinkDialog(dismiss = { showAutomateLinkDialog = false }, onConfirm = {
+            copyAutomateLink()
+            showAutomateLinkDialog = false
+        })
+    }
+}
+
+@Composable
+fun TabletLayout(
+    paddingValues: PaddingValues,
+    description: (@Composable () -> Unit)? = null,
+    timer: @Composable (Modifier) -> Unit,
+    steps: List<Step>,
+    isInPiP: Boolean,
+    getCurrentStepProgress: (Int) -> StepProgress,
+) {
+    val state = rememberScrollState()
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.onPrimary)
+            .padding(
+                if (isInPiP) {
+                    PaddingValues(0.dp)
+                } else {
+                    PaddingValues(
+                        start = Spacing.big,
+                        top =  paddingValues.calculateTopPadding(),
+                        end = Spacing.big,
+                        bottom = paddingValues.calculateBottomPadding(),
                     )
                 }
-            }
-            if (!isInPiP) {
-                item {
-                    Spacer(modifier = Modifier.height(Spacing.big))
-                }
-            }
-            item {
-                Timer(
-                    currentStep = currentStep,
-                    animatedProgressValue = animatedProgressValue,
-                    animatedProgressColor = animatedProgressColor,
-                    isInPiP = isInPiP,
-                    alreadyDoneWeight = alreadyDoneWeight,
-                    isDone = isDone,
-                )
-            }
-            item {
-                if (!isInPiP) {
-                    Spacer(modifier = Modifier.height(Spacing.big))
-                }
-            }
-            if (!isInPiP) {
-                itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
-                    val stepProgress = when {
-                        index < indexOfCurrentStep -> StepProgress.Done
-                        indexOfCurrentStep == index -> StepProgress.Current
-                        else -> StepProgress.Upcoming
+            ),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        timer(Modifier.fillMaxWidth(0.5f).align(Alignment.CenterVertically))
+        if (!isInPiP) {
+            LazyColumn(
+                modifier = Modifier.padding(Spacing.normal),
+                contentPadding = PaddingValues(bottom = fabSpacing, top = Spacing.big)
+            ) {
+                if ((description != null)) {
+                    item {
+                        description()
                     }
-                    StepListItem(step = step, stepProgress = stepProgress)
+                }
+                itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
+                    StepListItem(
+                        step = step,
+                        stepProgress = getCurrentStepProgress(index)
+                    )
                     Divider(color = Color(0xFFE8EAF6))
                 }
             }
         }
-        if (showAutomateLinkDialog) {
-            DirectLinkDialog(dismiss = { showAutomateLinkDialog = false }, onConfirm = {
-                copyAutomateLink()
-                showAutomateLinkDialog = false
-            })
+    }
+
+}
+
+@Composable
+fun PhoneLayout(
+    paddingValues: PaddingValues,
+    description: (@Composable () -> Unit)? = null,
+    timer: @Composable (Modifier) -> Unit,
+    steps: List<Step>,
+    isInPiP: Boolean,
+    getCurrentStepProgress: (Int) -> StepProgress,
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentPadding = if (isInPiP) {
+            PaddingValues(0.dp)
+        } else {
+            rememberInsetsPaddingValues(
+                insets = LocalWindowInsets.current.navigationBars,
+                additionalStart = Spacing.big,
+                additionalTop = Spacing.big + paddingValues.calculateTopPadding(),
+                additionalEnd = Spacing.big,
+                additionalBottom = fabSpacing,
+            )
+        },
+    ) {
+        if (!isInPiP && (description != null)) {
+            item {
+                description()
+            }
+        }
+        item {
+            timer(Modifier)
+        }
+        if (!isInPiP) {
+            itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
+                StepListItem(step = step, stepProgress = getCurrentStepProgress(index))
+                Divider(color = Color(0xFFE8EAF6))
+            }
         }
     }
 }
@@ -376,11 +468,19 @@ fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun RecipeDetailsPreview() {
-    RecipeDetails(recipeId = 1, isInPiP = false)
+    RecipeDetails(
+        recipeId = 1, isInPiP = false, windowSizeClass = WindowSizeClass.calculateFromSize(
+            DpSize(1920.dp, 1080.dp)
+        )
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun RecipeDetailsPreviewPip() {
-    RecipeDetails(recipeId = 1, isInPiP = true)
+    RecipeDetails(
+        recipeId = 1, isInPiP = true, windowSizeClass = WindowSizeClass.calculateFromSize(
+            DpSize(1920.dp, 1080.dp)
+        )
+    )
 }

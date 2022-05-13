@@ -145,6 +145,8 @@ dependencies {
     // Material Design
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.material3:material3:1.0.0-alpha11"
+    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha11"
+
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     // Navigation
@@ -161,7 +163,6 @@ dependencies {
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
 
     implementation "androidx.datastore:datastore-preferences:1.0.0"
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
     implementation "androidx.activity:activity-compose:1.4.0"
     //Room
     def room_version = "2.4.2"

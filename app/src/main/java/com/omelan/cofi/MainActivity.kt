@@ -12,6 +12,9 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -117,6 +120,7 @@ class MainActivity : MonetCompatActivity() {
         navController: NavController,
         backStackEntry: NavBackStackEntry,
         goBack: () -> Unit,
+        windowSizeClass: WindowSizeClass,
         db: AppDatabase
     ) {
         val recipeId = backStackEntry.arguments?.getInt("recipeId")
@@ -139,6 +143,7 @@ class MainActivity : MonetCompatActivity() {
                 )
             },
             onTimerRunning = { onTimerRunning(it) },
+            windowSizeClass = windowSizeClass,
         )
     }
 
@@ -221,6 +226,7 @@ class MainActivity : MonetCompatActivity() {
         )
     }
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     @Composable
     fun MainNavigation() {
         val navController = rememberAnimatedNavController()
@@ -230,6 +236,7 @@ class MainActivity : MonetCompatActivity() {
             navController.popBackStack()
         }
         val systemUiController = rememberSystemUiController()
+        val windowSizeClass = calculateWindowSizeClass(this)
 
         CofiTheme(monet) {
             val darkIcons = MaterialTheme.colorScheme.background.luminance() > 0.5
@@ -250,19 +257,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                            slideIntoContainer(
-                                AnimatedContentScope.SlideDirection.End,
-                                animationSpec = tween(tweenDuration),
-                                initialOffset = { fullWidth -> -fullWidth / 5 }
-                            )
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.End,
+                                    animationSpec = tween(tweenDuration),
+                                    initialOffset = { fullWidth -> -fullWidth / 5 }
+                                )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                            slideOutOfContainer(
-                                AnimatedContentScope.SlideDirection.Start,
-                                animationSpec = tween(tweenDuration),
-                                targetOffset = { fullWidth -> fullWidth / 5 }
-                            )
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Start,
+                                    animationSpec = tween(tweenDuration),
+                                    targetOffset = { fullWidth -> fullWidth / 5 }
+                                )
                     },
                 ) {
 //                    composable("list_color") {
@@ -284,7 +291,13 @@ class MainActivity : MonetCompatActivity() {
                             }
                         ),
                     ) { backStackEntry ->
-                        MainRecipeDetails(navController, backStackEntry, goBack, db)
+                        MainRecipeDetails(
+                            navController,
+                            backStackEntry,
+                            goBack,
+                            windowSizeClass,
+                            db,
+                        )
                     }
                     composable(
                         "edit/{recipeId}",

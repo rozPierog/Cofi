@@ -7,6 +7,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.progressSemantics
 import androidx.compose.material.Divider
@@ -49,8 +50,8 @@ fun Track(
     Canvas(
         modifier
             .progressSemantics(progress)
-            .fillMaxWidth()
             .aspectRatio(1f)
+
     ) {
         val startAngle = 270f
         val sweep = progress * 360f
@@ -128,7 +129,12 @@ fun Timer(
             Column(
                 modifier = Modifier
                     .padding(strokeWidth)
-                    .animateContentSize()
+                    .aspectRatio(1f)
+                    .align(Alignment.Center)
+                    .fillMaxSize()
+                    .animateContentSize(),
+                Arrangement.Center,
+                Alignment.CenterHorizontally
             ) {
                 if (currentStep != null) {
                     val durationInString = if (currentStep.time == null) {
