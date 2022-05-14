@@ -9,8 +9,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -65,24 +67,28 @@ fun RecipeDetails(
         DpSize(1920.dp, 1080.dp)
     ),
 ) {
-    val isDarkMode = isSystemInDarkTheme()
     var currentStep by remember { mutableStateOf<Step?>(null) }
     var isDone by remember { mutableStateOf(false) }
+    var isTimerRunning by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
+
     val steps by stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
     val recipe by recipeViewModel.getRecipe(recipeId)
         .observeAsState(Recipe(name = "", description = ""))
     val indexOfCurrentStep = steps.indexOf(currentStep)
     val indexOfLastStep = steps.lastIndex
+
+    val coroutineScope = rememberCoroutineScope()
     val animatedProgressValue = remember { Animatable(0f) }
+    val isDarkMode = isSystemInDarkTheme()
     val animatedProgressColor =
         remember { Animatable(if (isDarkMode) Color.LightGray else Color.DarkGray) }
     val clipboardManager = LocalClipboardManager.current
     val snackbarState = SnackbarHostState()
-    val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
-    val lazyListState = rememberLazyGridState()
+    val lazyListState = rememberLazyListState()
     val appBarBehavior = createAppBarBehavior()
+
     val dataStore = DataStore(LocalContext.current)
     val isDingEnabled by dataStore.getStepChangeSetting()
         .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
@@ -90,22 +96,24 @@ fun RecipeDetails(
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
 
     val alreadyDoneWeight = remember(combineWeightState, currentStep) {
-        val doneSteps = if (indexOfCurrentStep == -1) {
-            listOf()
-        } else {
-            steps.subList(0, indexOfCurrentStep)
-        }
-        return@remember when (combineWeightState) {
-            CombineWeight.ALL.name -> doneSteps.sumOf { it.value ?: 0 }
-            CombineWeight.WATER.name -> doneSteps.sumOf {
-                if (it.type === StepType.WATER) {
-                    it.value ?: 0
-                } else {
-                    0
-                }
+        derivedStateOf {
+            val doneSteps = if (indexOfCurrentStep == -1) {
+                listOf()
+            } else {
+                steps.subList(0, indexOfCurrentStep)
             }
-            CombineWeight.NONE.name -> 0
-            else -> 0
+            when (combineWeightState) {
+                CombineWeight.ALL.name -> doneSteps.sumOf { it.value ?: 0 }
+                CombineWeight.WATER.name -> doneSteps.sumOf {
+                    if (it.type === StepType.WATER) {
+                        it.value ?: 0
+                    } else {
+                        0
+                    }
+                }
+                CombineWeight.NONE.name -> 0
+                else -> 0
+            }
         }
     }
 
@@ -119,7 +127,7 @@ fun RecipeDetails(
     suspend fun pauseAnimations() {
         animatedProgressColor.stop()
         animatedProgressValue.stop()
-        onTimerRunning(false)
+        isTimerRunning = false
     }
 
     val context = LocalContext.current
@@ -131,7 +139,7 @@ fun RecipeDetails(
             currentStep = steps[indexOfCurrentStep + 1]
         } else {
             currentStep = null
-            onTimerRunning(false)
+            isTimerRunning = false
             isDone = true
             onRecipeEnd(recipe)
         }
@@ -144,7 +152,7 @@ fun RecipeDetails(
     suspend fun progressAnimation() {
         val safeCurrentStep = currentStep ?: return
         isDone = false
-        onTimerRunning(true)
+        isTimerRunning = true
         val currentStepTime = safeCurrentStep.time
         if (currentStepTime == null) {
             animatedProgressValue.snapTo(1f)
@@ -178,6 +186,9 @@ fun RecipeDetails(
     }
     LaunchedEffect(currentStep) {
         progressAnimation()
+    }
+    LaunchedEffect(isTimerRunning) {
+        onTimerRunning(isTimerRunning)
     }
 
     suspend fun startRecipe() = coroutineScope.launch {
@@ -226,7 +237,7 @@ fun RecipeDetails(
             animatedProgressValue = animatedProgressValue,
             animatedProgressColor = animatedProgressColor,
             isInPiP = isInPiP,
-            alreadyDoneWeight = alreadyDoneWeight,
+            alreadyDoneWeight = alreadyDoneWeight.value,
             isDone = isDone,
         )
         if (!isInPiP) {
@@ -284,7 +295,7 @@ fun RecipeDetails(
         floatingActionButton = {
             if (!isInPiP) {
                 StartFAB(
-                    isTimerRunning = animatedProgressValue.isRunning,
+                    isTimerRunning = isTimerRunning,
                     onClick = {
                         if (currentStep != null) {
                             if (animatedProgressValue.isRunning) {
@@ -308,7 +319,15 @@ fun RecipeDetails(
         floatingActionButtonPosition = if (isPhoneLayout) FabPosition.Center else FabPosition.End,
     ) {
         if (isPhoneLayout) {
-            PhoneLayout(it, renderDescription, renderTimer, steps, isInPiP, getCurrentStepProgress)
+            PhoneLayout(
+                it,
+                renderDescription,
+                renderTimer,
+                steps,
+                isInPiP,
+                getCurrentStepProgress,
+                lazyListState
+            )
         } else {
             TabletLayout(it, renderDescription, renderTimer, steps, isInPiP, getCurrentStepProgress)
         }
@@ -379,6 +398,7 @@ fun PhoneLayout(
     steps: List<Step>,
     isInPiP: Boolean,
     getCurrentStepProgress: (Int) -> StepProgress,
+    lazyListState: LazyListState,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -389,6 +409,7 @@ fun PhoneLayout(
         } else {
             getDefaultPadding(paddingValues = paddingValues, FabType.Big)
         },
+        state = lazyListState,
     ) {
         if (!isInPiP && (description != null)) {
             item {
