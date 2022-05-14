@@ -7,10 +7,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.ui.Spacing
 
-val defaultFabPadding = 76.dp
-val defaultBigFabPadding = 112.dp
-
-enum class FabType(val padding: Dp) { Big(defaultBigFabPadding), Normal(defaultFabPadding) }
+enum class FabType(val padding: Dp) { Big(Spacing.bigFab), Normal(Spacing.fab) }
 
 @Composable
 fun getDefaultPadding(paddingValues: PaddingValues, fabType: FabType? = null): PaddingValues {

@@ -47,7 +47,6 @@ import com.omelan.cofi.model.*
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.Haptics
-import com.omelan.cofi.utils.defaultBigFabPadding
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 
@@ -178,6 +177,27 @@ fun RecipeDetails(
     LaunchedEffect(currentStep) {
         progressAnimation()
     }
+
+    suspend fun startRecipe() = coroutineScope.launch {
+        launch {
+            animate(
+                initialValue = appBarBehavior.offset,
+                targetValue = appBarBehavior.offsetLimit,
+                block = { value, _ ->
+                    appBarBehavior.offset = value
+                }
+            )
+        }
+        launch {
+            lazyListState.animateScrollToItem(
+                if (recipe.description.isNotBlank()) 1 else 0
+            )
+        }
+        launch {
+            changeToNextStep(silent = true)
+        }
+    }
+
     val configuration = LocalConfiguration.current
 
     val isPhoneLayout by remember(
@@ -221,12 +241,8 @@ fun RecipeDetails(
     Scaffold(
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarState, modifier = Modifier.padding(Spacing.medium)
-            ) {
-                Snackbar(
-                    shape = RoundedCornerShape(50)
-                ) {
+            SnackbarHost(hostState = snackbarState, modifier = Modifier.padding(Spacing.medium)) {
+                Snackbar(shape = RoundedCornerShape(50)) {
                     Text(text = it.visuals.message)
                 }
             }
@@ -267,11 +283,11 @@ fun RecipeDetails(
             if (!isInPiP) {
                 StartFAB(
                     isAnimationRunning = animatedProgressValue.isRunning,
-                    onClick = if (currentStep != null) {
-                        if (animatedProgressValue.isRunning) {
-                            { coroutineScope.launch { pauseAnimations() } }
-                        } else {
-                            {
+                    onClick = {
+                        if (currentStep != null) {
+                            if (animatedProgressValue.isRunning) {
+                                coroutineScope.launch { pauseAnimations() }
+                            } else {
                                 coroutineScope.launch {
                                     if (currentStep?.time == null) {
                                         changeToNextStep()
@@ -280,27 +296,9 @@ fun RecipeDetails(
                                     }
                                 }
                             }
+                            return@StartFAB
                         }
-                    } else {
-                        {
-                            coroutineScope.launch {
-                                animate(
-                                    initialValue = appBarBehavior.offset,
-                                    targetValue = appBarBehavior.offsetLimit,
-                                    block = { value, _ ->
-                                        appBarBehavior.offset = value
-                                    }
-                                )
-                            }
-                            coroutineScope.launch {
-                                lazyListState.animateScrollToItem(
-                                    if (recipe.description.isNotBlank()) 1 else 0
-                                )
-                            }
-                            coroutineScope.launch {
-                                changeToNextStep(silent = true)
-                            }
-                        }
+                        coroutineScope.launch { startRecipe() }
                     },
                 )
             }
@@ -352,7 +350,7 @@ fun TabletLayout(
         if (!isInPiP) {
             LazyColumn(
                 modifier = Modifier.padding(Spacing.normal),
-                contentPadding = PaddingValues(bottom = defaultBigFabPadding, top = Spacing.big)
+                contentPadding = PaddingValues(bottom = Spacing.bigFab, top = Spacing.big)
             ) {
                 if ((description != null)) {
                     item {
@@ -364,7 +362,7 @@ fun TabletLayout(
                         step = step,
                         stepProgress = getCurrentStepProgress(index)
                     )
-                    Divider(color = Color(0xFFE8EAF6))
+                    Divider(color = MaterialTheme.colorScheme.surfaceVariant)
                 }
             }
         }
@@ -401,7 +399,7 @@ fun PhoneLayout(
         if (!isInPiP) {
             itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
                 StepListItem(step = step, stepProgress = getCurrentStepProgress(index))
-                Divider(color = Color(0xFFE8EAF6))
+                Divider(color = MaterialTheme.colorScheme.surfaceVariant)
             }
         }
     }

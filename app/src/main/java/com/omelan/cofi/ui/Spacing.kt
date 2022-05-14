@@ -8,4 +8,6 @@ object Spacing {
     val normal = 8.dp
     val medium = 10.dp
     val big = 16.dp
+    val bigFab = 112.dp
+    val fab = 76.dp
 }
