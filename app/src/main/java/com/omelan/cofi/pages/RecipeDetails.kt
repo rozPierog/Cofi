@@ -10,7 +10,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
@@ -179,17 +179,26 @@ fun RecipeDetails(
     LaunchedEffect(currentStep) {
         progressAnimation()
     }
-    val isPhone by remember(windowSizeClass.widthSizeClass) {
-        derivedStateOf { windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact }
+    val configuration = LocalConfiguration.current
+
+    val isPhoneLayout by remember(
+        windowSizeClass.widthSizeClass,
+        configuration.screenHeightDp,
+        configuration.screenWidthDp
+    ) {
+        derivedStateOf {
+            windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
+        }
     }
 
-    val Description: @Composable () -> Unit = {
+    val renderDescription: @Composable () -> Unit = {
         Description(
             modifier = Modifier.fillMaxWidth(), descriptionText = recipe.description
         )
         Spacer(modifier = Modifier.height(Spacing.big))
     }
-    val Timer: @Composable (Modifier) -> Unit = {
+    val renderTimer: @Composable (Modifier) -> Unit = {
         Timer(
             modifier = it,
             currentStep = currentStep,
@@ -297,12 +306,12 @@ fun RecipeDetails(
                 )
             }
         },
-        floatingActionButtonPosition = if (isPhone) FabPosition.Center else FabPosition.End,
+        floatingActionButtonPosition = if (isPhoneLayout) FabPosition.Center else FabPosition.End,
     ) {
-        if (isPhone) {
-            PhoneLayout(it, Description, Timer, steps, isInPiP, getCurrentStepProgress)
+        if (isPhoneLayout) {
+            PhoneLayout(it, renderDescription, renderTimer, steps, isInPiP, getCurrentStepProgress)
         } else {
-            TabletLayout(it, Description, Timer, steps, isInPiP, getCurrentStepProgress)
+            TabletLayout(it, renderDescription, renderTimer, steps, isInPiP, getCurrentStepProgress)
         }
     }
 
@@ -327,7 +336,7 @@ fun TabletLayout(
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.onPrimary)
+            .background(MaterialTheme.colorScheme.background)
             .padding(
                 if (isInPiP) {
                     PaddingValues(0.dp)
@@ -335,13 +344,13 @@ fun TabletLayout(
                     val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
                     PaddingValues(
                         start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                            paddingValues.calculateStartPadding(layoutDirection),
+                                paddingValues.calculateStartPadding(layoutDirection),
                         top = navigationBarPadding.calculateTopPadding() +
-                            paddingValues.calculateTopPadding(),
+                                paddingValues.calculateTopPadding(),
                         bottom = navigationBarPadding.calculateBottomPadding() +
-                            paddingValues.calculateBottomPadding(),
+                                paddingValues.calculateBottomPadding(),
                         end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                            paddingValues.calculateEndPadding(layoutDirection)
+                                paddingValues.calculateEndPadding(layoutDirection)
                     )
                 }
             ),
@@ -394,13 +403,13 @@ fun PhoneLayout(
             val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
             PaddingValues(
                 start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                    paddingValues.calculateStartPadding(layoutDirection) + Spacing.big,
+                        paddingValues.calculateStartPadding(layoutDirection) + Spacing.big,
                 top = navigationBarPadding.calculateTopPadding() +
-                    paddingValues.calculateTopPadding() + Spacing.big,
+                        paddingValues.calculateTopPadding() + Spacing.big,
                 bottom = navigationBarPadding.calculateBottomPadding() +
-                    paddingValues.calculateBottomPadding() + Spacing.big,
+                        paddingValues.calculateBottomPadding() + Spacing.big,
                 end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                    paddingValues.calculateEndPadding(layoutDirection) + Spacing.big
+                        paddingValues.calculateEndPadding(layoutDirection) + Spacing.big
             )
         },
     ) {
