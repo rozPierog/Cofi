@@ -20,7 +20,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
@@ -32,6 +31,8 @@ import com.omelan.cofi.components.RecipeItem
 import com.omelan.cofi.components.createAppBarBehavior
 import com.omelan.cofi.model.RecipeViewModel
 import com.omelan.cofi.ui.Spacing
+import com.omelan.cofi.utils.FabType
+import com.omelan.cofi.utils.getDefaultPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,8 +43,6 @@ fun RecipeList(
     recipeViewModel: RecipeViewModel = viewModel(),
     windowSizeClass: WindowSizeClass,
 ) {
-    val layoutDirection = LocalLayoutDirection.current
-    val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
     val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = listOf())
     val scrollBehavior = createAppBarBehavior()
     val isMultiColumn by remember(windowSizeClass.widthSizeClass) {
@@ -81,16 +80,7 @@ fun RecipeList(
         },
     ) {
         LazyVerticalGrid(
-            contentPadding = PaddingValues(
-                start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                    it.calculateStartPadding(layoutDirection) + Spacing.big,
-                top = navigationBarPadding.calculateTopPadding() +
-                    it.calculateTopPadding() + Spacing.small,
-                bottom = navigationBarPadding.calculateBottomPadding() +
-                    it.calculateBottomPadding() + Spacing.big + 76.dp,
-                end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                    it.calculateEndPadding(layoutDirection) + Spacing.big
-            ),
+            contentPadding = getDefaultPadding(it, FabType.Normal),
             verticalArrangement = Arrangement.spacedBy(Spacing.normal),
             modifier = Modifier
                 .fillMaxSize()

@@ -18,12 +18,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.omelan.cofi.BuildConfig
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
-import com.omelan.cofi.ui.Spacing
+import com.omelan.cofi.utils.getDefaultPadding
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
@@ -55,16 +54,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             modifier = Modifier
                 .nestedScroll(appBarBehavior.nestedScrollConnection)
                 .fillMaxSize(),
-            contentPadding = PaddingValues(
-                start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                    it.calculateStartPadding(layoutDirection) + Spacing.big,
-                top = navigationBarPadding.calculateTopPadding() +
-                    it.calculateTopPadding() + Spacing.small,
-                bottom = navigationBarPadding.calculateBottomPadding() +
-                    it.calculateBottomPadding() + Spacing.big + 76.dp,
-                end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                    it.calculateEndPadding(layoutDirection) + Spacing.big
-            )
+            contentPadding = getDefaultPadding(paddingValues = it),
         ) {
             item {
                 ListItem(

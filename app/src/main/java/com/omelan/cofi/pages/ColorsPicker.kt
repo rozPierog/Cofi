@@ -24,6 +24,7 @@ import com.kieronquinn.monetcompat.core.MonetCompat
 import com.kieronquinn.monetcompat.extensions.toArgb
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.ui.Spacing
+import com.omelan.cofi.utils.getDefaultPadding
 
 @Composable
 fun ColorPicker(goToList: () -> Unit, monet: MonetCompat) {
@@ -92,7 +93,7 @@ fun ColorPicker(goToList: () -> Unit, monet: MonetCompat) {
             )
         }
     ) {
-        LazyColumn {
+        LazyColumn(contentPadding = getDefaultPadding(paddingValues = it)) {
 //            shades.forEach { shade ->
 //                item {
 //                    Box(

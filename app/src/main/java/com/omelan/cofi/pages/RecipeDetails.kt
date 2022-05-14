@@ -8,7 +8,6 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -33,7 +32,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -47,10 +45,11 @@ import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.*
 import com.omelan.cofi.ui.Spacing
+import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.Haptics
+import com.omelan.cofi.utils.defaultBigFabPadding
+import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
-
-val fabSpacing = 112.0.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -332,7 +331,6 @@ fun TabletLayout(
     isInPiP: Boolean,
     getCurrentStepProgress: (Int) -> StepProgress,
 ) {
-    val layoutDirection = LocalLayoutDirection.current
     Row(
         modifier = Modifier
             .fillMaxSize()
@@ -341,17 +339,7 @@ fun TabletLayout(
                 if (isInPiP) {
                     PaddingValues(0.dp)
                 } else {
-                    val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
-                    PaddingValues(
-                        start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                            paddingValues.calculateStartPadding(layoutDirection),
-                        top = navigationBarPadding.calculateTopPadding() +
-                            paddingValues.calculateTopPadding(),
-                        bottom = navigationBarPadding.calculateBottomPadding() +
-                            paddingValues.calculateBottomPadding(),
-                        end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                            paddingValues.calculateEndPadding(layoutDirection)
-                    )
+                    getDefaultPadding(paddingValues)
                 }
             ),
         horizontalArrangement = Arrangement.Center,
@@ -364,7 +352,7 @@ fun TabletLayout(
         if (!isInPiP) {
             LazyColumn(
                 modifier = Modifier.padding(Spacing.normal),
-                contentPadding = PaddingValues(bottom = fabSpacing, top = Spacing.big)
+                contentPadding = PaddingValues(bottom = defaultBigFabPadding, top = Spacing.big)
             ) {
                 if ((description != null)) {
                     item {
@@ -392,7 +380,6 @@ fun PhoneLayout(
     isInPiP: Boolean,
     getCurrentStepProgress: (Int) -> StepProgress,
 ) {
-    val layoutDirection = LocalLayoutDirection.current
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -400,17 +387,7 @@ fun PhoneLayout(
         contentPadding = if (isInPiP) {
             PaddingValues(0.dp)
         } else {
-            val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
-            PaddingValues(
-                start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                    paddingValues.calculateStartPadding(layoutDirection) + Spacing.big,
-                top = navigationBarPadding.calculateTopPadding() +
-                    paddingValues.calculateTopPadding() + Spacing.big,
-                bottom = navigationBarPadding.calculateBottomPadding() +
-                    paddingValues.calculateBottomPadding() + Spacing.big,
-                end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                    paddingValues.calculateEndPadding(layoutDirection) + Spacing.big
-            )
+            getDefaultPadding(paddingValues = paddingValues, FabType.Big)
         },
     ) {
         if (!isInPiP && (description != null)) {

@@ -33,6 +33,7 @@ import com.omelan.cofi.model.PrepopulateData
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.checkPiPPermission
+import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -88,16 +89,7 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
             modifier = Modifier
                 .nestedScroll(appBarBehavior.nestedScrollConnection)
                 .fillMaxSize(),
-            contentPadding = PaddingValues(
-                start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                    it.calculateStartPadding(layoutDirection) + Spacing.big,
-                top = navigationBarPadding.calculateTopPadding() +
-                    it.calculateTopPadding() + Spacing.small,
-                bottom = navigationBarPadding.calculateBottomPadding() +
-                    it.calculateBottomPadding() + Spacing.big + 76.dp,
-                end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                    it.calculateEndPadding(layoutDirection) + Spacing.big
-            )
+            contentPadding = getDefaultPadding(paddingValues = it)
         ) {
             item {
                 ListItem(
