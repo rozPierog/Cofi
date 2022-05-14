@@ -107,11 +107,12 @@ class MainActivity : MonetCompatActivity() {
     }
 
     @Composable
-    fun MainList(navController: NavController) {
+    fun MainList(navController: NavController, windowSizeClass: WindowSizeClass) {
         RecipeList(
             navigateToRecipe = { recipeId -> navController.navigate(route = "recipe/$recipeId") },
             addNewRecipe = { navController.navigate(route = "add_recipe") },
             goToSettings = { navController.navigate(route = "settings") },
+            windowSizeClass = windowSizeClass,
         )
     }
 
@@ -280,7 +281,7 @@ class MainActivity : MonetCompatActivity() {
 //                        }, monet)
 //                    }
                     composable("list") {
-                        MainList(navController = navController)
+                        MainList(navController = navController, windowSizeClass)
                     }
                     composable(
                         "recipe/{recipeId}",

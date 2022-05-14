@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
@@ -56,13 +55,13 @@ fun LicensesList(goBack: () -> Unit) {
                 .fillMaxSize(),
             contentPadding = PaddingValues(
                 start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                        it.calculateStartPadding(layoutDirection) + Spacing.big,
+                    it.calculateStartPadding(layoutDirection) + Spacing.big,
                 top = navigationBarPadding.calculateTopPadding() +
-                        it.calculateTopPadding() + Spacing.small,
+                    it.calculateTopPadding() + Spacing.small,
                 bottom = navigationBarPadding.calculateBottomPadding() +
-                        it.calculateBottomPadding() + Spacing.big,
+                    it.calculateBottomPadding() + Spacing.big,
                 end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                        it.calculateEndPadding(layoutDirection)+ Spacing.big
+                    it.calculateEndPadding(layoutDirection) + Spacing.big
             ),
         ) {
             items(dependencyList) {

@@ -57,13 +57,13 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                 .fillMaxSize(),
             contentPadding = PaddingValues(
                 start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                        it.calculateStartPadding(layoutDirection) + Spacing.big,
+                    it.calculateStartPadding(layoutDirection) + Spacing.big,
                 top = navigationBarPadding.calculateTopPadding() +
-                        it.calculateTopPadding() + Spacing.small,
+                    it.calculateTopPadding() + Spacing.small,
                 bottom = navigationBarPadding.calculateBottomPadding() +
-                        it.calculateBottomPadding() + Spacing.big + 76.dp,
+                    it.calculateBottomPadding() + Spacing.big + 76.dp,
                 end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                        it.calculateEndPadding(layoutDirection) + Spacing.big
+                    it.calculateEndPadding(layoutDirection) + Spacing.big
             )
         ) {
             item {

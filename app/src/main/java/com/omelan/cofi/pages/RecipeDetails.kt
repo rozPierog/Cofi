@@ -188,7 +188,7 @@ fun RecipeDetails(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -344,13 +344,13 @@ fun TabletLayout(
                     val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
                     PaddingValues(
                         start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                                paddingValues.calculateStartPadding(layoutDirection),
+                            paddingValues.calculateStartPadding(layoutDirection),
                         top = navigationBarPadding.calculateTopPadding() +
-                                paddingValues.calculateTopPadding(),
+                            paddingValues.calculateTopPadding(),
                         bottom = navigationBarPadding.calculateBottomPadding() +
-                                paddingValues.calculateBottomPadding(),
+                            paddingValues.calculateBottomPadding(),
                         end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                                paddingValues.calculateEndPadding(layoutDirection)
+                            paddingValues.calculateEndPadding(layoutDirection)
                     )
                 }
             ),
@@ -403,13 +403,13 @@ fun PhoneLayout(
             val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
             PaddingValues(
                 start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                        paddingValues.calculateStartPadding(layoutDirection) + Spacing.big,
+                    paddingValues.calculateStartPadding(layoutDirection) + Spacing.big,
                 top = navigationBarPadding.calculateTopPadding() +
-                        paddingValues.calculateTopPadding() + Spacing.big,
+                    paddingValues.calculateTopPadding() + Spacing.big,
                 bottom = navigationBarPadding.calculateBottomPadding() +
-                        paddingValues.calculateBottomPadding() + Spacing.big,
+                    paddingValues.calculateBottomPadding() + Spacing.big,
                 end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                        paddingValues.calculateEndPadding(layoutDirection) + Spacing.big
+                    paddingValues.calculateEndPadding(layoutDirection) + Spacing.big
             )
         },
     ) {
