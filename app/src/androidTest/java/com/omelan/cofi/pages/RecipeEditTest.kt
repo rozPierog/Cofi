@@ -6,7 +6,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.Step
@@ -18,7 +17,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import java.util.*
 
-@OptIn(ExperimentalAnimatedInsets::class)
 @ExperimentalAnimationApi
 @RunWith(JUnit4::class)
 class RecipeEditTest {
@@ -70,7 +68,7 @@ class RecipeEditTest {
 
         val stepValueNode = composeTestRule.onNodeWithTag("step_time")
         stepValueNode.assertExists()
-        stepValueNode.performTextInput((expectedStep.time / 1000).toString())
+        stepValueNode.performTextInput(((expectedStep.time ?: 1) / 1000).toString())
         composeTestRule.onNodeWithTag("step_save").performClick()
 
         composeTestRule.onNodeWithTag("recipe_edit_save").performClick()
@@ -135,7 +133,7 @@ class RecipeEditTest {
 
         val stepValueNode = composeTestRule.onNodeWithTag("step_time")
         stepValueNode.assertExists()
-        stepValueNode.performTextReplacement((expectedStep.time / 1000).toString())
+        stepValueNode.performTextReplacement(((expectedStep.time ?: 0) / 1000).toString())
         composeTestRule.onNodeWithTag("step_save").performClick()
         composeTestRule.onNodeWithTag("recipe_edit_save").performClick()
     }

@@ -3,7 +3,6 @@ package com.omelan.cofi.components
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.model.StepType
 import com.omelan.cofi.ui.CofiTheme
 import org.junit.Rule
@@ -12,7 +11,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import java.util.*
 
-@OptIn(ExperimentalAnimatedInsets::class)
 @RunWith(JUnit4::class)
 class StepAddCardTest {
     @get:Rule

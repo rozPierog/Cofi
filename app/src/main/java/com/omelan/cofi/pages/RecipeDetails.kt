@@ -61,7 +61,9 @@ fun RecipeDetails(
     onTimerRunning: (Boolean) -> Unit = {},
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
-    windowSizeClass: WindowSizeClass,
+    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(
+        DpSize(1920.dp, 1080.dp)
+    ),
 ) {
     val isDarkMode = isSystemInDarkTheme()
     var currentStep by remember { mutableStateOf<Step?>(null) }

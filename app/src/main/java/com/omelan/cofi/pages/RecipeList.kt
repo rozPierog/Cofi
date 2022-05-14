@@ -34,6 +34,7 @@ import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.getDefaultPadding
 
+@ExperimentalMaterial3WindowSizeClassApi
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeList(
@@ -41,7 +42,9 @@ fun RecipeList(
     addNewRecipe: () -> Unit,
     goToSettings: () -> Unit,
     recipeViewModel: RecipeViewModel = viewModel(),
-    windowSizeClass: WindowSizeClass,
+    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(
+        DpSize(1920.dp, 1080.dp)
+    ),
 ) {
     val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = listOf())
     val scrollBehavior = createAppBarBehavior()
@@ -106,8 +109,5 @@ fun RecipeListPreview() {
         navigateToRecipe = {},
         addNewRecipe = {},
         goToSettings = {},
-        windowSizeClass = WindowSizeClass.calculateFromSize(
-            DpSize(1920.dp, 1080.dp)
-        )
     )
 }

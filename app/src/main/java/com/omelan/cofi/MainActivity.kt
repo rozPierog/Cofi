@@ -59,6 +59,7 @@ const val appDeepLinkUrl = "https://rozpierog.github.io"
 
 const val tweenDuration = 200
 
+@ExperimentalMaterial3WindowSizeClassApi
 @OptIn(ExperimentalAnimationApi::class)
 class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
@@ -339,7 +340,9 @@ class MainActivity : MonetCompatActivity() {
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration
     ) {
-        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        }
         mainActivityViewModel.setIsInPiP(isInPictureInPictureMode)
     }
 

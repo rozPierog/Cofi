@@ -2,14 +2,12 @@ package com.omelan.cofi.components
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.ui.CofiTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@OptIn(ExperimentalAnimatedInsets::class)
 @RunWith(JUnit4::class)
 class DescriptionTest {
     @get:Rule
