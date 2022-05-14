@@ -1,6 +1,8 @@
 package com.omelan.cofi.model
 
 import android.app.Application
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.annotation.WorkerThread
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.AndroidViewModel
@@ -9,64 +11,37 @@ import androidx.room.*
 import com.omelan.cofi.R
 import com.omelan.cofi.ui.*
 
-enum class StepType {
-    ADD_COFFEE {
-        override val color: Color
-            get() = brown500
+enum class StepType(
+    val color: Color,
+    val colorNight: Color,
+    @StringRes val stringRes: Int,
+    @DrawableRes val iconRes: Int
+) {
+    ADD_COFFEE(
+        color = brown500,
+        colorNight = brown300,
+        stringRes = R.string.step_type_add_coffee,
+        iconRes = R.drawable.ic_coffee,
+    ),
+    WATER(
+        color = blue600,
+        colorNight = blue600,
+        stringRes = R.string.step_type_water,
+        iconRes = R.drawable.ic_water_plus,
+    ),
+    WAIT(
+        color = green600,
+        colorNight = green600,
+        stringRes = R.string.step_type_wait,
+        iconRes = R.drawable.ic_progress_clock,
+    ),
+    OTHER(
+        color = greyBlue900,
+        colorNight = grey300,
+        stringRes = R.string.step_type_other,
+        iconRes = R.drawable.ic_playlist_edit
+    );
 
-        override val colorNight: Color
-            get() = brown300
-
-        override val stringRes: Int
-            get() = R.string.step_type_add_coffee
-
-        override val iconRes: Int
-            get() = R.drawable.ic_coffee
-    },
-    WATER {
-        override val color: Color
-            get() = blue600
-
-        override val colorNight: Color
-            get() = blue600
-
-        override val stringRes: Int
-            get() = R.string.step_type_water
-
-        override val iconRes: Int
-            get() = R.drawable.ic_water_plus
-    },
-    WAIT {
-        override val color: Color
-            get() = green600
-
-        override val colorNight: Color
-            get() = green600
-
-        override val stringRes: Int
-            get() = R.string.step_type_wait
-
-        override val iconRes: Int
-            get() = R.drawable.ic_progress_clock
-    },
-    OTHER {
-        override val color: Color
-            get() = greyBlue900
-
-        override val colorNight: Color
-            get() = grey300
-
-        override val stringRes: Int
-            get() = R.string.step_type_other
-
-        override val iconRes: Int
-            get() = R.drawable.ic_playlist_edit
-    };
-
-    abstract val color: Color
-    abstract val colorNight: Color
-    abstract val stringRes: Int
-    abstract val iconRes: Int
     fun isNotWaitStepType(): Boolean = this != WAIT
 }
 

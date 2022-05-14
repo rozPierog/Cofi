@@ -1,6 +1,7 @@
 package com.omelan.cofi.model
 
 import android.app.Application
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -56,29 +57,12 @@ import com.omelan.cofi.R
 //    ),
 // )
 
-enum class RecipeIcon {
-    V60 {
-        override val icon: Int
-            get() = R.drawable.ic_drip
-    },
-    FrenchPress {
-        override val icon: Int
-            get() = R.drawable.ic_french_press
-    },
-    Grinder {
-        override val icon: Int
-            get() = R.drawable.ic_coffee_grinder
-    },
-    Chemex {
-        override val icon: Int
-            get() = R.drawable.ic_chemex
-    },
-    Aeropress {
-        override val icon: Int
-            get() = R.drawable.ic_aeropress
-    };
-
-    abstract val icon: Int
+enum class RecipeIcon(@DrawableRes val icon: Int) {
+    V60(R.drawable.ic_drip),
+    FrenchPress(R.drawable.ic_french_press),
+    Grinder(R.drawable.ic_coffee_grinder),
+    Chemex(R.drawable.ic_chemex),
+    Aeropress(R.drawable.ic_aeropress)
 }
 
 class RecipeIconTypeConverter {
