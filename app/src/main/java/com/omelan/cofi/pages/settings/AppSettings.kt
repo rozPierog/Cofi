@@ -1,46 +1,53 @@
 package com.omelan.cofi.pages.settings
 
+import android.content.ContentResolver
+import android.content.Intent
+import android.icu.text.DateFormat
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import androidx.core.net.toFile
 import com.omelan.cofi.*
 import com.omelan.cofi.R
+import com.omelan.cofi.components.Material3Dialog
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
 import com.omelan.cofi.model.AppDatabase
 import com.omelan.cofi.model.PrepopulateData
 import com.omelan.cofi.model.Recipe
-import com.omelan.cofi.ui.Spacing
+import com.omelan.cofi.model.serialize
 import com.omelan.cofi.utils.checkPiPPermission
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
-    val layoutDirection = LocalLayoutDirection.current
-    val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     val dataStore = DataStore(context)
@@ -51,6 +58,7 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
         .collectAsState(COMBINE_WEIGHT_DEFAULT_VALUE)
     var showCombineWeightDialog by remember { mutableStateOf(false) }
     var showDefaultRecipeDialog by remember { mutableStateOf(false) }
+    var showBackupDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val appBarBehavior = createAppBarBehavior()
 
@@ -183,6 +191,21 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
             }
             item {
                 ListItem(
+                    text = { Text(text = "Backup") },
+                    icon = {
+                        Icon(
+                            Icons.Rounded.Share,
+                            contentDescription = null
+                        )
+                    },
+                    modifier = Modifier.settingsItemModifier(
+                        onClick = { showBackupDialog = true }
+                    ),
+                )
+                if (showBackupDialog) BackupDialog(dismiss = { showBackupDialog = false })
+            }
+            item {
+                ListItem(
                     text = { Text(text = stringResource(id = R.string.settings_bug_item)) },
                     icon = {
                         Icon(
@@ -208,6 +231,58 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@Composable
+fun BackupDialog(dismiss: () -> Unit) {
+    val recipesToBackup = remember { mutableStateListOf<Recipe>() }
+    val context = LocalContext.current
+    val db = AppDatabase.getInstance(context)
+    val recipes by db.recipeDao().getAll().observeAsState(initial = listOf())
+    val steps by db.stepDao().getAll().observeAsState(initial = listOf())
+    val stepsWithRecipeId = steps.groupBy { it.recipeId }
+    val launcher = rememberLauncherForActivityResult(CreateDocument("application/text")) {
+        if (it == null) {
+            return@rememberLauncherForActivityResult
+        }
+        val contentResolver = context.contentResolver
+        contentResolver.openOutputStream(it).use { outputStream ->
+            if (outputStream == null) return@rememberLauncherForActivityResult
+            val jsonArray = JSONArray()
+            recipesToBackup.forEach { recipe ->
+                jsonArray.put(recipe.serialize(stepsWithRecipeId[recipe.id]))
+            }
+            outputStream.write(jsonArray.toString(2).toByteArray())
+            outputStream.close()
+        }
+        dismiss()
+    }
+
+    Material3Dialog(modifier = Modifier.fillMaxSize(), onDismissRequest = dismiss, onSave = {
+        val c = Calendar.getInstance().time
+        val format: DateFormat =
+            DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())
+        val formattedDate: String = format.format(c)
+        launcher.launch("cofi_backup_${formattedDate}.txt")
+//        dismiss()
+    }) {
+        LazyColumn(Modifier.weight(1f, true)) {
+            items(recipes) {
+                val isSelected = recipesToBackup.contains(it)
+                val onCheck: () -> Unit = {
+                    if (isSelected) recipesToBackup.remove(it) else recipesToBackup.add(it)
+                }
+                ListItem(
+                    text = { Text(it.name) },
+                    modifier = Modifier.selectable(selected = isSelected, onClick = onCheck),
+                    icon = {
+                        Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
+                    }
+                )
+            }
+        }
+    }
+}
+
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalMaterialApi
@@ -218,58 +293,37 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
     val prepopulateData = PrepopulateData(context)
     val steps = prepopulateData.steps.groupBy { it.recipeId }
     val db = AppDatabase.getInstance(context)
-    Dialog(
-        onDismissRequest = dismiss
-    ) {
-        Surface(
-            shape = RoundedCornerShape(28.0.dp),
-            color = MaterialTheme.colorScheme.surface,
-            tonalElevation = 6.dp,
-        ) {
-            Column(Modifier.padding(vertical = Spacing.big)) {
-                LazyColumn {
-                    items(prepopulateData.recipes) {
-                        val isSelected = recipesToAdd.contains(it)
-                        val onCheck: () -> Unit = {
-                            if (isSelected) recipesToAdd.remove(it) else recipesToAdd.add(it)
-                        }
-                        ListItem(
-                            text = { Text(it.name) },
-                            modifier = Modifier.selectable(
-                                selected = isSelected,
-                                onClick = onCheck
-                            ),
-                            icon = {
-                                Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
-                            }
+    Material3Dialog(onDismissRequest = dismiss, onSave = {
+        recipesToAdd.forEach {
+            coroutineScope.launch {
+                val idOfRecipe = db.recipeDao().insertRecipe(it.copy(id = 0))
+                val stepsOfTheRecipe =
+                    steps[prepopulateData.recipes.indexOf(it)] ?: return@launch
+                db.stepDao().insertAll(
+                    stepsOfTheRecipe.map {
+                        it.copy(
+                            id = 0,
+                            recipeId = idOfRecipe.toInt()
                         )
                     }
+                )
+            }
+        }
+        dismiss()
+    }) {
+        LazyColumn {
+            items(prepopulateData.recipes) {
+                val isSelected = recipesToAdd.contains(it)
+                val onCheck: () -> Unit = {
+                    if (isSelected) recipesToAdd.remove(it) else recipesToAdd.add(it)
                 }
-                TextButton(
-                    onClick = {
-                        recipesToAdd.forEach {
-                            coroutineScope.launch {
-                                val idOfRecipe = db.recipeDao().insertRecipe(it.copy(id = 0))
-                                val stepsOfTheRecipe =
-                                    steps[prepopulateData.recipes.indexOf(it)] ?: return@launch
-                                db.stepDao().insertAll(
-                                    stepsOfTheRecipe.map {
-                                        it.copy(
-                                            id = 0,
-                                            recipeId = idOfRecipe.toInt()
-                                        )
-                                    }
-                                )
-                            }
-                        }
-                        dismiss()
-                    },
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(horizontal = Spacing.big)
-                ) {
-                    Text(text = stringResource(id = android.R.string.ok))
-                }
+                ListItem(
+                    text = { Text(it.name) },
+                    modifier = Modifier.selectable(selected = isSelected, onClick = onCheck),
+                    icon = {
+                        Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
+                    }
+                )
             }
         }
     }
@@ -283,39 +337,28 @@ fun CombineWeightDialog(
     selectCombineMethod: (CombineWeight) -> Unit,
     combineWeightState: String
 ) {
-    Dialog(
-        onDismissRequest = dismiss
-    ) {
-        Surface(
-            shape = RoundedCornerShape(28.0.dp),
-            color = MaterialTheme.colorScheme.surface,
-            tonalElevation = 6.dp,
-        ) {
-            Column(
-                modifier = Modifier.padding(vertical = Spacing.big)
-            ) {
-                CombineWeight.values().forEach {
-                    ListItem(
-                        text = { Text(stringResource(id = it.settingsStringId)) },
-                        modifier = Modifier.selectable(
-                            selected = combineWeightState == it.name,
-                            onClick = { selectCombineMethod(it) },
-                        ),
-                        icon = {
-                            RadioButton(
-                                selected = combineWeightState == it.name,
-                                onClick = { selectCombineMethod(it) },
-                                colors = RadioButtonDefaults.colors(
-                                    selectedColor = MaterialTheme.colorScheme.secondary,
-                                )
-                            )
-                        }
+    Material3Dialog(onDismissRequest = dismiss) {
+        CombineWeight.values().forEach {
+            ListItem(
+                text = { Text(stringResource(id = it.settingsStringId)) },
+                modifier = Modifier.selectable(
+                    selected = combineWeightState == it.name,
+                    onClick = { selectCombineMethod(it) },
+                ),
+                icon = {
+                    RadioButton(
+                        selected = combineWeightState == it.name,
+                        onClick = { selectCombineMethod(it) },
+                        colors = RadioButtonDefaults.colors(
+                            selectedColor = MaterialTheme.colorScheme.secondary,
+                        )
                     )
                 }
-            }
+            )
         }
     }
 }
+
 
 @ExperimentalMaterial3Api
 @ExperimentalMaterialApi

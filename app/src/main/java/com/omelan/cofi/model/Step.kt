@@ -10,6 +10,8 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.omelan.cofi.R
 import com.omelan.cofi.ui.*
+import org.json.JSONArray
+import org.json.JSONObject
 
 enum class StepType(
     val color: Color,
@@ -67,18 +69,47 @@ class StepTypeConverter {
 data class Step(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "recipe_id") val recipeId: Int = 0,
+    @ColumnInfo(name = "order_in_recipe") val orderInRecipe: Int?,
     val name: String,
     val time: Int?,
     val type: StepType,
-    @ColumnInfo(name = "order_in_recipe") val orderInRecipe: Int?,
     val value: Int? = null
+)
+
+private const val jsonName = "name"
+private const val jsonTime = "time"
+private const val jsonType = "type"
+private const val jsonOrderInRecipe = "orderInRecipe"
+private const val jsonValue = "value"
+
+fun Step.serialize(): JSONObject = JSONObject().let {
+    it.put(jsonName, name)
+    it.put(jsonTime, time)
+    it.put(jsonValue, value)
+    it.put(jsonOrderInRecipe, orderInRecipe)
+    it.put(jsonType, type.name)
+    it
+}
+
+fun List<Step>.serialize() = JSONArray().let {
+    forEach { step -> it.put(step.serialize()) }
+    it
+}
+
+fun JSONObject.toStep(recipeId: Int = 0) = Step(
+    name = getString(jsonName),
+    recipeId = recipeId,
+    time = getInt(jsonTime),
+    value = getInt(jsonValue),
+    orderInRecipe = getInt(jsonOrderInRecipe),
+    type = StepTypeConverter().stringToStepType(getString(jsonType))
 )
 
 @Dao
 interface StepDao {
     @WorkerThread
     @Query("SELECT * FROM step")
-    suspend fun getAll(): List<Step>
+    fun getAll(): LiveData<List<Step>>
 
     @WorkerThread
     @Query("SELECT * FROM step WHERE recipe_id IS :recipeId ORDER BY order_in_recipe ASC")
