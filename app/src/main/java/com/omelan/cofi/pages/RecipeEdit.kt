@@ -279,7 +279,7 @@ fun RecipeEdit(
                         onClick = { pickIcon(it) },
                         modifier = Modifier
                             .fillMaxWidth(0.2F)
-                            .aspectRatio(1F)
+                            .padding(Spacing.big)
                     ) {
                         Icon(
                             painter = painterResource(id = it.icon),
