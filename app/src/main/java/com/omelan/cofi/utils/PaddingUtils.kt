@@ -28,15 +28,15 @@ fun getDefaultPadding(
     val fabPadding = fabType?.padding ?: 0.dp
     return PaddingValues(
         start = navigationBarPadding.calculateStartPadding(layoutDirection) +
-                paddingValues.calculateStartPadding(layoutDirection) + Spacing.big +
-                additionalStartPadding,
+            paddingValues.calculateStartPadding(layoutDirection) + Spacing.big +
+            additionalStartPadding,
         top = navigationBarPadding.calculateTopPadding() +
-                paddingValues.calculateTopPadding() + Spacing.small + additionalTopPadding,
+            paddingValues.calculateTopPadding() + Spacing.small + additionalTopPadding,
         bottom = navigationBarPadding.calculateBottomPadding() +
-                paddingValues.calculateBottomPadding() + Spacing.big + fabPadding +
-                additionalBottomPadding,
+            paddingValues.calculateBottomPadding() + Spacing.big + fabPadding +
+            additionalBottomPadding,
         end = navigationBarPadding.calculateEndPadding(layoutDirection) +
-                paddingValues.calculateEndPadding(layoutDirection) + Spacing.big +
-                additionalEndPadding
+            paddingValues.calculateEndPadding(layoutDirection) + Spacing.big +
+            additionalEndPadding
     )
 }
