@@ -8,9 +8,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.*
@@ -24,11 +22,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -36,6 +38,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.omelan.cofi.R
@@ -49,7 +53,7 @@ import kotlinx.coroutines.launch
 @OptIn(
     ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class,
-    ExperimentalFoundationApi::class
+    ExperimentalFoundationApi::class, ExperimentalMaterial3WindowSizeClassApi::class
 )
 @Composable
 fun RecipeEdit(
@@ -60,6 +64,9 @@ fun RecipeEdit(
     deleteRecipe: () -> Unit = {},
     cloneRecipe: (Recipe, List<Step>) -> Unit = { _, _ -> },
     isEditing: Boolean = false,
+    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(
+        DpSize(1920.dp, 1080.dp)
+    ),
 ) {
     var showDeleteModal by remember { mutableStateOf(false) }
     var showCloneModal by remember { mutableStateOf(false) }
@@ -80,6 +87,18 @@ fun RecipeEdit(
     val textSelectionColors = MaterialTheme.createTextSelectionColors()
 
     val canSave = name.isNotBlank() && steps.isNotEmpty()
+    val configuration = LocalConfiguration.current
+
+    val isPhoneLayout by remember(
+        windowSizeClass.widthSizeClass,
+        configuration.screenHeightDp,
+        configuration.screenWidthDp
+    ) {
+        derivedStateOf {
+            windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
+        }
+    }
 
     val safeGoBack: () -> Unit = {
         if (steps !== stepsToEdit ||
@@ -101,14 +120,12 @@ fun RecipeEdit(
         safeGoBack()
     }
 
-    fun saveRecipe() = saveRecipe(
-        recipeToEdit.copy(
-            name = name,
-            description = description,
-            recipeIcon = pickedIcon,
-        ),
-        steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
-    )
+    val onSave: () -> Unit = {
+        saveRecipe(
+            recipeToEdit.copy(name = name, description = description, recipeIcon = pickedIcon),
+            steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
+        )
+    }
 
     fun pickIcon(icon: RecipeIcon) {
         coroutineScope.launch {
@@ -116,6 +133,133 @@ fun RecipeEdit(
             pickedIcon = icon
         }
     }
+
+    val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
+        item {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(
+                    onClick = {
+                        coroutineScope.launch {
+                            if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
+                                bottomSheetScaffoldState.bottomSheetState.collapse()
+                            } else {
+                                bottomSheetScaffoldState.bottomSheetState.expand()
+                            }
+                            keyboardController?.hide()
+                        }
+                    }
+                ) {
+                    Icon(
+                        painter = painterResource(id = pickedIcon.icon),
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        contentDescription = null
+                    )
+                }
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("recipe_edit_name"),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
+                    label = { Text(stringResource(id = R.string.recipe_edit_name)) },
+                )
+            }
+        }
+        item {
+            OutlinedTextField(
+                value = description,
+                onValueChange = { description = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = Spacing.big)
+                    .testTag("recipe_edit_description"),
+                keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
+                label = { Text(stringResource(id = R.string.recipe_edit_description)) },
+            )
+        }
+    }
+
+    val renderSteps: LazyListScope.() -> Unit = {
+        itemsIndexed(
+            steps,
+            { _, step -> if (step.id == 0) step.hashCode() else step.id }
+        ) { index, step ->
+            AnimatedVisibility(
+                modifier = Modifier.animateItemPlacement(),
+                visible = stepWithOpenEditor == step,
+                enter = expandVertically(),
+                exit = shrinkVertically(),
+            ) {
+                StepAddCard(
+                    stepToEdit = step,
+                    save = { stepToSave ->
+                        steps = if (stepToSave == null) {
+                            steps.minus(step)
+                        } else {
+                            steps.mapIndexed { mapIndex, step ->
+                                if (index == mapIndex) {
+                                    stepToSave
+                                } else {
+                                    step
+                                }
+                            }
+                        }
+                        stepWithOpenEditor = null
+                    },
+                    isFirst = index == 0,
+                    isLast = index == steps.size - 1,
+                    onPositionChange = { change ->
+                        steps = steps.toMutableList().apply {
+                            add(index + change, removeAt(index))
+                        }
+                    },
+                    orderInRecipe = index,
+                    recipeId = recipeToEdit.id,
+                )
+            }
+            AnimatedVisibility(
+                visible = stepWithOpenEditor != step,
+                enter = expandVertically(),
+                modifier = Modifier.animateItemPlacement(),
+                exit = shrinkVertically(),
+            ) {
+                StepListItem(
+                    step = step,
+                    stepProgress = StepProgress.Upcoming,
+                    onClick = { stepWithOpenEditor = it }
+                )
+            }
+        }
+        item {
+            AnimatedVisibility(
+                visible = stepWithOpenEditor == null,
+                enter = expandVertically(),
+                modifier = Modifier.animateItemPlacement(),
+                exit = shrinkVertically(),
+            ) {
+                StepAddCard(
+                    onTypeSelect = {
+                        coroutineScope.launch {
+                            lazyListState.animateScrollToItem(
+                                lazyListState.layoutInfo.totalItemsCount - 1
+                            )
+                        }
+                    },
+                    modifier = Modifier.animateItemPlacement(),
+                    save = { stepToSave ->
+                        if (stepToSave != null) {
+                            steps = steps.toMutableList().apply { add(stepToSave) }
+                        }
+                    },
+                    orderInRecipe = steps.size,
+                    recipeId = recipeToEdit.id,
+                )
+            }
+        }
+    }
+
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
@@ -126,7 +270,8 @@ fun RecipeEdit(
         sheetContent = {
             FlowRow(
                 modifier = Modifier
-                    .navigationBarsPadding().imePadding()
+                    .navigationBarsPadding()
+                    .imePadding()
                     .fillMaxWidth()
             ) {
                 RecipeIcon.values().map {
@@ -166,7 +311,7 @@ fun RecipeEdit(
                     }
                     IconButton(
                         modifier = Modifier.testTag("recipe_edit_save"),
-                        onClick = { saveRecipe() },
+                        onClick = onSave,
                         enabled = canSave,
                     ) {
                         Icon(
@@ -192,138 +337,22 @@ fun RecipeEdit(
     ) {
         CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
             BoxWithConstraints {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(color = MaterialTheme.colorScheme.background),
-                    state = lazyListState,
-                    contentPadding = PaddingValues(
-                        bottom = maxHeight / 2,
-                        top = Spacing.big + it.calculateTopPadding(),
-                        start = Spacing.big,
-                        end = Spacing.big,
-                    ),
-                ) {
-                    item {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
-                                            bottomSheetScaffoldState.bottomSheetState.collapse()
-                                        } else {
-                                            bottomSheetScaffoldState.bottomSheetState.expand()
-                                        }
-                                        keyboardController?.hide()
-                                    }
-                                }
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = pickedIcon.icon),
-                                    tint = MaterialTheme.colorScheme.onBackground,
-                                    contentDescription = null
-                                )
-                            }
-                            OutlinedTextField(
-                                value = name,
-                                onValueChange = { name = it },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .testTag("recipe_edit_name"),
-                                singleLine = true,
-                                keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
-                                label = { Text(stringResource(id = R.string.recipe_edit_name)) },
-                            )
-                        }
-                    }
-                    item {
-                        OutlinedTextField(
-                            value = description,
-                            onValueChange = { description = it },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = Spacing.big)
-                                .testTag("recipe_edit_description"),
-                            keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
-                            label = { Text(stringResource(id = R.string.recipe_edit_description)) },
-                        )
-                    }
-                    itemsIndexed(
-                        steps,
-                        { _, step -> if (step.id == 0) step.hashCode() else step.id }
-                    ) { index, step ->
-                        AnimatedVisibility(
-                            modifier = Modifier.animateItemPlacement(),
-                            visible = stepWithOpenEditor == step,
-                            enter = expandVertically(),
-                            exit = shrinkVertically(),
-                        ) {
-                            StepAddCard(
-                                stepToEdit = step,
-                                save = { stepToSave ->
-                                    steps = if (stepToSave == null) {
-                                        steps.minus(step)
-                                    } else {
-                                        steps.mapIndexed { mapIndex, step ->
-                                            if (index == mapIndex) {
-                                                stepToSave
-                                            } else {
-                                                step
-                                            }
-                                        }
-                                    }
-                                    stepWithOpenEditor = null
-                                },
-                                isFirst = index == 0,
-                                isLast = index == steps.size - 1,
-                                onPositionChange = { change ->
-                                    steps = steps.toMutableList().apply {
-                                        add(index + change, removeAt(index))
-                                    }
-                                },
-                                orderInRecipe = index,
-                                recipeId = recipeToEdit.id,
-                            )
-                        }
-                        AnimatedVisibility(
-                            visible = stepWithOpenEditor != step,
-                            enter = expandVertically(),
-                            modifier = Modifier.animateItemPlacement(),
-                            exit = shrinkVertically(),
-                        ) {
-                            StepListItem(
-                                step = step,
-                                stepProgress = StepProgress.Upcoming,
-                                onClick = { stepWithOpenEditor = it }
-                            )
-                        }
-                    }
-                    item {
-                        AnimatedVisibility(
-                            visible = stepWithOpenEditor == null,
-                            enter = expandVertically(),
-                            modifier = Modifier.animateItemPlacement(),
-                            exit = shrinkVertically(),
-                        ) {
-                            StepAddCard(
-                                onTypeSelect = {
-                                    coroutineScope.launch {
-                                        lazyListState.animateScrollToItem(
-                                            lazyListState.layoutInfo.totalItemsCount - 1
-                                        )
-                                    }
-                                },
-                                modifier = Modifier.animateItemPlacement(),
-                                save = { stepToSave ->
-                                    if (stepToSave != null) {
-                                        steps = steps.toMutableList().apply { add(stepToSave) }
-                                    }
-                                },
-                                orderInRecipe = steps.size,
-                                recipeId = recipeToEdit.id,
-                            )
-                        }
-                    }
+                if (isPhoneLayout) {
+                    PhoneLayout(
+                        it,
+                        maxHeight,
+                        lazyListState,
+                        renderNameAndDescriptionEdit,
+                        renderSteps
+                    )
+                } else {
+                    TabletLayout(
+                        it,
+                        maxHeight,
+                        lazyListState,
+                        renderNameAndDescriptionEdit,
+                        renderSteps
+                    )
                 }
             }
         }
@@ -334,7 +363,7 @@ fun RecipeEdit(
         if (showSaveModal) {
             SaveDialog(
                 canSave = canSave,
-                onSave = { saveRecipe() },
+                onSave = onSave,
                 onDiscard = goBack,
                 onDismiss = { showSaveModal = false }
             )
@@ -350,6 +379,70 @@ fun RecipeEdit(
                     steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
                 )
             }, onDismiss = { showCloneModal = false })
+        }
+    }
+}
+
+@Composable
+fun PhoneLayout(
+    paddingValues: PaddingValues,
+    maxHeight: Dp,
+    lazyListState: LazyListState,
+    renderNameAndDescriptionEdit: LazyListScope.() -> Unit,
+    renderSteps: LazyListScope.() -> Unit
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background),
+        state = lazyListState,
+        contentPadding = PaddingValues(
+            bottom = maxHeight / 2,
+            top = Spacing.big + paddingValues.calculateTopPadding(),
+            start = Spacing.big,
+            end = Spacing.big,
+        ),
+    ) {
+        renderNameAndDescriptionEdit()
+        renderSteps()
+    }
+}
+
+@Composable
+fun TabletLayout(
+    paddingValues: PaddingValues,
+    maxHeight: Dp,
+    lazyListState: LazyListState,
+    renderNameAndDescriptionEdit: LazyListScope.() -> Unit,
+    renderSteps: LazyListScope.() -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background),
+    ) {
+        LazyColumn(
+            modifier = Modifier.weight(1f, fill = true),
+            contentPadding = PaddingValues(
+                bottom = maxHeight / 2,
+                top = Spacing.big + paddingValues.calculateTopPadding(),
+                start = Spacing.big,
+                end = Spacing.big,
+            )
+        ) {
+            renderNameAndDescriptionEdit()
+        }
+        LazyColumn(
+            modifier = Modifier.weight(1f, fill = true),
+            state = lazyListState,
+            contentPadding = PaddingValues(
+                bottom = maxHeight / 2,
+                top = Spacing.big + paddingValues.calculateTopPadding(),
+                start = Spacing.big,
+                end = Spacing.big,
+            ),
+        ) {
+            renderSteps()
         }
     }
 }
