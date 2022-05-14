@@ -41,13 +41,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowRow
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.*
+import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -259,7 +259,6 @@ fun RecipeEdit(
             }
         }
     }
-
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
@@ -268,18 +267,19 @@ fun RecipeEdit(
         sheetShape = shapes.modal,
         sheetBackgroundColor = MaterialTheme.colorScheme.surfaceVariant,
         sheetContent = {
-            FlowRow(
+            Row(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .navigationBarsPadding()
                     .imePadding()
-                    .fillMaxWidth()
+                    .padding(getDefaultPadding(skipNavigationBarPadding = true))
             ) {
                 RecipeIcon.values().map {
                     IconButton(
                         onClick = { pickIcon(it) },
                         modifier = Modifier
-                            .fillMaxWidth(0.2F)
-                            .padding(Spacing.big)
+                            .weight(1f)
+                            .padding(vertical = Spacing.big)
                     ) {
                         Icon(
                             painter = painterResource(id = it.icon),
@@ -396,11 +396,9 @@ fun PhoneLayout(
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background),
         state = lazyListState,
-        contentPadding = PaddingValues(
-            bottom = maxHeight / 2,
-            top = Spacing.big + paddingValues.calculateTopPadding(),
-            start = Spacing.big,
-            end = Spacing.big,
+        contentPadding = getDefaultPadding(
+            paddingValues = paddingValues,
+            additionalBottomPadding = maxHeight / 2
         ),
     ) {
         renderNameAndDescriptionEdit()
@@ -419,28 +417,20 @@ fun TabletLayout(
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.background),
+            .background(color = MaterialTheme.colorScheme.background)
+            .padding(getDefaultPadding(paddingValues)),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.normal)
     ) {
         LazyColumn(
             modifier = Modifier.weight(1f, fill = true),
-            contentPadding = PaddingValues(
-                bottom = maxHeight / 2,
-                top = Spacing.big + paddingValues.calculateTopPadding(),
-                start = Spacing.big,
-                end = Spacing.big,
-            )
+            contentPadding = PaddingValues(bottom = maxHeight / 2)
         ) {
             renderNameAndDescriptionEdit()
         }
         LazyColumn(
             modifier = Modifier.weight(1f, fill = true),
             state = lazyListState,
-            contentPadding = PaddingValues(
-                bottom = maxHeight / 2,
-                top = Spacing.big + paddingValues.calculateTopPadding(),
-                start = Spacing.big,
-                end = Spacing.big,
-            ),
+            contentPadding = PaddingValues(bottom = maxHeight / 2)
         ) {
             renderSteps()
         }
