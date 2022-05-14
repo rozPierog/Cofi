@@ -209,7 +209,7 @@ fun RecipeDetails(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -284,7 +284,7 @@ fun RecipeDetails(
         floatingActionButton = {
             if (!isInPiP) {
                 StartFAB(
-                    isAnimationRunning = animatedProgressValue.isRunning,
+                    isTimerRunning = animatedProgressValue.isRunning,
                     onClick = {
                         if (currentStep != null) {
                             if (animatedProgressValue.isRunning) {
@@ -436,18 +436,21 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
 }
 
 @Composable
-fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
-    val fabRadii by animateDpAsState(
-        targetValue = if (isAnimationRunning) 28.0.dp else 100.dp,
-        animationSpec = tween(durationMillis = 500, easing = FastOutLinearInEasing),
-    )
+fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
+    val animatedFabRadii = remember { Animatable(100f) }
+    LaunchedEffect(key1 = isTimerRunning) {
+        animatedFabRadii.animateTo(
+            if (isTimerRunning) 28.0f else 100f,
+            tween(if (isTimerRunning) 300 else 500)
+        )
+    }
     LargeFloatingActionButton(
-        shape = RoundedCornerShape(fabRadii),
+        shape = RoundedCornerShape(animatedFabRadii.value.dp),
         onClick = onClick,
         modifier = Modifier.navigationBarsPadding(),
     ) {
         Icon(
-            painter = if (isAnimationRunning) {
+            painter = if (isTimerRunning) {
                 painterResource(id = R.drawable.ic_pause)
             } else {
                 painterResource(id = R.drawable.ic_play_arrow)

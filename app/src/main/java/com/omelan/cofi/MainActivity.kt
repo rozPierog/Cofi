@@ -78,7 +78,7 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-    private fun onTimerRunning(isRunning: Boolean) {
+    private val onTimerRunning: (Boolean) -> Unit = { isRunning ->
         mainActivityViewModel.setCanGoToPiP(isRunning)
         val isPiPEnabledFlow: Flow<Boolean> = DataStore(this).getPiPSetting()
         lifecycleScope.launch(Dispatchers.IO) {
@@ -144,7 +144,7 @@ class MainActivity : MonetCompatActivity() {
                     route = "edit/$recipeId",
                 )
             },
-            onTimerRunning = { onTimerRunning(it) },
+            onTimerRunning = onTimerRunning,
             windowSizeClass = windowSizeClass,
         )
     }
@@ -259,19 +259,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                            slideIntoContainer(
-                                AnimatedContentScope.SlideDirection.End,
-                                animationSpec = tween(tweenDuration),
-                                initialOffset = { fullWidth -> -fullWidth / 5 }
-                            )
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.End,
+                                    animationSpec = tween(tweenDuration),
+                                    initialOffset = { fullWidth -> -fullWidth / 5 }
+                                )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                            slideOutOfContainer(
-                                AnimatedContentScope.SlideDirection.Start,
-                                animationSpec = tween(tweenDuration),
-                                targetOffset = { fullWidth -> fullWidth / 5 }
-                            )
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Start,
+                                    animationSpec = tween(tweenDuration),
+                                    targetOffset = { fullWidth -> fullWidth / 5 }
+                                )
                     },
                 ) {
 //                    composable("list_color") {
