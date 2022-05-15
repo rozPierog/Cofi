@@ -100,23 +100,13 @@ data class Recipe(
 private const val jsonName = "name"
 private const val jsonDescription = "description"
 private const val jsonRecipeIcon = "recipeIcon"
-private const val jsonSteps= "steps"
+const val jsonSteps= "steps"
 
 fun Recipe.serialize(steps: List<Step>? = null): JSONObject = JSONObject().run {
     put(jsonName, name)
     put(jsonDescription, description)
     put(jsonRecipeIcon, recipeIcon.name)
     put(jsonSteps, steps?.serialize())
-}
-
-
-fun List<Recipe>.serialize(): JSONArray {
-    return JSONArray().let {
-        forEach { recipe ->
-            val recipeJSONObject = recipe.serialize()
-        }
-        it
-    }
 }
 
 fun JSONObject.toRecipe() =

@@ -96,14 +96,28 @@ fun List<Step>.serialize() = JSONArray().let {
     it
 }
 
-fun JSONObject.toStep(recipeId: Int = 0) = Step(
+fun JSONObject.getIntOrNull(key: String) = try {
+    getInt(key)
+} catch (e: Exception) {
+    null
+}
+
+fun JSONObject.toStep(recipeId: Long = 0) = Step(
     name = getString(jsonName),
-    recipeId = recipeId,
-    time = getInt(jsonTime),
-    value = getInt(jsonValue),
+    recipeId = recipeId.toInt(),
+    time = getIntOrNull(jsonTime),
+    value = getIntOrNull(jsonValue),
     orderInRecipe = getInt(jsonOrderInRecipe),
     type = StepTypeConverter().stringToStepType(getString(jsonType))
 )
+
+fun JSONArray.toSteps(recipeId: Long = 0): List<Step> {
+    var steps = listOf<Step>()
+    for (i in 0 until length()) {
+        steps = steps.plus(getJSONObject(i).toStep(recipeId))
+    }
+    return steps
+}
 
 @Dao
 interface StepDao {

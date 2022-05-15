@@ -1,9 +1,10 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.omelan.cofi.pages.settings
 
-import android.content.ContentResolver
-import android.content.Intent
 import android.icu.text.DateFormat
 import android.net.Uri
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
@@ -27,22 +28,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.net.toFile
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3Dialog
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
-import com.omelan.cofi.model.AppDatabase
-import com.omelan.cofi.model.PrepopulateData
-import com.omelan.cofi.model.Recipe
-import com.omelan.cofi.model.serialize
+import com.omelan.cofi.model.*
 import com.omelan.cofi.utils.checkPiPPermission
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 import org.json.JSONArray
-import java.io.File
-import java.text.SimpleDateFormat
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -194,7 +190,7 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
                     text = { Text(text = "Backup") },
                     icon = {
                         Icon(
-                            Icons.Rounded.Share,
+                            painterResource(id = R.drawable.ic_save),
                             contentDescription = null
                         )
                     },
@@ -203,6 +199,9 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
                     ),
                 )
                 if (showBackupDialog) BackupDialog(dismiss = { showBackupDialog = false })
+            }
+            item {
+                RestoreListItem()
             }
             item {
                 ListItem(
@@ -231,6 +230,48 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
     }
 }
 
+@Composable
+fun RestoreListItem() {
+    val context = LocalContext.current
+    val db = AppDatabase.getInstance(context)
+    val coroutineScope = rememberCoroutineScope()
+
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
+            if (it == null) {
+                return@rememberLauncherForActivityResult
+            }
+            val contentResolver = context.contentResolver
+            contentResolver.openInputStream(it).use { inputStream ->
+                if (inputStream == null) return@rememberLauncherForActivityResult
+                val jsonString = String(inputStream.readBytes(), StandardCharsets.UTF_8)
+                val jsonArray = JSONArray(jsonString)
+                coroutineScope.launch {
+                    for (i in 0 until jsonArray.length()) {
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        val recipe = jsonObject.toRecipe()
+                        val recipeId = db.recipeDao().insertRecipe(recipe)
+                        val steps = jsonObject.getJSONArray(jsonSteps).toSteps(recipeId)
+                        db.stepDao().insertAll(steps)
+                    }
+                }
+            }
+        }
+
+    ListItem(
+        text = { Text(text = "Restore") },
+        icon = {
+            Icon(
+                painterResource(id = R.drawable.ic_restore),
+                contentDescription = null
+            )
+        },
+        modifier = Modifier.settingsItemModifier(
+            onClick = { launcher.launch(arrayOf("application/json")) }
+        ),
+    )
+}
+
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BackupDialog(dismiss: () -> Unit) {
@@ -238,9 +279,14 @@ fun BackupDialog(dismiss: () -> Unit) {
     val context = LocalContext.current
     val db = AppDatabase.getInstance(context)
     val recipes by db.recipeDao().getAll().observeAsState(initial = listOf())
+    LaunchedEffect(recipes) {
+        if (recipesToBackup.isEmpty()) {
+            recipesToBackup.addAll(recipes)
+        }
+    }
     val steps by db.stepDao().getAll().observeAsState(initial = listOf())
     val stepsWithRecipeId = steps.groupBy { it.recipeId }
-    val launcher = rememberLauncherForActivityResult(CreateDocument("application/text")) {
+    val launcher = rememberLauncherForActivityResult(CreateDocument("application/json")) {
         if (it == null) {
             return@rememberLauncherForActivityResult
         }
@@ -262,8 +308,7 @@ fun BackupDialog(dismiss: () -> Unit) {
         val format: DateFormat =
             DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())
         val formattedDate: String = format.format(c)
-        launcher.launch("cofi_backup_${formattedDate}.txt")
-//        dismiss()
+        launcher.launch("cofi_backup_${formattedDate}.json")
     }) {
         LazyColumn(Modifier.weight(1f, true)) {
             items(recipes) {
@@ -294,11 +339,11 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
     val steps = prepopulateData.steps.groupBy { it.recipeId }
     val db = AppDatabase.getInstance(context)
     Material3Dialog(onDismissRequest = dismiss, onSave = {
-        recipesToAdd.forEach {
-            coroutineScope.launch {
-                val idOfRecipe = db.recipeDao().insertRecipe(it.copy(id = 0))
+        coroutineScope.launch {
+            recipesToAdd.forEach { recipe ->
+                val idOfRecipe = db.recipeDao().insertRecipe(recipe.copy(id = 0))
                 val stepsOfTheRecipe =
-                    steps[prepopulateData.recipes.indexOf(it)] ?: return@launch
+                    steps[prepopulateData.recipes.indexOf(recipe)] ?: return@launch
                 db.stepDao().insertAll(
                     stepsOfTheRecipe.map {
                         it.copy(
@@ -308,8 +353,8 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
                     }
                 )
             }
+            dismiss()
         }
-        dismiss()
     }) {
         LazyColumn {
             items(prepopulateData.recipes) {
