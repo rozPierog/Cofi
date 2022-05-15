@@ -33,7 +33,7 @@ fun PiPAwareAppBar(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit = {
         Text(
-            text = stringResource(id = R.string.app_name),
+            text = stringResource(id = R.string.list_header),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )

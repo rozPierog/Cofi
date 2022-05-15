@@ -33,6 +33,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -467,7 +468,7 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
     LargeFloatingActionButton(
         shape = RoundedCornerShape(animatedFabRadii.value.dp),
         onClick = onClick,
-        modifier = Modifier.navigationBarsPadding(),
+        modifier = Modifier.navigationBarsPadding().testTag("recipe_start"),
     ) {
         Icon(
             painter = if (isTimerRunning) {

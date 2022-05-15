@@ -20,7 +20,9 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performClick
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.omelan.cofi.model.Recipe
@@ -127,6 +129,9 @@ class ScreenshotCreator {
                 }
             }
         }
+        composeTestRule.mainClock.autoAdvance = false
+        composeTestRule.onNodeWithTag("recipe_start").performClick()
+        composeTestRule.mainClock.advanceTimeBy(9500)
         saveScreenshot("3_en-US")
     }
 
@@ -145,11 +150,14 @@ class ScreenshotCreator {
                     RecipeDetails(
                         recipeId = 1,
                         recipeViewModel = recipeViewModel,
-                        stepsViewModel = stepsViewModel
+                        stepsViewModel = stepsViewModel,
                     )
                 }
             }
         }
+        composeTestRule.mainClock.autoAdvance = false
+        composeTestRule.onNodeWithTag("recipe_start").performClick()
+        composeTestRule.mainClock.advanceTimeBy(9000)
         saveScreenshot("4_en-US")
     }
 
