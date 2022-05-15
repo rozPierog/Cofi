@@ -175,7 +175,7 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = { Text(text = "Add default recipes") },
+                    text = { Text(text = stringResource(id = R.string.settings_addDefault)) },
                     icon = { Icon(Icons.Rounded.AddCircle, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(
                         onClick = { showDefaultRecipeDialog = true }
@@ -187,7 +187,7 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = { Text(text = "Backup") },
+                    text = { Text(text = stringResource(id = R.string.settings_backup)) },
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
@@ -259,7 +259,7 @@ fun RestoreListItem() {
         }
 
     ListItem(
-        text = { Text(text = "Restore") },
+        text = { Text(text = stringResource(id = R.string.settings_restore)) },
         icon = {
             Icon(
                 painterResource(id = R.drawable.ic_restore),

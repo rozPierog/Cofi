@@ -60,7 +60,7 @@ Przelać można już po 5minutach ostatniego kroku, ale im dłużej poczekasz ty
     <string name="prepopulate_chemex_description">"Przepis od: James Hoffmann
 Źródło: https://youtu.be/ikt-X5x7yoc
 Grubość mielenia: średnio
-Temperature: im cieplej tym lepiej (szczególnie z jasno paloną kawą)
+Temperatura: im cieplej tym lepiej (szczególnie z jasno paloną kawą)
 Upewnij się, że najgrubsza strona filtra jest po stronie lejka
 Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze musie gdzieś uciekać"</string>
     <string name="tereszkiewicz_credits_title">Ikona aplikacji: Hubert Tereszkiewicz</string>
@@ -77,4 +77,14 @@ Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze 
     <string name="recipe_details_noTime">Wciśnij start żeby kontunuować</string>
     <string name="app_version">Wersja aplikacji</string>
     <string name="step_add_duration_explainer">Czas trwania decyduje ile masz czasu na skończenie tego kroku (w sekundach). Jeśli chcesz stworzyć krok który wstrzymuje przepis do czasu aż jesteś gotowy pozostaw te pole puste</string>
+    <string name="settings_backup">Kopia zapasowa</string>
+    <string name="settings_restore">Przywróć kopię zapasową</string>
+    <string name="settings_addDefault">Dodaj początkowe przepisy</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="prepopulate_aero_step_piston">Umieść tłok na 1cm w zaparzaczu</string>
+    <string name="prepopulate_aero_step_press">Wciskaj delikatnie tłok</string>
+    <string name="prepopulate_aero_description">Przepis od: James Hoffmann
+Źródło: https://youtu.be/j6VlT_jUVPc
+Grubość mielenia: Dla jasno palonych – średnio-drobno. Im ciemiejsza kawa tym grubiej powinna być zmielona
+Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 85–90℃</string>
 </resources>

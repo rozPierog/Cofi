@@ -71,10 +71,10 @@ Keep an eye out not to block air moving out of the brewer"</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Place the piston 1cm into the brewer</string>
     <string name="prepopulate_aero_step_press">Press the piston gently</string>
-    <string name="prepopulate_aero_description">"Recipe created by: James Hoffmann
+    <string name="prepopulate_aero_description">Recipe created by: James Hoffmann
 Source: https://youtu.be/j6VlT_jUVPc
-Grind size: For light roast - finer end of medium. The darker you go the more you may prefer to increase the dose and coarsen the grind
-Temperature: For light roast - brought to a boil and used immediately. For dark roasts - 85-90℃"</string>
+Grind size: For light roast – finer end of medium. The darker you go the more you may prefer to increase the dose and coarsen the grind
+Temperature: For light roast – brought to a boil and used immediately. For dark roasts – 85–90℃</string>
     <string name="tereszkiewicz_credits_title">App icon by: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Check out his Dribbble</string>
     <string name="recipe_create_title">Add recipe</string>
@@ -84,4 +84,7 @@ Temperature: For light roast - brought to a boil and used immediately. For dark 
     <string name="app_version">App version</string>
     <string name="recipe_details_noTime">Press start to conitinue</string>
     <string name="step_add_duration_explainer">Step duration determines how long an action will take (in seconds). If you want to create a step that will hold whole recipe till you are read, just leave it empty.</string>
+    <string name="settings_backup">Backup</string>
+    <string name="settings_restore">Restore</string>
+    <string name="settings_addDefault">Add default reciepies</string>
 </resources>
