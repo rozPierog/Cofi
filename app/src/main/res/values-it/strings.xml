@@ -11,7 +11,7 @@
     <string name="step_add_weight">Peso (g)</string>
     <string name="step_add_save">Salva</string>
     <string name="recipe_delete_title">Sei sicuro?</string>
-    <string name="recpie_delete_text">Questo rimuoverà la ricetta permanentemente</string>
+    <string name="recipe_delete_text">Questo rimuoverà la ricetta permanentemente</string>
     <string name="recipe_edit_name">Nome</string>
     <string name="recipe_edit_description">Descrizione</string>
     <string name="recipe_edit_title">Modifica ricetta</string>

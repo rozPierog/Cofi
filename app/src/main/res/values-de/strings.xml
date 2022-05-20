@@ -8,7 +8,7 @@
     <string name="step_add_weight">Gewicht (g)</string>
     <string name="step_add_save">Speichern</string>
     <string name="recipe_delete_title">Bist du sicher?</string>
-    <string name="recpie_delete_text">Damit wird dieses Rezept dauerhaft entfernt</string>
+    <string name="recipe_delete_text">Damit wird dieses Rezept dauerhaft entfernt</string>
     <string name="recipe_edit_name">Name</string>
     <string name="recipe_edit_description">Beschreibung</string>
     <string name="recipe_edit_title">Rezept bearbeiten</string>
@@ -69,8 +69,8 @@ Achte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite bef
     <string name="recipe_unsaved_text">Möchtest du die Änderungen verwerfen?</string>
     <string name="button_discard">Verwerfen</string>
     <string name="recipe_clone_title">Dieses Rezept kopieren?</string>
-    <string name="recpie_clone_text">Dadurch wird ein Duplikat dieses Rezepts erstellt</string>
-    <string name="recpie_clone_suffix">%1$s - Kopie</string>
+    <string name="recipe_clone_text">Dadurch wird ein Duplikat dieses Rezepts erstellt</string>
+    <string name="recipe_clone_suffix">%1$s - Kopie</string>
     <string name="button_continue_editing">Bearbeitung fortsetzen</string>
     <string name="app_version">App-Version</string>
 </resources>

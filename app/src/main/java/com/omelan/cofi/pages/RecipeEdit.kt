@@ -458,7 +458,7 @@ fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
             Text(text = stringResource(id = R.string.recipe_delete_title))
         },
         text = {
-            Text(text = stringResource(id = R.string.recpie_delete_text))
+            Text(text = stringResource(id = R.string.recipe_delete_text))
         },
     )
 }
@@ -523,7 +523,7 @@ fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
             Text(text = stringResource(id = R.string.recipe_clone_title))
         },
         text = {
-            Text(text = stringResource(id = R.string.recpie_clone_text))
+            Text(text = stringResource(id = R.string.recipe_clone_text))
         },
     )
 }

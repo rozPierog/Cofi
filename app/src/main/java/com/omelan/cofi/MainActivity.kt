@@ -182,7 +182,7 @@ class MainActivity : MonetCompatActivity() {
                         newRecipe.copy(
                             id = 0,
                             name = applicationContext.resources.getString(
-                                R.string.recpie_clone_suffix,
+                                R.string.recipe_clone_suffix,
                                 recipe.name
                             )
                         )
