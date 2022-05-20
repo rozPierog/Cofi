@@ -13,8 +13,8 @@ IFS=$'\n'                      # Change IFS to new line
 devicesOutput=($devicesOutput) # split to array
 IFS=$SAVEIFS                   # Restore IFS
 
-mkdir "${pathToPhoneMetadata}"
-mkdir "${pathToTabletMetadata}"
+mkdir -p "${pathToPhoneMetadata}"
+mkdir -p "${pathToTabletMetadata}"
 
 [[ "$PWD" =~ bin ]] && echo "❌ Run from project root ❌" && exit 2
 
