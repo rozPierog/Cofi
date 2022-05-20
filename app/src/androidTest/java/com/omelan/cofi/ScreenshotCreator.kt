@@ -132,7 +132,8 @@ class ScreenshotCreator {
         }
         composeTestRule.mainClock.autoAdvance = false
         composeTestRule.onNodeWithTag("recipe_start").performClick()
-        composeTestRule.mainClock.advanceTimeBy(9500)
+        composeTestRule.mainClock.advanceTimeBy(4500)
+        composeTestRule.mainClock.advanceTimeBy(5000)
         saveScreenshot("3_en-US")
     }
 
@@ -149,7 +150,7 @@ class ScreenshotCreator {
                     LocalPiPState provides false,
                 ) {
                     RecipeDetails(
-                        recipeId = 1,
+                        recipeId = 3,
                         recipeViewModel = recipeViewModel,
                         stepsViewModel = stepsViewModel,
                     )
@@ -158,7 +159,8 @@ class ScreenshotCreator {
         }
         composeTestRule.mainClock.autoAdvance = false
         composeTestRule.onNodeWithTag("recipe_start").performClick()
-        composeTestRule.mainClock.advanceTimeBy(9000)
+        composeTestRule.mainClock.advanceTimeBy(8000)
+        composeTestRule.mainClock.advanceTimeBy(10000)
         saveScreenshot("4_en-US")
     }
 
