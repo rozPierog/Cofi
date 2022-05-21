@@ -26,13 +26,28 @@
   </a>
 </p>
 
+<style>
+  .row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .screen {
+    flex-basis: 20%;
+    flex-shrink: 1;
+    padding: 5px;
+  }
+}
+</style>
 # Screenshots
-<p align="center">
-  <img src="docs/assets/cofi_showcase.gif" width="20%">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" width="20%">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" width="20%">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" width="20%">
-</p>
+<div class="row">
+    <img class="screen" src="docs/assets/cofi_showcase.gif" >
+    <img class="screen" src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" >
+    <img class="screen" src="fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" >
+    <img class="screen" src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png">
+</div>
+
 
 # [Changelog](docs/Changelog.md)
 
