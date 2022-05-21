@@ -4,17 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
-import androidx.compose.material.Switch
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.List
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -30,35 +29,40 @@ import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
+import com.omelan.cofi.model.AppDatabase
+import com.omelan.cofi.model.PrepopulateData
+import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.checkPiPPermission
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
-fun AppSettings(
-    goBack: () -> Unit,
-    goToAbout: () -> Unit,
-) {
+fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     val dataStore = DataStore(context)
-    val isDingEnabled by dataStore.getStepChangeSetting().collectAsState(DING_DEFAULT_VALUE)
+    val isStepSoundEnabled by dataStore.getStepChangeSetting()
+        .collectAsState(STEP_SOUND_DEFAULT_VALUE)
     val isPiPEnabled by dataStore.getPiPSetting().collectAsState(PIP_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(COMBINE_WEIGHT_DEFAULT_VALUE)
     var showCombineWeightDialog by remember { mutableStateOf(false) }
+    var showDefaultRecipeDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val appBarBehavior = createAppBarBehavior()
 
     val hasPiPPermission = checkPiPPermission(context)
-    fun enablePip() {
+    val togglePiP: () -> Unit = {
         coroutineScope.launch { dataStore.togglePipSetting() }
+    }
+    val toggleStepChangeSound: () -> Unit = {
+        coroutineScope.launch { dataStore.toggleStepChangeSound() }
     }
 
     val switchColors = SwitchDefaults.colors(
         checkedThumbColor = MaterialTheme.colorScheme.secondary,
-        checkedTrackColor = MaterialTheme.colorScheme.secondary,
+        checkedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
     )
     Scaffold(
         topBar = {
@@ -97,14 +101,14 @@ fun AppSettings(
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
-                        onClick = { enablePip() },
+                        onClick = togglePiP,
                         enabled = hasPiPPermission
                     ),
                     trailing = {
                         // TODO: Material3 Switch - right now it has issue that it's stuck on default after first render
                         Switch(
                             checked = isPiPEnabled,
-                            onCheckedChange = { enablePip() },
+                            onCheckedChange = { togglePiP() },
                             enabled = hasPiPPermission,
                             colors = switchColors,
                         )
@@ -122,21 +126,11 @@ fun AppSettings(
                             contentDescription = null
                         )
                     },
-                    modifier = Modifier.settingsItemModifier(
-                        onClick = {
-                            coroutineScope.launch {
-                                dataStore.toggleStepChangeSound()
-                            }
-                        },
-                    ),
+                    modifier = Modifier.settingsItemModifier(onClick = toggleStepChangeSound),
                     trailing = {
                         Switch(
-                            checked = isDingEnabled,
-                            onCheckedChange = {
-                                coroutineScope.launch {
-                                    dataStore.toggleStepChangeSound()
-                                }
-                            },
+                            checked = isStepSoundEnabled,
+                            onCheckedChange = { toggleStepChangeSound() },
                             colors = switchColors,
                         )
                     }
@@ -175,9 +169,19 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    text = {
-                        Text(text = stringResource(id = R.string.settings_bug_item))
-                    },
+                    text = { Text(text = "Add default recipes") },
+                    icon = { Icon(Icons.Rounded.AddCircle, contentDescription = null) },
+                    modifier = Modifier.settingsItemModifier(
+                        onClick = { showDefaultRecipeDialog = true }
+                    ),
+                )
+                if (showDefaultRecipeDialog) {
+                    DefaultRecipesDialog(dismiss = { showDefaultRecipeDialog = false })
+                }
+            }
+            item {
+                ListItem(
+                    text = { Text(text = stringResource(id = R.string.settings_bug_item)) },
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_bug_report),
@@ -193,14 +197,77 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    text = {
-                        Text(text = stringResource(id = R.string.settings_about_item))
-                    },
-                    icon = {
-                        Icon(Icons.Rounded.Info, contentDescription = null)
-                    },
+                    text = { Text(text = stringResource(id = R.string.settings_about_item)) },
+                    icon = { Icon(Icons.Rounded.Info, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(onClick = goToAbout)
                 )
+            }
+        }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterialApi
+fun DefaultRecipesDialog(dismiss: () -> Unit) {
+    val recipesToAdd = remember { mutableStateListOf<Recipe>() }
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val prepopulateData = PrepopulateData(context)
+    val steps = prepopulateData.steps.groupBy { it.recipeId }
+    val db = AppDatabase.getInstance(context)
+    Dialog(
+        onDismissRequest = dismiss
+    ) {
+        Surface(
+            shape = RoundedCornerShape(28.0.dp),
+            color = MaterialTheme.colorScheme.surface,
+            tonalElevation = 6.dp,
+        ) {
+            Column(Modifier.padding(vertical = Spacing.big)) {
+                LazyColumn {
+                    items(prepopulateData.recipes) {
+                        val isSelected = recipesToAdd.contains(it)
+                        val onCheck: () -> Unit = {
+                            if (isSelected) recipesToAdd.remove(it) else recipesToAdd.add(it)
+                        }
+                        ListItem(
+                            text = { Text(it.name) },
+                            modifier = Modifier.selectable(
+                                selected = isSelected,
+                                onClick = onCheck
+                            ),
+                            icon = {
+                                Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
+                            }
+                        )
+                    }
+                }
+                TextButton(
+                    onClick = {
+                        recipesToAdd.forEach {
+                            coroutineScope.launch {
+                                val idOfRecipe = db.recipeDao().insertRecipe(it.copy(id = 0))
+                                val stepsOfTheRecipe =
+                                    steps[prepopulateData.recipes.indexOf(it)] ?: return@launch
+                                db.stepDao().insertAll(
+                                    stepsOfTheRecipe.map {
+                                        it.copy(
+                                            id = 0,
+                                            recipeId = idOfRecipe.toInt()
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                        dismiss()
+                    },
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(horizontal = Spacing.big)
+                ) {
+                    Text(text = stringResource(id = android.R.string.ok))
+                }
             }
         }
     }

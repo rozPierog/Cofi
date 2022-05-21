@@ -7,8 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- New default recipe - AeroPress
+- Ability to add default recipes again - in case you've edit them or want to get new default one without wiping app data
 
 ### Changed
+- Updated more components to Material You
+- New animation when changing between screens 
+- Minor performance improvements
+- Fixed issues with layout in Timer if names are too long
+- Fixed visibility issues in Timer in Dark Mode
+- Timer is now prettier, and less square
 
 ### Removed
 

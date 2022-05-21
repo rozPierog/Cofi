@@ -12,8 +12,8 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    if (keystoreProperties.containsKey('storeFile')) {
-        signingConfigs {
+    signingConfigs {
+        if (keystoreProperties.containsKey('storeFile')) {
             release {
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
@@ -26,7 +26,7 @@ android {
     defaultConfig {
         applicationId "com.omelan.cofi"
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 32
         compileSdkVersion 31
         versionCode 62
         versionName "1.6.0"
@@ -38,6 +38,7 @@ android {
             }
         }
         resConfigs 'en', 'pl', 'it', 'de'
+        manifestPlaceholders = [profileable: false]
 
     }
 
@@ -54,6 +55,15 @@ android {
             debuggable true
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
+        }
+
+        benchmark {
+            signingConfig signingConfigs.debug
+            minifyEnabled true
+            manifestPlaceholders["profileable"] = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            applicationIdSuffix ".benchmark"
+            versionNameSuffix "-benchmark"
         }
     }
 
@@ -134,7 +144,7 @@ dependencies {
     implementation "androidx.compose.foundation:foundation:$compose_version"
     // Material Design
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha10"
+    implementation "androidx.compose.material3:material3:1.0.0-alpha11"
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     // Navigation
@@ -143,9 +153,12 @@ dependencies {
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     // Jetpack Utils
-    implementation 'com.google.accompanist:accompanist-insets:0.23.0'
-    implementation "com.google.accompanist:accompanist-flowlayout:0.23.0"
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.23.0"
+    def accompanist_version = "0.24.8-beta"
+
+    implementation "com.google.accompanist:accompanist-insets:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
 
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"

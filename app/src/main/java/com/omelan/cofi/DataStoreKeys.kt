@@ -4,11 +4,11 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 
 val PIP_ENABLED = booleanPreferencesKey("pip_enabled")
-val DING_ENABLED = booleanPreferencesKey("ding_enabled")
+val STEP_SOUND_ENABLED = booleanPreferencesKey("ding_enabled")
 val COMBINE_WEIGHT = stringPreferencesKey("combine_weight")
 
 const val PIP_DEFAULT_VALUE = true
-const val DING_DEFAULT_VALUE = true
+const val STEP_SOUND_DEFAULT_VALUE = true
 val COMBINE_WEIGHT_DEFAULT_VALUE = CombineWeight.WATER.name
 
 enum class CombineWeight {

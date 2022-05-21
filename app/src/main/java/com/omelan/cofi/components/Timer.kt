@@ -1,30 +1,81 @@
 package com.omelan.cofi.components
 
 import android.annotation.SuppressLint
+import androidx.annotation.FloatRange
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.AnimationVector4D
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.foundation.progressSemantics
 import androidx.compose.material.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
+import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.green600
 import com.omelan.cofi.utils.toStringDuration
+
+@Composable
+fun Track(
+    modifier: Modifier = Modifier,
+    @FloatRange(from = 0.0, to = 1.0) progress: Float,
+    color: Color,
+    backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    strokeWidth: Dp,
+) {
+    val stroke = with(LocalDensity.current) {
+        Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round)
+    }
+    Canvas(
+        modifier
+            .progressSemantics(progress)
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    ) {
+        val startAngle = 270f
+        val sweep = progress * 360f
+        val diameterOffset = stroke.width / 2
+        val arcDimen = size.width - 2 * diameterOffset
+        drawArc(
+            color = backgroundColor,
+            startAngle = startAngle,
+            sweepAngle = 360f,
+            useCenter = false,
+            topLeft = Offset(diameterOffset, diameterOffset),
+            size = Size(arcDimen, arcDimen),
+            style = stroke
+        )
+        drawArc(
+            color = color,
+            startAngle = startAngle,
+            sweepAngle = sweep,
+            useCenter = false,
+            topLeft = Offset(diameterOffset, diameterOffset),
+            size = Size(arcDimen, arcDimen),
+            style = stroke
+        )
+    }
+}
 
 @Composable
 fun Timer(
@@ -46,22 +97,6 @@ fun Timer(
         contentAlignment = Alignment.Center,
         modifier = modifier,
     ) {
-        CircularProgressIndicator(
-            progress = 1f,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f),
-            color = MaterialTheme.colorScheme.surfaceVariant,
-            strokeWidth = strokeWidth
-        )
-        CircularProgressIndicator(
-            progress = if (isDone) 1f else animatedProgressValue.value,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f),
-            color = animatedProgressColor.value,
-            strokeWidth = strokeWidth,
-        )
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
             Column(
                 modifier = Modifier
@@ -120,6 +155,7 @@ fun Timer(
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
+                            .padding(horizontal = if (isInPiP) Spacing.xSmall else Spacing.normal)
                             .testTag("timer_duration")
                     )
                     Divider(
@@ -142,6 +178,7 @@ fun Timer(
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
+                            .padding(horizontal = if (isInPiP) Spacing.xSmall else Spacing.normal)
                             .testTag("timer_name")
                     )
                     currentStep.value?.let {
@@ -157,10 +194,10 @@ fun Timer(
                                 it + alreadyDoneWeight,
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
+                            overflow = TextOverflow.Ellipsis,
                             modifier = Modifier
-                                .align(
-                                    Alignment.CenterHorizontally
-                                )
+                                .align(Alignment.CenterHorizontally)
                                 .testTag("timer_value"),
                             style = if (isInPiP) {
                                 MaterialTheme.typography.titleLarge
@@ -172,6 +209,11 @@ fun Timer(
                 }
             }
         }
+        Track(
+            progress = if (isDone) 1f else animatedProgressValue.value,
+            color = animatedProgressColor.value,
+            strokeWidth = strokeWidth,
+        )
     }
 }
 
