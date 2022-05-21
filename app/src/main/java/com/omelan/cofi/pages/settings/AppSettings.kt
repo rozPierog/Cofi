@@ -1,10 +1,10 @@
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class,
+    ExperimentalMaterial3Api::class
+)
 
 package com.omelan.cofi.pages.settings
 
 import android.icu.text.DateFormat
-import android.net.Uri
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -41,11 +43,11 @@ import org.json.JSONArray
 import java.nio.charset.StandardCharsets
 import java.util.*
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
+    val snackbarState = SnackbarHostState()
     val dataStore = DataStore(context)
     val isStepSoundEnabled by dataStore.getStepChangeSetting()
         .collectAsState(STEP_SOUND_DEFAULT_VALUE)
@@ -87,7 +89,17 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
                 },
                 scrollBehavior = appBarBehavior,
             )
-        }
+        },
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarState,
+                modifier = Modifier.padding(getDefaultPadding())
+            ) {
+                Snackbar(shape = RoundedCornerShape(50)) {
+                    Text(text = it.visuals.message)
+                }
+            }
+        },
     ) {
         LazyColumn(
             modifier = Modifier
@@ -111,7 +123,6 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
                         enabled = hasPiPPermission
                     ),
                     trailing = {
-                        // TODO: Material3 Switch - right now it has issue that it's stuck on default after first render
                         Switch(
                             checked = isPiPEnabled,
                             onCheckedChange = { togglePiP() },
@@ -198,10 +209,30 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
                         onClick = { showBackupDialog = true }
                     ),
                 )
-                if (showBackupDialog) BackupDialog(dismiss = { showBackupDialog = false })
+                if (showBackupDialog) BackupDialog(
+                    dismiss = { showBackupDialog = false },
+                    afterBackup = { numberOfBackedUp ->
+                        coroutineScope.launch {
+                            snackbarState.showSnackbar(
+                                context.resources.getQuantityString(
+                                    R.plurals.settings_snackbar_backup,
+                                    numberOfBackedUp, numberOfBackedUp
+                                )
+                            )
+                        }
+                    })
             }
             item {
-                RestoreListItem()
+                RestoreListItem(afterRestore = { numberOfRestored ->
+                    coroutineScope.launch {
+                        snackbarState.showSnackbar(
+                            context.resources.getQuantityString(
+                                R.plurals.settings_snackbar_restore,
+                                numberOfRestored, numberOfRestored
+                            )
+                        )
+                    }
+                })
             }
             item {
                 ListItem(
@@ -231,7 +262,7 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
 }
 
 @Composable
-fun RestoreListItem() {
+fun RestoreListItem(afterRestore: (numberOfRestored: Int) -> Unit) {
     val context = LocalContext.current
     val db = AppDatabase.getInstance(context)
     val coroutineScope = rememberCoroutineScope()
@@ -255,6 +286,7 @@ fun RestoreListItem() {
                         db.stepDao().insertAll(steps)
                     }
                 }
+                afterRestore(jsonArray.length())
             }
         }
 
@@ -272,9 +304,8 @@ fun RestoreListItem() {
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun BackupDialog(dismiss: () -> Unit) {
+fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Unit) {
     val recipesToBackup = remember { mutableStateListOf<Recipe>() }
     val context = LocalContext.current
     val db = AppDatabase.getInstance(context)
@@ -300,6 +331,7 @@ fun BackupDialog(dismiss: () -> Unit) {
             outputStream.write(jsonArray.toString(2).toByteArray())
             outputStream.close()
         }
+        afterBackup(recipesToBackup.size)
         dismiss()
     }
 
@@ -329,7 +361,6 @@ fun BackupDialog(dismiss: () -> Unit) {
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalMaterialApi
 fun DefaultRecipesDialog(dismiss: () -> Unit) {
     val recipesToAdd = remember { mutableStateListOf<Recipe>() }
@@ -374,7 +405,6 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalMaterialApi
 @Composable
 fun CombineWeightDialog(

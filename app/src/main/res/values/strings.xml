@@ -41,6 +41,14 @@ WARNING: You cannot share recipe this way!"</string>
     <string name="settings_about_title">About</string>
     <string name="settings_licenses_item">Acknowledgments</string>
     <string name="settings_github_item">Github Repository</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Backed up %d recipe</item>
+        <item quantity="other">Backed up %d recipes</item>
+    </plurals>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Restored %d recipe</item>
+        <item quantity="other">Restored %d recipes</item>
+    </plurals>
     <string name="step_add_remove">Remove</string>
     <string name="timer_enjoy">Enjoy your coffee</string>
     <string name="prepopulate_v60_name">Ultimate V60</string>

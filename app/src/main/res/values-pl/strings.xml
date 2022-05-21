@@ -37,6 +37,16 @@ UWAGA: ten link nie służy do dzielenia się przepisem z innymi"</string>
     <string name="settings_combine_weight_all">Sumuj całą wagę</string>
     <string name="settings_combine_weight_water">Sumuj wagę wody</string>
     <string name="settings_combine_weight_none">Nie sumuj wagi</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Zapisano %d przepis</item>
+        <item quantity="few">Zapisano %d przepisy</item>
+        <item quantity="many">Zapisano %d przepisów</item>
+    </plurals>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Przywrócono %d przepis</item>
+        <item quantity="few">Przywrócono %d przepisy</item>
+        <item quantity="many">Przywrócono %d przepisów</item>
+    </plurals>
     <string name="prepopulate_v60_name">V60</string>
     <string name="prepopulate_v60_description">"Przepis od: James Hoffmann
 Źródło: https://youtu.be/AI4ynXzkSQo
