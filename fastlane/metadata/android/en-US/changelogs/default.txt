@@ -1,11 +1,17 @@
 ### Added
-- Missing german translations
-- German store translation
-- Ability to create blocking steps that require user input to progress
+- New default recipe - AeroPress
+- Ability to add default recipes again - in case you've edit them or want to get new default one without wiping app data
+- Added layouts for landscape displays. App is now usable on Tablets
+- Added ability to backup data to JSON and restore recipes from it
 
 ### Changed
-- Fixed keyboard not hiding on step being added (and crash when it happens)
-- Updated underlying dependencies,
+- Updated more components to Material You
+- New animation when changing between screens
+- Minor performance improvements
+- Fixed issues with layout in Timer if names are too long
+- Fixed visibility issues in Timer in Dark Mode
+- Timer is now prettier, and less square
+- App bar now collapses when starting timer
 
 ### Removed
 

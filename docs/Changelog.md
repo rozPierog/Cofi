@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.7.0] - 2022-05-21
+
+### Added
 - New default recipe - AeroPress
 - Ability to add default recipes again - in case you've edit them or want to get new default one without wiping app data
 - Added layouts for landscape displays. App is now usable on Tablets
