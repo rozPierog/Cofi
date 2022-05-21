@@ -12,6 +12,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
@@ -50,7 +51,11 @@ fun LicensesList(goBack: () -> Unit) {
             modifier = Modifier
                 .nestedScroll(appBarBehavior.nestedScrollConnection)
                 .fillMaxSize(),
-            contentPadding = getDefaultPadding(paddingValues = it),
+            contentPadding = getDefaultPadding(
+                paddingValues = it,
+                additionalStartPadding = 0.dp,
+                additionalEndPadding = 0.dp,
+            ),
         ) {
             items(dependencyList) {
                 DependencyItem(dependency = it)

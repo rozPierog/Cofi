@@ -1,4 +1,5 @@
-@file:OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class,
+@file:OptIn(
+    ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class,
     ExperimentalMaterial3Api::class
 )
 
@@ -30,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3Dialog
@@ -105,7 +107,11 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
             modifier = Modifier
                 .nestedScroll(appBarBehavior.nestedScrollConnection)
                 .fillMaxSize(),
-            contentPadding = getDefaultPadding(paddingValues = it)
+            contentPadding = getDefaultPadding(
+                paddingValues = it,
+                additionalStartPadding = 0.dp,
+                additionalEndPadding = 0.dp,
+            )
         ) {
             item {
                 ListItem(

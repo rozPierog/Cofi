@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.omelan.cofi.BuildConfig
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
@@ -27,8 +28,6 @@ import com.omelan.cofi.utils.getDefaultPadding
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
-    val layoutDirection = LocalLayoutDirection.current
-    val navigationBarPadding = WindowInsets.navigationBars.asPaddingValues()
     val uriHandler = LocalUriHandler.current
     val appBarBehavior = createAppBarBehavior()
     Scaffold(
@@ -54,7 +53,11 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             modifier = Modifier
                 .nestedScroll(appBarBehavior.nestedScrollConnection)
                 .fillMaxSize(),
-            contentPadding = getDefaultPadding(paddingValues = it),
+            contentPadding = getDefaultPadding(
+                paddingValues = it,
+                additionalStartPadding = 0.dp,
+                additionalEndPadding = 0.dp,
+            ),
         ) {
             item {
                 ListItem(
