@@ -6,9 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.omelan.cofi.R
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.json.JSONArray
 import org.json.JSONObject
 
 // val dummySteps = listOf(
@@ -100,7 +97,7 @@ data class Recipe(
 private const val jsonName = "name"
 private const val jsonDescription = "description"
 private const val jsonRecipeIcon = "recipeIcon"
-const val jsonSteps= "steps"
+const val jsonSteps = "steps"
 
 fun Recipe.serialize(steps: List<Step>? = null): JSONObject = JSONObject().run {
     put(jsonName, name)
@@ -115,7 +112,6 @@ fun JSONObject.toRecipe() =
         description = getString(jsonDescription),
         recipeIcon = RecipeIconTypeConverter().stringToRecipeIcon(getString(jsonRecipeIcon))
     )
-
 
 @Dao
 interface RecipeDao {

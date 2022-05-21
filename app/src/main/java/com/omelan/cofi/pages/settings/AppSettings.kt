@@ -226,7 +226,8 @@ fun AppSettings(goBack: () -> Unit, goToAbout: () -> Unit) {
                                 )
                             )
                         }
-                    })
+                    }
+                )
             }
             item {
                 RestoreListItem(afterRestore = { numberOfRestored ->
@@ -346,7 +347,7 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
         val format: DateFormat =
             DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())
         val formattedDate: String = format.format(c)
-        launcher.launch("cofi_backup_${formattedDate}.json")
+        launcher.launch("cofi_backup_$formattedDate.json")
     }) {
         LazyColumn(Modifier.weight(1f, true)) {
             items(recipes) {
@@ -439,7 +440,6 @@ fun CombineWeightDialog(
         }
     }
 }
-
 
 @ExperimentalMaterial3Api
 @ExperimentalMaterialApi

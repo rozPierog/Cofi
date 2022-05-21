@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.omelan.cofi.ui.Spacing
-import kotlinx.coroutines.launch
 
 @Composable
 fun Material3Dialog(
@@ -29,7 +28,7 @@ fun Material3Dialog(
 ) {
     Dialog(onDismissRequest = onDismissRequest, properties = properties) {
         Surface(
-            modifier= modifier,
+            modifier = modifier,
             shape = RoundedCornerShape(28.0.dp),
             color = MaterialTheme.colorScheme.surface,
             tonalElevation = 6.dp,
