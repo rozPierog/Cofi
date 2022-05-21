@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+
 package com.omelan.cofi.pages
 
 import android.media.MediaPlayer
@@ -7,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +21,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -25,21 +31,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.accompanist.insets.*
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.*
 import com.omelan.cofi.ui.Spacing
+import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.Haptics
+import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,48 +63,57 @@ fun RecipeDetails(
     onTimerRunning: (Boolean) -> Unit = {},
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
+    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(
+        DpSize(1920.dp, 1080.dp)
+    ),
 ) {
-    val isDarkMode = isSystemInDarkTheme()
     var currentStep by remember { mutableStateOf<Step?>(null) }
     var isDone by remember { mutableStateOf(false) }
+    var isTimerRunning by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
+
     val steps by stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
     val recipe by recipeViewModel.getRecipe(recipeId)
         .observeAsState(Recipe(name = "", description = ""))
     val indexOfCurrentStep = steps.indexOf(currentStep)
     val indexOfLastStep = steps.lastIndex
+
+    val coroutineScope = rememberCoroutineScope()
     val animatedProgressValue = remember { Animatable(0f) }
+    val isDarkMode = isSystemInDarkTheme()
     val animatedProgressColor =
         remember { Animatable(if (isDarkMode) Color.LightGray else Color.DarkGray) }
     val clipboardManager = LocalClipboardManager.current
     val snackbarState = SnackbarHostState()
-    val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
     val lazyListState = rememberLazyListState()
-    val dataStore = DataStore(LocalContext.current)
+    val appBarBehavior = createAppBarBehavior()
 
+    val dataStore = DataStore(LocalContext.current)
     val isDingEnabled by dataStore.getStepChangeSetting()
         .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
 
     val alreadyDoneWeight = remember(combineWeightState, currentStep) {
-        val doneSteps = if (indexOfCurrentStep == -1) {
-            listOf()
-        } else {
-            steps.subList(0, indexOfCurrentStep)
-        }
-        return@remember when (combineWeightState) {
-            CombineWeight.ALL.name -> doneSteps.sumOf { it.value ?: 0 }
-            CombineWeight.WATER.name -> doneSteps.sumOf {
-                if (it.type === StepType.WATER) {
-                    it.value ?: 0
-                } else {
-                    0
-                }
+        derivedStateOf {
+            val doneSteps = if (indexOfCurrentStep == -1) {
+                listOf()
+            } else {
+                steps.subList(0, indexOfCurrentStep)
             }
-            CombineWeight.NONE.name -> 0
-            else -> 0
+            when (combineWeightState) {
+                CombineWeight.ALL.name -> doneSteps.sumOf { it.value ?: 0 }
+                CombineWeight.WATER.name -> doneSteps.sumOf {
+                    if (it.type === StepType.WATER) {
+                        it.value ?: 0
+                    } else {
+                        0
+                    }
+                }
+                CombineWeight.NONE.name -> 0
+                else -> 0
+            }
         }
     }
 
@@ -108,7 +127,7 @@ fun RecipeDetails(
     suspend fun pauseAnimations() {
         animatedProgressColor.stop()
         animatedProgressValue.stop()
-        onTimerRunning(false)
+        isTimerRunning = false
     }
 
     val context = LocalContext.current
@@ -120,7 +139,7 @@ fun RecipeDetails(
             currentStep = steps[indexOfCurrentStep + 1]
         } else {
             currentStep = null
-            onTimerRunning(false)
+            isTimerRunning = false
             isDone = true
             onRecipeEnd(recipe)
         }
@@ -133,7 +152,7 @@ fun RecipeDetails(
     suspend fun progressAnimation() {
         val safeCurrentStep = currentStep ?: return
         isDone = false
-        onTimerRunning(true)
+        isTimerRunning = true
         val currentStepTime = safeCurrentStep.time
         if (currentStepTime == null) {
             animatedProgressValue.snapTo(1f)
@@ -168,17 +187,75 @@ fun RecipeDetails(
     LaunchedEffect(currentStep) {
         progressAnimation()
     }
-    val appBarBehavior = createAppBarBehavior()
+    LaunchedEffect(isTimerRunning) {
+        onTimerRunning(isTimerRunning)
+    }
+
+    suspend fun startRecipe() = coroutineScope.launch {
+        launch {
+            animate(
+                initialValue = appBarBehavior.offset,
+                targetValue = appBarBehavior.offsetLimit,
+                block = { value, _ ->
+                    appBarBehavior.offset = value
+                }
+            )
+        }
+        launch {
+            lazyListState.animateScrollToItem(
+                if (recipe.description.isNotBlank()) 1 else 0
+            )
+        }
+        launch {
+            changeToNextStep(silent = true)
+        }
+    }
+
+    val configuration = LocalConfiguration.current
+
+    val isPhoneLayout by remember(
+        windowSizeClass.widthSizeClass,
+        configuration.screenHeightDp,
+        configuration.screenWidthDp
+    ) {
+        derivedStateOf {
+            windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
+                (configuration.screenHeightDp > configuration.screenWidthDp)
+        }
+    }
+
+    val renderDescription: @Composable () -> Unit = {
+        Description(
+            modifier = Modifier.fillMaxWidth(), descriptionText = recipe.description
+        )
+        Spacer(modifier = Modifier.height(Spacing.big))
+    }
+    val renderTimer: @Composable (Modifier) -> Unit = {
+        Timer(
+            modifier = it,
+            currentStep = currentStep,
+            animatedProgressValue = animatedProgressValue,
+            animatedProgressColor = animatedProgressColor,
+            isInPiP = isInPiP,
+            alreadyDoneWeight = alreadyDoneWeight.value,
+            isDone = isDone,
+        )
+        if (!isInPiP) {
+            Spacer(modifier = Modifier.height(Spacing.big))
+        }
+    }
+    val getCurrentStepProgress: (Int) -> StepProgress = { index ->
+        when {
+            index < indexOfCurrentStep -> StepProgress.Done
+            indexOfCurrentStep == index -> StepProgress.Current
+            else -> StepProgress.Upcoming
+        }
+    }
     Scaffold(
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarState,
-                modifier = Modifier.padding(Spacing.medium)
-            ) {
-                Snackbar(
-                    shape = RoundedCornerShape(50)
-                ) {
+            SnackbarHost(hostState = snackbarState, modifier = Modifier.padding(Spacing.medium)) {
+                Snackbar(shape = RoundedCornerShape(50)) {
                     Text(text = it.visuals.message)
                 }
             }
@@ -193,9 +270,7 @@ fun RecipeDetails(
                             modifier = Modifier.padding(end = Spacing.small)
                         )
                         Text(
-                            text = recipe.name,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            text = recipe.name, maxLines = 1, overflow = TextOverflow.Ellipsis
                         )
                     }
                 },
@@ -207,8 +282,7 @@ fun RecipeDetails(
                 actions = {
                     IconButton(onClick = { showAutomateLinkDialog = true }) {
                         Icon(
-                            painterResource(id = R.drawable.ic_link),
-                            contentDescription = null
+                            painterResource(id = R.drawable.ic_link), contentDescription = null
                         )
                     }
                     IconButton(onClick = goToEdit) {
@@ -221,12 +295,12 @@ fun RecipeDetails(
         floatingActionButton = {
             if (!isInPiP) {
                 StartFAB(
-                    isAnimationRunning = animatedProgressValue.isRunning,
-                    onClick = if (currentStep != null) {
-                        if (animatedProgressValue.isRunning) {
-                            { coroutineScope.launch { pauseAnimations() } }
-                        } else {
-                            {
+                    isTimerRunning = isTimerRunning,
+                    onClick = {
+                        if (currentStep != null) {
+                            if (animatedProgressValue.isRunning) {
+                                coroutineScope.launch { pauseAnimations() }
+                            } else {
                                 coroutineScope.launch {
                                     if (currentStep?.time == null) {
                                         changeToNextStep()
@@ -235,91 +309,121 @@ fun RecipeDetails(
                                     }
                                 }
                             }
+                            return@StartFAB
                         }
-                    } else {
-                        {
-                            coroutineScope.launch {
-                                lazyListState.animateScrollToItem(
-                                    if (recipe.description.isNotBlank()) 1 else 0
-                                )
-                                changeToNextStep(silent = true)
-                            }
-                        }
+                        coroutineScope.launch { startRecipe() }
                     },
                 )
             }
         },
-        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButtonPosition = if (isPhoneLayout) FabPosition.Center else FabPosition.End,
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-            state = lazyListState,
-            contentPadding = if (isInPiP) {
-                PaddingValues(0.dp)
-            } else {
-                rememberInsetsPaddingValues(
-                    insets = LocalWindowInsets.current.navigationBars,
-                    additionalStart = Spacing.big,
-                    additionalTop = Spacing.big + it.calculateTopPadding(),
-                    additionalEnd = Spacing.big,
-                    additionalBottom = 112.0.dp,
-                )
-            },
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            if (!isInPiP && recipe.description.isNotBlank()) {
-                item {
-                    Description(
-                        modifier = Modifier.fillMaxWidth(),
-                        descriptionText = recipe.description
-                    )
+        if (isPhoneLayout) {
+            PhoneLayout(
+                it,
+                renderDescription,
+                renderTimer,
+                steps,
+                isInPiP,
+                getCurrentStepProgress,
+                lazyListState
+            )
+        } else {
+            TabletLayout(it, renderDescription, renderTimer, steps, isInPiP, getCurrentStepProgress)
+        }
+    }
+
+    if (showAutomateLinkDialog) {
+        DirectLinkDialog(dismiss = { showAutomateLinkDialog = false }, onConfirm = {
+            copyAutomateLink()
+            showAutomateLinkDialog = false
+        })
+    }
+}
+
+@Composable
+fun TabletLayout(
+    paddingValues: PaddingValues,
+    description: (@Composable () -> Unit)? = null,
+    timer: @Composable (Modifier) -> Unit,
+    steps: List<Step>,
+    isInPiP: Boolean,
+    getCurrentStepProgress: (Int) -> StepProgress,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(
+                if (isInPiP) {
+                    PaddingValues(0.dp)
+                } else {
+                    getDefaultPadding(paddingValues)
                 }
-            }
-            if (!isInPiP) {
-                item {
-                    Spacer(modifier = Modifier.height(Spacing.big))
-                }
-            }
-            item {
-                Timer(
-                    currentStep = currentStep,
-                    animatedProgressValue = animatedProgressValue,
-                    animatedProgressColor = animatedProgressColor,
-                    isInPiP = isInPiP,
-                    alreadyDoneWeight = alreadyDoneWeight,
-                    isDone = isDone,
-                )
-            }
-            item {
-                if (!isInPiP) {
-                    Spacer(modifier = Modifier.height(Spacing.big))
-                }
-            }
-            if (!isInPiP) {
-                itemsIndexed(
-                    items = steps,
-                    key = { _, step -> step.id }
-                ) { index, step ->
-                    val stepProgress = when {
-                        index < indexOfCurrentStep -> StepProgress.Done
-                        indexOfCurrentStep == index -> StepProgress.Current
-                        else -> StepProgress.Upcoming
+            ),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        timer(
+            Modifier
+                .fillMaxWidth(0.5f)
+                .align(Alignment.CenterVertically)
+        )
+        if (!isInPiP) {
+            LazyColumn(
+                modifier = Modifier.padding(Spacing.normal),
+                contentPadding = PaddingValues(bottom = Spacing.bigFab, top = Spacing.big)
+            ) {
+                if ((description != null)) {
+                    item {
+                        description()
                     }
-                    StepListItem(step = step, stepProgress = stepProgress)
-                    Divider(color = Color(0xFFE8EAF6))
+                }
+                itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
+                    StepListItem(
+                        step = step,
+                        stepProgress = getCurrentStepProgress(index)
+                    )
+                    Divider(color = MaterialTheme.colorScheme.surfaceVariant)
                 }
             }
         }
-        if (showAutomateLinkDialog) {
-            DirectLinkDialog(
-                dismiss = { showAutomateLinkDialog = false },
-                onConfirm = {
-                    copyAutomateLink()
-                    showAutomateLinkDialog = false
-                }
-            )
+    }
+}
+
+@Composable
+fun PhoneLayout(
+    paddingValues: PaddingValues,
+    description: (@Composable () -> Unit)? = null,
+    timer: @Composable (Modifier) -> Unit,
+    steps: List<Step>,
+    isInPiP: Boolean,
+    getCurrentStepProgress: (Int) -> StepProgress,
+    lazyListState: LazyListState,
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentPadding = if (isInPiP) {
+            PaddingValues(0.dp)
+        } else {
+            getDefaultPadding(paddingValues = paddingValues, FabType.Big)
+        },
+        state = lazyListState,
+    ) {
+        if (!isInPiP && (description != null)) {
+            item {
+                description()
+            }
+        }
+        item {
+            timer(Modifier)
+        }
+        if (!isInPiP) {
+            itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
+                StepListItem(step = step, stepProgress = getCurrentStepProgress(index))
+                Divider(color = MaterialTheme.colorScheme.surfaceVariant)
+            }
         }
     }
 }
@@ -340,8 +444,7 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
         },
         icon = {
             Icon(
-                painter = painterResource(id = R.drawable.ic_link),
-                contentDescription = null
+                painter = painterResource(id = R.drawable.ic_link), contentDescription = null
             )
         },
         title = {
@@ -354,18 +457,21 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
 }
 
 @Composable
-fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
-    val fabShape by animateDpAsState(
-        targetValue = if (isAnimationRunning) 28.0.dp else 100.dp,
-        animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
-    )
+fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
+    val animatedFabRadii = remember { Animatable(100f) }
+    LaunchedEffect(key1 = isTimerRunning) {
+        animatedFabRadii.animateTo(
+            if (isTimerRunning) 28.0f else 100f,
+            tween(if (isTimerRunning) 300 else 500)
+        )
+    }
     LargeFloatingActionButton(
-        shape = RoundedCornerShape(fabShape),
+        shape = RoundedCornerShape(animatedFabRadii.value.dp),
         onClick = onClick,
-        modifier = Modifier.navigationBarsPadding(),
+        modifier = Modifier.navigationBarsPadding().testTag("recipe_start"),
     ) {
         Icon(
-            painter = if (isAnimationRunning) {
+            painter = if (isTimerRunning) {
                 painterResource(id = R.drawable.ic_pause)
             } else {
                 painterResource(id = R.drawable.ic_play_arrow)
@@ -380,11 +486,21 @@ fun StartFAB(isAnimationRunning: Boolean, onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun RecipeDetailsPreview() {
-    RecipeDetails(recipeId = 1, isInPiP = false)
+    RecipeDetails(
+        recipeId = 1, isInPiP = false,
+        windowSizeClass = WindowSizeClass.calculateFromSize(
+            DpSize(1920.dp, 1080.dp)
+        )
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun RecipeDetailsPreviewPip() {
-    RecipeDetails(recipeId = 1, isInPiP = true)
+    RecipeDetails(
+        recipeId = 1, isInPiP = true,
+        windowSizeClass = WindowSizeClass.calculateFromSize(
+            DpSize(1920.dp, 1080.dp)
+        )
+    )
 }

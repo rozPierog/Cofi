@@ -1,11 +1,11 @@
 package com.omelan.cofi.components
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Animatable
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
 import com.omelan.cofi.ui.CofiTheme
@@ -15,13 +15,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@OptIn(ExperimentalAnimatedInsets::class)
 @ExperimentalAnimationApi
 @RunWith(JUnit4::class)
 class TimerTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    @SuppressLint("UnrememberedAnimatable")
     @Test
     fun testOnWait() {
         val step = Step(name = "Test", time = 5000, type = StepType.WAIT, orderInRecipe = 0)
@@ -40,6 +40,7 @@ class TimerTest {
         composeTestRule.onNodeWithTag("timer_duration").assertExists()
     }
 
+    @SuppressLint("UnrememberedAnimatable")
     @Test
     fun testOnCoffee() {
         val step = Step(
@@ -64,6 +65,7 @@ class TimerTest {
         composeTestRule.onNodeWithTag("timer_duration").assertExists()
     }
 
+    @SuppressLint("UnrememberedAnimatable")
     @Test
     fun testOnNull() {
         composeTestRule.setContent {

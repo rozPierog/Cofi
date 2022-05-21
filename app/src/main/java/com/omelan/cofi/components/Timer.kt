@@ -49,8 +49,8 @@ fun Track(
     Canvas(
         modifier
             .progressSemantics(progress)
-            .fillMaxWidth()
             .aspectRatio(1f)
+
     ) {
         val startAngle = 270f
         val sweep = progress * 360f
@@ -128,7 +128,12 @@ fun Timer(
             Column(
                 modifier = Modifier
                     .padding(strokeWidth)
-                    .animateContentSize()
+                    .aspectRatio(1f)
+                    .align(Alignment.Center)
+                    .fillMaxSize()
+                    .animateContentSize(),
+                Arrangement.Center,
+                Alignment.CenterHorizontally
             ) {
                 if (currentStep != null) {
                     val durationInString = if (currentStep.time == null) {

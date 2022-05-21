@@ -10,7 +10,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.kieronquinn.monetcompat.core.MonetCompat
 import com.kieronquinn.monetcompat.extensions.toArgb
 
@@ -126,7 +125,5 @@ fun CofiTheme(
             if (isDarkMode) darkColorScheme() else lightColorScheme()
         }
     }
-    MaterialTheme(colorScheme = colors) {
-        ProvideWindowInsets(windowInsetsAnimationsEnabled = false, content = content)
-    }
+    MaterialTheme(colorScheme = colors, content = content)
 }

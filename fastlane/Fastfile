@@ -119,6 +119,10 @@ platform :android do
     UI.important "⚠️ Remember to upload instant app bundle to Play Console! ⚠️"
   end
 
+  lane :create_screenshots do
+      `cd .. && ./bin/createScreenshots`
+  end
+
   desc "Perform deploy for all"
   lane :deploy do
     bump_type = UI.select "How to bump version:", %w{major minor patch}
@@ -126,11 +130,12 @@ platform :android do
       text: "is this a prerelease: ",
       boolean: true
     )
-    # test
+    test
+    create_screenshots
     licenses
     bump_version(bump_type: bump_type)
     prepare_changelog
-    git_commit(path: ["./*.gradle"], message: "Version bump")
+    git_commit(path: ["./*.gradle"], message: "Prepare for release")
     push_to_git_remote
     deploy_gps(prerelease: prerelease)
     deploy_github(prerelease: prerelease)

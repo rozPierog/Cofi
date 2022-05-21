@@ -1,6 +1,6 @@
 package com.omelan.cofi.pages.settings.licenses
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -12,11 +12,11 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
+import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
+import com.omelan.cofi.utils.getDefaultPadding
 import com.omelan.cofi.utils.parseJsonToDependencyList
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,9 +51,10 @@ fun LicensesList(goBack: () -> Unit) {
             modifier = Modifier
                 .nestedScroll(appBarBehavior.nestedScrollConnection)
                 .fillMaxSize(),
-            contentPadding = rememberInsetsPaddingValues(
-                insets = LocalWindowInsets.current.navigationBars,
-                additionalTop = it.calculateTopPadding()
+            contentPadding = getDefaultPadding(
+                paddingValues = it,
+                additionalStartPadding = 0.dp,
+                additionalEndPadding = 0.dp,
             ),
         ) {
             items(dependencyList) {

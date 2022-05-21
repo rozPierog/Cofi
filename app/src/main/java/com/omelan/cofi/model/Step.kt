@@ -1,6 +1,8 @@
 package com.omelan.cofi.model
 
 import android.app.Application
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.annotation.WorkerThread
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.AndroidViewModel
@@ -8,65 +10,40 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.omelan.cofi.R
 import com.omelan.cofi.ui.*
+import org.json.JSONArray
+import org.json.JSONObject
 
-enum class StepType {
-    ADD_COFFEE {
-        override val color: Color
-            get() = brown500
+enum class StepType(
+    val color: Color,
+    val colorNight: Color,
+    @StringRes val stringRes: Int,
+    @DrawableRes val iconRes: Int
+) {
+    ADD_COFFEE(
+        color = brown500,
+        colorNight = brown300,
+        stringRes = R.string.step_type_add_coffee,
+        iconRes = R.drawable.ic_coffee,
+    ),
+    WATER(
+        color = blue600,
+        colorNight = blue600,
+        stringRes = R.string.step_type_water,
+        iconRes = R.drawable.ic_water_plus,
+    ),
+    WAIT(
+        color = green600,
+        colorNight = green600,
+        stringRes = R.string.step_type_wait,
+        iconRes = R.drawable.ic_progress_clock,
+    ),
+    OTHER(
+        color = greyBlue900,
+        colorNight = grey300,
+        stringRes = R.string.step_type_other,
+        iconRes = R.drawable.ic_playlist_edit
+    );
 
-        override val colorNight: Color
-            get() = brown300
-
-        override val stringRes: Int
-            get() = R.string.step_type_add_coffee
-
-        override val iconRes: Int
-            get() = R.drawable.ic_coffee
-    },
-    WATER {
-        override val color: Color
-            get() = blue600
-
-        override val colorNight: Color
-            get() = blue600
-
-        override val stringRes: Int
-            get() = R.string.step_type_water
-
-        override val iconRes: Int
-            get() = R.drawable.ic_water_plus
-    },
-    WAIT {
-        override val color: Color
-            get() = green600
-
-        override val colorNight: Color
-            get() = green600
-
-        override val stringRes: Int
-            get() = R.string.step_type_wait
-
-        override val iconRes: Int
-            get() = R.drawable.ic_progress_clock
-    },
-    OTHER {
-        override val color: Color
-            get() = greyBlue900
-
-        override val colorNight: Color
-            get() = grey300
-
-        override val stringRes: Int
-            get() = R.string.step_type_other
-
-        override val iconRes: Int
-            get() = R.drawable.ic_playlist_edit
-    };
-
-    abstract val color: Color
-    abstract val colorNight: Color
-    abstract val stringRes: Int
-    abstract val iconRes: Int
     fun isNotWaitStepType(): Boolean = this != WAIT
 }
 
@@ -92,18 +69,61 @@ class StepTypeConverter {
 data class Step(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "recipe_id") val recipeId: Int = 0,
+    @ColumnInfo(name = "order_in_recipe") val orderInRecipe: Int?,
     val name: String,
     val time: Int?,
     val type: StepType,
-    @ColumnInfo(name = "order_in_recipe") val orderInRecipe: Int?,
     val value: Int? = null
 )
+
+private const val jsonName = "name"
+private const val jsonTime = "time"
+private const val jsonType = "type"
+private const val jsonOrderInRecipe = "orderInRecipe"
+private const val jsonValue = "value"
+
+fun Step.serialize(): JSONObject = JSONObject().let {
+    it.put(jsonName, name)
+    it.put(jsonTime, time)
+    it.put(jsonValue, value)
+    it.put(jsonOrderInRecipe, orderInRecipe)
+    it.put(jsonType, type.name)
+    it
+}
+
+fun List<Step>.serialize() = JSONArray().let {
+    forEach { step -> it.put(step.serialize()) }
+    it
+}
+
+fun JSONObject.getIntOrNull(key: String) = try {
+    getInt(key)
+} catch (e: Exception) {
+    null
+}
+
+fun JSONObject.toStep(recipeId: Long = 0) = Step(
+    name = getString(jsonName),
+    recipeId = recipeId.toInt(),
+    time = getIntOrNull(jsonTime),
+    value = getIntOrNull(jsonValue),
+    orderInRecipe = getInt(jsonOrderInRecipe),
+    type = StepTypeConverter().stringToStepType(getString(jsonType))
+)
+
+fun JSONArray.toSteps(recipeId: Long = 0): List<Step> {
+    var steps = listOf<Step>()
+    for (i in 0 until length()) {
+        steps = steps.plus(getJSONObject(i).toStep(recipeId))
+    }
+    return steps
+}
 
 @Dao
 interface StepDao {
     @WorkerThread
     @Query("SELECT * FROM step")
-    suspend fun getAll(): List<Step>
+    fun getAll(): LiveData<List<Step>>
 
     @WorkerThread
     @Query("SELECT * FROM step WHERE recipe_id IS :recipeId ORDER BY order_in_recipe ASC")

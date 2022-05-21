@@ -12,6 +12,9 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -56,6 +59,7 @@ const val appDeepLinkUrl = "https://rozpierog.github.io"
 
 const val tweenDuration = 200
 
+@ExperimentalMaterial3WindowSizeClassApi
 @OptIn(ExperimentalAnimationApi::class)
 class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
@@ -74,7 +78,7 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-    private fun onTimerRunning(isRunning: Boolean) {
+    private val onTimerRunning: (Boolean) -> Unit = { isRunning ->
         mainActivityViewModel.setCanGoToPiP(isRunning)
         val isPiPEnabledFlow: Flow<Boolean> = DataStore(this).getPiPSetting()
         lifecycleScope.launch(Dispatchers.IO) {
@@ -117,6 +121,7 @@ class MainActivity : MonetCompatActivity() {
         navController: NavController,
         backStackEntry: NavBackStackEntry,
         goBack: () -> Unit,
+        windowSizeClass: WindowSizeClass,
         db: AppDatabase
     ) {
         val recipeId = backStackEntry.arguments?.getInt("recipeId")
@@ -138,7 +143,8 @@ class MainActivity : MonetCompatActivity() {
                     route = "edit/$recipeId",
                 )
             },
-            onTimerRunning = { onTimerRunning(it) },
+            onTimerRunning = onTimerRunning,
+            windowSizeClass = windowSizeClass,
         )
     }
 
@@ -176,7 +182,7 @@ class MainActivity : MonetCompatActivity() {
                         newRecipe.copy(
                             id = 0,
                             name = applicationContext.resources.getString(
-                                R.string.recpie_clone_suffix,
+                                R.string.recipe_clone_suffix,
                                 recipe.name
                             )
                         )
@@ -221,6 +227,7 @@ class MainActivity : MonetCompatActivity() {
         )
     }
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     @Composable
     fun MainNavigation() {
         val navController = rememberAnimatedNavController()
@@ -230,6 +237,7 @@ class MainActivity : MonetCompatActivity() {
             navController.popBackStack()
         }
         val systemUiController = rememberSystemUiController()
+        val windowSizeClass = calculateWindowSizeClass(this)
 
         CofiTheme(monet) {
             val darkIcons = MaterialTheme.colorScheme.background.luminance() > 0.5
@@ -284,7 +292,13 @@ class MainActivity : MonetCompatActivity() {
                             }
                         ),
                     ) { backStackEntry ->
-                        MainRecipeDetails(navController, backStackEntry, goBack, db)
+                        MainRecipeDetails(
+                            navController,
+                            backStackEntry,
+                            goBack,
+                            windowSizeClass,
+                            db,
+                        )
                     }
                     composable(
                         "edit/{recipeId}",
@@ -325,7 +339,9 @@ class MainActivity : MonetCompatActivity() {
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration
     ) {
-        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        }
         mainActivityViewModel.setIsInPiP(isInPictureInPictureMode)
     }
 
