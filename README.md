@@ -27,12 +27,13 @@
 </p>
 
 # Screenshots
-<p align="center">
-  <img src="docs/assets/cofi_showcase.gif" width="20%">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" width="20%">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" width="20%">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" width="20%">
-</p>
+<table>
+<tr>
+    <td><img src="docs/assets/cofi_showcase.gif" ></td>
+	<td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" ></td>
+	<td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" ></td>
+	<td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png"></td>
+</table>
 
 # [Changelog](docs/Changelog.md)
 
