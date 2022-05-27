@@ -8,10 +8,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -286,6 +283,25 @@ fun RecipeDetails(
             else -> StepProgress.Upcoming
         }
     }
+    val renderSteps: LazyListScope.() -> Unit = {
+        itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
+            StepListItem(
+                step = step,
+                stepProgress = getCurrentStepProgress(index),
+                onClick = {newStep: Step ->
+                    coroutineScope.launch {
+                        if (newStep == currentStep) {
+                            return@launch
+                        }
+                        animatedProgressValue.snapTo(0f)
+                        currentStep = newStep
+                    }
+                }
+            )
+            Divider(color = MaterialTheme.colorScheme.surfaceVariant)
+        }
+    }
+
     Scaffold(
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         snackbarHost = {
@@ -358,13 +374,12 @@ fun RecipeDetails(
                 it,
                 renderDescription,
                 renderTimer,
-                steps,
+                renderSteps,
                 isInPiP,
-                getCurrentStepProgress,
                 lazyListState
             )
         } else {
-            TabletLayout(it, renderDescription, renderTimer, steps, isInPiP, getCurrentStepProgress)
+            TabletLayout(it, renderDescription, renderTimer, renderSteps, isInPiP)
         }
     }
 
@@ -381,9 +396,8 @@ fun TabletLayout(
     paddingValues: PaddingValues,
     description: (@Composable () -> Unit)? = null,
     timer: @Composable (Modifier) -> Unit,
-    steps: List<Step>,
+    steps: LazyListScope.() -> Unit,
     isInPiP: Boolean,
-    getCurrentStepProgress: (Int) -> StepProgress,
 ) {
     Row(
         modifier = Modifier
@@ -413,13 +427,7 @@ fun TabletLayout(
                         description()
                     }
                 }
-                itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
-                    StepListItem(
-                        step = step,
-                        stepProgress = getCurrentStepProgress(index)
-                    )
-                    Divider(color = MaterialTheme.colorScheme.surfaceVariant)
-                }
+                steps()
             }
         }
     }
@@ -430,9 +438,8 @@ fun PhoneLayout(
     paddingValues: PaddingValues,
     description: (@Composable () -> Unit)? = null,
     timer: @Composable (Modifier) -> Unit,
-    steps: List<Step>,
+    steps: LazyListScope.() -> Unit,
     isInPiP: Boolean,
-    getCurrentStepProgress: (Int) -> StepProgress,
     lazyListState: LazyListState,
 ) {
     LazyColumn(
@@ -454,12 +461,7 @@ fun PhoneLayout(
         item {
             timer(Modifier)
         }
-        if (!isInPiP) {
-            itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
-                StepListItem(step = step, stepProgress = getCurrentStepProgress(index))
-                Divider(color = MaterialTheme.colorScheme.surfaceVariant)
-            }
-        }
+        steps()
     }
 }
 
