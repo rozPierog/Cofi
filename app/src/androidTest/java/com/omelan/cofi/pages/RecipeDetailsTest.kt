@@ -26,6 +26,23 @@ class RecipeDetailsTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    val testRecipe = Recipe(
+        id = 0,
+        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas nisi vel est malesuada, in tincidunt ligula lacinia. Maecenas sed sem non nisl commodo ullamcorper. Donec euismod volutpat magna, nec dapibus augue rutrum et. Cras ligula erat, tempus quis nibh vel, sagittis gravida leo. Mauris quis leo erat. Aliquam tincidunt sagittis tempor. Sed id finibus urna. Praesent at nulla aliquet, molestie magna at, mattis tortor. Aenean eleifend justo ipsum, sed convallis lectus viverra at. ",
+        name = "Test Recipe",
+        recipeIcon = RecipeIcon.Aeropress,
+        lastFinished = 0L
+    )
+
+    val testStep = Step(
+            id = 0,
+            name = "Step without time",
+            time = null,
+            recipeId = 0,
+            orderInRecipe = 0,
+            type = StepType.OTHER
+        )
+
     @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     @Test
@@ -37,23 +54,8 @@ class RecipeDetailsTest {
                 ) {
                     RecipeDetails(
                         isInPiP = false,
-                        recipe = Recipe(
-                            id = 0,
-                            description = "",
-                            name = "Test Recipe",
-                            recipeIcon = RecipeIcon.Aeropress,
-                            lastFinished = 0L
-                        ),
-                        steps = listOf(
-                            Step(
-                                id = 0,
-                                name = "Step without time",
-                                time = null,
-                                recipeId = 0,
-                                orderInRecipe = 0,
-                                type = StepType.OTHER
-                            )
-                        )
+                        recipe = testRecipe.copy(description = ""),
+                        steps = listOf(testStep),
                     )
                 }
             }
@@ -72,23 +74,8 @@ class RecipeDetailsTest {
                 ) {
                     RecipeDetails(
                         isInPiP = false,
-                        recipe = Recipe(
-                            id = 0,
-                            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas nisi vel est malesuada, in tincidunt ligula lacinia. Maecenas sed sem non nisl commodo ullamcorper. Donec euismod volutpat magna, nec dapibus augue rutrum et. Cras ligula erat, tempus quis nibh vel, sagittis gravida leo. Mauris quis leo erat. Aliquam tincidunt sagittis tempor. Sed id finibus urna. Praesent at nulla aliquet, molestie magna at, mattis tortor. Aenean eleifend justo ipsum, sed convallis lectus viverra at. ",
-                            name = "Test Recipe",
-                            recipeIcon = RecipeIcon.Aeropress,
-                            lastFinished = 0L
-                        ),
-                        steps = listOf(
-                            Step(
-                                id = 0,
-                                name = "Step without time",
-                                time = null,
-                                recipeId = 0,
-                                orderInRecipe = 0,
-                                type = StepType.OTHER
-                            )
-                        )
+                        recipe = testRecipe,
+                        steps = listOf(testStep)
                     )
                 }
             }
@@ -107,23 +94,8 @@ class RecipeDetailsTest {
                 ) {
                     RecipeDetails(
                         isInPiP = false,
-                        recipe = Recipe(
-                            id = 0,
-                            description = "",
-                            name = "Test Recipe",
-                            recipeIcon = RecipeIcon.Aeropress,
-                            lastFinished = 0L
-                        ),
-                        steps = listOf(
-                            Step(
-                                id = 0,
-                                name = "Step with time",
-                                time = 10000,
-                                recipeId = 0,
-                                orderInRecipe = 0,
-                                type = StepType.OTHER
-                            )
-                        )
+                        recipe = testRecipe,
+                        steps = listOf(testStep.copy(name = "Step with time", time = 10000))
                     )
                 }
             }
@@ -150,23 +122,8 @@ class RecipeDetailsTest {
                 ) {
                     RecipeDetails(
                         isInPiP = false,
-                        recipe = Recipe(
-                            id = 0,
-                            description = "",
-                            name = "Test Recipe",
-                            recipeIcon = RecipeIcon.Aeropress,
-                            lastFinished = 0L
-                        ),
-                        steps = listOf(
-                            Step(
-                                id = 0,
-                                name = "Step without time",
-                                time = null,
-                                recipeId = 0,
-                                orderInRecipe = 0,
-                                type = StepType.OTHER
-                            )
-                        )
+                        recipe = testRecipe,
+                        steps = listOf(testStep)
                     )
                 }
             }
@@ -194,23 +151,8 @@ class RecipeDetailsTest {
                 ) {
                     RecipeDetails(
                         isInPiP = isInPip.value,
-                        recipe = Recipe(
-                            id = 0,
-                            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-                            name = "Test Recipe",
-                            recipeIcon = RecipeIcon.Aeropress,
-                            lastFinished = 0L
-                        ),
-                        steps = listOf(
-                            Step(
-                                id = 0,
-                                name = "Step without time",
-                                time = null,
-                                recipeId = 0,
-                                orderInRecipe = 0,
-                                type = StepType.OTHER
-                            )
-                        )
+                        recipe = testRecipe,
+                        steps = listOf(testStep)
                     )
                 }
             }
