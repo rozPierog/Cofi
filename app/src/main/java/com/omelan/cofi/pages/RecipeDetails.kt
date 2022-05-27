@@ -264,7 +264,7 @@ fun RecipeDetails(
     }
     val renderTimer: @Composable (Modifier) -> Unit = {
         Timer(
-            modifier = it,
+            modifier = it.testTag("recipe_timer"),
             currentStep = currentStep,
             animatedProgressValue = animatedProgressValue,
             animatedProgressColor = animatedProgressColor,
@@ -286,6 +286,7 @@ fun RecipeDetails(
     val renderSteps: LazyListScope.() -> Unit = {
         itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
             StepListItem(
+                modifier = Modifier.testTag("recipe_step"),
                 step = step,
                 stepProgress = getCurrentStepProgress(index),
                 onClick = {newStep: Step ->
@@ -461,7 +462,9 @@ fun PhoneLayout(
         item {
             timer(Modifier)
         }
-        steps()
+        if (!isInPiP) {
+            steps()
+        }
     }
 }
 

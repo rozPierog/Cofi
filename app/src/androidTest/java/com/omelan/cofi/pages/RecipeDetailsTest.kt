@@ -3,6 +3,8 @@ package com.omelan.cofi.pages
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -178,5 +180,54 @@ class RecipeDetailsTest {
         composeTestRule.onNodeWithTag("recipe_start")
             .assertIsToggleable()
             .assertIsOff()
+    }
+
+    @ExperimentalMaterialApi
+    @ExperimentalComposeUiApi
+    @Test
+    fun pipTest() {
+        val isInPip = mutableStateOf(false)
+        composeTestRule.setContent {
+            CofiTheme {
+                CompositionLocalProvider(
+                    LocalPiPState provides false,
+                ) {
+                    RecipeDetails(
+                        isInPiP = isInPip.value,
+                        recipe = Recipe(
+                            id = 0,
+                            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                            name = "Test Recipe",
+                            recipeIcon = RecipeIcon.Aeropress,
+                            lastFinished = 0L
+                        ),
+                        steps = listOf(
+                            Step(
+                                id = 0,
+                                name = "Step without time",
+                                time = null,
+                                recipeId = 0,
+                                orderInRecipe = 0,
+                                type = StepType.OTHER
+                            )
+                        )
+                    )
+                }
+            }
+        }
+        composeTestRule.onNodeWithTag("recipe_timer").assertExists()
+        composeTestRule.onNodeWithTag("recipe_description").assertExists()
+        composeTestRule.onNodeWithTag("recipe_step").assertExists()
+        composeTestRule.onNodeWithTag("recipe_start")
+            .assertIsToggleable()
+            .assertIsOff()
+            .performClick()
+        isInPip.value = true
+        composeTestRule.mainClock.autoAdvance = false
+        composeTestRule.mainClock.advanceTimeBy(100)
+        composeTestRule.onNodeWithTag("recipe_timer").assertExists()
+        composeTestRule.onNodeWithTag("recipe_description").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_step").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_start").assertDoesNotExist()
     }
 }
