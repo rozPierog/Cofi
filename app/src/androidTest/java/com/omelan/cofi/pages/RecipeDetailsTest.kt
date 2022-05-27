@@ -4,7 +4,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -26,22 +25,28 @@ class RecipeDetailsTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    val testRecipe = Recipe(
+    private val testRecipe = Recipe(
         id = 0,
-        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas nisi vel est malesuada, in tincidunt ligula lacinia. Maecenas sed sem non nisl commodo ullamcorper. Donec euismod volutpat magna, nec dapibus augue rutrum et. Cras ligula erat, tempus quis nibh vel, sagittis gravida leo. Mauris quis leo erat. Aliquam tincidunt sagittis tempor. Sed id finibus urna. Praesent at nulla aliquet, molestie magna at, mattis tortor. Aenean eleifend justo ipsum, sed convallis lectus viverra at. ",
+        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas nisi " +
+                "vel est malesuada, in tincidunt ligula lacinia. Maecenas sed sem non nisl " +
+                "commodo ullamcorper. Donec euismod volutpat magna, nec dapibus augue rutrum et. " +
+                "Cras ligula erat, tempus quis nibh vel, sagittis gravida leo. Mauris quis " +
+                "leo erat. Aliquam tincidunt sagittis tempor. Sed id finibus urna. Praesent " +
+                "at nulla aliquet, molestie magna at, mattis tortor. Aenean eleifend justo ipsum," +
+                " sed convallis lectus viverra at. ",
         name = "Test Recipe",
         recipeIcon = RecipeIcon.Aeropress,
         lastFinished = 0L
     )
 
-    val testStep = Step(
-            id = 0,
-            name = "Step without time",
-            time = null,
-            recipeId = 0,
-            orderInRecipe = 0,
-            type = StepType.OTHER
-        )
+    private val testStep = Step(
+        id = 0,
+        name = "Step without time",
+        time = null,
+        recipeId = 0,
+        orderInRecipe = 0,
+        type = StepType.OTHER
+    )
 
     @ExperimentalMaterialApi
     @ExperimentalComposeUiApi

@@ -247,7 +247,7 @@ fun RecipeDetails(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -289,7 +289,7 @@ fun RecipeDetails(
                 modifier = Modifier.testTag("recipe_step"),
                 step = step,
                 stepProgress = getCurrentStepProgress(index),
-                onClick = {newStep: Step ->
+                onClick = { newStep: Step ->
                     coroutineScope.launch {
                         if (newStep == currentStep) {
                             return@launch

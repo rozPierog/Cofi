@@ -7,7 +7,6 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.progressSemantics
 import androidx.compose.material.Divider
@@ -217,7 +216,6 @@ fun Timer(
                             },
                         )
                     }
-
                 }
             }
         }
@@ -237,7 +235,7 @@ fun TimerPreview() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,
@@ -257,7 +255,7 @@ fun TimerPreviewPiP() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.WATER,
             value = 300,
