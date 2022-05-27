@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.7.1] - 2022-05-27
+
+### Added
 - Ability to change current step by tapping on the name of the step
 
 ### Changed

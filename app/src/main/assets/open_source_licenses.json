@@ -971,11 +971,11 @@
   {
     "project": "androidx.customview:poolingcontainer",
     "description": "Utilities for listening to the lifecycle of containers that manage their child Views\u0027 lifecycle, such as RecyclerView",
-    "version": "1.0.0-beta01",
+    "version": "1.0.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/customview#1.0.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/customview#1.0.0-beta02",
     "year": "2021",
     "licenses": [
       {
@@ -983,16 +983,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.customview:customview-poolingcontainer:1.0.0-beta01"
+    "dependency": "androidx.customview:customview-poolingcontainer:1.0.0-beta02"
   },
   {
     "project": "androidx.profileinstaller:profileinstaller",
     "description": "Allows libraries to prepopulate ahead of time compilation traces to be read by ART",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/profileinstaller#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/profileinstaller#1.2.0-beta02",
     "year": "2021",
     "licenses": [
       {
@@ -1000,7 +1000,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.profileinstaller:profileinstaller:1.2.0-beta01"
+    "dependency": "androidx.profileinstaller:profileinstaller:1.2.0-beta02"
   },
   {
     "project": "Collections Kotlin Extensions",
@@ -1056,11 +1056,11 @@
   {
     "project": "Compose Foundation",
     "description": "Higher level abstractions of the Compose UI primitives. This library is design system agnostic, providing the high-level building blocks for both application and design-system developers",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.2.0-beta02",
     "year": "2018",
     "licenses": [
       {
@@ -1068,16 +1068,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.foundation:foundation:1.2.0-beta01"
+    "dependency": "androidx.compose.foundation:foundation:1.2.0-beta02"
   },
   {
     "project": "Compose Geometry",
     "description": "Compose classes related to dimensions without units",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta02",
     "year": "2020",
     "licenses": [
       {
@@ -1085,16 +1085,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-geometry:1.2.0-beta01"
+    "dependency": "androidx.compose.ui:ui-geometry:1.2.0-beta02"
   },
   {
     "project": "Compose Graphics",
     "description": "Compose graphics",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta02",
     "year": "2020",
     "licenses": [
       {
@@ -1102,16 +1102,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-graphics:1.2.0-beta01"
+    "dependency": "androidx.compose.ui:ui-graphics:1.2.0-beta02"
   },
   {
     "project": "Compose Layouts",
     "description": "Compose layout implementations",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.2.0-beta02",
     "year": "2019",
     "licenses": [
       {
@@ -1119,16 +1119,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.foundation:foundation-layout:1.2.0-beta01"
+    "dependency": "androidx.compose.foundation:foundation-layout:1.2.0-beta02"
   },
   {
     "project": "Compose LiveData integration",
     "description": "Compose integration with LiveData",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.2.0-beta02",
     "year": "2020",
     "licenses": [
       {
@@ -1136,16 +1136,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.runtime:runtime-livedata:1.2.0-beta01"
+    "dependency": "androidx.compose.runtime:runtime-livedata:1.2.0-beta02"
   },
   {
     "project": "Compose Material 3 Window Size Class",
     "description": "Provides window size classes for building responsive UIs",
-    "version": "1.0.0-alpha11",
+    "version": "1.0.0-alpha12",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material3#1.0.0-alpha11",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material3#1.0.0-alpha12",
     "year": "2022",
     "licenses": [
       {
@@ -1153,16 +1153,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.material3:material3-window-size-class:1.0.0-alpha11"
+    "dependency": "androidx.compose.material3:material3-window-size-class:1.0.0-alpha12"
   },
   {
     "project": "Compose Material Components",
     "description": "Compose Material Design Components library",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.2.0-beta02",
     "year": "2018",
     "licenses": [
       {
@@ -1170,16 +1170,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.material:material:1.2.0-beta01"
+    "dependency": "androidx.compose.material:material:1.2.0-beta02"
   },
   {
     "project": "Compose Material Icons Core",
     "description": "Compose Material Design core icons. This module contains the most commonly used set of Material icons.",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.2.0-beta02",
     "year": "2020",
     "licenses": [
       {
@@ -1187,16 +1187,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.material:material-icons-core:1.2.0-beta01"
+    "dependency": "androidx.compose.material:material-icons-core:1.2.0-beta02"
   },
   {
     "project": "Compose Material Ripple",
     "description": "Material ripple used to build interactive components",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.2.0-beta02",
     "year": "2020",
     "licenses": [
       {
@@ -1204,16 +1204,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.material:material-ripple:1.2.0-beta01"
+    "dependency": "androidx.compose.material:material-ripple:1.2.0-beta02"
   },
   {
     "project": "Compose Material3 Components",
     "description": "Compose Material You Design Components library",
-    "version": "1.0.0-alpha11",
+    "version": "1.0.0-alpha12",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material3#1.0.0-alpha11",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material3#1.0.0-alpha12",
     "year": "2021",
     "licenses": [
       {
@@ -1221,7 +1221,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.material3:material3:1.0.0-alpha11"
+    "dependency": "androidx.compose.material3:material3:1.0.0-alpha12"
   },
   {
     "project": "Compose Navigation",
@@ -1243,11 +1243,11 @@
   {
     "project": "Compose Runtime",
     "description": "Tree composition support for code generated by the Compose compiler plugin and corresponding public API",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.2.0-beta02",
     "year": "2019",
     "licenses": [
       {
@@ -1255,7 +1255,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.runtime:runtime:1.2.0-beta01"
+    "dependency": "androidx.compose.runtime:runtime:1.2.0-beta02"
   },
   {
     "project": "Compose Saveable",
@@ -1277,11 +1277,11 @@
   {
     "project": "Compose Tooling API",
     "description": "Compose tooling library API. This library provides the API required to declare @Preview composables in user apps.",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta02",
     "year": "2021",
     "licenses": [
       {
@@ -1289,16 +1289,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-tooling-preview:1.2.0-beta01"
+    "dependency": "androidx.compose.ui:ui-tooling-preview:1.2.0-beta02"
   },
   {
     "project": "Compose UI primitives",
     "description": "Compose UI primitives. This library contains the primitives that form the Compose UI Toolkit, such as drawing, measurement and layout.",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta02",
     "year": "2019",
     "licenses": [
       {
@@ -1306,16 +1306,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui:1.2.0-beta01"
+    "dependency": "androidx.compose.ui:ui:1.2.0-beta02"
   },
   {
     "project": "Compose UI Text",
     "description": "Compose Text primitives and utilities",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta02",
     "year": "2019",
     "licenses": [
       {
@@ -1323,16 +1323,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-text:1.2.0-beta01"
+    "dependency": "androidx.compose.ui:ui-text:1.2.0-beta02"
   },
   {
     "project": "Compose Unit",
     "description": "Compose classes for simple units",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta02",
     "year": "2020",
     "licenses": [
       {
@@ -1340,16 +1340,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-unit:1.2.0-beta01"
+    "dependency": "androidx.compose.ui:ui-unit:1.2.0-beta02"
   },
   {
     "project": "Compose Util",
     "description": "Internal Compose utilities used by other modules",
-    "version": "1.2.0-beta01",
+    "version": "1.2.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.2.0-beta02",
     "year": "2020",
     "licenses": [
       {
@@ -1357,7 +1357,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-util:1.2.0-beta01"
+    "dependency": "androidx.compose.ui:ui-util:1.2.0-beta02"
   },
   {
     "project": "Core Kotlin Extensions",
