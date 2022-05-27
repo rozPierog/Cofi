@@ -185,6 +185,7 @@ fun RecipeDetails(
         val currentStepTime = safeCurrentStep.time
         if (currentStepTime == null) {
             animatedProgressValue.snapTo(1f)
+            isTimerRunning = false
             return
         }
         val duration = (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
