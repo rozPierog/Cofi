@@ -144,8 +144,8 @@ dependencies {
     implementation "androidx.compose.foundation:foundation:$compose_version"
     // Material Design
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha11"
-    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha11"
+    implementation "androidx.compose.material3:material3:1.0.0-alpha12"
+    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha12"
 
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
