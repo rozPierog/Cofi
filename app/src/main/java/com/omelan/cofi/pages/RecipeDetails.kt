@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class)
 
 package com.omelan.cofi.pages
 
@@ -8,10 +8,8 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -52,7 +50,6 @@ import com.omelan.cofi.utils.Haptics
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeDetails(
     recipeId: Int,
@@ -67,14 +64,43 @@ fun RecipeDetails(
         DpSize(1920.dp, 1080.dp)
     ),
 ) {
+    val steps by stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
+    val recipe by recipeViewModel.getRecipe(recipeId)
+        .observeAsState(Recipe(name = "", description = ""))
+    RecipeDetails(
+        recipe,
+        steps,
+        isInPiP,
+        onRecipeEnd,
+        goToEdit,
+        goBack,
+        onTimerRunning,
+        windowSizeClass
+    )
+}
+
+@Composable
+fun RecipeDetails(
+    recipe: Recipe,
+    steps: List<Step>,
+    isInPiP: Boolean = LocalPiPState.current,
+    onRecipeEnd: (Recipe) -> Unit = {},
+    goToEdit: () -> Unit = {},
+    goBack: () -> Unit = {},
+    onTimerRunning: (Boolean) -> Unit = {},
+    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(
+        DpSize(1920.dp, 1080.dp)
+    ),
+) {
+    val recipeId by remember {
+        derivedStateOf { recipe.id }
+    }
+
     var currentStep by remember { mutableStateOf<Step?>(null) }
     var isDone by remember { mutableStateOf(false) }
     var isTimerRunning by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
 
-    val steps by stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
-    val recipe by recipeViewModel.getRecipe(recipeId)
-        .observeAsState(Recipe(name = "", description = ""))
     val indexOfCurrentStep = steps.indexOf(currentStep)
     val indexOfLastStep = steps.lastIndex
 
@@ -156,6 +182,7 @@ fun RecipeDetails(
         val currentStepTime = safeCurrentStep.time
         if (currentStepTime == null) {
             animatedProgressValue.snapTo(1f)
+            isTimerRunning = false
             return
         }
         val duration = (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
@@ -224,15 +251,20 @@ fun RecipeDetails(
         }
     }
 
-    val renderDescription: @Composable () -> Unit = {
-        Description(
-            modifier = Modifier.fillMaxWidth(), descriptionText = recipe.description
-        )
-        Spacer(modifier = Modifier.height(Spacing.big))
+    val renderDescription: @Composable (() -> Unit)? = if (recipe.description.isBlank()) null else {
+        {
+            Description(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("recipe_description"),
+                descriptionText = recipe.description
+            )
+            Spacer(modifier = Modifier.height(Spacing.big))
+        }
     }
     val renderTimer: @Composable (Modifier) -> Unit = {
         Timer(
-            modifier = it,
+            modifier = it.testTag("recipe_timer"),
             currentStep = currentStep,
             animatedProgressValue = animatedProgressValue,
             animatedProgressColor = animatedProgressColor,
@@ -251,6 +283,26 @@ fun RecipeDetails(
             else -> StepProgress.Upcoming
         }
     }
+    val renderSteps: LazyListScope.() -> Unit = {
+        itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
+            StepListItem(
+                modifier = Modifier.testTag("recipe_step"),
+                step = step,
+                stepProgress = getCurrentStepProgress(index),
+                onClick = { newStep: Step ->
+                    coroutineScope.launch {
+                        if (newStep == currentStep) {
+                            return@launch
+                        }
+                        animatedProgressValue.snapTo(0f)
+                        currentStep = newStep
+                    }
+                }
+            )
+            Divider(color = MaterialTheme.colorScheme.surfaceVariant)
+        }
+    }
+
     Scaffold(
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         snackbarHost = {
@@ -323,13 +375,12 @@ fun RecipeDetails(
                 it,
                 renderDescription,
                 renderTimer,
-                steps,
+                renderSteps,
                 isInPiP,
-                getCurrentStepProgress,
                 lazyListState
             )
         } else {
-            TabletLayout(it, renderDescription, renderTimer, steps, isInPiP, getCurrentStepProgress)
+            TabletLayout(it, renderDescription, renderTimer, renderSteps, isInPiP)
         }
     }
 
@@ -346,9 +397,8 @@ fun TabletLayout(
     paddingValues: PaddingValues,
     description: (@Composable () -> Unit)? = null,
     timer: @Composable (Modifier) -> Unit,
-    steps: List<Step>,
+    steps: LazyListScope.() -> Unit,
     isInPiP: Boolean,
-    getCurrentStepProgress: (Int) -> StepProgress,
 ) {
     Row(
         modifier = Modifier
@@ -378,13 +428,7 @@ fun TabletLayout(
                         description()
                     }
                 }
-                itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
-                    StepListItem(
-                        step = step,
-                        stepProgress = getCurrentStepProgress(index)
-                    )
-                    Divider(color = MaterialTheme.colorScheme.surfaceVariant)
-                }
+                steps()
             }
         }
     }
@@ -395,9 +439,8 @@ fun PhoneLayout(
     paddingValues: PaddingValues,
     description: (@Composable () -> Unit)? = null,
     timer: @Composable (Modifier) -> Unit,
-    steps: List<Step>,
+    steps: LazyListScope.() -> Unit,
     isInPiP: Boolean,
-    getCurrentStepProgress: (Int) -> StepProgress,
     lazyListState: LazyListState,
 ) {
     LazyColumn(
@@ -420,10 +463,7 @@ fun PhoneLayout(
             timer(Modifier)
         }
         if (!isInPiP) {
-            itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
-                StepListItem(step = step, stepProgress = getCurrentStepProgress(index))
-                Divider(color = MaterialTheme.colorScheme.surfaceVariant)
-            }
+            steps()
         }
     }
 }
@@ -468,7 +508,10 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
     LargeFloatingActionButton(
         shape = RoundedCornerShape(animatedFabRadii.value.dp),
         onClick = onClick,
-        modifier = Modifier.navigationBarsPadding().testTag("recipe_start"),
+        modifier = Modifier
+            .navigationBarsPadding()
+            .testTag("recipe_start")
+            .toggleable(isTimerRunning) {},
     ) {
         Icon(
             painter = if (isTimerRunning) {

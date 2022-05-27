@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Ability to change current step by tapping on the name of the step
 
 ### Changed
+- New animations of the text during step change
+- Fixed issue with empty description showing up
+- Fixed issue with steps with no time not changing FAB to the "play" icon
 
 ### Removed
 

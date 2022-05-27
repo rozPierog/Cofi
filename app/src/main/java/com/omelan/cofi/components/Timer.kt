@@ -182,13 +182,17 @@ fun Timer(
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
+                            .align(Alignment.CenterHorizontally).animateContentSize()
                             .padding(horizontal = if (isInPiP) Spacing.xSmall else Spacing.normal)
                             .testTag("timer_name")
                     )
-                    currentStep.value?.let {
+                    AnimatedVisibility(
+                        visible = currentStep.value != null,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    ) {
+                        val currentStepValue = currentStep.value ?: 0
                         val currentValueFromProgress =
-                            (currentStep.value * animatedProgressValue.value).toInt()
+                            (currentStepValue * animatedProgressValue.value).toInt()
                         Divider(
                             color = MaterialTheme.colorScheme.onSurface,
                         )
@@ -196,13 +200,14 @@ fun Timer(
                             text = stringResource(
                                 id = R.string.timer_progress_weight,
                                 currentValueFromProgress + alreadyDoneWeight,
-                                it + alreadyDoneWeight,
+                                currentStepValue + alreadyDoneWeight,
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
                             maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                             overflow = TextOverflow.Ellipsis,
+                            textAlign = TextAlign.Center,
                             modifier = Modifier
-                                .align(Alignment.CenterHorizontally)
+                                .fillMaxWidth()
                                 .testTag("timer_value"),
                             style = if (isInPiP) {
                                 MaterialTheme.typography.titleLarge
