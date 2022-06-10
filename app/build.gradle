@@ -103,7 +103,17 @@ android {
     }
     packagingOptions {
         resources {
-            excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/notice.txt', 'META-INF/ASL2.0', 'META-INF/AL2.0', 'META-INF/LGPL2.1', 'META-INF/*.kotlin_module']
+            excludes += ['META-INF/DEPENDENCIES',
+                         'META-INF/LICENSE',
+                         'META-INF/LICENSE.txt',
+                         'META-INF/license.txt',
+                         'META-INF/NOTICE',
+                         'META-INF/NOTICE.txt',
+                         'META-INF/notice.txt',
+                         'META-INF/ASL2.0',
+                         'META-INF/AL2.0',
+                         'META-INF/LGPL2.1',
+                         'META-INF/*.kotlin_module']
         }
     }
 
@@ -130,11 +140,15 @@ configurations {
 }
 
 dependencies {
-    ktlint "com.pinterest:ktlint:0.43.2"
+    ktlint("com.pinterest:ktlint:0.45.2") {
+        attributes {
+            attribute(Bundling.BUNDLING_ATTRIBUTE, getObjects().named(Bundling, Bundling.EXTERNAL))
+        }
+    }
 
     instantImplementation('com.google.android.gms:play-services-instantapps:18.0.1')
 
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation "androidx.compose.ui:ui:$compose_version"
     // Tooling support (Previews, etc.)
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
@@ -144,8 +158,8 @@ dependencies {
     implementation "androidx.compose.foundation:foundation:$compose_version"
     // Material Design
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha12"
-    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha12"
+    implementation "androidx.compose.material3:material3:1.0.0-alpha13"
+    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha13"
 
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
@@ -155,7 +169,7 @@ dependencies {
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     // Jetpack Utils
-    def accompanist_version = "0.24.8-beta"
+    def accompanist_version = "0.24.10-beta"
 
     implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
@@ -180,19 +194,14 @@ dependencies {
 task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
     classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
+    mainClass.set("com.pinterest.ktlint.Main")
     args "src/**/*.kt"
-    // to generate report in checkstyle format prepend following args:
-    // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
-    // to add a baseline to check against prepend following args:
-    // "--baseline=ktlint-baseline.xml"
-    // see https://github.com/pinterest/ktlint#usage for more
 }
 check.dependsOn ktlint
 
 task ktlintFormat(type: JavaExec, group: "formatting") {
     description = "Fix Kotlin code style deviations."
     classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
+    mainClass.set("com.pinterest.ktlint.Main")
     args "-F", "src/**/*.kt"
 }
