@@ -60,9 +60,7 @@ fun RecipeDetails(
     onTimerRunning: (Boolean) -> Unit = {},
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
-    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(
-        DpSize(1920.dp, 1080.dp)
-    ),
+    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
 ) {
     val steps by stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
     val recipe by recipeViewModel.getRecipe(recipeId)
@@ -88,11 +86,9 @@ fun RecipeDetails(
     goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
     onTimerRunning: (Boolean) -> Unit = {},
-    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(
-        DpSize(1920.dp, 1080.dp)
-    ),
+    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
 ) {
-    val recipeId by remember {
+    val recipeId by remember(recipe) {
         derivedStateOf { recipe.id }
     }
 
@@ -361,14 +357,7 @@ fun RecipeDetails(
         floatingActionButtonPosition = if (isPhoneLayout) FabPosition.Center else FabPosition.End,
     ) {
         if (isPhoneLayout) {
-            PhoneLayout(
-                it,
-                renderDescription,
-                renderTimer,
-                renderSteps,
-                isInPiP,
-                lazyListState
-            )
+            PhoneLayout(it, renderDescription, renderTimer, renderSteps, isInPiP, lazyListState)
         } else {
             TabletLayout(it, renderDescription, renderTimer, renderSteps, isInPiP)
         }
