@@ -237,7 +237,7 @@ fun RecipeDetails(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
         }
     }
 
