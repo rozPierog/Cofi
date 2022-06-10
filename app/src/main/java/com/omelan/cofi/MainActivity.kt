@@ -1,8 +1,10 @@
 package com.omelan.cofi
 
+import android.app.PendingIntent
 import android.app.PictureInPictureParams
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Rational
@@ -21,6 +23,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
+import androidx.core.app.TaskStackBuilder
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
+import androidx.core.net.toUri
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -127,6 +134,27 @@ class MainActivity : MonetCompatActivity() {
             onRecipeEnd = { recipe ->
                 lifecycleScope.launch {
                     db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
+                    val deepLinkIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        "$appDeepLinkUrl/recipe/$recipeId".toUri(),
+                        this@MainActivity,
+                        MainActivity::class.java
+                    )
+                    val shortcut =
+                        ShortcutInfoCompat.Builder(this@MainActivity, recipeId.toString())
+                            .setShortLabel(recipe.name)
+                            .setLongLabel(recipe.name)
+                            .setIcon(
+                                IconCompat.createWithResource(
+                                    this@MainActivity,
+                                    recipe.recipeIcon.icon
+                                )
+                            )
+                            .setIntent(deepLinkIntent)
+                            .build()
+
+                    ShortcutManagerCompat.pushDynamicShortcut(this@MainActivity, shortcut)
+
                 }
             },
             goBack = {
@@ -257,19 +285,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                            slideIntoContainer(
-                                AnimatedContentScope.SlideDirection.End,
-                                animationSpec = tween(tweenDuration),
-                                initialOffset = { fullWidth -> -fullWidth / 5 }
-                            )
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.End,
+                                    animationSpec = tween(tweenDuration),
+                                    initialOffset = { fullWidth -> -fullWidth / 5 }
+                                )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                            slideOutOfContainer(
-                                AnimatedContentScope.SlideDirection.Start,
-                                animationSpec = tween(tweenDuration),
-                                targetOffset = { fullWidth -> fullWidth / 5 }
-                            )
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Start,
+                                    animationSpec = tween(tweenDuration),
+                                    targetOffset = { fullWidth -> fullWidth / 5 }
+                                )
                     },
                 ) {
 //                    composable("list_color") {
