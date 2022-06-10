@@ -26,8 +26,8 @@ android {
     defaultConfig {
         applicationId "com.omelan.cofi"
         minSdkVersion 24
-        targetSdkVersion 32
-        compileSdkVersion 31
+        targetSdkVersion 33
+        compileSdkVersion 33
         versionCode 66
         versionName "1.7.1"
 
