@@ -16,30 +16,32 @@
             tools:node="remove" />
 
     <application
+            android:name=".CofiApp"
             android:allowBackup="true"
             android:fullBackupOnly="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:name=".CofiApp"
+            android:localeConfig="@xml/locales_config"
             android:supportsRtl="true"
             android:theme="@style/Theme.Cofi">
-        <profileable android:shell="${profileable}" android:enabled="${profileable}"
+        <profileable
+                android:enabled="${profileable}"
+                android:shell="${profileable}"
                 tools:targetApi="q" />
         <activity
                 android:name=".MainActivity"
                 android:configChanges="keyboard|keyboardHidden|screenSize|smallestScreenSize|screenLayout|orientation|uiMode"
+                android:exported="true"
                 android:launchMode="singleInstance"
                 android:supportsPictureInPicture="true"
                 android:theme="@style/Theme.Cofi"
-                android:windowSoftInputMode="adjustResize"
-                android:exported="true">
+                android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter
-                    android:autoVerify="true">
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -56,6 +58,7 @@
                         android:pathPrefix="/"
                         android:scheme="http" />
             </intent-filter>
+
             <meta-data
                     android:name="default-url"
                     android:value="https://rozpierog.github.io/cofi" />
