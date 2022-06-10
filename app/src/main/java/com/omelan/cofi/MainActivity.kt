@@ -1,6 +1,7 @@
 package com.omelan.cofi
 
 import android.app.PictureInPictureParams
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -15,11 +16,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
@@ -119,13 +117,11 @@ class MainActivity : MonetCompatActivity() {
     @Composable
     fun MainRecipeDetails(
         navController: NavController,
-        backStackEntry: NavBackStackEntry,
+        recipeId: Int,
         goBack: () -> Unit,
         windowSizeClass: WindowSizeClass,
         db: AppDatabase
     ) {
-        val recipeId = backStackEntry.arguments?.getInt("recipeId")
-            ?: throw IllegalStateException("No Recipe ID")
         RecipeDetails(
             recipeId = recipeId,
             onRecipeEnd = { recipe ->
@@ -238,7 +234,10 @@ class MainActivity : MonetCompatActivity() {
         }
         val systemUiController = rememberSystemUiController()
         val windowSizeClass = calculateWindowSizeClass(this)
-
+        val intent by mainActivityViewModel.intent.observeAsState()
+        LaunchedEffect(intent) {
+            navController.handleDeepLink(intent)
+        }
         CofiTheme(monet) {
             val darkIcons = MaterialTheme.colorScheme.background.luminance() > 0.5
             systemUiController.setStatusBarColor(
@@ -292,13 +291,9 @@ class MainActivity : MonetCompatActivity() {
                             }
                         ),
                     ) { backStackEntry ->
-                        MainRecipeDetails(
-                            navController,
-                            backStackEntry,
-                            goBack,
-                            windowSizeClass,
-                            db,
-                        )
+                        val recipeId = backStackEntry.arguments?.getInt("recipeId")
+                            ?: throw IllegalStateException("No Recipe ID")
+                        MainRecipeDetails(navController, recipeId, goBack, windowSizeClass, db)
                     }
                     composable(
                         "edit/{recipeId}",
@@ -332,6 +327,13 @@ class MainActivity : MonetCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    override fun onNewIntent(newIntent: Intent?) {
+        super.onNewIntent(intent)
+        if (newIntent != null) {
+            mainActivityViewModel.setIntent(newIntent)
         }
     }
 
