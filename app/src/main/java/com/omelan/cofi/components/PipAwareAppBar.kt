@@ -1,11 +1,13 @@
 package com.omelan.cofi.components
 
+import androidx.compose.animation.core.animate
 import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
@@ -16,16 +18,56 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createAppBarBehavior(): TopAppBarScrollBehavior {
+fun createAppBarBehavior(
+    topBarState: TopAppBarScrollState = rememberTopAppBarScrollState()
+): TopAppBarScrollBehavior {
     val decayAnimationSpec = rememberSplineBasedDecay<Float>()
-
     val scrollBehavior = remember(decayAnimationSpec) {
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec)
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec, topBarState)
+    }
+    val coroutineScope = rememberCoroutineScope()
+    val animateCollapse = {
+        coroutineScope.launch {
+            animate(
+                initialValue = topBarState.offset,
+                targetValue = topBarState.offsetLimit,
+                block = { value, _ ->
+                    topBarState.offset = value
+                }
+            )
+        }
     }
     return scrollBehavior
+}
+
+data class AppBarBehaviorWithCollapse(
+    val behavior: TopAppBarScrollBehavior,
+    val collapse: () -> Job
+)
+
+@Composable
+fun createAppBarBehaviorWithCollapse(): AppBarBehaviorWithCollapse {
+    val topBarState = rememberTopAppBarScrollState()
+    val scrollBehavior = createAppBarBehavior(topBarState)
+    val coroutineScope = rememberCoroutineScope()
+
+    val animateCollapse = {
+        coroutineScope.launch {
+            animate(
+                initialValue = topBarState.offset,
+                targetValue = topBarState.offsetLimit,
+                block = { value, _ ->
+                    topBarState.offset = value
+                }
+            )
+        }
+    }
+    return AppBarBehaviorWithCollapse(scrollBehavior, animateCollapse)
 }
 
 @Composable

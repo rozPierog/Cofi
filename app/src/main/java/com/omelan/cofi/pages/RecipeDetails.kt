@@ -113,7 +113,7 @@ fun RecipeDetails(
     val snackbarState = SnackbarHostState()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
     val lazyListState = rememberLazyListState()
-    val appBarBehavior = createAppBarBehavior()
+    val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
 
     val dataStore = DataStore(LocalContext.current)
     val isDingEnabled by dataStore.getStepChangeSetting()
@@ -219,19 +219,9 @@ fun RecipeDetails(
     }
 
     suspend fun startRecipe() = coroutineScope.launch {
+        collapse()
         launch {
-            animate(
-                initialValue = appBarBehavior.offset,
-                targetValue = appBarBehavior.offsetLimit,
-                block = { value, _ ->
-                    appBarBehavior.offset = value
-                }
-            )
-        }
-        launch {
-            lazyListState.animateScrollToItem(
-                if (recipe.description.isNotBlank()) 1 else 0
-            )
+            lazyListState.animateScrollToItem(if (recipe.description.isNotBlank()) 1 else 0)
         }
         launch {
             changeToNextStep(silent = true)
