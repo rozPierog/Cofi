@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added app shortcuts to last recipes
 
 ### Changed
+- Fixed deeplinks only working when app is dead
+- Fixed layout on foldable phones (like Z Fold)
+- Target Android T, with language selection in app settings
 
 ### Removed
 
@@ -36,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Updated more components to Material You
-- New animation when changing between screens 
+- New animation when changing between screens
 - Minor performance improvements
 - Fixed issues with layout in Timer if names are too long
 - Fixed visibility issues in Timer in Dark Mode
@@ -80,7 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
-## [1.4.0 (1.8.0 via error)] - 2022-01-30 
+## [1.4.0 (1.8.0 via error)] - 2022-01-30
 
 ### Added
 - Proper changelog
