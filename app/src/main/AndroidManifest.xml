@@ -3,13 +3,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         package="com.omelan.cofi">
 
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.SENDTO" />
-            <data android:scheme="mailto" />
-        </intent>
-    </queries>
-
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission
             android:name="android.permission.ACCESS_NETWORK_STATE"
@@ -58,11 +51,9 @@
                         android:pathPrefix="/"
                         android:scheme="http" />
             </intent-filter>
-
             <meta-data
                     android:name="default-url"
                     android:value="https://rozpierog.github.io/cofi" />
         </activity>
     </application>
-
 </manifest>
