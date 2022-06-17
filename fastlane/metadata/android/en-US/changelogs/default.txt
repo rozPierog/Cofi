@@ -1,10 +1,10 @@
 ### Added
-- Ability to change current step by tapping on the name of the step
+- Added app shortcuts to last recipes
 
 ### Changed
-- New animations of the text during step change
-- Fixed issue with empty description showing up
-- Fixed issue with steps with no time not changing FAB to the "play" icon
+- Fixed deeplinks only working when app is dead
+- Fixed layout on foldable phones (like Z Fold)
+- Target Android T, with language selection in app settings
 
 ### Removed
 
