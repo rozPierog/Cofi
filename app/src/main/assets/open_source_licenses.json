@@ -1445,7 +1445,7 @@
   {
     "project": "KieronQuinn/MonetCompat",
     "description": "App-level wallpaper color palette generation for Android 5.0+",
-    "version": "0.4.1",
+    "version": "0.2.1",
     "developers": [
       "Kieron Quinn"
     ],
@@ -1457,7 +1457,7 @@
         "license_url": "https://api.github.com/licenses/mit"
       }
     ],
-    "dependency": "com.github.KieronQuinn:MonetCompat:0.4.1"
+    "dependency": "com.github.KieronQuinn:MonetCompat:0.2.1"
   },
   {
     "project": "Kotlin Stdlib",

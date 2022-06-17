@@ -1,10 +1,7 @@
 ### Added
-- Added app shortcuts to last recipes
+hotfix for crash
 
 ### Changed
-- Fixed deeplinks only working when app is dead
-- Fixed layout on foldable phones (like Z Fold)
-- Target Android T, with language selection in app settings
 
 ### Removed
 
