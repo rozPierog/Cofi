@@ -1,10 +1,8 @@
 package com.omelan.cofi
 
-import android.app.PendingIntent
 import android.app.PictureInPictureParams
 import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Rational
@@ -23,7 +21,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
-import androidx.core.app.TaskStackBuilder
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -154,7 +151,6 @@ class MainActivity : MonetCompatActivity() {
                             .build()
 
                     ShortcutManagerCompat.pushDynamicShortcut(this@MainActivity, shortcut)
-
                 }
             },
             goBack = {
@@ -285,19 +281,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                                slideIntoContainer(
-                                    AnimatedContentScope.SlideDirection.End,
-                                    animationSpec = tween(tweenDuration),
-                                    initialOffset = { fullWidth -> -fullWidth / 5 }
-                                )
+                            slideIntoContainer(
+                                AnimatedContentScope.SlideDirection.End,
+                                animationSpec = tween(tweenDuration),
+                                initialOffset = { fullWidth -> -fullWidth / 5 }
+                            )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                                slideOutOfContainer(
-                                    AnimatedContentScope.SlideDirection.Start,
-                                    animationSpec = tween(tweenDuration),
-                                    targetOffset = { fullWidth -> fullWidth / 5 }
-                                )
+                            slideOutOfContainer(
+                                AnimatedContentScope.SlideDirection.Start,
+                                animationSpec = tween(tweenDuration),
+                                targetOffset = { fullWidth -> fullWidth / 5 }
+                            )
                     },
                 ) {
 //                    composable("list_color") {
