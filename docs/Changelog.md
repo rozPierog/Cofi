@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Fixed issues with Timer duration if user changed Animator Duration Scale
 
 ### Removed
 
