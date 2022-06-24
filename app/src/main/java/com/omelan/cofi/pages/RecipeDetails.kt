@@ -26,6 +26,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.MotionDurationScale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -48,7 +49,9 @@ import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.Haptics
 import com.omelan.cofi.utils.getDefaultPadding
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun RecipeDetails(
@@ -182,24 +185,32 @@ fun RecipeDetails(
             return
         }
         val duration = (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
-        coroutineScope.launch {
-            animatedProgressColor.animateTo(
-                targetValue = if (isDarkMode) {
-                    safeCurrentStep.type.colorNight
-                } else {
-                    safeCurrentStep.type.color
-                },
+        coroutineScope.launch(Dispatchers.Default) {
+            withContext(object : MotionDurationScale {
+                override val scaleFactor: Float = 1f
+            }) {
+                animatedProgressColor.animateTo(
+                    targetValue = if (isDarkMode) {
+                        safeCurrentStep.type.colorNight
+                    } else {
+                        safeCurrentStep.type.color
+                    },
+                    animationSpec = tween(durationMillis = duration, easing = LinearEasing),
+                )
+            }
+        }
+        withContext(object : MotionDurationScale {
+            override val scaleFactor: Float = 1f
+        }) {
+            val result = animatedProgressValue.animateTo(
+                targetValue = 1f,
                 animationSpec = tween(durationMillis = duration, easing = LinearEasing),
             )
+            if (result.endReason != AnimationEndReason.Finished) {
+                return@withContext
+            }
+            changeToNextStep()
         }
-        val result = animatedProgressValue.animateTo(
-            targetValue = 1f,
-            animationSpec = tween(durationMillis = duration, easing = LinearEasing),
-        )
-        if (result.endReason != AnimationEndReason.Finished) {
-            return
-        }
-        changeToNextStep()
     }
 
     suspend fun startAnimations() {
