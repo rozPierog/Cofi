@@ -1,7 +1,7 @@
 ### Added
-hotfix for crash
 
 ### Changed
+- Fixed issues with Timer duration if user changed Animator Duration Scale
 
 ### Removed
 
