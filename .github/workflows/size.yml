@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                build_type: [ debug ]
+                build_type: [ benchmark ]
         steps:
             -   uses: actions/checkout@v2
             -   name: Create empty keystore
