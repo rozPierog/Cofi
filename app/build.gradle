@@ -95,11 +95,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "11"
-        useIR = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion "$compose_version"
+        kotlinCompilerExtensionVersion = "1.2.0"
     }
     packagingOptions {
         resources {
@@ -149,25 +148,25 @@ dependencies {
     instantImplementation('com.google.android.gms:play-services-instantapps:18.0.1')
 
     implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui:1.2.0-rc03"
     // Tooling support (Previews, etc.)
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.2.0-rc03"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.2.0-rc03"
 
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation "androidx.compose.foundation:foundation:$compose_version"
+    implementation "androidx.compose.foundation:foundation:1.2.0-rc03"
     // Material Design
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha13"
-    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha13"
+    implementation "androidx.compose.material:material:1.2.0-rc03"
+    implementation "androidx.compose.material3:material3:1.0.0-alpha14"
+    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha14"
 
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     // Navigation
-    implementation "androidx.navigation:navigation-compose:2.4.2"
+    implementation "androidx.navigation:navigation-compose:2.5.0"
 
     // Integration with observables
-    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+    implementation "androidx.compose.runtime:runtime-livedata:1.2.0-rc03"
     // Jetpack Utils
     def accompanist_version = "0.24.10-beta"
 
@@ -176,9 +175,9 @@ dependencies {
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
 
     implementation "androidx.datastore:datastore-preferences:1.0.0"
-    implementation "androidx.activity:activity-compose:1.4.0"
+    implementation "androidx.activity:activity-compose:1.5.0"
     //Room
-    def room_version = "2.4.2"
+    def room_version = "2.5.0-alpha02"
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
@@ -187,7 +186,7 @@ dependencies {
 
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     // UI Tests
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.2.0-rc03"
     testImplementation 'junit:junit:4.13.2'
 }
 
