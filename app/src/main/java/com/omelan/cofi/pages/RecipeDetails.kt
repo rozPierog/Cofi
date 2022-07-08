@@ -2,6 +2,7 @@
 
 package com.omelan.cofi.pages
 
+import android.graphics.Rect
 import android.media.MediaPlayer
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -28,7 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.MotionDurationScale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -60,7 +64,7 @@ fun RecipeDetails(
     onRecipeEnd: (Recipe) -> Unit = {},
     goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
-    onTimerRunning: (Boolean) -> Unit = {},
+    onTimerRunning: (Boolean, Rect?) -> Unit = { _, _ -> },
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
     windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
@@ -88,7 +92,7 @@ fun RecipeDetails(
     onRecipeEnd: (Recipe) -> Unit = {},
     goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
-    onTimerRunning: (Boolean) -> Unit = {},
+    onTimerRunning: (Boolean, Rect?) -> Unit = { _, _ -> },
     windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
 ) {
     val recipeId by remember(recipe) {
@@ -99,6 +103,7 @@ fun RecipeDetails(
     var isDone by remember { mutableStateOf(false) }
     var isTimerRunning by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
+    var timerRect by remember { mutableStateOf<Rect?>(null) }
 
     val indexOfCurrentStep = steps.indexOf(currentStep)
     val indexOfLastStep = steps.lastIndex
@@ -221,8 +226,8 @@ fun RecipeDetails(
     LaunchedEffect(currentStep) {
         progressAnimation()
     }
-    LaunchedEffect(isTimerRunning) {
-        onTimerRunning(isTimerRunning)
+    LaunchedEffect(isTimerRunning, timerRect) {
+        onTimerRunning(isTimerRunning, timerRect)
     }
 
     suspend fun startRecipe() = coroutineScope.launch {
@@ -244,7 +249,7 @@ fun RecipeDetails(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
+                    (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
         }
     }
 
@@ -261,7 +266,13 @@ fun RecipeDetails(
     }
     val renderTimer: @Composable (Modifier) -> Unit = {
         Timer(
-            modifier = it.testTag("recipe_timer"),
+            modifier = it
+                .testTag("recipe_timer")
+                .onGloballyPositioned { coordinates ->
+                    timerRect = coordinates
+                        .boundsInWindow()
+                        .toAndroidRect()
+                },
             currentStep = currentStep,
             animatedProgressValue = animatedProgressValue,
             animatedProgressColor = animatedProgressColor,

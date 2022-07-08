@@ -3,6 +3,7 @@ package com.omelan.cofi
 import android.app.PictureInPictureParams
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.util.Rational
@@ -80,7 +81,7 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-    private val onTimerRunning: (Boolean) -> Unit = { isRunning ->
+    private val onTimerRunning: (Boolean, Rect?) -> Unit = { isRunning, timerRect ->
         mainActivityViewModel.setCanGoToPiP(isRunning)
         val isPiPEnabledFlow: Flow<Boolean> = DataStore(this).getPiPSetting()
         lifecycleScope.launch(Dispatchers.IO) {
@@ -96,7 +97,8 @@ class MainActivity : MonetCompatActivity() {
                         .apply {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                                 setAutoEnterEnabled(isRunning)
-                                setSeamlessResizeEnabled(true)
+                                setSourceRectHint(timerRect)
+                                setSeamlessResizeEnabled(false)
                             }
                         }.build()
                 )
@@ -154,11 +156,11 @@ class MainActivity : MonetCompatActivity() {
                 }
             },
             goBack = {
-                onTimerRunning(false)
+                onTimerRunning(false, null)
                 goBack()
             },
             goToEdit = {
-                onTimerRunning(false)
+                onTimerRunning(false, null)
                 navController.navigate(
                     route = "edit/$recipeId",
                 )
@@ -281,19 +283,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                            slideIntoContainer(
-                                AnimatedContentScope.SlideDirection.End,
-                                animationSpec = tween(tweenDuration),
-                                initialOffset = { fullWidth -> -fullWidth / 5 }
-                            )
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.End,
+                                    animationSpec = tween(tweenDuration),
+                                    initialOffset = { fullWidth -> -fullWidth / 5 }
+                                )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                            slideOutOfContainer(
-                                AnimatedContentScope.SlideDirection.Start,
-                                animationSpec = tween(tweenDuration),
-                                targetOffset = { fullWidth -> fullWidth / 5 }
-                            )
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Start,
+                                    animationSpec = tween(tweenDuration),
+                                    targetOffset = { fullWidth -> fullWidth / 5 }
+                                )
                     },
                 ) {
 //                    composable("list_color") {
