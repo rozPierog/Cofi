@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -218,7 +220,7 @@ fun StepAddCard(
                     PillButton(
                         modifier = Modifier.testTag("step_save"),
                         text = stringResource(id = R.string.step_add_save),
-                        imageVector = Icons.Rounded.Add,
+                        painter = rememberVectorPainter(Icons.Rounded.Add),
                         enabled = stepName.text.isNotBlank(),
                         onClick = { saveStep() }
                     )
@@ -226,7 +228,7 @@ fun StepAddCard(
                         PillButton(
                             modifier = Modifier.testTag("step_remove"),
                             text = stringResource(id = R.string.step_add_remove),
-                            imageVector = Icons.Rounded.Delete,
+                            painter = painterResource(id = R.drawable.ic_delete),
                             onClick = { save(null) }
                         )
                     }
@@ -237,13 +239,13 @@ fun StepAddCard(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         PillButton(
-                            imageVector = Icons.Rounded.KeyboardArrowUp,
+                            painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowUp),
                             onClick = { onPositionChange(-1) },
                             enabled = !isFirst
                         )
                         Spacer(modifier = Modifier.width(Spacing.normal))
                         PillButton(
-                            imageVector = Icons.Rounded.KeyboardArrowDown,
+                            painter = rememberVectorPainter(image = Icons.Rounded.KeyboardArrowDown),
                             onClick = { onPositionChange(1) },
                             enabled = !isLast
                         )
@@ -281,7 +283,7 @@ fun PillButton(
     modifier: Modifier = Modifier,
     text: String? = null,
     enabled: Boolean = true,
-    imageVector: ImageVector,
+    painter: Painter,
     onClick: () -> Unit,
 ) {
     Button(
@@ -293,7 +295,7 @@ fun PillButton(
         enabled = enabled,
         modifier = modifier,
     ) {
-        Icon(imageVector = imageVector, contentDescription = null)
+        Icon(painter, contentDescription = null)
         if (!text.isNullOrBlank()) {
             Spacer(modifier = Modifier.width(Spacing.small))
             Text(text = text)

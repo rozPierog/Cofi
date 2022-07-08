@@ -22,8 +22,12 @@ class DataStore(private val context: Context) {
         preferences[COMBINE_WEIGHT] ?: COMBINE_WEIGHT_DEFAULT_VALUE
     }
 
-    fun getStepChangeSetting() = context.dataStore.data.map { preferences ->
+    fun getStepChangeSoundSetting() = context.dataStore.data.map { preferences ->
         preferences[STEP_SOUND_ENABLED] ?: STEP_SOUND_DEFAULT_VALUE
+    }
+
+    fun getStepChangeVibrationSetting() = context.dataStore.data.map { preferences ->
+        preferences[STEP_VIBRATION_ENABLED] ?: STEP_VIBRATION_DEFAULT_VALUE
     }
 
     suspend fun togglePipSetting() {
@@ -37,6 +41,14 @@ class DataStore(private val context: Context) {
         context.dataStore.edit {
             val currentStepSoundState = it[STEP_SOUND_ENABLED] ?: STEP_SOUND_DEFAULT_VALUE
             it[STEP_SOUND_ENABLED] = !currentStepSoundState
+        }
+    }
+
+    suspend fun toggleStepChangeVibration() {
+        context.dataStore.edit {
+            val currentStepVibrationState =
+                it[STEP_VIBRATION_ENABLED] ?: STEP_VIBRATION_DEFAULT_VALUE
+            it[STEP_VIBRATION_ENABLED] = !currentStepVibrationState
         }
     }
 

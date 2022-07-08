@@ -64,6 +64,6 @@ Occhio a non bloccare la fuoriuscita dell'aria dal coffee brewer"</string>
     <string name="hoffmann_credits_title">Ricette predefinite di James Hoffmann</string>
     <string name="tereszkiewicz_credits_title">Icona dell\'app di: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Guarda il suo Dribbble</string>
-    <string name="settings_ding_item">Emetti un suono tra i passaggi</string>
+    <string name="settings_step_sound_item">Emetti un suono tra i passaggi</string>
     <string name="recipe_create_title">Aggiungi ricetta</string>
 </resources>

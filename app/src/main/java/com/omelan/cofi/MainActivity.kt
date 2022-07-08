@@ -44,6 +44,8 @@ import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
 import com.omelan.cofi.pages.settings.AppSettings
 import com.omelan.cofi.pages.settings.AppSettingsAbout
+import com.omelan.cofi.pages.settings.BackupRestoreSettings
+import com.omelan.cofi.pages.settings.TimerSettings
 import com.omelan.cofi.pages.settings.licenses.LicensesList
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
@@ -337,6 +339,26 @@ class MainActivity : MonetCompatActivity() {
                                 goToAbout = {
                                     navController.navigate("about")
                                 },
+                                goToBackupRestore = {
+                                    navController.navigate("backup")
+                                },
+                                goToTimerSettings = {
+                                    navController.navigate("timer")
+                                }
+                            )
+                        }
+                        composable("timer") {
+                            TimerSettings(goBack = goBack)
+                        }
+                        composable("backup") {
+                            BackupRestoreSettings(goBack = goBack)
+                        }
+                        composable("about") {
+                            AppSettingsAbout(
+                                goBack = goBack,
+                                openLicenses = {
+                                    navController.navigate("licenses")
+                                }
                             )
                         }
                         composable("about") {

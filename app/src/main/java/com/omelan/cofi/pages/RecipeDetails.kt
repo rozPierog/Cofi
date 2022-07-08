@@ -120,8 +120,10 @@ fun RecipeDetails(
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
 
     val dataStore = DataStore(LocalContext.current)
-    val isDingEnabled by dataStore.getStepChangeSetting()
+    val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
         .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
+    val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
+        .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
 
@@ -173,9 +175,14 @@ fun RecipeDetails(
             isDone = true
             onRecipeEnd(recipe)
         }
-        if (!silent && isDingEnabled) {
-            haptics.progress()
+        if (silent) {
+            return
+        }
+        if (isStepChangeSoundEnabled) {
             mediaPlayer.start()
+        }
+        if (isStepChangeVibrationEnabled) {
+            haptics.progress()
         }
     }
 
@@ -346,7 +353,7 @@ fun RecipeDetails(
                         )
                     }
                     IconButton(onClick = goToEdit) {
-                        Icon(Icons.Rounded.Edit, contentDescription = null)
+                        Icon(painterResource(id = R.drawable.ic_edit), contentDescription = null)
                     }
                 },
                 scrollBehavior = appBarBehavior,

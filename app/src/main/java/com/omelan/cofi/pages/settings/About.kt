@@ -82,7 +82,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Text(text = stringResource(id = R.string.settings_licenses_item))
                     },
                     icon = {
-                        Icon(painterResource(id = R.drawable.ic_book), contentDescription = null)
+                        Icon(painterResource(id = R.drawable.ic_gavel), contentDescription = null)
                     },
                     modifier = Modifier.settingsItemModifier(onClick = openLicenses)
                 )

@@ -32,7 +32,7 @@ WARNING: You cannot share recipe this way!"</string>
     <string name="settings_title">Settings</string>
     <string name="settings_about_item">About App</string>
     <string name="settings_pip_item">Picture in picture</string>
-    <string name="settings_ding_item">Step change sound</string>
+    <string name="settings_step_sound_item">Step change sound</string>
     <string name="settings_bug_item">Report a bug or suggest a feature</string>
     <string name="settings_combine_weight_item">Combine weight</string>
     <string name="settings_combine_weight_all">Combine every weight</string>
@@ -96,4 +96,7 @@ Temperature: For light roast – brought to a boil and used immediately. For dar
     <string name="settings_backup">Backup</string>
     <string name="settings_restore">Restore</string>
     <string name="settings_addDefault">Add default recipes</string>
+    <string name="settings_timer_item">Timer settings</string>
+    <string name="settings_backup_item">Backup/Restore</string>
+    <string name="settings_step_vibrate_item">Step change vibration</string>
 </resources>

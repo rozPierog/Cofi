@@ -96,7 +96,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -306,7 +306,10 @@ fun RecipeEdit(
                             )
                         }
                         IconButton(onClick = { showDeleteModal = true }) {
-                            Icon(Icons.Rounded.Delete, contentDescription = null)
+                            Icon(
+                                painterResource(id = R.drawable.ic_delete),
+                                contentDescription = null
+                            )
                         }
                     }
                     IconButton(
@@ -453,7 +456,7 @@ fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
                 Text(text = stringResource(id = R.string.button_cancel))
             }
         },
-        icon = { Icon(Icons.Rounded.Delete, null) },
+        icon = { Icon(painterResource(id = R.drawable.ic_delete), null) },
         title = {
             Text(text = stringResource(id = R.string.recipe_delete_title))
         },

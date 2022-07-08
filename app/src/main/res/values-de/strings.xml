@@ -25,7 +25,7 @@
     <string name="settings_title">Einstellungen</string>
     <string name="settings_about_item">Über die App</string>
     <string name="settings_pip_item">Bild-im-Bild</string>
-    <string name="settings_ding_item">Schrittwechsel-Ton</string>
+    <string name="settings_step_sound_item">Schrittwechsel-Ton</string>
     <string name="settings_bug_item">Einen Fehler melden oder eine Funktion vorschlagen</string>
     <string name="settings_combine_weight_item">Gewicht kombinieren</string>
     <string name="settings_combine_weight_water">Nur Wassergewicht kombinieren</string>

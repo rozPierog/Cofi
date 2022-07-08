@@ -76,7 +76,7 @@ Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze 
     <string name="tereszkiewicz_credits_title">Ikona aplikacji: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Sprawdź jego Dribbble!</string>
     <string name="recipe_create_title">Dodaj przepis</string>
-    <string name="settings_ding_item">Dźwięk zmiany kroku</string>
+    <string name="settings_step_sound_item">Dźwięk zmiany kroku</string>
     <string name="button_continue_editing">Edytuj dalej</string>
     <string name="button_discard">Porzuć</string>
     <string name="recipe_unsaved_text">Chcesz je porzucić?</string>
@@ -97,4 +97,7 @@ Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze 
 Źródło: https://youtu.be/j6VlT_jUVPc
 Grubość mielenia: Dla jasno palonych – średnio-drobno. Im ciemniejsza kawa tym grubiej powinna być zmielona
 Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 85–90℃</string>
+    <string name="settings_timer_item">Ustawienia odliczania</string>
+    <string name="settings_backup_item">Kopia zapasowa i przywracanie</string>
+    <string name="settings_step_vibrate_item">Wibracja przy zmianie kroku</string>
 </resources>
