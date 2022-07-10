@@ -28,6 +28,7 @@
                 android:exported="true"
                 android:launchMode="singleInstance"
                 android:supportsPictureInPicture="true"
+                android:resizeableActivity="true"
                 android:theme="@style/Theme.Cofi"
                 android:windowSoftInputMode="adjustResize">
             <intent-filter>

@@ -2,8 +2,13 @@
 
 package com.omelan.cofi.pages
 
+import android.app.Activity
+import android.app.PictureInPictureParams
 import android.graphics.Rect
 import android.media.MediaPlayer
+import android.os.Build
+import android.util.Rational
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -54,6 +59,7 @@ import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.Haptics
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -64,7 +70,7 @@ fun RecipeDetails(
     onRecipeEnd: (Recipe) -> Unit = {},
     goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
-    onTimerRunning: (Boolean, Rect?) -> Unit = { _, _ -> },
+    onTimerRunning: (Boolean) -> Unit = { },
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
     windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
@@ -84,6 +90,32 @@ fun RecipeDetails(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRectHint: Rect) {
+    if (activity !is MainActivity) {
+        return
+    }
+    val isPiPEnabled = DataStore(activity).getPiPSetting().first()
+    if ((!isTimerRunning || !isPiPEnabled) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        activity.setPictureInPictureParams(
+            PictureInPictureParams.Builder().setAutoEnterEnabled(false).build()
+        )
+    } else {
+        activity.setPictureInPictureParams(
+            PictureInPictureParams.Builder()
+                .setAspectRatio(Rational(1, 1))
+                .apply {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        setAutoEnterEnabled(true)
+                        setSourceRectHint(sourceRectHint)
+                        setSeamlessResizeEnabled(false)
+                    }
+                }.build()
+        )
+    }
+}
+
+
 @Composable
 fun RecipeDetails(
     recipe: Recipe,
@@ -92,7 +124,7 @@ fun RecipeDetails(
     onRecipeEnd: (Recipe) -> Unit = {},
     goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
-    onTimerRunning: (Boolean, Rect?) -> Unit = { _, _ -> },
+    onTimerRunning: (Boolean) -> Unit = { },
     windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
 ) {
     val recipeId by remember(recipe) {
@@ -103,8 +135,6 @@ fun RecipeDetails(
     var isDone by remember { mutableStateOf(false) }
     var isTimerRunning by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
-    var timerRect by remember { mutableStateOf<Rect?>(null) }
-
     val indexOfCurrentStep = steps.indexOf(currentStep)
     val indexOfLastStep = steps.lastIndex
 
@@ -233,8 +263,8 @@ fun RecipeDetails(
     LaunchedEffect(currentStep) {
         progressAnimation()
     }
-    LaunchedEffect(isTimerRunning, timerRect) {
-        onTimerRunning(isTimerRunning, timerRect)
+    LaunchedEffect(isTimerRunning) {
+        onTimerRunning(isTimerRunning)
     }
 
     suspend fun startRecipe() = coroutineScope.launch {
@@ -271,14 +301,23 @@ fun RecipeDetails(
             Spacer(modifier = Modifier.height(Spacing.big))
         }
     }
+    val activity = LocalContext.current as Activity
     val renderTimer: @Composable (Modifier) -> Unit = {
         Timer(
             modifier = it
                 .testTag("recipe_timer")
                 .onGloballyPositioned { coordinates ->
-                    timerRect = coordinates
-                        .boundsInWindow()
-                        .toAndroidRect()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        coroutineScope.launch(Dispatchers.IO) {
+                            setPiPSettings(
+                                activity,
+                                isTimerRunning,
+                                coordinates
+                                    .boundsInWindow()
+                                    .toAndroidRect()
+                            )
+                        }
+                    }
                 },
             currentStep = currentStep,
             animatedProgressValue = animatedProgressValue,

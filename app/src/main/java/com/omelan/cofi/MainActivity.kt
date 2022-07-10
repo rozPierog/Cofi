@@ -3,10 +3,8 @@ package com.omelan.cofi
 import android.app.PictureInPictureParams
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.util.Rational
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -49,7 +47,6 @@ import com.omelan.cofi.pages.settings.TimerSettings
 import com.omelan.cofi.pages.settings.licenses.LicensesList
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -83,29 +80,8 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-    private val onTimerRunning: (Boolean, Rect?) -> Unit = { isRunning, timerRect ->
+    private val onTimerRunning: (Boolean) -> Unit = { isRunning ->
         mainActivityViewModel.setCanGoToPiP(isRunning)
-        val isPiPEnabledFlow: Flow<Boolean> = DataStore(this).getPiPSetting()
-        lifecycleScope.launch(Dispatchers.IO) {
-            val isPiPEnabled = isPiPEnabledFlow.first()
-            if (
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
-                checkPiPPermission(this@MainActivity) &&
-                isPiPEnabled
-            ) {
-                setPictureInPictureParams(
-                    PictureInPictureParams.Builder()
-                        .setAspectRatio(Rational(1, 1))
-                        .apply {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                                setAutoEnterEnabled(isRunning)
-                                setSourceRectHint(timerRect)
-                                setSeamlessResizeEnabled(false)
-                            }
-                        }.build()
-                )
-            }
-        }
         if (isRunning) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
@@ -158,11 +134,11 @@ class MainActivity : MonetCompatActivity() {
                 }
             },
             goBack = {
-                onTimerRunning(false, null)
+                onTimerRunning(false)
                 goBack()
             },
             goToEdit = {
-                onTimerRunning(false, null)
+                onTimerRunning(false)
                 navController.navigate(
                     route = "edit/$recipeId",
                 )
