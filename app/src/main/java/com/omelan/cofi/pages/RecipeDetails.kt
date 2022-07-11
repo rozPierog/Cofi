@@ -115,7 +115,6 @@ suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRe
     }
 }
 
-
 @Composable
 fun RecipeDetails(
     recipe: Recipe,
@@ -286,7 +285,7 @@ fun RecipeDetails(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
+                (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
         }
     }
 

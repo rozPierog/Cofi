@@ -15,7 +15,6 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
@@ -245,7 +244,7 @@ fun StepAddCard(
                         )
                         Spacer(modifier = Modifier.width(Spacing.normal))
                         PillButton(
-                            painter = rememberVectorPainter(image = Icons.Rounded.KeyboardArrowDown),
+                            painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowDown),
                             onClick = { onPositionChange(1) },
                             enabled = !isLast
                         )
