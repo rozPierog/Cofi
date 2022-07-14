@@ -85,7 +85,16 @@ class MainActivity : MonetCompatActivity() {
         if (isRunning) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
+            blockPip()
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+    }
+
+    private fun blockPip() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            setPictureInPictureParams(
+                PictureInPictureParams.Builder().setAutoEnterEnabled(false).build()
+            )
         }
     }
 
@@ -133,16 +142,8 @@ class MainActivity : MonetCompatActivity() {
                     ShortcutManagerCompat.pushDynamicShortcut(this@MainActivity, shortcut)
                 }
             },
-            goBack = {
-                onTimerRunning(false)
-                goBack()
-            },
-            goToEdit = {
-                onTimerRunning(false)
-                navController.navigate(
-                    route = "edit/$recipeId",
-                )
-            },
+            goBack = goBack,
+            goToEdit = { navController.navigate(route = "edit/$recipeId") },
             onTimerRunning = onTimerRunning,
             windowSizeClass = windowSizeClass,
         )

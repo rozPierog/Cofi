@@ -10,6 +10,7 @@ import android.app.PictureInPictureParams
 import android.graphics.Rect
 import android.media.MediaPlayer
 import android.os.Build
+import android.util.Log
 import android.util.Rational
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
@@ -45,10 +46,7 @@ import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.platform.*
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -98,12 +96,15 @@ fun RecipeDetails(
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRectHint: Rect) {
+suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRectHint: Rect?) {
     if (activity !is MainActivity) {
         return
     }
     val isPiPEnabled = DataStore(activity).getPiPSetting().first()
-    if ((!isTimerRunning || !isPiPEnabled) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    if (!isPiPEnabled) {
+        return
+    }
+    if (!isTimerRunning && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         activity.setPictureInPictureParams(
             PictureInPictureParams.Builder().setAutoEnterEnabled(false).build()
         )
@@ -271,6 +272,11 @@ fun RecipeDetails(
     }
     LaunchedEffect(isTimerRunning) {
         onTimerRunning(isTimerRunning)
+    }
+    DisposableEffect(true) {
+        onDispose {
+            onTimerRunning(false)
+        }
     }
 
     suspend fun startRecipe() = coroutineScope.launch {
@@ -555,7 +561,7 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
     val icon = AnimatedImageVector.animatedVectorResource(R.drawable.play_anim)
     var atEnd by remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = isTimerRunning) {
+    LaunchedEffect(isTimerRunning) {
         launch {
             atEnd = isTimerRunning
         }
