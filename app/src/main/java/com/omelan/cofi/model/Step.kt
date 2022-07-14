@@ -29,7 +29,7 @@ enum class StepType(
         color = blue600,
         colorNight = blue600,
         stringRes = R.string.step_type_water,
-        iconRes = R.drawable.ic_water_plus,
+        iconRes = R.drawable.ic_water,
     ),
     WAIT(
         color = green600,
@@ -41,7 +41,7 @@ enum class StepType(
         color = greyBlue900,
         colorNight = grey300,
         stringRes = R.string.step_type_other,
-        iconRes = R.drawable.ic_playlist_edit
+        iconRes = R.drawable.ic_step_other
     );
 
     fun isNotWaitStepType(): Boolean = this != WAIT

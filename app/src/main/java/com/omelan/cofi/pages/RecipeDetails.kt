@@ -1,4 +1,7 @@
-@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class)
+@file:OptIn(
+    ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class,
+    ExperimentalAnimationGraphicsApi::class
+)
 
 package com.omelan.cofi.pages
 
@@ -11,6 +14,10 @@ import android.util.Rational
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
+import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
+import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -285,7 +292,7 @@ fun RecipeDetails(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
+                    (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
         }
     }
 
@@ -545,11 +552,19 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
 @Composable
 fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
     val animatedFabRadii = remember { Animatable(100f) }
+    val icon = AnimatedImageVector.animatedVectorResource(R.drawable.play_anim)
+    var atEnd by remember { mutableStateOf(false) }
+
     LaunchedEffect(key1 = isTimerRunning) {
-        animatedFabRadii.animateTo(
-            if (isTimerRunning) 28.0f else 100f,
-            tween(if (isTimerRunning) 300 else 500)
-        )
+        launch {
+            atEnd = isTimerRunning
+        }
+        launch {
+            animatedFabRadii.animateTo(
+                if (isTimerRunning) 28.0f else 100f,
+                tween(if (isTimerRunning) 300 else 500)
+            )
+        }
     }
     LargeFloatingActionButton(
         shape = RoundedCornerShape(animatedFabRadii.value.dp),
@@ -560,11 +575,7 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
             .toggleable(isTimerRunning) {},
     ) {
         Icon(
-            painter = if (isTimerRunning) {
-                painterResource(id = R.drawable.ic_pause)
-            } else {
-                painterResource(id = R.drawable.ic_play_arrow)
-            },
+            painter = rememberAnimatedVectorPainter(icon, atEnd),
             tint = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize),
             contentDescription = null,

@@ -173,6 +173,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+    implementation 'androidx.compose.animation:animation-graphics:1.1.1'
 
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.activity:activity-compose:1.5.0"

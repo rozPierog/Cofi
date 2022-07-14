@@ -1,5 +1,11 @@
+@file:OptIn(ExperimentalAnimationGraphicsApi::class)
+
 package com.omelan.cofi.components
 
+import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
+import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -7,8 +13,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,10 +36,14 @@ fun StepListItem(
     stepProgress: StepProgress,
     onClick: ((Step) -> Unit)? = null
 ) {
+    val icon = AnimatedImageVector.animatedVectorResource(R.drawable.step_done_anim)
+    var atEnd by remember { mutableStateOf(false) }
     val painter = when (stepProgress) {
-        StepProgress.Current -> painterResource(id = R.drawable.ic_play_arrow)
-        StepProgress.Done -> painterResource(id = R.drawable.ic_check_circle)
+        StepProgress.Current, StepProgress.Done -> rememberAnimatedVectorPainter(icon, atEnd)
         StepProgress.Upcoming -> painterResource(id = step.type.iconRes)
+    }
+    LaunchedEffect(stepProgress) {
+        atEnd = stepProgress == StepProgress.Done
     }
     Row(
         modifier = modifier
@@ -61,7 +70,9 @@ fun StepListItem(
             text = step.name,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f, true).padding(horizontal = Spacing.small)
+            modifier = Modifier
+                .weight(1f, true)
+                .padding(horizontal = Spacing.small)
         )
         if (step.value != null) {
             Text(
@@ -90,8 +101,8 @@ fun StepListItemPreview() {
         step = Step(
             id = 0,
             name = "Somebody once told me the world is gonna roll me I ain't the sharpest " +
-                "tool in the shed She was looking kind of dumb with her finger and her thumb " +
-                "In the shape of an \"L\" on her forehead",
+                    "tool in the shed She was looking kind of dumb with her finger and her thumb " +
+                    "In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
             value = 60,
