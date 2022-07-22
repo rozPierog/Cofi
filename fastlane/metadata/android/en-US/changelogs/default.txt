@@ -1,7 +1,10 @@
 ### Added
+- Added setting to enable/disable vibration on step change
 
 ### Changed
-- Fixed issues with Timer duration if user changed Animator Duration Scale
+- Cleaned up Settings pages
+- PiP animation should be smoother on Android 12+
+- Added some animations when icon changes state (play/pause, current/done)
 
 ### Removed
 
