@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Cleaned up Settings pages
 - PiP animation should be smoother on Android 12+
+- Added some animations when icon changes state (play/pause, current/done)
 
 ### Removed
 
