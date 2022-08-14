@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.omelan.cofi.pages
 
 import androidx.activity.compose.BackHandler
@@ -14,7 +16,8 @@ import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -45,7 +48,10 @@ import com.omelan.cofi.components.*
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
-import com.omelan.cofi.ui.*
+import com.omelan.cofi.ui.Spacing
+import com.omelan.cofi.ui.createTextSelectionColors
+import com.omelan.cofi.ui.modal
+import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 

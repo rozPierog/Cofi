@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.omelan.cofi.components
 
 import androidx.compose.animation.core.animate
@@ -24,23 +26,11 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun createAppBarBehavior(
-    topBarState: TopAppBarScrollState = rememberTopAppBarScrollState()
+    topBarState: TopAppBarState = rememberTopAppBarState()
 ): TopAppBarScrollBehavior {
     val decayAnimationSpec = rememberSplineBasedDecay<Float>()
     val scrollBehavior = remember(decayAnimationSpec) {
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec, topBarState)
-    }
-    val coroutineScope = rememberCoroutineScope()
-    val animateCollapse = {
-        coroutineScope.launch {
-            animate(
-                initialValue = topBarState.offset,
-                targetValue = topBarState.offsetLimit,
-                block = { value, _ ->
-                    topBarState.offset = value
-                }
-            )
-        }
     }
     return scrollBehavior
 }
@@ -52,17 +42,17 @@ data class AppBarBehaviorWithCollapse(
 
 @Composable
 fun createAppBarBehaviorWithCollapse(): AppBarBehaviorWithCollapse {
-    val topBarState = rememberTopAppBarScrollState()
+    val topBarState = rememberTopAppBarState()
     val scrollBehavior = createAppBarBehavior(topBarState)
     val coroutineScope = rememberCoroutineScope()
 
     val animateCollapse = {
         coroutineScope.launch {
             animate(
-                initialValue = topBarState.offset,
-                targetValue = topBarState.offsetLimit,
+                initialValue = topBarState.heightOffset,
+                targetValue = topBarState.heightOffsetLimit,
                 block = { value, _ ->
-                    topBarState.offset = value
+                    topBarState.heightOffset = value
                 }
             )
         }
@@ -106,7 +96,7 @@ fun InsetAwareTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior? = null,
     elevation: Dp = 4.dp
 ) {
-    val scrollFraction = scrollBehavior?.scrollFraction ?: 0f
+    val scrollFraction = scrollBehavior?.state?.collapsedFraction ?: 0f
     val colors = TopAppBarDefaults.largeTopAppBarColors()
     val appBarContainerColor by colors.containerColor(scrollFraction)
     Surface(
