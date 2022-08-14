@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Updated dependencies
+- fixed horizontal overscoll effect being applied when there is no horizontal scroll 
 
 ### Removed
 
