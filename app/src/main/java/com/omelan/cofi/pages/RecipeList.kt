@@ -61,6 +61,7 @@ fun RecipeList(
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = addNewRecipe,
+                expanded = scrollBehavior.state.collapsedFraction < 0.9,
                 modifier = Modifier.navigationBarsPadding(),
                 icon = {
                     Icon(
