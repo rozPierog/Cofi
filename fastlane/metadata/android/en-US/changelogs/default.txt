@@ -1,10 +1,9 @@
 ### Added
-- Added setting to enable/disable vibration on step change
 
 ### Changed
-- Cleaned up Settings pages
-- PiP animation should be smoother on Android 12+
-- Added some animations when icon changes state (play/pause, current/done)
+- Updated dependencies
+- fixed horizontal overscoll effect being applied when there is no horizontal scroll 
+- Add recipe FAB will collapse down to "small" state on scroll
 
 ### Removed
 

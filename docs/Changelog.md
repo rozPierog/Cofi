@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+
+### Removed
+
+
+## [1.7.7] - 2022-08-16
+
+### Added
+
+### Changed
 - Updated dependencies
 - fixed horizontal overscoll effect being applied when there is no horizontal scroll 
 - Add recipe FAB will collapse down to "small" state on scroll
