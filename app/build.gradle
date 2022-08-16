@@ -29,7 +29,7 @@ android {
         targetSdkVersion 33
         compileSdkVersion 33
         versionCode 79
-        versionName "1.7.6"
+        versionName "1.7.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
