@@ -17,6 +17,7 @@
             android:launchMode="singleInstance"
             android:localeConfig="@xml/locales_config"
             android:supportsRtl="true"
+            android:enableOnBackInvokedCallback="true"
             android:theme="@style/Theme.Cofi">
         <profileable
                 android:enabled="${profileable}"

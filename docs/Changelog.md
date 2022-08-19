@@ -7,22 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-
-### Changed
-
-### Removed
-
-
-## [1.7.7] - 2022-08-16
-
-### Added
+- Added support for predictive back gesture animation on Android 13+
 
 ### Changed
 - Updated dependencies
-- fixed horizontal overscoll effect being applied when there is no horizontal scroll 
+- fixed horizontal overscoll effect being applied when there is no horizontal scroll
 - Add recipe FAB will collapse down to "small" state on scroll
 
 ### Removed
+
 
 
 ## [1.7.5] - 2022-07-22
