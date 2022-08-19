@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.7.8] - 2022-08-19
+
+### Added
 - Added support for predictive back gesture animation on Android 13+
 
 ### Changed

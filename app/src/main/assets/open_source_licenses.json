@@ -53,11 +53,11 @@
   {
     "project": "Activity",
     "description": "Provides the base Activity subclass and the relevant hooks to build a composable structure on top.",
-    "version": "1.5.1",
+    "version": "1.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.6.0-beta01",
     "year": "2018",
     "licenses": [
       {
@@ -65,16 +65,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.activity:activity:1.5.1"
+    "dependency": "androidx.activity:activity:1.6.0-beta01"
   },
   {
     "project": "Activity Compose",
     "description": "Compose integration with Activity",
-    "version": "1.5.1",
+    "version": "1.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.6.0-beta01",
     "year": "2020",
     "licenses": [
       {
@@ -82,16 +82,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.activity:activity-compose:1.5.1"
+    "dependency": "androidx.activity:activity-compose:1.6.0-beta01"
   },
   {
     "project": "Activity Kotlin Extensions",
     "description": "Kotlin extensions for \u0027activity\u0027 artifact",
-    "version": "1.5.1",
+    "version": "1.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.6.0-beta01",
     "year": "2018",
     "licenses": [
       {
@@ -99,7 +99,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.activity:activity-ktx:1.5.1"
+    "dependency": "androidx.activity:activity-ktx:1.6.0-beta01"
   },
   {
     "project": "Android App Startup Runtime",

@@ -1,9 +1,11 @@
 ### Added
+- Added support for predictive back gesture animation on Android 13+
 
 ### Changed
 - Updated dependencies
-- fixed horizontal overscoll effect being applied when there is no horizontal scroll 
+- fixed horizontal overscoll effect being applied when there is no horizontal scroll
 - Add recipe FAB will collapse down to "small" state on scroll
 
 ### Removed
+
 
