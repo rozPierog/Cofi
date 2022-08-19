@@ -130,8 +130,8 @@ platform :android do
       text: "is this a prerelease: ",
       boolean: true
     )
-    test
-    create_screenshots
+    #test
+    #create_screenshots
     licenses
     bump_version(bump_type: bump_type)
     prepare_changelog
