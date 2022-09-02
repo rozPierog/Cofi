@@ -69,7 +69,7 @@ class StepTypeConverter {
 data class Step(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "recipe_id") val recipeId: Int = 0,
-    @ColumnInfo(name = "order_in_recipe") val orderInRecipe: Int?,
+    @ColumnInfo(name = "order_in_recipe") val orderInRecipe: Int? = null,
     val name: String,
     val time: Int?,
     val type: StepType,

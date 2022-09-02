@@ -298,7 +298,7 @@ fun RecipeDetails(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
+                    (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
         }
     }
 
@@ -315,29 +315,34 @@ fun RecipeDetails(
     }
     val activity = LocalContext.current as Activity
     val renderTimer: @Composable (Modifier) -> Unit = {
-        Timer(
-            modifier = it
-                .testTag("recipe_timer")
-                .onGloballyPositioned { coordinates ->
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        coroutineScope.launch(Dispatchers.IO) {
-                            setPiPSettings(
-                                activity,
-                                isTimerRunning,
-                                coordinates
-                                    .boundsInWindow()
-                                    .toAndroidRect()
-                            )
+        Box {
+            if (currentStep == null) {
+                RecipeInfo(modifier = it, steps = steps)
+            }
+            Timer(
+                modifier = it
+                    .testTag("recipe_timer")
+                    .onGloballyPositioned { coordinates ->
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            coroutineScope.launch(Dispatchers.IO) {
+                                setPiPSettings(
+                                    activity,
+                                    isTimerRunning,
+                                    coordinates
+                                        .boundsInWindow()
+                                        .toAndroidRect()
+                                )
+                            }
                         }
-                    }
-                },
-            currentStep = currentStep,
-            animatedProgressValue = animatedProgressValue,
-            animatedProgressColor = animatedProgressColor,
-            isInPiP = isInPiP,
-            alreadyDoneWeight = alreadyDoneWeight.value,
-            isDone = isDone,
-        )
+                    },
+                currentStep = currentStep,
+                animatedProgressValue = animatedProgressValue,
+                animatedProgressColor = animatedProgressColor,
+                isInPiP = isInPiP,
+                alreadyDoneWeight = alreadyDoneWeight.value,
+                isDone = isDone,
+            )
+        }
         if (!isInPiP) {
             Spacer(modifier = Modifier.height(Spacing.big))
         }
