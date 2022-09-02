@@ -81,6 +81,7 @@ fun Track(
 fun Timer(
     modifier: Modifier = Modifier,
     currentStep: Step?,
+    allSteps: List<Step> = emptyList(),
     alreadyDoneWeight: Int = 0,
     animatedProgressValue: Animatable<Float, AnimationVector1D>,
     animatedProgressColor: Animatable<Color, AnimationVector4D>,
@@ -97,6 +98,9 @@ fun Timer(
         contentAlignment = Alignment.Center,
         modifier = modifier,
     ) {
+        AnimatedVisibility(visible = currentStep==null) {
+            RecipeInfo(steps = allSteps)
+        }
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
             Column(
                 modifier = Modifier
@@ -182,7 +186,8 @@ fun Timer(
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
-                            .align(Alignment.CenterHorizontally).animateContentSize()
+                            .align(Alignment.CenterHorizontally)
+                            .animateContentSize()
                             .padding(horizontal = if (isInPiP) Spacing.xSmall else Spacing.normal)
                             .testTag("timer_name")
                     )

@@ -1,17 +1,17 @@
 package com.omelan.cofi.components
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,11 +53,17 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
             }
         }
     }
+    val localDensity = LocalDensity.current
+    var isSmall by remember { mutableStateOf(true) }
     Box(
         modifier = modifier
+            .aspectRatio(1f)
             .fillMaxSize()
-            .aspectRatio(1f),
-        contentAlignment = Alignment.Center
+            .onGloballyPositioned { coordinates ->
+                val width = with(localDensity) { coordinates.size.width.toDp() }
+                isSmall = width < 225.0.dp
+            },
+        contentAlignment = Alignment.Center,
     ) {
         Row(
             modifier = Modifier
@@ -74,11 +80,16 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
                 icon = painterResource(id = R.drawable.ic_water),
                 text = "${stepInfo.waterWeight}g"
             )
-            Param(
-                icon = painterResource(id = R.drawable.ic_timer),
-                text = stepInfo.duration.toStringDuration()
-            )
-
+            AnimatedVisibility(
+                visible = !isSmall,
+                enter = fadeIn() + expandVertically(expandFrom = Alignment.CenterVertically),
+                exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically)
+            ) {
+                Param(
+                    icon = painterResource(id = R.drawable.ic_timer),
+                    text = stepInfo.duration.toStringDuration()
+                )
+            }
         }
         Divider(
             color = MaterialTheme.colorScheme.onSurface,
@@ -89,6 +100,7 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
 @Composable
 fun Param(icon: Painter, text: String) {
     Column(
+        modifier = Modifier.animateContentSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
