@@ -54,7 +54,7 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
         }
     }
     val localDensity = LocalDensity.current
-    var isSmall by remember { mutableStateOf(true) }
+    var isSmall by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
             .aspectRatio(1f)
