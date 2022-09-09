@@ -134,6 +134,12 @@ fun RecipeEdit(
             stepWithOpenEditor = null
             return@BackHandler
         }
+        if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
+            coroutineScope.launch {
+                bottomSheetScaffoldState.bottomSheetState.collapse()
+            }
+            return@BackHandler
+        }
         safeGoBack()
     }
 
