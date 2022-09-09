@@ -14,7 +14,6 @@ import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
@@ -40,7 +39,6 @@ import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun StepAddCard(
     modifier: Modifier = Modifier,
@@ -134,6 +132,7 @@ fun StepAddCard(
                 OutlinedTextField(
                     label = { Text(text = stringResource(id = R.string.step_add_name)) },
                     value = stepName,
+                    isError = stepName.text.isBlank(),
                     singleLine = true,
                     onValueChange = { stepName = it },
                     keyboardOptions = KeyboardOptions(
