@@ -16,7 +16,6 @@ import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -113,7 +112,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -339,12 +338,13 @@ fun RecipeEdit(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { showCloneModal = true }) {
-                        Icon(
-                            Icons.Rounded.Settings,
-                            contentDescription = null
-                        )
-                    }
+                    // TODO: Add recipe settings later
+//                    IconButton(onClick = { showCloneModal = true }) {
+//                        Icon(
+//                            Icons.Rounded.Settings,
+//                            contentDescription = null
+//                        )
+//                    }
                     if (isEditing) {
                         IconButton(onClick = { showCloneModal = true }) {
                             Icon(
