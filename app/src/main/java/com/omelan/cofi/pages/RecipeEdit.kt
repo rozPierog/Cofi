@@ -25,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -153,11 +154,16 @@ fun RecipeEdit(
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
-
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
         item {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.Bottom) {
                 IconButton(
+                    modifier = Modifier
+                        .defaultMinSize(
+                            minHeight = TextFieldDefaults.MinHeight
+                        )
+                        .padding(bottom = Spacing.xSmall)
+                        .padding(horizontal = Spacing.normal),
                     onClick = {
                         coroutineScope.launch {
                             if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
@@ -182,7 +188,8 @@ fun RecipeEdit(
                     isError = name.text.isBlank() && !nameHasFocus,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .focusRequester(focusRequester).onFocusChanged {
+                        .focusRequester(focusRequester)
+                        .onFocusChanged {
                             nameHasFocus = it.isFocused
                         }
                         .testTag("recipe_edit_name"),
