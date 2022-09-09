@@ -1,6 +1,5 @@
 package com.omelan.cofi.components
 
-import android.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
@@ -42,7 +41,7 @@ fun Material3Dialog(
                             .align(Alignment.End)
                             .padding(horizontal = Spacing.big)
                     ) {
-                        Text(text = stringResource(id = R.string.ok))
+                        Text(text = stringResource(id = android.R.string.ok))
                     }
                 }
             }

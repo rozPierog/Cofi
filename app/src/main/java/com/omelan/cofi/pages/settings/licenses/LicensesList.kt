@@ -1,6 +1,6 @@
 package com.omelan.cofi.pages.settings.licenses
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -57,8 +57,8 @@ fun LicensesList(goBack: () -> Unit) {
                 additionalEndPadding = 0.dp,
             ),
         ) {
-            items(dependencyList) {
-                DependencyItem(dependency = it)
+            items(dependencyList) { dependency ->
+                DependencyItem(dependency)
             }
         }
     }

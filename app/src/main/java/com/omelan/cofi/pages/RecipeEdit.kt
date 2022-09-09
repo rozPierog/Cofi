@@ -584,7 +584,7 @@ fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
 @Preview
 @Composable
 fun RecipeEditPreview() {
-    CofiTheme() {
+    CofiTheme {
         RecipeEdit(saveRecipe = { _, _ -> })
     }
 }

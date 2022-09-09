@@ -1,4 +1,3 @@
-@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 
 package com.omelan.cofi
 
@@ -9,7 +8,6 @@ import android.graphics.Color.parseColor
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -38,7 +36,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
@@ -48,7 +45,7 @@ class ScreenshotCreator {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    lateinit var context: Context
+    private lateinit var context: Context
 
     @SuppressLint("ComposableNaming")
     @Composable
