@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -54,7 +55,8 @@ fun StepAddCard(
     var pickedType by remember(stepToEdit) { mutableStateOf(stepToEdit?.type) }
     val pickedTypeName = pickedType?.stringRes?.let { stringResource(id = it) } ?: ""
     var stepName by remember(stepToEdit, pickedTypeName) {
-        mutableStateOf(TextFieldValue(stepToEdit?.name ?: pickedTypeName))
+        val name = stepToEdit?.name ?: pickedTypeName
+        mutableStateOf(TextFieldValue(name, TextRange(name.length)))
     }
     var stepTime by remember(stepToEdit) {
         if (stepToEdit == null) {
@@ -79,9 +81,11 @@ fun StepAddCard(
     val nameFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     val isExpanded = pickedType != null
+
     LaunchedEffect(key1 = isExpanded) {
         if (isExpanded) {
             onTypeSelect()
+            nameFocusRequester.requestFocus()
         }
     }
     fun saveStep() {
