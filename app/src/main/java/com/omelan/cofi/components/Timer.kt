@@ -106,7 +106,11 @@ fun Timer(
             enter = fadeIn(),
             exit = fadeOut()
         ) {
-            RecipeInfo(steps = allSteps)
+            RecipeInfo(
+                modifier = Modifier
+                    .aspectRatio(1f)
+                    .fillMaxSize(), steps = allSteps
+            )
         }
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
             Column(
@@ -178,9 +182,7 @@ fun Timer(
                             .padding(horizontal = if (isInPiP) Spacing.xSmall else Spacing.normal)
                             .testTag("timer_duration")
                     )
-                    Divider(
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
+                    Divider()
                     Text(
                         text = if (currentStep.time != null) stringResource(
                             id = R.string.timer_step_name_time,
@@ -209,9 +211,7 @@ fun Timer(
                         val currentStepValue = currentStep.value ?: 0
                         val currentValueFromProgress =
                             (currentStepValue * animatedProgressValue.value).toInt()
-                        Divider(
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
+                        Divider()
                         Text(
                             text = stringResource(
                                 id = R.string.timer_progress_weight,

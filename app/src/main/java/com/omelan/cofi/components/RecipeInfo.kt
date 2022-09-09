@@ -39,7 +39,7 @@ private data class CoffeeWaterTime(
 }
 
 @Composable
-fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
+fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>, compactStyle: Boolean = false) {
     val stepInfo by remember(steps) {
         derivedStateOf {
             steps.fold(CoffeeWaterTime()) { acc, step ->
@@ -55,8 +55,6 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
     var isSmall by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
-            .aspectRatio(1f)
-            .fillMaxSize()
             .onGloballyPositioned { coordinates ->
                 val width = with(localDensity) { coordinates.size.width.toDp() }
                 isSmall = width < 225.0.dp
@@ -79,7 +77,8 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
                 Param(
                     modifier = Modifier.testTag("recipe_info_coffee"),
                     icon = painterResource(id = R.drawable.ic_coffee_grinder),
-                    text = "${stepInfo.coffeeWeight}g"
+                    text = "${stepInfo.coffeeWeight}g",
+                    compactStyle = compactStyle,
                 )
             }
             AnimatedVisibility(
@@ -90,7 +89,8 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
                 Param(
                     modifier = Modifier.testTag("recipe_info_water"),
                     icon = painterResource(id = R.drawable.ic_water),
-                    text = "${stepInfo.waterWeight}g"
+                    text = "${stepInfo.waterWeight}g",
+                    compactStyle = compactStyle,
                 )
             }
             AnimatedVisibility(
@@ -101,30 +101,62 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
                 Param(
                     modifier = Modifier.testTag("recipe_info_time"),
                     icon = painterResource(id = R.drawable.ic_timer),
-                    text = stepInfo.duration.toStringDuration()
+                    text = stepInfo.duration.toStringDuration(),
+                    compactStyle = compactStyle,
                 )
             }
         }
-        Divider(
-            color = MaterialTheme.colorScheme.onSurface,
+        if (!compactStyle) {
+            Divider()
+        }
+    }
+}
+
+@Composable
+fun Param(modifier: Modifier = Modifier, icon: Painter, text: String, compactStyle: Boolean) {
+    Container(
+        modifier = modifier.animateContentSize(),
+        compactStyle = compactStyle,
+    ) {
+        Icon(
+            modifier = Modifier.size(if (compactStyle) 20.dp else 30.dp),
+            painter = icon,
+            contentDescription = ""
+        )
+        Spacer(modifier = Modifier.size(Spacing.normal))
+        Text(
+            modifier = Modifier.testTag("recipe_info_text"),
+            text = text,
+            style = if (compactStyle) {
+                MaterialTheme.typography.bodyMedium
+            } else {
+                MaterialTheme.typography.headlineSmall
+            }
         )
     }
 }
 
 @Composable
-fun Param(modifier: Modifier = Modifier, icon: Painter, text: String) {
-    Column(
-        modifier = modifier.animateContentSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Icon(modifier = Modifier.size(30.dp), painter = icon, contentDescription = "")
-        Spacer(modifier = Modifier.height(Spacing.normal))
-        Text(
-            modifier = Modifier.testTag("recipe_info_text"),
-            text = text,
-            style = MaterialTheme.typography.headlineSmall
-        )
+fun Container(
+    modifier: Modifier = Modifier,
+    compactStyle: Boolean,
+    content: @Composable () -> Unit
+) {
+    if (compactStyle) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            content()
+        }
+    } else {
+        Column(
+            modifier,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            content()
+        }
     }
 }
 
@@ -132,6 +164,55 @@ fun Param(modifier: Modifier = Modifier, icon: Painter, text: String) {
 @Preview
 fun RecipeInfoPreview() {
     RecipeInfo(
+        steps = listOf(
+            Step(
+                name = stringResource(R.string.prepopulate_step_coffee),
+                value = 30,
+                time = 5.toMillis(),
+                type = StepType.ADD_COFFEE,
+            ),
+            Step(
+                name = stringResource(R.string.prepopulate_step_water),
+                value = 60,
+                time = 5.toMillis(),
+                type = StepType.WATER,
+            ),
+            Step(
+                name = stringResource(R.string.prepopulate_step_swirl),
+                time = 5.toMillis(),
+                type = StepType.OTHER,
+            ),
+            Step(
+                name = stringResource(R.string.prepopulate_step_wait),
+                time = 35.toMillis(),
+                type = StepType.WAIT,
+            ),
+            Step(
+                name = stringResource(R.string.prepopulate_step_water),
+                time = 30.toMillis(),
+                type = StepType.WATER,
+                value = 240,
+            ),
+            Step(
+                name = stringResource(R.string.prepopulate_step_water),
+                time = 30.toMillis(),
+                type = StepType.WATER,
+                value = 200,
+            ),
+            Step(
+                name = stringResource(R.string.prepopulate_step_swirl),
+                time = 5.toMillis(),
+                type = StepType.OTHER,
+            )
+        )
+    )
+}
+
+@Composable
+@Preview
+fun RecipeInfoCompactPreview() {
+    RecipeInfo(
+        compactStyle = true,
         steps = listOf(
             Step(
                 name = stringResource(R.string.prepopulate_step_coffee),
