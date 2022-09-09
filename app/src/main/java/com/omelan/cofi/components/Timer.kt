@@ -101,7 +101,11 @@ fun Timer(
         contentAlignment = Alignment.Center,
         modifier = modifier,
     ) {
-        AnimatedVisibility(visible = currentStep == null && !isDone) {
+        AnimatedVisibility(
+            visible = currentStep == null && !isDone,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
             RecipeInfo(steps = allSteps)
         }
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
