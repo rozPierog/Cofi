@@ -210,7 +210,7 @@ fun StepAddCard(
                         .padding(Spacing.xSmall)
                         .fillMaxWidth(),
                 )
-                if (pickedType?.isNotWaitStepType() == true) {
+                AnimatedVisibility(visible = pickedType?.isNotWaitStepType() == true) {
                     OutlinedTextField(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
                         value = stepValue,
