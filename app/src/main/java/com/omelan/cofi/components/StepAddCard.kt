@@ -1,9 +1,13 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 
 package com.omelan.cofi.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -18,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalFocusManager
@@ -39,6 +44,8 @@ import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.launch
 
 @Composable
 fun StepAddCard(
@@ -80,8 +87,9 @@ fun StepAddCard(
     }
     val nameFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val isExpanded = pickedType != null
-
+    val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(key1 = isExpanded) {
         if (isExpanded) {
             onTypeSelect()
@@ -110,8 +118,10 @@ fun StepAddCard(
     }
     Surface(
         shape = RoundedCornerShape(10.dp),
-        modifier = modifier.fillMaxWidth(),
-        tonalElevation = 2.dp
+        modifier = modifier
+            .fillMaxWidth()
+            .bringIntoViewRequester(bringIntoViewRequester),
+        tonalElevation = 1.dp
     ) {
         Column(
             modifier = Modifier
@@ -152,6 +162,14 @@ fun StepAddCard(
                         .testTag("step_name")
                         .padding(Spacing.xSmall)
                         .focusRequester(nameFocusRequester)
+                        .onFocusEvent {
+                            if (it.isFocused) {
+                                coroutineScope.launch {
+                                    awaitFrame()
+                                    bringIntoViewRequester.bringIntoView()
+                                }
+                            }
+                        }
                         .fillMaxWidth(),
                 )
                 OutlinedTextField(

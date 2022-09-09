@@ -280,11 +280,6 @@ fun RecipeEdit(
                     onTypeSelect = {
                         coroutineScope.launch {
                             collapse()
-                            launch {
-                                lazyListState.animateScrollToItem(
-                                    lazyListState.layoutInfo.totalItemsCount - 1
-                                )
-                            }
                         }
                     },
                     modifier = Modifier.animateItemPlacement(),
