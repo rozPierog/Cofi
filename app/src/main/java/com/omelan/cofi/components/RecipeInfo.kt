@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,13 +29,13 @@ private data class CoffeeWaterTime(
     val waterWeight: Int = 0,
     val duration: Int = 0
 ) {
-    fun addCoffee(weight: Int, time: Int): CoffeeWaterTime =
-        this.copy(coffeeWeight = coffeeWeight + weight, duration = duration + time)
+    fun addCoffee(weight: Int?, time: Int?): CoffeeWaterTime =
+        this.copy(coffeeWeight = coffeeWeight + (weight ?: 0), duration = duration + (time ?: 0))
 
-    fun addWater(weight: Int, time: Int): CoffeeWaterTime =
-        this.copy(waterWeight = waterWeight + weight, duration = duration + time)
+    fun addWater(weight: Int?, time: Int?): CoffeeWaterTime =
+        this.copy(waterWeight = waterWeight + (weight ?: 0), duration = duration + (time ?: 0))
 
-    fun addTime(time: Int): CoffeeWaterTime = this.copy(duration = duration + time)
+    fun addTime(time: Int?): CoffeeWaterTime = this.copy(duration = duration + (time ?: 0))
 }
 
 @Composable
@@ -42,13 +43,10 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
     val stepInfo by remember(steps) {
         derivedStateOf {
             steps.fold(CoffeeWaterTime()) { acc, step ->
-                when (step.type) {
-                    StepType.ADD_COFFEE -> return@fold acc.addCoffee(
-                        step.value ?: 0,
-                        step.time ?: 0
-                    )
-                    StepType.WATER -> return@fold acc.addWater(step.value ?: 0, step.time ?: 0)
-                    else -> return@fold acc.addTime(step.time ?: 0)
+                return@fold when (step.type) {
+                    StepType.ADD_COFFEE -> acc.addCoffee(step.value, step.time)
+                    StepType.WATER -> acc.addWater(step.value, step.time)
+                    else -> acc.addTime(step.time)
                 }
             }
         }
@@ -62,7 +60,8 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
             .onGloballyPositioned { coordinates ->
                 val width = with(localDensity) { coordinates.size.width.toDp() }
                 isSmall = width < 225.0.dp
-            },
+            }
+            .testTag("recipe_info_box"),
         contentAlignment = Alignment.Center,
     ) {
         Row(
@@ -72,20 +71,35 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Param(
-                icon = painterResource(id = R.drawable.ic_coffee_grinder),
-                text = "${stepInfo.coffeeWeight}g"
-            )
-            Param(
-                icon = painterResource(id = R.drawable.ic_water),
-                text = "${stepInfo.waterWeight}g"
-            )
             AnimatedVisibility(
-                visible = !isSmall,
+                visible = stepInfo.coffeeWeight > 0,
                 enter = fadeIn() + expandVertically(expandFrom = Alignment.CenterVertically),
-                exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically)
+                exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically),
             ) {
                 Param(
+                    modifier = Modifier.testTag("recipe_info_coffee"),
+                    icon = painterResource(id = R.drawable.ic_coffee_grinder),
+                    text = "${stepInfo.coffeeWeight}g"
+                )
+            }
+            AnimatedVisibility(
+                visible = stepInfo.waterWeight > 0,
+                enter = fadeIn() + expandVertically(expandFrom = Alignment.CenterVertically),
+                exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically),
+            ) {
+                Param(
+                    modifier = Modifier.testTag("recipe_info_water"),
+                    icon = painterResource(id = R.drawable.ic_water),
+                    text = "${stepInfo.waterWeight}g"
+                )
+            }
+            AnimatedVisibility(
+                visible = !isSmall && stepInfo.duration > 0,
+                enter = fadeIn() + expandVertically(expandFrom = Alignment.CenterVertically),
+                exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically),
+            ) {
+                Param(
+                    modifier = Modifier.testTag("recipe_info_time"),
                     icon = painterResource(id = R.drawable.ic_timer),
                     text = stepInfo.duration.toStringDuration()
                 )
@@ -98,15 +112,19 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>) {
 }
 
 @Composable
-fun Param(icon: Painter, text: String) {
+fun Param(modifier: Modifier = Modifier, icon: Painter, text: String) {
     Column(
-        modifier = Modifier.animateContentSize(),
+        modifier = modifier.animateContentSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Icon(modifier = Modifier.size(30.dp), painter = icon, contentDescription = "")
         Spacer(modifier = Modifier.height(Spacing.normal))
-        Text(text = text, style = MaterialTheme.typography.headlineSmall)
+        Text(
+            modifier = Modifier.testTag("recipe_info_text"),
+            text = text,
+            style = MaterialTheme.typography.headlineSmall
+        )
     }
 }
 
