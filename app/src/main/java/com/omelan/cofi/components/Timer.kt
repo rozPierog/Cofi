@@ -10,6 +10,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.progressSemantics
 import androidx.compose.material.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,9 +20,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -44,7 +47,7 @@ fun Track(
     strokeWidth: Dp,
 ) {
     val stroke = with(LocalDensity.current) {
-        Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round)
+        Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Bevel)
     }
     Canvas(
         modifier
@@ -89,9 +92,9 @@ fun Timer(
     isDone: Boolean = false,
 ) {
     val strokeWidth = if (isInPiP) {
-        15.dp
+        10.dp
     } else {
-        20.dp
+        15.dp
     }
 
     Box(
@@ -122,6 +125,10 @@ fun Timer(
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.testTag("timer_enjoy")
                 )
+                if (!isInPiP) {
+                    Spacer(modifier = Modifier.height(Spacing.normal))
+                }
+                Icon(painter = painterResource(id = R.drawable.ic_coffee), contentDescription = "")
             }
         }
         AnimatedVisibility(
@@ -240,7 +247,7 @@ fun TimerPreview() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,
@@ -259,15 +266,14 @@ fun TimerPreviewPiP() {
     Timer(
         currentStep = Step(
             id = 1,
-            name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+            name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets ",
             time = 5 * 1000,
             type = StepType.WATER,
             value = 300,
             orderInRecipe = 0,
         ),
-        animatedProgressValue = Animatable(0.5f),
-        animatedProgressColor = Animatable(green600),
+        animatedProgressValue = Animatable(0.2f),
+        animatedProgressColor = Animatable(StepType.WATER.color),
         isInPiP = true,
         isDone = false
     )
