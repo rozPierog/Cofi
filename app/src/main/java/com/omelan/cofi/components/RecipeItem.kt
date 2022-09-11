@@ -26,7 +26,11 @@ import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.toMillis
 
 @Composable
-fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
+fun RecipeItem(
+    recipe: Recipe,
+    allSteps: List<Step> = emptyList(),
+    onPress: (recipeId: Int) -> Unit
+) {
     Surface(
         tonalElevation = 2.dp,
         shadowElevation = 2.dp,
@@ -53,7 +57,7 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
                     contentDescription = null,
                     modifier = Modifier
                         .padding(horizontal = Spacing.small)
-                        .size(30.dp)
+                        .size(28.dp)
                 )
                 Column(
                     modifier = Modifier.padding(
@@ -80,50 +84,7 @@ fun RecipeItem(recipe: Recipe, onPress: (recipeId: Int) -> Unit) {
                 }
             }
             Divider()
-            RecipeInfo(
-                compactStyle = true,
-                steps = listOf(
-                    Step(
-                        name = stringResource(R.string.prepopulate_step_coffee),
-                        value = 30,
-                        time = 5.toMillis(),
-                        type = StepType.ADD_COFFEE,
-                    ),
-                    Step(
-                        name = stringResource(R.string.prepopulate_step_water),
-                        value = 60,
-                        time = 5.toMillis(),
-                        type = StepType.WATER,
-                    ),
-                    Step(
-                        name = stringResource(R.string.prepopulate_step_swirl),
-                        time = 5.toMillis(),
-                        type = StepType.OTHER,
-                    ),
-                    Step(
-                        name = stringResource(R.string.prepopulate_step_wait),
-                        time = 35.toMillis(),
-                        type = StepType.WAIT,
-                    ),
-                    Step(
-                        name = stringResource(R.string.prepopulate_step_water),
-                        time = 30.toMillis(),
-                        type = StepType.WATER,
-                        value = 240,
-                    ),
-                    Step(
-                        name = stringResource(R.string.prepopulate_step_water),
-                        time = 30.toMillis(),
-                        type = StepType.WATER,
-                        value = 200,
-                    ),
-                    Step(
-                        name = stringResource(R.string.prepopulate_step_swirl),
-                        time = 5.toMillis(),
-                        type = StepType.OTHER,
-                    )
-                )
-            )
+            RecipeInfo(compactStyle = true, steps = allSteps)
         }
     }
 }
@@ -136,6 +97,36 @@ fun PreviewRecipeItem() {
             id = 0,
             name = "Ultimate V60",
             description = "Recipe by Hoffman",
+        ),
+        allSteps = listOf(
+            Step(
+                name = stringResource(R.string.prepopulate_step_coffee),
+                value = 30,
+                time = 5.toMillis(),
+                type = StepType.ADD_COFFEE,
+            ),
+            Step(
+                name = stringResource(R.string.prepopulate_step_water),
+                value = 60,
+                time = 5.toMillis(),
+                type = StepType.WATER,
+            ),
+            Step(
+                name = stringResource(R.string.prepopulate_step_swirl),
+                time = 5.toMillis(),
+                type = StepType.OTHER,
+            ),
+            Step(
+                name = stringResource(R.string.prepopulate_step_wait),
+                time = 35.toMillis(),
+                type = StepType.WAIT,
+            ),
+            Step(
+                name = stringResource(R.string.prepopulate_step_water),
+                time = 30.toMillis(),
+                type = StepType.WATER,
+                value = 240,
+            ),
         ),
         onPress = {}
     )

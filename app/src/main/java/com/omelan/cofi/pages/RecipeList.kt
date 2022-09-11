@@ -27,6 +27,7 @@ import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.RecipeItem
 import com.omelan.cofi.components.createAppBarBehavior
 import com.omelan.cofi.model.RecipeViewModel
+import com.omelan.cofi.model.StepsViewModel
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.getDefaultPadding
@@ -38,9 +39,12 @@ fun RecipeList(
     addNewRecipe: () -> Unit,
     goToSettings: () -> Unit,
     recipeViewModel: RecipeViewModel = viewModel(),
+    stepsViewModel: StepsViewModel = viewModel(),
 ) {
     val configuration = LocalConfiguration.current
-    val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = listOf())
+    val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = emptyList())
+    val steps by stepsViewModel.getAllSteps().observeAsState(initial = emptyList())
+    val stepsByRecipe = steps.groupBy { it.recipeId }
     val scrollBehavior = createAppBarBehavior()
     val isMultiColumn by remember(configuration.screenWidthDp) {
         derivedStateOf { configuration.screenWidthDp > 600 }
@@ -88,6 +92,7 @@ fun RecipeList(
                 RecipeItem(
                     recipe = recipe,
                     onPress = navigateToRecipe,
+                    allSteps = stepsByRecipe[recipe.id] ?: emptyList()
                 )
             }
         }

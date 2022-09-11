@@ -149,4 +149,5 @@ class StepsViewModel(application: Application) : AndroidViewModel(application) {
     private val db = AppDatabase.getInstance(application)
 
     fun getAllStepsForRecipe(recipeId: Int) = db.stepDao().getStepsForRecipe(recipeId)
+    fun getAllSteps() = db.stepDao().getAll()
 }
