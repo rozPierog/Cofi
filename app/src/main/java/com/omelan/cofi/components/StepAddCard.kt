@@ -320,7 +320,7 @@ fun PillButton(
         enabled = enabled,
         modifier = modifier,
     ) {
-        Icon(painter, contentDescription = null)
+        Icon(painter = painter, contentDescription = null, modifier = Modifier.size(22.dp))
         if (!text.isNullOrBlank()) {
             Spacer(modifier = Modifier.width(Spacing.small))
             Text(text = text)
