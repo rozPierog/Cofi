@@ -7,6 +7,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,8 +17,7 @@ import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -49,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.Recipe
@@ -112,7 +113,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -159,24 +160,31 @@ fun RecipeEdit(
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
+
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
         item {
             Row(verticalAlignment = Alignment.Bottom) {
-                IconButton(
+                OutlinedIconButton(
                     modifier = Modifier
+                        .padding(end = Spacing.normal)
                         .defaultMinSize(
-                            minHeight = TextFieldDefaults.MinHeight
-                        )
-                        .padding(bottom = Spacing.xSmall)
-                        .padding(horizontal = Spacing.normal),
+                            minHeight = TextFieldDefaults.MinHeight,
+                            minWidth = TextFieldDefaults.MinHeight,
+                        ),
+                    shape = ShapeDefaults.ExtraSmall,
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                     onClick = {
+                        focusRequester.freeFocus()
+
+                        coroutineScope.launch {
+                            keyboardController?.hide()
+                        }
                         coroutineScope.launch {
                             if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                             } else {
                                 bottomSheetScaffoldState.bottomSheetState.expand()
                             }
-                            keyboardController?.hide()
                         }
                     }
                 ) {
@@ -429,7 +437,7 @@ fun RecipeEdit(
 }
 
 @Composable
-fun PhoneLayout(
+private fun PhoneLayout(
     paddingValues: PaddingValues,
     maxHeight: Dp,
     lazyListState: LazyListState,
@@ -452,7 +460,7 @@ fun PhoneLayout(
 }
 
 @Composable
-fun TabletLayout(
+private fun TabletLayout(
     paddingValues: PaddingValues,
     maxHeight: Dp,
     lazyListState: LazyListState,
@@ -483,7 +491,7 @@ fun TabletLayout(
 }
 
 @Composable
-fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
+private fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -509,7 +517,7 @@ fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
 }
 
 @Composable
-fun SaveDialog(
+private fun SaveDialog(
     onSave: () -> Unit,
     onDiscard: () -> Unit,
     onDismiss: () -> Unit,
@@ -548,7 +556,7 @@ fun SaveDialog(
 }
 
 @Composable
-fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
+private fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -578,8 +586,27 @@ fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
 @ExperimentalAnimationApi
 @Preview
 @Composable
-fun RecipeEditPreview() {
+private fun RecipeAddPreview() {
     CofiTheme {
-        RecipeEdit(saveRecipe = { _, _ -> })
+        CompositionLocalProvider(
+            LocalPiPState provides false,
+        ) {
+            RecipeEdit(saveRecipe = { _, _ -> })
+        }
+    }
+}
+
+@ExperimentalComposeUiApi
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@Preview
+@Composable
+private fun RecipeEditPreview() {
+    CofiTheme {
+        CompositionLocalProvider(
+            LocalPiPState provides false,
+        ) {
+            RecipeEdit(saveRecipe = { _, _ -> }, isEditing = true)
+        }
     }
 }
