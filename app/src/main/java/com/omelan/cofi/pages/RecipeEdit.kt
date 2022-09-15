@@ -174,11 +174,7 @@ fun RecipeEdit(
                     shape = ShapeDefaults.ExtraSmall,
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                     onClick = {
-                        focusRequester.freeFocus()
-
-                        coroutineScope.launch {
-                            keyboardController?.hide()
-                        }
+                        keyboardController?.hide()
                         coroutineScope.launch {
                             if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
                                 bottomSheetScaffoldState.bottomSheetState.collapse()
