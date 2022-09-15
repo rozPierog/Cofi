@@ -1,12 +1,9 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 
 package com.omelan.cofi.pages
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -16,6 +13,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.material3.Icon
@@ -80,6 +78,9 @@ fun RecipeEdit(
     var showDeleteModal by remember { mutableStateOf(false) }
     var showCloneModal by remember { mutableStateOf(false) }
     var showSaveModal by remember { mutableStateOf(false) }
+    var showDescription by remember {
+        mutableStateOf(false)
+    }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
     var name by remember(recipeToEdit) {
         mutableStateOf(
@@ -101,7 +102,8 @@ fun RecipeEdit(
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
     val lazyListState = rememberLazyListState()
     val textSelectionColors = MaterialTheme.createTextSelectionColors()
-    val focusRequester = remember { FocusRequester() }
+    val nameFocusRequester = remember { FocusRequester() }
+    val descriptionFocusRequester = remember { FocusRequester() }
 
     val canSave = name.text.isNotBlank() && steps.isNotEmpty()
     val configuration = LocalConfiguration.current
@@ -158,7 +160,14 @@ fun RecipeEdit(
     }
 
     LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
+        nameFocusRequester.requestFocus()
+    }
+    LaunchedEffect(showDescription) {
+        if (showDescription) {
+            descriptionFocusRequester.requestFocus()
+        } else {
+            nameFocusRequester.requestFocus()
+        }
     }
 
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
@@ -197,7 +206,7 @@ fun RecipeEdit(
                     isError = name.text.isBlank() && !nameHasFocus,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .focusRequester(focusRequester)
+                        .focusRequester(nameFocusRequester)
                         .onFocusChanged {
                             nameHasFocus = it.isFocused
                         }
@@ -209,16 +218,31 @@ fun RecipeEdit(
             }
         }
         item {
-            OutlinedTextField(
-                value = description,
-                onValueChange = { description = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = Spacing.big)
-                    .testTag("recipe_edit_description"),
-                keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
-                label = { Text(stringResource(id = R.string.recipe_edit_description)) },
-            )
+            AnimatedContent(targetState = showDescription) {
+                if (!showDescription) {
+                    TextButton(onClick = { showDescription = !showDescription }) {
+                        Icon(
+                            modifier = Modifier.size(20.dp),
+                            imageVector = Icons.Rounded.Add,
+                            contentDescription = ""
+                        )
+                        Spacer(modifier = Modifier.size(Spacing.small))
+                        Text(text = "Add description")
+                    }
+                } else {
+                    OutlinedTextField(
+                        value = description,
+                        onValueChange = { description = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = Spacing.big)
+                            .focusRequester(descriptionFocusRequester)
+                            .testTag("recipe_edit_description"),
+                        keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
+                        label = { Text(stringResource(id = R.string.recipe_edit_description)) },
+                    )
+                }
+            }
         }
     }
 
