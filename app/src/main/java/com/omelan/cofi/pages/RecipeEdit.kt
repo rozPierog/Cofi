@@ -174,6 +174,7 @@ fun RecipeEdit(
     }
 
     LaunchedEffect(Unit) {
+        collapse()
         nameFocusRequester.requestFocus()
     }
     LaunchedEffect(showDescription) {
@@ -183,7 +184,6 @@ fun RecipeEdit(
             nameFocusRequester.requestFocus()
         }
     }
-
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
         item {
             Row(verticalAlignment = Alignment.Bottom) {
@@ -382,13 +382,6 @@ fun RecipeEdit(
                     }
                 },
                 actions = {
-                    // TODO: Add recipe settings later
-//                    IconButton(onClick = { showCloneModal = true }) {
-//                        Icon(
-//                            Icons.Rounded.Settings,
-//                            contentDescription = null
-//                        )
-//                    }
                     if (isEditing) {
                         IconButton(onClick = { showCloneModal = true }) {
                             Icon(
