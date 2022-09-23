@@ -41,7 +41,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -54,6 +56,7 @@ import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.*
+import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 
@@ -78,8 +81,8 @@ fun RecipeEdit(
     var showDeleteModal by remember { mutableStateOf(false) }
     var showCloneModal by remember { mutableStateOf(false) }
     var showSaveModal by remember { mutableStateOf(false) }
-    var showDescription by remember {
-        mutableStateOf(false)
+    var showDescription by remember(recipeToEdit.description) {
+        mutableStateOf(recipeToEdit.description.isNotBlank())
     }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
     var name by remember(recipeToEdit) {
@@ -90,7 +93,14 @@ fun RecipeEdit(
             )
         )
     }
-    var description by remember(recipeToEdit) { mutableStateOf(recipeToEdit.description) }
+    var description by remember(recipeToEdit) {
+        mutableStateOf(
+            TextFieldValue(
+                recipeToEdit.description,
+                TextRange(recipeToEdit.description.length),
+            )
+        )
+    }
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
 
@@ -122,7 +132,7 @@ fun RecipeEdit(
     val safeGoBack: () -> Unit = {
         if (steps !== stepsToEdit ||
             name.text != recipeToEdit.name ||
-            description != recipeToEdit.description ||
+            description.text != recipeToEdit.description ||
             pickedIcon != recipeToEdit.recipeIcon
         ) {
             showSaveModal = true
@@ -147,7 +157,11 @@ fun RecipeEdit(
 
     val onSave: () -> Unit = {
         saveRecipe(
-            recipeToEdit.copy(name = name.text, description = description, recipeIcon = pickedIcon),
+            recipeToEdit.copy(
+                name = name.text,
+                description = description.text,
+                recipeIcon = pickedIcon
+            ),
             steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
         )
     }
@@ -163,7 +177,7 @@ fun RecipeEdit(
         nameFocusRequester.requestFocus()
     }
     LaunchedEffect(showDescription) {
-        if (showDescription) {
+        if (showDescription && recipeToEdit.description.isBlank()) {
             descriptionFocusRequester.requestFocus()
         } else {
             nameFocusRequester.requestFocus()
@@ -218,6 +232,7 @@ fun RecipeEdit(
             }
         }
         item {
+            val linkColor = MaterialTheme.colorScheme.secondary
             AnimatedContent(targetState = showDescription) {
                 if (!showDescription) {
                     TextButton(onClick = { showDescription = !showDescription }) {
@@ -232,6 +247,12 @@ fun RecipeEdit(
                 } else {
                     OutlinedTextField(
                         value = description,
+                        visualTransformation = {
+                            TransformedText(
+                                buildAnnotatedStringWithUrls(description.text, linkColor),
+                                OffsetMapping.Identity
+                            )
+                        },
                         onValueChange = { description = it },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -446,7 +467,7 @@ fun RecipeEdit(
                 cloneRecipe(
                     recipeToEdit.copy(
                         name = name.text,
-                        description = description,
+                        description = description.text,
                         recipeIcon = pickedIcon,
                     ),
                     steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }

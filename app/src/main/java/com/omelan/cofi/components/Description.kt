@@ -1,19 +1,21 @@
 package com.omelan.cofi.components
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
@@ -22,34 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.URL_ANNOTATION
-import com.omelan.cofi.utils.addLinkAnnotation
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
-private fun extractUrls(text: String): List<String> {
-    val containedUrls: MutableList<String> = arrayListOf()
-    val urlRegex =
-        "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?+-=\\\\.&]*)"
-    val pattern: Pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE)
-    val urlMatcher: Matcher = pattern.matcher(text)
-    while (urlMatcher.find()) {
-        containedUrls.add(
-            text.substring(
-                urlMatcher.start(0),
-                urlMatcher.end(0)
-            )
-        )
-    }
-    return containedUrls
-}
+import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
@@ -57,21 +39,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     var isExpanded by remember { mutableStateOf(false) }
     var showExpandButton by remember { mutableStateOf(false) }
     val rotationDegree = remember { Animatable(initialValue = 0f) }
-    val descriptionWithLinks = buildAnnotatedString {
-        val urlsInDescription = extractUrls(descriptionText)
-        append(descriptionText)
-        addStyle(
-            SpanStyle(color = MaterialTheme.colorScheme.onSurface),
-            0,
-            descriptionText.length
-        )
-        var lastPosition = 0
-        urlsInDescription.forEach {
-            val positionOfUrl = descriptionText.indexOf(it, startIndex = lastPosition)
-            lastPosition = positionOfUrl
-            addLinkAnnotation(start = positionOfUrl, text = it)
-        }
-    }
+    val descriptionWithLinks = buildAnnotatedStringWithUrls(descriptionText)
     LaunchedEffect(isExpanded) {
         rotationDegree.animateTo(
             targetValue = if (isExpanded) 180f else 0f,
@@ -84,11 +52,8 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                 .animateContentSize()
                 .toggleable(
                     value = isExpanded,
-                    onValueChange = {
-                        if (showExpandButton) {
-                            isExpanded = it
-                        }
-                    },
+                    enabled = showExpandButton,
+                    onValueChange = { isExpanded = it },
                     role = Role.Switch,
                     interactionSource = remember { MutableInteractionSource() },
                     indication = rememberRipple(bounded = true),
@@ -112,7 +77,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                 } else {
                     2
                 },
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyLarge.copy(color = LocalContentColor.current),
                 modifier = Modifier.animateContentSize(),
                 onClick = {
                     descriptionWithLinks
@@ -143,15 +108,6 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
             }
         }
     }
-}
-
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun DescriptionPreview() {
-    Description(
-        descriptionText = "Recipe made by Hoffman Weird Coffee Person. Grind mildly" +
-                " \n https://www.youtube.com/watch?v=AI4ynXzkSQo "
-    )
 }
 
 @Preview
@@ -227,5 +183,23 @@ fun DescriptionLongPreview() {
             "\n" +
             "◉ Enjoy!\n" +
             "\n"
-    Description(descriptionText = longDesc)
+    CofiTheme {
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(Spacing.big)) {
+            item {
+                Description(descriptionText = longDesc)
+            }
+            item {
+                Description(
+                    descriptionText = "Recipe made by James Hoffmann. Grind mildly" +
+                            " \n https://www.youtube.com/watch?v=AI4ynXzkSQo "
+                )
+            }
+            item {
+                Description(
+                    descriptionText = "Recipe made by James Hoffmann. Grind mildly"
+                )
+            }
+        }
+
+    }
 }
