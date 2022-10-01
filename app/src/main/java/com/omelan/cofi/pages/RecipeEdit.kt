@@ -125,7 +125,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -175,13 +175,13 @@ fun RecipeEdit(
 
     LaunchedEffect(Unit) {
         collapse()
-        nameFocusRequester.requestFocus()
+//        nameFocusRequester.requestFocus()
     }
     LaunchedEffect(showDescription) {
         if (showDescription && recipeToEdit.description.isBlank()) {
             descriptionFocusRequester.requestFocus()
         } else {
-            nameFocusRequester.requestFocus()
+//            nameFocusRequester.requestFocus()
         }
     }
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
@@ -235,7 +235,9 @@ fun RecipeEdit(
             val linkColor = MaterialTheme.colorScheme.secondary
             AnimatedContent(targetState = showDescription) {
                 if (!showDescription) {
-                    TextButton(onClick = { showDescription = !showDescription }) {
+                    TextButton(
+                        modifier = Modifier.testTag("recipe_edit_description_button"),
+                        onClick = { showDescription = !showDescription }) {
                         Icon(
                             modifier = Modifier.size(20.dp),
                             imageVector = Icons.Rounded.Add,
