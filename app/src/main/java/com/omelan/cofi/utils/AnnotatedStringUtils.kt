@@ -70,11 +70,6 @@ fun buildAnnotatedStringWithUrls(baseText: String) =
     buildAnnotatedString {
         val urlsInDescription = extractUrls(baseText)
         append(baseText)
-//        addStyle(
-//            SpanStyle(color = MaterialTheme.colorScheme.onSurface),
-//            0,
-//            baseText.length
-//        )
         var lastPosition = 0
         urlsInDescription.forEach {
             val positionOfUrl = baseText.indexOf(it, startIndex = lastPosition)
@@ -91,11 +86,6 @@ fun buildAnnotatedStringWithUrls(baseText: String, color: Color) =
     buildAnnotatedString {
         val urlsInDescription = extractUrls(baseText)
         append(baseText)
-//        addStyle(
-//            SpanStyle(color = color),
-//            0,
-//            baseText.length
-//        )
         var lastPosition = 0
         urlsInDescription.forEach {
             val positionOfUrl = baseText.indexOf(it, startIndex = lastPosition)
