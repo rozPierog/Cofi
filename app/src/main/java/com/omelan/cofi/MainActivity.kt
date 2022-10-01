@@ -8,8 +8,11 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -51,7 +54,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.util.*
+import java.util.Date
 
 val LocalPiPState = staticCompositionLocalOf<Boolean> {
     error("AmbientPiPState value not available.")
@@ -262,19 +265,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                            slideIntoContainer(
-                                AnimatedContentScope.SlideDirection.End,
-                                animationSpec = tween(tweenDuration),
-                                initialOffset = { fullWidth -> -fullWidth / 5 }
-                            )
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.End,
+                                    animationSpec = tween(tweenDuration),
+                                    initialOffset = { fullWidth -> -fullWidth / 5 }
+                                )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                            slideOutOfContainer(
-                                AnimatedContentScope.SlideDirection.Start,
-                                animationSpec = tween(tweenDuration),
-                                targetOffset = { fullWidth -> fullWidth / 5 }
-                            )
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Start,
+                                    animationSpec = tween(tweenDuration),
+                                    targetOffset = { fullWidth -> fullWidth / 5 }
+                                )
                     },
                 ) {
 //                    composable("list_color") {
@@ -328,7 +331,13 @@ class MainActivity : MonetCompatActivity() {
                             TimerSettings(goBack = goBack)
                         }
                         composable("backup") {
-                            BackupRestoreSettings(goBack = goBack)
+                            BackupRestoreSettings(goBack = goBack, goToRoot = {
+                                navController.navigate("list") {
+                                    popUpTo("list") {
+                                        inclusive = true
+                                    }
+                                }
+                            })
                         }
                         composable("about") {
                             AppSettingsAbout(

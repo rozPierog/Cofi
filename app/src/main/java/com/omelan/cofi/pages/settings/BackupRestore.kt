@@ -41,7 +41,7 @@ import java.util.Calendar
 import java.util.Locale
 
 @Composable
-fun BackupRestoreSettings(goBack: () -> Unit) {
+fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
     val context = LocalContext.current
     val snackbarState = SnackbarHostState()
     var showDefaultRecipeDialog by remember { mutableStateOf(false) }
@@ -71,7 +71,14 @@ fun BackupRestoreSettings(goBack: () -> Unit) {
                 hostState = snackbarState,
                 modifier = Modifier.padding(getDefaultPadding())
             ) {
-                Snackbar(shape = RoundedCornerShape(50)) {
+                Snackbar(shape = RoundedCornerShape(50),
+                    action = {
+                        it.visuals.actionLabel?.let { label ->
+                            TextButton(onClick = goToRoot) {
+                                Text(text = label)
+                            }
+                        }
+                    }) {
                     Text(text = it.visuals.message)
                 }
             }
@@ -133,7 +140,8 @@ fun BackupRestoreSettings(goBack: () -> Unit) {
                             context.resources.getQuantityString(
                                 R.plurals.settings_snackbar_restore,
                                 numberOfRestored, numberOfRestored
-                            )
+                            ),
+                            actionLabel = "Show",
                         )
                     }
                 })
@@ -287,5 +295,5 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
 @Preview
 @Composable
 fun BackupRestoreSettings() {
-    BackupRestoreSettings(goBack = { })
+    BackupRestoreSettings(goBack = {}, goToRoot = {})
 }
