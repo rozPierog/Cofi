@@ -244,7 +244,7 @@ fun RecipeEdit(
                             contentDescription = ""
                         )
                         Spacer(modifier = Modifier.size(Spacing.small))
-                        Text(text = "Add description")
+                        Text(text = stringResource(id = R.string.recipe_edit_description_button))
                     }
                 } else {
                     OutlinedTextField(

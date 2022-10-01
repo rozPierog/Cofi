@@ -143,7 +143,7 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
                                 R.plurals.settings_snackbar_restore,
                                 numberOfRestored, numberOfRestored
                             ),
-                            actionLabel = "Show",
+                            actionLabel = context.resources.getString(R.string.button_show),
                         )
                     }
                 })
