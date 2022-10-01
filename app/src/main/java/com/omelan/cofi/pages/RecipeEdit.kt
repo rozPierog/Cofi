@@ -58,6 +58,7 @@ import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.*
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -112,8 +113,7 @@ fun RecipeEdit(
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
     val lazyListState = rememberLazyListState()
     val textSelectionColors = MaterialTheme.createTextSelectionColors()
-    val nameFocusRequester = remember { FocusRequester() }
-    val descriptionFocusRequester = remember { FocusRequester() }
+    val (nameFocusRequester, descriptionFocusRequester) = remember { FocusRequester.createRefs() }
 
     val canSave = name.text.isNotBlank() && steps.isNotEmpty()
     val configuration = LocalConfiguration.current
@@ -125,7 +125,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -175,13 +175,15 @@ fun RecipeEdit(
 
     LaunchedEffect(Unit) {
         collapse()
-//        nameFocusRequester.requestFocus()
+        delay(100)
+        nameFocusRequester.requestFocus()
     }
     LaunchedEffect(showDescription) {
         if (showDescription && recipeToEdit.description.isBlank()) {
             descriptionFocusRequester.requestFocus()
         } else {
-//            nameFocusRequester.requestFocus()
+            delay(100)
+            nameFocusRequester.requestFocus()
         }
     }
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
@@ -237,7 +239,8 @@ fun RecipeEdit(
                 if (!showDescription) {
                     TextButton(
                         modifier = Modifier.testTag("recipe_edit_description_button"),
-                        onClick = { showDescription = !showDescription }) {
+                        onClick = { showDescription = !showDescription }
+                    ) {
                         Icon(
                             modifier = Modifier.size(20.dp),
                             imageVector = Icons.Rounded.Add,
