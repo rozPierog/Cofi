@@ -15,7 +15,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class RecipeInfoTests {
+class RecipeInfoTest {
     @get:Rule
     val composeTestRule = createComposeRule()
     // createComposeRule() if you don't need access to the activityTestRule
