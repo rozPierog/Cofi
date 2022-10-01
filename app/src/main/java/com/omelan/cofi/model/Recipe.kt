@@ -89,7 +89,7 @@ class RecipeIconTypeConverter {
 data class Recipe(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val description: String,
+    val description: String = "",
     @ColumnInfo(name = "last_finished") val lastFinished: Long = 0L,
     @ColumnInfo(name = "icon") val recipeIcon: RecipeIcon = RecipeIcon.Grinder,
 )

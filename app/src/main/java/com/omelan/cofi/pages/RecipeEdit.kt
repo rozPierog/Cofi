@@ -58,6 +58,7 @@ import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.*
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -112,8 +113,7 @@ fun RecipeEdit(
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
     val lazyListState = rememberLazyListState()
     val textSelectionColors = MaterialTheme.createTextSelectionColors()
-    val nameFocusRequester = remember { FocusRequester() }
-    val descriptionFocusRequester = remember { FocusRequester() }
+    val (nameFocusRequester, descriptionFocusRequester) = remember { FocusRequester.createRefs() }
 
     val canSave = name.text.isNotBlank() && steps.isNotEmpty()
     val configuration = LocalConfiguration.current
@@ -175,12 +175,14 @@ fun RecipeEdit(
 
     LaunchedEffect(Unit) {
         collapse()
+        delay(100)
         nameFocusRequester.requestFocus()
     }
     LaunchedEffect(showDescription) {
         if (showDescription && recipeToEdit.description.isBlank()) {
             descriptionFocusRequester.requestFocus()
         } else {
+            delay(100)
             nameFocusRequester.requestFocus()
         }
     }
@@ -235,14 +237,17 @@ fun RecipeEdit(
             val linkColor = MaterialTheme.colorScheme.secondary
             AnimatedContent(targetState = showDescription) {
                 if (!showDescription) {
-                    TextButton(onClick = { showDescription = !showDescription }) {
+                    TextButton(
+                        modifier = Modifier.testTag("recipe_edit_description_button"),
+                        onClick = { showDescription = !showDescription }
+                    ) {
                         Icon(
                             modifier = Modifier.size(20.dp),
                             imageVector = Icons.Rounded.Add,
                             contentDescription = ""
                         )
                         Spacer(modifier = Modifier.size(Spacing.small))
-                        Text(text = "Add description")
+                        Text(text = stringResource(id = R.string.recipe_edit_description_button))
                     }
                 } else {
                     OutlinedTextField(

@@ -15,7 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.util.*
+import java.util.Locale
 
 @ExperimentalAnimationApi
 @RunWith(JUnit4::class)
@@ -57,7 +57,10 @@ class RecipeEditTest {
         }
         composeTestRule.onNodeWithTag("recipe_edit_name")
             .performTextInput(expectedRecipe.name)
-        composeTestRule.onNodeWithTag("recipe_edit_description")
+        composeTestRule.onNodeWithTag("recipe_edit_description").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_edit_description_button").assertExists()
+            .performClick()
+        composeTestRule.onNodeWithTag("recipe_edit_description").assertExists()
             .performTextInput(expectedRecipe.description)
         composeTestRule.onNodeWithTag(
             "step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}"

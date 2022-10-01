@@ -2,15 +2,17 @@
 
 package com.omelan.cofi.pages.settings
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
@@ -99,6 +101,13 @@ fun AppSettings(
             }
             item {
                 ListItem(
+                    text = { Text(text = stringResource(id = R.string.settings_about_item)) },
+                    icon = { Icon(Icons.Rounded.Info, contentDescription = null) },
+                    modifier = Modifier.settingsItemModifier(onClick = goToAbout)
+                )
+            }
+            item {
+                ListItem(
                     text = { Text(text = stringResource(id = R.string.settings_bug_item)) },
                     icon = {
                         Icon(
@@ -111,13 +120,6 @@ fun AppSettings(
                             uriHandler.openUri("https://github.com/rozPierog/Cofi/issues")
                         }
                     ),
-                )
-            }
-            item {
-                ListItem(
-                    text = { Text(text = stringResource(id = R.string.settings_about_item)) },
-                    icon = { Icon(Icons.Rounded.Info, contentDescription = null) },
-                    modifier = Modifier.settingsItemModifier(onClick = goToAbout)
                 )
             }
         }

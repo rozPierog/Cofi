@@ -12,6 +12,7 @@
     <string name="recipe_delete_text">Nie będzie można przywrócić tego przepisu</string>
     <string name="recipe_edit_name">Nazwa</string>
     <string name="recipe_edit_description">Opis</string>
+    <string name="recipe_edit_description_button">Dodaj opis</string>
     <string name="recipe_edit_title">Edytuj przepis</string>
     <string name="recipe_add_new_title">Dodaj nowy przepis</string>
     <string name="recipe_details_automation_dialog_title">Bezpośredni link</string>
@@ -29,6 +30,7 @@ UWAGA: ten link nie służy do dzielenia się przepisem z innymi"</string>
     <string name="settings_about_title">O aplikacji</string>
     <string name="settings_licenses_item">Licencje</string>
     <string name="settings_github_item">Repozytorium na Github</string>
+    <string name="button_show">Pokaż</string>
     <string name="step_add_remove">Usuń</string>
     <string name="timer_enjoy">Czas na kawę</string>
     <string name="settings_pip_item">Obraz w obrazie</string>

@@ -15,6 +15,7 @@
     <string name="recipe_delete_text">This will remove this recipe permanently</string>
     <string name="recipe_edit_name">Name</string>
     <string name="recipe_edit_description">Description</string>
+    <string name="recipe_edit_description_button">Add description</string>
     <string name="recipe_edit_title">Edit recipe</string>
     <string name="recipe_add_new_title">Create new recipe</string>
     <string name="recipe_details_automation_dialog_title">Direct link</string>
@@ -49,6 +50,7 @@ WARNING: You cannot share recipe this way!"</string>
         <item quantity="one">Restored %d recipe</item>
         <item quantity="other">Restored %d recipes</item>
     </plurals>
+    <string name="button_show">Show</string>
     <string name="step_add_remove">Remove</string>
     <string name="timer_enjoy">Enjoy your coffee</string>
     <string name="prepopulate_v60_name">Ultimate V60</string>
