@@ -2,7 +2,6 @@ package com.omelan.cofi.components
 
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.omelan.cofi.R
@@ -20,7 +19,6 @@ class RecipeInfoTests {
     @get:Rule
     val composeTestRule = createComposeRule()
     // createComposeRule() if you don't need access to the activityTestRule
-
 
     @Test
     fun showRecipeInfo() {
