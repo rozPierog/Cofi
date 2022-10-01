@@ -264,7 +264,7 @@ fun StepAddCard(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = Spacing.big),
-                        ) {
+                    ) {
                         PillButton(
                             painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowUp),
                             onClick = { onPositionChange(-1) },
