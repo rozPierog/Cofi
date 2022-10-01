@@ -2,17 +2,17 @@
 
 package com.omelan.cofi.components
 
+import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,10 +29,10 @@ fun createAppBarBehavior(
     topBarState: TopAppBarState = rememberTopAppBarState()
 ): TopAppBarScrollBehavior {
     val decayAnimationSpec = rememberSplineBasedDecay<Float>()
-    val scrollBehavior = remember(decayAnimationSpec) {
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec, topBarState)
-    }
-    return scrollBehavior
+    return TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+        state = topBarState,
+        flingAnimationSpec = decayAnimationSpec
+    )
 }
 
 data class AppBarBehaviorWithCollapse(
@@ -97,8 +97,11 @@ fun InsetAwareTopAppBar(
     elevation: Dp = 4.dp
 ) {
     val scrollFraction = scrollBehavior?.state?.collapsedFraction ?: 0f
-    val colors = TopAppBarDefaults.largeTopAppBarColors()
-    val appBarContainerColor by colors.containerColor(scrollFraction)
+    val appBarContainerColor = lerp(
+        MaterialTheme.colorScheme.surface,
+        MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
+        FastOutLinearInEasing.transform(scrollFraction)
+    )
     Surface(
         color = Color.Transparent,
         shadowElevation = elevation * scrollFraction,

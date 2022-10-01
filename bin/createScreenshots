@@ -7,17 +7,17 @@ while read -r line; do
 done < bin/emulatorNames
 
 function waitForEmulator {
-    bootanim=""
-    failcounter=0
+    boot_animation=""
+    fail_counter=0
     timeout_in_sec=360
 
-    until [[ "$bootanim" =~ "stopped" ]]; do
-      bootanim=$(adb -s "$1" -e shell getprop init.svc.bootanim 2>&1 &)
-      if [[ "$bootanim" =~ "device not found" || "$bootanim" =~ "device offline"
-        || "$bootanim" =~ "running" ]]; then
-        let "failcounter += 1"
+    until [[ "$boot_animation" =~ "stopped" ]]; do
+      boot_animation=$(adb -s "$1" -e shell getprop init.svc.boot_animation 2>&1 &)
+      if [[ "$boot_animation" =~ "device not found" || "$boot_animation" =~ "device offline"
+        || "$boot_animation" =~ "running" ]]; then
+        (( fail_counter += 1 )) || true
         echo "Waiting for emulator to start"
-        if [[ $failcounter -gt timeout_in_sec ]]; then
+        if [[ $fail_counter -gt timeout_in_sec ]]; then
           echo "Timeout ($timeout_in_sec seconds) reached; failed to start emulator"
           exit 1
         fi

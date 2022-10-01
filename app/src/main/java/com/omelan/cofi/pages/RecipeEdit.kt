@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -31,13 +32,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -48,10 +54,7 @@ import com.omelan.cofi.components.*
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
-import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.ui.createTextSelectionColors
-import com.omelan.cofi.ui.modal
-import com.omelan.cofi.ui.shapes
+import com.omelan.cofi.ui.*
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 
@@ -77,7 +80,14 @@ fun RecipeEdit(
     var showCloneModal by remember { mutableStateOf(false) }
     var showSaveModal by remember { mutableStateOf(false) }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
-    var name by remember(recipeToEdit) { mutableStateOf(recipeToEdit.name) }
+    var name by remember(recipeToEdit) {
+        mutableStateOf(
+            TextFieldValue(
+                recipeToEdit.name,
+                TextRange(recipeToEdit.name.length),
+            )
+        )
+    }
     var description by remember(recipeToEdit) { mutableStateOf(recipeToEdit.description) }
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
@@ -87,11 +97,12 @@ fun RecipeEdit(
     )
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
-    val appBarBehavior = createAppBarBehavior()
+    val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
     val lazyListState = rememberLazyListState()
     val textSelectionColors = MaterialTheme.createTextSelectionColors()
+    val focusRequester = remember { FocusRequester() }
 
-    val canSave = name.isNotBlank() && steps.isNotEmpty()
+    val canSave = name.text.isNotBlank() && steps.isNotEmpty()
     val configuration = LocalConfiguration.current
 
     val isPhoneLayout by remember(
@@ -107,7 +118,7 @@ fun RecipeEdit(
 
     val safeGoBack: () -> Unit = {
         if (steps !== stepsToEdit ||
-            name != recipeToEdit.name ||
+            name.text != recipeToEdit.name ||
             description != recipeToEdit.description ||
             pickedIcon != recipeToEdit.recipeIcon
         ) {
@@ -122,12 +133,18 @@ fun RecipeEdit(
             stepWithOpenEditor = null
             return@BackHandler
         }
+        if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
+            coroutineScope.launch {
+                bottomSheetScaffoldState.bottomSheetState.collapse()
+            }
+            return@BackHandler
+        }
         safeGoBack()
     }
 
     val onSave: () -> Unit = {
         saveRecipe(
-            recipeToEdit.copy(name = name, description = description, recipeIcon = pickedIcon),
+            recipeToEdit.copy(name = name.text, description = description, recipeIcon = pickedIcon),
             steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
         )
     }
@@ -139,10 +156,19 @@ fun RecipeEdit(
         }
     }
 
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
         item {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.Bottom) {
                 IconButton(
+                    modifier = Modifier
+                        .defaultMinSize(
+                            minHeight = TextFieldDefaults.MinHeight
+                        )
+                        .padding(bottom = Spacing.xSmall)
+                        .padding(horizontal = Spacing.normal),
                     onClick = {
                         coroutineScope.launch {
                             if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
@@ -160,11 +186,17 @@ fun RecipeEdit(
                         contentDescription = null
                     )
                 }
+                var nameHasFocus by remember { mutableStateOf(true) }
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
+                    isError = name.text.isBlank() && !nameHasFocus,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .focusRequester(focusRequester)
+                        .onFocusChanged {
+                            nameHasFocus = it.isFocused
+                        }
                         .testTag("recipe_edit_name"),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
@@ -247,9 +279,7 @@ fun RecipeEdit(
                 StepAddCard(
                     onTypeSelect = {
                         coroutineScope.launch {
-                            lazyListState.animateScrollToItem(
-                                lazyListState.layoutInfo.totalItemsCount - 1
-                            )
+                            collapse()
                         }
                     },
                     modifier = Modifier.animateItemPlacement(),
@@ -303,6 +333,13 @@ fun RecipeEdit(
                     }
                 },
                 actions = {
+                    // TODO: Add recipe settings later
+//                    IconButton(onClick = { showCloneModal = true }) {
+//                        Icon(
+//                            Icons.Rounded.Settings,
+//                            contentDescription = null
+//                        )
+//                    }
                     if (isEditing) {
                         IconButton(onClick = { showCloneModal = true }) {
                             Icon(
@@ -380,7 +417,7 @@ fun RecipeEdit(
             CloneDialog(onConfirm = {
                 cloneRecipe(
                     recipeToEdit.copy(
-                        name = name,
+                        name = name.text,
                         description = description,
                         recipeIcon = pickedIcon,
                     ),
@@ -542,5 +579,7 @@ fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
 @Preview
 @Composable
 fun RecipeEditPreview() {
-    RecipeEdit(saveRecipe = { _, _ -> })
+    CofiTheme {
+        RecipeEdit(saveRecipe = { _, _ -> })
+    }
 }

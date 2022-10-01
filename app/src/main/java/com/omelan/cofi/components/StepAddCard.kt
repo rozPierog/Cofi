@@ -1,9 +1,13 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 
 package com.omelan.cofi.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -14,17 +18,18 @@ import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -39,8 +44,9 @@ import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun StepAddCard(
     modifier: Modifier = Modifier,
@@ -56,7 +62,8 @@ fun StepAddCard(
     var pickedType by remember(stepToEdit) { mutableStateOf(stepToEdit?.type) }
     val pickedTypeName = pickedType?.stringRes?.let { stringResource(id = it) } ?: ""
     var stepName by remember(stepToEdit, pickedTypeName) {
-        mutableStateOf(TextFieldValue(stepToEdit?.name ?: pickedTypeName))
+        val name = stepToEdit?.name ?: pickedTypeName
+        mutableStateOf(TextFieldValue(name, TextRange(name.length)))
     }
     var stepTime by remember(stepToEdit) {
         if (stepToEdit == null) {
@@ -80,10 +87,13 @@ fun StepAddCard(
     }
     val nameFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val isExpanded = pickedType != null
+    val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(key1 = isExpanded) {
         if (isExpanded) {
             onTypeSelect()
+            nameFocusRequester.requestFocus()
         }
     }
     fun saveStep() {
@@ -108,8 +118,10 @@ fun StepAddCard(
     }
     Surface(
         shape = RoundedCornerShape(10.dp),
-        modifier = modifier.fillMaxWidth(),
-        tonalElevation = 2.dp
+        modifier = modifier
+            .fillMaxWidth()
+            .bringIntoViewRequester(bringIntoViewRequester),
+        tonalElevation = 1.dp
     ) {
         Column(
             modifier = Modifier
@@ -134,6 +146,7 @@ fun StepAddCard(
                 OutlinedTextField(
                     label = { Text(text = stringResource(id = R.string.step_add_name)) },
                     value = stepName,
+                    isError = stepName.text.isBlank(),
                     singleLine = true,
                     onValueChange = { stepName = it },
                     keyboardOptions = KeyboardOptions(
@@ -149,6 +162,14 @@ fun StepAddCard(
                         .testTag("step_name")
                         .padding(Spacing.xSmall)
                         .focusRequester(nameFocusRequester)
+                        .onFocusEvent {
+                            if (it.isFocused) {
+                                coroutineScope.launch {
+                                    awaitFrame()
+                                    bringIntoViewRequester.bringIntoView()
+                                }
+                            }
+                        }
                         .fillMaxWidth(),
                 )
                 OutlinedTextField(
@@ -189,7 +210,7 @@ fun StepAddCard(
                         .padding(Spacing.xSmall)
                         .fillMaxWidth(),
                 )
-                if (pickedType?.isNotWaitStepType() == true) {
+                AnimatedVisibility(visible = pickedType?.isNotWaitStepType() == true) {
                     OutlinedTextField(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
                         value = stepValue,

@@ -332,6 +332,7 @@ fun RecipeDetails(
                     }
                 },
             currentStep = currentStep,
+            allSteps = steps,
             animatedProgressValue = animatedProgressValue,
             animatedProgressColor = animatedProgressColor,
             isInPiP = isInPiP,
@@ -467,19 +468,21 @@ fun TabletLayout(
                 if (isInPiP) {
                     PaddingValues(0.dp)
                 } else {
-                    getDefaultPadding(paddingValues)
+                    paddingValues
                 }
             ),
+
         horizontalArrangement = Arrangement.Center,
     ) {
         timer(
             Modifier
                 .fillMaxWidth(0.5f)
                 .align(Alignment.CenterVertically)
+                .padding(getDefaultPadding(additionalBottomPadding = 0.dp))
         )
         if (!isInPiP) {
             LazyColumn(
-                modifier = Modifier.padding(Spacing.normal),
+                modifier = Modifier.padding(horizontal = Spacing.normal),
                 contentPadding = PaddingValues(bottom = Spacing.bigFab, top = Spacing.big)
             ) {
                 if ((description != null)) {

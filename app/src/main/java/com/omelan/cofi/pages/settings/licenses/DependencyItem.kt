@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.*
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.cofi.model.Dependency
@@ -21,7 +21,6 @@ import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.URL_ANNOTATION
 import com.omelan.cofi.utils.appendLink
 
-@OptIn(ExperimentalTextApi::class)
 @Composable
 fun DependencyItem(dependency: Dependency) {
     val uriHandler = LocalUriHandler.current

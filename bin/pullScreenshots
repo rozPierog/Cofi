@@ -8,10 +8,10 @@ pathToScreenshots="sdcard/Pictures/"
 
 devicesOutput=$(adb devices)
 
-SAVEIFS=$IFS                   # Save current IFS
+SAVE_IFS=$IFS                   # Save current IFS
 IFS=$'\n'                      # Change IFS to new line
 devicesOutput=($devicesOutput) # split to array
-IFS=$SAVEIFS                   # Restore IFS
+IFS=$SAVE_IFS                   # Restore IFS
 
 mkdir -p "${pathToPhoneMetadata}"
 mkdir -p "${pathToTabletMetadata}"
