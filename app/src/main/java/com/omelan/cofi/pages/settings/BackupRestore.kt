@@ -37,7 +37,8 @@ import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import java.nio.charset.StandardCharsets
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 @Composable
 fun BackupRestoreSettings(goBack: () -> Unit) {
@@ -250,17 +251,13 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
     val steps = prepopulateData.steps.groupBy { it.recipeId }
     val db = AppDatabase.getInstance(context)
     Material3Dialog(onDismissRequest = dismiss, onSave = {
-        coroutineScope.launch {
-            recipesToAdd.forEach { recipe ->
+        recipesToAdd.forEach { recipe ->
+            coroutineScope.launch {
                 val idOfRecipe = db.recipeDao().insertRecipe(recipe.copy(id = 0))
-                val stepsOfTheRecipe =
-                    steps[prepopulateData.recipes.indexOf(recipe)] ?: return@launch
+                val stepsOfTheRecipe = steps[recipe.id] ?: return@launch
                 db.stepDao().insertAll(
                     stepsOfTheRecipe.map {
-                        it.copy(
-                            id = 0,
-                            recipeId = idOfRecipe.toInt()
-                        )
+                        it.copy(id = 0, recipeId = idOfRecipe.toInt())
                     }
                 )
             }
