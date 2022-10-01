@@ -71,14 +71,16 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
                 hostState = snackbarState,
                 modifier = Modifier.padding(getDefaultPadding())
             ) {
-                Snackbar(shape = RoundedCornerShape(50),
+                Snackbar(
+                    shape = RoundedCornerShape(50),
                     action = {
                         it.visuals.actionLabel?.let { label ->
                             TextButton(onClick = goToRoot) {
                                 Text(text = label)
                             }
                         }
-                    }) {
+                    }
+                ) {
                     Text(text = it.visuals.message)
                 }
             }
