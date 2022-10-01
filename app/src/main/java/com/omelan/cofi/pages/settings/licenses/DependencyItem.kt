@@ -31,7 +31,11 @@ fun DependencyItem(dependency: Dependency) {
     }
     val licenses = buildAnnotatedString {
         dependency.licenses.forEachIndexed { index, license ->
-            appendLink(text = license.license, url = license.license_url)
+            appendLink(
+                text = license.license,
+                url = license.license_url,
+                color = MaterialTheme.colorScheme.secondary,
+            )
             if (index != dependency.licenses.size - 1) {
                 append(", ")
             }

@@ -1,12 +1,10 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 
 package com.omelan.cofi.pages
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.*
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,9 +13,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,18 +41,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.*
+import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 
@@ -79,6 +81,9 @@ fun RecipeEdit(
     var showDeleteModal by remember { mutableStateOf(false) }
     var showCloneModal by remember { mutableStateOf(false) }
     var showSaveModal by remember { mutableStateOf(false) }
+    var showDescription by remember(recipeToEdit.description) {
+        mutableStateOf(recipeToEdit.description.isNotBlank())
+    }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
     var name by remember(recipeToEdit) {
         mutableStateOf(
@@ -88,7 +93,14 @@ fun RecipeEdit(
             )
         )
     }
-    var description by remember(recipeToEdit) { mutableStateOf(recipeToEdit.description) }
+    var description by remember(recipeToEdit) {
+        mutableStateOf(
+            TextFieldValue(
+                recipeToEdit.description,
+                TextRange(recipeToEdit.description.length),
+            )
+        )
+    }
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
 
@@ -100,7 +112,8 @@ fun RecipeEdit(
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
     val lazyListState = rememberLazyListState()
     val textSelectionColors = MaterialTheme.createTextSelectionColors()
-    val focusRequester = remember { FocusRequester() }
+    val nameFocusRequester = remember { FocusRequester() }
+    val descriptionFocusRequester = remember { FocusRequester() }
 
     val canSave = name.text.isNotBlank() && steps.isNotEmpty()
     val configuration = LocalConfiguration.current
@@ -119,7 +132,7 @@ fun RecipeEdit(
     val safeGoBack: () -> Unit = {
         if (steps !== stepsToEdit ||
             name.text != recipeToEdit.name ||
-            description != recipeToEdit.description ||
+            description.text != recipeToEdit.description ||
             pickedIcon != recipeToEdit.recipeIcon
         ) {
             showSaveModal = true
@@ -144,7 +157,11 @@ fun RecipeEdit(
 
     val onSave: () -> Unit = {
         saveRecipe(
-            recipeToEdit.copy(name = name.text, description = description, recipeIcon = pickedIcon),
+            recipeToEdit.copy(
+                name = name.text,
+                description = description.text,
+                recipeIcon = pickedIcon
+            ),
             steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
         )
     }
@@ -157,26 +174,36 @@ fun RecipeEdit(
     }
 
     LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
+        collapse()
+        nameFocusRequester.requestFocus()
+    }
+    LaunchedEffect(showDescription) {
+        if (showDescription && recipeToEdit.description.isBlank()) {
+            descriptionFocusRequester.requestFocus()
+        } else {
+            nameFocusRequester.requestFocus()
+        }
     }
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
         item {
             Row(verticalAlignment = Alignment.Bottom) {
-                IconButton(
+                OutlinedIconButton(
                     modifier = Modifier
+                        .padding(end = Spacing.normal)
                         .defaultMinSize(
-                            minHeight = TextFieldDefaults.MinHeight
-                        )
-                        .padding(bottom = Spacing.xSmall)
-                        .padding(horizontal = Spacing.normal),
+                            minHeight = TextFieldDefaults.MinHeight,
+                            minWidth = TextFieldDefaults.MinHeight,
+                        ),
+                    shape = ShapeDefaults.ExtraSmall,
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                     onClick = {
+                        keyboardController?.hide()
                         coroutineScope.launch {
                             if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                             } else {
                                 bottomSheetScaffoldState.bottomSheetState.expand()
                             }
-                            keyboardController?.hide()
                         }
                     }
                 ) {
@@ -193,7 +220,7 @@ fun RecipeEdit(
                     isError = name.text.isBlank() && !nameHasFocus,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .focusRequester(focusRequester)
+                        .focusRequester(nameFocusRequester)
                         .onFocusChanged {
                             nameHasFocus = it.isFocused
                         }
@@ -205,16 +232,38 @@ fun RecipeEdit(
             }
         }
         item {
-            OutlinedTextField(
-                value = description,
-                onValueChange = { description = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = Spacing.big)
-                    .testTag("recipe_edit_description"),
-                keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
-                label = { Text(stringResource(id = R.string.recipe_edit_description)) },
-            )
+            val linkColor = MaterialTheme.colorScheme.secondary
+            AnimatedContent(targetState = showDescription) {
+                if (!showDescription) {
+                    TextButton(onClick = { showDescription = !showDescription }) {
+                        Icon(
+                            modifier = Modifier.size(20.dp),
+                            imageVector = Icons.Rounded.Add,
+                            contentDescription = ""
+                        )
+                        Spacer(modifier = Modifier.size(Spacing.small))
+                        Text(text = "Add description")
+                    }
+                } else {
+                    OutlinedTextField(
+                        value = description,
+                        visualTransformation = {
+                            TransformedText(
+                                buildAnnotatedStringWithUrls(description.text, linkColor),
+                                OffsetMapping.Identity
+                            )
+                        },
+                        onValueChange = { description = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = Spacing.big)
+                            .focusRequester(descriptionFocusRequester)
+                            .testTag("recipe_edit_description"),
+                        keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
+                        label = { Text(stringResource(id = R.string.recipe_edit_description)) },
+                    )
+                }
+            }
         }
     }
 
@@ -333,13 +382,6 @@ fun RecipeEdit(
                     }
                 },
                 actions = {
-                    // TODO: Add recipe settings later
-//                    IconButton(onClick = { showCloneModal = true }) {
-//                        Icon(
-//                            Icons.Rounded.Settings,
-//                            contentDescription = null
-//                        )
-//                    }
                     if (isEditing) {
                         IconButton(onClick = { showCloneModal = true }) {
                             Icon(
@@ -418,7 +460,7 @@ fun RecipeEdit(
                 cloneRecipe(
                     recipeToEdit.copy(
                         name = name.text,
-                        description = description,
+                        description = description.text,
                         recipeIcon = pickedIcon,
                     ),
                     steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
@@ -429,7 +471,7 @@ fun RecipeEdit(
 }
 
 @Composable
-fun PhoneLayout(
+private fun PhoneLayout(
     paddingValues: PaddingValues,
     maxHeight: Dp,
     lazyListState: LazyListState,
@@ -452,7 +494,7 @@ fun PhoneLayout(
 }
 
 @Composable
-fun TabletLayout(
+private fun TabletLayout(
     paddingValues: PaddingValues,
     maxHeight: Dp,
     lazyListState: LazyListState,
@@ -483,7 +525,7 @@ fun TabletLayout(
 }
 
 @Composable
-fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
+private fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -509,7 +551,7 @@ fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
 }
 
 @Composable
-fun SaveDialog(
+private fun SaveDialog(
     onSave: () -> Unit,
     onDiscard: () -> Unit,
     onDismiss: () -> Unit,
@@ -548,7 +590,7 @@ fun SaveDialog(
 }
 
 @Composable
-fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
+private fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -578,8 +620,27 @@ fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
 @ExperimentalAnimationApi
 @Preview
 @Composable
-fun RecipeEditPreview() {
+private fun RecipeAddPreview() {
     CofiTheme {
-        RecipeEdit(saveRecipe = { _, _ -> })
+        CompositionLocalProvider(
+            LocalPiPState provides false,
+        ) {
+            RecipeEdit(saveRecipe = { _, _ -> })
+        }
+    }
+}
+
+@ExperimentalComposeUiApi
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@Preview
+@Composable
+private fun RecipeEditPreview() {
+    CofiTheme {
+        CompositionLocalProvider(
+            LocalPiPState provides false,
+        ) {
+            RecipeEdit(saveRecipe = { _, _ -> }, isEditing = true)
+        }
     }
 }

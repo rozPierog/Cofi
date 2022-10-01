@@ -240,7 +240,7 @@ fun StepAddCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = Spacing.big),
+                        .padding(top = Spacing.big),
                 ) {
                     PillButton(
                         modifier = Modifier.testTag("step_save"),
@@ -261,7 +261,9 @@ fun StepAddCard(
                 if (stepToEdit != null) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = Spacing.big),
                     ) {
                         PillButton(
                             painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowUp),
@@ -320,7 +322,7 @@ fun PillButton(
         enabled = enabled,
         modifier = modifier,
     ) {
-        Icon(painter, contentDescription = null)
+        Icon(painter = painter, contentDescription = null, modifier = Modifier.size(22.dp))
         if (!text.isNullOrBlank()) {
             Spacer(modifier = Modifier.width(Spacing.small))
             Text(text = text)
