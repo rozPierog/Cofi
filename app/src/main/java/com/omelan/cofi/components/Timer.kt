@@ -109,7 +109,8 @@ fun Timer(
             RecipeInfo(
                 modifier = Modifier
                     .aspectRatio(1f)
-                    .fillMaxSize(), steps = allSteps
+                    .fillMaxSize(),
+                steps = allSteps
             )
         }
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
@@ -251,7 +252,7 @@ fun TimerPreview() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,
