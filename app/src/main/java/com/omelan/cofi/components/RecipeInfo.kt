@@ -27,7 +27,7 @@ import com.omelan.cofi.utils.toStringDuration
 private data class CoffeeWaterTime(
     val coffeeWeight: Int = 0,
     val waterWeight: Int = 0,
-    val duration: Int = 0
+    val duration: Int = 0,
 ) {
     fun addCoffee(weight: Int?, time: Int?): CoffeeWaterTime =
         this.copy(coffeeWeight = coffeeWeight + (weight ?: 0), duration = duration + (time ?: 0))
@@ -121,7 +121,7 @@ fun Param(modifier: Modifier = Modifier, icon: Painter, text: String, compactSty
         Icon(
             modifier = Modifier.size(if (compactStyle) 20.dp else 30.dp),
             painter = icon,
-            contentDescription = ""
+            contentDescription = "",
         )
         Spacer(modifier = Modifier.size(Spacing.normal))
         Text(
@@ -131,7 +131,7 @@ fun Param(modifier: Modifier = Modifier, icon: Painter, text: String, compactSty
                 MaterialTheme.typography.bodyMedium
             } else {
                 MaterialTheme.typography.headlineSmall
-            }
+            },
         )
     }
 }
@@ -140,12 +140,12 @@ fun Param(modifier: Modifier = Modifier, icon: Painter, text: String, compactSty
 fun Container(
     modifier: Modifier = Modifier,
     compactStyle: Boolean,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     if (compactStyle) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             content()
         }
@@ -153,7 +153,7 @@ fun Container(
         Column(
             modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceBetween,
         ) {
             content()
         }
@@ -203,8 +203,8 @@ fun RecipeInfoPreview() {
                 name = stringResource(R.string.prepopulate_step_swirl),
                 time = 5.toMillis(),
                 type = StepType.OTHER,
-            )
-        )
+            ),
+        ),
     )
 }
 
@@ -252,7 +252,7 @@ fun RecipeInfoCompactPreview() {
                 name = stringResource(R.string.prepopulate_step_swirl),
                 time = 5.toMillis(),
                 type = StepType.OTHER,
-            )
-        )
+            ),
+        ),
     )
 }

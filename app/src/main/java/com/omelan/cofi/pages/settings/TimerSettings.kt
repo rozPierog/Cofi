@@ -1,6 +1,6 @@
 @file:OptIn(
     ExperimentalMaterialApi::class,
-    ExperimentalMaterial3Api::class
+    ExperimentalMaterial3Api::class,
 )
 
 package com.omelan.cofi.pages.settings
@@ -72,7 +72,7 @@ fun TimerSettings(goBack: () -> Unit) {
                     Text(
                         text = stringResource(id = R.string.settings_timer_item),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
@@ -86,7 +86,7 @@ fun TimerSettings(goBack: () -> Unit) {
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarState,
-                modifier = Modifier.padding(getDefaultPadding())
+                modifier = Modifier.padding(getDefaultPadding()),
             ) {
                 Snackbar(shape = RoundedCornerShape(50)) {
                     Text(text = it.visuals.message)
@@ -102,7 +102,7 @@ fun TimerSettings(goBack: () -> Unit) {
                 paddingValues = it,
                 additionalStartPadding = 0.dp,
                 additionalEndPadding = 0.dp,
-            )
+            ),
         ) {
             item {
                 ListItem(
@@ -112,12 +112,12 @@ fun TimerSettings(goBack: () -> Unit) {
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_picture_in_picture),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
                         onClick = togglePiP,
-                        enabled = hasPiPPermission
+                        enabled = hasPiPPermission,
                     ),
                     trailing = {
                         Switch(
@@ -126,7 +126,7 @@ fun TimerSettings(goBack: () -> Unit) {
                             enabled = hasPiPPermission,
                             colors = switchColors,
                         )
-                    }
+                    },
                 )
             }
             item {
@@ -137,7 +137,7 @@ fun TimerSettings(goBack: () -> Unit) {
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_sound),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     modifier = Modifier.settingsItemModifier(onClick = toggleStepChangeSound),
@@ -147,7 +147,7 @@ fun TimerSettings(goBack: () -> Unit) {
                             onCheckedChange = { toggleStepChangeSound() },
                             colors = switchColors,
                         )
-                    }
+                    },
                 )
             }
             item {
@@ -158,7 +158,7 @@ fun TimerSettings(goBack: () -> Unit) {
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_vibration),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     modifier = Modifier.settingsItemModifier(onClick = toggleStepChangeVibration),
@@ -168,7 +168,7 @@ fun TimerSettings(goBack: () -> Unit) {
                             onCheckedChange = { toggleStepChangeVibration() },
                             colors = switchColors,
                         )
-                    }
+                    },
                 )
             }
             item {
@@ -179,15 +179,15 @@ fun TimerSettings(goBack: () -> Unit) {
                     text = {
                         Text(
                             text = stringResource(
-                                stringToCombineWeight(combineWeightState).settingsStringId
+                                stringToCombineWeight(combineWeightState).settingsStringId,
                             ),
-                            fontWeight = FontWeight.Light
+                            fontWeight = FontWeight.Light,
                         )
                     },
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_list_add),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
@@ -203,7 +203,7 @@ fun TimerSettings(goBack: () -> Unit) {
                                 showCombineWeightDialog = false
                             }
                         },
-                        combineWeightState = combineWeightState
+                        combineWeightState = combineWeightState,
                     )
                 }
             }
@@ -216,7 +216,7 @@ fun TimerSettings(goBack: () -> Unit) {
 fun CombineWeightDialog(
     dismiss: () -> Unit,
     selectCombineMethod: (CombineWeight) -> Unit,
-    combineWeightState: String
+    combineWeightState: String,
 ) {
     Material3Dialog(onDismissRequest = dismiss) {
         CombineWeight.values().forEach {
@@ -232,9 +232,9 @@ fun CombineWeightDialog(
                         onClick = { selectCombineMethod(it) },
                         colors = RadioButtonDefaults.colors(
                             selectedColor = MaterialTheme.colorScheme.secondary,
-                        )
+                        ),
                     )
-                }
+                },
             )
         }
     }

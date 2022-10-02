@@ -31,7 +31,7 @@ fun AppSettings(
     goBack: () -> Unit,
     goToAbout: () -> Unit,
     goToTimerSettings: () -> Unit,
-    goToBackupRestore: () -> Unit
+    goToBackupRestore: () -> Unit,
 ) {
     val uriHandler = LocalUriHandler.current
     val snackbarState = SnackbarHostState()
@@ -43,7 +43,7 @@ fun AppSettings(
                     Text(
                         text = stringResource(id = R.string.settings_title),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
@@ -57,7 +57,7 @@ fun AppSettings(
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarState,
-                modifier = Modifier.padding(getDefaultPadding())
+                modifier = Modifier.padding(getDefaultPadding()),
             ) {
                 Snackbar(shape = RoundedCornerShape(50)) {
                     Text(text = it.visuals.message)
@@ -73,7 +73,7 @@ fun AppSettings(
                 paddingValues = it,
                 additionalStartPadding = 0.dp,
                 additionalEndPadding = 0.dp,
-            )
+            ),
         ) {
             item {
                 ListItem(
@@ -81,10 +81,10 @@ fun AppSettings(
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_timer),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    modifier = Modifier.settingsItemModifier(onClick = goToTimerSettings)
+                    modifier = Modifier.settingsItemModifier(onClick = goToTimerSettings),
                 )
             }
             item {
@@ -93,17 +93,17 @@ fun AppSettings(
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    modifier = Modifier.settingsItemModifier(onClick = goToBackupRestore)
+                    modifier = Modifier.settingsItemModifier(onClick = goToBackupRestore),
                 )
             }
             item {
                 ListItem(
                     text = { Text(text = stringResource(id = R.string.settings_about_item)) },
                     icon = { Icon(Icons.Rounded.Info, contentDescription = null) },
-                    modifier = Modifier.settingsItemModifier(onClick = goToAbout)
+                    modifier = Modifier.settingsItemModifier(onClick = goToAbout),
                 )
             }
             item {
@@ -112,13 +112,13 @@ fun AppSettings(
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_bug_report),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri("https://github.com/rozPierog/Cofi/issues")
-                        }
+                        },
                     ),
                 )
             }

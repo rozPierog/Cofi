@@ -52,7 +52,7 @@ fun Track(
     Canvas(
         modifier
             .progressSemantics(progress)
-            .aspectRatio(1f)
+            .aspectRatio(1f),
 
     ) {
         val startAngle = 270f
@@ -66,7 +66,7 @@ fun Track(
             useCenter = false,
             topLeft = Offset(diameterOffset, diameterOffset),
             size = Size(arcDimen, arcDimen),
-            style = stroke
+            style = stroke,
         )
         drawArc(
             color = color,
@@ -75,7 +75,7 @@ fun Track(
             useCenter = false,
             topLeft = Offset(diameterOffset, diameterOffset),
             size = Size(arcDimen, arcDimen),
-            style = stroke
+            style = stroke,
         )
     }
 }
@@ -104,13 +104,13 @@ fun Timer(
         AnimatedVisibility(
             visible = currentStep == null && !isDone,
             enter = fadeIn(),
-            exit = fadeOut()
+            exit = fadeOut(),
         ) {
             RecipeInfo(
                 modifier = Modifier
                     .aspectRatio(1f)
                     .fillMaxSize(),
-                steps = allSteps
+                steps = allSteps,
             )
         }
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
@@ -132,7 +132,7 @@ fun Timer(
                     maxLines = if (isInPiP) 2 else Int.MAX_VALUE,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.testTag("timer_enjoy")
+                    modifier = Modifier.testTag("timer_enjoy"),
                 )
                 if (!isInPiP) {
                     Spacer(modifier = Modifier.height(Spacing.normal))
@@ -143,7 +143,7 @@ fun Timer(
         AnimatedVisibility(
             visible = currentStep != null && !isDone,
             enter = fadeIn(),
-            exit = fadeOut()
+            exit = fadeOut(),
         ) {
             Column(
                 modifier = Modifier
@@ -153,7 +153,7 @@ fun Timer(
                     .fillMaxSize()
                     .animateContentSize(),
                 Arrangement.Center,
-                Alignment.CenterHorizontally
+                Alignment.CenterHorizontally,
             ) {
                 if (currentStep != null) {
                     val durationInString = if (currentStep.time == null) {
@@ -164,7 +164,7 @@ fun Timer(
                             padMillis = true,
                             padMinutes = true,
                             padSeconds = true,
-                            showMillis = !isInPiP
+                            showMillis = !isInPiP,
                         )
                     }
                     Text(
@@ -181,15 +181,19 @@ fun Timer(
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .padding(horizontal = if (isInPiP) Spacing.xSmall else Spacing.normal)
-                            .testTag("timer_duration")
+                            .testTag("timer_duration"),
                     )
                     Divider()
                     Text(
-                        text = if (currentStep.time != null) stringResource(
-                            id = R.string.timer_step_name_time,
-                            currentStep.name,
-                            currentStep.time / 1000,
-                        ) else currentStep.name,
+                        text = if (currentStep.time != null) {
+                            stringResource(
+                                id = R.string.timer_step_name_time,
+                                currentStep.name,
+                                currentStep.time / 1000,
+                            )
+                        } else {
+                            currentStep.name
+                        },
                         color = MaterialTheme.colorScheme.onSurface,
                         style = if (isInPiP) {
                             MaterialTheme.typography.titleSmall
@@ -203,11 +207,11 @@ fun Timer(
                             .align(Alignment.CenterHorizontally)
                             .animateContentSize()
                             .padding(horizontal = if (isInPiP) Spacing.xSmall else Spacing.normal)
-                            .testTag("timer_name")
+                            .testTag("timer_name"),
                     )
                     AnimatedVisibility(
                         visible = currentStep.value != null,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
                     ) {
                         val currentStepValue = currentStep.value ?: 0
                         val currentValueFromProgress =
@@ -260,7 +264,7 @@ fun TimerPreview() {
         animatedProgressValue = Animatable(0.5f),
         animatedProgressColor = Animatable(green600),
         isInPiP = false,
-        isDone = false
+        isDone = false,
     )
 }
 
@@ -280,7 +284,7 @@ fun TimerPreviewPiP() {
         animatedProgressValue = Animatable(0.2f),
         animatedProgressColor = Animatable(StepType.WATER.color),
         isInPiP = true,
-        isDone = false
+        isDone = false,
     )
 }
 
@@ -293,7 +297,7 @@ fun TimerPreviewDone() {
         animatedProgressValue = Animatable(0.5f),
         animatedProgressColor = Animatable(green600),
         isInPiP = false,
-        isDone = true
+        isDone = true,
     )
 }
 
@@ -306,6 +310,6 @@ fun TimerPreviewDonePip() {
         animatedProgressValue = Animatable(0.5f),
         animatedProgressColor = Animatable(green600),
         isInPiP = true,
-        isDone = true
+        isDone = true,
     )
 }

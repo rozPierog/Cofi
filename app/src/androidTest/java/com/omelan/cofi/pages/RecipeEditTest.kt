@@ -35,7 +35,7 @@ class RecipeEditTest {
                 time = 5000,
                 type = StepType.WAIT,
                 orderInRecipe = 0,
-                recipeId = 0
+                recipeId = 0,
             )
         composeTestRule.setContent {
             CofiTheme {
@@ -50,7 +50,7 @@ class RecipeEditTest {
                             assert(steps.first() == expectedStep) {
                                 "expected: $expectedStep \ngot: ${steps.first()}"
                             }
-                        }
+                        },
                     )
                 }
             }
@@ -63,7 +63,7 @@ class RecipeEditTest {
         composeTestRule.onNodeWithTag("recipe_edit_description").assertExists()
             .performTextInput(expectedRecipe.description)
         composeTestRule.onNodeWithTag(
-            "step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}"
+            "step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}",
         ).performClick()
         val stepNameNode = composeTestRule.onNodeWithTag("step_name")
         stepNameNode.assertExists().performTextClearance()
@@ -90,7 +90,7 @@ class RecipeEditTest {
                 time = 5000,
                 type = StepType.WAIT,
                 orderInRecipe = 0,
-                recipeId = 3
+                recipeId = 3,
             )
         val startingStep =
             Step(
@@ -98,7 +98,7 @@ class RecipeEditTest {
                 time = 2000,
                 type = StepType.ADD_COFFEE,
                 orderInRecipe = 0,
-                recipeId = 3
+                recipeId = 3,
             )
         composeTestRule.setContent {
             CofiTheme {
@@ -116,7 +116,7 @@ class RecipeEditTest {
                         },
                         isEditing = true,
                         stepsToEdit = listOf(startingStep),
-                        recipeToEdit = startingRecipe
+                        recipeToEdit = startingRecipe,
                     )
                 }
             }
@@ -128,7 +128,7 @@ class RecipeEditTest {
         composeTestRule.onNodeWithText(startingStep.name, useUnmergedTree = true).performClick()
 
         composeTestRule.onNodeWithTag(
-            "step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}"
+            "step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}",
         ).performClick()
         val stepNameNode = composeTestRule.onNodeWithTag("step_name")
         stepNameNode.assertExists().performTextClearance()

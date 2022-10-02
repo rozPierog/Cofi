@@ -35,7 +35,7 @@ class RecipeDetailsTest {
             " sed convallis lectus viverra at. ",
         name = "Test Recipe",
         recipeIcon = RecipeIcon.Aeropress,
-        lastFinished = 0L
+        lastFinished = 0L,
     )
 
     private val testStep = Step(
@@ -44,7 +44,7 @@ class RecipeDetailsTest {
         time = null,
         recipeId = 0,
         orderInRecipe = 0,
-        type = StepType.OTHER
+        type = StepType.OTHER,
     )
 
     @ExperimentalMaterialApi
@@ -79,7 +79,7 @@ class RecipeDetailsTest {
                     RecipeDetails(
                         isInPiP = false,
                         recipe = testRecipe,
-                        steps = listOf(testStep)
+                        steps = listOf(testStep),
                     )
                 }
             }
@@ -99,7 +99,7 @@ class RecipeDetailsTest {
                     RecipeDetails(
                         isInPiP = false,
                         recipe = testRecipe,
-                        steps = listOf(testStep.copy(name = "Step with time", time = 10000))
+                        steps = listOf(testStep.copy(name = "Step with time", time = 10000)),
                     )
                 }
             }
@@ -127,7 +127,7 @@ class RecipeDetailsTest {
                     RecipeDetails(
                         isInPiP = false,
                         recipe = testRecipe,
-                        steps = listOf(testStep)
+                        steps = listOf(testStep),
                     )
                 }
             }
@@ -156,7 +156,7 @@ class RecipeDetailsTest {
                     RecipeDetails(
                         isInPiP = isInPip.value,
                         recipe = testRecipe,
-                        steps = listOf(testStep)
+                        steps = listOf(testStep),
                     )
                 }
             }

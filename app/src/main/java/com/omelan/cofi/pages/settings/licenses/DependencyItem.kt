@@ -46,15 +46,15 @@ fun DependencyItem(dependency: Dependency) {
             .settingsItemModifier(
                 onClick = {
                     uriHandler.openUri(
-                        dependency.url ?: dependency.licenses.first().license_url
+                        dependency.url ?: dependency.licenses.first().license_url,
                     )
                 },
                 enabled = !dependency.url.isNullOrBlank() && dependency.url != "null",
-                unlimitedHeight = true
+                unlimitedHeight = true,
             )
             .padding(vertical = Spacing.normal, horizontal = Spacing.big)
             .fillMaxWidth()
-            .testTag("dependency_column")
+            .testTag("dependency_column"),
     ) {
         Text(
             text = "${dependency.project} @${dependency.version}",
@@ -62,8 +62,9 @@ fun DependencyItem(dependency: Dependency) {
             color = MaterialTheme.colorScheme.onBackground,
         )
         Text(
-            text = dependency.description, color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(vertical = Spacing.normal)
+            text = dependency.description,
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.padding(vertical = Spacing.normal),
         )
         Text(
             text = "Copyright © $year ${dependency.developers.joinToString()}",
@@ -80,7 +81,7 @@ fun DependencyItem(dependency: Dependency) {
                         return@ClickableText
                     }
             },
-            modifier = Modifier.padding(bottom = Spacing.normal)
+            modifier = Modifier.padding(bottom = Spacing.normal),
         )
         Divider(color = MaterialTheme.colorScheme.onBackground.copy(0.12f))
     }
@@ -114,6 +115,6 @@ fun DependencyPreview() {
             url = "jsonObject.getString( url )",
             year = "null",
             licenses = listOf(License(license = "WTFPL", license_url = "http://www.wtfpl.net/")),
-        )
+        ),
     )
 }

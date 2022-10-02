@@ -96,7 +96,7 @@ class MainActivity : MonetCompatActivity() {
     private fun blockPip() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             setPictureInPictureParams(
-                PictureInPictureParams.Builder().setAutoEnterEnabled(false).build()
+                PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
             )
         }
     }
@@ -116,7 +116,7 @@ class MainActivity : MonetCompatActivity() {
         recipeId: Int,
         goBack: () -> Unit,
         windowSizeClass: WindowSizeClass,
-        db: AppDatabase
+        db: AppDatabase,
     ) {
         RecipeDetails(
             recipeId = recipeId,
@@ -127,7 +127,7 @@ class MainActivity : MonetCompatActivity() {
                         Intent.ACTION_VIEW,
                         "$appDeepLinkUrl/recipe/$recipeId".toUri(),
                         this@MainActivity,
-                        MainActivity::class.java
+                        MainActivity::class.java,
                     )
                     val shortcut =
                         ShortcutInfoCompat.Builder(this@MainActivity, recipeId.toString())
@@ -136,8 +136,8 @@ class MainActivity : MonetCompatActivity() {
                             .setIcon(
                                 IconCompat.createWithResource(
                                     this@MainActivity,
-                                    recipe.recipeIcon.icon
-                                )
+                                    recipe.recipeIcon.icon,
+                                ),
                             )
                             .setIntent(deepLinkIntent)
                             .build()
@@ -157,7 +157,7 @@ class MainActivity : MonetCompatActivity() {
         navController: NavController,
         backStackEntry: NavBackStackEntry,
         goBack: () -> Unit,
-        db: AppDatabase
+        db: AppDatabase,
     ) {
         val recipeId = backStackEntry.arguments?.getInt("recipeId")
             ?: throw IllegalStateException("No Recipe ID")
@@ -187,14 +187,14 @@ class MainActivity : MonetCompatActivity() {
                             id = 0,
                             name = applicationContext.resources.getString(
                                 R.string.recipe_clone_suffix,
-                                recipe.name
-                            )
-                        )
+                                recipe.name,
+                            ),
+                        ),
                     )
                     db.stepDao().insertAll(
                         newSteps.map {
                             it.copy(recipeId = idOfRecipe.toInt(), id = 0)
-                        }
+                        },
                     )
                 }
                 navController.navigate("list") {
@@ -213,7 +213,7 @@ class MainActivity : MonetCompatActivity() {
                         inclusive = true
                     }
                 }
-            }
+            },
         )
     }
 
@@ -250,11 +250,11 @@ class MainActivity : MonetCompatActivity() {
             val darkIcons = MaterialTheme.colorScheme.background.luminance() > 0.5
             systemUiController.setStatusBarColor(
                 color = Color.Transparent,
-                darkIcons = darkIcons
+                darkIcons = darkIcons,
             )
             systemUiController.setNavigationBarColor(
                 color = MaterialTheme.colorScheme.background.copy(alpha = 0.8F),
-                darkIcons = darkIcons
+                darkIcons = darkIcons,
             )
             CompositionLocalProvider(
                 LocalPiPState provides isInPiP,
@@ -268,7 +268,7 @@ class MainActivity : MonetCompatActivity() {
                             slideIntoContainer(
                                 AnimatedContentScope.SlideDirection.End,
                                 animationSpec = tween(tweenDuration),
-                                initialOffset = { fullWidth -> -fullWidth / 5 }
+                                initialOffset = { fullWidth -> -fullWidth / 5 },
                             )
                     },
                     exitTransition = {
@@ -276,7 +276,7 @@ class MainActivity : MonetCompatActivity() {
                             slideOutOfContainer(
                                 AnimatedContentScope.SlideDirection.Start,
                                 animationSpec = tween(tweenDuration),
-                                targetOffset = { fullWidth -> fullWidth / 5 }
+                                targetOffset = { fullWidth -> fullWidth / 5 },
                             )
                     },
                 ) {
@@ -296,7 +296,7 @@ class MainActivity : MonetCompatActivity() {
                         deepLinks = listOf(
                             navDeepLink {
                                 uriPattern = "$appDeepLinkUrl/recipe/{recipeId}"
-                            }
+                            },
                         ),
                     ) { backStackEntry ->
                         val recipeId = backStackEntry.arguments?.getInt("recipeId")
@@ -324,7 +324,7 @@ class MainActivity : MonetCompatActivity() {
                                 },
                                 goToTimerSettings = {
                                     navController.navigate("timer")
-                                }
+                                },
                             )
                         }
                         composable("timer") {
@@ -337,14 +337,14 @@ class MainActivity : MonetCompatActivity() {
                                         inclusive = true
                                     }
                                 }
-                            })
+                            },)
                         }
                         composable("about") {
                             AppSettingsAbout(
                                 goBack = goBack,
                                 openLicenses = {
                                     navController.navigate("licenses")
-                                }
+                                },
                             )
                         }
                         composable("about") {
@@ -352,7 +352,7 @@ class MainActivity : MonetCompatActivity() {
                                 goBack = goBack,
                                 openLicenses = {
                                     navController.navigate("licenses")
-                                }
+                                },
                             )
                         }
                         composable("licenses") {
@@ -373,7 +373,7 @@ class MainActivity : MonetCompatActivity() {
 
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,
-        newConfig: Configuration
+        newConfig: Configuration,
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
@@ -412,7 +412,7 @@ class MainActivity : MonetCompatActivity() {
             !checkPiPPermission(this)
         ) {
             setPictureInPictureParams(
-                PictureInPictureParams.Builder().setAutoEnterEnabled(false).build()
+                PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
             )
         }
     }

@@ -48,7 +48,7 @@ class TimerTest {
             time = 5000,
             type = StepType.ADD_COFFEE,
             value = 500,
-            orderInRecipe = 0
+            orderInRecipe = 0,
         )
         composeTestRule.setContent {
             CofiTheme {

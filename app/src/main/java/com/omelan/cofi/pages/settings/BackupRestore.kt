@@ -55,7 +55,7 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
                     Text(
                         text = stringResource(id = R.string.settings_backup_item),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
@@ -69,7 +69,7 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarState,
-                modifier = Modifier.padding(getDefaultPadding())
+                modifier = Modifier.padding(getDefaultPadding()),
             ) {
                 Snackbar(
                     shape = RoundedCornerShape(50),
@@ -79,7 +79,7 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
                                 Text(text = label)
                             }
                         }
-                    }
+                    },
                 ) {
                     Text(text = it.visuals.message)
                 }
@@ -94,14 +94,14 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
                 paddingValues = it,
                 additionalStartPadding = 0.dp,
                 additionalEndPadding = 0.dp,
-            )
+            ),
         ) {
             item {
                 ListItem(
                     text = { Text(text = stringResource(id = R.string.settings_addDefault)) },
                     icon = { Icon(Icons.Rounded.AddCircle, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(
-                        onClick = { showDefaultRecipeDialog = true }
+                        onClick = { showDefaultRecipeDialog = true },
                     ),
                 )
                 if (showDefaultRecipeDialog) {
@@ -114,26 +114,29 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
-                        onClick = { showBackupDialog = true }
+                        onClick = { showBackupDialog = true },
                     ),
                 )
-                if (showBackupDialog) BackupDialog(
-                    dismiss = { showBackupDialog = false },
-                    afterBackup = { numberOfBackedUp ->
-                        coroutineScope.launch {
-                            snackbarState.showSnackbar(
-                                context.resources.getQuantityString(
-                                    R.plurals.settings_snackbar_backup,
-                                    numberOfBackedUp, numberOfBackedUp
+                if (showBackupDialog) {
+                    BackupDialog(
+                        dismiss = { showBackupDialog = false },
+                        afterBackup = { numberOfBackedUp ->
+                            coroutineScope.launch {
+                                snackbarState.showSnackbar(
+                                    context.resources.getQuantityString(
+                                        R.plurals.settings_snackbar_backup,
+                                        numberOfBackedUp,
+                                        numberOfBackedUp,
+                                    ),
                                 )
-                            )
-                        }
-                    }
-                )
+                            }
+                        },
+                    )
+                }
             }
             item {
                 RestoreListItem(afterRestore = { numberOfRestored ->
@@ -141,12 +144,13 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
                         snackbarState.showSnackbar(
                             context.resources.getQuantityString(
                                 R.plurals.settings_snackbar_restore,
-                                numberOfRestored, numberOfRestored
+                                numberOfRestored,
+                                numberOfRestored,
                             ),
                             actionLabel = context.resources.getString(R.string.button_show),
                         )
                     }
-                })
+                },)
             }
         }
     }
@@ -186,11 +190,11 @@ fun RestoreListItem(afterRestore: (numberOfRestored: Int) -> Unit) {
         icon = {
             Icon(
                 painterResource(id = R.drawable.ic_restore),
-                contentDescription = null
+                contentDescription = null,
             )
         },
         modifier = Modifier.settingsItemModifier(
-            onClick = { launcher.launch(arrayOf("application/json")) }
+            onClick = { launcher.launch(arrayOf("application/json")) },
         ),
     )
 }
@@ -233,7 +237,7 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
             DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())
         val formattedDate: String = format.format(c)
         launcher.launch("cofi_backup_$formattedDate.json")
-    }) {
+    },) {
         LazyColumn(Modifier.weight(1f, true)) {
             items(recipes) {
                 val isSelected = recipesToBackup.contains(it)
@@ -246,7 +250,7 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
                         .selectable(selected = isSelected, onClick = onCheck),
                     icon = {
                         Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
-                    }
+                    },
                 )
             }
         }
@@ -270,12 +274,12 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
                 db.stepDao().insertAll(
                     stepsOfTheRecipe.map {
                         it.copy(id = 0, recipeId = idOfRecipe.toInt())
-                    }
+                    },
                 )
             }
             dismiss()
         }
-    }) {
+    },) {
         LazyColumn {
             items(prepopulateData.recipes) {
                 val isSelected = recipesToAdd.contains(it)
@@ -287,7 +291,7 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
                     modifier = Modifier.selectable(selected = isSelected, onClick = onCheck),
                     icon = {
                         Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
-                    }
+                    },
                 )
             }
         }

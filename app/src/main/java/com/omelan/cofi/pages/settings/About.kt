@@ -1,6 +1,6 @@
 package com.omelan.cofi.pages.settings
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
@@ -36,7 +36,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     Text(
                         text = stringResource(id = R.string.settings_about_title),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
@@ -46,7 +46,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                 },
                 scrollBehavior = appBarBehavior,
             )
-        }
+        },
     ) {
         LazyColumn(
             modifier = Modifier
@@ -66,13 +66,13 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_github_icon),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri("https://github.com/rozPierog/Cofi/")
-                        }
+                        },
                     ),
                 )
             }
@@ -84,7 +84,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     icon = {
                         Icon(painterResource(id = R.drawable.ic_gavel), contentDescription = null)
                     },
-                    modifier = Modifier.settingsItemModifier(onClick = openLicenses)
+                    modifier = Modifier.settingsItemModifier(onClick = openLicenses),
                 )
             }
             item {
@@ -93,7 +93,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Text(
                             text = stringResource(id = R.string.hoffmann_credits_title),
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
                         )
                     },
                     text = {
@@ -110,10 +110,10 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri(
-                                "https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ"
+                                "https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ",
                             )
-                        }
-                    )
+                        },
+                    ),
                 )
             }
             item {
@@ -136,16 +136,16 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_coffee_grinder),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri(
-                                "https://dribbble.com/hubert-tereszkiewicz"
+                                "https://dribbble.com/hubert-tereszkiewicz",
                             )
-                        }
-                    )
+                        },
+                    ),
                 )
             }
             item {
@@ -154,7 +154,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                         Text(
                             text = stringResource(R.string.app_version),
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
                         )
                     },
                     text = {
@@ -169,10 +169,10 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri(
-                                "https://github.com/rozPierog/Cofi/blob/main/docs/Changelog.md"
+                                "https://github.com/rozPierog/Cofi/blob/main/docs/Changelog.md",
                             )
-                        }
-                    )
+                        },
+                    ),
                 )
             }
         }

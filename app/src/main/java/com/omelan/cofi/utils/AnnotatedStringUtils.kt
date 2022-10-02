@@ -13,14 +13,14 @@ const val URL_ANNOTATION = "URL"
 
 fun linkSpanStyle(color: Color) = SpanStyle(
     color = color,
-    textDecoration = TextDecoration.Underline
+    textDecoration = TextDecoration.Underline,
 )
 
 fun AnnotatedString.Builder.addLinkAnnotation(
     start: Int,
     text: String,
     url: String = text,
-    color: Color
+    color: Color,
 ) {
     addStringAnnotation(
         tag = URL_ANNOTATION,
@@ -31,7 +31,7 @@ fun AnnotatedString.Builder.addLinkAnnotation(
     addStyle(
         linkSpanStyle(color),
         start = start,
-        end = start + text.length
+        end = start + text.length,
     )
 }
 
@@ -57,8 +57,8 @@ private fun extractUrls(text: String): List<String> {
         containedUrls.add(
             text.substring(
                 urlMatcher.start(0),
-                urlMatcher.end(0)
-            )
+                urlMatcher.end(0),
+            ),
         )
     }
     return containedUrls
@@ -77,7 +77,7 @@ fun buildAnnotatedStringWithUrls(baseText: String) =
             addLinkAnnotation(
                 start = positionOfUrl,
                 text = it,
-                color = MaterialTheme.colorScheme.secondary
+                color = MaterialTheme.colorScheme.secondary,
             )
         }
     }
