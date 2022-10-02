@@ -18,7 +18,6 @@ import org.junit.runners.JUnit4
 class RecipeInfoTest {
     @get:Rule
     val composeTestRule = createComposeRule()
-    // createComposeRule() if you don't need access to the activityTestRule
 
     @Test
     fun showRecipeInfo() {
