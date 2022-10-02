@@ -45,7 +45,7 @@ class RecipeInfoTest {
 
     @Test
     fun checkAllParamVisible() {
-        fun checkAsserts(){
+        fun checkAsserts() {
             composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed()
             composeTestRule.onNodeWithTag("recipe_info_water").assertIsDisplayed()
             composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
