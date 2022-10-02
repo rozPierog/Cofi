@@ -66,4 +66,26 @@ Occhio a non bloccare la fuoriuscita dell'aria dal coffee brewer"</string>
     <string name="tereszkiewicz_credits_subtitle">Guarda il suo Dribbble</string>
     <string name="settings_step_sound_item">Emetti un suono tra i passaggi</string>
     <string name="recipe_create_title">Aggiungi ricetta</string>
+    <string name="settings_step_vibrate_item">Vibrazione del cambio di passo</string>
+    <string name="settings_backup_item">Ripristinare il backup</string><string name="settings_timer_item">Impostazioni del timer</string>
+    <string name="prepopulate_aero_description">Ricetta creata da: James Hoffmann Fonte: https://youtu.be/j6VlT_jUVPc Dimensione della macinatura: per arrosti leggeri – fine più fine di media. Più si scurisce, più si può preferire aumentare la dose e rendere più grossolana la macinatura. Temperatura: Per arrosti leggeri – portare ad ebollizione e consumare subito. Per arrosti scuri – 85–90 ℃</string>
+    <string name="prepopulate_aero_step_press">Premere delicatamente il pistone</string>
+    <string name="prepopulate_aero_step_piston">Mettere il pistone 1 cm nel birraio</string>
+    <string name="prepopulate_aero_step_piston">Mettere il pistone 1 cm nel birraio</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="settings_addDefault">Aggiungi ricette predefinite</string>
+    <string name="settings_restore">Ristabilire</string>
+    <string name="settings_backup">Backup</string>
+    <string name="step_add_duration_explainer">La durata del passaggio determina quanto tempo impiegherà un'azione (in secondi). Se vuoi creare un passaggio che contenga l'intera ricetta fino a quando non vieni letto, lascialo vuoto.</string>
+    <string name="recipe_details_noTime">Premi inizio per continuare</string>
+    <string name="button_show">Mostrare</string>
+    <string name="recipe_edit_description_button">Aggiungi una descrizione</string>
+    <string name="app_version">Versione app</string>
+    <string name="button_continue_editing">Continua la modifica</string>
+    <string name="recipe_clone_suffix">%1$s - copia</string>
+    <string name="recipe_clone_text">Questo creerà un duplicato di questa ricetta</string>
+    <string name="recipe_clone_title">Clonare questa ricetta?</string>
+    <string name="button_discard">Scartare</string>
+    <string name="recipe_unsaved_text">Vuoi scartarli?</string>
+    <string name="recipe_unsaved_title">Hai modifiche non salvate</string>
 </resources>
