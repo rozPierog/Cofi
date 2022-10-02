@@ -2,15 +2,17 @@
 
 package com.omelan.cofi.pages.settings
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
@@ -29,7 +31,7 @@ fun AppSettings(
     goBack: () -> Unit,
     goToAbout: () -> Unit,
     goToTimerSettings: () -> Unit,
-    goToBackupRestore: () -> Unit
+    goToBackupRestore: () -> Unit,
 ) {
     val uriHandler = LocalUriHandler.current
     val snackbarState = SnackbarHostState()
@@ -41,7 +43,7 @@ fun AppSettings(
                     Text(
                         text = stringResource(id = R.string.settings_title),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
@@ -55,7 +57,7 @@ fun AppSettings(
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarState,
-                modifier = Modifier.padding(getDefaultPadding())
+                modifier = Modifier.padding(getDefaultPadding()),
             ) {
                 Snackbar(shape = RoundedCornerShape(50)) {
                     Text(text = it.visuals.message)
@@ -71,7 +73,7 @@ fun AppSettings(
                 paddingValues = it,
                 additionalStartPadding = 0.dp,
                 additionalEndPadding = 0.dp,
-            )
+            ),
         ) {
             item {
                 ListItem(
@@ -79,10 +81,10 @@ fun AppSettings(
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_timer),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    modifier = Modifier.settingsItemModifier(onClick = goToTimerSettings)
+                    modifier = Modifier.settingsItemModifier(onClick = goToTimerSettings),
                 )
             }
             item {
@@ -91,10 +93,17 @@ fun AppSettings(
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    modifier = Modifier.settingsItemModifier(onClick = goToBackupRestore)
+                    modifier = Modifier.settingsItemModifier(onClick = goToBackupRestore),
+                )
+            }
+            item {
+                ListItem(
+                    text = { Text(text = stringResource(id = R.string.settings_about_item)) },
+                    icon = { Icon(Icons.Rounded.Info, contentDescription = null) },
+                    modifier = Modifier.settingsItemModifier(onClick = goToAbout),
                 )
             }
             item {
@@ -103,21 +112,14 @@ fun AppSettings(
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_bug_report),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri("https://github.com/rozPierog/Cofi/issues")
-                        }
+                        },
                     ),
-                )
-            }
-            item {
-                ListItem(
-                    text = { Text(text = stringResource(id = R.string.settings_about_item)) },
-                    icon = { Icon(Icons.Rounded.Info, contentDescription = null) },
-                    modifier = Modifier.settingsItemModifier(onClick = goToAbout)
                 )
             }
         }

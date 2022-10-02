@@ -58,12 +58,14 @@ import com.omelan.cofi.model.Step
 import com.omelan.cofi.ui.*
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(
     ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class,
-    ExperimentalFoundationApi::class, ExperimentalMaterial3WindowSizeClassApi::class
+    ExperimentalFoundationApi::class,
+    ExperimentalMaterial3WindowSizeClassApi::class,
 )
 @Composable
 fun RecipeEdit(
@@ -75,7 +77,7 @@ fun RecipeEdit(
     cloneRecipe: (Recipe, List<Step>) -> Unit = { _, _ -> },
     isEditing: Boolean = false,
     windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(
-        DpSize(1920.dp, 1080.dp)
+        DpSize(1920.dp, 1080.dp),
     ),
 ) {
     var showDeleteModal by remember { mutableStateOf(false) }
@@ -90,7 +92,7 @@ fun RecipeEdit(
             TextFieldValue(
                 recipeToEdit.name,
                 TextRange(recipeToEdit.name.length),
-            )
+            ),
         )
     }
     var description by remember(recipeToEdit) {
@@ -98,22 +100,21 @@ fun RecipeEdit(
             TextFieldValue(
                 recipeToEdit.description,
                 TextRange(recipeToEdit.description.length),
-            )
+            ),
         )
     }
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed),
     )
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
     val lazyListState = rememberLazyListState()
     val textSelectionColors = MaterialTheme.createTextSelectionColors()
-    val nameFocusRequester = remember { FocusRequester() }
-    val descriptionFocusRequester = remember { FocusRequester() }
+    val (nameFocusRequester, descriptionFocusRequester) = remember { FocusRequester.createRefs() }
 
     val canSave = name.text.isNotBlank() && steps.isNotEmpty()
     val configuration = LocalConfiguration.current
@@ -121,11 +122,11 @@ fun RecipeEdit(
     val isPhoneLayout by remember(
         windowSizeClass.widthSizeClass,
         configuration.screenHeightDp,
-        configuration.screenWidthDp
+        configuration.screenWidthDp,
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -160,9 +161,9 @@ fun RecipeEdit(
             recipeToEdit.copy(
                 name = name.text,
                 description = description.text,
-                recipeIcon = pickedIcon
+                recipeIcon = pickedIcon,
             ),
-            steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
+            steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) },
         )
     }
 
@@ -175,12 +176,14 @@ fun RecipeEdit(
 
     LaunchedEffect(Unit) {
         collapse()
+        delay(100)
         nameFocusRequester.requestFocus()
     }
     LaunchedEffect(showDescription) {
         if (showDescription && recipeToEdit.description.isBlank()) {
             descriptionFocusRequester.requestFocus()
         } else {
+            delay(100)
             nameFocusRequester.requestFocus()
         }
     }
@@ -205,12 +208,12 @@ fun RecipeEdit(
                                 bottomSheetScaffoldState.bottomSheetState.expand()
                             }
                         }
-                    }
+                    },
                 ) {
                     Icon(
                         painter = painterResource(id = pickedIcon.icon),
                         tint = MaterialTheme.colorScheme.onBackground,
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
                 var nameHasFocus by remember { mutableStateOf(true) }
@@ -235,14 +238,17 @@ fun RecipeEdit(
             val linkColor = MaterialTheme.colorScheme.secondary
             AnimatedContent(targetState = showDescription) {
                 if (!showDescription) {
-                    TextButton(onClick = { showDescription = !showDescription }) {
+                    TextButton(
+                        modifier = Modifier.testTag("recipe_edit_description_button"),
+                        onClick = { showDescription = !showDescription },
+                    ) {
                         Icon(
                             modifier = Modifier.size(20.dp),
                             imageVector = Icons.Rounded.Add,
-                            contentDescription = ""
+                            contentDescription = "",
                         )
                         Spacer(modifier = Modifier.size(Spacing.small))
-                        Text(text = "Add description")
+                        Text(text = stringResource(id = R.string.recipe_edit_description_button))
                     }
                 } else {
                     OutlinedTextField(
@@ -250,7 +256,7 @@ fun RecipeEdit(
                         visualTransformation = {
                             TransformedText(
                                 buildAnnotatedStringWithUrls(description.text, linkColor),
-                                OffsetMapping.Identity
+                                OffsetMapping.Identity,
                             )
                         },
                         onValueChange = { description = it },
@@ -270,7 +276,7 @@ fun RecipeEdit(
     val renderSteps: LazyListScope.() -> Unit = {
         itemsIndexed(
             steps,
-            { _, step -> if (step.id == 0) step.hashCode() else step.id }
+            { _, step -> if (step.id == 0) step.hashCode() else step.id },
         ) { index, step ->
             AnimatedVisibility(
                 modifier = Modifier.animateItemPlacement(),
@@ -314,7 +320,7 @@ fun RecipeEdit(
                 StepListItem(
                     step = step,
                     stepProgress = StepProgress.Upcoming,
-                    onClick = { stepWithOpenEditor = it }
+                    onClick = { stepWithOpenEditor = it },
                 )
             }
         }
@@ -356,14 +362,14 @@ fun RecipeEdit(
                     .fillMaxWidth()
                     .navigationBarsPadding()
                     .imePadding()
-                    .padding(getDefaultPadding(skipNavigationBarPadding = true))
+                    .padding(getDefaultPadding(skipNavigationBarPadding = true)),
             ) {
                 RecipeIcon.values().map {
                     IconButton(
                         onClick = { pickIcon(it) },
                         modifier = Modifier
                             .weight(1f)
-                            .padding(vertical = Spacing.big)
+                            .padding(vertical = Spacing.big),
                     ) {
                         Icon(
                             painter = painterResource(id = it.icon),
@@ -386,13 +392,13 @@ fun RecipeEdit(
                         IconButton(onClick = { showCloneModal = true }) {
                             Icon(
                                 painterResource(id = R.drawable.ic_copy),
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         }
                         IconButton(onClick = { showDeleteModal = true }) {
                             Icon(
                                 painterResource(id = R.drawable.ic_delete),
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         }
                     }
@@ -420,7 +426,7 @@ fun RecipeEdit(
                 },
                 scrollBehavior = appBarBehavior,
             )
-        }
+        },
     ) {
         CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
             BoxWithConstraints {
@@ -430,7 +436,7 @@ fun RecipeEdit(
                         maxHeight,
                         lazyListState,
                         renderNameAndDescriptionEdit,
-                        renderSteps
+                        renderSteps,
                     )
                 } else {
                     TabletLayout(
@@ -438,7 +444,7 @@ fun RecipeEdit(
                         maxHeight,
                         lazyListState,
                         renderNameAndDescriptionEdit,
-                        renderSteps
+                        renderSteps,
                     )
                 }
             }
@@ -452,7 +458,7 @@ fun RecipeEdit(
                 canSave = canSave,
                 onSave = onSave,
                 onDiscard = goBack,
-                onDismiss = { showSaveModal = false }
+                onDismiss = { showSaveModal = false },
             )
         }
         if (showCloneModal) {
@@ -463,9 +469,9 @@ fun RecipeEdit(
                         description = description.text,
                         recipeIcon = pickedIcon,
                     ),
-                    steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) }
+                    steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) },
                 )
-            }, onDismiss = { showCloneModal = false })
+            }, onDismiss = { showCloneModal = false },)
         }
     }
 }
@@ -476,7 +482,7 @@ private fun PhoneLayout(
     maxHeight: Dp,
     lazyListState: LazyListState,
     renderNameAndDescriptionEdit: LazyListScope.() -> Unit,
-    renderSteps: LazyListScope.() -> Unit
+    renderSteps: LazyListScope.() -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -485,7 +491,7 @@ private fun PhoneLayout(
         state = lazyListState,
         contentPadding = getDefaultPadding(
             paddingValues = paddingValues,
-            additionalBottomPadding = maxHeight / 2
+            additionalBottomPadding = maxHeight / 2,
         ),
     ) {
         renderNameAndDescriptionEdit()
@@ -499,25 +505,25 @@ private fun TabletLayout(
     maxHeight: Dp,
     lazyListState: LazyListState,
     renderNameAndDescriptionEdit: LazyListScope.() -> Unit,
-    renderSteps: LazyListScope.() -> Unit
+    renderSteps: LazyListScope.() -> Unit,
 ) {
     Row(
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
             .padding(getDefaultPadding(paddingValues)),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.normal)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
     ) {
         LazyColumn(
             modifier = Modifier.weight(1f, fill = true),
-            contentPadding = PaddingValues(bottom = maxHeight / 2)
+            contentPadding = PaddingValues(bottom = maxHeight / 2),
         ) {
             renderNameAndDescriptionEdit()
         }
         LazyColumn(
             modifier = Modifier.weight(1f, fill = true),
             state = lazyListState,
-            contentPadding = PaddingValues(bottom = maxHeight / 2)
+            contentPadding = PaddingValues(bottom = maxHeight / 2),
         ) {
             renderSteps()
         }
@@ -530,7 +536,7 @@ private fun DeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(
-                onClick = onConfirm
+                onClick = onConfirm,
             ) {
                 Text(text = stringResource(id = R.string.button_delete))
             }
@@ -561,7 +567,7 @@ private fun SaveDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(
-                onClick = if (canSave) onSave else onDismiss
+                onClick = if (canSave) onSave else onDismiss,
             ) {
                 Text(
                     stringResource(
@@ -569,8 +575,8 @@ private fun SaveDialog(
                             R.string.step_add_save
                         } else {
                             R.string.button_continue_editing
-                        }
-                    )
+                        },
+                    ),
                 )
             }
         },
@@ -595,7 +601,7 @@ private fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(
-                onClick = onConfirm
+                onClick = onConfirm,
             ) {
                 Text(text = stringResource(id = R.string.button_copy))
             }

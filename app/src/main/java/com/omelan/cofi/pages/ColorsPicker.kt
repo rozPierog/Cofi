@@ -62,7 +62,7 @@ fun ColorPicker(goToList: () -> Unit, monet: MonetCompat) {
 
     fun getMonetNeutralColor(
         @IntRange(from = 1, to = 2) type: Int,
-        @IntRange(from = 50, to = 900) level: Int
+        @IntRange(from = 50, to = 900) level: Int,
     ): Color? {
         val monetColor = when (type) {
             1 -> monet.getMonetColors().neutral1[level]
@@ -74,7 +74,7 @@ fun ColorPicker(goToList: () -> Unit, monet: MonetCompat) {
 
     fun getMonetAccentColor(
         @IntRange(from = 1, to = 2) type: Int,
-        @IntRange(from = 50, to = 900) level: Int
+        @IntRange(from = 50, to = 900) level: Int,
     ): Color? {
         val monetColor = when (type) {
             1 -> monet.getMonetColors().accent1[level]
@@ -94,7 +94,7 @@ fun ColorPicker(goToList: () -> Unit, monet: MonetCompat) {
                     }
                 },
             )
-        }
+        },
     ) {
         LazyColumn(contentPadding = getDefaultPadding(paddingValues = it)) {
 //            shades.forEach { shade ->
@@ -175,7 +175,7 @@ fun ColorPicker(goToList: () -> Unit, monet: MonetCompat) {
                             .height(50.dp)
                             .fillMaxWidth()
                             .padding(Spacing.big)
-                            .clickable { Log.e("color", colorName) }
+                            .clickable { Log.e("color", colorName) },
                     ) {
                         Text(text = colorName)
                     }

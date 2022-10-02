@@ -2,6 +2,7 @@ package com.omelan.cofi.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -23,6 +24,7 @@ fun Material3Dialog(
     onDismissRequest: () -> Unit,
     properties: DialogProperties = DialogProperties(),
     onSave: (() -> Unit)? = null,
+    onCancel: (() -> Unit)? = onDismissRequest,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Dialog(onDismissRequest = onDismissRequest, properties = properties) {
@@ -34,14 +36,20 @@ fun Material3Dialog(
         ) {
             Column(modifier = Modifier.padding(vertical = Spacing.big)) {
                 content()
-                if (onSave != null) {
-                    TextButton(
-                        onClick = onSave,
-                        modifier = Modifier
-                            .align(Alignment.End)
-                            .padding(horizontal = Spacing.big)
-                    ) {
-                        Text(text = stringResource(id = android.R.string.ok))
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(horizontal = Spacing.big),
+                ) {
+                    if (onCancel != null) {
+                        TextButton(onClick = onCancel) {
+                            Text(text = stringResource(id = android.R.string.cancel))
+                        }
+                    }
+                    if (onSave != null) {
+                        TextButton(onClick = onSave) {
+                            Text(text = stringResource(id = android.R.string.ok))
+                        }
                     }
                 }
             }

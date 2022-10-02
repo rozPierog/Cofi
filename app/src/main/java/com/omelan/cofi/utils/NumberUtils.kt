@@ -6,7 +6,7 @@ fun Int.toStringDuration(
     padMinutes: Boolean = false,
     padSeconds: Boolean = true,
     showMillis: Boolean = false,
-    padMillis: Boolean = true
+    padMillis: Boolean = true,
 ): String {
     val minutes = this / 1000 / 60
     val seconds = this / 1000 % 60
@@ -28,7 +28,9 @@ fun Int.toStringDuration(
         } else {
             millis.toString()
         }
-    } else ""
+    } else {
+        ""
+    }
 
     return "$minutesString:$secondsString" + if (millisString.isNotBlank()) {
         ":$millisString"

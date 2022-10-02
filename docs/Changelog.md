@@ -7,8 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Show recipe information (Water weight, coffee weight, brew time) before running recipe
+- show recipe information on main recipe list screen
+- tweaked layout of timer
+- WYSIWYG in description input
+- Added "Show" button to go to recipe list after restoring backup file
+- Added "Cancel" button to Dialogs that we missing it
 
 ### Changed
+- Back button now closes icon picker bottom sheet in recipe edit
+- Weight input in step editor now animates on visibility change 
+- Tweaked scrolling into view of inputs in recipe edit page
+- Description input is hidden by default to indicate that it isn't required
+- Changed padding in StepAddCard and Description components
+- Tweaked layout of recipe edit page
+- Fixed adding default recipes
+- Changed settings items position
 
 ### Removed
 

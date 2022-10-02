@@ -37,6 +37,6 @@ fun getDefaultPadding(
             additionalBottomPadding,
         end = navigationBarPadding.calculateEndPadding(layoutDirection) +
             paddingValues.calculateEndPadding(layoutDirection) +
-            additionalEndPadding
+            additionalEndPadding,
     )
 }

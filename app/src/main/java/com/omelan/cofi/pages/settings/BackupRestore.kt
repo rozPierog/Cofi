@@ -37,10 +37,11 @@ import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import java.nio.charset.StandardCharsets
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 @Composable
-fun BackupRestoreSettings(goBack: () -> Unit) {
+fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
     val context = LocalContext.current
     val snackbarState = SnackbarHostState()
     var showDefaultRecipeDialog by remember { mutableStateOf(false) }
@@ -54,7 +55,7 @@ fun BackupRestoreSettings(goBack: () -> Unit) {
                     Text(
                         text = stringResource(id = R.string.settings_backup_item),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
@@ -68,9 +69,18 @@ fun BackupRestoreSettings(goBack: () -> Unit) {
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarState,
-                modifier = Modifier.padding(getDefaultPadding())
+                modifier = Modifier.padding(getDefaultPadding()),
             ) {
-                Snackbar(shape = RoundedCornerShape(50)) {
+                Snackbar(
+                    shape = RoundedCornerShape(50),
+                    action = {
+                        it.visuals.actionLabel?.let { label ->
+                            TextButton(onClick = goToRoot) {
+                                Text(text = label)
+                            }
+                        }
+                    },
+                ) {
                     Text(text = it.visuals.message)
                 }
             }
@@ -84,14 +94,14 @@ fun BackupRestoreSettings(goBack: () -> Unit) {
                 paddingValues = it,
                 additionalStartPadding = 0.dp,
                 additionalEndPadding = 0.dp,
-            )
+            ),
         ) {
             item {
                 ListItem(
                     text = { Text(text = stringResource(id = R.string.settings_addDefault)) },
                     icon = { Icon(Icons.Rounded.AddCircle, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(
-                        onClick = { showDefaultRecipeDialog = true }
+                        onClick = { showDefaultRecipeDialog = true },
                     ),
                 )
                 if (showDefaultRecipeDialog) {
@@ -104,26 +114,29 @@ fun BackupRestoreSettings(goBack: () -> Unit) {
                     icon = {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     modifier = Modifier.settingsItemModifier(
-                        onClick = { showBackupDialog = true }
+                        onClick = { showBackupDialog = true },
                     ),
                 )
-                if (showBackupDialog) BackupDialog(
-                    dismiss = { showBackupDialog = false },
-                    afterBackup = { numberOfBackedUp ->
-                        coroutineScope.launch {
-                            snackbarState.showSnackbar(
-                                context.resources.getQuantityString(
-                                    R.plurals.settings_snackbar_backup,
-                                    numberOfBackedUp, numberOfBackedUp
+                if (showBackupDialog) {
+                    BackupDialog(
+                        dismiss = { showBackupDialog = false },
+                        afterBackup = { numberOfBackedUp ->
+                            coroutineScope.launch {
+                                snackbarState.showSnackbar(
+                                    context.resources.getQuantityString(
+                                        R.plurals.settings_snackbar_backup,
+                                        numberOfBackedUp,
+                                        numberOfBackedUp,
+                                    ),
                                 )
-                            )
-                        }
-                    }
-                )
+                            }
+                        },
+                    )
+                }
             }
             item {
                 RestoreListItem(afterRestore = { numberOfRestored ->
@@ -131,11 +144,13 @@ fun BackupRestoreSettings(goBack: () -> Unit) {
                         snackbarState.showSnackbar(
                             context.resources.getQuantityString(
                                 R.plurals.settings_snackbar_restore,
-                                numberOfRestored, numberOfRestored
-                            )
+                                numberOfRestored,
+                                numberOfRestored,
+                            ),
+                            actionLabel = context.resources.getString(R.string.button_show),
                         )
                     }
-                })
+                },)
             }
         }
     }
@@ -175,11 +190,11 @@ fun RestoreListItem(afterRestore: (numberOfRestored: Int) -> Unit) {
         icon = {
             Icon(
                 painterResource(id = R.drawable.ic_restore),
-                contentDescription = null
+                contentDescription = null,
             )
         },
         modifier = Modifier.settingsItemModifier(
-            onClick = { launcher.launch(arrayOf("application/json")) }
+            onClick = { launcher.launch(arrayOf("application/json")) },
         ),
     )
 }
@@ -189,8 +204,8 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
     val recipesToBackup = remember { mutableStateListOf<Recipe>() }
     val context = LocalContext.current
     val db = AppDatabase.getInstance(context)
-    val recipes by db.recipeDao().getAll().observeAsState(initial = listOf())
-    LaunchedEffect(recipes) {
+    val recipes by db.recipeDao().getAll().observeAsState(initial = emptyList())
+    LaunchedEffect(recipes.isEmpty()) {
         if (recipesToBackup.isEmpty()) {
             recipesToBackup.addAll(recipes)
         }
@@ -215,13 +230,14 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
         dismiss()
     }
 
+    // TODO: Underlying Dialog doesn't change size when content changes size, maybe rewrite it?
     Material3Dialog(modifier = Modifier.fillMaxSize(), onDismissRequest = dismiss, onSave = {
         val c = Calendar.getInstance().time
         val format: DateFormat =
             DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())
         val formattedDate: String = format.format(c)
         launcher.launch("cofi_backup_$formattedDate.json")
-    }) {
+    },) {
         LazyColumn(Modifier.weight(1f, true)) {
             items(recipes) {
                 val isSelected = recipesToBackup.contains(it)
@@ -230,10 +246,11 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
                 }
                 ListItem(
                     text = { Text(it.name) },
-                    modifier = Modifier.selectable(selected = isSelected, onClick = onCheck),
+                    modifier = Modifier
+                        .selectable(selected = isSelected, onClick = onCheck),
                     icon = {
                         Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
-                    }
+                    },
                 )
             }
         }
@@ -250,23 +267,19 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
     val steps = prepopulateData.steps.groupBy { it.recipeId }
     val db = AppDatabase.getInstance(context)
     Material3Dialog(onDismissRequest = dismiss, onSave = {
-        coroutineScope.launch {
-            recipesToAdd.forEach { recipe ->
+        recipesToAdd.forEach { recipe ->
+            coroutineScope.launch {
                 val idOfRecipe = db.recipeDao().insertRecipe(recipe.copy(id = 0))
-                val stepsOfTheRecipe =
-                    steps[prepopulateData.recipes.indexOf(recipe)] ?: return@launch
+                val stepsOfTheRecipe = steps[recipe.id] ?: return@launch
                 db.stepDao().insertAll(
                     stepsOfTheRecipe.map {
-                        it.copy(
-                            id = 0,
-                            recipeId = idOfRecipe.toInt()
-                        )
-                    }
+                        it.copy(id = 0, recipeId = idOfRecipe.toInt())
+                    },
                 )
             }
             dismiss()
         }
-    }) {
+    },) {
         LazyColumn {
             items(prepopulateData.recipes) {
                 val isSelected = recipesToAdd.contains(it)
@@ -278,7 +291,7 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
                     modifier = Modifier.selectable(selected = isSelected, onClick = onCheck),
                     icon = {
                         Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
-                    }
+                    },
                 )
             }
         }
@@ -290,5 +303,5 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
 @Preview
 @Composable
 fun BackupRestoreSettings() {
-    BackupRestoreSettings(goBack = { })
+    BackupRestoreSettings(goBack = {}, goToRoot = {})
 }

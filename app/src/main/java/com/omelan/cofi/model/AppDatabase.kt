@@ -18,13 +18,13 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
                 "description TEXT NOT NULL," +
                 "last_finished INTEGER NOT NULL," +
                 "icon TEXT NOT NULL," +
-                "PRIMARY KEY(id))"
+                "PRIMARY KEY(id))",
         )
         // Copy the data
         database.execSQL(
             "INSERT INTO recipe_new (id, name, description, last_finished) " +
                 "SELECT id, name, description, last_finished " +
-                "FROM recipe"
+                "FROM recipe",
         )
         // Remove the old table
         database.execSQL("DROP TABLE recipe")
@@ -44,7 +44,7 @@ val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2, MIGRATION_2_3)
 @Database(
     version = 4,
     autoMigrations = [
-        AutoMigration(from = 3, to = 4)
+        AutoMigration(from = 3, to = 4),
     ],
     entities = [Recipe::class, Step::class],
 )
@@ -63,36 +63,38 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "cofi-database.db"
+                    "cofi-database.db",
                 )
-                    .addCallback(object : Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            val data = PrepopulateData(context)
-                            data.recipes.forEach {
-                                val values = ContentValues().apply {
-                                    put("id", it.id)
-                                    put("name", it.name)
-                                    put("description", it.description)
-                                    put("last_finished", it.lastFinished)
-                                    put("icon", it.recipeIcon.name)
+                    .addCallback(
+                        object : Callback() {
+                            override fun onCreate(db: SupportSQLiteDatabase) {
+                                super.onCreate(db)
+                                val data = PrepopulateData(context)
+                                data.recipes.forEach {
+                                    val values = ContentValues().apply {
+                                        put("id", it.id)
+                                        put("name", it.name)
+                                        put("description", it.description)
+                                        put("last_finished", it.lastFinished)
+                                        put("icon", it.recipeIcon.name)
+                                    }
+                                    db.insert("recipe", SQLiteDatabase.CONFLICT_REPLACE, values)
                                 }
-                                db.insert("recipe", SQLiteDatabase.CONFLICT_REPLACE, values)
-                            }
-                            data.steps.forEach {
-                                val values = ContentValues().apply {
-                                    put("id", it.id)
-                                    put("recipe_id", it.recipeId)
-                                    put("order_in_recipe", it.orderInRecipe)
-                                    put("value", it.value)
-                                    put("name", it.name)
-                                    put("time", it.time)
-                                    put("type", it.type.name)
+                                data.steps.forEach {
+                                    val values = ContentValues().apply {
+                                        put("id", it.id)
+                                        put("recipe_id", it.recipeId)
+                                        put("order_in_recipe", it.orderInRecipe)
+                                        put("value", it.value)
+                                        put("name", it.name)
+                                        put("time", it.time)
+                                        put("type", it.type.name)
+                                    }
+                                    db.insert("step", SQLiteDatabase.CONFLICT_REPLACE, values)
                                 }
-                                db.insert("step", SQLiteDatabase.CONFLICT_REPLACE, values)
                             }
-                        }
-                    })
+                        },
+                    )
                     .addMigrations(*ALL_MIGRATIONS)
                     .fallbackToDestructiveMigration()
                     .build()

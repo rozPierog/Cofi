@@ -36,7 +36,7 @@ class Haptics(context: Context) {
 
     private fun Vibrator.vibrateCompat(
         effectId: Int? = null,
-        vibrationEffect: VibrationEffect? = null
+        vibrationEffect: VibrationEffect? = null,
     ) = when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
             when {

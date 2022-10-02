@@ -26,18 +26,18 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun createAppBarBehavior(
-    topBarState: TopAppBarState = rememberTopAppBarState()
+    topBarState: TopAppBarState = rememberTopAppBarState(),
 ): TopAppBarScrollBehavior {
     val decayAnimationSpec = rememberSplineBasedDecay<Float>()
     return TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
         state = topBarState,
-        flingAnimationSpec = decayAnimationSpec
+        flingAnimationSpec = decayAnimationSpec,
     )
 }
 
 data class AppBarBehaviorWithCollapse(
     val behavior: TopAppBarScrollBehavior,
-    val collapse: () -> Job
+    val collapse: () -> Job,
 )
 
 @Composable
@@ -53,7 +53,7 @@ fun createAppBarBehaviorWithCollapse(): AppBarBehaviorWithCollapse {
                 targetValue = topBarState.heightOffsetLimit,
                 block = { value, _ ->
                     topBarState.heightOffset = value
-                }
+                },
             )
         }
     }
@@ -73,7 +73,7 @@ fun PiPAwareAppBar(
     navigationIcon: @Composable (() -> Unit) = {},
     actions: @Composable RowScope.() -> Unit = {},
     scrollBehavior: TopAppBarScrollBehavior? = null,
-    elevation: Dp = 0.dp
+    elevation: Dp = 0.dp,
 ) {
     if (!LocalPiPState.current) {
         InsetAwareTopAppBar(
@@ -94,20 +94,20 @@ fun InsetAwareTopAppBar(
     navigationIcon: @Composable (() -> Unit) = {},
     actions: @Composable RowScope.() -> Unit = {},
     scrollBehavior: TopAppBarScrollBehavior? = null,
-    elevation: Dp = 4.dp
+    elevation: Dp = 4.dp,
 ) {
     val scrollFraction = scrollBehavior?.state?.collapsedFraction ?: 0f
     val appBarContainerColor = lerp(
         MaterialTheme.colorScheme.surface,
         MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
-        FastOutLinearInEasing.transform(scrollFraction)
+        FastOutLinearInEasing.transform(scrollFraction),
     )
     Surface(
         color = Color.Transparent,
         shadowElevation = elevation * scrollFraction,
         modifier = modifier.drawBehind {
             drawRect(appBarContainerColor)
-        }
+        },
     ) {
         LargeTopAppBar(
             title = title,
@@ -118,7 +118,7 @@ fun InsetAwareTopAppBar(
                 .padding(
                     WindowInsets.navigationBars
                         .only(WindowInsetsSides.End + WindowInsetsSides.Start)
-                        .asPaddingValues()
+                        .asPaddingValues(),
                 ),
             scrollBehavior = scrollBehavior,
         )

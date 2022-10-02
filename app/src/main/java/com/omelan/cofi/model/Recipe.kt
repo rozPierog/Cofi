@@ -63,7 +63,7 @@ enum class RecipeIcon(@DrawableRes val icon: Int) {
     FrenchPress(R.drawable.ic_french_press),
     Grinder(R.drawable.ic_coffee_grinder),
     Chemex(R.drawable.ic_chemex),
-    Aeropress(R.drawable.ic_aeropress)
+    Aeropress(R.drawable.ic_aeropress),
 }
 
 class RecipeIconTypeConverter {
@@ -89,7 +89,7 @@ class RecipeIconTypeConverter {
 data class Recipe(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val description: String,
+    val description: String = "",
     @ColumnInfo(name = "last_finished") val lastFinished: Long = 0L,
     @ColumnInfo(name = "icon") val recipeIcon: RecipeIcon = RecipeIcon.Grinder,
 )
@@ -110,7 +110,7 @@ fun JSONObject.toRecipe() =
     Recipe(
         name = getString(jsonName),
         description = getString(jsonDescription),
-        recipeIcon = RecipeIconTypeConverter().stringToRecipeIcon(getString(jsonRecipeIcon))
+        recipeIcon = RecipeIconTypeConverter().stringToRecipeIcon(getString(jsonRecipeIcon)),
     )
 
 @Dao

@@ -7,11 +7,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,7 +22,7 @@ fun Chip(
     modifier: Modifier = Modifier,
     value: String,
     onCheck: (Boolean) -> Unit,
-    isChecked: Boolean
+    isChecked: Boolean,
 ) {
     val fabShape by animateDpAsState(
         targetValue = if (!isChecked) 12.dp else 14.dp,
@@ -33,21 +33,21 @@ fun Chip(
             MaterialTheme.colorScheme.outline.copy(alpha = 0f)
         } else {
             MaterialTheme.colorScheme.outline
-        }
+        },
     )
     val containerColor by animateColorAsState(
         targetValue = if (!isChecked) {
             MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0f)
         } else {
             MaterialTheme.colorScheme.secondaryContainer
-        }
+        },
     )
     val contentColor by animateColorAsState(
         targetValue = if (!isChecked) {
             MaterialTheme.colorScheme.onSurface
         } else {
             MaterialTheme.colorScheme.onSecondaryContainer
-        }
+        },
     )
     Button(
         onClick = { onCheck(!isChecked) },
@@ -57,7 +57,7 @@ fun Chip(
             containerColor = containerColor,
             contentColor = contentColor,
         ),
-        modifier = modifier.padding(Spacing.xSmall)
+        modifier = modifier.padding(Spacing.xSmall),
     ) {
         Text(text = value, color = contentColor)
     }

@@ -25,7 +25,8 @@ class AppDatabaseTest {
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, AppDatabase::class.java
+            context,
+            AppDatabase::class.java,
         ).build()
         recipeDao = db.recipeDao()
         stepDao = db.stepDao()
@@ -63,7 +64,7 @@ class AppDatabaseTest {
                 recipeId = firstRecipe.id,
                 time = 5000,
                 type = type,
-                orderInRecipe = index
+                orderInRecipe = index,
             )
         }
         val stepsForSecond = StepType.values().mapIndexed { index, type ->
@@ -72,7 +73,7 @@ class AppDatabaseTest {
                 recipeId = lastRecipe.id,
                 time = 5000,
                 type = type,
-                orderInRecipe = index
+                orderInRecipe = index,
             )
         }
         runBlocking {
