@@ -73,4 +73,18 @@ Achte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite bef
     <string name="recipe_clone_suffix">%1$s - Kopie</string>
     <string name="button_continue_editing">Bearbeitung fortsetzen</string>
     <string name="app_version">App-Version</string>
+    <string name="settings_step_vibrate_item">Vibration beim Schrittwechsel</string>
+    <string name="settings_backup_item">Sichern/Wiederherstellen</string>
+    <string name="settings_timer_item">Timer-Einstellung</string>
+    <string name="prepopulate_aero_description">Rezept erstellt von: James Hoffmann Quelle: https://youtu.be/j6VlT_jUVPc Mahlgrad: Für leichtere Röstung - Ende von medium. Je dunkler du wirst, desto mehr solltests du möglicherweise die Dosis erhöhen und die Mahltemperatur vergröbern: Für leichte Röstung - aufkochen und direkt verwenden. Für dunkle Röstung – 85–90℃</string>
+    <string name="prepopulate_aero_step_press">Kolben nur leicht drücken</string>
+    <string name="prepopulate_aero_step_piston">Kolben 1cm in den Brüher stecken</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="settings_addDefault">Standard Rezepte einfügen</string>
+    <string name="settings_restore">Wiederherstellen</string>
+    <string name="settings_backup">Sichern</string>
+    <string name="step_add_duration_explainer">Die Schrittdauer legt fest, wie lange die Aktion dauert (in Sekunden). Lasse das Feld leer, um einen Schritt zu erstellen, der das ganze Rezept enthält, bis du es gelesen hast.</string>
+    <string name="recipe_details_noTime">Drücke Start zum Fortfahren</string>
+    <string name="button_show">Zeigen</string>
+    <string name="recipe_edit_description_button">Beschreibung hinzufügen</string>
 </resources>
