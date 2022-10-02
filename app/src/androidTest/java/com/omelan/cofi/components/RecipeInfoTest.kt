@@ -1,5 +1,6 @@
 package com.omelan.cofi.components
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -21,9 +22,11 @@ class RecipeInfoTest {
 
     @Test
     fun showRecipeInfo() {
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
@@ -36,13 +39,22 @@ class RecipeInfoTest {
             }
         }
         composeTestRule.onNodeWithTag("recipe_info_box").assertIsDisplayed()
+        compactStyle.value = true
+        composeTestRule.onNodeWithTag("recipe_info_box").assertIsDisplayed()
     }
 
     @Test
     fun checkAllParamVisible() {
+        fun checkAsserts(){
+            composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed()
+            composeTestRule.onNodeWithTag("recipe_info_water").assertIsDisplayed()
+            composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
+        }
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
@@ -65,16 +77,23 @@ class RecipeInfoTest {
                 )
             }
         }
-        composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("recipe_info_water").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
+        checkAsserts()
+        compactStyle.value = true
+        checkAsserts()
     }
 
     @Test
     fun checkNullParamVisibility() {
+        fun checkAsserts() {
+            composeTestRule.onNodeWithTag("recipe_info_coffee").assertDoesNotExist()
+            composeTestRule.onNodeWithTag("recipe_info_water").assertDoesNotExist()
+            composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
+        }
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
@@ -97,16 +116,23 @@ class RecipeInfoTest {
                 )
             }
         }
-        composeTestRule.onNodeWithTag("recipe_info_coffee").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("recipe_info_water").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
+        checkAsserts()
+        compactStyle.value = true
+        checkAsserts()
     }
 
     @Test
     fun checkNonParamVisibility() {
+        fun checkAsserts() {
+            composeTestRule.onNodeWithTag("recipe_info_coffee").assertDoesNotExist()
+            composeTestRule.onNodeWithTag("recipe_info_water").assertDoesNotExist()
+            composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
+        }
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
@@ -129,16 +155,18 @@ class RecipeInfoTest {
                 )
             }
         }
-        composeTestRule.onNodeWithTag("recipe_info_coffee").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("recipe_info_water").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
+        checkAsserts()
+        compactStyle.value = true
+        checkAsserts()
     }
 
     @Test
     fun checkNullCoffee() {
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
@@ -152,13 +180,18 @@ class RecipeInfoTest {
         }
         composeTestRule.onNodeWithTag("recipe_info_coffee").assertDoesNotExist()
         composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
+        compactStyle.value = true
+        composeTestRule.onNodeWithTag("recipe_info_coffee").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
     }
 
     @Test
     fun checkNoCoffee() {
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
@@ -172,13 +205,18 @@ class RecipeInfoTest {
         }
         composeTestRule.onNodeWithTag("recipe_info_coffee").assertDoesNotExist()
         composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
+        compactStyle.value = true
+        composeTestRule.onNodeWithTag("recipe_info_coffee").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
     }
 
     @Test
     fun checkNullWater() {
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_water),
@@ -192,13 +230,18 @@ class RecipeInfoTest {
         }
         composeTestRule.onNodeWithTag("recipe_info_water").assertDoesNotExist()
         composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
+        compactStyle.value = true
+        composeTestRule.onNodeWithTag("recipe_info_water").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
     }
 
     @Test
     fun checkNoWater() {
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_water),
@@ -212,13 +255,18 @@ class RecipeInfoTest {
         }
         composeTestRule.onNodeWithTag("recipe_info_water").assertDoesNotExist()
         composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
+        compactStyle.value = true
+        composeTestRule.onNodeWithTag("recipe_info_water").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
     }
 
     @Test
     fun checkNullTimeWater() {
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_water),
@@ -232,13 +280,18 @@ class RecipeInfoTest {
         }
         composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
         composeTestRule.onNodeWithTag("recipe_info_water").assertIsDisplayed()
+        compactStyle.value = true
+        composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_info_water").assertIsDisplayed()
     }
 
     @Test
     fun checkNoTimeWater() {
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_water),
@@ -252,13 +305,18 @@ class RecipeInfoTest {
         }
         composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
         composeTestRule.onNodeWithTag("recipe_info_water").assertIsDisplayed()
+        compactStyle.value = true
+        composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_info_water").assertIsDisplayed()
     }
 
     @Test
     fun checkNullTimeCoffee() {
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
@@ -272,13 +330,18 @@ class RecipeInfoTest {
         }
         composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
         composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed()
+        compactStyle.value = true
+        composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed()
     }
 
     @Test
     fun checkNoTimeCoffee() {
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
@@ -292,13 +355,18 @@ class RecipeInfoTest {
         }
         composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
         composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed()
+        compactStyle.value = true
+        composeTestRule.onNodeWithTag("recipe_info_time").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed()
     }
 
     @Test
     fun checkTimeWait() {
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
@@ -317,6 +385,9 @@ class RecipeInfoTest {
         }
         composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
         composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed()
+        compactStyle.value = true
+        composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed()
     }
 
     @Test
@@ -325,9 +396,22 @@ class RecipeInfoTest {
         val value2 = 12
         val time1 = 6
         val time2 = 13
+        fun checkAsserts() {
+            composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed().onChildren()
+                .filterToOne(
+                    hasTestTag("recipe_info_text"),
+                ).assertTextEquals((time1 + time2 + time2).toMillis().toStringDuration())
+            composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed().onChildren()
+                .filterToOne(
+                    hasTestTag("recipe_info_text"),
+                ).assertTextEquals("${value1 + value2}g")
+        }
+
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
@@ -350,14 +434,9 @@ class RecipeInfoTest {
                 )
             }
         }
-        composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed().onChildren()
-            .filterToOne(
-                hasTestTag("recipe_info_text"),
-            ).assertTextEquals((time1 + time2 + time2).toMillis().toStringDuration())
-        composeTestRule.onNodeWithTag("recipe_info_coffee").assertIsDisplayed().onChildren()
-            .filterToOne(
-                hasTestTag("recipe_info_text"),
-            ).assertTextEquals("${value1 + value2}g")
+        checkAsserts()
+        compactStyle.value = true
+        checkAsserts()
     }
 
     @Test
@@ -366,9 +445,22 @@ class RecipeInfoTest {
         val value2 = 6
         val time1 = 7
         val time2 = 8
+        fun checkAsserts() {
+            composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed().onChildren()
+                .filterToOne(
+                    hasTestTag("recipe_info_text"),
+                ).assertTextEquals((time1 + time2 + time2).toMillis().toStringDuration())
+            composeTestRule.onNodeWithTag("recipe_info_water").assertIsDisplayed().onChildren()
+                .filterToOne(
+                    hasTestTag("recipe_info_text"),
+                ).assertTextEquals("${value1 + value2}g")
+        }
+
+        val compactStyle = mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 RecipeInfo(
+                    compactStyle = compactStyle.value,
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_water),
@@ -391,13 +483,8 @@ class RecipeInfoTest {
                 )
             }
         }
-        composeTestRule.onNodeWithTag("recipe_info_time").assertIsDisplayed().onChildren()
-            .filterToOne(
-                hasTestTag("recipe_info_text"),
-            ).assertTextEquals((time1 + time2 + time2).toMillis().toStringDuration())
-        composeTestRule.onNodeWithTag("recipe_info_water").assertIsDisplayed().onChildren()
-            .filterToOne(
-                hasTestTag("recipe_info_text"),
-            ).assertTextEquals("${value1 + value2}g")
+        checkAsserts()
+        compactStyle.value = true
+        checkAsserts()
     }
 }
