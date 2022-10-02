@@ -144,6 +144,7 @@ fun Container(
 ) {
     if (compactStyle) {
         Row(
+            modifier,
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
