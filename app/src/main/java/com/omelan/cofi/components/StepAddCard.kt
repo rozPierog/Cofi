@@ -57,7 +57,7 @@ fun StepAddCard(
     isLast: Boolean = false,
     isFirst: Boolean = false,
     onPositionChange: (Int) -> Unit = {},
-    recipeId: Int
+    recipeId: Int,
 ) {
     var pickedType by remember(stepToEdit) { mutableStateOf(stepToEdit?.type) }
     val pickedTypeName = pickedType?.stringRes?.let { stringResource(id = it) } ?: ""
@@ -113,7 +113,7 @@ fun StepAddCard(
                 },
                 recipeId = recipeId,
                 orderInRecipe = orderInRecipe,
-            )
+            ),
         )
     }
     Surface(
@@ -121,12 +121,12 @@ fun StepAddCard(
         modifier = modifier
             .fillMaxWidth()
             .bringIntoViewRequester(bringIntoViewRequester),
-        tonalElevation = 1.dp
+        tonalElevation = 1.dp,
     ) {
         Column(
             modifier = Modifier
                 .padding(Spacing.medium)
-                .animateContentSize()
+                .animateContentSize(),
         ) {
             FlowRow {
                 StepType.values().forEach { stepType ->
@@ -137,8 +137,8 @@ fun StepAddCard(
                         },
                         isChecked = pickedType == stepType,
                         modifier = Modifier.testTag(
-                            "step_type_button_${stepType.name.lowercase()}"
-                        )
+                            "step_type_button_${stepType.name.lowercase()}",
+                        ),
                     )
                 }
             }
@@ -151,7 +151,7 @@ fun StepAddCard(
                     onValueChange = { stepName = it },
                     keyboardOptions = KeyboardOptions(
                         KeyboardCapitalization.Sentences,
-                        imeAction = ImeAction.Next
+                        imeAction = ImeAction.Next,
                     ),
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -194,7 +194,7 @@ fun StepAddCard(
                             } else {
                                 ImeAction.Previous
                             }
-                        }
+                        },
                     ),
                     keyboardActions = KeyboardActions(
                         onPrevious = { focusManager.moveFocus(FocusDirection.Up) },
@@ -203,7 +203,7 @@ fun StepAddCard(
                         },
                         onDone = {
                             saveStep()
-                        }
+                        },
                     ),
                     modifier = Modifier
                         .testTag("step_time")
@@ -228,7 +228,7 @@ fun StepAddCard(
                         ),
                         keyboardActions = KeyboardActions(
                             onDone = { saveStep() },
-                            onPrevious = { nameFocusRequester.requestFocus() }
+                            onPrevious = { nameFocusRequester.requestFocus() },
                         ),
                         modifier = Modifier
                             .testTag("step_value")
@@ -247,14 +247,14 @@ fun StepAddCard(
                         text = stringResource(id = R.string.step_add_save),
                         painter = rememberVectorPainter(Icons.Rounded.Add),
                         enabled = stepName.text.isNotBlank(),
-                        onClick = { saveStep() }
+                        onClick = { saveStep() },
                     )
                     if (stepToEdit != null) {
                         PillButton(
                             modifier = Modifier.testTag("step_remove"),
                             text = stringResource(id = R.string.step_add_remove),
                             painter = painterResource(id = R.drawable.ic_delete),
-                            onClick = { save(null) }
+                            onClick = { save(null) },
                         )
                     }
                 }
@@ -268,13 +268,13 @@ fun StepAddCard(
                         PillButton(
                             painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowUp),
                             onClick = { onPositionChange(-1) },
-                            enabled = !isFirst
+                            enabled = !isFirst,
                         )
                         Spacer(modifier = Modifier.width(Spacing.normal))
                         PillButton(
                             painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowDown),
                             onClick = { onPositionChange(1) },
-                            enabled = !isLast
+                            enabled = !isLast,
                         )
                     }
                 }
@@ -292,7 +292,7 @@ fun StepAddCard(
             icon = {
                 Icon(
                     painterResource(StepType.WAIT.iconRes),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             },
             title = {
@@ -349,7 +349,7 @@ fun StepAddCardPreviewExpanded() {
             name = "Add Water",
             time = 0,
             type = StepType.WATER,
-            orderInRecipe = 0
+            orderInRecipe = 0,
         ),
     )
 }

@@ -17,20 +17,24 @@ object ScreenshotsHelpers {
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun getExistingImageUriOrNull(
         contentResolver: ContentResolver,
-        searchedDisplayName: String
+        searchedDisplayName: String,
     ): Uri? {
         val selection = "${MediaStore.MediaColumns.RELATIVE_PATH}='Pictures/' AND " +
             "${MediaStore.MediaColumns.DISPLAY_NAME}='$searchedDisplayName.png' "
         with(contentResolver) {
             query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, arrayOf(MediaStore.MediaColumns._ID),
-                selection, null, null
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                arrayOf(MediaStore.MediaColumns._ID),
+                selection,
+                null,
+                null,
             ).use { c ->
                 if (c != null && c.count >= 1) {
                     c.moveToFirst()
                     val id = c.getLong(c.getColumnIndexOrThrow(MediaStore.MediaColumns._ID))
                     return ContentUris.withAppendedId(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        id,
                     )
                 }
             }
@@ -45,7 +49,7 @@ object ScreenshotsHelpers {
         bitmap: Bitmap,
         format: Bitmap.CompressFormat,
         mimeType: String,
-        displayName: String
+        displayName: String,
     ): Uri {
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)

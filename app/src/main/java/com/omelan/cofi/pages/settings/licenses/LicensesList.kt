@@ -35,7 +35,7 @@ fun LicensesList(goBack: () -> Unit) {
                     Text(
                         text = stringResource(id = R.string.settings_licenses_title),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
@@ -45,7 +45,7 @@ fun LicensesList(goBack: () -> Unit) {
                 },
                 scrollBehavior = appBarBehavior,
             )
-        }
+        },
     ) {
         LazyColumn(
             modifier = Modifier

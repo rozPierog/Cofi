@@ -26,7 +26,7 @@ class NumberUtilsKtTest : TestCase() {
                 padMinutes = true,
                 padSeconds = true,
                 showMillis = true,
-            )
+            ),
         )
     }
 

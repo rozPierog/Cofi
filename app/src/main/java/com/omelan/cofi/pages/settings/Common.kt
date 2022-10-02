@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 fun Modifier.settingsItemModifier(
     onClick: () -> Unit,
     enabled: Boolean = true,
-    unlimitedHeight: Boolean = false
+    unlimitedHeight: Boolean = false,
 ) = composed {
     val modifier = this.clickable(
         onClick = onClick,

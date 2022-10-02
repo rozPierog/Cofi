@@ -17,7 +17,7 @@ val COMBINE_WEIGHT_DEFAULT_VALUE = CombineWeight.WATER.name
 enum class CombineWeight(@StringRes val settingsStringId: Int) {
     ALL(R.string.settings_combine_weight_all),
     WATER(R.string.settings_combine_weight_water),
-    NONE(R.string.settings_combine_weight_none)
+    NONE(R.string.settings_combine_weight_none),
 }
 
 fun stringToCombineWeight(string: String) =

@@ -39,7 +39,7 @@ fun Material3Dialog(
                 Row(
                     modifier = Modifier
                         .align(Alignment.End)
-                        .padding(horizontal = Spacing.big)
+                        .padding(horizontal = Spacing.big),
                 ) {
                     if (onCancel != null) {
                         TextButton(onClick = onCancel) {

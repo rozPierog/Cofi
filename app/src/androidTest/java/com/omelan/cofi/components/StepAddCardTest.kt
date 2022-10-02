@@ -9,7 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.util.*
+import java.util.Locale
 
 @RunWith(JUnit4::class)
 class StepAddCardTest {
@@ -26,7 +26,7 @@ class StepAddCardTest {
         composeTestRule.onNodeWithTag(
             "step_type_button_${
             StepType.WAIT.name.lowercase(Locale.getDefault())
-            }"
+            }",
         )
             .assertExists()
     }
@@ -41,7 +41,7 @@ class StepAddCardTest {
         composeTestRule.onNodeWithTag("step_name").assertDoesNotExist()
         StepType.values().forEach { stepType ->
             composeTestRule.onNodeWithTag(
-                "step_type_button_${stepType.name.lowercase(Locale.getDefault())}"
+                "step_type_button_${stepType.name.lowercase(Locale.getDefault())}",
             ).assertExists().performClick()
             val nameNode = composeTestRule.onNodeWithTag("step_name")
 

@@ -34,7 +34,7 @@ fun StepListItem(
     modifier: Modifier = Modifier,
     step: Step,
     stepProgress: StepProgress,
-    onClick: ((Step) -> Unit)? = null
+    onClick: ((Step) -> Unit)? = null,
 ) {
     val icon = AnimatedImageVector.animatedVectorResource(R.drawable.step_done_anim)
     var atEnd by remember { mutableStateOf(false) }
@@ -64,7 +64,7 @@ fun StepListItem(
             painter = painter,
             tint = MaterialTheme.colorScheme.onBackground,
             contentDescription = null,
-            modifier = Modifier.padding(horizontal = Spacing.small)
+            modifier = Modifier.padding(horizontal = Spacing.small),
         )
         Text(
             text = step.name,
@@ -72,14 +72,14 @@ fun StepListItem(
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .weight(1f, true)
-                .padding(horizontal = Spacing.small)
+                .padding(horizontal = Spacing.small),
         )
         if (step.value != null) {
             Text(
                 text = "${step.value}g",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(horizontal = Spacing.small)
+                modifier = Modifier.padding(horizontal = Spacing.small),
 
             )
         }
@@ -88,7 +88,7 @@ fun StepListItem(
                 text = step.time.toStringDuration(),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(horizontal = Spacing.small)
+                modifier = Modifier.padding(horizontal = Spacing.small),
             )
         }
     }

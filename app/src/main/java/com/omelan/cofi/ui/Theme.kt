@@ -16,14 +16,14 @@ import com.kieronquinn.monetcompat.extensions.toArgb
 @Composable
 fun MaterialTheme.createTextSelectionColors() = TextSelectionColors(
     handleColor = this.colorScheme.secondary,
-    backgroundColor = this.colorScheme.secondary.copy(alpha = 0.4f)
+    backgroundColor = this.colorScheme.secondary.copy(alpha = 0.4f),
 )
 
 @Composable
 fun createMonetCompatColorScheme(monet: MonetCompat, darkMode: Boolean): ColorScheme {
     fun getMonetNeutralColor(
         @IntRange(from = 1, to = 2) type: Int,
-        @IntRange(from = 50, to = 900) shade: Int
+        @IntRange(from = 50, to = 900) shade: Int,
     ): Color {
         val monetColor = when (type) {
             1 -> monet.getMonetColors().neutral1[shade]
@@ -34,7 +34,7 @@ fun createMonetCompatColorScheme(monet: MonetCompat, darkMode: Boolean): ColorSc
 
     fun getMonetAccentColor(
         @IntRange(from = 1, to = 2) type: Int,
-        @IntRange(from = 50, to = 900) shade: Int
+        @IntRange(from = 50, to = 900) shade: Int,
     ): Color {
         val monetColor = when (type) {
             1 -> monet.getMonetColors().accent1[shade]

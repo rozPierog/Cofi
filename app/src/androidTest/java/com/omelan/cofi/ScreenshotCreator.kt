@@ -46,7 +46,7 @@ class ScreenshotCreator {
     private fun setNavigationBarColor(darkMode: Boolean) {
         rememberSystemUiController().setNavigationBarColor(
             color = if (darkMode) Color(parseColor("#121212")) else Color.White,
-            darkIcons = darkMode
+            darkIcons = darkMode,
         )
     }
 
@@ -57,7 +57,7 @@ class ScreenshotCreator {
             bitmap = screenShot,
             format = Bitmap.CompressFormat.PNG,
             displayName = name,
-            mimeType = "image/png"
+            mimeType = "image/png",
         )
     }
 
@@ -73,7 +73,7 @@ class ScreenshotCreator {
                     RecipeList(
                         navigateToRecipe = {},
                         addNewRecipe = { },
-                        goToSettings = { }
+                        goToSettings = { },
                     )
                 }
             }
@@ -93,7 +93,7 @@ class ScreenshotCreator {
                     RecipeList(
                         navigateToRecipe = {},
                         addNewRecipe = { },
-                        goToSettings = { }
+                        goToSettings = { },
                     )
                 }
             }

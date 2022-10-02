@@ -17,7 +17,7 @@ enum class StepType(
     val color: Color,
     val colorNight: Color,
     @StringRes val stringRes: Int,
-    @DrawableRes val iconRes: Int
+    @DrawableRes val iconRes: Int,
 ) {
     ADD_COFFEE(
         color = brown500,
@@ -41,8 +41,9 @@ enum class StepType(
         color = greyBlue900,
         colorNight = grey300,
         stringRes = R.string.step_type_other,
-        iconRes = R.drawable.ic_step_other
-    );
+        iconRes = R.drawable.ic_step_other,
+    ),
+    ;
 
     fun isNotWaitStepType(): Boolean = this != WAIT
 }
@@ -73,7 +74,7 @@ data class Step(
     val name: String,
     val time: Int?,
     val type: StepType,
-    val value: Int? = null
+    val value: Int? = null,
 )
 
 private const val jsonName = "name"
@@ -108,7 +109,7 @@ fun JSONObject.toStep(recipeId: Long = 0) = Step(
     time = getIntOrNull(jsonTime),
     value = getIntOrNull(jsonValue),
     orderInRecipe = getInt(jsonOrderInRecipe),
-    type = StepTypeConverter().stringToStepType(getString(jsonType))
+    type = StepTypeConverter().stringToStepType(getString(jsonType)),
 )
 
 fun JSONArray.toSteps(recipeId: Long = 0): List<Step> {

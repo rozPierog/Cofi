@@ -1,6 +1,7 @@
 @file:OptIn(
-    ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class,
-    ExperimentalAnimationGraphicsApi::class
+    ExperimentalMaterial3WindowSizeClassApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalAnimationGraphicsApi::class,
 )
 
 package com.omelan.cofi.pages
@@ -91,7 +92,7 @@ fun RecipeDetails(
         goToEdit,
         goBack,
         onTimerRunning,
-        windowSizeClass
+        windowSizeClass,
     )
 }
 
@@ -106,7 +107,7 @@ suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRe
     }
     if (!isTimerRunning && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         activity.setPictureInPictureParams(
-            PictureInPictureParams.Builder().setAutoEnterEnabled(false).build()
+            PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
         )
     } else {
         activity.setPictureInPictureParams(
@@ -118,7 +119,7 @@ suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRe
                         setSourceRectHint(sourceRectHint)
                         setSeamlessResizeEnabled(false)
                     }
-                }.build()
+                }.build(),
         )
     }
 }
@@ -180,6 +181,7 @@ fun RecipeDetails(
                         0
                     }
                 }
+
                 CombineWeight.NONE.name -> 0
                 else -> 0
             }
@@ -235,9 +237,11 @@ fun RecipeDetails(
         }
         val duration = (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
         coroutineScope.launch(Dispatchers.Default) {
-            withContext(object : MotionDurationScale {
-                override val scaleFactor: Float = 1f
-            }) {
+            withContext(
+                object : MotionDurationScale {
+                    override val scaleFactor: Float = 1f
+                },
+            ) {
                 animatedProgressColor.animateTo(
                     targetValue = if (isDarkMode) {
                         safeCurrentStep.type.colorNight
@@ -248,9 +252,11 @@ fun RecipeDetails(
                 )
             }
         }
-        withContext(object : MotionDurationScale {
-            override val scaleFactor: Float = 1f
-        }) {
+        withContext(
+            object : MotionDurationScale {
+                override val scaleFactor: Float = 1f
+            },
+        ) {
             val result = animatedProgressValue.animateTo(
                 targetValue = 1f,
                 animationSpec = tween(durationMillis = duration, easing = LinearEasing),
@@ -294,7 +300,7 @@ fun RecipeDetails(
     val isPhoneLayout by remember(
         windowSizeClass.widthSizeClass,
         configuration.screenHeightDp,
-        configuration.screenWidthDp
+        configuration.screenWidthDp,
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
@@ -302,13 +308,15 @@ fun RecipeDetails(
         }
     }
 
-    val renderDescription: @Composable (() -> Unit)? = if (recipe.description.isBlank()) null else {
+    val renderDescription: @Composable (() -> Unit)? = if (recipe.description.isBlank()) {
+        null
+    } else {
         {
             Description(
                 modifier = Modifier
                     .fillMaxWidth()
                     .testTag("recipe_description"),
-                descriptionText = recipe.description
+                descriptionText = recipe.description,
             )
             Spacer(modifier = Modifier.height(Spacing.big))
         }
@@ -326,7 +334,7 @@ fun RecipeDetails(
                                 isTimerRunning,
                                 coordinates
                                     .boundsInWindow()
-                                    .toAndroidRect()
+                                    .toAndroidRect(),
                             )
                         }
                     }
@@ -364,7 +372,7 @@ fun RecipeDetails(
                         animatedProgressValue.snapTo(0f)
                         currentStep = newStep
                     }
-                }
+                },
             )
             Divider(color = MaterialTheme.colorScheme.surfaceVariant)
         }
@@ -386,10 +394,12 @@ fun RecipeDetails(
                         Icon(
                             painter = painterResource(id = recipe.recipeIcon.icon),
                             contentDescription = null,
-                            modifier = Modifier.padding(end = Spacing.small)
+                            modifier = Modifier.padding(end = Spacing.small),
                         )
                         Text(
-                            text = recipe.name, maxLines = 1, overflow = TextOverflow.Ellipsis
+                            text = recipe.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
                 },
@@ -401,7 +411,8 @@ fun RecipeDetails(
                 actions = {
                     IconButton(onClick = { showAutomateLinkDialog = true }) {
                         Icon(
-                            painterResource(id = R.drawable.ic_link), contentDescription = null
+                            painterResource(id = R.drawable.ic_link),
+                            contentDescription = null,
                         )
                     }
                     IconButton(onClick = goToEdit) {
@@ -445,10 +456,13 @@ fun RecipeDetails(
     }
 
     if (showAutomateLinkDialog) {
-        DirectLinkDialog(dismiss = { showAutomateLinkDialog = false }, onConfirm = {
-            copyAutomateLink()
-            showAutomateLinkDialog = false
-        })
+        DirectLinkDialog(
+            dismiss = { showAutomateLinkDialog = false },
+            onConfirm = {
+                copyAutomateLink()
+                showAutomateLinkDialog = false
+            },
+        )
     }
 }
 
@@ -469,7 +483,7 @@ fun TabletLayout(
                     PaddingValues(0.dp)
                 } else {
                     paddingValues
-                }
+                },
             ),
 
         horizontalArrangement = Arrangement.Center,
@@ -478,12 +492,12 @@ fun TabletLayout(
             Modifier
                 .fillMaxWidth(0.5f)
                 .align(Alignment.CenterVertically)
-                .padding(getDefaultPadding(additionalBottomPadding = 0.dp))
+                .padding(getDefaultPadding(additionalBottomPadding = 0.dp)),
         )
         if (!isInPiP) {
             LazyColumn(
                 modifier = Modifier.padding(horizontal = Spacing.normal),
-                contentPadding = PaddingValues(bottom = Spacing.bigFab, top = Spacing.big)
+                contentPadding = PaddingValues(bottom = Spacing.bigFab, top = Spacing.big),
             ) {
                 if ((description != null)) {
                     item {
@@ -546,7 +560,8 @@ fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
         },
         icon = {
             Icon(
-                painter = painterResource(id = R.drawable.ic_link), contentDescription = null
+                painter = painterResource(id = R.drawable.ic_link),
+                contentDescription = null,
             )
         },
         title = {
@@ -571,7 +586,7 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
         launch {
             animatedFabRadii.animateTo(
                 if (isTimerRunning) 28.0f else 100f,
-                tween(if (isTimerRunning) 300 else 500)
+                tween(if (isTimerRunning) 300 else 500),
             )
         }
     }
@@ -596,10 +611,11 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
 @Composable
 fun RecipeDetailsPreview() {
     RecipeDetails(
-        recipeId = 1, isInPiP = false,
+        recipeId = 1,
+        isInPiP = false,
         windowSizeClass = WindowSizeClass.calculateFromSize(
-            DpSize(1920.dp, 1080.dp)
-        )
+            DpSize(1920.dp, 1080.dp),
+        ),
     )
 }
 
@@ -607,9 +623,10 @@ fun RecipeDetailsPreview() {
 @Composable
 fun RecipeDetailsPreviewPip() {
     RecipeDetails(
-        recipeId = 1, isInPiP = true,
+        recipeId = 1,
+        isInPiP = true,
         windowSizeClass = WindowSizeClass.calculateFromSize(
-            DpSize(1920.dp, 1080.dp)
-        )
+            DpSize(1920.dp, 1080.dp),
+        ),
     )
 }

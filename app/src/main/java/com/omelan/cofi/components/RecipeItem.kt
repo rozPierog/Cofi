@@ -29,13 +29,13 @@ import com.omelan.cofi.utils.toMillis
 fun RecipeItem(
     recipe: Recipe,
     allSteps: List<Step> = emptyList(),
-    onPress: (recipeId: Int) -> Unit
+    onPress: (recipeId: Int) -> Unit,
 ) {
     Surface(
         tonalElevation = 2.dp,
         shadowElevation = 2.dp,
         shape = shapes.card,
-        color = MaterialTheme.colorScheme.surface
+        color = MaterialTheme.colorScheme.surface,
     ) {
         Column(
             Modifier.clickable(
@@ -43,7 +43,7 @@ fun RecipeItem(
                 role = Role.Button,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(bounded = true),
-            )
+            ),
         ) {
             Row(
                 modifier = Modifier
@@ -57,14 +57,14 @@ fun RecipeItem(
                     contentDescription = null,
                     modifier = Modifier
                         .padding(horizontal = Spacing.small)
-                        .size(28.dp)
+                        .size(28.dp),
                 )
                 Column(
                     modifier = Modifier.padding(
                         vertical = Spacing.big,
-                        horizontal = Spacing.medium
+                        horizontal = Spacing.medium,
                     ),
-                    verticalArrangement = Arrangement.Center
+                    verticalArrangement = Arrangement.Center,
                 ) {
                     Text(
                         text = recipe.name,
@@ -128,6 +128,6 @@ fun PreviewRecipeItem() {
                 value = 240,
             ),
         ),
-        onPress = {}
+        onPress = {},
     )
 }

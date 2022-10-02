@@ -43,7 +43,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     LaunchedEffect(isExpanded) {
         rotationDegree.animateTo(
             targetValue = if (isExpanded) 180f else 0f,
-            animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
+            animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
         )
     }
     Surface(modifier = modifier, shape = shapes.card, tonalElevation = 2.dp) {
@@ -63,12 +63,12 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                             top = Spacing.big,
                             start = Spacing.big,
                             end = Spacing.big,
-                            bottom = Spacing.small
+                            bottom = Spacing.small,
                         )
                     } else {
                         padding(Spacing.big)
                     }
-                }
+                },
         ) {
             ClickableText(
                 text = descriptionWithLinks,
@@ -94,7 +94,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     if (!isExpanded) {
                         showExpandButton = textLayoutResult.didOverflowHeight
                     }
-                }
+                },
             )
             if (showExpandButton || isExpanded) {
                 Icon(
@@ -103,7 +103,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     modifier = Modifier
                         .padding(top = Spacing.small)
                         .align(Alignment.CenterHorizontally)
-                        .rotate(rotationDegree.value)
+                        .rotate(rotationDegree.value),
                 )
             }
         }
@@ -191,12 +191,12 @@ fun DescriptionLongPreview() {
             item {
                 Description(
                     descriptionText = "Recipe made by James Hoffmann. Grind mildly" +
-                        " \n https://www.youtube.com/watch?v=AI4ynXzkSQo "
+                        " \n https://www.youtube.com/watch?v=AI4ynXzkSQo ",
                 )
             }
             item {
                 Description(
-                    descriptionText = "Recipe made by James Hoffmann. Grind mildly"
+                    descriptionText = "Recipe made by James Hoffmann. Grind mildly",
                 )
             }
         }

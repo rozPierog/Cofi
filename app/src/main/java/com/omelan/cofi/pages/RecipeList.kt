@@ -75,7 +75,7 @@ fun RecipeList(
                 },
                 text = {
                     Text(text = stringResource(R.string.recipe_create_title))
-                }
+                },
             )
         },
     ) {
@@ -92,7 +92,7 @@ fun RecipeList(
                 RecipeItem(
                     recipe = recipe,
                     onPress = navigateToRecipe,
-                    allSteps = stepsByRecipe[recipe.id] ?: emptyList()
+                    allSteps = stepsByRecipe[recipe.id] ?: emptyList(),
                 )
             }
         }

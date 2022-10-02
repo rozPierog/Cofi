@@ -20,8 +20,8 @@ private fun JSONArray.toLicensesList(): List<License> {
         list.add(
             License(
                 license = jsonObject.getString("license"),
-                license_url = jsonObject.getString("license_url")
-            )
+                license_url = jsonObject.getString("license_url"),
+            ),
         )
     }
     return list
@@ -41,7 +41,7 @@ fun String.parseJsonToDependencyList(): List<Dependency> {
                 url = jsonObject.getString("url"),
                 year = jsonObject.getString("year"),
                 licenses = jsonObject.getJSONArray("licenses").toLicensesList(),
-            )
+            ),
         )
     }
     return dependencyList

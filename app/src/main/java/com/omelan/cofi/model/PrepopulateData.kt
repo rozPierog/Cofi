@@ -63,7 +63,7 @@ class PrepopulateData(context: Context) {
             value = 30,
             time = 5.toMillis(),
             type = StepType.ADD_COFFEE,
-            orderInRecipe = autoOrderInRecipe(v60Id)
+            orderInRecipe = autoOrderInRecipe(v60Id),
         ),
         Step(
             id = autoStepId(),
@@ -72,7 +72,7 @@ class PrepopulateData(context: Context) {
             value = 60,
             time = 5.toMillis(),
             type = StepType.WATER,
-            orderInRecipe = autoOrderInRecipe(v60Id)
+            orderInRecipe = autoOrderInRecipe(v60Id),
         ),
         Step(
             id = autoStepId(),
@@ -80,7 +80,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_swirl),
             time = 5.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = autoOrderInRecipe(v60Id)
+            orderInRecipe = autoOrderInRecipe(v60Id),
         ),
         Step(
             id = autoStepId(),
@@ -88,7 +88,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_wait),
             time = 35.toMillis(),
             type = StepType.WAIT,
-            orderInRecipe = autoOrderInRecipe(v60Id)
+            orderInRecipe = autoOrderInRecipe(v60Id),
         ),
         Step(
             id = autoStepId(),
@@ -97,7 +97,7 @@ class PrepopulateData(context: Context) {
             time = 30.toMillis(),
             type = StepType.WATER,
             value = 240,
-            orderInRecipe = autoOrderInRecipe(v60Id)
+            orderInRecipe = autoOrderInRecipe(v60Id),
         ),
         Step(
             id = autoStepId(),
@@ -106,7 +106,7 @@ class PrepopulateData(context: Context) {
             time = 30.toMillis(),
             type = StepType.WATER,
             value = 200,
-            orderInRecipe = autoOrderInRecipe(v60Id)
+            orderInRecipe = autoOrderInRecipe(v60Id),
         ),
         Step(
             id = autoStepId(),
@@ -114,7 +114,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_swirl),
             time = 5.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = autoOrderInRecipe(v60Id)
+            orderInRecipe = autoOrderInRecipe(v60Id),
         ),
         // French Press
         Step(
@@ -200,7 +200,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_swirl),
             time = 5.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = autoOrderInRecipe(chemexId)
+            orderInRecipe = autoOrderInRecipe(chemexId),
         ),
         Step(
             id = autoStepId(),
@@ -217,7 +217,7 @@ class PrepopulateData(context: Context) {
             time = 30.toMillis(),
             type = StepType.WATER,
             value = 240,
-            orderInRecipe = autoOrderInRecipe(chemexId)
+            orderInRecipe = autoOrderInRecipe(chemexId),
         ),
         Step(
             id = autoStepId(),
@@ -226,7 +226,7 @@ class PrepopulateData(context: Context) {
             time = 30.toMillis(),
             type = StepType.WATER,
             value = 200,
-            orderInRecipe = autoOrderInRecipe(chemexId)
+            orderInRecipe = autoOrderInRecipe(chemexId),
         ),
         Step(
             id = autoStepId(),
@@ -234,7 +234,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_swirl),
             time = 5.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = autoOrderInRecipe(chemexId)
+            orderInRecipe = autoOrderInRecipe(chemexId),
         ),
         // AeroPress
         Step(
@@ -244,7 +244,7 @@ class PrepopulateData(context: Context) {
             value = 11,
             time = 5.toMillis(),
             type = StepType.ADD_COFFEE,
-            orderInRecipe = autoOrderInRecipe(aeroPress)
+            orderInRecipe = autoOrderInRecipe(aeroPress),
         ),
         Step(
             id = autoStepId(),
@@ -253,7 +253,7 @@ class PrepopulateData(context: Context) {
             value = 200,
             time = 8.toMillis(),
             type = StepType.WATER,
-            orderInRecipe = autoOrderInRecipe(aeroPress)
+            orderInRecipe = autoOrderInRecipe(aeroPress),
         ),
         Step(
             id = autoStepId(),
@@ -261,7 +261,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_aero_step_piston),
             time = 10.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = autoOrderInRecipe(aeroPress)
+            orderInRecipe = autoOrderInRecipe(aeroPress),
         ),
         Step(
             id = autoStepId(),
@@ -269,7 +269,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_wait),
             time = 120.toMillis(),
             type = StepType.WAIT,
-            orderInRecipe = autoOrderInRecipe(aeroPress)
+            orderInRecipe = autoOrderInRecipe(aeroPress),
         ),
         Step(
             id = autoStepId(),
@@ -277,7 +277,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_swirl),
             time = 5.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = autoOrderInRecipe(aeroPress)
+            orderInRecipe = autoOrderInRecipe(aeroPress),
         ),
         Step(
             id = autoStepId(),
@@ -285,7 +285,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_step_wait),
             time = 30.toMillis(),
             type = StepType.WAIT,
-            orderInRecipe = autoOrderInRecipe(aeroPress)
+            orderInRecipe = autoOrderInRecipe(aeroPress),
         ),
         Step(
             id = autoStepId(),
@@ -293,7 +293,7 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_aero_step_press),
             time = 30.toMillis(),
             type = StepType.OTHER,
-            orderInRecipe = autoOrderInRecipe(aeroPress)
+            orderInRecipe = autoOrderInRecipe(aeroPress),
         ),
     )
 }
