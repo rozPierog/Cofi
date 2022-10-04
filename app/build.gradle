@@ -37,7 +37,7 @@ android {
                 arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
-        resConfigs 'en', 'pl', 'it', 'de'
+        resConfigs 'en', 'pl', 'it', 'de', 'tr'
         manifestPlaceholders = [profileable: false]
 
     }
