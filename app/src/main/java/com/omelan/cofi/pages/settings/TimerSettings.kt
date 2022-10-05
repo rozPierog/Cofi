@@ -19,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +31,7 @@ import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3Dialog
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
+import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
@@ -115,12 +117,15 @@ fun TimerSettings(goBack: () -> Unit) {
                             contentDescription = null,
                         )
                     },
-                    modifier = Modifier.settingsItemModifier(
-                        onClick = togglePiP,
-                        enabled = hasPiPPermission,
-                    ),
+                    modifier = Modifier
+                        .settingsItemModifier(
+                            onClick = togglePiP,
+                            enabled = hasPiPPermission,
+                        )
+                        .testTag("settings_timer_list_item_pip"),
                     trailing = {
                         Switch(
+                            modifier = Modifier.testTag("settings_timer_switch_pip"),
                             checked = isPiPEnabled,
                             onCheckedChange = { togglePiP() },
                             enabled = hasPiPPermission,
@@ -140,9 +145,12 @@ fun TimerSettings(goBack: () -> Unit) {
                             contentDescription = null,
                         )
                     },
-                    modifier = Modifier.settingsItemModifier(onClick = toggleStepChangeSound),
+                    modifier = Modifier
+                        .settingsItemModifier(onClick = toggleStepChangeSound)
+                        .testTag("settings_timer_list_item_sound"),
                     trailing = {
                         Switch(
+                            modifier = Modifier.testTag("settings_timer_switch_sound"),
                             checked = isStepSoundEnabled,
                             onCheckedChange = { toggleStepChangeSound() },
                             colors = switchColors,
@@ -161,9 +169,12 @@ fun TimerSettings(goBack: () -> Unit) {
                             contentDescription = null,
                         )
                     },
-                    modifier = Modifier.settingsItemModifier(onClick = toggleStepChangeVibration),
+                    modifier = Modifier
+                        .settingsItemModifier(onClick = toggleStepChangeVibration)
+                        .testTag("settings_timer_list_item_vibration"),
                     trailing = {
                         Switch(
+                            modifier = Modifier.testTag("settings_timer_switch_vibration"),
                             checked = isStepVibrationEnabled,
                             onCheckedChange = { toggleStepChangeVibration() },
                             colors = switchColors,
@@ -192,7 +203,7 @@ fun TimerSettings(goBack: () -> Unit) {
                     },
                     modifier = Modifier.settingsItemModifier(
                         onClick = { showCombineWeightDialog = true },
-                    ),
+                    ).testTag("settings_timer_list_item_weight"),
                 )
                 if (showCombineWeightDialog) {
                     CombineWeightDialog(
@@ -225,7 +236,7 @@ fun CombineWeightDialog(
                 modifier = Modifier.selectable(
                     selected = combineWeightState == it.name,
                     onClick = { selectCombineMethod(it) },
-                ),
+                ).testTag("settings_timer_list_item_weight_dialog"),
                 icon = {
                     RadioButton(
                         selected = combineWeightState == it.name,
@@ -245,5 +256,7 @@ fun CombineWeightDialog(
 @Preview
 @Composable
 fun SettingsTimerPreview() {
-    TimerSettings(goBack = { })
+    CofiTheme() {
+        TimerSettings(goBack = { })
+    }
 }
