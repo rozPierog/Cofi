@@ -1,0 +1,15 @@
+name: Changelog checks
+
+on:
+    pull_request:
+        branches: [ main ]
+
+jobs:
+    build:
+        if: ${{ contains(github.event.pull_request.body, '[x] I''ve added new item into [Changelog](docs/Changelog.md) under [Unreleased]') }}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Run changelog checker
+                uses: mwcodebase/versioning-checker@85b1edf4dbf1ff8fbe37884ea600de012ca3d7a3
+                with:
+                    tracked_files: 'docs/Changelog.md'
