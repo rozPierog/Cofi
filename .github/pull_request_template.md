@@ -11,6 +11,7 @@ Fixes # (issue)
 - [ ] New feature
 
 # Checklist:
-
 - [ ] I've added new item into [Changelog](docs/Changelog.md) under [Unreleased]
+<!-- ignore-task-list-start -->
 - [ ] I've tested the change on device
+<!-- ignore-task-list-end -->

@@ -1,0 +1,16 @@
+name: Verify Changelog
+
+on:
+    pull_request:
+        branches: [ fature/* ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Check PR
+                uses: kentaro-m/task-completed-checker-action@v0.1.0
+            -   name: Version check action
+                uses: mwcodebase/versioning-checker@v2.2
+                with:
+                    tracked_files: 'docs/Changelog.md'
