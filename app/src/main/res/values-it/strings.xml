@@ -66,8 +66,6 @@ Occhio a non bloccare la fuoriuscita dell'aria dal coffee brewer"</string>
     <string name="tereszkiewicz_credits_subtitle">Guarda il suo Dribbble</string>
     <string name="settings_step_sound_item">Emetti un suono tra i passaggi</string>
     <string name="recipe_create_title">Aggiungi ricetta</string>
-
-
     <string name="settings_step_vibrate_item">Modifica vibrazione</string>
     <string name="settings_backup_item">Backup/Restore</string><string name="settings_timer_item">Impostazioni Timer</string>
     <string name="prepopulate_aero_description">Ricetta di: James Hoffmann Sito: https://youtu.be/j6VlT_jUVPc Macinatura: Per una tostatura leggera - macinatura media. Più il caffè è scuro, più bisogna aumentare la macinatura Temperatura: Per le tostature chiare - portare a ebollizione e utilizzare immediatamente. Per le tostature scure - 85-90℃</string>
@@ -79,7 +77,7 @@ Occhio a non bloccare la fuoriuscita dell'aria dal coffee brewer"</string>
     <string name="settings_restore">Ripristina</string>
     <string name="settings_backup">Backup</string>
     <string name="step_add_duration_explainer">La durata del passaggio determina la durata dell'azione (in secondi). Se si vuole creare un passaggio che contiene l'intera ricetta finché non viene letta, basta lasciare lo spazio vuoto.</string>.
- <string name="recipe_details_noTime">Premi Start per continuare</string>
+    <string name="recipe_details_noTime">Premi Start per continuare</string>
     <string name="button_show">Mostra</string>
     <string name="recipe_edit_description_button">Aggiungi descrizione</string>
     <string name="app_version">Versione dell'app</string>
