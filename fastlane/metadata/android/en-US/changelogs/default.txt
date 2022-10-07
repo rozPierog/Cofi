@@ -1,11 +1,14 @@
 ### Added
-- Added support for predictive back gesture animation on Android 13+
+- Show recipe basic info in timer and on main recipe list screen
+- WYSIWYG in description input
+- Added "Cancel" button to Dialogs that were missing it
 
 ### Changed
-- Updated dependencies
-- fixed horizontal overscoll effect being applied when there is no horizontal scroll
-- Add recipe FAB will collapse down to "small" state on scroll
+- Back button now closes icon picker bottom sheet in recipe edit
+- Tweaked scrolling into view of inputs in recipe edit page
+- Description input is hidden by default to indicate that it isn't required
+- Tweaked layout of Timer, StepAddCard, Description, Recipe Edit, Settings
+- Fixed adding default recipes
 
 ### Removed
-
 

@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.8.0] - 2022-10-07
+
+### Added
 - Show recipe basic info in timer and on main recipe list screen
 - WYSIWYG in description input
 - Added "Cancel" button to Dialogs that were missing it
