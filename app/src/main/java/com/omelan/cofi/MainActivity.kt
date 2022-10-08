@@ -35,7 +35,6 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.android.gms.instantapps.InstantApps
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.model.AppDatabase
 import com.omelan.cofi.model.Recipe
@@ -51,6 +50,8 @@ import com.omelan.cofi.pages.settings.TimerSettings
 import com.omelan.cofi.pages.settings.licenses.LicensesList
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
+import com.omelan.cofi.utils.isInstantApp
+import com.omelan.cofi.utils.showInstallPrompt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -102,25 +103,6 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-    private fun isAppInstalled(packageName: String): Boolean {
-        return try {
-            packageManager.getPackageInfo(packageName, 0)
-            true
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    private fun showInstallPrompt() {
-        // Here it shows a install prompt for instant apps
-        val postInstall = Intent(Intent.ACTION_MAIN)
-            .addCategory(Intent.CATEGORY_DEFAULT)
-            .setPackage("com.omelan.cofi")
-
-        InstantApps.showInstallPrompt(this@MainActivity, postInstall, 1000, null)
-    }
-
-
     @Composable
     fun MainList(navController: NavController) {
         RecipeList(
@@ -141,32 +123,30 @@ class MainActivity : MonetCompatActivity() {
         RecipeDetails(
             recipeId = recipeId,
             onRecipeEnd = { recipe ->
-                if (!isAppInstalled("com.omelan.cofi")) {
-                    showInstallPrompt()
-                } else {
-                    lifecycleScope.launch {
-                        db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
-                        val deepLinkIntent = Intent(
-                            Intent.ACTION_VIEW,
-                            "$appDeepLinkUrl/recipe/$recipeId".toUri(),
-                            this@MainActivity,
-                            MainActivity::class.java,
-                        )
-                        val shortcut =
-                            ShortcutInfoCompat.Builder(this@MainActivity, recipeId.toString())
-                                .setShortLabel(recipe.name)
-                                .setLongLabel(recipe.name)
-                                .setIcon(
-                                    IconCompat.createWithResource(
-                                        this@MainActivity,
-                                        recipe.recipeIcon.icon,
-                                    ),
-                                )
-                                .setIntent(deepLinkIntent)
-                                .build()
-
-                        ShortcutManagerCompat.pushDynamicShortcut(this@MainActivity, shortcut)
-                    }
+                if (isInstantApp()) {
+                    showInstallPrompt(this@MainActivity)
+                }
+                lifecycleScope.launch {
+                    db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
+                    val deepLinkIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        "$appDeepLinkUrl/recipe/$recipeId".toUri(),
+                        this@MainActivity,
+                        MainActivity::class.java,
+                    )
+                    val shortcut =
+                        ShortcutInfoCompat.Builder(this@MainActivity, recipeId.toString())
+                            .setShortLabel(recipe.name)
+                            .setLongLabel(recipe.name)
+                            .setIcon(
+                                IconCompat.createWithResource(
+                                    this@MainActivity,
+                                    recipe.recipeIcon.icon,
+                                ),
+                            )
+                            .setIntent(deepLinkIntent)
+                            .build()
+                    ShortcutManagerCompat.pushDynamicShortcut(this@MainActivity, shortcut)
                 }
             },
             goBack = goBack,
