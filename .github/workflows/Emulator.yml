@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         api-level: [24, 30, 31]
-        target: [default]
+        target: [google_apis]
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
