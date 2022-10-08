@@ -123,8 +123,8 @@ class MainActivity : MonetCompatActivity() {
         RecipeDetails(
             recipeId = recipeId,
             onRecipeEnd = { recipe ->
-                if (isInstantApp()) {
-                    showInstallPrompt(this@MainActivity)
+                if (isInstantApp(this)) {
+                    showInstallPrompt(this@MainActivity, this.packageName)
                 }
                 lifecycleScope.launch {
                     db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
