@@ -33,7 +33,7 @@ jobs:
         with:
           java-version: 1.11
       - name: Android Emulator Runner
-        uses: ReactiveCircus/android-emulator-runner@6fd58f95fca234f6afffa070854b8c4c520b2d81
+        uses: ReactiveCircus/android-emulator-runner@b390b0e1166697ae57c242a0a33c29ca9f5ae078
         with:
           api-level: 30
           arch: x86_64
