@@ -41,5 +41,5 @@ jobs:
           api-level: ${{ matrix.api-level }}
           target: ${{ matrix.target }}
           arch: x86_64
-          emulator-build: 7075546
+#           emulator-build: 7075546
           script: './gradlew connectedFullDebugAndroidTest'
