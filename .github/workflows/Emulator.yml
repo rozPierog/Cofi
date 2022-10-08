@@ -19,7 +19,10 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: macos-latest
-
+    strategy:
+      matrix:
+        api-level: [24, 30, 33]
+        target: [default, google_apis]
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -33,10 +36,10 @@ jobs:
         with:
           java-version: 1.11
       - name: Android Emulator Runner
-        uses: ReactiveCircus/android-emulator-runner@b390b0e1166697ae57c242a0a33c29ca9f5ae078
+        uses: ReactiveCircus/android-emulator-runner@v2.26.0
         with:
-          api-level: 30
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
           arch: x86_64
-          target: google_apis
           emulator-build: 7075546
           script: './gradlew connectedFullDebugAndroidTest'
