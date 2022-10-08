@@ -21,8 +21,8 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        api-level: [24, 30, 33]
-        target: [default, google_apis]
+        api-level: [24, 30, 31]
+        target: [default]
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
