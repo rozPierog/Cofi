@@ -1,7 +1,8 @@
 package com.omelan.cofi.utils
 
 import android.app.Activity
+import android.content.Context
 
-fun isInstantApp() = false
+fun isInstantApp(@Suppress("UNUSED_PARAMETER") context: Context) = false
 
-fun showInstallPrompt(activity: Activity) {}
+fun showInstallPrompt(@Suppress("UNUSED_PARAMETER") activity: Activity) {}

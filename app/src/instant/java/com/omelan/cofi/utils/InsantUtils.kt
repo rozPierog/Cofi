@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import com.google.android.gms.instantapps.InstantApps
 
-fun showInstallPrompt(activity: Activity, id: String) {
+fun showInstallPrompt(activity: Activity) {
     val postInstall = Intent(Intent.ACTION_MAIN)
         .addCategory(Intent.CATEGORY_DEFAULT)
-        .setPackage(id)
+        .setPackage(activity.packageName)
 
     InstantApps.showInstallPrompt(activity, postInstall, 1000, null)
 }
