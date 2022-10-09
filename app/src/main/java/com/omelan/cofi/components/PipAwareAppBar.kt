@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -78,7 +79,7 @@ fun PiPAwareAppBar(
     if (!LocalPiPState.current) {
         InsetAwareTopAppBar(
             title = title,
-            modifier = modifier,
+            modifier = modifier.testTag("pip_app_bar"),
             navigationIcon = navigationIcon,
             actions = actions,
             elevation = elevation,
