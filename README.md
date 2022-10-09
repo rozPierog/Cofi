@@ -13,7 +13,7 @@
   </a>
 </p>
 
-# Download
+# Download1
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.omelan.cofi">
     <img src="https://user-images.githubusercontent.com/23499434/105481420-4f9e4b80-5ca7-11eb-93a8-68ec63e55d00.png" height="75">
