@@ -50,6 +50,8 @@ import com.omelan.cofi.pages.settings.TimerSettings
 import com.omelan.cofi.pages.settings.licenses.LicensesList
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
+import com.omelan.cofi.utils.isInstantApp
+import com.omelan.cofi.utils.showInstallPrompt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -121,6 +123,9 @@ class MainActivity : MonetCompatActivity() {
         RecipeDetails(
             recipeId = recipeId,
             onRecipeEnd = { recipe ->
+                if (isInstantApp(this)) {
+                    showInstallPrompt(this@MainActivity, this.packageName)
+                }
                 lifecycleScope.launch {
                     db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
                     val deepLinkIntent = Intent(
@@ -141,7 +146,6 @@ class MainActivity : MonetCompatActivity() {
                             )
                             .setIntent(deepLinkIntent)
                             .build()
-
                     ShortcutManagerCompat.pushDynamicShortcut(this@MainActivity, shortcut)
                 }
             },
