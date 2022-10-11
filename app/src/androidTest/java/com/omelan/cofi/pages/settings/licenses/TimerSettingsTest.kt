@@ -41,6 +41,13 @@ class TimerSettingsTest {
         listItem.assertIsDisplayed()
         val currentSwitchState =
             switch.fetchSemanticsNode().config[SemanticsProperties.ToggleableState]
+        val isListItemDisabled =
+            listItem.fetchSemanticsNode().config.contains(SemanticsProperties.Disabled)
+        if (isListItemDisabled) {
+            switch.assertIsOff()
+            listItem.assertIsNotEnabled()
+            return
+        }
         if (currentSwitchState == ToggleableState.Off) {
             switch.performClick()
         }

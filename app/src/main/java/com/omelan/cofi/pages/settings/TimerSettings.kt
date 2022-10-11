@@ -126,7 +126,7 @@ fun TimerSettings(goBack: () -> Unit) {
                     trailing = {
                         Switch(
                             modifier = Modifier.testTag("settings_timer_switch_pip"),
-                            checked = isPiPEnabled,
+                            checked = if (!hasPiPPermission) false else isPiPEnabled,
                             onCheckedChange = { togglePiP() },
                             enabled = hasPiPPermission,
                             colors = switchColors,
