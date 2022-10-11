@@ -46,6 +46,7 @@ class TimerSettingsTest {
         }
         switch.assertIsOn()
         listItem.performClick()
+        listItem.printToLog("LISTITEM")
         switch.assertIsOff().performClick().assertIsOn()
     }
 
