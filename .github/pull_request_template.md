@@ -12,5 +12,5 @@ Fixes # (issue)
 
 # Checklist:
 
-- [ ] I've added new item into [Changelog](docs/Changelog.md) under [Unreleased]
+- [ ] I've added new item into [Changelog](/docs/Changelog.md) under [Unreleased]
 - [ ] I've tested the change on device
