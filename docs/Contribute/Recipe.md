@@ -20,7 +20,7 @@ A good contender for new default recipe:
 
 ## 🤖 If you are an Android developer:
 
-Everything you need to start is [here](app/src/main/java/com/omelan/cofi/model/PrepopulateData.kt)
+Everything you need to start is [here](/app/src/main/java/com/omelan/cofi/model/PrepopulateData.kt)
 
 1. Add next `<recipe_name>Id` - must be one higher than one above it
 2. Add Recipe object to the `recipes` list
