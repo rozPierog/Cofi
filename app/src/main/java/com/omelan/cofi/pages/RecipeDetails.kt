@@ -30,6 +30,7 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -143,6 +144,7 @@ fun RecipeDetails(
     var isDone by remember { mutableStateOf(false) }
     var isTimerRunning by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
+    var multiplier by remember { mutableStateOf(1.0) }
     val indexOfCurrentStep = steps.indexOf(currentStep)
     val indexOfLastStep = steps.lastIndex
 
@@ -229,13 +231,15 @@ fun RecipeDetails(
         val safeCurrentStep = currentStep ?: return
         isDone = false
         isTimerRunning = true
-        val currentStepTime = safeCurrentStep.time
+        val currentStepTime =
+            if (safeCurrentStep.time != null) safeCurrentStep.time * multiplier else null
         if (currentStepTime == null) {
             animatedProgressValue.snapTo(1f)
             isTimerRunning = false
             return
         }
-        val duration = (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
+        val duration =
+            (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
         coroutineScope.launch(Dispatchers.Default) {
             withContext(
                 object : MotionDurationScale {
@@ -304,7 +308,7 @@ fun RecipeDetails(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
+                    (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
         }
     }
 
@@ -346,6 +350,7 @@ fun RecipeDetails(
             isInPiP = isInPiP,
             alreadyDoneWeight = alreadyDoneWeight.value,
             isDone = isDone,
+            multiplier = multiplier,
         )
         if (!isInPiP) {
             Spacer(modifier = Modifier.height(Spacing.big))
@@ -409,6 +414,12 @@ fun RecipeDetails(
                     }
                 },
                 actions = {
+                    IconButton(onClick = { multiplier += 1 }) {
+                        Icon(
+                            Icons.Rounded.ExitToApp,
+                            contentDescription = null,
+                        )
+                    }
                     IconButton(onClick = { showAutomateLinkDialog = true }) {
                         Icon(
                             painterResource(id = R.drawable.ic_link),
