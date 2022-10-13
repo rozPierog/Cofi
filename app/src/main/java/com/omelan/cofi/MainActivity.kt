@@ -120,33 +120,37 @@ class MainActivity : MonetCompatActivity() {
         windowSizeClass: WindowSizeClass,
         db: AppDatabase,
     ) {
+        val pipState = LocalPiPState.current
         RecipeDetails(
             recipeId = recipeId,
             onRecipeEnd = { recipe ->
-                if (isInstantApp(this@MainActivity)) {
-                    showInstallPrompt(this@MainActivity)
-                }
                 lifecycleScope.launch {
                     db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
-                    val deepLinkIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        "$appDeepLinkUrl/recipe/$recipeId".toUri(),
-                        this@MainActivity,
-                        MainActivity::class.java,
-                    )
-                    val shortcut =
-                        ShortcutInfoCompat.Builder(this@MainActivity, recipeId.toString())
-                            .setShortLabel(recipe.name)
-                            .setLongLabel(recipe.name)
-                            .setIcon(
-                                IconCompat.createWithResource(
-                                    this@MainActivity,
-                                    recipe.recipeIcon.icon,
-                                ),
-                            )
-                            .setIntent(deepLinkIntent)
-                            .build()
-                    ShortcutManagerCompat.pushDynamicShortcut(this@MainActivity, shortcut)
+                }
+                if (isInstantApp(this@MainActivity) && !pipState) {
+                    showInstallPrompt(this@MainActivity)
+                } else {
+                    lifecycleScope.launch {
+                        val deepLinkIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            "$appDeepLinkUrl/recipe/$recipeId".toUri(),
+                            this@MainActivity,
+                            MainActivity::class.java,
+                        )
+                        val shortcut =
+                            ShortcutInfoCompat.Builder(this@MainActivity, recipeId.toString())
+                                .setShortLabel(recipe.name)
+                                .setLongLabel(recipe.name)
+                                .setIcon(
+                                    IconCompat.createWithResource(
+                                        this@MainActivity,
+                                        recipe.recipeIcon.icon,
+                                    ),
+                                )
+                                .setIntent(deepLinkIntent)
+                                .build()
+                        ShortcutManagerCompat.pushDynamicShortcut(this@MainActivity, shortcut)
+                    }
                 }
             },
             goBack = goBack,
@@ -269,19 +273,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                            slideIntoContainer(
-                                AnimatedContentScope.SlideDirection.End,
-                                animationSpec = tween(tweenDuration),
-                                initialOffset = { fullWidth -> -fullWidth / 5 },
-                            )
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.End,
+                                    animationSpec = tween(tweenDuration),
+                                    initialOffset = { fullWidth -> -fullWidth / 5 },
+                                )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                            slideOutOfContainer(
-                                AnimatedContentScope.SlideDirection.Start,
-                                animationSpec = tween(tweenDuration),
-                                targetOffset = { fullWidth -> fullWidth / 5 },
-                            )
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Start,
+                                    animationSpec = tween(tweenDuration),
+                                    targetOffset = { fullWidth -> fullWidth / 5 },
+                                )
                     },
                 ) {
 //                    composable("list_color") {
@@ -335,13 +339,16 @@ class MainActivity : MonetCompatActivity() {
                             TimerSettings(goBack = goBack)
                         }
                         composable("backup") {
-                            BackupRestoreSettings(goBack = goBack, goToRoot = {
-                                navController.navigate("list") {
-                                    popUpTo("list") {
-                                        inclusive = true
+                            BackupRestoreSettings(
+                                goBack = goBack,
+                                goToRoot = {
+                                    navController.navigate("list") {
+                                        popUpTo("list") {
+                                            inclusive = true
+                                        }
                                     }
-                                }
-                            },)
+                                },
+                            )
                         }
                         composable("about") {
                             AppSettingsAbout(
