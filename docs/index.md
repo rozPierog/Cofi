@@ -42,6 +42,6 @@ I've built Cofi after getting frustrated with the lack of privacy-respecting, sm
 
 ## Contribute to Cofi
 
-- [New language](/docs/Contribute/Language.md)
-- [New default recipe](/docs/Contribute/Recipe.md)
-- [New feature or bugfix](/docs/Contribute/CONTRIBUTING.md)
+- [New language](Contribute/Language.md)
+- [New default recipe](Contribute/Recipe.md)
+- [New feature or bugfix](Contribute/CONTRIBUTING.md)
