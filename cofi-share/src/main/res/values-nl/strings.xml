@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name" translatable="false">Cofi</string>
+    <string name="list_header" translatable="false">Cofi</string>
+    <string name="step_type_add_coffee">Voeg koffie toe</string>
+    <string name="step_type_water">Voeg water toe</string>
+    <string name="step_type_wait">Wacht</string>
+    <string name="step_type_other">Andere</string>
+    <string name="step_add_name">Naam</string>
+    <string name="step_add_duration">Tijd (s)</string>
+    <string name="step_add_weight">Gewicht (g)</string>
+    <string name="step_add_save">Bewaren</string>
+    <string name="recipe_unsaved_title">U heeft onbewaarde wijzigingen</string>
+    <string name="recipe_unsaved_text">Wilt u deze weggooien?</string>
+    <string name="recipe_delete_title">Bent u zeker?</string>
+    <string name="recipe_delete_text">Dit zal het recept permanent verwijderen</string>
+    <string name="recipe_edit_name">Naam</string>
+    <string name="recipe_edit_description">Beschrijving</string>
+    <string name="recipe_edit_description_button">Beschrijving toevoegen</string>
+    <string name="recipe_edit_title">Recept bewerken</string>
+    <string name="recipe_add_new_title">Recept toevoegen</string>
+    <string name="recipe_details_automation_dialog_title">Directe link</string>
+    <string name="recipe_details_automation_dialog_text">"Gebruik deze link om meteen naar het recept te gaan. Maak een NFC tag ermee, of maak een automatisatie opdracht in Tasker om uw ochtendkoffie eenvoudiger te maken.
+OPGELET: U kan het recept op deze manier niet delen!"</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="button_cancel">Annuleren</string>
+    <string name="button_delete">Verwijderen</string>
+    <string name="button_discard">Weggooien</string>
+    <string name="button_continue_editing">Verder wijzigen</string>
+    <string name="button_copy">Kopiëren</string>
+    <string name="snackbar_copied">Gekopieerd!</string>
+    <string name="settings_licenses_title">Open source licenties</string>
+    <string name="settings_title">Instellingen</string>
+    <string name="settings_about_item">Over de applicatie</string>
+    <string name="settings_pip_item">Beeld in beeld</string>
+    <string name="settings_step_sound_item">Stap aanpassings geluid</string>
+    <string name="settings_bug_item">Meld een bug of maak een suggestie</string>
+    <string name="settings_combine_weight_item">Gewicht combineren</string>
+    <string name="settings_combine_weight_all">Alle gewichten combineren</string>
+    <string name="settings_combine_weight_water">Combineer alleen watergewicht</string>
+    <string name="settings_combine_weight_none">Gewicht niet combineren</string>
+    <string name="settings_about_title">Over</string>
+    <string name="settings_licenses_item">Erkenningen</string>
+    <string name="settings_github_item">Github Repository</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Backup van %d recept</item>
+        <item quantity="other">Backup van %d recepten</item>
+    </plurals>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Herstel van %d recept</item>
+        <item quantity="other">Herstel van %d recepten</item>
+    </plurals>
+    <string name="button_show">Toon</string>
+    <string name="step_add_remove">Verberg</string>
+    <string name="timer_enjoy">Geniet van uw koffie</string>
+    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_description">"Recept gemaakt door: James Hoffmann
+Bron: https://youtu.be/AI4ynXzkSQo
+Grind: medium fijn
+Temperatuur: hoe warmer, hoe beter (zeker met lichtere brandingen)"</string>
+    <string name="prepopulate_step_coffee">Voeg koffie toe</string>
+    <string name="prepopulate_step_water">Voeg water toe</string>
+    <string name="prepopulate_step_swirl">Roer</string>
+    <string name="prepopulate_step_wait">Wacht</string>
+    <string name="prepopulate_step_plunge">Dompel tot net onder het oppervlak en giet</string>
+    <string name="prepopulate_step_stir_crust">Roeren</string>
+    <string name="prepopulate_step_scoop_coffee">Verwijder schuim en koffieresten van de top</string>
+    <string name="prepopulate_frenchPress_name">French Press</string>
+    <string name="prepopulate_frenchPress_description">"Recept gemaakt door: James Hoffmann
+Bron: https://youtu.be/st571DYYTR8
+Grind: medium
+Je kan het 5 minuten na de laatste stap gieten, maar hoe langer je wacht hoe beter."</string>
+    <string name="hoffmann_credits_title">Standaard recepten door James Hoffmann</string>
+    <string name="hoffmann_credits_subtitle">Ga naar zijn Youtube kanaal</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_chemex_description">"Recept gemaakt door: James Hoffmann
+Bron: https://youtu.be/ikt-X5x7yoc
+Grind: medium fijn
+Temperature: hoe warmer, hoe beter (zeker met lichtere brandingen)
+Zorg ervoor dat de stijfste kant van de filter langs de gietkant is.
+Let erop dat je de luchtuitgang van het toestel niet blokkeerd."</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="prepopulate_aero_step_piston">Plaats de piston 1cm in het toestel</string>
+    <string name="prepopulate_aero_step_press">Druk licht op de piston</string>
+    <string name="prepopulate_aero_description">Recept gemaakt door: James Hoffmann
+Bron: https://youtu.be/j6VlT_jUVPc
+Grind : Voor een lichte roast - fijne kant van medium. Hoe donkerder je wenst te gaan, hoe groffer je korrel en hoe hoger je dossering dient te zijn.
+Temperatuur: Voor een lichte branding - aan het koken brengen en meteen gebruiken. Voor een donkerdere – 85–90℃</string>
+    <string name="tereszkiewicz_credits_title">App icoon door: Hubert Tereszkiewicz</string>
+    <string name="tereszkiewicz_credits_subtitle">Bekijk zijn Dribbble</string>
+    <string name="recipe_create_title">Recept toevoegen</string>
+    <string name="recipe_clone_title">Recept kopiëren?</string>
+    <string name="recipe_clone_text">Dit zal een kopie van het recept maken</string>
+    <string name="recipe_clone_suffix">%1$s - Kopieer</string>
+    <string name="app_version">App versie</string>
+    <string name="recipe_details_noTime">Druk op start om verder te gaan</string>
+    <string name="step_add_duration_explainer">Lengte van hoe lang een stap zal duren in secondes. Indien je een voor de lengte van het ganse recept wenst, laat het veld leeg.</string>
+    <string name="settings_backup">Backup</string>
+    <string name="settings_restore">Herstel</string>
+    <string name="settings_addDefault">Standaard recepten toevoegen</string>
+    <string name="settings_timer_item">Timer instellingen</string>
+    <string name="settings_backup_item">Backup/Herstel</string>
+    <string name="settings_step_vibrate_item">Stap verandering vibratie</string>
+</resources>

@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.model.Step
-import com.omelan.cofi.model.StepType
+import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.toMillis
 import com.omelan.cofi.utils.toStringDuration

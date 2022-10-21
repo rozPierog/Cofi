@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import com.omelan.cofi.share.StepType
 import com.omelan.cofi.utils.getOrAwaitValue
 import kotlinx.coroutines.runBlocking
 import org.junit.After
