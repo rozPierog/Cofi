@@ -19,10 +19,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.ScalingLazyColumn
-import androidx.wear.compose.material.Text
+import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material.*
+import com.omelan.cofi.share.RecipeIcon
+import com.omelan.cofi.share.RecipeShared
 import com.omelan.cofi.wearos.R
+import com.omelan.cofi.wearos.presentation.components.RecipeListItem
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,28 +38,48 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun WearApp(greetingName: String) {
+    val recipes = arrayOf(
+        RecipeShared(
+            id = 1,
+            name = stringResource(R.string.prepopulate_v60_name),
+            description = stringResource(R.string.prepopulate_v60_description),
+            recipeIcon = RecipeIcon.V60,
+        ),
+        RecipeShared(
+            id = 2,
+            name = stringResource(R.string.prepopulate_frenchPress_name),
+            description = stringResource(R.string.prepopulate_frenchPress_description),
+            recipeIcon = RecipeIcon.FrenchPress,
+        ),
+        RecipeShared(
+            id = 3,
+            name = stringResource(R.string.prepopulate_chemex_name),
+            description = stringResource(R.string.prepopulate_chemex_description),
+            recipeIcon = RecipeIcon.Chemex,
+        ),
+        RecipeShared(
+            id = 4,
+            name = stringResource(R.string.prepopulate_aero_name),
+            description = stringResource(R.string.prepopulate_aero_description),
+            recipeIcon = RecipeIcon.Aeropress,
+        ),
+    )
     CofiTheme {
-        /* If you have enough items in your list, use [ScalingLazyColumn] which is an optimized
-         * version of LazyColumn for wear devices with some added features. For more information,
-         * see d.android.com/wear/compose.
-         */
         ScalingLazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background),
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            autoCentering = AutoCenteringParams(itemIndex = 1 , itemOffset = 0)
+
         ) {
             item {
-                Greeting(greetingName = greetingName)
+                Text(text = "Cofi")
             }
-            item {
-                Greeting(greetingName = greetingName)
-            }
-            item {
-                Greeting(greetingName = greetingName)
-            }
-            item {
-                Greeting(greetingName = greetingName)
+            items(recipes) {
+                RecipeListItem(recipe = it) {
+                    
+                }
             }
 
         }
