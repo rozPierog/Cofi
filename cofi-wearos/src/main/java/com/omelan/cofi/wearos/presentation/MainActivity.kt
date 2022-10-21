@@ -1,12 +1,7 @@
-/* While this template provides a good starting point for using Wear Compose, you can always
- * take a look at https://github.com/android/wear-os-samples/tree/main/ComposeStarter and
- * https://github.com/android/wear-os-samples/tree/main/ComposeAdvanced to find the most up to date
- * changes to the libraries and their usages.
- */
-
 package com.omelan.cofi.wearos.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -28,23 +23,44 @@ import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.google.android.gms.wearable.Wearable
 import com.omelan.cofi.share.RecipeIcon
 import com.omelan.cofi.share.RecipeShared
 import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.components.RecipeListItem
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WearApp("Android")
+            WearApp()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val channelClient = Wearable.getChannelClient(this)
+        val ioScope = CoroutineScope(Dispatchers.IO + Job())
+        ioScope.launch {
+            val nodes = Wearable.getNodeClient(applicationContext).connectedNodes.await()
+            nodes.forEach { node ->
+                val channel = channelClient.openChannel(node.id, "sync").await()
+                val inputStream = channelClient.getInputStream(channel).await()
+                Log.e("TEST", inputStream.toString())
+                channelClient.close(channel)
+            }
         }
     }
 }
 
 @Composable
-fun WearApp(greetingName: String) {
+fun WearApp() {
     val recipes = arrayOf(
         RecipeShared(
             id = 1,
@@ -132,5 +148,5 @@ fun WearApp(greetingName: String) {
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    WearApp("Preview Android")
+    WearApp()
 }
