@@ -11,16 +11,23 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import androidx.wear.compose.material.*
+import androidx.wear.compose.navigation.SwipeDismissableNavHost
+import androidx.wear.compose.navigation.composable
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.omelan.cofi.share.RecipeIcon
 import com.omelan.cofi.share.RecipeShared
 import com.omelan.cofi.wearos.R
@@ -64,36 +71,62 @@ fun WearApp(greetingName: String) {
             recipeIcon = RecipeIcon.Aeropress,
         ),
     )
-    CofiTheme {
-        ScalingLazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            autoCentering = AutoCenteringParams(itemIndex = 1 , itemOffset = 0)
 
-        ) {
-            item {
-                Text(text = "Cofi")
-            }
-            items(recipes) {
-                RecipeListItem(recipe = it) {
-                    
+    val navController = rememberSwipeDismissableNavController()
+
+    CofiTheme {
+        Box {
+            SwipeDismissableNavHost(
+                navController = navController,
+                startDestination = "recipe_list",
+            ) {
+                composable("recipe_list") {
+                    ScalingLazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colors.background),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        autoCentering = AutoCenteringParams(itemIndex = 1, itemOffset = 0),
+                    ) {
+                        item {
+                            Text(text = "Cofi")
+                        }
+                        items(recipes) {
+                            RecipeListItem(recipe = it) {
+                                navController.navigate(route = "recipe_details/${it.id}")
+                            }
+                        }
+                    }
+                }
+                composable(
+                    "recipe_details/{id}",
+                    arguments = listOf(navArgument("id") { type = NavType.IntType }),
+                ) {
+                    val id = it.arguments?.getInt("id")
+                    val recipe = recipes.find { recipeShared -> recipeShared.id == id }
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.fillMaxSize(),
+                            progress = 0.5f,
+                        )
+                        Column(
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Text(text = recipe?.name ?: "wat")
+                            Button(onClick = { /*TODO*/ }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_gavel),
+                                    contentDescription = null,
+                                )
+                            }
+                        }
+                    }
                 }
             }
-
+            TimeText()
         }
     }
-}
-
-@Composable
-fun Greeting(greetingName: String) {
-    Text(
-        modifier = Modifier.fillMaxWidth(),
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.secondary,
-        text = stringResource(R.string.hello_world, greetingName)
-    )
 }
 
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
