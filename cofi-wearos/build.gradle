@@ -8,7 +8,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.omelan.cofi.wearos"
+        applicationId "com.omelan.cofi"
         minSdk 25
         targetSdk 33
         versionCode 1

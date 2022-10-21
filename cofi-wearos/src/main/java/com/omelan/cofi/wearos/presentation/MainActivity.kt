@@ -23,17 +23,18 @@ import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.google.android.gms.wearable.ChannelClient
+import com.google.android.gms.wearable.ChannelClient.ChannelCallback
 import com.google.android.gms.wearable.Wearable
 import com.omelan.cofi.share.RecipeIcon
 import com.omelan.cofi.share.RecipeShared
 import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.components.RecipeListItem
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayOutputStream
+import java.nio.charset.StandardCharsets
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,15 +48,41 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         val channelClient = Wearable.getChannelClient(this)
         val ioScope = CoroutineScope(Dispatchers.IO + Job())
-        ioScope.launch {
-            val nodes = Wearable.getNodeClient(applicationContext).connectedNodes.await()
-            nodes.forEach { node ->
-                val channel = channelClient.openChannel(node.id, "sync").await()
-                val inputStream = channelClient.getInputStream(channel).await()
-                Log.e("TEST", inputStream.toString())
-                channelClient.close(channel)
-            }
-        }
+//            val nodes = Wearable.getNodeClient(applicationContext).connectedNodes.await()
+        Log.d("ByteArray", "ByteArray")
+
+        channelClient.registerChannelCallback(
+            object : ChannelCallback() {
+                override fun onChannelOpened(channel: ChannelClient.Channel) {
+                    super.onChannelOpened(channel)
+                    Log.d("ByteArray", "channel: ${channel.nodeId}")
+
+                    ioScope.launch {
+                        val inputStream = channelClient.getInputStream(channel).await()
+                        var text = ""
+                        val buffer = ByteArrayOutputStream()
+                        var read: Int
+                        val data = ByteArray(1024)
+                        Log.d("ByteArray", "ByteArray")
+
+                        while (withContext(Dispatchers.IO) {
+                                inputStream.read(data, 0, data.size)
+                            }.also { read = it } != -1) {
+                            Log.d("ByteArray", "data length $read")
+                            /** use Log.e to force print, if Log.d does not work  */
+                            buffer.write(data, 0, read)
+                            withContext(Dispatchers.IO) {
+                                buffer.flush()
+                            }
+                            val byteArray: ByteArray = buffer.toByteArray()
+                            text += String(byteArray, StandardCharsets.UTF_8)
+                        }
+                        Log.d("ByteArray", "reading: $text")
+                        channelClient.close(channel)
+                    }
+                }
+            },
+        )
     }
 }
 
