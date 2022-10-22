@@ -32,7 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
-import com.omelan.cofi.model.Step
+import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.green600
@@ -159,7 +159,7 @@ fun Timer(
                     val durationInString = if (currentStep.time == null) {
                         stringResource(id = R.string.recipe_details_noTime)
                     } else {
-                        val duration = (currentStep.time * animatedProgressValue.value).toInt()
+                        val duration = (currentStep.time!! * animatedProgressValue.value).toInt()
                         duration.toStringDuration(
                             padMillis = true,
                             padMinutes = true,
@@ -189,7 +189,7 @@ fun Timer(
                             stringResource(
                                 id = R.string.timer_step_name_time,
                                 currentStep.name,
-                                currentStep.time / 1000,
+                                currentStep.time!! / 1000,
                             )
                         } else {
                             currentStep.name

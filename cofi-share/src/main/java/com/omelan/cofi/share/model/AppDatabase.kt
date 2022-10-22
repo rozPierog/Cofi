@@ -1,4 +1,4 @@
-package com.omelan.cofi.model
+package com.omelan.cofi.share.model
 
 import android.content.ContentValues
 import android.content.Context
@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.room.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.omelan.cofi.share.*
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {

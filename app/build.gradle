@@ -32,11 +32,6 @@ android {
         versionName "1.8.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
-        }
         resConfigs 'en', 'pl', 'it', 'de', 'tr', 'nl'
         manifestPlaceholders = [profileable: false]
 
@@ -185,7 +180,6 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
-    androidTestImplementation "androidx.room:room-testing:$room_version"
 
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     // UI Tests

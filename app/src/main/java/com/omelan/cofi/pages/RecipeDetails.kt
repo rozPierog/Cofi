@@ -59,11 +59,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
-import com.omelan.cofi.model.Recipe
-import com.omelan.cofi.model.RecipeViewModel
-import com.omelan.cofi.model.Step
-import com.omelan.cofi.model.StepsViewModel
-import com.omelan.cofi.share.StepType
+import com.omelan.cofi.share.*
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.Haptics

@@ -52,9 +52,9 @@ import androidx.compose.ui.unit.dp
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
-import com.omelan.cofi.model.Recipe
-import com.omelan.cofi.model.Step
+import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeIcon
+import com.omelan.cofi.share.Step
 import com.omelan.cofi.ui.*
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding

@@ -38,10 +38,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.wearable.Wearable
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
-import com.omelan.cofi.model.AppDatabase
-import com.omelan.cofi.model.Recipe
-import com.omelan.cofi.model.RecipeViewModel
-import com.omelan.cofi.model.StepsViewModel
 import com.omelan.cofi.pages.RecipeDetails
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
@@ -50,6 +46,11 @@ import com.omelan.cofi.pages.settings.AppSettingsAbout
 import com.omelan.cofi.pages.settings.BackupRestoreSettings
 import com.omelan.cofi.pages.settings.TimerSettings
 import com.omelan.cofi.pages.settings.licenses.LicensesList
+import com.omelan.cofi.share.Recipe
+import com.omelan.cofi.share.RecipeViewModel
+import com.omelan.cofi.share.StepsViewModel
+import com.omelan.cofi.share.model.AppDatabase
+import com.omelan.cofi.share.serialize
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
 import com.omelan.cofi.utils.isInstantApp
@@ -58,6 +59,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.tasks.await
+import org.json.JSONArray
 import java.io.IOException
 import java.io.OutputStream
 import java.util.Date
@@ -432,22 +434,30 @@ class MainActivity : MonetCompatActivity() {
         }
         val channelClient = Wearable.getChannelClient(this)
         val ioScope = CoroutineScope(Dispatchers.IO + Job())
-        ioScope.launch {
-            val nodes = Wearable.getNodeClient(applicationContext).connectedNodes.await()
-            nodes.forEach { node ->
-                val channel = channelClient.openChannel(node.id, "sync").await()
-                val outputStreamTask: Task<OutputStream> =
-                    Wearable.getChannelClient(applicationContext).getOutputStream(channel)
-                outputStreamTask.addOnSuccessListener { outputStream ->
-                    try {
-                        outputStream.write("Hello, world!".toByteArray())
-                        outputStream.flush()
-                        outputStream.close()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
+        val recipesLiveData = AppDatabase.getInstance(applicationContext).recipeDao().getAll()
+        recipesLiveData.observe(this@MainActivity) { recipes ->
+            ioScope.launch {
+                val nodes = Wearable.getNodeClient(applicationContext).connectedNodes.await()
+                nodes.forEach { node ->
+                    val channel = channelClient.openChannel(node.id, "sync").await()
+                    val outputStreamTask: Task<OutputStream> =
+                        Wearable.getChannelClient(applicationContext).getOutputStream(channel)
+                    outputStreamTask.addOnSuccessListener { outputStream ->
+                        try {
+                            val jsonArray = JSONArray()
+                            recipes.forEach {
+                                jsonArray.put(it.serialize())
+                            }
+                            outputStream.write(jsonArray.toString().toByteArray())
+                            outputStream.flush()
+                            outputStream.close()
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
                     }
                 }
             }
+
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.omelan.cofi.model
+package com.omelan.cofi.share
 
 import androidx.room.Room
 import androidx.room.testing.MigrationTestHelper

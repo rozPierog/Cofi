@@ -32,11 +32,9 @@ import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3Dialog
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
-import com.omelan.cofi.model.*
-import com.omelan.cofi.share.jsonSteps
-import com.omelan.cofi.share.serialize
-import com.omelan.cofi.share.toRecipe
-import com.omelan.cofi.share.toSteps
+import com.omelan.cofi.share.*
+import com.omelan.cofi.share.model.AppDatabase
+import com.omelan.cofi.share.model.PrepopulateData
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -182,9 +180,9 @@ fun RestoreListItem(afterRestore: (numberOfRestored: Int) -> Unit) {
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
                         val recipe = jsonObject.toRecipe()
-                        val recipeId = db.recipeDao().insertRecipe(recipe.toDBRecipe())
+                        val recipeId = db.recipeDao().insertRecipe(recipe)
                         val steps = jsonObject.getJSONArray(jsonSteps).toSteps(recipeId)
-                        db.stepDao().insertAll(steps.map { stepShared -> stepShared.toDBStep() })
+                        db.stepDao().insertAll(steps.map { stepShared -> stepShared })
                     }
                 }
                 afterRestore(jsonArray.length())

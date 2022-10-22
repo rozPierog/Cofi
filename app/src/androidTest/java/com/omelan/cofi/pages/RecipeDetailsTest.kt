@@ -8,9 +8,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.omelan.cofi.LocalPiPState
-import com.omelan.cofi.model.Recipe
-import com.omelan.cofi.model.Step
+import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeIcon
+import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.CofiTheme
 import org.junit.Rule

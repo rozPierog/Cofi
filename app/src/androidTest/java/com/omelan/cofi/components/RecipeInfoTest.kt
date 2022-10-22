@@ -5,7 +5,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.omelan.cofi.R
-import com.omelan.cofi.model.Step
+import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.toMillis

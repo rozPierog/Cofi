@@ -26,8 +26,8 @@ import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.RecipeItem
 import com.omelan.cofi.components.createAppBarBehavior
-import com.omelan.cofi.model.RecipeViewModel
-import com.omelan.cofi.model.StepsViewModel
+import com.omelan.cofi.share.RecipeViewModel
+import com.omelan.cofi.share.StepsViewModel
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.getDefaultPadding

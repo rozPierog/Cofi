@@ -1,9 +1,7 @@
-package com.omelan.cofi.model
+package com.omelan.cofi.share.model
 
 import android.content.Context
-import com.omelan.cofi.R
-import com.omelan.cofi.share.RecipeIcon
-import com.omelan.cofi.share.StepType
+import com.omelan.cofi.share.*
 import com.omelan.cofi.utils.toMillis
 
 class PrepopulateData(context: Context) {

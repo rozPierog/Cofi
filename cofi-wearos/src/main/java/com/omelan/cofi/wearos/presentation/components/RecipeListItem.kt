@@ -14,10 +14,10 @@ import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
-import com.omelan.cofi.share.RecipeShared
+import com.omelan.cofi.share.Recipe
 
 @Composable
-fun RecipeListItem(modifier: Modifier = Modifier, recipe: RecipeShared, onClick: () -> Unit) {
+fun RecipeListItem(modifier: Modifier = Modifier, recipe: Recipe, onClick: () -> Unit) {
     Card(
         modifier = modifier,
         onClick = onClick,
@@ -37,7 +37,7 @@ fun RecipeListItem(modifier: Modifier = Modifier, recipe: RecipeShared, onClick:
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND)
 @Composable
 fun RecipeListItemPreview() {
-    RecipeListItem(recipe = RecipeShared(id = 0, name = "test")) {
+    RecipeListItem(recipe = Recipe(id = 0, name = "test")) {
 
     }
 }

@@ -1,7 +1,6 @@
 package com.omelan.cofi.wearos.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -26,21 +25,23 @@ import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.android.gms.wearable.ChannelClient
 import com.google.android.gms.wearable.ChannelClient.ChannelCallback
 import com.google.android.gms.wearable.Wearable
+import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeIcon
-import com.omelan.cofi.share.RecipeShared
+import com.omelan.cofi.share.toRecipes
 import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.components.RecipeListItem
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import java.io.ByteArrayOutputStream
+import org.json.JSONArray
 import java.nio.charset.StandardCharsets
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WearApp()
+            WearApp(listOf())
         }
     }
 
@@ -48,36 +49,17 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         val channelClient = Wearable.getChannelClient(this)
         val ioScope = CoroutineScope(Dispatchers.IO + Job())
-//            val nodes = Wearable.getNodeClient(applicationContext).connectedNodes.await()
-        Log.d("ByteArray", "ByteArray")
-
         channelClient.registerChannelCallback(
             object : ChannelCallback() {
                 override fun onChannelOpened(channel: ChannelClient.Channel) {
                     super.onChannelOpened(channel)
-                    Log.d("ByteArray", "channel: ${channel.nodeId}")
-
                     ioScope.launch {
                         val inputStream = channelClient.getInputStream(channel).await()
-                        var text = ""
-                        val buffer = ByteArrayOutputStream()
-                        var read: Int
-                        val data = ByteArray(1024)
-                        Log.d("ByteArray", "ByteArray")
-
-                        while (withContext(Dispatchers.IO) {
-                                inputStream.read(data, 0, data.size)
-                            }.also { read = it } != -1) {
-                            Log.d("ByteArray", "data length $read")
-                            /** use Log.e to force print, if Log.d does not work  */
-                            buffer.write(data, 0, read)
-                            withContext(Dispatchers.IO) {
-                                buffer.flush()
-                            }
-                            val byteArray: ByteArray = buffer.toByteArray()
-                            text += String(byteArray, StandardCharsets.UTF_8)
+                        val jsonString = String(inputStream.readBytes(), StandardCharsets.UTF_8)
+                        JSONArray(jsonString).toRecipes()
+                        withContext(Dispatchers.IO) {
+                            inputStream.close()
                         }
-                        Log.d("ByteArray", "reading: $text")
                         channelClient.close(channel)
                     }
                 }
@@ -87,36 +69,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun WearApp() {
-    val recipes = arrayOf(
-        RecipeShared(
-            id = 1,
-            name = stringResource(R.string.prepopulate_v60_name),
-            description = stringResource(R.string.prepopulate_v60_description),
-            recipeIcon = RecipeIcon.V60,
-        ),
-        RecipeShared(
-            id = 2,
-            name = stringResource(R.string.prepopulate_frenchPress_name),
-            description = stringResource(R.string.prepopulate_frenchPress_description),
-            recipeIcon = RecipeIcon.FrenchPress,
-        ),
-        RecipeShared(
-            id = 3,
-            name = stringResource(R.string.prepopulate_chemex_name),
-            description = stringResource(R.string.prepopulate_chemex_description),
-            recipeIcon = RecipeIcon.Chemex,
-        ),
-        RecipeShared(
-            id = 4,
-            name = stringResource(R.string.prepopulate_aero_name),
-            description = stringResource(R.string.prepopulate_aero_description),
-            recipeIcon = RecipeIcon.Aeropress,
-        ),
-    )
-
+fun WearApp(recipes: List<Recipe>) {
     val navController = rememberSwipeDismissableNavController()
-
     CofiTheme {
         Box {
             SwipeDismissableNavHost(
@@ -146,7 +100,7 @@ fun WearApp() {
                     arguments = listOf(navArgument("id") { type = NavType.IntType }),
                 ) {
                     val id = it.arguments?.getInt("id")
-                    val recipe = recipes.find { recipeShared -> recipeShared.id == id }
+                    val recipe = recipes.find { Recipe -> Recipe.id == id }
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         CircularProgressIndicator(
                             modifier = Modifier.fillMaxSize(),
@@ -175,5 +129,31 @@ fun WearApp() {
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    WearApp()
+    val recipes = listOf(
+        Recipe(
+            id = 1,
+            name = stringResource(R.string.prepopulate_v60_name),
+            description = stringResource(R.string.prepopulate_v60_description),
+            recipeIcon = RecipeIcon.V60,
+        ),
+        Recipe(
+            id = 2,
+            name = stringResource(R.string.prepopulate_frenchPress_name),
+            description = stringResource(R.string.prepopulate_frenchPress_description),
+            recipeIcon = RecipeIcon.FrenchPress,
+        ),
+        Recipe(
+            id = 3,
+            name = stringResource(R.string.prepopulate_chemex_name),
+            description = stringResource(R.string.prepopulate_chemex_description),
+            recipeIcon = RecipeIcon.Chemex,
+        ),
+        Recipe(
+            id = 4,
+            name = stringResource(R.string.prepopulate_aero_name),
+            description = stringResource(R.string.prepopulate_aero_description),
+            recipeIcon = RecipeIcon.Aeropress,
+        ),
+    )
+    WearApp(recipes)
 }
