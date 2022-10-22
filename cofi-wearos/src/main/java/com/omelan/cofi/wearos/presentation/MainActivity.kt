@@ -30,8 +30,8 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable("recipe_list") {
                             RecipeList(
-                                goToDetails = {
-                                    navController.navigate(route = "recipe_details/${it.id}")
+                                goToDetails = { recipe ->
+                                    navController.navigate(route = "recipe_details/${recipe.id}")
                                 },
                             )
                         }

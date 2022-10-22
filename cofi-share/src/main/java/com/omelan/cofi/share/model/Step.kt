@@ -114,6 +114,7 @@ private const val jsonType = "type"
 private const val jsonOrderInRecipe = "orderInRecipe"
 private const val jsonValue = "value"
 private const val jsonId = "id"
+private const val jsonRecipeId = "recipeId"
 
 @Entity
 data class Step(
@@ -127,6 +128,7 @@ data class Step(
 ) : SharedData {
     override fun serialize(): JSONObject = JSONObject().let {
         it.put(jsonId, id)
+        it.put(jsonRecipeId, recipeId)
         it.put(jsonName, name)
         it.put(jsonTime, time)
         it.put(jsonValue, value)
@@ -147,11 +149,11 @@ fun JSONObject.getIntOrNull(key: String) = try {
     null
 }
 
-fun JSONObject.toStep(withId: Boolean = false, recipeId: Long = 0) = if (withId) {
+fun JSONObject.toStep(withId: Boolean = false, recipeId: Long? = null) = if (withId) {
     Step(
         id = getInt(jsonId),
         name = getString(jsonName),
-        recipeId = recipeId.toInt(),
+        recipeId = recipeId?.toInt() ?: getInt(jsonRecipeId),
         time = getIntOrNull(jsonTime),
         value = getIntOrNull(jsonValue),
         orderInRecipe = getInt(jsonOrderInRecipe),
@@ -160,7 +162,7 @@ fun JSONObject.toStep(withId: Boolean = false, recipeId: Long = 0) = if (withId)
 } else {
     Step(
         name = getString(jsonName),
-        recipeId = recipeId.toInt(),
+        recipeId = recipeId?.toInt() ?: getInt(jsonRecipeId),
         time = getIntOrNull(jsonTime),
         value = getIntOrNull(jsonValue),
         orderInRecipe = getInt(jsonOrderInRecipe),
@@ -168,7 +170,7 @@ fun JSONObject.toStep(withId: Boolean = false, recipeId: Long = 0) = if (withId)
     )
 }
 
-fun JSONArray.toSteps(withId: Boolean = false, recipeId: Long = 0): List<Step> {
+fun JSONArray.toSteps(withId: Boolean = false, recipeId: Long? = null): List<Step> {
     var steps = listOf<Step>()
     for (i in 0 until length()) {
         steps = steps.plus(getJSONObject(i).toStep(withId, recipeId))

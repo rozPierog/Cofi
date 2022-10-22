@@ -20,14 +20,14 @@ import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.components.RecipeListItem
 
 @Composable
-fun RecipeList(goToDetails: () -> Unit) {
+fun RecipeList(goToDetails: (Recipe) -> Unit) {
     val recipeViewModel: RecipeViewModel = viewModel()
     val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = emptyList())
     RecipeList(recipes = recipes, goToDetails = goToDetails)
 }
 
 @Composable
-fun RecipeList(recipes: List<Recipe>, goToDetails: () -> Unit = {}) {
+fun RecipeList(recipes: List<Recipe>, goToDetails: (Recipe) -> Unit = {}) {
     ScalingLazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -40,7 +40,7 @@ fun RecipeList(recipes: List<Recipe>, goToDetails: () -> Unit = {}) {
         }
         items(recipes) {
             RecipeListItem(recipe = it) {
-                goToDetails()
+                goToDetails(it)
             }
         }
     }

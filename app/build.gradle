@@ -184,7 +184,7 @@ dependencies {
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    androidTestImplementation 'androidx.test:core-ktx:1.5.0-beta01'
+    androidTestImplementation 'androidx.test:core-ktx:1.4.0'
     testImplementation 'junit:junit:4.13.2'
 }
 
