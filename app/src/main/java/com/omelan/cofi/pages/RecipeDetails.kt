@@ -138,6 +138,15 @@ fun RecipeDetails(
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
     val lazyListState = rememberLazyListState()
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
+
+    val dataStore = DataStore(LocalContext.current)
+    val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
+        .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
+    val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
+        .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
+    val combineWeightState by dataStore.getWeightSetting()
+        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+
     val (
         currentStep,
         isDone,
@@ -149,15 +158,13 @@ fun RecipeDetails(
         progressAnimation,
         startAnimations,
         changeToNextStep,
-    ) = Timer.createTimerControllers(steps = steps)
+    ) = Timer.createTimerControllers(
+        steps = steps,
+        onRecipeEnd = { onRecipeEnd(recipe) },
+        isStepChangeSoundEnabled = isStepChangeSoundEnabled,
+        isStepChangeVibrationEnabled = isStepChangeVibrationEnabled,
+    )
 
-    val dataStore = DataStore(LocalContext.current)
-    val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
-        .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
-    val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
-        .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
-    val combineWeightState by dataStore.getWeightSetting()
-        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
 
     val alreadyDoneWeight = remember(combineWeightState, currentStep) {
         derivedStateOf {

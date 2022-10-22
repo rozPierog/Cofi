@@ -35,7 +35,12 @@ data class TimerControllers(
 object Timer {
 
     @Composable
-    fun createTimerControllers(steps: List<Step>): TimerControllers {
+    fun createTimerControllers(
+        steps: List<Step>,
+        onRecipeEnd: () -> Unit,
+        isStepChangeSoundEnabled: Boolean,
+        isStepChangeVibrationEnabled: Boolean,
+    ): TimerControllers {
         val currentStep = remember { mutableStateOf<Step?>(null) }
         var isDone by remember { mutableStateOf(false) }
         var isTimerRunning by remember { mutableStateOf(false) }
@@ -66,17 +71,17 @@ object Timer {
                 currentStep.value = null
                 isTimerRunning = false
                 isDone = true
-//                onRecipeEnd(recipe)
+                onRecipeEnd()
             }
             if (silent) {
                 return@suspendCompat
             }
-//            if (isStepChangeSoundEnabled) {
-            mediaPlayer.start()
-//            }
-//            if (isStepChangeVibrationEnabled) {
-            haptics.progress()
-//            }
+            if (isStepChangeSoundEnabled) {
+                mediaPlayer.start()
+            }
+            if (isStepChangeVibrationEnabled) {
+                haptics.progress()
+            }
         }
 
         val progressAnimation = suspendCompat<Unit, Unit> {
