@@ -52,7 +52,7 @@ object Timer {
 
         val context = LocalContext.current
         val haptics = Haptics(context)
-        val mediaPlayer = MediaPlayer.create(context, R.raw.ding)
+        val mediaPlayer = remember { MediaPlayer.create(context, R.raw.ding) }
 
         val indexOfCurrentStep = steps.indexOf(currentStep.value)
         val indexOfLastStep = steps.lastIndex

@@ -7,14 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.wear.compose.material.*
+import androidx.wear.compose.material.CircularProgressIndicator
+import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.Text
 import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeViewModel
 import com.omelan.cofi.share.Step
@@ -23,8 +23,7 @@ import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
 import com.omelan.cofi.share.components.TimerValue
 import com.omelan.cofi.share.timer.Timer
-import com.omelan.cofi.wearos.R
-import kotlinx.coroutines.launch
+import com.omelan.cofi.wearos.presentation.components.StartButton
 
 
 @Composable
@@ -38,7 +37,6 @@ fun RecipeDetails(recipeId: Int) {
 
 @Composable
 fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
-    val coroutineScope = rememberCoroutineScope()
     val (
         currentStep,
         isDone,
@@ -125,34 +123,14 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
                     }
                 }
             }
-            Button(
-                onClick = {
-                    if (currentStep.value != null) {
-                        if (animatedProgressValue.isRunning) {
-                            coroutineScope.launch { pauseAnimations() }
-                        } else {
-                            coroutineScope.launch {
-                                if (currentStep.value?.time == null) {
-                                    changeToNextStep(false)
-                                } else {
-                                    startAnimations()
-                                }
-                            }
-                        }
-                        return@Button
-                    }
-                    coroutineScope.launch { changeToNextStep(true) }
-                },
-            ) {
-                Icon(
-                    painter = if (isTimerRunning) {
-                        painterResource(id = R.drawable.ic_gavel)
-                    } else {
-                        painterResource(id = R.drawable.ic_coffee)
-                    },
-                    contentDescription = null,
-                )
-            }
+            StartButton(
+                currentStepSafe,
+                isTimerRunning,
+                animatedProgressValue,
+                pauseAnimations,
+                changeToNextStep,
+                startAnimations,
+            )
         }
     }
 }
