@@ -12,7 +12,6 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.utils.Haptics
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -28,7 +27,7 @@ data class TimerControllers(
     val animatedProgressColor: Animatable<Color, AnimationVector4D>,
     val pauseAnimations: suspend () -> Unit,
     val progressAnimation: suspend (Unit) -> Unit,
-    val startAnimations: suspend () -> Job,
+    val startAnimations: suspend () -> Unit,
     val changeToNextStep: suspend (Boolean) -> Unit,
 )
 
@@ -128,7 +127,7 @@ object Timer {
             }
         }
 
-        val startAnimations = suspend {
+        val startAnimations: suspend () -> Unit = suspend {
             coroutineScope.launch {
                 progressAnimation(Unit)
             }

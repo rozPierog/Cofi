@@ -1,5 +1,6 @@
 package com.omelan.cofi.wearos.presentation.pages
 
+import android.view.KeyEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
@@ -7,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,7 +25,9 @@ import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
 import com.omelan.cofi.share.components.TimerValue
 import com.omelan.cofi.share.timer.Timer
+import com.omelan.cofi.wearos.presentation.components.ListenKeyEvents
 import com.omelan.cofi.wearos.presentation.components.StartButton
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -58,6 +62,44 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
     LaunchedEffect(currentStep.value) {
         progressAnimation(Unit)
     }
+    val coroutineScope = rememberCoroutineScope()
+
+    val startButtonOnClick: () -> Unit = {
+        if (currentStep.value != null) {
+            if (animatedProgressValue.isRunning) {
+                coroutineScope.launch { pauseAnimations() }
+            } else {
+                coroutineScope.launch {
+                    if (currentStep.value?.time == null) {
+                        changeToNextStep(false)
+                    } else {
+                        startAnimations()
+                    }
+                }
+            }
+        } else
+            coroutineScope.launch { changeToNextStep(true) }
+    }
+
+    ListenKeyEvents { keyCode, event ->
+        if (event.repeatCount == 0) {
+            when (keyCode) {
+                KeyEvent.KEYCODE_STEM_1,
+                KeyEvent.KEYCODE_STEM_2,
+                KeyEvent.KEYCODE_STEM_3,
+                -> {
+                    startButtonOnClick()
+                    true
+                }
+
+                else -> false
+            }
+        } else {
+            false
+        }
+
+    }
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
@@ -123,14 +165,7 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
                 }
             }
             Spacer(Modifier.height(6.dp))
-            StartButton(
-                currentStep.value,
-                isTimerRunning,
-                animatedProgressValue,
-                pauseAnimations,
-                changeToNextStep,
-                startAnimations,
-            )
+            StartButton(isTimerRunning, startButtonOnClick)
         }
     }
 }
