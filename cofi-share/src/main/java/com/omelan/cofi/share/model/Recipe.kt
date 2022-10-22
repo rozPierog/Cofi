@@ -50,6 +50,9 @@ interface RecipeDao {
     suspend fun insertAll(vararg recipes: Recipe)
 
     @Insert
+    suspend fun insertAll(recipes: List<Recipe>)
+
+    @Insert
     suspend fun insertRecipe(recipe: Recipe): Long
 
     @Update

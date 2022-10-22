@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -16,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.wear.compose.material.*
@@ -23,10 +26,11 @@ import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.android.gms.wearable.ChannelClient
-import com.google.android.gms.wearable.ChannelClient.ChannelCallback
 import com.google.android.gms.wearable.Wearable
 import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeIcon
+import com.omelan.cofi.share.RecipeViewModel
+import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.toRecipes
 import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.components.RecipeListItem
@@ -40,23 +44,17 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            WearApp(listOf())
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
         val channelClient = Wearable.getChannelClient(this)
         val ioScope = CoroutineScope(Dispatchers.IO + Job())
+        val db = AppDatabase.getInstance(this)
         channelClient.registerChannelCallback(
-            object : ChannelCallback() {
+            object : ChannelClient.ChannelCallback() {
                 override fun onChannelOpened(channel: ChannelClient.Channel) {
                     super.onChannelOpened(channel)
                     ioScope.launch {
                         val inputStream = channelClient.getInputStream(channel).await()
                         val jsonString = String(inputStream.readBytes(), StandardCharsets.UTF_8)
-                        JSONArray(jsonString).toRecipes()
+                        db.recipeDao().insertAll(JSONArray(jsonString).toRecipes())
                         withContext(Dispatchers.IO) {
                             inputStream.close()
                         }
@@ -65,7 +63,13 @@ class MainActivity : ComponentActivity() {
                 }
             },
         )
+        setContent {
+            val recipeViewModel: RecipeViewModel = viewModel()
+            val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = emptyList())
+            WearApp(recipes)
+        }
     }
+
 }
 
 @Composable

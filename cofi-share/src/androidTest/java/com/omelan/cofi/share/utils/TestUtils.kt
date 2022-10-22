@@ -1,4 +1,4 @@
-package com.omelan.cofi.utils
+package com.omelan.cofi.share.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
