@@ -123,6 +123,7 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
                     }
                 }
             }
+            Spacer(Modifier.height(6.dp))
             StartButton(
                 currentStepSafe,
                 isTimerRunning,
