@@ -27,11 +27,8 @@ import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.android.gms.wearable.ChannelClient
 import com.google.android.gms.wearable.Wearable
-import com.omelan.cofi.share.Recipe
-import com.omelan.cofi.share.RecipeIcon
-import com.omelan.cofi.share.RecipeViewModel
+import com.omelan.cofi.share.*
 import com.omelan.cofi.share.model.AppDatabase
-import com.omelan.cofi.share.toRecipes
 import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.components.RecipeListItem
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
@@ -54,7 +51,18 @@ class MainActivity : ComponentActivity() {
                     ioScope.launch {
                         val inputStream = channelClient.getInputStream(channel).await()
                         val jsonString = String(inputStream.readBytes(), StandardCharsets.UTF_8)
-                        db.recipeDao().deleteAndCreate(JSONArray(jsonString).toRecipes(true))
+                        when (channel.path) {
+                            "steps" -> {
+                                db.stepDao()
+                                    .deleteAndCreate(JSONArray(jsonString).toSteps(true))
+                            }
+                            "recipes" -> {
+                                db.recipeDao()
+                                    .deleteAndCreate(JSONArray(jsonString).toRecipes(true))
+                            }
+
+                            else -> throw Exception("UNEXPECTED PATH ${channel.path}")
+                        }
                         withContext(Dispatchers.IO) {
                             inputStream.close()
                         }

@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.omelan.cofi.share.model.AppDatabase
+import com.omelan.cofi.share.model.SharedData
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -34,8 +35,17 @@ interface StepDao {
     @Delete
     suspend fun delete(step: Step)
 
+    @Query("DELETE FROM step")
+    suspend fun deleteAll()
+
     @Query("DELETE FROM step WHERE recipe_id = :recipeId")
     suspend fun deleteAllStepsForRecipe(recipeId: Int)
+
+    @Transaction
+    suspend fun deleteAndCreate(steps: List<Step>) {
+        deleteAll()
+        insertAll(steps)
+    }
 }
 
 class StepsViewModel(application: Application) : AndroidViewModel(application) {
@@ -98,6 +108,13 @@ open class StepTypeConverter {
     }
 }
 
+private const val jsonName = "name"
+private const val jsonTime = "time"
+private const val jsonType = "type"
+private const val jsonOrderInRecipe = "orderInRecipe"
+private const val jsonValue = "value"
+private const val jsonId = "id"
+
 @Entity
 data class Step(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
@@ -107,21 +124,16 @@ data class Step(
     val time: Int? = null,
     val type: StepType,
     val value: Int? = null,
-)
-
-private const val jsonName = "name"
-private const val jsonTime = "time"
-private const val jsonType = "type"
-private const val jsonOrderInRecipe = "orderInRecipe"
-private const val jsonValue = "value"
-
-fun Step.serialize(): JSONObject = JSONObject().let {
-    it.put(jsonName, name)
-    it.put(jsonTime, time)
-    it.put(jsonValue, value)
-    it.put(jsonOrderInRecipe, orderInRecipe)
-    it.put(jsonType, type.name)
-    it
+) : SharedData {
+    override fun serialize(): JSONObject = JSONObject().let {
+        it.put(jsonId, id)
+        it.put(jsonName, name)
+        it.put(jsonTime, time)
+        it.put(jsonValue, value)
+        it.put(jsonOrderInRecipe, orderInRecipe)
+        it.put(jsonType, type.name)
+        it
+    }
 }
 
 fun List<Step>.serialize() = JSONArray().let {
@@ -135,19 +147,31 @@ fun JSONObject.getIntOrNull(key: String) = try {
     null
 }
 
-fun JSONObject.toStep(recipeId: Long = 0) = Step(
-    name = getString(jsonName),
-    recipeId = recipeId.toInt(),
-    time = getIntOrNull(jsonTime),
-    value = getIntOrNull(jsonValue),
-    orderInRecipe = getInt(jsonOrderInRecipe),
-    type = StepTypeConverter().stringToStepType(getString(jsonType)),
-)
+fun JSONObject.toStep(withId: Boolean = false, recipeId: Long = 0) = if (withId) {
+    Step(
+        id = getInt(jsonId),
+        name = getString(jsonName),
+        recipeId = recipeId.toInt(),
+        time = getIntOrNull(jsonTime),
+        value = getIntOrNull(jsonValue),
+        orderInRecipe = getInt(jsonOrderInRecipe),
+        type = StepTypeConverter().stringToStepType(getString(jsonType)),
+    )
+} else {
+    Step(
+        name = getString(jsonName),
+        recipeId = recipeId.toInt(),
+        time = getIntOrNull(jsonTime),
+        value = getIntOrNull(jsonValue),
+        orderInRecipe = getInt(jsonOrderInRecipe),
+        type = StepTypeConverter().stringToStepType(getString(jsonType)),
+    )
+}
 
-fun JSONArray.toSteps(recipeId: Long = 0): List<Step> {
+fun JSONArray.toSteps(withId: Boolean = false, recipeId: Long = 0): List<Step> {
     var steps = listOf<Step>()
     for (i in 0 until length()) {
-        steps = steps.plus(getJSONObject(i).toStep(recipeId))
+        steps = steps.plus(getJSONObject(i).toStep(withId, recipeId))
     }
     return steps
 }

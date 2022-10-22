@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.omelan.cofi.share.model.AppDatabase
+import com.omelan.cofi.share.model.SharedData
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -66,9 +67,9 @@ interface RecipeDao {
     suspend fun deleteById(recipeId: Int)
 
     @Transaction
-    suspend fun deleteAndCreate(users: List<Recipe>) {
+    suspend fun deleteAndCreate(recipes: List<Recipe>) {
         deleteAll()
-        insertAll(users)
+        insertAll(recipes)
     }
 }
 
@@ -81,6 +82,11 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun getAllRecipes() = dao.getAll()
 }
 
+private const val jsonName = "name"
+private const val jsonId = "id"
+private const val jsonDescription = "description"
+private const val jsonRecipeIcon = "recipeIcon"
+const val jsonSteps = "steps"
 @Entity
 data class Recipe(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
@@ -88,21 +94,17 @@ data class Recipe(
     val description: String = "",
     @ColumnInfo(name = "last_finished") val lastFinished: Long = 0L,
     @ColumnInfo(name = "icon") val recipeIcon: RecipeIcon = RecipeIcon.Grinder,
-)
-
-private const val jsonName = "name"
-private const val jsonId = "id"
-private const val jsonDescription = "description"
-private const val jsonRecipeIcon = "recipeIcon"
-const val jsonSteps = "steps"
-
-fun Recipe.serialize(steps: List<Step>? = null): JSONObject = JSONObject().run {
-    put(jsonId, id)
-    put(jsonName, name)
-    put(jsonDescription, description)
-    put(jsonRecipeIcon, recipeIcon.name)
-    put(jsonSteps, steps?.serialize())
+) : SharedData {
+    override fun serialize(): JSONObject = serialize(null)
+    fun serialize(steps: List<Step>?): JSONObject = JSONObject().run {
+        put(jsonId, id)
+        put(jsonName, name)
+        put(jsonDescription, description)
+        put(jsonRecipeIcon, recipeIcon.name)
+        put(jsonSteps, steps?.serialize())
+    }
 }
+
 
 fun JSONObject.toRecipe(withId: Boolean = false) = if (withId) {
     Recipe(

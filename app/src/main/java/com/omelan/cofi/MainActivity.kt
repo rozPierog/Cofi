@@ -50,7 +50,7 @@ import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeViewModel
 import com.omelan.cofi.share.StepsViewModel
 import com.omelan.cofi.share.model.AppDatabase
-import com.omelan.cofi.share.serialize
+import com.omelan.cofi.share.model.SharedData
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
 import com.omelan.cofi.utils.isInstantApp
@@ -434,18 +434,20 @@ class MainActivity : MonetCompatActivity() {
         }
         val channelClient = Wearable.getChannelClient(this)
         val ioScope = CoroutineScope(Dispatchers.IO + Job())
-        val recipesLiveData = AppDatabase.getInstance(applicationContext).recipeDao().getAll()
-        recipesLiveData.observe(this@MainActivity) { recipes ->
+        val db = AppDatabase.getInstance(applicationContext)
+        val recipesLiveData = db.recipeDao().getAll()
+        val stepsLiveData = db.stepDao().getAll()
+        fun sendDataToWearOS(data: List<SharedData>, channelName: String) {
             ioScope.launch {
                 val nodes = Wearable.getNodeClient(applicationContext).connectedNodes.await()
                 nodes.forEach { node ->
-                    val channel = channelClient.openChannel(node.id, "sync").await()
+                    val channel = channelClient.openChannel(node.id, channelName).await()
                     val outputStreamTask: Task<OutputStream> =
                         Wearable.getChannelClient(applicationContext).getOutputStream(channel)
                     outputStreamTask.addOnSuccessListener { outputStream ->
                         try {
                             val jsonArray = JSONArray()
-                            recipes.forEach {
+                            data.forEach {
                                 jsonArray.put(it.serialize())
                             }
                             outputStream.write(jsonArray.toString().toByteArray())
@@ -457,7 +459,12 @@ class MainActivity : MonetCompatActivity() {
                     }
                 }
             }
-
+        }
+        recipesLiveData.observe(this@MainActivity) { recipes ->
+            sendDataToWearOS(recipes, "recipes")
+        }
+        stepsLiveData.observe(this@MainActivity) { steps ->
+            sendDataToWearOS(steps, "steps")
         }
     }
 }
