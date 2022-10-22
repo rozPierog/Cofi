@@ -77,7 +77,7 @@ object Timer {
                 return@suspendCompat
             }
             if (isStepChangeSoundEnabled) {
-                mediaPlayer.start()
+                mediaPlayer?.start()
             }
             if (isStepChangeVibrationEnabled) {
                 haptics.progress()

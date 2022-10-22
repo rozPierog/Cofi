@@ -1,5 +1,7 @@
 package com.omelan.cofi.wearos.presentation.pages
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,14 +14,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.CircularProgressIndicator
-import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.*
 import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeViewModel
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.StepsViewModel
+import com.omelan.cofi.share.components.StepNameText
+import com.omelan.cofi.share.components.TimeText
+import com.omelan.cofi.share.components.TimerValue
 import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.wearos.R
 import kotlinx.coroutines.launch
@@ -41,7 +43,7 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
         currentStep,
         isDone,
         isTimerRunning,
-        indexOfCurrentStep,
+        _,
         animatedProgressValue,
         animatedProgressColor,
         pauseAnimations,
@@ -54,6 +56,8 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
         isStepChangeSoundEnabled = true,
         isStepChangeVibrationEnabled = true,
     )
+
+    val currentStepSafe = currentStep.value
     LaunchedEffect(currentStep.value) {
         progressAnimation(Unit)
     }
@@ -71,10 +75,56 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
             endAngle = 240f,
         )
         Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(4.dp)
+                .aspectRatio(1f)
+                .fillMaxSize()
+                .animateContentSize(),
+            Arrangement.Center,
+            Alignment.CenterHorizontally,
         ) {
-            Text(text = currentStep.value?.name ?: recipe.name)
+            AnimatedVisibility(
+                visible = currentStepSafe == null && !isDone,
+            ) {
+                Text(
+                    text = recipe.name,
+                    color = MaterialTheme.colors.onSurface,
+                    maxLines = 2,
+                    style = MaterialTheme.typography.title1,
+                )
+            }
+            AnimatedVisibility(
+                visible = currentStepSafe != null && !isDone,
+            ) {
+                Column {
+                    if (currentStepSafe != null) {
+                        TimeText(
+                            currentStep = currentStepSafe,
+                            animatedProgressValue = animatedProgressValue.value,
+                            color = MaterialTheme.colors.onSurface,
+                            maxLines = 2,
+                            style = MaterialTheme.typography.title2,
+                            paddingHorizontal = 2.dp,
+                            showMillis = false,
+                        )
+                        StepNameText(
+                            currentStep = currentStepSafe,
+                            color = MaterialTheme.colors.onSurface,
+                            style = MaterialTheme.typography.title3,
+                            maxLines = 1,
+                            paddingHorizontal = 2.dp,
+                        )
+                        TimerValue(
+                            currentStep = currentStepSafe,
+                            animatedProgressValue = animatedProgressValue.value,
+                            alreadyDoneWeight = 0,
+                            color = MaterialTheme.colors.onSurface,
+                            maxLines = 1,
+                            style = MaterialTheme.typography.title1,
+                        )
+                    }
+                }
+            }
             Button(
                 onClick = {
                     if (currentStep.value != null) {
@@ -95,13 +145,18 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
                 },
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_gavel),
+                    painter = if (isTimerRunning) {
+                        painterResource(id = R.drawable.ic_gavel)
+                    } else {
+                        painterResource(id = R.drawable.ic_coffee)
+                    },
                     contentDescription = null,
                 )
             }
         }
     }
 }
+
 
 @Preview
 @Composable
