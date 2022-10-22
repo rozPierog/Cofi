@@ -18,7 +18,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ChannelHandler.listenToChanges(this)
 
         setContent {
             val navController = rememberSwipeDismissableNavController()

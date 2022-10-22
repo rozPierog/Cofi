@@ -441,7 +441,7 @@ class MainActivity : MonetCompatActivity() {
             ioScope.launch {
                 val nodes = Wearable.getNodeClient(applicationContext).connectedNodes.await()
                 nodes.forEach { node ->
-                    val channel = channelClient.openChannel(node.id, channelName).await()
+                    val channel = channelClient.openChannel(node.id, "cofi/$channelName").await()
                     val outputStreamTask: Task<OutputStream> =
                         Wearable.getChannelClient(applicationContext).getOutputStream(channel)
                     outputStreamTask.addOnSuccessListener { outputStream ->
