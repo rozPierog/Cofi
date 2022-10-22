@@ -55,7 +55,6 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
         isStepChangeVibrationEnabled = true,
     )
 
-    val currentStepSafe = currentStep.value
     LaunchedEffect(currentStep.value) {
         progressAnimation(Unit)
     }
@@ -82,7 +81,7 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
             Alignment.CenterHorizontally,
         ) {
             AnimatedVisibility(
-                visible = currentStepSafe == null && !isDone,
+                visible = currentStep.value == null && !isDone,
             ) {
                 Text(
                     text = recipe.name,
@@ -92,12 +91,12 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
                 )
             }
             AnimatedVisibility(
-                visible = currentStepSafe != null && !isDone,
+                visible = currentStep.value != null && !isDone,
             ) {
                 Column {
-                    if (currentStepSafe != null) {
+                    if (currentStep.value != null) {
                         TimeText(
-                            currentStep = currentStepSafe,
+                            currentStep = currentStep.value!!,
                             animatedProgressValue = animatedProgressValue.value,
                             color = MaterialTheme.colors.onSurface,
                             maxLines = 2,
@@ -106,14 +105,14 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
                             showMillis = false,
                         )
                         StepNameText(
-                            currentStep = currentStepSafe,
+                            currentStep = currentStep.value!!,
                             color = MaterialTheme.colors.onSurface,
                             style = MaterialTheme.typography.title3,
                             maxLines = 1,
                             paddingHorizontal = 2.dp,
                         )
                         TimerValue(
-                            currentStep = currentStepSafe,
+                            currentStep = currentStep.value!!,
                             animatedProgressValue = animatedProgressValue.value,
                             alreadyDoneWeight = 0,
                             color = MaterialTheme.colors.onSurface,
@@ -125,7 +124,7 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
             }
             Spacer(Modifier.height(6.dp))
             StartButton(
-                currentStepSafe,
+                currentStep.value,
                 isTimerRunning,
                 animatedProgressValue,
                 pauseAnimations,
