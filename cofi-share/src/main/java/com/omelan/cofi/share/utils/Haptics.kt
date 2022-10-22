@@ -1,4 +1,4 @@
-package com.omelan.cofi.utils
+package com.omelan.cofi.share.utils
 
 import android.content.Context
 import android.os.Build

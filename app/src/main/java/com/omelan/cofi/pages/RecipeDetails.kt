@@ -9,21 +9,16 @@ package com.omelan.cofi.pages
 import android.app.Activity
 import android.app.PictureInPictureParams
 import android.graphics.Rect
-import android.media.MediaPlayer
 import android.os.Build
 import android.util.Rational
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.AnimationEndReason
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.selection.toggleable
@@ -38,8 +33,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.MotionDurationScale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.boundsInWindow
@@ -60,14 +53,13 @@ import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.share.*
+import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
-import com.omelan.cofi.utils.Haptics
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @Composable
 fun RecipeDetails(
@@ -139,23 +131,25 @@ fun RecipeDetails(
         derivedStateOf { recipe.id }
     }
 
-    var currentStep by remember { mutableStateOf<Step?>(null) }
-    var isDone by remember { mutableStateOf(false) }
-    var isTimerRunning by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
-    val indexOfCurrentStep = steps.indexOf(currentStep)
-    val indexOfLastStep = steps.lastIndex
-
     val coroutineScope = rememberCoroutineScope()
-    val animatedProgressValue = remember { Animatable(0f) }
-    val isDarkMode = isSystemInDarkTheme()
-    val animatedProgressColor =
-        remember { Animatable(if (isDarkMode) Color.LightGray else Color.DarkGray) }
     val clipboardManager = LocalClipboardManager.current
     val snackbarState = SnackbarHostState()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
     val lazyListState = rememberLazyListState()
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
+    val (
+        currentStep,
+        isDone,
+        isTimerRunning,
+        indexOfCurrentStep,
+        animatedProgressValue,
+        animatedProgressColor,
+        pauseAnimations,
+        progressAnimation,
+        startAnimations,
+        changeToNextStep,
+    ) = Timer.createTimerControllers(steps = steps)
 
     val dataStore = DataStore(LocalContext.current)
     val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
@@ -195,86 +189,9 @@ fun RecipeDetails(
         }
     }
 
-    suspend fun pauseAnimations() {
-        animatedProgressColor.stop()
-        animatedProgressValue.stop()
-        isTimerRunning = false
-    }
 
-    val context = LocalContext.current
-    val haptics = Haptics(context)
-    val mediaPlayer = MediaPlayer.create(context, R.raw.ding)
-    suspend fun changeToNextStep(silent: Boolean = false) {
-        animatedProgressValue.snapTo(0f)
-        if (indexOfCurrentStep != indexOfLastStep) {
-            currentStep = steps[indexOfCurrentStep + 1]
-        } else {
-            currentStep = null
-            isTimerRunning = false
-            isDone = true
-            onRecipeEnd(recipe)
-        }
-        if (silent) {
-            return
-        }
-        if (isStepChangeSoundEnabled) {
-            mediaPlayer.start()
-        }
-        if (isStepChangeVibrationEnabled) {
-            haptics.progress()
-        }
-    }
-
-    suspend fun progressAnimation() {
-        val safeCurrentStep = currentStep ?: return
-        isDone = false
-        isTimerRunning = true
-        val currentStepTime = safeCurrentStep.time
-        if (currentStepTime == null) {
-            animatedProgressValue.snapTo(1f)
-            isTimerRunning = false
-            return
-        }
-        val duration = (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
-        coroutineScope.launch(Dispatchers.Default) {
-            withContext(
-                object : MotionDurationScale {
-                    override val scaleFactor: Float = 1f
-                },
-            ) {
-                animatedProgressColor.animateTo(
-                    targetValue = if (isDarkMode) {
-                        safeCurrentStep.type.colorNight
-                    } else {
-                        safeCurrentStep.type.color
-                    },
-                    animationSpec = tween(durationMillis = duration, easing = LinearEasing),
-                )
-            }
-        }
-        withContext(
-            object : MotionDurationScale {
-                override val scaleFactor: Float = 1f
-            },
-        ) {
-            val result = animatedProgressValue.animateTo(
-                targetValue = 1f,
-                animationSpec = tween(durationMillis = duration, easing = LinearEasing),
-            )
-            if (result.endReason != AnimationEndReason.Finished) {
-                return@withContext
-            }
-            changeToNextStep()
-        }
-    }
-
-    suspend fun startAnimations() {
-        coroutineScope.launch {
-            progressAnimation()
-        }
-    }
-    LaunchedEffect(currentStep) {
-        progressAnimation()
+    LaunchedEffect(currentStep.value) {
+        progressAnimation(Unit)
     }
     LaunchedEffect(isTimerRunning) {
         onTimerRunning(isTimerRunning)
@@ -291,7 +208,7 @@ fun RecipeDetails(
             lazyListState.animateScrollToItem(if (recipe.description.isNotBlank()) 1 else 0)
         }
         launch {
-            changeToNextStep(silent = true)
+            changeToNextStep(true)
         }
     }
 
@@ -304,7 +221,7 @@ fun RecipeDetails(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
+                    (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
         }
     }
 
@@ -339,7 +256,7 @@ fun RecipeDetails(
                         }
                     }
                 },
-            currentStep = currentStep,
+            currentStep = currentStep.value,
             allSteps = steps,
             animatedProgressValue = animatedProgressValue,
             animatedProgressColor = animatedProgressColor,
@@ -366,11 +283,11 @@ fun RecipeDetails(
                 stepProgress = getCurrentStepProgress(index),
                 onClick = { newStep: Step ->
                     coroutineScope.launch {
-                        if (newStep == currentStep) {
+                        if (newStep == currentStep.value) {
                             return@launch
                         }
                         animatedProgressValue.snapTo(0f)
-                        currentStep = newStep
+                        currentStep.value = (newStep)
                     }
                 },
             )
@@ -427,13 +344,13 @@ fun RecipeDetails(
                 StartFAB(
                     isTimerRunning = isTimerRunning,
                     onClick = {
-                        if (currentStep != null) {
+                        if (currentStep.value != null) {
                             if (animatedProgressValue.isRunning) {
                                 coroutineScope.launch { pauseAnimations() }
                             } else {
                                 coroutineScope.launch {
-                                    if (currentStep?.time == null) {
-                                        changeToNextStep()
+                                    if (currentStep.value?.time == null) {
+                                        changeToNextStep(false)
                                     } else {
                                         startAnimations()
                                     }
