@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                     ioScope.launch {
                         val inputStream = channelClient.getInputStream(channel).await()
                         val jsonString = String(inputStream.readBytes(), StandardCharsets.UTF_8)
-                        db.recipeDao().insertAll(JSONArray(jsonString).toRecipes())
+                        db.recipeDao().deleteAndCreate(JSONArray(jsonString).toRecipes(true))
                         withContext(Dispatchers.IO) {
                             inputStream.close()
                         }

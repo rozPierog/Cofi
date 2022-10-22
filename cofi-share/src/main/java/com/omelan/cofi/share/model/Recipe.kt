@@ -58,8 +58,18 @@ interface RecipeDao {
     @Update
     suspend fun updateRecipe(recipe: Recipe)
 
+
+    @Query("DELETE FROM recipe")
+    suspend fun deleteAll()
+
     @Query("DELETE FROM recipe WHERE id = :recipeId")
     suspend fun deleteById(recipeId: Int)
+
+    @Transaction
+    suspend fun deleteAndCreate(users: List<Recipe>) {
+        deleteAll()
+        insertAll(users)
+    }
 }
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
@@ -81,28 +91,38 @@ data class Recipe(
 )
 
 private const val jsonName = "name"
+private const val jsonId = "id"
 private const val jsonDescription = "description"
 private const val jsonRecipeIcon = "recipeIcon"
 const val jsonSteps = "steps"
 
 fun Recipe.serialize(steps: List<Step>? = null): JSONObject = JSONObject().run {
+    put(jsonId, id)
     put(jsonName, name)
     put(jsonDescription, description)
     put(jsonRecipeIcon, recipeIcon.name)
     put(jsonSteps, steps?.serialize())
 }
 
-fun JSONObject.toRecipe() =
+fun JSONObject.toRecipe(withId: Boolean = false) = if (withId) {
+    Recipe(
+        id = getInt(jsonId),
+        name = getString(jsonName),
+        description = getString(jsonDescription),
+        recipeIcon = RecipeIconTypeConverter().stringToRecipeIcon(getString(jsonRecipeIcon)),
+    )
+} else {
     Recipe(
         name = getString(jsonName),
         description = getString(jsonDescription),
         recipeIcon = RecipeIconTypeConverter().stringToRecipeIcon(getString(jsonRecipeIcon)),
     )
+}
 
-fun JSONArray.toRecipes(): List<Recipe> {
+fun JSONArray.toRecipes(withId: Boolean = false): List<Recipe> {
     var recipies = listOf<Recipe>()
     for (i in 0 until length()) {
-        recipies = recipies.plus(getJSONObject(i).toRecipe())
+        recipies = recipies.plus(getJSONObject(i).toRecipe(withId))
     }
     return recipies
 }
