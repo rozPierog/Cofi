@@ -70,6 +70,9 @@ android {
             versionNameSuffix "-instant"
             minSdkVersion 26
         }
+        playStore {
+            dimension "version"
+        }
         full {
             dimension "version"
             versionCode android.defaultConfig.versionCode
@@ -143,7 +146,7 @@ dependencies {
     }
 
     instantImplementation('com.google.android.gms:play-services-instantapps:18.0.1')
-    implementation 'com.google.android.gms:play-services-wearable:18.0.0'
+    playStoreImplementation 'com.google.android.gms:play-services-wearable:18.0.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
 
     implementation 'androidx.appcompat:appcompat:1.5.1'

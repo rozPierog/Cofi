@@ -35,8 +35,6 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.wearable.Wearable
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.pages.RecipeDetails
 import com.omelan.cofi.pages.RecipeEdit
@@ -50,18 +48,14 @@ import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeViewModel
 import com.omelan.cofi.share.StepsViewModel
 import com.omelan.cofi.share.model.AppDatabase
-import com.omelan.cofi.share.model.SharedData
 import com.omelan.cofi.ui.CofiTheme
+import com.omelan.cofi.utils.InstantUtils
+import com.omelan.cofi.utils.WearUtils
 import com.omelan.cofi.utils.checkPiPPermission
-import com.omelan.cofi.utils.isInstantApp
-import com.omelan.cofi.utils.showInstallPrompt
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.tasks.await
-import org.json.JSONArray
-import java.io.IOException
-import java.io.OutputStream
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.Date
 
 val LocalPiPState = staticCompositionLocalOf<Boolean> {
@@ -133,8 +127,8 @@ class MainActivity : MonetCompatActivity() {
                 lifecycleScope.launch {
                     db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
                 }
-                if (isInstantApp(this@MainActivity) && !pipState) {
-                    showInstallPrompt(this@MainActivity)
+                if (InstantUtils.isInstantApp(this@MainActivity) && !pipState) {
+                    InstantUtils.showInstallPrompt(this@MainActivity)
                 } else {
                     lifecycleScope.launch {
                         val deepLinkIntent = Intent(
@@ -432,40 +426,12 @@ class MainActivity : MonetCompatActivity() {
                 PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
             )
         }
-        val channelClient = Wearable.getChannelClient(this)
-        val ioScope = CoroutineScope(Dispatchers.IO + Job())
-        val db = AppDatabase.getInstance(applicationContext)
-        val recipesLiveData = db.recipeDao().getAll()
-        val stepsLiveData = db.stepDao().getAll()
-        fun sendDataToWearOS(data: List<SharedData>, channelName: String) {
-            ioScope.launch {
-                val nodes = Wearable.getNodeClient(applicationContext).connectedNodes.await()
-                nodes.forEach { node ->
-                    val channel = channelClient.openChannel(node.id, "cofi/$channelName").await()
-                    val outputStreamTask: Task<OutputStream> =
-                        Wearable.getChannelClient(applicationContext).getOutputStream(channel)
-                    outputStreamTask.addOnSuccessListener { outputStream ->
-                        try {
-                            val jsonArray = JSONArray()
-                            data.forEach {
-                                jsonArray.put(it.serialize())
-                            }
-                            outputStream.write(jsonArray.toString().toByteArray())
-                            outputStream.flush()
-                            outputStream.close()
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        }
-                    }
-                }
-            }
-        }
-        recipesLiveData.observe(this@MainActivity) { recipes ->
-            sendDataToWearOS(recipes, "recipes")
-        }
-        stepsLiveData.observe(this@MainActivity) { steps ->
-            sendDataToWearOS(steps, "steps")
-        }
+        WearUtils.observeChangesAndSendToWear(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        WearUtils.removeObservers(this)
     }
 }
 
