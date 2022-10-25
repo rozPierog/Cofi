@@ -4,7 +4,23 @@ plugins {
     id 'kotlin-kapt'
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
+    signingConfigs {
+        if (keystoreProperties.containsKey('storeFile')) {
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile rootProject.file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+    }
     namespace 'com.omelan.cofi.wearos'
     compileSdk 33
 
@@ -12,7 +28,7 @@ android {
         applicationId "com.omelan.cofi"
         minSdk 25
         targetSdk 33
-        versionCode 1
+        versionCode 84
         versionName "1.0"
         vectorDrawables {
             useSupportLibrary true
@@ -23,7 +39,10 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig keystoreProperties.containsKey('storeFile') ?
+                    signingConfigs.release : signingConfigs.debug
         }
         debug {
             debuggable true
