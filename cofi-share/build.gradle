@@ -50,7 +50,6 @@ dependencies {
     implementation "androidx.compose.material:material:$compose_version"
 
     //Room
-    def room_version = "2.5.0-beta01"
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
