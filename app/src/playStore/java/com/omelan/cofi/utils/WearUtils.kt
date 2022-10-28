@@ -38,7 +38,11 @@ object WearUtils {
         activity: AppCompatActivity,
     ) {
         CoroutineScope(Dispatchers.IO + Job()).launch {
-            val nodes = Wearable.getNodeClient(activity).connectedNodes.await()
+            val nodes = try {
+                Wearable.getNodeClient(activity).connectedNodes.await()
+            } catch (e: Exception) {
+                return@launch
+            }
             nodes.forEach { node ->
                 val channel = openChannel(node.id, "cofi/$channelName").await()
                 val outputStreamTask = Wearable.getChannelClient(activity).getOutputStream(channel)
@@ -85,7 +89,11 @@ object WearUtils {
         DisposableEffect(LocalLifecycleOwner.current) {
             val capabilityClient = Wearable.getCapabilityClient(mainActivity as Activity)
             coroutineScope.launch {
-                val connectedNodes = nodeClient.connectedNodes.await()
+                val connectedNodes = try {
+                    nodeClient.connectedNodes.await()
+                } catch (e: Exception) {
+                    return@launch
+                }
                 val listener = CapabilityClient.OnCapabilityChangedListener {
                     onChange(connectedNodes - it.nodes)
                 }
@@ -98,7 +106,11 @@ object WearUtils {
             onDispose { }
         }
         LaunchedEffect(Unit) {
-            val connectedNodes = nodeClient.connectedNodes.await()
+            val connectedNodes = try {
+                nodeClient.connectedNodes.await()
+            } catch (e: Exception) {
+                return@LaunchedEffect
+            }
             val capabilityClient = Wearable.getCapabilityClient(mainActivity)
             val capabilityInfo = capabilityClient
                 .getCapability(verify_cofi_wear_app, CapabilityClient.FILTER_ALL)
@@ -118,16 +130,13 @@ object WearUtils {
             .addCategory(Intent.CATEGORY_BROWSABLE)
             .setData(Uri.parse(COFI_PLAY_STORE_LINK))
         val remoteActivityHelper = RemoteActivityHelper(activity)
-        // In parallel, start remote activity requests for all wear devices that don't have the app installed yet.
         nodesWithoutApp.forEach { node ->
             activity.lifecycleScope.launch {
                 try {
-                    remoteActivityHelper
-                        .startRemoteActivity(
-                            targetIntent = intent,
-                            targetNodeId = node.id,
-                        )
-                        .await()
+                    remoteActivityHelper.startRemoteActivity(
+                        targetIntent = intent,
+                        targetNodeId = node.id,
+                    ).await()
                 } catch (cancellationException: CancellationException) {
                     // Request was cancelled normally
                 }
