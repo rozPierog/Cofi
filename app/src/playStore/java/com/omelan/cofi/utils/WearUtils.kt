@@ -1,17 +1,29 @@
 package com.omelan.cofi.utils
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.wear.remote.interactions.RemoteActivityHelper
+import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.ChannelClient
+import com.google.android.gms.wearable.Node
 import com.google.android.gms.wearable.Wearable
 import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.SharedData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import com.omelan.cofi.share.utils.CAPABILITY_WEAR_APP
+import kotlinx.coroutines.*
+import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.tasks.await
 import org.json.JSONArray
 
@@ -64,4 +76,63 @@ object WearUtils {
             stepsLiveData.removeObservers(activity)
         }
     }
+
+    @Composable
+    fun ObserveIfWearAppInstalled(onChange: (nodesWithoutApp: List<Node>) -> Unit) {
+        val mainActivity = LocalContext.current as Activity
+        val nodeClient = Wearable.getNodeClient(mainActivity)
+        val coroutineScope = rememberCoroutineScope()
+        DisposableEffect(LocalLifecycleOwner.current) {
+            val capabilityClient = Wearable.getCapabilityClient(mainActivity as Activity)
+            coroutineScope.launch {
+                val connectedNodes = nodeClient.connectedNodes.await()
+                val listener = CapabilityClient.OnCapabilityChangedListener {
+                    onChange(connectedNodes - it.nodes)
+                }
+
+                capabilityClient.addListener(listener, CAPABILITY_WEAR_APP)
+                onDispose {
+                    capabilityClient.removeListener(listener, CAPABILITY_WEAR_APP)
+                }
+            }
+            onDispose { }
+        }
+        LaunchedEffect(Unit) {
+            val connectedNodes = nodeClient.connectedNodes.await()
+            val capabilityClient = Wearable.getCapabilityClient(mainActivity)
+            val capabilityInfo = capabilityClient
+                .getCapability(CAPABILITY_WEAR_APP, CapabilityClient.FILTER_ALL)
+                .await()
+            onChange(connectedNodes - capabilityInfo.nodes)
+        }
+    }
+
+    private const val COFI_PLAY_STORE_LINK =
+        "https://play.google.com/store/apps/details?id=com.omelan.cofi"
+
+    fun openPlayStoreOnWearDevicesWithoutApp(
+        activity: AppCompatActivity,
+        nodesWithoutApp: List<Node>,
+    ) {
+        val intent = Intent(Intent.ACTION_VIEW)
+            .addCategory(Intent.CATEGORY_BROWSABLE)
+            .setData(Uri.parse(COFI_PLAY_STORE_LINK))
+        val remoteActivityHelper = RemoteActivityHelper(activity)
+        // In parallel, start remote activity requests for all wear devices that don't have the app installed yet.
+        nodesWithoutApp.forEach { node ->
+            activity.lifecycleScope.launch {
+                try {
+                    remoteActivityHelper
+                        .startRemoteActivity(
+                            targetIntent = intent,
+                            targetNodeId = node.id,
+                        )
+                        .await()
+                } catch (cancellationException: CancellationException) {
+                    // Request was cancelled normally
+                }
+            }
+        }
+    }
+
 }
