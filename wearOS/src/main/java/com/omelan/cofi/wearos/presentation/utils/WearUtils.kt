@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.Wearable
-import com.omelan.cofi.share.utils.CAPABILITY_PHONE_APP
+import com.omelan.cofi.share.utils.verify_cofi_phone_app
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.guava.await
@@ -29,7 +29,7 @@ object WearUtils {
         val capabilityClient = Wearable.getCapabilityClient(activity)
         try {
             val capabilityInfo = capabilityClient
-                .getCapability(CAPABILITY_PHONE_APP, CapabilityClient.FILTER_ALL)
+                .getCapability(verify_cofi_phone_app, CapabilityClient.FILTER_ALL)
                 .await()
 
             return withContext(Dispatchers.Main) {
@@ -70,9 +70,9 @@ object WearUtils {
             }
             val capabilityClient = Wearable.getCapabilityClient(mainActivity as Activity)
 
-            capabilityClient.addListener(listener, CAPABILITY_PHONE_APP)
+            capabilityClient.addListener(listener, verify_cofi_phone_app)
             onDispose {
-                capabilityClient.removeListener(listener, CAPABILITY_PHONE_APP)
+                capabilityClient.removeListener(listener, verify_cofi_phone_app)
             }
         }
         LaunchedEffect(Unit) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="android_wear_capabilities">
-        <item>CAPABILITY_PHONE_APP</item>
+        <item>verify_cofi_phone_app</item>
     </string-array>
 </resources>

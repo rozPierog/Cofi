@@ -21,7 +21,7 @@ import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.SharedData
-import com.omelan.cofi.share.utils.CAPABILITY_WEAR_APP
+import com.omelan.cofi.share.utils.verify_cofi_wear_app
 import kotlinx.coroutines.*
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.tasks.await
@@ -90,9 +90,9 @@ object WearUtils {
                     onChange(connectedNodes - it.nodes)
                 }
 
-                capabilityClient.addListener(listener, CAPABILITY_WEAR_APP)
+                capabilityClient.addListener(listener, verify_cofi_wear_app)
                 onDispose {
-                    capabilityClient.removeListener(listener, CAPABILITY_WEAR_APP)
+                    capabilityClient.removeListener(listener, verify_cofi_wear_app)
                 }
             }
             onDispose { }
@@ -101,7 +101,7 @@ object WearUtils {
             val connectedNodes = nodeClient.connectedNodes.await()
             val capabilityClient = Wearable.getCapabilityClient(mainActivity)
             val capabilityInfo = capabilityClient
-                .getCapability(CAPABILITY_WEAR_APP, CapabilityClient.FILTER_ALL)
+                .getCapability(verify_cofi_wear_app, CapabilityClient.FILTER_ALL)
                 .await()
             onChange(connectedNodes - capabilityInfo.nodes)
         }
