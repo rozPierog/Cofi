@@ -1,0 +1,5 @@
+<resources>
+    <string-array name="android_wear_capabilities">
+        <item>CAPABILITY_WEAR_APP</item>
+    </string-array>
+</resources>
