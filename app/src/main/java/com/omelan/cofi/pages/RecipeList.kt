@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Settings
@@ -37,6 +38,7 @@ import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.WearUtils
 import com.omelan.cofi.utils.WearUtils.ObserveIfWearAppInstalled
 import com.omelan.cofi.utils.getDefaultPadding
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,8 +61,15 @@ fun RecipeList(
     var wearNodesWithoutApp by remember {
         mutableStateOf(listOf<Node>())
     }
+    val lazyGridState = rememberLazyGridState()
+    val coroutineScope = rememberCoroutineScope()
     ObserveIfWearAppInstalled {
         wearNodesWithoutApp = it
+        if (it.isNotEmpty()) {
+            coroutineScope.launch {
+                lazyGridState.animateScrollToItem(0)
+            }
+        }
     }
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -100,12 +109,13 @@ fun RecipeList(
                 .background(color = MaterialTheme.colorScheme.background),
             columns = if (isMultiColumn) GridCells.Fixed(2) else GridCells.Fixed(1),
             horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
+            state = lazyGridState,
         ) {
             if (wearNodesWithoutApp.isNotEmpty()) {
                 item(key = "wearOS") {
                     RecipeListInfoBox(
                         title = {
-                            Text(text = "Cofi is now on WearOS",)
+                            Text(text = "Cofi is now on WearOS")
                         },
                         text = {
                             Row(
