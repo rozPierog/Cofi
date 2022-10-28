@@ -15,11 +15,9 @@ import com.google.android.gms.wearable.Wearable
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.verify_cofi_phone_app
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 object WearUtils {
     private const val COFI_PLAY_STORE_LINK =
@@ -32,9 +30,7 @@ object WearUtils {
                 .getCapability(verify_cofi_phone_app, CapabilityClient.FILTER_ALL)
                 .await()
 
-            return withContext(Dispatchers.Main) {
-                return@withContext capabilityInfo.nodes.isNotEmpty()
-            }
+            return capabilityInfo.nodes.isNotEmpty()
         } catch (cancellationException: CancellationException) {
             // Request was cancelled normally
         }
