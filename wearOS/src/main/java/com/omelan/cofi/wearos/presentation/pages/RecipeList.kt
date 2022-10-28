@@ -23,10 +23,10 @@ import androidx.wear.compose.material.dialog.Confirmation
 import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeIcon
 import com.omelan.cofi.share.RecipeViewModel
+import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.components.RecipeListItem
 import com.omelan.cofi.wearos.presentation.utils.WearUtils
-import com.omelan.cofi.wearos.presentation.utils.getActivity
 
 @Composable
 fun RecipeList(goToDetails: (Recipe) -> Unit) {

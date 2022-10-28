@@ -1,6 +1,5 @@
 package com.omelan.cofi.utils
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +20,7 @@ import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.SharedData
+import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.verify_cofi_wear_app
 import kotlinx.coroutines.*
 import kotlinx.coroutines.guava.await
@@ -83,11 +83,11 @@ object WearUtils {
 
     @Composable
     fun ObserveIfWearAppInstalled(onChange: (nodesWithoutApp: List<Node>) -> Unit) {
-        val mainActivity = LocalContext.current as Activity
+        val mainActivity = LocalContext.current.getActivity() ?: return
         val nodeClient = Wearable.getNodeClient(mainActivity)
         val coroutineScope = rememberCoroutineScope()
         DisposableEffect(LocalLifecycleOwner.current) {
-            val capabilityClient = Wearable.getCapabilityClient(mainActivity as Activity)
+            val capabilityClient = Wearable.getCapabilityClient(mainActivity)
             coroutineScope.launch {
                 val connectedNodes = try {
                     nodeClient.connectedNodes.await()

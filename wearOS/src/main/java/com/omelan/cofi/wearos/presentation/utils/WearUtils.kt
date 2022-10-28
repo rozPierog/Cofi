@@ -1,6 +1,5 @@
 package com.omelan.cofi.wearos.presentation.utils
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.ComponentActivity
@@ -13,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.Wearable
+import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.verify_cofi_phone_app
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -63,12 +63,12 @@ object WearUtils {
 
     @Composable
     fun ObserveIfPhoneAppInstalled(onChange: (hasPhoneApp: Boolean) -> Unit) {
-        val mainActivity = LocalContext.current.getActivity()
+        val mainActivity = LocalContext.current.getActivity() ?: return
         DisposableEffect(LocalLifecycleOwner.current) {
             val listener = CapabilityClient.OnCapabilityChangedListener {
                 onChange(it.nodes.isNotEmpty())
             }
-            val capabilityClient = Wearable.getCapabilityClient(mainActivity as Activity)
+            val capabilityClient = Wearable.getCapabilityClient(mainActivity)
 
             capabilityClient.addListener(listener, verify_cofi_phone_app)
             onDispose {
@@ -76,7 +76,7 @@ object WearUtils {
             }
         }
         LaunchedEffect(Unit) {
-            onChange(mainActivity?.let { checkIfPhoneHasApp(it) } ?: true)
+            onChange(checkIfPhoneHasApp(mainActivity))
         }
     }
 }

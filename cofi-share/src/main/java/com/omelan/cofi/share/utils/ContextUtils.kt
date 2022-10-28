@@ -1,4 +1,4 @@
-package com.omelan.cofi.wearos.presentation.utils
+package com.omelan.cofi.share.utils
 
 import android.content.Context
 import android.content.ContextWrapper

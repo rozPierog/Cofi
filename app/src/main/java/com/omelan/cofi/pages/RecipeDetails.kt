@@ -54,6 +54,7 @@ import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.timer.Timer
+import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.getDefaultPadding
@@ -89,7 +90,7 @@ fun RecipeDetails(
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRectHint: Rect?) {
+suspend fun setPiPSettings(activity: Activity?, isTimerRunning: Boolean, sourceRectHint: Rect?) {
     if (activity !is MainActivity) {
         return
     }
@@ -245,7 +246,7 @@ fun RecipeDetails(
             Spacer(modifier = Modifier.height(Spacing.big))
         }
     }
-    val activity = LocalContext.current as Activity
+    val activity = LocalContext.current.getActivity()
     val renderTimer: @Composable (Modifier) -> Unit = {
         Timer(
             modifier = it
