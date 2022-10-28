@@ -3,6 +3,7 @@ package com.omelan.cofi.pages
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -14,10 +15,12 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -101,7 +104,21 @@ fun RecipeList(
             if (wearNodesWithoutApp.isNotEmpty()) {
                 item(key = "wearOS") {
                     RecipeListInfoBox(
-                        text = { Text("DOWNLOAD COFI FOR YOUR WATCH") },
+                        title = {
+                            Text(text = "Cofi is now on WearOS",)
+                        },
+                        text = {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
+                            ) {
+                                Icon(
+                                    painterResource(id = R.drawable.ic_timer),
+                                    contentDescription = "",
+                                )
+                                Text(text = "Download Cofi app for your WearOS watch")
+                            }
+                        },
                         onClick = {
                             WearUtils.openPlayStoreOnWearDevicesWithoutApp(
                                 activity,

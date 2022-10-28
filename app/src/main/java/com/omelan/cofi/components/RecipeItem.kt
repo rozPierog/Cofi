@@ -27,6 +27,7 @@ import com.omelan.cofi.ui.shapes
 @Composable
 fun RecipeListItemBackground(
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
     onClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -43,7 +44,7 @@ fun RecipeListItemBackground(
                 role = Role.Button,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(bounded = true),
-            ),
+            ).padding(contentPadding),
             content = content,
         )
     }
@@ -56,8 +57,7 @@ fun LazyGridItemScope.RecipeItem(
     onPress: (recipeId: Int) -> Unit,
 ) {
     RecipeListItemBackground(
-        modifier = Modifier
-            .animateItemPlacement(),
+        modifier = Modifier.animateItemPlacement(),
         onClick = { onPress(recipe.id) },
     ) {
         Row(
