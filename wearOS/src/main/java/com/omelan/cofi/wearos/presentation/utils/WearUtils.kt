@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.CapabilityClient
@@ -63,7 +64,7 @@ object WearUtils {
     @Composable
     fun ObserveIfPhoneAppInstalled(onChange: (hasPhoneApp: Boolean) -> Unit) {
         val mainActivity = LocalContext.current.getActivity()
-        DisposableEffect(Unit) {
+        DisposableEffect(LocalLifecycleOwner.current) {
             val listener = CapabilityClient.OnCapabilityChangedListener {
                 onChange(it.nodes.isNotEmpty())
             }

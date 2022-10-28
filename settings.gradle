@@ -1,4 +1,4 @@
 rootProject.name = "Cofi"
 include ':app'
-include ':cofi-wearos'
+include ':wearOS'
 include ':cofi-share'
