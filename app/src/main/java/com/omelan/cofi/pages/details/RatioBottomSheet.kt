@@ -4,15 +4,19 @@ package com.omelan.cofi.pages.details
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.omelan.cofi.ui.Spacing
 import java.math.RoundingMode
 
 @Composable
@@ -43,7 +47,17 @@ private fun SheetContent(
     timeMultiplier: MutableState<Float>,
     weightMultiplier: MutableState<Float>,
 ) {
+    Text(
+        text = "Weight multiplier",
+        textAlign = TextAlign.Start,
+        style = MaterialTheme.typography.titleSmall,
+    )
     SliderWithValue(value = weightMultiplier)
+    Text(
+        text = "Time multiplier",
+        textAlign = TextAlign.Start,
+        style = MaterialTheme.typography.titleSmall,
+    )
     SliderWithValue(value = timeMultiplier)
 }
 
@@ -62,13 +76,13 @@ private fun SliderWithValue(value: MutableState<Float>) {
                 val rounded = it.toBigDecimal().setScale(1, RoundingMode.HALF_EVEN).toFloat()
                 value.value = rounded
             },
-            modifier = Modifier.weight(3f, true),
+            modifier = Modifier.weight(1f, true),
         )
         Text(
             text = "${value.value}", textAlign = TextAlign.Center,
             modifier = Modifier
-                .weight(1f)
-                .align(Alignment.CenterVertically),
+                .align(Alignment.CenterVertically)
+                .padding(horizontal = Spacing.normal),
         )
 //        OutlinedTextField(
 //            modifier = Modifier
