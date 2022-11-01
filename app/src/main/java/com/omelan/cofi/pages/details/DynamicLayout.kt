@@ -24,7 +24,6 @@ import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.getDefaultPadding
 
-
 @Composable
 fun rememberIsPhoneLayout(
     windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
@@ -37,12 +36,11 @@ fun rememberIsPhoneLayout(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
+                (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
         }
     }
     return isPhoneLayout
 }
-
 
 @Composable
 fun TabletLayout(

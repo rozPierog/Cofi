@@ -64,7 +64,6 @@ private fun SheetContent(
     SliderWithValue(value = timeMultiplier)
 }
 
-
 const val step = 0.1f
 val range = 0f..3f
 val steps = (range.endInclusive / step).roundToInt() + 1
@@ -87,7 +86,8 @@ private fun SliderWithValue(value: MutableState<Float>) {
             modifier = Modifier.weight(1f, true),
         )
         Text(
-            text = "${value.value}", textAlign = TextAlign.Center,
+            text = "${value.value}",
+            textAlign = TextAlign.Center,
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .padding(horizontal = Spacing.normal),

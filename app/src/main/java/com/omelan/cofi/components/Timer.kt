@@ -54,7 +54,7 @@ fun Track(
             .progressSemantics(progress)
             .aspectRatio(1f),
 
-        ) {
+    ) {
         val startAngle = 270f
         val sweep = progress * 360f
         val diameterOffset = stroke.width / 2
@@ -164,8 +164,10 @@ fun Timer(
                         stringResource(id = R.string.recipe_details_noTime)
                     } else {
                         val duration =
-                            (currentStep.time * animatedProgressValue.value *
-                                    timeMultiplier).toInt()
+                            (
+                                currentStep.time * animatedProgressValue.value *
+                                    timeMultiplier
+                                ).toInt()
                         duration.toStringDuration(
                             padMillis = true,
                             padMinutes = true,
@@ -262,7 +264,7 @@ fun TimerPreview() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,

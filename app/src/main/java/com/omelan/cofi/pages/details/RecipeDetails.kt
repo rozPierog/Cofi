@@ -1,7 +1,8 @@
 @file:OptIn(
     ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalMaterial3Api::class,
-    ExperimentalAnimationGraphicsApi::class, ExperimentalMaterialApi::class,
+    ExperimentalAnimationGraphicsApi::class,
+    ExperimentalMaterialApi::class,
 )
 
 package com.omelan.cofi.pages.details
@@ -267,7 +268,9 @@ fun RecipeDetails(
             )
             Spacer(modifier = Modifier.height(Spacing.big))
         }
-    } else null
+    } else {
+        null
+    }
 
     val activity = LocalContext.current as Activity
     val renderTimer: @Composable (Modifier) -> Unit = {
@@ -421,7 +424,11 @@ fun RecipeDetails(
                     )
                 }
             },
-            floatingActionButtonPosition = if (isPhoneLayout) FabPosition.Center else FabPosition.End,
+            floatingActionButtonPosition = if (isPhoneLayout) {
+                FabPosition.Center
+            } else {
+                FabPosition.End
+            },
         ) {
             if (isPhoneLayout) {
                 PhoneLayout(it, renderDescription, renderTimer, renderSteps, isInPiP, lazyListState)
