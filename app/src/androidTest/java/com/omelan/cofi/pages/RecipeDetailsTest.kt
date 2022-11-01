@@ -12,6 +12,7 @@ import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeIcon
 import com.omelan.cofi.model.Step
 import com.omelan.cofi.model.StepType
+import com.omelan.cofi.pages.details.RecipeDetails
 import com.omelan.cofi.ui.CofiTheme
 import org.junit.Rule
 import org.junit.Test
