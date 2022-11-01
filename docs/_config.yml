@@ -22,6 +22,8 @@ include: [".well-known"]
 # Build settings
 markdown: kramdown
 theme: minima
+plugins:
+  - jekyll-relative-links
 header_pages:
   - Contribute/CONTRIBUTING.md
   - index.md

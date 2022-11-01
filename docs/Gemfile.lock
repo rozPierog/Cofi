@@ -38,6 +38,8 @@ GEM
       safe_yaml (~> 1.0)
     jekyll-feed (0.15.1)
       jekyll (>= 3.7, < 5.0)
+    jekyll-relative-links (0.6.1)
+      jekyll (>= 3.3, < 5.0)
     jekyll-sass-converter (1.5.2)
       sass (~> 3.4)
     jekyll-seo-tag (2.7.1)
@@ -80,6 +82,7 @@ PLATFORMS
 DEPENDENCIES
   jekyll (~> 3.9.0)
   jekyll-feed (~> 0.6)
+  jekyll-relative-links
   kramdown-parser-gfm
   minima!
   tzinfo (~> 1.2)
