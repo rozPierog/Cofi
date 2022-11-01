@@ -55,8 +55,7 @@ fun Track(
         modifier
             .progressSemantics(progress)
             .aspectRatio(1f),
-
-        ) {
+    ) {
         val startAngle = 270f
         val sweep = progress * 360f
         val diameterOffset = stroke.width / 2
@@ -92,6 +91,8 @@ fun Timer(
     animatedProgressColor: Animatable<Color, AnimationVector4D>,
     isInPiP: Boolean,
     isDone: Boolean = false,
+    weightMultiplier: Float = 1.0f,
+    timeMultiplier: Float = 1.0f,
 ) {
     val strokeWidth = if (isInPiP) {
         10.dp
@@ -113,6 +114,8 @@ fun Timer(
                     .aspectRatio(1f)
                     .fillMaxSize(),
                 steps = allSteps,
+                timeMultiplier = timeMultiplier,
+                weightMultiplier = weightMultiplier,
             )
         }
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
@@ -160,7 +163,8 @@ fun Timer(
                 if (currentStep != null) {
                     TimeText(
                         currentStep = currentStep,
-                        animatedProgressValue = animatedProgressValue.value,
+                        animatedProgressValue = (animatedProgressValue.value *
+                                timeMultiplier).roundToInt(),
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = if (isInPiP) 2 else Int.MAX_VALUE,
                         style = if (isInPiP) {
@@ -186,7 +190,7 @@ fun Timer(
                     Divider()
                     TimerValue(
                         currentStep = currentStep,
-                        animatedProgressValue = animatedProgressValue.value,
+                        animatedProgressValue = (animatedProgressValue.value * ),
                         alreadyDoneWeight = alreadyDoneWeight,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,

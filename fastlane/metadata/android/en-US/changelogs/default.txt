@@ -1,14 +1,9 @@
 ### Added
-- Show recipe basic info in timer and on main recipe list screen
-- WYSIWYG in description input
-- Added "Cancel" button to Dialogs that were missing it
+- Added ability to multiply all values of the recipe without editing the recipe itself
 
 ### Changed
-- Back button now closes icon picker bottom sheet in recipe edit
-- Tweaked scrolling into view of inputs in recipe edit page
-- Description input is hidden by default to indicate that it isn't required
-- Tweaked layout of Timer, StepAddCard, Description, Recipe Edit, Settings
-- Fixed adding default recipes
+- Improved performance of app bar collapse
+- updated dependencies
 
 ### Removed
 

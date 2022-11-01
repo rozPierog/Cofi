@@ -49,4 +49,4 @@
 
 # License
 
-[GNU GENERAL PUBLIC LICENSE Version 3](License)
+[GNU GENERAL PUBLIC LICENSE Version 3](LICENSE)

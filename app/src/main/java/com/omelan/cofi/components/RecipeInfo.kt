@@ -23,6 +23,7 @@ import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.toMillis
 import com.omelan.cofi.utils.toStringDuration
+import kotlin.math.roundToInt
 
 private data class CoffeeWaterTime(
     val coffeeWeight: Int = 0,
@@ -39,7 +40,13 @@ private data class CoffeeWaterTime(
 }
 
 @Composable
-fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>, compactStyle: Boolean = false) {
+fun RecipeInfo(
+    modifier: Modifier = Modifier,
+    steps: List<Step>,
+    compactStyle: Boolean = false,
+    weightMultiplier: Float = 1f,
+    timeMultiplier: Float = 1f,
+) {
     val stepInfo by remember(steps) {
         derivedStateOf {
             steps.fold(CoffeeWaterTime()) { acc, step ->
@@ -70,38 +77,38 @@ fun RecipeInfo(modifier: Modifier = Modifier, steps: List<Step>, compactStyle: B
             verticalAlignment = Alignment.CenterVertically,
         ) {
             AnimatedVisibility(
-                visible = stepInfo.coffeeWeight > 0,
+                visible = stepInfo.coffeeWeight * weightMultiplier > 0,
                 enter = fadeIn() + expandVertically(expandFrom = Alignment.CenterVertically),
                 exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically),
             ) {
                 Param(
                     modifier = Modifier.testTag("recipe_info_coffee"),
                     icon = painterResource(id = R.drawable.ic_coffee_grinder),
-                    text = "${stepInfo.coffeeWeight}g",
+                    text = "${(stepInfo.coffeeWeight * weightMultiplier).roundToInt()}g",
                     compactStyle = compactStyle,
                 )
             }
             AnimatedVisibility(
-                visible = stepInfo.waterWeight > 0,
+                visible = stepInfo.waterWeight * weightMultiplier > 0,
                 enter = fadeIn() + expandVertically(expandFrom = Alignment.CenterVertically),
                 exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically),
             ) {
                 Param(
                     modifier = Modifier.testTag("recipe_info_water"),
                     icon = painterResource(id = R.drawable.ic_water),
-                    text = "${stepInfo.waterWeight}g",
+                    text = "${(stepInfo.waterWeight * weightMultiplier).roundToInt()}g",
                     compactStyle = compactStyle,
                 )
             }
             AnimatedVisibility(
-                visible = !isSmall && stepInfo.duration > 0,
+                visible = !isSmall && (stepInfo.duration * timeMultiplier) > 0,
                 enter = fadeIn() + expandVertically(expandFrom = Alignment.CenterVertically),
                 exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically),
             ) {
                 Param(
                     modifier = Modifier.testTag("recipe_info_time"),
                     icon = painterResource(id = R.drawable.ic_timer),
-                    text = stepInfo.duration.toStringDuration(),
+                    text = (stepInfo.duration * timeMultiplier).roundToInt().toStringDuration(),
                     compactStyle = compactStyle,
                 )
             }

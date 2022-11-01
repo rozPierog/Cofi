@@ -101,4 +101,6 @@ Temperature: For light roast – brought to a boil and used immediately. For dar
     <string name="settings_timer_item">Timer settings</string>
     <string name="settings_backup_item">Backup/Restore</string>
     <string name="settings_step_vibrate_item">Step change vibration</string>
+    <string name="recipe_details_multiply_time">Time multiplier</string>
+    <string name="recipe_details_multiply_weight">Weight multiplier</string>
 </resources>

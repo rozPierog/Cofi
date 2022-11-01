@@ -26,6 +26,7 @@ import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.toMillis
 import com.omelan.cofi.utils.toStringDuration
+import kotlin.math.roundToInt
 
 enum class StepProgress { Current, Done, Upcoming }
 
@@ -34,6 +35,8 @@ fun StepListItem(
     modifier: Modifier = Modifier,
     step: Step,
     stepProgress: StepProgress,
+    weightMultiplier: Float = 1.0f,
+    timeMultiplier: Float = 1.0f,
     onClick: ((Step) -> Unit)? = null,
 ) {
     val icon = AnimatedImageVector.animatedVectorResource(R.drawable.step_done_anim)
@@ -46,17 +49,13 @@ fun StepListItem(
         atEnd = stepProgress == StepProgress.Done
     }
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 42.dp)
-            .clickable(
+        modifier = modifier.fillMaxWidth().heightIn(min = 42.dp).clickable(
                 onClick = { onClick?.let { it(step) } },
                 enabled = onClick != null,
                 role = Role.Button,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(bounded = true),
-            )
-            .padding(vertical = Spacing.small),
+            ).padding(vertical = Spacing.small),
         Arrangement.Center,
         Alignment.CenterVertically,
     ) {
@@ -70,13 +69,11 @@ fun StepListItem(
             text = step.name,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier
-                .weight(1f, true)
-                .padding(horizontal = Spacing.small),
+            modifier = Modifier.weight(1f, true).padding(horizontal = Spacing.small),
         )
         if (step.value != null) {
             Text(
-                text = "${step.value}g",
+                text = "${(step.value * weightMultiplier).roundToInt()}g",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(horizontal = Spacing.small),
@@ -85,7 +82,7 @@ fun StepListItem(
         }
         if (step.time != null) {
             Text(
-                text = step.time!!.toStringDuration(),
+                text = (step.time * timeMultiplier).roundToInt().toStringDuration(),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(horizontal = Spacing.small),
@@ -100,9 +97,7 @@ fun StepListItemPreview() {
     StepListItem(
         step = Step(
             id = 0,
-            name = "Somebody once told me the world is gonna roll me I ain't the sharpest " +
-                    "tool in the shed She was looking kind of dumb with her finger and her thumb " +
-                    "In the shape of an \"L\" on her forehead",
+            name = "Somebody once told me the world is gonna roll me I ain't the sharpest " + "tool in the shed She was looking kind of dumb with her finger and her thumb " + "In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
             value = 60,
