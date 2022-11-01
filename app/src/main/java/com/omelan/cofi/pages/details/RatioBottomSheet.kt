@@ -11,8 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.ui.Spacing
 import java.math.RoundingMode
+import kotlin.math.roundToInt
 
 @Composable
 fun RatioBottomSheet(
@@ -64,6 +64,11 @@ private fun SheetContent(
     SliderWithValue(value = timeMultiplier)
 }
 
+
+const val step = 0.1f
+val range = 0f..3f
+val steps = (range.endInclusive / step).roundToInt() + 1
+
 @Composable
 private fun SliderWithValue(value: MutableState<Float>) {
     Row(
@@ -72,8 +77,8 @@ private fun SliderWithValue(value: MutableState<Float>) {
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Slider(
-            valueRange = 0f..5f,
-            steps = 51,
+            valueRange = range,
+            steps = steps,
             value = value.value,
             onValueChange = {
                 val rounded = it.toBigDecimal().setScale(1, RoundingMode.HALF_EVEN).toFloat()
