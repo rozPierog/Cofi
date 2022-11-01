@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalAnimationGraphicsApi::class)
+@file:OptIn(ExperimentalAnimationGraphicsApi::class, ExperimentalAnimationGraphicsApi::class)
 
 package com.omelan.cofi.components
 
@@ -49,13 +49,17 @@ fun StepListItem(
         atEnd = stepProgress == StepProgress.Done
     }
     Row(
-        modifier = modifier.fillMaxWidth().heightIn(min = 42.dp).clickable(
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 42.dp)
+            .clickable(
                 onClick = { onClick?.let { it(step) } },
                 enabled = onClick != null,
                 role = Role.Button,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(bounded = true),
-            ).padding(vertical = Spacing.small),
+            )
+            .padding(vertical = Spacing.small),
         Arrangement.Center,
         Alignment.CenterVertically,
     ) {
@@ -69,20 +73,22 @@ fun StepListItem(
             text = step.name,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f, true).padding(horizontal = Spacing.small),
+            modifier = Modifier
+                .weight(1f, true)
+                .padding(horizontal = Spacing.small),
         )
         if (step.value != null) {
             Text(
-                text = "${(step.value * weightMultiplier).roundToInt()}g",
+                text = "${(step.value!! * weightMultiplier).roundToInt()}g",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(horizontal = Spacing.small),
 
-                )
+            )
         }
         if (step.time != null) {
             Text(
-                text = (step.time * timeMultiplier).roundToInt().toStringDuration(),
+                text = (step.time!! * timeMultiplier).roundToInt().toStringDuration(),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(horizontal = Spacing.small),
@@ -97,7 +103,9 @@ fun StepListItemPreview() {
     StepListItem(
         step = Step(
             id = 0,
-            name = "Somebody once told me the world is gonna roll me I ain't the sharpest " + "tool in the shed She was looking kind of dumb with her finger and her thumb " + "In the shape of an \"L\" on her forehead",
+            name = "Somebody once told me the world is gonna roll me I ain't the sharpest " +
+                "tool in the shed She was looking kind of dumb with her finger and her thumb " +
+                "In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
             value = 60,

@@ -1,25 +1,12 @@
 @file:OptIn(
     ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalMaterial3Api::class,
-    ExperimentalAnimationGraphicsApi::class,
     ExperimentalMaterialApi::class,
 )
 
 package com.omelan.cofi.pages.details
 
-import android.app.Activity
-import android.app.PictureInPictureParams
-import android.graphics.Rect
 import android.os.Build
-import android.util.Rational
-import androidx.annotation.RequiresApi
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -56,8 +43,6 @@ import com.omelan.cofi.share.*
 import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.utils.FabType
-import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -88,34 +73,6 @@ fun RecipeDetails(
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRectHint: Rect?) {
-    if (activity !is MainActivity) {
-        return
-    }
-    val isPiPEnabled = DataStore(activity).getPiPSetting().first()
-    if (!isPiPEnabled) {
-        return
-    }
-    if (!isTimerRunning && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        activity.setPictureInPictureParams(
-            PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
-        )
-    } else {
-        activity.setPictureInPictureParams(
-            PictureInPictureParams.Builder()
-                .setAspectRatio(Rational(1, 1))
-                .apply {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        setAutoEnterEnabled(true)
-                        setSourceRectHint(sourceRectHint)
-                        setSeamlessResizeEnabled(false)
-                    }
-                }.build(),
-        )
-    }
-}
-
 @Composable
 fun RecipeDetails(
     recipe: Recipe,
@@ -138,11 +95,8 @@ fun RecipeDetails(
 
     val ratioBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-    val indexOfCurrentStep = steps.indexOf(currentStep)
-    val indexOfLastStep = steps.lastIndex
 
     val coroutineScope = rememberCoroutineScope()
-    val clipboardManager = LocalClipboardManager.current
     val snackbarState = SnackbarHostState()
     val lazyListState = rememberLazyListState()
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
@@ -173,7 +127,6 @@ fun RecipeDetails(
         isStepChangeVibrationEnabled = isStepChangeVibrationEnabled,
     )
 
-
     val copyAutomateLink = rememberCopyAutomateLink(snackbarState, recipeId)
 
     val alreadyDoneWeight = remember(combineWeightState, currentStep) {
@@ -199,28 +152,6 @@ fun RecipeDetails(
         }
     }
 
-
-    suspend fun changeToNextStep(silent: Boolean = false) {
-        animatedProgressValue.snapTo(0f)
-        if (indexOfCurrentStep != indexOfLastStep) {
-            currentStep = steps[indexOfCurrentStep + 1]
-        } else {
-            currentStep = null
-            isTimerRunning = false
-            isDone = true
-            onRecipeEnd(recipe)
-        }
-        if (silent) {
-            return
-        }
-        if (isStepChangeSoundEnabled) {
-            mediaPlayer.start()
-        }
-        if (isStepChangeVibrationEnabled) {
-            haptics.progress()
-        }
-    }
-
     LaunchedEffect(currentStep.value) {
         progressAnimation(Unit)
     }
@@ -239,7 +170,7 @@ fun RecipeDetails(
             lazyListState.animateScrollToItem(if (recipe.description.isNotBlank()) 1 else 0)
         }
         launch {
-            changeToNextStep(silent = true)
+            changeToNextStep(true)
         }
     }
 
@@ -390,13 +321,13 @@ fun RecipeDetails(
                     StartFAB(
                         isTimerRunning = isTimerRunning,
                         onClick = {
-                            if (currentStep != null) {
+                            if (currentStep.value != null) {
                                 if (animatedProgressValue.isRunning) {
                                     coroutineScope.launch { pauseAnimations() }
                                 } else {
                                     coroutineScope.launch {
-                                        if (currentStep?.time == null) {
-                                            changeToNextStep()
+                                        if (currentStep.value?.time == null) {
+                                            changeToNextStep(false)
                                         } else {
                                             startAnimations()
                                         }

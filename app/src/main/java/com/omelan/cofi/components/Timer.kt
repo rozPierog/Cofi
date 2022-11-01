@@ -163,8 +163,7 @@ fun Timer(
                 if (currentStep != null) {
                     TimeText(
                         currentStep = currentStep,
-                        animatedProgressValue = (animatedProgressValue.value *
-                                timeMultiplier).roundToInt(),
+                        animatedProgressValue = (animatedProgressValue.value * timeMultiplier),
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = if (isInPiP) 2 else Int.MAX_VALUE,
                         style = if (isInPiP) {
@@ -190,7 +189,7 @@ fun Timer(
                     Divider()
                     TimerValue(
                         currentStep = currentStep,
-                        animatedProgressValue = (animatedProgressValue.value * ),
+                        animatedProgressValue = (animatedProgressValue.value * timeMultiplier),
                         alreadyDoneWeight = alreadyDoneWeight,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
@@ -219,7 +218,7 @@ fun TimerPreview() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,

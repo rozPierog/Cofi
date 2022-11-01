@@ -239,7 +239,8 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
 
     // TODO: Underlying Dialog doesn't change size when content changes size, maybe rewrite it?
     Material3Dialog(
-        modifier = Modifier.fillMaxSize(), onDismissRequest = dismiss,
+        modifier = Modifier.fillMaxSize(),
+        onDismissRequest = dismiss,
         onSave = {
             val c = Calendar.getInstance().time
             val format: DateFormat =

@@ -14,7 +14,7 @@ import com.omelan.cofi.MainActivity
 import kotlinx.coroutines.flow.first
 
 @RequiresApi(Build.VERSION_CODES.O)
-suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRectHint: Rect?) {
+suspend fun setPiPSettings(activity: Activity?, isTimerRunning: Boolean, sourceRectHint: Rect?) {
     if (activity !is MainActivity) {
         return
     }
