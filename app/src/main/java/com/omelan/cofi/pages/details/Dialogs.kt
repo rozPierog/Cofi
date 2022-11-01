@@ -17,9 +17,9 @@ fun rememberCopyAutomateLink(snackbarState: SnackbarHostState, recipeId: Int): (
     val coroutineScope = rememberCoroutineScope()
     val snackbarMessage = stringResource(id = R.string.snackbar_copied)
 
-    clipboardManager.setText(AnnotatedString(text = "$appDeepLinkUrl/recipe/$recipeId"))
     return {
         coroutineScope.launch {
+            clipboardManager.setText(AnnotatedString(text = "$appDeepLinkUrl/recipe/$recipeId"))
             snackbarState.showSnackbar(message = snackbarMessage)
         }
     }
