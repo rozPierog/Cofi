@@ -15,8 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.omelan.cofi.R
 import com.omelan.cofi.ui.Spacing
 import java.math.RoundingMode
 
@@ -49,13 +51,13 @@ private fun SheetContent(
     weightMultiplier: MutableState<Float>,
 ) {
     Text(
-        text = "Weight multiplier",
+        text = stringResource(id = R.string.recipe_details_multiply_weight),
         textAlign = TextAlign.Start,
         style = MaterialTheme.typography.titleSmall,
     )
     SliderWithValue(value = weightMultiplier)
     Text(
-        text = "Time multiplier",
+        text = stringResource(id = R.string.recipe_details_multiply_time),
         textAlign = TextAlign.Start,
         style = MaterialTheme.typography.titleSmall,
     )
