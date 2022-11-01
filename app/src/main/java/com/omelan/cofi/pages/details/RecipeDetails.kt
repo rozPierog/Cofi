@@ -7,34 +7,25 @@
 package com.omelan.cofi.pages
 
 import android.app.Activity
-import android.app.PictureInPictureParams
-import android.graphics.Rect
 import android.media.MediaPlayer
 import android.os.Build
-import android.util.Rational
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationEndReason
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -45,28 +36,20 @@ import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.*
+import com.omelan.cofi.pages.details.*
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.Haptics
-import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -80,7 +63,6 @@ fun RecipeDetails(
     onTimerRunning: (Boolean) -> Unit = { },
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
-    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
 ) {
     val steps by stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
     val recipe by recipeViewModel.getRecipe(recipeId)
@@ -93,36 +75,7 @@ fun RecipeDetails(
         goToEdit,
         goBack,
         onTimerRunning,
-        windowSizeClass,
     )
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRectHint: Rect?) {
-    if (activity !is MainActivity) {
-        return
-    }
-    val isPiPEnabled = DataStore(activity).getPiPSetting().first()
-    if (!isPiPEnabled) {
-        return
-    }
-    if (!isTimerRunning && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        activity.setPictureInPictureParams(
-            PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
-        )
-    } else {
-        activity.setPictureInPictureParams(
-            PictureInPictureParams.Builder()
-                .setAspectRatio(Rational(1, 1))
-                .apply {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        setAutoEnterEnabled(true)
-                        setSourceRectHint(sourceRectHint)
-                        setSeamlessResizeEnabled(false)
-                    }
-                }.build(),
-        )
-    }
 }
 
 @Composable
@@ -134,7 +87,6 @@ fun RecipeDetails(
     goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
     onTimerRunning: (Boolean) -> Unit = { },
-    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
 ) {
     val recipeId by remember(recipe) {
         derivedStateOf { recipe.id }
@@ -144,7 +96,10 @@ fun RecipeDetails(
     var isDone by remember { mutableStateOf(false) }
     var isTimerRunning by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
-    var multiplier by remember { mutableStateOf(1.0) }
+
+    var weightMultiplier by remember { mutableStateOf(1.0) }
+    var _timeMultiplier by remember { mutableStateOf(1.0) }
+
     val indexOfCurrentStep = steps.indexOf(currentStep)
     val indexOfLastStep = steps.lastIndex
 
@@ -153,9 +108,7 @@ fun RecipeDetails(
     val isDarkMode = isSystemInDarkTheme()
     val animatedProgressColor =
         remember { Animatable(if (isDarkMode) Color.LightGray else Color.DarkGray) }
-    val clipboardManager = LocalClipboardManager.current
     val snackbarState = SnackbarHostState()
-    val snackbarMessage = stringResource(id = R.string.snackbar_copied)
     val lazyListState = rememberLazyListState()
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
 
@@ -166,6 +119,8 @@ fun RecipeDetails(
         .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+
+    val copyAutomateLink = rememberCopyAutomateLink(snackbarState, recipeId)
 
     val alreadyDoneWeight = remember(combineWeightState, currentStep) {
         derivedStateOf {
@@ -190,13 +145,6 @@ fun RecipeDetails(
         }
     }
 
-    fun copyAutomateLink() {
-        clipboardManager.setText(AnnotatedString(text = "$appDeepLinkUrl/recipe/$recipeId"))
-        coroutineScope.launch {
-            snackbarState.showSnackbar(message = snackbarMessage)
-        }
-    }
-
     suspend fun pauseAnimations() {
         animatedProgressColor.stop()
         animatedProgressValue.stop()
@@ -204,8 +152,9 @@ fun RecipeDetails(
     }
 
     val context = LocalContext.current
-    val haptics = Haptics(context)
-    val mediaPlayer = MediaPlayer.create(context, R.raw.ding)
+    val haptics = remember { Haptics(context) }
+    val mediaPlayer = remember { MediaPlayer.create(context, R.raw.ding) }
+
     suspend fun changeToNextStep(silent: Boolean = false) {
         animatedProgressValue.snapTo(0f)
         if (indexOfCurrentStep != indexOfLastStep) {
@@ -232,7 +181,7 @@ fun RecipeDetails(
         isDone = false
         isTimerRunning = true
         val currentStepTime =
-            if (safeCurrentStep.time != null) safeCurrentStep.time * multiplier else null
+            if (safeCurrentStep.time != null) safeCurrentStep.time * weightMultiplier else null
         if (currentStepTime == null) {
             animatedProgressValue.snapTo(1f)
             isTimerRunning = false
@@ -299,19 +248,7 @@ fun RecipeDetails(
         }
     }
 
-    val configuration = LocalConfiguration.current
-
-    val isPhoneLayout by remember(
-        windowSizeClass.widthSizeClass,
-        configuration.screenHeightDp,
-        configuration.screenWidthDp,
-    ) {
-        derivedStateOf {
-            windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
-        }
-    }
-
+    val isPhoneLayout = rememberIsPhoneLayout()
     val renderDescription: @Composable (() -> Unit)? = if (recipe.description.isBlank()) {
         null
     } else {
@@ -350,7 +287,7 @@ fun RecipeDetails(
             isInPiP = isInPiP,
             alreadyDoneWeight = alreadyDoneWeight.value,
             isDone = isDone,
-            multiplier = multiplier,
+            multiplier = weightMultiplier,
         )
         if (!isInPiP) {
             Spacer(modifier = Modifier.height(Spacing.big))
@@ -414,7 +351,7 @@ fun RecipeDetails(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { multiplier += 1 }) {
+                    IconButton(onClick = { weightMultiplier += 1 }) {
                         Icon(
                             Icons.Rounded.ExitToApp,
                             contentDescription = null,
@@ -477,156 +414,12 @@ fun RecipeDetails(
     }
 }
 
-@Composable
-fun TabletLayout(
-    paddingValues: PaddingValues,
-    description: (@Composable () -> Unit)? = null,
-    timer: @Composable (Modifier) -> Unit,
-    steps: LazyListScope.() -> Unit,
-    isInPiP: Boolean,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(
-                if (isInPiP) {
-                    PaddingValues(0.dp)
-                } else {
-                    paddingValues
-                },
-            ),
-
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        timer(
-            Modifier
-                .fillMaxWidth(0.5f)
-                .align(Alignment.CenterVertically)
-                .padding(getDefaultPadding(additionalBottomPadding = 0.dp)),
-        )
-        if (!isInPiP) {
-            LazyColumn(
-                modifier = Modifier.padding(horizontal = Spacing.normal),
-                contentPadding = PaddingValues(bottom = Spacing.bigFab, top = Spacing.big),
-            ) {
-                if ((description != null)) {
-                    item {
-                        description()
-                    }
-                }
-                steps()
-            }
-        }
-    }
-}
-
-@Composable
-fun PhoneLayout(
-    paddingValues: PaddingValues,
-    description: (@Composable () -> Unit)? = null,
-    timer: @Composable (Modifier) -> Unit,
-    steps: LazyListScope.() -> Unit,
-    isInPiP: Boolean,
-    lazyListState: LazyListState,
-) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        contentPadding = if (isInPiP) {
-            PaddingValues(0.dp)
-        } else {
-            getDefaultPadding(paddingValues = paddingValues, FabType.Big)
-        },
-        state = lazyListState,
-    ) {
-        if (!isInPiP && (description != null)) {
-            item {
-                description()
-            }
-        }
-        item {
-            timer(Modifier)
-        }
-        if (!isInPiP) {
-            steps()
-        }
-    }
-}
-
-@Composable
-fun DirectLinkDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
-    AlertDialog(
-        onDismissRequest = dismiss,
-        confirmButton = {
-            TextButton(onClick = onConfirm) {
-                Text(text = stringResource(id = R.string.button_copy))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = dismiss) {
-                Text(text = stringResource(id = R.string.button_cancel))
-            }
-        },
-        icon = {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_link),
-                contentDescription = null,
-            )
-        },
-        title = {
-            Text(text = stringResource(R.string.recipe_details_automation_dialog_title))
-        },
-        text = {
-            Text(text = stringResource(R.string.recipe_details_automation_dialog_text))
-        },
-    )
-}
-
-@Composable
-fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
-    val animatedFabRadii = remember { Animatable(100f) }
-    val icon = AnimatedImageVector.animatedVectorResource(R.drawable.play_anim)
-    var atEnd by remember { mutableStateOf(false) }
-
-    LaunchedEffect(isTimerRunning) {
-        launch {
-            atEnd = isTimerRunning
-        }
-        launch {
-            animatedFabRadii.animateTo(
-                if (isTimerRunning) 28.0f else 100f,
-                tween(if (isTimerRunning) 300 else 500),
-            )
-        }
-    }
-    LargeFloatingActionButton(
-        shape = RoundedCornerShape(animatedFabRadii.value.dp),
-        onClick = onClick,
-        modifier = Modifier
-            .navigationBarsPadding()
-            .testTag("recipe_start")
-            .toggleable(isTimerRunning) {},
-    ) {
-        Icon(
-            painter = rememberAnimatedVectorPainter(icon, atEnd),
-            tint = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize),
-            contentDescription = null,
-        )
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun RecipeDetailsPreview() {
     RecipeDetails(
         recipeId = 1,
         isInPiP = false,
-        windowSizeClass = WindowSizeClass.calculateFromSize(
-            DpSize(1920.dp, 1080.dp),
-        ),
     )
 }
 
@@ -636,8 +429,5 @@ fun RecipeDetailsPreviewPip() {
     RecipeDetails(
         recipeId = 1,
         isInPiP = true,
-        windowSizeClass = WindowSizeClass.calculateFromSize(
-            DpSize(1920.dp, 1080.dp),
-        ),
     )
 }
