@@ -50,18 +50,20 @@ private fun SheetContent(
     timeMultiplier: MutableState<Float>,
     weightMultiplier: MutableState<Float>,
 ) {
-    Text(
-        text = stringResource(id = R.string.recipe_details_multiply_weight),
-        textAlign = TextAlign.Start,
-        style = MaterialTheme.typography.titleSmall,
-    )
+    Title(stringResource(id = R.string.recipe_details_multiply_weight))
     SliderWithValue(value = weightMultiplier)
+    Title(stringResource(id = R.string.recipe_details_multiply_time))
+    SliderWithValue(value = timeMultiplier)
+}
+
+@Composable
+fun Title(text: String) {
     Text(
-        text = stringResource(id = R.string.recipe_details_multiply_time),
+        text = text,
         textAlign = TextAlign.Start,
         style = MaterialTheme.typography.titleSmall,
+        color = MaterialTheme.colorScheme.onSurface,
     )
-    SliderWithValue(value = timeMultiplier)
 }
 
 const val step = 0.1f
@@ -86,6 +88,7 @@ private fun SliderWithValue(value: MutableState<Float>) {
             modifier = Modifier.weight(1f, true),
         )
         Text(
+            color = MaterialTheme.colorScheme.onSurface,
             text = "${value.value}",
             textAlign = TextAlign.Center,
             modifier = Modifier
