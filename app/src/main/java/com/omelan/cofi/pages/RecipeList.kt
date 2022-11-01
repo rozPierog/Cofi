@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.wearable.Node
@@ -115,7 +116,7 @@ fun RecipeList(
                 item(key = "wearOS") {
                     RecipeListInfoBox(
                         title = {
-                            Text(text = "Cofi is now on WearOS")
+                            Text(text = "Cofi is now on WearOS", fontWeight = FontWeight.Bold)
                         },
                         text = {
                             Row(
