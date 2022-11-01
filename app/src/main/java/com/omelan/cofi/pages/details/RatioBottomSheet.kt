@@ -10,6 +10,7 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
@@ -29,7 +30,7 @@ fun RatioBottomSheet(
     ModalBottomSheetLayout(
         sheetShape = RoundedCornerShape(topEnd = 12.dp, topStart = 12.dp),
         sheetState = sheetState,
-        sheetBackgroundColor = MaterialTheme.colorScheme.surface,
+        sheetBackgroundColor = MaterialTheme.colorScheme.surfaceColorAtElevation(6.dp),
         sheetContent = {
             Column(modifier = Modifier.safeContentPadding()) {
                 SheetContent(

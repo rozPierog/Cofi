@@ -25,7 +25,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -378,7 +377,7 @@ fun RecipeDetails(
                             },
                         ) {
                             Icon(
-                                Icons.Rounded.ExitToApp,
+                                painterResource(id = R.drawable.ic_scale),
                                 contentDescription = null,
                             )
                         }
