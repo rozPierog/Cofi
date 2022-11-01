@@ -8,7 +8,9 @@ import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
@@ -98,10 +100,12 @@ fun InsetAwareTopAppBar(
     elevation: Dp = 4.dp,
 ) {
     val scrollFraction = scrollBehavior?.state?.collapsedFraction ?: 0f
-    val appBarContainerColor = lerp(
-        MaterialTheme.colorScheme.surface,
-        MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
-        FastOutLinearInEasing.transform(scrollFraction),
+    val appBarContainerColor by rememberUpdatedState(
+        lerp(
+            MaterialTheme.colorScheme.surface,
+            MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
+            FastOutLinearInEasing.transform(scrollFraction),
+        ),
     )
     Surface(
         color = Color.Transparent,
