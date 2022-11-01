@@ -1,10 +1,10 @@
 @file:OptIn(
     ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalMaterial3Api::class,
-    ExperimentalAnimationGraphicsApi::class,
+    ExperimentalAnimationGraphicsApi::class, ExperimentalMaterialApi::class,
 )
 
-package com.omelan.cofi.pages
+package com.omelan.cofi.pages.details
 
 import android.app.Activity
 import android.media.MediaPlayer
@@ -21,11 +21,15 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ExitToApp
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -41,12 +45,13 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.omelan.cofi.*
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.*
-import com.omelan.cofi.pages.details.*
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.Haptics
 import kotlinx.coroutines.Dispatchers
@@ -63,6 +68,7 @@ fun RecipeDetails(
     onTimerRunning: (Boolean) -> Unit = { },
     stepsViewModel: StepsViewModel = viewModel(),
     recipeViewModel: RecipeViewModel = viewModel(),
+    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
 ) {
     val steps by stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
     val recipe by recipeViewModel.getRecipe(recipeId)
@@ -87,6 +93,7 @@ fun RecipeDetails(
     goToEdit: () -> Unit = {},
     goBack: () -> Unit = {},
     onTimerRunning: (Boolean) -> Unit = { },
+    windowSizeClass: WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1920.dp, 1080.dp)),
 ) {
     val recipeId by remember(recipe) {
         derivedStateOf { recipe.id }
@@ -97,9 +104,10 @@ fun RecipeDetails(
     var isTimerRunning by remember { mutableStateOf(false) }
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
 
-    var weightMultiplier by remember { mutableStateOf(1.0) }
-    var _timeMultiplier by remember { mutableStateOf(1.0) }
-
+    val weightMultiplier = remember { mutableStateOf(1.0f) }
+    val timeMultiplier = remember { mutableStateOf(1.0f) }
+    val ratioBottomSheetState =
+        rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val indexOfCurrentStep = steps.indexOf(currentStep)
     val indexOfLastStep = steps.lastIndex
 
@@ -181,7 +189,7 @@ fun RecipeDetails(
         isDone = false
         isTimerRunning = true
         val currentStepTime =
-            if (safeCurrentStep.time != null) safeCurrentStep.time * weightMultiplier else null
+            if (safeCurrentStep.time != null) safeCurrentStep.time * weightMultiplier.value else null
         if (currentStepTime == null) {
             animatedProgressValue.snapTo(1f)
             isTimerRunning = false
@@ -248,7 +256,7 @@ fun RecipeDetails(
         }
     }
 
-    val isPhoneLayout = rememberIsPhoneLayout()
+    val isPhoneLayout = rememberIsPhoneLayout(windowSizeClass)
     val renderDescription: @Composable (() -> Unit)? = if (recipe.description.isBlank()) {
         null
     } else {
@@ -287,7 +295,7 @@ fun RecipeDetails(
             isInPiP = isInPiP,
             alreadyDoneWeight = alreadyDoneWeight.value,
             isDone = isDone,
-            multiplier = weightMultiplier,
+            multiplier = weightMultiplier.value,
         )
         if (!isInPiP) {
             Spacer(modifier = Modifier.height(Spacing.big))
@@ -320,86 +328,104 @@ fun RecipeDetails(
         }
     }
 
-    Scaffold(
-        modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarState, modifier = Modifier.padding(Spacing.medium)) {
-                Snackbar(shape = RoundedCornerShape(50)) {
-                    Text(text = it.visuals.message)
+    RatioBottomSheet(
+        timeMultiplier = timeMultiplier,
+        weightMultiplier = weightMultiplier,
+        sheetState = ratioBottomSheetState,
+    ) {
+        Scaffold(
+            modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
+            snackbarHost = {
+                SnackbarHost(
+                    hostState = snackbarState,
+                    modifier = Modifier.padding(Spacing.medium),
+                ) {
+                    Snackbar(shape = RoundedCornerShape(50)) {
+                        Text(text = it.visuals.message)
+                    }
                 }
-            }
-        },
-        topBar = {
-            PiPAwareAppBar(
-                title = {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            painter = painterResource(id = recipe.recipeIcon.icon),
-                            contentDescription = null,
-                            modifier = Modifier.padding(end = Spacing.small),
-                        )
-                        Text(
-                            text = recipe.name,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = goBack) {
-                        Icon(Icons.Rounded.ArrowBack, contentDescription = null)
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { weightMultiplier += 1 }) {
-                        Icon(
-                            Icons.Rounded.ExitToApp,
-                            contentDescription = null,
-                        )
-                    }
-                    IconButton(onClick = { showAutomateLinkDialog = true }) {
-                        Icon(
-                            painterResource(id = R.drawable.ic_link),
-                            contentDescription = null,
-                        )
-                    }
-                    IconButton(onClick = goToEdit) {
-                        Icon(painterResource(id = R.drawable.ic_edit), contentDescription = null)
-                    }
-                },
-                scrollBehavior = appBarBehavior,
-            )
-        },
-        floatingActionButton = {
-            if (!isInPiP) {
-                StartFAB(
-                    isTimerRunning = isTimerRunning,
-                    onClick = {
-                        if (currentStep != null) {
-                            if (animatedProgressValue.isRunning) {
-                                coroutineScope.launch { pauseAnimations() }
-                            } else {
+            },
+            topBar = {
+                PiPAwareAppBar(
+                    title = {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                painter = painterResource(id = recipe.recipeIcon.icon),
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = Spacing.small),
+                            )
+                            Text(
+                                text = recipe.name,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = goBack) {
+                            Icon(Icons.Rounded.ArrowBack, contentDescription = null)
+                        }
+                    },
+                    actions = {
+                        IconButton(
+                            onClick = {
                                 coroutineScope.launch {
-                                    if (currentStep?.time == null) {
-                                        changeToNextStep()
-                                    } else {
-                                        startAnimations()
+                                    ratioBottomSheetState.show()
+                                }
+                            },
+                        ) {
+                            Icon(
+                                Icons.Rounded.ExitToApp,
+                                contentDescription = null,
+                            )
+                        }
+                        IconButton(onClick = { showAutomateLinkDialog = true }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_link),
+                                contentDescription = null,
+                            )
+                        }
+                        IconButton(onClick = goToEdit) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_edit),
+                                contentDescription = null,
+                            )
+                        }
+                    },
+                    scrollBehavior = appBarBehavior,
+                )
+            },
+            floatingActionButton = {
+                if (!isInPiP) {
+                    StartFAB(
+                        isTimerRunning = isTimerRunning,
+                        onClick = {
+                            if (currentStep != null) {
+                                if (animatedProgressValue.isRunning) {
+                                    coroutineScope.launch { pauseAnimations() }
+                                } else {
+                                    coroutineScope.launch {
+                                        if (currentStep?.time == null) {
+                                            changeToNextStep()
+                                        } else {
+                                            startAnimations()
+                                        }
                                     }
                                 }
+                                return@StartFAB
                             }
-                            return@StartFAB
-                        }
-                        coroutineScope.launch { startRecipe() }
-                    },
-                )
+                            coroutineScope.launch { startRecipe() }
+                        },
+                    )
+                }
+            },
+            floatingActionButtonPosition = if (isPhoneLayout) FabPosition.Center else FabPosition.End,
+        ) {
+            if (isPhoneLayout) {
+                PhoneLayout(it, renderDescription, renderTimer, renderSteps, isInPiP, lazyListState)
+            } else {
+                TabletLayout(it, renderDescription, renderTimer, renderSteps, isInPiP)
             }
-        },
-        floatingActionButtonPosition = if (isPhoneLayout) FabPosition.Center else FabPosition.End,
-    ) {
-        if (isPhoneLayout) {
-            PhoneLayout(it, renderDescription, renderTimer, renderSteps, isInPiP, lazyListState)
-        } else {
-            TabletLayout(it, renderDescription, renderTimer, renderSteps, isInPiP)
         }
     }
 

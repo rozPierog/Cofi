@@ -90,7 +90,7 @@ fun Timer(
     animatedProgressColor: Animatable<Color, AnimationVector4D>,
     isInPiP: Boolean,
     isDone: Boolean = false,
-    multiplier: Double = 1.0,
+    multiplier: Float = 1.0f,
 ) {
     val strokeWidth = if (isInPiP) {
         10.dp
