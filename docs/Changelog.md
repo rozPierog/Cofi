@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added ability to multiply all values of the recipe without editing the recipe itself
 
 ### Changed
 - Improved performance of app bar collapse

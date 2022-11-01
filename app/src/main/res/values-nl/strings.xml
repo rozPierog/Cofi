@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Cofi</string>
-    <string name="list_header" translatable="false">Cofi</string>
     <string name="step_type_add_coffee">Voeg koffie toe</string>
     <string name="step_type_water">Voeg water toe</string>
     <string name="step_type_wait">Wacht</string>

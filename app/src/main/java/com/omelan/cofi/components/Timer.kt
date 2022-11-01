@@ -90,6 +90,8 @@ fun Timer(
     animatedProgressColor: Animatable<Color, AnimationVector4D>,
     isInPiP: Boolean,
     isDone: Boolean = false,
+    weightMultiplier: Float = 1.0f,
+    timeMultiplier: Float = 1.0f,
 ) {
     val strokeWidth = if (isInPiP) {
         10.dp
@@ -111,6 +113,8 @@ fun Timer(
                     .aspectRatio(1f)
                     .fillMaxSize(),
                 steps = allSteps,
+                timeMultiplier = timeMultiplier,
+                weightMultiplier = weightMultiplier,
             )
         }
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
@@ -159,7 +163,11 @@ fun Timer(
                     val durationInString = if (currentStep.time == null) {
                         stringResource(id = R.string.recipe_details_noTime)
                     } else {
-                        val duration = (currentStep.time * animatedProgressValue.value).toInt()
+                        val duration =
+                            (
+                                currentStep.time * animatedProgressValue.value *
+                                    timeMultiplier
+                                ).toInt()
                         duration.toStringDuration(
                             padMillis = true,
                             padMinutes = true,
@@ -189,7 +197,7 @@ fun Timer(
                             stringResource(
                                 id = R.string.timer_step_name_time,
                                 currentStep.name,
-                                currentStep.time / 1000,
+                                currentStep.time * timeMultiplier / 1000,
                             )
                         } else {
                             currentStep.name
@@ -213,7 +221,7 @@ fun Timer(
                         visible = currentStep.value != null,
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                     ) {
-                        val currentStepValue = currentStep.value ?: 0
+                        val currentStepValue = (currentStep.value ?: 0) * weightMultiplier
                         val currentValueFromProgress =
                             (currentStepValue * animatedProgressValue.value).toInt()
                         Divider()

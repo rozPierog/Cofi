@@ -20,9 +20,9 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.omelan.cofi.model.PrepopulateData
-import com.omelan.cofi.pages.RecipeDetails
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
+import com.omelan.cofi.pages.details.RecipeDetails
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.ScreenshotsHelpers
 import org.junit.Rule

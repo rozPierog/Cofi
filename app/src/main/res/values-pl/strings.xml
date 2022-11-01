@@ -102,4 +102,6 @@ Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 8
     <string name="settings_timer_item">Ustawienia odliczania</string>
     <string name="settings_backup_item">Kopia zapasowa i przywracanie</string>
     <string name="settings_step_vibrate_item">Wibracja przy zmianie kroku</string>
+    <string name="recipe_details_multiply_time">Mnożnik czasu</string>
+    <string name="recipe_details_multiply_weight">Mnożnik wagi</string>
 </resources>

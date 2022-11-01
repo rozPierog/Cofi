@@ -40,9 +40,9 @@ import com.omelan.cofi.model.AppDatabase
 import com.omelan.cofi.model.Recipe
 import com.omelan.cofi.model.RecipeViewModel
 import com.omelan.cofi.model.StepsViewModel
-import com.omelan.cofi.pages.RecipeDetails
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
+import com.omelan.cofi.pages.details.RecipeDetails
 import com.omelan.cofi.pages.settings.AppSettings
 import com.omelan.cofi.pages.settings.AppSettingsAbout
 import com.omelan.cofi.pages.settings.BackupRestoreSettings
@@ -273,19 +273,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                                slideIntoContainer(
-                                    AnimatedContentScope.SlideDirection.End,
-                                    animationSpec = tween(tweenDuration),
-                                    initialOffset = { fullWidth -> -fullWidth / 5 },
-                                )
+                            slideIntoContainer(
+                                AnimatedContentScope.SlideDirection.End,
+                                animationSpec = tween(tweenDuration),
+                                initialOffset = { fullWidth -> -fullWidth / 5 },
+                            )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                                slideOutOfContainer(
-                                    AnimatedContentScope.SlideDirection.Start,
-                                    animationSpec = tween(tweenDuration),
-                                    targetOffset = { fullWidth -> fullWidth / 5 },
-                                )
+                            slideOutOfContainer(
+                                AnimatedContentScope.SlideDirection.Start,
+                                animationSpec = tween(tweenDuration),
+                                targetOffset = { fullWidth -> fullWidth / 5 },
+                            )
                     },
                 ) {
 //                    composable("list_color") {
