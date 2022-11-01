@@ -135,7 +135,7 @@ platform :android do
 #     licenses
 #     bump_version(bump_type: bump_type)
 #     prepare_changelog
-    git_commit(path: ["./*"], message: "Prepare for release")
+    git_commit(path: ["*"], message: "Prepare for release")
     push_to_git_remote
     deploy_gps(prerelease: prerelease)
     deploy_github(prerelease: prerelease)
