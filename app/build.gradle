@@ -28,8 +28,8 @@ android {
         minSdkVersion 24
         targetSdkVersion 33
         compileSdkVersion 33
-        versionCode 83
-        versionName "1.8.0"
+        versionCode 86
+        versionName "1.9.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
