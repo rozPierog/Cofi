@@ -81,6 +81,7 @@ fun RecipeDetails(
         goToEdit,
         goBack,
         onTimerRunning,
+        windowSizeClass,
     )
 }
 
@@ -106,6 +107,7 @@ fun RecipeDetails(
 
     val weightMultiplier = remember { mutableStateOf(1.0f) }
     val timeMultiplier = remember { mutableStateOf(1.0f) }
+
     val ratioBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val indexOfCurrentStep = steps.indexOf(currentStep)
@@ -189,7 +191,7 @@ fun RecipeDetails(
         isDone = false
         isTimerRunning = true
         val currentStepTime =
-            if (safeCurrentStep.time != null) safeCurrentStep.time * weightMultiplier.value else null
+            if (safeCurrentStep.time != null) safeCurrentStep.time * timeMultiplier.value else null
         if (currentStepTime == null) {
             animatedProgressValue.snapTo(1f)
             isTimerRunning = false
@@ -295,7 +297,8 @@ fun RecipeDetails(
             isInPiP = isInPiP,
             alreadyDoneWeight = alreadyDoneWeight.value,
             isDone = isDone,
-            multiplier = weightMultiplier.value,
+            weightMultiplier = weightMultiplier.value,
+            timeMultiplier = timeMultiplier.value,
         )
         if (!isInPiP) {
             Spacer(modifier = Modifier.height(Spacing.big))
