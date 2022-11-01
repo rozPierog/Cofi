@@ -197,8 +197,7 @@ fun RecipeDetails(
             isTimerRunning = false
             return
         }
-        val duration =
-            (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
+        val duration = (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
         coroutineScope.launch(Dispatchers.Default) {
             withContext(
                 object : MotionDurationScale {
@@ -259,9 +258,7 @@ fun RecipeDetails(
     }
 
     val isPhoneLayout = rememberIsPhoneLayout(windowSizeClass)
-    val renderDescription: @Composable (() -> Unit)? = if (recipe.description.isBlank()) {
-        null
-    } else {
+    val renderDescription: @Composable (() -> Unit)? = if (recipe.description.isNotBlank()) {
         {
             Description(
                 modifier = Modifier
@@ -271,7 +268,8 @@ fun RecipeDetails(
             )
             Spacer(modifier = Modifier.height(Spacing.big))
         }
-    }
+    } else null
+
     val activity = LocalContext.current as Activity
     val renderTimer: @Composable (Modifier) -> Unit = {
         Timer(
@@ -326,6 +324,8 @@ fun RecipeDetails(
                         currentStep = newStep
                     }
                 },
+                weightMultiplier = weightMultiplier.value,
+                timeMultiplier = timeMultiplier.value,
             )
             Divider(color = MaterialTheme.colorScheme.surfaceVariant)
         }
