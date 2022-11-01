@@ -126,10 +126,10 @@ platform :android do
   desc "Perform deploy for all"
   lane :deploy do
 #     bump_type = UI.select "How to bump version:", %w{major minor patch}
-#     prerelease = prompt(
-#       text: "is this a prerelease: ",
-#       boolean: true
-#     )
+    prerelease = prompt(
+      text: "is this a prerelease: ",
+      boolean: true
+    )
 #     test
 #     create_screenshots
 #     licenses
