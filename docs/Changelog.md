@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+
+### Removed
+
+
+## [1.9.1] - 2022-11-02
+
+### Added
+
+### Changed
 - fixed already done weight calculation when using multiplier
 
 ### Removed

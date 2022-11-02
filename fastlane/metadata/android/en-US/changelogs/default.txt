@@ -1,9 +1,7 @@
 ### Added
-- Added ability to multiply all values of the recipe without editing the recipe itself
 
 ### Changed
-- Improved performance of app bar collapse
-- updated dependencies
+- fixed already done weight calculation when using multiplier
 
 ### Removed
 
