@@ -57,6 +57,7 @@ import com.omelan.cofi.utils.Haptics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.roundToInt
 
 @Composable
 fun RecipeDetails(
@@ -132,22 +133,25 @@ fun RecipeDetails(
 
     val copyAutomateLink = rememberCopyAutomateLink(snackbarState, recipeId)
 
-    val alreadyDoneWeight = remember(combineWeightState, currentStep) {
+    val alreadyDoneWeight: Int by remember(combineWeightState, currentStep, weightMultiplier) {
         derivedStateOf {
             val doneSteps = if (indexOfCurrentStep == -1) {
                 listOf()
             } else {
                 steps.subList(0, indexOfCurrentStep)
             }
-            when (combineWeightState) {
-                CombineWeight.ALL.name -> doneSteps.sumOf { it.value ?: 0 }
-                CombineWeight.WATER.name -> doneSteps.sumOf {
+            return@derivedStateOf when (combineWeightState) {
+                CombineWeight.ALL.name -> (doneSteps.sumOf {
+                    it.value ?: 0
+                } * weightMultiplier.value).roundToInt()
+
+                CombineWeight.WATER.name -> (doneSteps.sumOf {
                     if (it.type === StepType.WATER) {
                         it.value ?: 0
                     } else {
                         0
                     }
-                }
+                } * weightMultiplier.value).roundToInt()
 
                 CombineWeight.NONE.name -> 0
                 else -> 0
@@ -295,7 +299,7 @@ fun RecipeDetails(
             animatedProgressValue = animatedProgressValue,
             animatedProgressColor = animatedProgressColor,
             isInPiP = isInPiP,
-            alreadyDoneWeight = alreadyDoneWeight.value,
+            alreadyDoneWeight = alreadyDoneWeight,
             isDone = isDone,
             weightMultiplier = weightMultiplier.value,
             timeMultiplier = timeMultiplier.value,
