@@ -14,7 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.ChannelClient
-import com.google.android.gms.wearable.Node
 import com.google.android.gms.wearable.Wearable
 import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.Step
@@ -82,28 +81,26 @@ object WearUtils {
     }
 
     @Composable
-    fun ObserveIfWearAppInstalled(onChange: (nodesWithoutApp: List<Node>) -> Unit) {
+    fun ObserveIfWearAppInstalled(onChange: (nodesWithoutApp: List<String>) -> Unit) {
         val mainActivity = LocalContext.current.getActivity() ?: return
         val nodeClient = Wearable.getNodeClient(mainActivity)
         val coroutineScope = rememberCoroutineScope()
         DisposableEffect(LocalLifecycleOwner.current) {
             val capabilityClient = Wearable.getCapabilityClient(mainActivity)
-            coroutineScope.launch {
-                val connectedNodes = try {
-                    nodeClient.connectedNodes.await()
-                } catch (e: Exception) {
-                    return@launch
-                }
-                val listener = CapabilityClient.OnCapabilityChangedListener {
-                    onChange(connectedNodes - it.nodes)
-                }
-
-                capabilityClient.addListener(listener, verify_cofi_wear_app)
-                onDispose {
-                    capabilityClient.removeListener(listener, verify_cofi_wear_app)
+            val listener = CapabilityClient.OnCapabilityChangedListener { capabilityInfo ->
+                coroutineScope.launch {
+                    val connectedNodes = try {
+                        nodeClient.connectedNodes.await()
+                    } catch (e: Exception) {
+                        return@launch
+                    }
+                    onChange((connectedNodes - capabilityInfo.nodes).map { it.id })
                 }
             }
-            onDispose { }
+            capabilityClient.addListener(listener, verify_cofi_wear_app)
+            onDispose {
+                capabilityClient.removeListener(listener, verify_cofi_wear_app)
+            }
         }
         LaunchedEffect(Unit) {
             val connectedNodes = try {
@@ -115,7 +112,7 @@ object WearUtils {
             val capabilityInfo = capabilityClient
                 .getCapability(verify_cofi_wear_app, CapabilityClient.FILTER_ALL)
                 .await()
-            onChange(connectedNodes - capabilityInfo.nodes)
+            onChange((connectedNodes - capabilityInfo.nodes).map { it.id })
         }
     }
 
@@ -124,18 +121,18 @@ object WearUtils {
 
     fun openPlayStoreOnWearDevicesWithoutApp(
         activity: AppCompatActivity,
-        nodesWithoutApp: List<Node>,
+        nodesIdWithoutApp: List<String>,
     ) {
         val intent = Intent(Intent.ACTION_VIEW)
             .addCategory(Intent.CATEGORY_BROWSABLE)
             .setData(Uri.parse(COFI_PLAY_STORE_LINK))
         val remoteActivityHelper = RemoteActivityHelper(activity)
-        nodesWithoutApp.forEach { node ->
+        nodesIdWithoutApp.forEach { id ->
             activity.lifecycleScope.launch {
                 try {
                     remoteActivityHelper.startRemoteActivity(
                         targetIntent = intent,
-                        targetNodeId = node.id,
+                        targetNodeId = id,
                     ).await()
                 } catch (cancellationException: CancellationException) {
                     // Request was cancelled normally

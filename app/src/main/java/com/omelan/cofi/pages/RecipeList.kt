@@ -26,7 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.android.gms.wearable.Node
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.RecipeItem
@@ -60,7 +59,7 @@ fun RecipeList(
     }
     val activity = LocalContext.current as AppCompatActivity
     var wearNodesWithoutApp by remember {
-        mutableStateOf(listOf<Node>())
+        mutableStateOf(listOf<String>())
     }
     val lazyGridState = rememberLazyGridState()
     val coroutineScope = rememberCoroutineScope()
