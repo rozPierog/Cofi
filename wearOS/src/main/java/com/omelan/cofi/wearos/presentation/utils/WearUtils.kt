@@ -26,11 +26,14 @@ object WearUtils {
     private suspend fun checkIfPhoneHasApp(activity: ComponentActivity): Boolean {
         val capabilityClient = Wearable.getCapabilityClient(activity)
         try {
-            val capabilityInfo = capabilityClient
-                .getCapability(verify_cofi_phone_app, CapabilityClient.FILTER_ALL)
-                .await()
-
-            return capabilityInfo.nodes.isNotEmpty()
+            val nodesWithCofi = capabilityClient
+                .getCapability(verify_cofi_phone_app, CapabilityClient.FILTER_ALL).await().nodes
+            val allNodes = Wearable.getNodeClient(activity).connectedNodes.await()
+            if (nodesWithCofi.isEmpty() && allNodes.isEmpty()) {
+                // No phone connected at a time, cannot check if user has Cofi on a phone
+                return true
+            }
+            return nodesWithCofi.isNotEmpty()
         } catch (cancellationException: CancellationException) {
             // Request was cancelled normally
         }
