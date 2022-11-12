@@ -40,11 +40,16 @@ fun RecipeList(
     recipes: List<Recipe>,
     goToDetails: (Recipe) -> Unit = {},
 ) {
-    var hasPhoneApp by remember { mutableStateOf(false) }
+    var showOpenPhoneAppItem by remember { mutableStateOf(false) }
     var showConfirmation by remember { mutableStateOf(false) }
     val mainActivity = LocalContext.current.getActivity()
-    WearUtils.ObserveIfPhoneAppInstalled {
-        hasPhoneApp = it
+    WearUtils.ObserveIfPhoneAppInstalled { hasPhoneApp ->
+        showOpenPhoneAppItem = !hasPhoneApp
+    }
+    LaunchedEffect(recipes) {
+        if (recipes.isEmpty()) {
+            showOpenPhoneAppItem = true
+        }
     }
 
     ScalingLazyColumn(
@@ -57,14 +62,11 @@ fun RecipeList(
         item {
             Text(text = "Cofi")
         }
-        if (!hasPhoneApp && mainActivity != null) {
+        if (showOpenPhoneAppItem && mainActivity != null) {
             item {
                 Card(
                     onClick = {
-                        WearUtils.openAppInStoreOnPhone(
-                            mainActivity,
-                            onSuccess = { showConfirmation = true },
-                        )
+                        WearUtils.openAppInStoreOnPhone(mainActivity) { showConfirmation = true }
                     },
                 ) {
                     Row {
