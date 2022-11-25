@@ -28,7 +28,7 @@ android {
         applicationId "com.omelan.cofi"
         minSdk 25
         targetSdk 33
-        versionCode 84
+        versionCode 93
         versionName "1.0"
         vectorDrawables {
             useSupportLibrary true

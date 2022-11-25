@@ -86,10 +86,12 @@ platform :android do
 
   desc "Deploy a new version to the Google Play Store"
   lane :deploy_gps do |options|
-    gradle(task: "clean app:bundlePlayStoreRelease")
+    gradle(task: "clean app:bundlePlayStoreRelease wearOS:bundleRelease")
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
       skip_upload_apk: true,
+      aab_paths: ["app/build/outputs/bundle/playStoreRelease/app-playStore-release.aab",
+      "wearOS/build/outputs/bundle/release/wearOS-release.aab"]
     )
   end
 
@@ -131,14 +133,6 @@ platform :android do
     sh("open", "app/build/outputs/bundle/instantRelease")
   end
 
-  desc "Builds a WearOS App"
-    lane :build_wearOS do
-      gradle(task: "clean wearOS:bundleRelease")
-      UI.important "⚠️ Fastlane does not support uploading instant apps to google play console ⚠️"
-      UI.important "⚠️ Remember to upload instant app bundle to Play Console! ⚠️"
-      sh("open", "wearOS/build/outputs/bundle/release")
-    end
-
   lane :create_screenshots do
       `cd .. && ./bin/createScreenshots`
   end
@@ -160,6 +154,5 @@ platform :android do
     deploy_gps(prerelease: prerelease)
     deploy_github(prerelease: prerelease)
     build_instant
-    build_wearOS
   end
 end
