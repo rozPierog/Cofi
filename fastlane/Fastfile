@@ -105,7 +105,7 @@ platform :android do
 
   desc "Deploy a new version to Github Releases"
   lane :deploy_github do |options|
-    gradle(task: "clean app:assembleFullRelease")
+    gradle(task: "clean app:assembleFullRelease app:assemblePlayStoreRelease wearOS:assembleRelease")
     versionName = get_version_name(
       app_project_dir: '**/app',
     )
@@ -117,7 +117,9 @@ platform :android do
       is_prerelease: options[:prerelease],
       description: (File.read("metadata/android/en-US/changelogs/default.txt") rescue "No changelog provided"),
       # commitish: "master",
-      upload_assets: ["app/build/outputs/apk/full/release/app-full-release.apk"]
+      upload_assets: ["app/build/outputs/apk/full/release/app-full-release.apk",
+       "app/build/outputs/apk/playStore/release/app-playStore-release.apk",
+       "wearOS/build/outputs/apk/release/wearOS-release.apk"]
     )
   end
 
