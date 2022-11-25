@@ -30,6 +30,8 @@ android {
         targetSdk 33
         versionCode 93
         versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         vectorDrawables {
             useSupportLibrary true
         }
@@ -96,4 +98,5 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+    androidTestImplementation 'androidx.test:core:1.5.0'
 }

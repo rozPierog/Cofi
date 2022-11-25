@@ -97,7 +97,6 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
         } else {
             false
         }
-
     }
 
     Box(
