@@ -1,5 +1,6 @@
 package com.omelan.cofi.utils
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.wear.remote.interactions.RemoteActivityHelper
@@ -170,14 +172,15 @@ object WearUtils {
         "https://play.google.com/store/apps/details?id=com.omelan.cofi"
 
     fun openPlayStoreOnWearDevicesWithoutApp(
-        activity: AppCompatActivity,
+        lifecycleOwner: LifecycleOwner,
+        activity: Activity,
         nodesIdWithoutApp: List<String>,
     ) {
         val intent = Intent(Intent.ACTION_VIEW).addCategory(Intent.CATEGORY_BROWSABLE)
             .setData(Uri.parse(COFI_PLAY_STORE_LINK))
         val remoteActivityHelper = RemoteActivityHelper(activity)
         nodesIdWithoutApp.forEach { id ->
-            activity.lifecycleScope.launch {
+            lifecycleOwner.lifecycleScope.launch {
                 try {
                     remoteActivityHelper.startRemoteActivity(
                         targetIntent = intent,

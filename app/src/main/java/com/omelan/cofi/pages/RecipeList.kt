@@ -1,6 +1,6 @@
 package com.omelan.cofi.pages
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -58,7 +59,8 @@ fun RecipeList(
     val isMultiColumn by remember(configuration.screenWidthDp) {
         derivedStateOf { configuration.screenWidthDp > 600 }
     }
-    val activity = LocalContext.current as AppCompatActivity
+    val activity = LocalContext.current as Activity
+    val lifecycleOwner = LocalLifecycleOwner.current
     var wearNodesWithoutApp by remember {
         mutableStateOf(listOf<String>())
     }
@@ -139,6 +141,7 @@ fun RecipeList(
                         },
                         onClick = {
                             WearUtils.openPlayStoreOnWearDevicesWithoutApp(
+                                lifecycleOwner,
                                 activity,
                                 wearNodesWithoutApp,
                             )
