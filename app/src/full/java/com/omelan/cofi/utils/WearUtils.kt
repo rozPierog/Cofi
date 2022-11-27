@@ -1,7 +1,9 @@
 package com.omelan.cofi.utils
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.LifecycleOwner
 
 object WearUtils {
     fun observeChangesAndSendToWear(activity: AppCompatActivity) {}
@@ -11,7 +13,8 @@ object WearUtils {
     @Composable
     fun ObserveIfWearAppInstalled(onChange: (nodesIdWithoutApp: List<String>) -> Unit) {}
     fun openPlayStoreOnWearDevicesWithoutApp(
-        activity: AppCompatActivity,
+        lifecycleOwner: LifecycleOwner,
+        activity: Activity,
         nodesIdWithoutApp: List<String>,
     ) { }
 }
