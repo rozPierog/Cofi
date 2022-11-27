@@ -4,23 +4,18 @@ import android.view.KeyEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
-import com.omelan.cofi.share.Recipe
-import com.omelan.cofi.share.RecipeViewModel
-import com.omelan.cofi.share.Step
-import com.omelan.cofi.share.StepsViewModel
+import com.omelan.cofi.share.*
 import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
 import com.omelan.cofi.share.components.TimerValue
@@ -41,6 +36,10 @@ fun RecipeDetails(recipeId: Int) {
 
 @Composable
 fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
+    val dataStore = DataStore(LocalContext.current)
+    val combineWeightState by dataStore.getWeightSetting()
+        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+
     val (
         currentStep,
         isDone,
@@ -55,8 +54,13 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
     ) = Timer.createTimerControllers(
         steps = steps,
         onRecipeEnd = { },
-        isStepChangeSoundEnabled = true,
-        isStepChangeVibrationEnabled = true,
+        dataStore = dataStore,
+    )
+
+    val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
+        indexOfCurrentStep = steps.indexOf(currentStep.value),
+        allSteps = steps,
+        combineWeightState = combineWeightState,
     )
 
     LaunchedEffect(currentStep.value) {
@@ -155,7 +159,7 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
                         TimerValue(
                             currentStep = currentStep.value!!,
                             animatedProgressValue = animatedProgressValue.value,
-                            alreadyDoneWeight = 0,
+                            alreadyDoneWeight = alreadyDoneWeight,
                             color = MaterialTheme.colors.onSurface,
                             maxLines = 1,
                             style = MaterialTheme.typography.title1,

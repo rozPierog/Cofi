@@ -8,12 +8,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.MotionDurationScale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
-import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.utils.Haptics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.roundToInt
 
 
 fun <R, T> suspendCompat(block: suspend (T) -> R): suspend (T) -> R = block
@@ -32,14 +33,54 @@ data class TimerControllers(
 )
 
 object Timer {
+    @Composable
+    fun rememberAlreadyDoneWeight(
+        indexOfCurrentStep: Int,
+        allSteps: List<Step>,
+        combineWeightState: String,
+        weightMultiplier: Float = 1f,
+    ): State<Int> {
+        val doneSteps = if (indexOfCurrentStep == -1) {
+            listOf()
+        } else {
+            allSteps.subList(0, indexOfCurrentStep)
+        }
+        return remember(combineWeightState, indexOfCurrentStep, weightMultiplier) {
+            derivedStateOf {
+                when (combineWeightState) {
+                    CombineWeight.ALL.name -> (
+                            doneSteps.sumOf {
+                                it.value ?: 0
+                            } * weightMultiplier
+                            ).roundToInt()
+
+                    CombineWeight.WATER.name -> (
+                            doneSteps.sumOf {
+                                if (it.type === StepType.WATER) {
+                                    it.value ?: 0
+                                } else {
+                                    0
+                                }
+                            } * weightMultiplier
+                            ).roundToInt()
+
+                    CombineWeight.NONE.name -> 0
+                    else -> 0
+                }
+            }
+        }
+    }
 
     @Composable
     fun createTimerControllers(
         steps: List<Step>,
         onRecipeEnd: () -> Unit,
-        isStepChangeSoundEnabled: Boolean,
-        isStepChangeVibrationEnabled: Boolean,
+        dataStore: DataStore,
     ): TimerControllers {
+        val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
+            .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
+        val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
+            .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
         val currentStep = remember { mutableStateOf<Step?>(null) }
         var isDone by remember { mutableStateOf(false) }
         var isTimerRunning by remember { mutableStateOf(false) }

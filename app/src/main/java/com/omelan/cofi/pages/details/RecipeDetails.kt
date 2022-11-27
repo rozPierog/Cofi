@@ -45,7 +45,6 @@ import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.ui.Spacing
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
 
 @Composable
 fun RecipeDetails(
@@ -103,10 +102,6 @@ fun RecipeDetails(
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
 
     val dataStore = DataStore(LocalContext.current)
-    val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
-        .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
-    val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
-        .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
 
@@ -124,41 +119,17 @@ fun RecipeDetails(
     ) = Timer.createTimerControllers(
         steps = steps,
         onRecipeEnd = { onRecipeEnd(recipe) },
-        isStepChangeSoundEnabled = isStepChangeSoundEnabled,
-        isStepChangeVibrationEnabled = isStepChangeVibrationEnabled,
+        dataStore = dataStore,
     )
 
     val copyAutomateLink = rememberCopyAutomateLink(snackbarState, recipeId)
 
-    val alreadyDoneWeight: Int by remember(combineWeightState, currentStep, weightMultiplier) {
-        derivedStateOf {
-            val doneSteps = if (indexOfCurrentStep == -1) {
-                listOf()
-            } else {
-                steps.subList(0, indexOfCurrentStep)
-            }
-            return@derivedStateOf when (combineWeightState) {
-                CombineWeight.ALL.name -> (
-                    doneSteps.sumOf {
-                        it.value ?: 0
-                    } * weightMultiplier.value
-                    ).roundToInt()
-
-                CombineWeight.WATER.name -> (
-                    doneSteps.sumOf {
-                        if (it.type === StepType.WATER) {
-                            it.value ?: 0
-                        } else {
-                            0
-                        }
-                    } * weightMultiplier.value
-                    ).roundToInt()
-
-                CombineWeight.NONE.name -> 0
-                else -> 0
-            }
-        }
-    }
+    val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
+        indexOfCurrentStep = indexOfCurrentStep,
+        allSteps = steps,
+        combineWeightState = combineWeightState,
+        weightMultiplier = weightMultiplier.value,
+    )
 
     LaunchedEffect(currentStep.value) {
         progressAnimation(Unit)
