@@ -36,10 +36,6 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
-import com.omelan.cofi.model.AppDatabase
-import com.omelan.cofi.model.Recipe
-import com.omelan.cofi.model.RecipeViewModel
-import com.omelan.cofi.model.StepsViewModel
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
 import com.omelan.cofi.pages.details.RecipeDetails
@@ -48,10 +44,15 @@ import com.omelan.cofi.pages.settings.AppSettingsAbout
 import com.omelan.cofi.pages.settings.BackupRestoreSettings
 import com.omelan.cofi.pages.settings.TimerSettings
 import com.omelan.cofi.pages.settings.licenses.LicensesList
+import com.omelan.cofi.share.DataStore
+import com.omelan.cofi.share.Recipe
+import com.omelan.cofi.share.RecipeViewModel
+import com.omelan.cofi.share.StepsViewModel
+import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.ui.CofiTheme
+import com.omelan.cofi.utils.InstantUtils
+import com.omelan.cofi.utils.WearUtils
 import com.omelan.cofi.utils.checkPiPPermission
-import com.omelan.cofi.utils.isInstantApp
-import com.omelan.cofi.utils.showInstallPrompt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -127,8 +128,8 @@ class MainActivity : MonetCompatActivity() {
                 lifecycleScope.launch {
                     db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
                 }
-                if (isInstantApp(this@MainActivity) && !pipState) {
-                    showInstallPrompt(this@MainActivity)
+                if (InstantUtils.isInstantApp(this@MainActivity) && !pipState) {
+                    InstantUtils.showInstallPrompt(this@MainActivity)
                 } else {
                     lifecycleScope.launch {
                         val deepLinkIntent = Intent(
@@ -426,5 +427,11 @@ class MainActivity : MonetCompatActivity() {
                 PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
             )
         }
+        WearUtils.observeChangesAndSendToWear(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        WearUtils.removeObservers(this)
     }
 }

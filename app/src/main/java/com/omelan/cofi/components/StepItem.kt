@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalAnimationGraphicsApi::class)
+@file:OptIn(ExperimentalAnimationGraphicsApi::class, ExperimentalAnimationGraphicsApi::class)
 
 package com.omelan.cofi.components
 
@@ -21,8 +21,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
-import com.omelan.cofi.model.Step
-import com.omelan.cofi.model.StepType
+import com.omelan.cofi.share.Step
+import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.toMillis
 import com.omelan.cofi.utils.toStringDuration
@@ -79,7 +79,7 @@ fun StepListItem(
         )
         if (step.value != null) {
             Text(
-                text = "${(step.value * weightMultiplier).roundToInt()}g",
+                text = "${(step.value!! * weightMultiplier).roundToInt()}g",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(horizontal = Spacing.small),
@@ -88,7 +88,7 @@ fun StepListItem(
         }
         if (step.time != null) {
             Text(
-                text = (step.time * timeMultiplier).roundToInt().toStringDuration(),
+                text = (step.time!! * timeMultiplier).roundToInt().toStringDuration(),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(horizontal = Spacing.small),

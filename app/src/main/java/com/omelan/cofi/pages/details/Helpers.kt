@@ -9,12 +9,12 @@ import android.os.Build
 import android.util.Rational
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import com.omelan.cofi.DataStore
 import com.omelan.cofi.MainActivity
+import com.omelan.cofi.share.DataStore
 import kotlinx.coroutines.flow.first
 
 @RequiresApi(Build.VERSION_CODES.O)
-suspend fun setPiPSettings(activity: Activity, isTimerRunning: Boolean, sourceRectHint: Rect?) {
+suspend fun setPiPSettings(activity: Activity?, isTimerRunning: Boolean, sourceRectHint: Rect?) {
     if (activity !is MainActivity) {
         return
     }

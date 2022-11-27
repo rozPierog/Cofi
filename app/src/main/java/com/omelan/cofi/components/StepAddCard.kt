@@ -38,8 +38,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.omelan.cofi.R
-import com.omelan.cofi.model.Step
-import com.omelan.cofi.model.StepType
+import com.omelan.cofi.share.Step
+import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.ensureNumbersOnly
 import com.omelan.cofi.utils.safeToInt
@@ -350,6 +350,7 @@ fun StepAddCardPreviewExpanded() {
             time = 0,
             type = StepType.WATER,
             orderInRecipe = 0,
+            value = null,
         ),
     )
 }
