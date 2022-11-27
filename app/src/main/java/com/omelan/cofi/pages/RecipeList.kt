@@ -31,6 +31,7 @@ import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.RecipeItem
 import com.omelan.cofi.components.RecipeListInfoBox
 import com.omelan.cofi.components.createAppBarBehavior
+import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.RecipeViewModel
 import com.omelan.cofi.share.StepsViewModel
 import com.omelan.cofi.ui.Spacing
@@ -63,6 +64,8 @@ fun RecipeList(
     }
     val lazyGridState = rememberLazyGridState()
     val coroutineScope = rememberCoroutineScope()
+    val dataStore = DataStore(activity)
+    val dismissedBoxes by dataStore.getDismissedInfoBoxes().collectAsState(initial = null)
     ObserveIfWearAppInstalled {
         wearNodesWithoutApp = it
         if (it.isNotEmpty()) {
@@ -111,7 +114,9 @@ fun RecipeList(
             horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
             state = lazyGridState,
         ) {
-            if (wearNodesWithoutApp.isNotEmpty()) {
+            if (wearNodesWithoutApp.isNotEmpty() && dismissedBoxes != null &&
+                dismissedBoxes?.containsKey("wearOS") == false
+            ) {
                 item(key = "wearOS") {
                     RecipeListInfoBox(
                         title = {
@@ -135,7 +140,16 @@ fun RecipeList(
                                 wearNodesWithoutApp,
                             )
                         },
-                        onDismiss = { wearNodesWithoutApp = emptyList() },
+                        onDismiss = {
+                            val newMap =
+                                if (dismissedBoxes != null) {
+                                    dismissedBoxes!!.toMutableMap()
+                                } else mutableMapOf()
+                            newMap["wearOS"] = true
+                            coroutineScope.launch {
+                                dataStore.setDismissedInfoBoxes(newMap)
+                            }
+                        },
                     )
                 }
             }

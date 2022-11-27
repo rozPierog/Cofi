@@ -4,12 +4,11 @@ import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
+import org.json.JSONObject
 
 class DataStore(private val context: Context) {
     companion object {
-        val Context.dataStore by preferencesDataStore(
-            name = "settings",
-        )
+        val Context.dataStore by preferencesDataStore(name = "settings")
     }
 
     fun getPiPSetting() = context.dataStore.data.map { preferences ->
@@ -26,6 +25,14 @@ class DataStore(private val context: Context) {
 
     fun getStepChangeVibrationSetting() = context.dataStore.data.map { preferences ->
         preferences[STEP_VIBRATION_ENABLED] ?: STEP_VIBRATION_DEFAULT_VALUE
+    }
+
+    fun getDismissedInfoBoxes() = context.dataStore.data.map {
+        stringToDismissedInfoBoxes(it[DISMISSED_INFO] ?: DISMISSED_INFO_DEFAULT_VALUE)
+    }
+
+    suspend fun setDismissedInfoBoxes(newValue: Map<String, Boolean>) = context.dataStore.edit {
+        it[DISMISSED_INFO] = JSONObject(newValue).toString()
     }
 
     suspend fun setStepChangeSound(value: Boolean) {
