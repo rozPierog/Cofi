@@ -104,4 +104,6 @@ Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 8
     <string name="settings_step_vibrate_item">Wibracja przy zmianie kroku</string>
     <string name="recipe_details_multiply_time">Mnożnik czasu</string>
     <string name="recipe_details_multiply_weight">Mnożnik wagi</string>
+    <string name="infoBox_wearOS_title">Cofi jest już na WearOS</string>
+    <string name="infoBox_wearOS_body">Pobierz Cofi na swój zegarek!</string>
 </resources>

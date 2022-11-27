@@ -120,7 +120,7 @@ fun RecipeList(
                 item(key = "wearOS") {
                     RecipeListInfoBox(
                         title = {
-                            Text(text = "Cofi is now on WearOS", fontWeight = FontWeight.Bold)
+                            Text(text = stringResource(id = R.string.infoBox_wearOS_title), fontWeight = FontWeight.Bold)
                         },
                         text = {
                             Row(
@@ -131,7 +131,7 @@ fun RecipeList(
                                     painterResource(id = R.drawable.ic_timer),
                                     contentDescription = "",
                                 )
-                                Text(text = "Download Cofi app for your WearOS watch")
+                                Text(text = stringResource(id = R.string.infoBox_wearOS_body))
                             }
                         },
                         onClick = {
