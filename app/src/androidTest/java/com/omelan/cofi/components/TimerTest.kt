@@ -6,8 +6,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Animatable
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import com.omelan.cofi.model.Step
-import com.omelan.cofi.model.StepType
+import com.omelan.cofi.share.Step
+import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.green600
 import org.junit.Rule

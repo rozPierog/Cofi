@@ -46,15 +46,14 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
-import com.omelan.cofi.model.Recipe
-import com.omelan.cofi.model.RecipeIcon
-import com.omelan.cofi.model.Step
+import com.omelan.cofi.share.Recipe
+import com.omelan.cofi.share.RecipeIcon
+import com.omelan.cofi.share.Step
 import com.omelan.cofi.ui.*
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding
@@ -433,7 +432,6 @@ fun RecipeEdit(
                 if (isPhoneLayout) {
                     PhoneLayout(
                         it,
-                        maxHeight,
                         lazyListState,
                         renderNameAndDescriptionEdit,
                         renderSteps,
@@ -441,7 +439,6 @@ fun RecipeEdit(
                 } else {
                     TabletLayout(
                         it,
-                        maxHeight,
                         lazyListState,
                         renderNameAndDescriptionEdit,
                         renderSteps,
@@ -479,19 +476,17 @@ fun RecipeEdit(
 @Composable
 private fun PhoneLayout(
     paddingValues: PaddingValues,
-    maxHeight: Dp,
     lazyListState: LazyListState,
     renderNameAndDescriptionEdit: LazyListScope.() -> Unit,
     renderSteps: LazyListScope.() -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize().imePadding()
             .background(color = MaterialTheme.colorScheme.background),
         state = lazyListState,
         contentPadding = getDefaultPadding(
             paddingValues = paddingValues,
-            additionalBottomPadding = maxHeight / 2,
         ),
     ) {
         renderNameAndDescriptionEdit()
@@ -502,7 +497,6 @@ private fun PhoneLayout(
 @Composable
 private fun TabletLayout(
     paddingValues: PaddingValues,
-    maxHeight: Dp,
     lazyListState: LazyListState,
     renderNameAndDescriptionEdit: LazyListScope.() -> Unit,
     renderSteps: LazyListScope.() -> Unit,
@@ -515,15 +509,13 @@ private fun TabletLayout(
         horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
     ) {
         LazyColumn(
-            modifier = Modifier.weight(1f, fill = true),
-            contentPadding = PaddingValues(bottom = maxHeight / 2),
+            modifier = Modifier.weight(1f, fill = true).imePadding(),
         ) {
             renderNameAndDescriptionEdit()
         }
         LazyColumn(
-            modifier = Modifier.weight(1f, fill = true),
+            modifier = Modifier.weight(1f, fill = true).imePadding(),
             state = lazyListState,
-            contentPadding = PaddingValues(bottom = maxHeight / 2),
         ) {
             renderSteps()
         }

@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,7 +39,7 @@ fun createAppBarBehavior(
 
 data class AppBarBehaviorWithCollapse(
     val behavior: TopAppBarScrollBehavior,
-    val collapse: () -> Job,
+    val collapse: () -> Unit,
 )
 
 @Composable
@@ -49,7 +48,7 @@ fun createAppBarBehaviorWithCollapse(): AppBarBehaviorWithCollapse {
     val scrollBehavior = createAppBarBehavior(topBarState)
     val coroutineScope = rememberCoroutineScope()
 
-    val animateCollapse = {
+    val animateCollapse: () -> Unit = {
         coroutineScope.launch {
             animate(
                 initialValue = topBarState.heightOffset,

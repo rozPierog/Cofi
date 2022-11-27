@@ -36,14 +36,23 @@ platform :android do
     ) }
     .flatten
     newest_code = codes.map { |c| c % 10000 }.max
-    version_code = newest_code + 2
+    version_code = newest_code + 3
     set_value_in_build(
       key: 'versionCode',
       value: version_code.to_s,
       app_project_dir: '**/app',
     )
+    set_value_in_build(
+      key: 'versionCode',
+      value: (newest_code + 2).to_s,
+      app_project_dir: '**/wearOS',
+    )
     increment_version_name(
       app_project_dir: '**/app',
+      bump_type: options[:bump_type],
+    )
+     increment_version_name(
+      app_project_dir: '**/wearOS',
       bump_type: options[:bump_type],
     )
   end
@@ -77,10 +86,12 @@ platform :android do
 
   desc "Deploy a new version to the Google Play Store"
   lane :deploy_gps do |options|
-    gradle(task: "clean bundleFullRelease")
+    gradle(task: "clean app:bundlePlayStoreRelease wearOS:bundleRelease")
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
       skip_upload_apk: true,
+      aab_paths: ["app/build/outputs/bundle/playStoreRelease/app-playStore-release.aab",
+      "wearOS/build/outputs/bundle/release/wearOS-release.aab"]
     )
   end
 
@@ -96,7 +107,7 @@ platform :android do
 
   desc "Deploy a new version to Github Releases"
   lane :deploy_github do |options|
-    gradle(task: "clean assembleFullRelease")
+    gradle(task: "clean app:assembleFullRelease app:assemblePlayStoreRelease wearOS:assembleRelease")
     versionName = get_version_name(
       app_project_dir: '**/app',
     )
@@ -108,15 +119,18 @@ platform :android do
       is_prerelease: options[:prerelease],
       description: (File.read("metadata/android/en-US/changelogs/default.txt") rescue "No changelog provided"),
       # commitish: "master",
-      upload_assets: ["app/build/outputs/apk/full/release/app-full-release.apk"]
+      upload_assets: ["app/build/outputs/apk/full/release/app-full-release.apk",
+       "app/build/outputs/apk/playStore/release/app-playStore-release.apk",
+       "wearOS/build/outputs/apk/release/wearOS-release.apk"]
     )
   end
 
   desc "Builds an Instant App"
   lane :build_instant do
-    gradle(task: "clean bundleInstantRelease")
+    gradle(task: "clean app:bundleInstantRelease")
     UI.important "⚠️ Fastlane does not support uploading instant apps to google play console ⚠️"
     UI.important "⚠️ Remember to upload instant app bundle to Play Console! ⚠️"
+    sh("open", "app/build/outputs/bundle/instantRelease")
   end
 
   lane :create_screenshots do

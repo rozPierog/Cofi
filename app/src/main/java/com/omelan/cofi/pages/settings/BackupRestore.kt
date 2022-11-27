@@ -32,7 +32,12 @@ import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3Dialog
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
-import com.omelan.cofi.model.*
+import com.omelan.cofi.share.Recipe
+import com.omelan.cofi.share.jsonSteps
+import com.omelan.cofi.share.model.AppDatabase
+import com.omelan.cofi.share.model.PrepopulateData
+import com.omelan.cofi.share.toRecipe
+import com.omelan.cofi.share.toSteps
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -139,18 +144,20 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
                 }
             }
             item {
-                RestoreListItem(afterRestore = { numberOfRestored ->
-                    coroutineScope.launch {
-                        snackbarState.showSnackbar(
-                            context.resources.getQuantityString(
-                                R.plurals.settings_snackbar_restore,
-                                numberOfRestored,
-                                numberOfRestored,
-                            ),
-                            actionLabel = context.resources.getString(R.string.button_show),
-                        )
-                    }
-                },)
+                RestoreListItem(
+                    afterRestore = { numberOfRestored ->
+                        coroutineScope.launch {
+                            snackbarState.showSnackbar(
+                                context.resources.getQuantityString(
+                                    R.plurals.settings_snackbar_restore,
+                                    numberOfRestored,
+                                    numberOfRestored,
+                                ),
+                                actionLabel = context.resources.getString(R.string.button_show),
+                            )
+                        }
+                    },
+                )
             }
         }
     }
@@ -177,7 +184,7 @@ fun RestoreListItem(afterRestore: (numberOfRestored: Int) -> Unit) {
                         val jsonObject = jsonArray.getJSONObject(i)
                         val recipe = jsonObject.toRecipe()
                         val recipeId = db.recipeDao().insertRecipe(recipe)
-                        val steps = jsonObject.getJSONArray(jsonSteps).toSteps(recipeId)
+                        val steps = jsonObject.getJSONArray(jsonSteps).toSteps(recipeId = recipeId)
                         db.stepDao().insertAll(steps)
                     }
                 }
@@ -231,13 +238,21 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
     }
 
     // TODO: Underlying Dialog doesn't change size when content changes size, maybe rewrite it?
-    Material3Dialog(modifier = Modifier.fillMaxSize(), onDismissRequest = dismiss, onSave = {
-        val c = Calendar.getInstance().time
-        val format: DateFormat =
-            DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())
-        val formattedDate: String = format.format(c)
-        launcher.launch("cofi_backup_$formattedDate.json")
-    },) {
+    Material3Dialog(
+        modifier = Modifier.fillMaxSize(),
+        onDismissRequest = dismiss,
+        onSave = {
+            val c = Calendar.getInstance().time
+            val format: DateFormat =
+                DateFormat.getDateTimeInstance(
+                    DateFormat.SHORT,
+                    DateFormat.SHORT,
+                    Locale.getDefault(),
+                )
+            val formattedDate: String = format.format(c)
+            launcher.launch("cofi_backup_$formattedDate.json")
+        },
+    ) {
         LazyColumn(Modifier.weight(1f, true)) {
             items(recipes) {
                 val isSelected = recipesToBackup.contains(it)
@@ -266,20 +281,23 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
     val prepopulateData = PrepopulateData(context)
     val steps = prepopulateData.steps.groupBy { it.recipeId }
     val db = AppDatabase.getInstance(context)
-    Material3Dialog(onDismissRequest = dismiss, onSave = {
-        recipesToAdd.forEach { recipe ->
-            coroutineScope.launch {
-                val idOfRecipe = db.recipeDao().insertRecipe(recipe.copy(id = 0))
-                val stepsOfTheRecipe = steps[recipe.id] ?: return@launch
-                db.stepDao().insertAll(
-                    stepsOfTheRecipe.map {
-                        it.copy(id = 0, recipeId = idOfRecipe.toInt())
-                    },
-                )
+    Material3Dialog(
+        onDismissRequest = dismiss,
+        onSave = {
+            recipesToAdd.forEach { recipe ->
+                coroutineScope.launch {
+                    val idOfRecipe = db.recipeDao().insertRecipe(recipe.copy(id = 0))
+                    val stepsOfTheRecipe = steps[recipe.id] ?: return@launch
+                    db.stepDao().insertAll(
+                        stepsOfTheRecipe.map {
+                            it.copy(id = 0, recipeId = idOfRecipe.toInt())
+                        },
+                    )
+                }
+                dismiss()
             }
-            dismiss()
-        }
-    },) {
+        },
+    ) {
         LazyColumn {
             items(prepopulateData.recipes) {
                 val isSelected = recipesToAdd.contains(it)

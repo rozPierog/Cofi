@@ -32,11 +32,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
-import com.omelan.cofi.model.Step
-import com.omelan.cofi.model.StepType
+import com.omelan.cofi.share.Step
+import com.omelan.cofi.share.StepType
+import com.omelan.cofi.share.components.StepNameText
+import com.omelan.cofi.share.components.TimeText
+import com.omelan.cofi.share.components.TimerValue
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.green600
-import com.omelan.cofi.utils.toStringDuration
 
 @Composable
 fun Track(
@@ -53,7 +55,6 @@ fun Track(
         modifier
             .progressSemantics(progress)
             .aspectRatio(1f),
-
     ) {
         val startAngle = 270f
         val sweep = progress * 360f
@@ -160,91 +161,44 @@ fun Timer(
                 Alignment.CenterHorizontally,
             ) {
                 if (currentStep != null) {
-                    val durationInString = if (currentStep.time == null) {
-                        stringResource(id = R.string.recipe_details_noTime)
-                    } else {
-                        val duration =
-                            (
-                                currentStep.time * animatedProgressValue.value *
-                                    timeMultiplier
-                                ).toInt()
-                        duration.toStringDuration(
-                            padMillis = true,
-                            padMinutes = true,
-                            padSeconds = true,
-                            showMillis = !isInPiP,
-                        )
-                    }
-                    Text(
-                        text = durationInString,
+                    TimeText(
+                        currentStep = currentStep,
+                        animatedProgressValue = (animatedProgressValue.value * timeMultiplier),
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = if (isInPiP) 2 else Int.MAX_VALUE,
                         style = if (isInPiP) {
                             MaterialTheme.typography.titleMedium
                         } else {
                             MaterialTheme.typography.headlineMedium
                         },
-                        color = MaterialTheme.colorScheme.onSurface,
-                        textAlign = TextAlign.Center,
-                        maxLines = if (isInPiP) 2 else Int.MAX_VALUE,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(horizontal = if (isInPiP) Spacing.xSmall else Spacing.normal)
-                            .testTag("timer_duration"),
+                        paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
+                        showMillis = !isInPiP,
                     )
                     Divider()
-                    Text(
-                        text = if (currentStep.time != null) {
-                            stringResource(
-                                id = R.string.timer_step_name_time,
-                                currentStep.name,
-                                currentStep.time * timeMultiplier / 1000,
-                            )
-                        } else {
-                            currentStep.name
-                        },
+                    StepNameText(
+                        currentStep = currentStep,
                         color = MaterialTheme.colorScheme.onSurface,
                         style = if (isInPiP) {
                             MaterialTheme.typography.titleSmall
                         } else {
                             MaterialTheme.typography.titleMedium
                         },
-                        textAlign = TextAlign.Center,
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .animateContentSize()
-                            .padding(horizontal = if (isInPiP) Spacing.xSmall else Spacing.normal)
-                            .testTag("timer_name"),
+                        paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                     )
-                    AnimatedVisibility(
-                        visible = currentStep.value != null,
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                    ) {
-                        val currentStepValue = (currentStep.value ?: 0) * weightMultiplier
-                        val currentValueFromProgress =
-                            (currentStepValue * animatedProgressValue.value).toInt()
-                        Divider()
-                        Text(
-                            text = stringResource(
-                                id = R.string.timer_progress_weight,
-                                currentValueFromProgress + alreadyDoneWeight,
-                                currentStepValue + alreadyDoneWeight,
-                            ),
-                            color = MaterialTheme.colorScheme.onSurface,
-                            maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
-                            overflow = TextOverflow.Ellipsis,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .testTag("timer_value"),
-                            style = if (isInPiP) {
-                                MaterialTheme.typography.titleLarge
-                            } else {
-                                MaterialTheme.typography.headlineMedium
-                            },
-                        )
-                    }
+                    Divider()
+                    TimerValue(
+                        currentStep = currentStep,
+                        animatedProgressValue = (animatedProgressValue.value * timeMultiplier),
+                        alreadyDoneWeight = alreadyDoneWeight,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
+                        style = if (isInPiP) {
+                            MaterialTheme.typography.titleLarge
+                        } else {
+                            MaterialTheme.typography.headlineMedium
+                        },
+                    )
                 }
             }
         }
