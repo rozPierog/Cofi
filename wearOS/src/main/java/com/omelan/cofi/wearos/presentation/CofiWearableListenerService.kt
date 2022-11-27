@@ -49,21 +49,22 @@ class CofiWearableListenerService : WearableListenerService() {
 
     private suspend fun saveSettingsFromChannel(jsonArray: JSONArray) {
         val dataStore = DataStore(this)
-        val jsonSetting = jsonArray.get(0) as JSONObject
-        jsonSetting.keys().forEach { key ->
-            when (key) {
-                COMBINE_WEIGHT.name -> dataStore.selectCombineMethod(
-                    stringToCombineWeight(jsonSetting.get(key) as String),
-                )
+        for (i in 0 until jsonArray.length()) {
+            val jsonSetting = jsonArray.get(i) as JSONObject
+            jsonSetting.keys().forEach { key ->
+                when (key) {
+                    COMBINE_WEIGHT.name -> dataStore.selectCombineMethod(
+                        stringToCombineWeight(jsonSetting.get(key) as String),
+                    )
 
-                STEP_VIBRATION_ENABLED.name ->
-                    dataStore.setStepChangeVibration(jsonSetting.get(key) as Boolean)
+                    STEP_VIBRATION_ENABLED.name ->
+                        dataStore.setStepChangeVibration(jsonSetting.get(key) as Boolean)
 
-                STEP_SOUND_ENABLED.name ->
-                    dataStore.setStepChangeSound(jsonSetting.get(key) as Boolean)
+                    STEP_SOUND_ENABLED.name ->
+                        dataStore.setStepChangeSound(jsonSetting.get(key) as Boolean)
+                }
             }
         }
-
 
     }
 }

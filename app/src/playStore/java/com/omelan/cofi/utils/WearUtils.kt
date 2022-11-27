@@ -21,9 +21,11 @@ import com.omelan.cofi.share.model.SharedData
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.verify_cofi_wear_app
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.tasks.await
 import org.json.JSONArray
+import org.json.JSONObject
 
 object WearUtils {
 
@@ -72,7 +74,13 @@ object WearUtils {
                 outputStreamTask.addOnSuccessListener { outputStream ->
                     outputStream.use {
                         val jsonArray = JSONArray()
-                        data.forEach { sharedData -> jsonArray.put(sharedData) }
+                        data.forEach { sharedData ->
+                            jsonArray.put(
+                                JSONObject().apply {
+                                    put(sharedData.key, sharedData.value)
+                                },
+                            )
+                        }
                         it.write(jsonArray.toString().toByteArray())
                         it.flush()
                     }
@@ -88,21 +96,19 @@ object WearUtils {
         recipesLiveData = db.recipeDao().getAll()
         stepsLiveData = db.stepDao().getAll()
         CoroutineScope(Dispatchers.IO + Job()).launch {
-            dataStore.getStepChangeSoundSetting().collect {
+            combine(
+                dataStore.getStepChangeSoundSetting(),
+                dataStore.getStepChangeVibrationSetting(),
+                dataStore.getWeightSetting(),
+            ) { isSoundEnabled: Boolean, isVibrationEnabled: Boolean, weightSetting: String ->
+                Triple(isSoundEnabled, isVibrationEnabled, weightSetting)
+            }.collect { (isSoundEnabled, isVibrationEnabled, weightSetting) ->
                 channelClient.sendSettingsToWearOS(
-                    mapOf(STEP_SOUND_ENABLED.name to it),
-                    activity,
-                )
-            }
-            dataStore.getStepChangeVibrationSetting().collect {
-                channelClient.sendSettingsToWearOS(
-                    mapOf(STEP_VIBRATION_ENABLED.name to it),
-                    activity,
-                )
-            }
-            dataStore.getWeightSetting().collect {
-                channelClient.sendSettingsToWearOS(
-                    mapOf(COMBINE_WEIGHT.name to it),
+                    mapOf(
+                        STEP_SOUND_ENABLED.name to isSoundEnabled,
+                        STEP_VIBRATION_ENABLED.name to isVibrationEnabled,
+                        COMBINE_WEIGHT.name to weightSetting,
+                    ),
                     activity,
                 )
             }
@@ -153,9 +159,9 @@ object WearUtils {
                 return@LaunchedEffect
             }
             val capabilityClient = Wearable.getCapabilityClient(mainActivity)
-            val capabilityInfo = capabilityClient
-                .getCapability(verify_cofi_wear_app, CapabilityClient.FILTER_ALL)
-                .await()
+            val capabilityInfo =
+                capabilityClient.getCapability(verify_cofi_wear_app, CapabilityClient.FILTER_ALL)
+                    .await()
             onChange((connectedNodes - capabilityInfo.nodes).map { it.id })
         }
     }
@@ -167,8 +173,7 @@ object WearUtils {
         activity: AppCompatActivity,
         nodesIdWithoutApp: List<String>,
     ) {
-        val intent = Intent(Intent.ACTION_VIEW)
-            .addCategory(Intent.CATEGORY_BROWSABLE)
+        val intent = Intent(Intent.ACTION_VIEW).addCategory(Intent.CATEGORY_BROWSABLE)
             .setData(Uri.parse(COFI_PLAY_STORE_LINK))
         val remoteActivityHelper = RemoteActivityHelper(activity)
         nodesIdWithoutApp.forEach { id ->
