@@ -28,11 +28,18 @@
 
 # Screenshots
 <table>
-<tr>
+  <tr>
+    <td>Android</td>
     <td><img src="docs/assets/cofi_showcase.gif" ></td>
-	<td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" ></td>
-	<td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" ></td>
-	<td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png"></td>
+    <td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" ></td>
+    <td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" ></td>
+    <td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png"></td>
+  </tr>
+  <tr>
+    <td>WearOS</td>
+    <td><img src="fastlane/metadata/android/en-US/images/wearScreenshots/1_en-US.png" ></td>
+    <td><img src="fastlane/metadata/android/en-US/images/wearScreenshots/2_en-US.png" ></td>
+  </tr>
 </table>
 
 # [Changelog](docs/Changelog.md)

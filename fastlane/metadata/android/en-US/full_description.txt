@@ -8,5 +8,6 @@ Features:
 - Deeplinks to recipes - you can add it to automation software or NFC tag to open your favorite recipe with one tap,
 - Picture in Picture - need to respond to a text while brewing? The timer will pop into small movable windows that will stay with you for the entire brew,
 - Absolutely no tracking - not even a crash report will make its way back to me. Everything you do in the app stays with you,
-- Smallest footprint possible - I'm going to be surprised if it ever breaks 7MB on your device
+- Smallest footprint possible - I respect the storage of your device
+- WearOS app - for easiest mornings possible
 - Instant app - the whole app is accessible as an Instant Experience, no need to install anything if you don't want it.
