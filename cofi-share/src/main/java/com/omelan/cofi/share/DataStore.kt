@@ -1,15 +1,13 @@
-package com.omelan.cofi
+package com.omelan.cofi.share
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
 
 class DataStore(private val context: Context) {
     companion object {
-        val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+        val Context.dataStore by preferencesDataStore(
             name = "settings",
         )
     }
@@ -28,6 +26,18 @@ class DataStore(private val context: Context) {
 
     fun getStepChangeVibrationSetting() = context.dataStore.data.map { preferences ->
         preferences[STEP_VIBRATION_ENABLED] ?: STEP_VIBRATION_DEFAULT_VALUE
+    }
+
+    suspend fun setStepChangeSound(value: Boolean) {
+        context.dataStore.edit {
+            it[STEP_SOUND_ENABLED] = value
+        }
+    }
+
+    suspend fun setStepChangeVibration(value: Boolean) {
+        context.dataStore.edit {
+            it[STEP_VIBRATION_ENABLED] = value
+        }
     }
 
     suspend fun togglePipSetting() {

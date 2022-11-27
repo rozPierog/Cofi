@@ -15,8 +15,7 @@ import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.ChannelClient
 import com.google.android.gms.wearable.Wearable
-import com.omelan.cofi.share.Recipe
-import com.omelan.cofi.share.Step
+import com.omelan.cofi.share.*
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.SharedData
 import com.omelan.cofi.share.utils.getActivity
@@ -57,12 +56,57 @@ object WearUtils {
         }
     }
 
+    private fun ChannelClient.sendSettingsToWearOS(
+        data: Map<String, Any>,
+        activity: AppCompatActivity,
+    ) {
+        CoroutineScope(Dispatchers.IO + Job()).launch {
+            val nodes = try {
+                Wearable.getNodeClient(activity).connectedNodes.await()
+            } catch (e: Exception) {
+                return@launch
+            }
+            nodes.forEach { node ->
+                val channel = openChannel(node.id, "cofi/settings").await()
+                val outputStreamTask = Wearable.getChannelClient(activity).getOutputStream(channel)
+                outputStreamTask.addOnSuccessListener { outputStream ->
+                    outputStream.use {
+                        val jsonArray = JSONArray()
+                        data.forEach { sharedData -> jsonArray.put(sharedData) }
+                        it.write(jsonArray.toString().toByteArray())
+                        it.flush()
+                    }
+                }
+            }
+        }
+    }
+
     fun observeChangesAndSendToWear(activity: AppCompatActivity) {
         val channelClient = Wearable.getChannelClient(activity)
         val db = AppDatabase.getInstance(activity)
+        val dataStore = DataStore(activity)
         recipesLiveData = db.recipeDao().getAll()
         stepsLiveData = db.stepDao().getAll()
-
+        CoroutineScope(Dispatchers.IO + Job()).launch {
+            dataStore.getStepChangeSoundSetting().collect {
+                channelClient.sendSettingsToWearOS(
+                    mapOf(STEP_SOUND_ENABLED.name to it),
+                    activity,
+                )
+            }
+            dataStore.getStepChangeVibrationSetting().collect {
+                channelClient.sendSettingsToWearOS(
+                    mapOf(STEP_VIBRATION_ENABLED.name to it),
+                    activity,
+                )
+            }
+            dataStore.getWeightSetting().collect {
+                channelClient.sendSettingsToWearOS(
+                    mapOf(COMBINE_WEIGHT.name to it),
+                    activity,
+                )
+            }
+        }
         recipesLiveData.observe(activity) { recipes ->
             channelClient.sendDataToWearOS(recipes, "recipes", activity)
         }

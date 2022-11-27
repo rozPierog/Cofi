@@ -1,4 +1,4 @@
-package com.omelan.cofi
+package com.omelan.cofi.share
 
 import androidx.annotation.StringRes
 import androidx.datastore.preferences.core.booleanPreferencesKey
