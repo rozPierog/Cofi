@@ -1,7 +1,9 @@
 ### Added
+- Added a wearOS app
+- separated Play Store and Open Source builds
+- fixed performance issues with timer when there are a lot of short steps
 
 ### Changed
-- fixed already done weight calculation when using multiplier
 
 ### Removed
 
