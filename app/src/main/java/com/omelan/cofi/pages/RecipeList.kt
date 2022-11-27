@@ -120,7 +120,10 @@ fun RecipeList(
                 item(key = "wearOS") {
                     RecipeListInfoBox(
                         title = {
-                            Text(text = stringResource(id = R.string.infoBox_wearOS_title), fontWeight = FontWeight.Bold)
+                            Text(
+                                text = stringResource(id = R.string.infoBox_wearOS_title),
+                                fontWeight = FontWeight.Bold,
+                            )
                         },
                         text = {
                             Row(
@@ -141,10 +144,11 @@ fun RecipeList(
                             )
                         },
                         onDismiss = {
-                            val newMap =
-                                if (dismissedBoxes != null) {
-                                    dismissedBoxes!!.toMutableMap()
-                                } else mutableMapOf()
+                            val newMap = if (dismissedBoxes != null) {
+                                dismissedBoxes!!.toMutableMap()
+                            } else {
+                                mutableMapOf()
+                            }
                             newMap["wearOS"] = true
                             coroutineScope.launch {
                                 dataStore.setDismissedInfoBoxes(newMap)
