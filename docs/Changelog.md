@@ -7,13 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added a wearOS app
+- separated Play Store and Open Source builds
 
 ### Changed
+- fixed performance issues with timer when there are a lot of short steps
+- fixed potential crash when editing the recipe
+- fixed weight calculation when using multipliers
 
 ### Removed
 
 
-## [1.11.0] - 2022-11-27
+## [1.11.0] - 2022-11-27 [Pre-release]
 
 ### Added
 - Added a wearOS app
