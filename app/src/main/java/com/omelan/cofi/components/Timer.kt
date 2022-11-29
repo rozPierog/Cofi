@@ -191,6 +191,7 @@ fun Timer(
                         currentStep = currentStep,
                         animatedProgressValue = (animatedProgressValue.value * timeMultiplier),
                         alreadyDoneWeight = alreadyDoneWeight,
+                        weightMultiplier = weightMultiplier,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                         style = if (isInPiP) {

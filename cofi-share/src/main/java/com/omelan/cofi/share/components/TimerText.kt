@@ -19,11 +19,17 @@ import androidx.compose.ui.unit.Dp
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.utils.toStringDuration
+import kotlin.math.roundToInt
 
 @Composable
 fun ColumnScope.TimerValue(
-    currentStep: Step, animatedProgressValue: Float, alreadyDoneWeight: Int = 0,
-    color: Color, maxLines: Int, style: TextStyle,
+    currentStep: Step,
+    animatedProgressValue: Float,
+    weightMultiplier: Float = 1f,
+    alreadyDoneWeight: Int = 0,
+    color: Color,
+    maxLines: Int,
+    style: TextStyle,
 ) {
     AnimatedVisibility(
         visible = currentStep.value != null,
@@ -35,8 +41,8 @@ fun ColumnScope.TimerValue(
         Text(
             text = stringResource(
                 id = R.string.timer_progress_weight,
-                currentValueFromProgress + alreadyDoneWeight,
-                currentStepValue + alreadyDoneWeight,
+                (currentValueFromProgress * weightMultiplier).roundToInt() + alreadyDoneWeight,
+                (currentStepValue * weightMultiplier).roundToInt() + alreadyDoneWeight,
             ),
             color = color,
             maxLines = maxLines,
