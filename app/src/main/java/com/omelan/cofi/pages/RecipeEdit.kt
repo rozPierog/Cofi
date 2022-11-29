@@ -176,7 +176,11 @@ fun RecipeEdit(
     LaunchedEffect(Unit) {
         collapse()
         delay(100)
-        nameFocusRequester.requestFocus()
+        try {
+            nameFocusRequester.requestFocus()
+        } catch (e: IllegalStateException) {
+            // do nothing - it's not vital part of the app, just QoL feature
+        }
     }
     LaunchedEffect(showDescription) {
         if (showDescription && recipeToEdit.description.isBlank()) {
