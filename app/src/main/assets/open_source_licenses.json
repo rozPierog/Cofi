@@ -1748,23 +1748,6 @@
     "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4"
   },
   {
-    "project": "kotlinx-coroutines-play-services",
-    "description": "Coroutines support libraries for Kotlin",
-    "version": "1.6.4",
-    "developers": [
-      "JetBrains Team"
-    ],
-    "url": "https://github.com/Kotlin/kotlinx.coroutines",
-    "year": null,
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4"
-  },
-  {
     "project": "Lifecycle ViewModel Compose",
     "description": "Compose integration with Lifecycle ViewModel",
     "version": "2.5.1",
@@ -1797,36 +1780,6 @@
       }
     ],
     "dependency": "androidx.palette:palette-ktx:1.0.0"
-  },
-  {
-    "project": "play-services-basement",
-    "description": null,
-    "version": "16.0.1",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "Android Software Development Kit License",
-        "license_url": "https://developer.android.com/studio/terms.html"
-      }
-    ],
-    "dependency": "com.google.android.gms:play-services-basement:16.0.1"
-  },
-  {
-    "project": "play-services-tasks",
-    "description": null,
-    "version": "16.0.1",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "Android Software Development Kit License",
-        "license_url": "https://developer.android.com/studio/terms.html"
-      }
-    ],
-    "dependency": "com.google.android.gms:play-services-tasks:16.0.1"
   },
   {
     "project": "Saved State",

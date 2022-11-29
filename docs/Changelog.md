@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.11.1] - 2022-11-29
+
+### Added
 - Added a wearOS app
 - separated Play Store and Open Source builds
 
