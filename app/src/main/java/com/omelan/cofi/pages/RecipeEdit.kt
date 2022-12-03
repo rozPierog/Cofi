@@ -1,4 +1,8 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@file:OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class,
+    ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalComposeUiApi::class,
+    ExperimentalFoundationApi::class, ExperimentalMaterialApi::class,
+)
 
 package com.omelan.cofi.pages
 
@@ -11,18 +15,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.*
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -60,12 +60,6 @@ import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class,
-    ExperimentalFoundationApi::class,
-    ExperimentalMaterial3WindowSizeClassApi::class,
-)
 @Composable
 fun RecipeEdit(
     saveRecipe: (Recipe, List<Step>) -> Unit,
@@ -105,8 +99,9 @@ fun RecipeEdit(
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
 
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed),
+    val bottomSheetScaffoldState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true,
     )
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -125,7 +120,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -146,9 +141,9 @@ fun RecipeEdit(
             stepWithOpenEditor = null
             return@BackHandler
         }
-        if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
+        if (bottomSheetScaffoldState.isVisible) {
             coroutineScope.launch {
-                bottomSheetScaffoldState.bottomSheetState.collapse()
+                bottomSheetScaffoldState.hide()
             }
             return@BackHandler
         }
@@ -168,7 +163,7 @@ fun RecipeEdit(
 
     fun pickIcon(icon: RecipeIcon) {
         coroutineScope.launch {
-            bottomSheetScaffoldState.bottomSheetState.collapse()
+            bottomSheetScaffoldState.hide()
             pickedIcon = icon
         }
     }
@@ -205,10 +200,10 @@ fun RecipeEdit(
                     onClick = {
                         keyboardController?.hide()
                         coroutineScope.launch {
-                            if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
-                                bottomSheetScaffoldState.bottomSheetState.collapse()
+                            if (bottomSheetScaffoldState.isVisible) {
+                                bottomSheetScaffoldState.hide()
                             } else {
-                                bottomSheetScaffoldState.bottomSheetState.expand()
+                                bottomSheetScaffoldState.show()
                             }
                         }
                     },
@@ -352,13 +347,11 @@ fun RecipeEdit(
             }
         }
     }
-    BottomSheetScaffold(
-        scaffoldState = bottomSheetScaffoldState,
-        modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
-        sheetPeekHeight = 0.dp,
-        sheetElevation = 30.dp,
+
+    ModalBottomSheetLayout(
         sheetShape = shapes.modal,
         sheetBackgroundColor = MaterialTheme.colorScheme.surfaceVariant,
+        sheetState = bottomSheetScaffoldState,
         sheetContent = {
             Row(
                 modifier = Modifier
@@ -383,74 +376,77 @@ fun RecipeEdit(
                 }
             }
         },
-        topBar = {
-            PiPAwareAppBar(
-                navigationIcon = {
-                    IconButton(onClick = safeGoBack) {
-                        Icon(Icons.Rounded.ArrowBack, contentDescription = null)
-                    }
-                },
-                actions = {
-                    if (isEditing) {
-                        IconButton(onClick = { showCloneModal = true }) {
+    ) {
+        Scaffold(
+            modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
+            topBar = {
+                PiPAwareAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = safeGoBack) {
+                            Icon(Icons.Rounded.ArrowBack, contentDescription = null)
+                        }
+                    },
+                    actions = {
+                        if (isEditing) {
+                            IconButton(onClick = { showCloneModal = true }) {
+                                Icon(
+                                    painterResource(id = R.drawable.ic_copy),
+                                    contentDescription = null,
+                                )
+                            }
+                            IconButton(onClick = { showDeleteModal = true }) {
+                                Icon(
+                                    painterResource(id = R.drawable.ic_delete),
+                                    contentDescription = null,
+                                )
+                            }
+                        }
+                        IconButton(
+                            modifier = Modifier.testTag("recipe_edit_save"),
+                            onClick = onSave,
+                            enabled = canSave,
+                        ) {
                             Icon(
-                                painterResource(id = R.drawable.ic_copy),
+                                painterResource(id = R.drawable.ic_save),
                                 contentDescription = null,
                             )
                         }
-                        IconButton(onClick = { showDeleteModal = true }) {
-                            Icon(
-                                painterResource(id = R.drawable.ic_delete),
-                                contentDescription = null,
-                            )
-                        }
-                    }
-                    IconButton(
-                        modifier = Modifier.testTag("recipe_edit_save"),
-                        onClick = onSave,
-                        enabled = canSave,
-                    ) {
-                        Icon(
-                            painterResource(id = R.drawable.ic_save),
-                            contentDescription = null,
+                    },
+                    title = {
+                        Text(
+                            text = if (isEditing) {
+                                stringResource(id = R.string.recipe_edit_title)
+                            } else {
+                                stringResource(id = R.string.recipe_add_new_title)
+                            },
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    },
+                    scrollBehavior = appBarBehavior,
+                )
+            },
+        ) {
+            CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
+                BoxWithConstraints {
+                    if (isPhoneLayout) {
+                        PhoneLayout(
+                            it,
+                            lazyListState,
+                            renderNameAndDescriptionEdit,
+                            renderSteps,
+                        )
+                    } else {
+                        TabletLayout(
+                            it,
+                            lazyListState,
+                            renderNameAndDescriptionEdit,
+                            renderSteps,
                         )
                     }
-                },
-                title = {
-                    Text(
-                        text = if (isEditing) {
-                            stringResource(id = R.string.recipe_edit_title)
-                        } else {
-                            stringResource(id = R.string.recipe_add_new_title)
-                        },
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                },
-                scrollBehavior = appBarBehavior,
-            )
-        },
-    ) {
-        CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
-            BoxWithConstraints {
-                if (isPhoneLayout) {
-                    PhoneLayout(
-                        it,
-                        lazyListState,
-                        renderNameAndDescriptionEdit,
-                        renderSteps,
-                    )
-                } else {
-                    TabletLayout(
-                        it,
-                        lazyListState,
-                        renderNameAndDescriptionEdit,
-                        renderSteps,
-                    )
                 }
             }
         }
-
         if (showDeleteModal && isEditing) {
             DeleteDialog(onConfirm = deleteRecipe, onDismiss = { showDeleteModal = false })
         }
@@ -463,16 +459,19 @@ fun RecipeEdit(
             )
         }
         if (showCloneModal) {
-            CloneDialog(onConfirm = {
-                cloneRecipe(
-                    recipeToEdit.copy(
-                        name = name.text,
-                        description = description.text,
-                        recipeIcon = pickedIcon,
-                    ),
-                    steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) },
-                )
-            }, onDismiss = { showCloneModal = false },)
+            CloneDialog(
+                onConfirm = {
+                    cloneRecipe(
+                        recipeToEdit.copy(
+                            name = name.text,
+                            description = description.text,
+                            recipeIcon = pickedIcon,
+                        ),
+                        steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) },
+                    )
+                },
+                onDismiss = { showCloneModal = false },
+            )
         }
     }
 }
@@ -486,7 +485,8 @@ private fun PhoneLayout(
 ) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize().imePadding()
+            .fillMaxSize()
+            .imePadding()
             .background(color = MaterialTheme.colorScheme.background),
         state = lazyListState,
         contentPadding = getDefaultPadding(
@@ -513,12 +513,16 @@ private fun TabletLayout(
         horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
     ) {
         LazyColumn(
-            modifier = Modifier.weight(1f, fill = true).imePadding(),
+            modifier = Modifier
+                .weight(1f, fill = true)
+                .imePadding(),
         ) {
             renderNameAndDescriptionEdit()
         }
         LazyColumn(
-            modifier = Modifier.weight(1f, fill = true).imePadding(),
+            modifier = Modifier
+                .weight(1f, fill = true)
+                .imePadding(),
             state = lazyListState,
         ) {
             renderSteps()
