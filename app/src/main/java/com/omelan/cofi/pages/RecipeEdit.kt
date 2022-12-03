@@ -486,7 +486,6 @@ private fun PhoneLayout(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .imePadding()
             .background(color = MaterialTheme.colorScheme.background),
         state = lazyListState,
         contentPadding = getDefaultPadding(
@@ -495,6 +494,14 @@ private fun PhoneLayout(
     ) {
         renderNameAndDescriptionEdit()
         renderSteps()
+        item {
+            Spacer(
+                modifier = Modifier
+                    .imePadding()
+                    .navigationBarsPadding(),
+            )
+        }
+
     }
 }
 
@@ -513,19 +520,29 @@ private fun TabletLayout(
         horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
     ) {
         LazyColumn(
-            modifier = Modifier
-                .weight(1f, fill = true)
-                .imePadding(),
+            modifier = Modifier.weight(1f, fill = true)
         ) {
             renderNameAndDescriptionEdit()
+            item {
+                Spacer(
+                    modifier = Modifier
+                        .imePadding()
+                        .navigationBarsPadding(),
+                )
+            }
         }
         LazyColumn(
-            modifier = Modifier
-                .weight(1f, fill = true)
-                .imePadding(),
+            modifier = Modifier.weight(1f, fill = true),
             state = lazyListState,
         ) {
             renderSteps()
+            item {
+                Spacer(
+                    modifier = Modifier
+                        .imePadding()
+                        .navigationBarsPadding(),
+                )
+            }
         }
     }
 }
