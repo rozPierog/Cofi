@@ -78,6 +78,8 @@ class ScreenshotCreator {
                 }
             }
         }
+        composeTestRule.mainClock.autoAdvance = false
+        composeTestRule.mainClock.advanceTimeBy(45000)
         saveScreenshot("1_en-US")
     }
 
@@ -98,6 +100,8 @@ class ScreenshotCreator {
                 }
             }
         }
+        composeTestRule.mainClock.autoAdvance = false
+        composeTestRule.mainClock.advanceTimeBy(45000)
         saveScreenshot("2_en-US")
     }
 
