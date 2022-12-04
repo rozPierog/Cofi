@@ -11,6 +11,9 @@
   <a href="https://github.com/rozPierog/Cofi/releases">
     <img src="https://img.shields.io/github/v/release/rozPierog/Cofi.svg?include_prereleases?logo=github">
   </a>
+  <a href="https://liberapay.com/LeonOmelan/">
+    <img src="https://img.shields.io/liberapay/patrons/LeonOmelan.svg?logo=liberapay">
+  </a>
 </p>
 
 # Download
