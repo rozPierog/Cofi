@@ -28,7 +28,7 @@ android {
         applicationId "com.omelan.cofi"
         minSdk 25
         targetSdk 33
-        versionCode 104
+        versionCode 107
         versionName "1.2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

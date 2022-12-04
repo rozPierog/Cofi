@@ -1,1 +1,1 @@
-Open source coffee brew timer
+Open-source coffee timer. Easy-to-use interface. Perfect cup every time!
