@@ -1,5 +1,6 @@
 package com.omelan.cofi.wearos.presentation.pages
 
+import android.provider.Settings
 import android.view.KeyEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -29,16 +30,16 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun RecipeDetails(recipeId: Int) {
+fun RecipeDetails(recipeId: Int, onTimerRunning: (Boolean) -> Unit) {
     val recipeViewModel: RecipeViewModel = viewModel()
     val stepsViewModel: StepsViewModel = viewModel()
     val recipe by recipeViewModel.getRecipe(recipeId).observeAsState(initial = Recipe(name = ""))
     val steps by stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
-    RecipeDetails(recipe = recipe, steps = steps)
+    RecipeDetails(recipe = recipe, steps = steps, onTimerRunning = onTimerRunning)
 }
 
 @Composable
-fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
+fun RecipeDetails(recipe: Recipe, steps: List<Step>, onTimerRunning: (Boolean) -> Unit) {
     val dataStore = DataStore(LocalContext.current)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
@@ -59,6 +60,10 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
         onRecipeEnd = { },
         dataStore = dataStore,
     )
+    val context = LocalContext.current
+    val ambientEnabled: Boolean = remember(LocalLifecycleOwner.current) {
+        Settings.Global.getInt(context.contentResolver, "ambient_enabled") == 1
+    }
 
     val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
         indexOfCurrentStep = steps.indexOf(currentStep.value),
@@ -66,7 +71,10 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
         combineWeightState = combineWeightState,
     )
     LaunchedEffect(isTimerRunning) {
-        ambientController.setAmbientOffloadEnabled(isTimerRunning)
+        if (ambientEnabled) {
+            ambientController.setAmbientOffloadEnabled(isTimerRunning)
+        }
+        onTimerRunning(isTimerRunning)
     }
     DisposableEffect(LocalLifecycleOwner.current) {
         onDispose {
@@ -193,5 +201,5 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>) {
 @Preview
 @Composable
 fun TimerPreview() {
-    RecipeDetails(Recipe(name = "test"), steps = emptyList())
+    RecipeDetails(Recipe(name = "test"), steps = emptyList(), onTimerRunning = {})
 }

@@ -2,6 +2,7 @@ package com.omelan.cofi.wearos.presentation
 
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.CompositionLocalProvider
@@ -59,7 +60,17 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
                             ) {
                                 val id = it.arguments?.getInt("id")
                                     ?: throw Exception("Expected recipe id, got Null")
-                                RecipeDetails(id)
+                                RecipeDetails(
+                                    id,
+                                    onTimerRunning = { isTimerRunning ->
+                                        val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                                        if (isTimerRunning) {
+                                            window.addFlags(flag)
+                                        } else {
+                                            window.clearFlags(flag)
+                                        }
+                                    },
+                                )
                             }
                         }
                         TimeText()

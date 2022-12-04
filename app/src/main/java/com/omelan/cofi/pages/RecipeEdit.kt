@@ -1,7 +1,10 @@
 @file:OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class,
-    ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalComposeUiApi::class,
-    ExperimentalFoundationApi::class, ExperimentalMaterialApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalAnimationApi::class,
+    ExperimentalMaterial3WindowSizeClassApi::class,
+    ExperimentalComposeUiApi::class,
+    ExperimentalFoundationApi::class,
+    ExperimentalMaterialApi::class,
 )
 
 package com.omelan.cofi.pages
@@ -120,7 +123,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -501,7 +504,6 @@ private fun PhoneLayout(
                     .navigationBarsPadding(),
             )
         }
-
     }
 }
 
@@ -520,7 +522,7 @@ private fun TabletLayout(
         horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
     ) {
         LazyColumn(
-            modifier = Modifier.weight(1f, fill = true)
+            modifier = Modifier.weight(1f, fill = true),
         ) {
             renderNameAndDescriptionEdit()
             item {
