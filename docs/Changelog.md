@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.11.2] - 2022-12-06
+
+### Added
 - Added Always on Display when timer is running
 - If wearOS device doesn't support AoD then keep screen on during timer
 
