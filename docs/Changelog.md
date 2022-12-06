@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added Always on Display when timer is running
+- If wearOS device doesn't support AoD then keep screen on during timer
 
 ### Changed
+- fixed keyboard issue when adding steps after certain number
+- changed Icon Bottom Sheet during recipe edit slightly
 
 ### Removed
 
