@@ -14,35 +14,35 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 @Dao
-interface StepDao {
+abstract class StepDao {
     @WorkerThread
     @Query("SELECT * FROM step")
-    fun getAll(): LiveData<List<Step>>
+    abstract fun getAll(): LiveData<List<Step>>
 
     @WorkerThread
     @Query("SELECT * FROM step WHERE recipe_id IS :recipeId ORDER BY order_in_recipe ASC")
-    fun getStepsForRecipe(recipeId: Int): LiveData<List<Step>>
+    abstract fun getStepsForRecipe(recipeId: Int): LiveData<List<Step>>
 
     @WorkerThread
     @Insert
-    suspend fun insertAll(vararg steps: Step)
+    abstract suspend fun insertAll(vararg steps: Step)
 
     @WorkerThread
     @Insert
-    suspend fun insertAll(steps: List<Step>)
+    abstract suspend fun insertAll(steps: List<Step>)
 
     @WorkerThread
     @Delete
-    suspend fun delete(step: Step)
+    abstract suspend fun delete(step: Step)
 
     @Query("DELETE FROM step")
-    suspend fun deleteAll()
+    abstract suspend fun deleteAll()
 
     @Query("DELETE FROM step WHERE recipe_id = :recipeId")
-    suspend fun deleteAllStepsForRecipe(recipeId: Int)
+    abstract suspend fun deleteAllStepsForRecipe(recipeId: Int)
 
     @Transaction
-    suspend fun deleteAndCreate(steps: List<Step>) {
+    open suspend fun deleteAndCreate(steps: List<Step>) {
         deleteAll()
         insertAll(steps)
     }

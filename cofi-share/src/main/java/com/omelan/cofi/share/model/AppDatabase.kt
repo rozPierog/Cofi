@@ -14,18 +14,18 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
         // Create the new table
         database.execSQL(
             "CREATE TABLE recipe_new (" +
-                "id INTEGER NOT NULL," +
-                "name TEXT NOT NULL," +
-                "description TEXT NOT NULL," +
-                "last_finished INTEGER NOT NULL," +
-                "icon TEXT NOT NULL," +
-                "PRIMARY KEY(id))",
+                    "id INTEGER NOT NULL," +
+                    "name TEXT NOT NULL," +
+                    "description TEXT NOT NULL," +
+                    "last_finished INTEGER NOT NULL," +
+                    "icon TEXT NOT NULL," +
+                    "PRIMARY KEY(id))",
         )
         // Copy the data
         database.execSQL(
             "INSERT INTO recipe_new (id, name, description, last_finished) " +
-                "SELECT id, name, description, last_finished " +
-                "FROM recipe",
+                    "SELECT id, name, description, last_finished " +
+                    "FROM recipe",
         )
         // Remove the old table
         database.execSQL("DROP TABLE recipe")
@@ -59,44 +59,54 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase {
+        fun getInstance(context: Context, createWithData: Boolean = true): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "cofi-database.db",
-                )
-                    .addCallback(
-                        object : Callback() {
-                            override fun onCreate(db: SupportSQLiteDatabase) {
-                                super.onCreate(db)
-                                val data = PrepopulateData(context)
-                                data.recipes.forEach {
-                                    val values = ContentValues().apply {
-                                        put("id", it.id)
-                                        put("name", it.name)
-                                        put("description", it.description)
-                                        put("last_finished", it.lastFinished)
-                                        put("icon", it.recipeIcon.name)
+                ).run {
+                    if (createWithData) {
+                        addCallback(
+                            object : Callback() {
+                                override fun onCreate(db: SupportSQLiteDatabase) {
+                                    super.onCreate(db)
+                                    val data = PrepopulateData(context)
+                                    data.recipes.forEach {
+                                        val values = ContentValues().apply {
+                                            put("id", it.id)
+                                            put("name", it.name)
+                                            put("description", it.description)
+                                            put("last_finished", it.lastFinished)
+                                            put("icon", it.recipeIcon.name)
+                                        }
+                                        db.insert(
+                                            "recipe",
+                                            SQLiteDatabase.CONFLICT_REPLACE, values,
+                                        )
                                     }
-                                    db.insert("recipe", SQLiteDatabase.CONFLICT_REPLACE, values)
-                                }
-                                data.steps.forEach {
-                                    val values = ContentValues().apply {
-                                        put("id", it.id)
-                                        put("recipe_id", it.recipeId)
-                                        put("order_in_recipe", it.orderInRecipe)
-                                        put("value", it.value)
-                                        put("name", it.name)
-                                        put("time", it.time)
-                                        put("type", it.type.name)
+                                    data.steps.forEach {
+                                        val values = ContentValues().apply {
+                                            put("id", it.id)
+                                            put("recipe_id", it.recipeId)
+                                            put("order_in_recipe", it.orderInRecipe)
+                                            put("value", it.value)
+                                            put("name", it.name)
+                                            put("time", it.time)
+                                            put("type", it.type.name)
+                                        }
+                                        db.insert(
+                                            "step",
+                                            SQLiteDatabase.CONFLICT_REPLACE, values,
+                                        )
                                     }
-                                    db.insert("step", SQLiteDatabase.CONFLICT_REPLACE, values)
                                 }
-                            }
-                        },
-                    )
-                    .addMigrations(*ALL_MIGRATIONS)
+                            },
+                        )
+                    } else {
+                        this
+                    }
+                }.addMigrations(*ALL_MIGRATIONS)
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

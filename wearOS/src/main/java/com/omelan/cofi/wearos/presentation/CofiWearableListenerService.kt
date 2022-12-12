@@ -40,7 +40,7 @@ class CofiWearableListenerService : WearableListenerService() {
     }
 
     private suspend fun saveDBDataFromChannel(jsonArray: JSONArray, channelPath: String) {
-        val db = AppDatabase.getInstance(this)
+        val db = AppDatabase.getInstance(this, false)
         when (channelPath) {
             "cofi/steps" -> db.stepDao().deleteAndCreate(jsonArray.toSteps(true))
             "cofi/recipes" -> db.recipeDao().deleteAndCreate(jsonArray.toRecipes(true))

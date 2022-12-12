@@ -39,35 +39,34 @@ open class RecipeIconTypeConverter {
 }
 
 @Dao
-interface RecipeDao {
+abstract class RecipeDao {
 
     @Query("SELECT * FROM recipe ORDER BY last_finished DESC")
-    fun getAll(): LiveData<List<Recipe>>
+    abstract fun getAll(): LiveData<List<Recipe>>
 
     @Query("SELECT * FROM recipe WHERE ID is :id")
-    fun get(id: Int): LiveData<Recipe>
+    abstract fun get(id: Int): LiveData<Recipe>
 
     @Insert
-    suspend fun insertAll(vararg recipes: Recipe)
+    abstract suspend fun insertAll(vararg recipes: Recipe)
 
     @Insert
-    suspend fun insertAll(recipes: List<Recipe>)
+    abstract suspend fun insertAll(recipes: List<Recipe>)
 
     @Insert
-    suspend fun insertRecipe(recipe: Recipe): Long
+    abstract suspend fun insertRecipe(recipe: Recipe): Long
 
     @Update
-    suspend fun updateRecipe(recipe: Recipe)
-
+    abstract suspend fun updateRecipe(recipe: Recipe)
 
     @Query("DELETE FROM recipe")
-    suspend fun deleteAll()
+    abstract suspend fun deleteAll()
 
     @Query("DELETE FROM recipe WHERE id = :recipeId")
-    suspend fun deleteById(recipeId: Int)
+    abstract suspend fun deleteById(recipeId: Int)
 
     @Transaction
-    suspend fun deleteAndCreate(recipes: List<Recipe>) {
+    open suspend fun deleteAndCreate(recipes: List<Recipe>) {
         deleteAll()
         insertAll(recipes)
     }
