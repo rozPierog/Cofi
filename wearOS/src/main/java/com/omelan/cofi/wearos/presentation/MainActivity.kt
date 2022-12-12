@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.WindowManager
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.fragment.app.FragmentActivity
@@ -12,7 +11,6 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.wear.ambient.AmbientModeSupport
 import androidx.wear.ambient.AmbientModeSupport.AmbientCallback
-import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
@@ -42,38 +40,35 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
                 LocalAmbientModeProvider provides ambientController,
             ) {
                 CofiTheme {
-                    Box {
-                        SwipeDismissableNavHost(
-                            navController = navController,
-                            startDestination = "recipe_list",
-                        ) {
-                            composable("recipe_list") {
-                                RecipeList(
-                                    goToDetails = { recipe ->
-                                        navController.navigate(route = "recipe_details/${recipe.id}")
-                                    },
-                                )
-                            }
-                            composable(
-                                "recipe_details/{id}",
-                                arguments = listOf(navArgument("id") { type = NavType.IntType }),
-                            ) {
-                                val id = it.arguments?.getInt("id")
-                                    ?: throw Exception("Expected recipe id, got Null")
-                                RecipeDetails(
-                                    id,
-                                    onTimerRunning = { isTimerRunning ->
-                                        val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                                        if (isTimerRunning) {
-                                            window.addFlags(flag)
-                                        } else {
-                                            window.clearFlags(flag)
-                                        }
-                                    },
-                                )
-                            }
+                    SwipeDismissableNavHost(
+                        navController = navController,
+                        startDestination = "recipe_list",
+                    ) {
+                        composable("recipe_list") {
+                            RecipeList(
+                                goToDetails = { recipe ->
+                                    navController.navigate(route = "recipe_details/${recipe.id}")
+                                },
+                            )
                         }
-                        TimeText()
+                        composable(
+                            "recipe_details/{id}",
+                            arguments = listOf(navArgument("id") { type = NavType.IntType }),
+                        ) {
+                            val id = it.arguments?.getInt("id")
+                                ?: throw Exception("Expected recipe id, got Null")
+                            RecipeDetails(
+                                id,
+                                onTimerRunning = { isTimerRunning ->
+                                    val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                                    if (isTimerRunning) {
+                                        window.addFlags(flag)
+                                    } else {
+                                        window.clearFlags(flag)
+                                    }
+                                },
+                            )
+                        }
                     }
                 }
             }

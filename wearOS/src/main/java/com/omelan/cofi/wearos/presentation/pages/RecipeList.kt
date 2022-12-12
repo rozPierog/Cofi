@@ -51,58 +51,74 @@ fun RecipeList(
             showOpenPhoneAppItem = true
         }
     }
-
-    ScalingLazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        autoCentering = AutoCenteringParams(itemIndex = 1, itemOffset = 0),
+    val lazyListState = rememberScalingLazyListState()
+    Scaffold(
+        positionIndicator = {
+            PositionIndicator(scalingLazyListState = lazyListState)
+        },
+        timeText = {
+            TimeText()
+        },
+        vignette = {
+            Vignette(vignettePosition = VignettePosition.TopAndBottom)
+        },
     ) {
-        item {
-            Text(text = "Cofi")
-        }
-        if (showOpenPhoneAppItem && mainActivity != null) {
+        ScalingLazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            state = lazyListState,
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            autoCentering = AutoCenteringParams(itemIndex = 1, itemOffset = 0),
+        ) {
             item {
-                Card(
-                    onClick = {
-                        WearUtils.openAppInStoreOnPhone(mainActivity) { showConfirmation = true }
-                    },
-                ) {
-                    Row {
-                        Icon(
-                            modifier = Modifier.size(24.dp),
-                            painter = painterResource(id = R.drawable.common_full_open_on_phone),
-                            contentDescription = "",
-                        )
-                        Text(text = "Install Cofi on your phone")
+                Text(text = "Cofi")
+            }
+            if (showOpenPhoneAppItem && mainActivity != null) {
+                item {
+                    Card(
+                        onClick = {
+                            WearUtils.openAppInStoreOnPhone(mainActivity) {
+                                showConfirmation = true
+                            }
+                        },
+                    ) {
+                        Row {
+                            Icon(
+                                modifier = Modifier.size(24.dp),
+                                painter = painterResource(id = R.drawable.common_full_open_on_phone),
+                                contentDescription = "",
+                            )
+                            Text(text = "Install Cofi on your phone")
+                        }
                     }
                 }
             }
+            items(recipes) {
+                RecipeListItem(recipe = it) {
+                    goToDetails(it)
+                }
+            }
         }
-        items(recipes) {
-            RecipeListItem(recipe = it) {
-                goToDetails(it)
+        AnimatedVisibility(
+            visible = showConfirmation,
+            enter = fadeIn() + scaleIn(),
+            exit = fadeOut() + scaleOut(),
+        ) {
+            Confirmation(
+                onTimeout = { showConfirmation = false },
+                icon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.common_full_open_on_phone),
+                        contentDescription = "",
+                    )
+                },
+            ) {
+                Text(text = stringResource(id = R.string.common_open_on_phone))
             }
         }
     }
-    AnimatedVisibility(
-        visible = showConfirmation,
-        enter = fadeIn() + scaleIn(),
-        exit = fadeOut() + scaleOut(),
-    ) {
-        Confirmation(
-            onTimeout = { showConfirmation = false },
-            icon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.common_full_open_on_phone),
-                    contentDescription = "",
-                )
-            },
-        ) {
-            Text(text = stringResource(id = R.string.common_open_on_phone))
-        }
-    }
+
 }
 
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)

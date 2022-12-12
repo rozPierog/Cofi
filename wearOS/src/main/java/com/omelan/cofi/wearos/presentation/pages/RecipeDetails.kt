@@ -15,9 +15,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.wear.compose.material.CircularProgressIndicator
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.*
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
@@ -120,78 +118,83 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>, onTimerRunning: (Boolean) -
             false
         }
     }
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
+    Scaffold(
+        timeText = {
+            TimeText()
+        }
     ) {
-        CircularProgressIndicator(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(4.dp),
-            progress = animatedProgressValue.value,
-            indicatorColor = if (ambientController.isAmbient) {
-                Color.White
-            } else {
-                animatedProgressColor.value
-            },
-            startAngle = 300f,
-            endAngle = 240f,
-        )
-        Column(
-            modifier = Modifier
-                .padding(4.dp)
-                .aspectRatio(1f)
-                .fillMaxSize()
-                .animateContentSize(),
-            Arrangement.Center,
-            Alignment.CenterHorizontally,
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
         ) {
-            AnimatedVisibility(
-                visible = currentStep.value == null && !isDone,
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(4.dp),
+                progress = animatedProgressValue.value,
+                indicatorColor = if (ambientController.isAmbient) {
+                    Color.White
+                } else {
+                    animatedProgressColor.value
+                },
+                startAngle = 300f,
+                endAngle = 240f,
+            )
+            Column(
+                modifier = Modifier
+                    .padding(4.dp)
+                    .aspectRatio(1f)
+                    .fillMaxSize()
+                    .animateContentSize(),
+                Arrangement.Center,
+                Alignment.CenterHorizontally,
             ) {
-                Text(
-                    text = recipe.name,
-                    color = MaterialTheme.colors.onSurface,
-                    maxLines = 2,
-                    style = MaterialTheme.typography.title1,
-                )
-            }
-            AnimatedVisibility(
-                visible = currentStep.value != null && !isDone,
-            ) {
-                Column {
-                    if (currentStep.value != null) {
-                        TimeText(
-                            currentStep = currentStep.value!!,
-                            animatedProgressValue = animatedProgressValue.value,
-                            color = MaterialTheme.colors.onSurface,
-                            maxLines = 2,
-                            style = MaterialTheme.typography.title2,
-                            paddingHorizontal = 2.dp,
-                            showMillis = false,
-                        )
-                        StepNameText(
-                            currentStep = currentStep.value!!,
-                            color = MaterialTheme.colors.onSurface,
-                            style = MaterialTheme.typography.title3,
-                            maxLines = 1,
-                            paddingHorizontal = 2.dp,
-                        )
-                        TimerValue(
-                            currentStep = currentStep.value!!,
-                            animatedProgressValue = animatedProgressValue.value,
-                            alreadyDoneWeight = alreadyDoneWeight,
-                            color = MaterialTheme.colors.onSurface,
-                            maxLines = 1,
-                            style = MaterialTheme.typography.title1,
-                        )
+                AnimatedVisibility(
+                    visible = currentStep.value == null && !isDone,
+                ) {
+                    Text(
+                        text = recipe.name,
+                        color = MaterialTheme.colors.onSurface,
+                        maxLines = 2,
+                        style = MaterialTheme.typography.title1,
+                    )
+                }
+                AnimatedVisibility(
+                    visible = currentStep.value != null && !isDone,
+                ) {
+                    Column {
+                        if (currentStep.value != null) {
+                            TimeText(
+                                currentStep = currentStep.value!!,
+                                animatedProgressValue = animatedProgressValue.value,
+                                color = MaterialTheme.colors.onSurface,
+                                maxLines = 2,
+                                style = MaterialTheme.typography.title2,
+                                paddingHorizontal = 2.dp,
+                                showMillis = false,
+                            )
+                            StepNameText(
+                                currentStep = currentStep.value!!,
+                                color = MaterialTheme.colors.onSurface,
+                                style = MaterialTheme.typography.title3,
+                                maxLines = 1,
+                                paddingHorizontal = 2.dp,
+                            )
+                            TimerValue(
+                                currentStep = currentStep.value!!,
+                                animatedProgressValue = animatedProgressValue.value,
+                                alreadyDoneWeight = alreadyDoneWeight,
+                                color = MaterialTheme.colors.onSurface,
+                                maxLines = 1,
+                                style = MaterialTheme.typography.title1,
+                            )
+                        }
                     }
                 }
-            }
-            AnimatedVisibility(visible = !ambientController.isAmbient) {
-                Spacer(Modifier.height(6.dp))
-                StartButton(isTimerRunning, startButtonOnClick)
+                AnimatedVisibility(visible = !ambientController.isAmbient) {
+                    Spacer(Modifier.height(6.dp))
+                    StartButton(isTimerRunning, startButtonOnClick)
+                }
             }
         }
     }
