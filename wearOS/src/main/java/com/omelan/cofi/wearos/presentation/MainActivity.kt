@@ -6,14 +6,19 @@ import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.wear.ambient.AmbientModeSupport
 import androidx.wear.ambient.AmbientModeSupport.AmbientCallback
+import androidx.wear.compose.material.edgeSwipeToDismiss
+import androidx.wear.compose.material.rememberSwipeToDismissBoxState
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavHostState
 import com.omelan.cofi.wearos.presentation.components.KeyEventHandler
 import com.omelan.cofi.wearos.presentation.pages.RecipeDetails
 import com.omelan.cofi.wearos.presentation.pages.RecipeList
@@ -34,6 +39,9 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
         ambientController = AmbientModeSupport.attach(this)
         ambientController.setAmbientOffloadEnabled(false)
         setContent {
+            val edgeSwipeToDismissBoxState = rememberSwipeToDismissBoxState()
+            val swipeDismissableNavHostState =
+                rememberSwipeDismissableNavHostState(edgeSwipeToDismissBoxState)
             val navController = rememberSwipeDismissableNavController()
             CompositionLocalProvider(
                 LocalKeyEventHandlers provides keyEventHandlers,
@@ -42,6 +50,7 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
                 CofiTheme {
                     SwipeDismissableNavHost(
                         navController = navController,
+                        state = swipeDismissableNavHostState,
                         startDestination = "recipe_list",
                     ) {
                         composable("recipe_list") {
@@ -58,6 +67,7 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
                             val id = it.arguments?.getInt("id")
                                 ?: throw Exception("Expected recipe id, got Null")
                             RecipeDetails(
+                                modifier = Modifier.edgeSwipeToDismiss(edgeSwipeToDismissBoxState, 10.dp),
                                 id,
                                 onTimerRunning = { isTimerRunning ->
                                     val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON

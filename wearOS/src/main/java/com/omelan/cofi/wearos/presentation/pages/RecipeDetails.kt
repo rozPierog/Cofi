@@ -1,9 +1,12 @@
+@file:OptIn(ExperimentalPagerApi::class)
+
 package com.omelan.cofi.wearos.presentation.pages
 
 import android.provider.Settings
 import android.view.KeyEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -16,11 +19,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.material.*
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
 import com.omelan.cofi.share.components.TimerValue
 import com.omelan.cofi.share.timer.Timer
+import com.omelan.cofi.share.timer.TimerControllers
 import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
 import com.omelan.cofi.wearos.presentation.components.ListenKeyEvents
 import com.omelan.cofi.wearos.presentation.components.StartButton
@@ -28,32 +35,30 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun RecipeDetails(recipeId: Int, onTimerRunning: (Boolean) -> Unit) {
+fun RecipeDetails(modifier: Modifier = Modifier, recipeId: Int, onTimerRunning: (Boolean) -> Unit) {
     val recipeViewModel: RecipeViewModel = viewModel()
     val stepsViewModel: StepsViewModel = viewModel()
     val recipe by recipeViewModel.getRecipe(recipeId).observeAsState(initial = Recipe(name = ""))
     val steps by stepsViewModel.getAllStepsForRecipe(recipeId).observeAsState(listOf())
-    RecipeDetails(recipe = recipe, steps = steps, onTimerRunning = onTimerRunning)
+    RecipeDetails(
+        modifier = modifier,
+        recipe = recipe,
+        steps = steps,
+        onTimerRunning = onTimerRunning,
+    )
 }
 
 @Composable
-fun RecipeDetails(recipe: Recipe, steps: List<Step>, onTimerRunning: (Boolean) -> Unit) {
+fun RecipeDetails(
+    modifier: Modifier = Modifier,
+    recipe: Recipe,
+    steps: List<Step>,
+    onTimerRunning: (Boolean) -> Unit,
+) {
     val dataStore = DataStore(LocalContext.current)
-    val combineWeightState by dataStore.getWeightSetting()
-        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+
     val ambientController = LocalAmbientModeProvider.current
-    val (
-        currentStep,
-        isDone,
-        isTimerRunning,
-        _,
-        animatedProgressValue,
-        animatedProgressColor,
-        pauseAnimations,
-        progressAnimation,
-        startAnimations,
-        changeToNextStep,
-    ) = Timer.createTimerControllers(
+    val timerControllers = Timer.createTimerControllers(
         steps = steps,
         onRecipeEnd = { },
         dataStore = dataStore,
@@ -63,27 +68,97 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>, onTimerRunning: (Boolean) -
         Settings.Global.getInt(context.contentResolver, "ambient_enabled") == 1
     }
 
-    val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
-        indexOfCurrentStep = steps.indexOf(currentStep.value),
-        allSteps = steps,
-        combineWeightState = combineWeightState,
-    )
-    LaunchedEffect(isTimerRunning) {
+    LaunchedEffect(timerControllers.isTimerRunning) {
         if (ambientEnabled) {
-            ambientController.setAmbientOffloadEnabled(isTimerRunning)
+            ambientController.setAmbientOffloadEnabled(timerControllers.isTimerRunning)
         }
-        onTimerRunning(isTimerRunning)
+        onTimerRunning(timerControllers.isTimerRunning)
     }
     DisposableEffect(LocalLifecycleOwner.current) {
         onDispose {
             ambientController.setAmbientOffloadEnabled(false)
         }
     }
-    LaunchedEffect(currentStep.value) {
-        progressAnimation(Unit)
+    LaunchedEffect(timerControllers.currentStep.value) {
+        timerControllers.progressAnimation(Unit)
     }
-    val coroutineScope = rememberCoroutineScope()
 
+
+    val pagerState = rememberPagerState(0)
+    val animatedSelectedPage by animateFloatAsState(
+        targetValue = pagerState.currentPage.toFloat(),
+        animationSpec = TweenSpec(durationMillis = 500),
+    )
+    val pageIndicatorState: PageIndicatorState = remember {
+        object : PageIndicatorState {
+            override val pageOffset: Float
+                get() = animatedSelectedPage - pagerState.currentPage
+            override val selectedPage: Int
+                get() = pagerState.currentPage
+            override val pageCount: Int
+                get() = pagerState.pageCount
+        }
+    }
+    Scaffold(
+        timeText = {
+            TimeText()
+        },
+        pageIndicator = {
+            HorizontalPageIndicator(
+                pageIndicatorState = pageIndicatorState,
+                modifier = Modifier.padding(bottom = 10.dp),
+            )
+        },
+    ) {
+        HorizontalPager(count = 2, modifier = modifier, state = pagerState) { page ->
+            when (page) {
+                0 -> TimerPage(
+                    timerControllers = timerControllers,
+                    allSteps = steps,
+                    recipe = recipe,
+                    dataStore = dataStore,
+                )
+
+                1 -> TimerPage(
+                    timerControllers = timerControllers,
+                    allSteps = steps,
+                    recipe = recipe,
+                    dataStore = dataStore,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun TimerPage(
+    timerControllers: TimerControllers,
+    allSteps: List<Step>,
+    recipe: Recipe,
+    dataStore: DataStore,
+) {
+    val (
+        currentStep,
+        isDone,
+        isTimerRunning,
+        _,
+        animatedProgressValue,
+        animatedProgressColor,
+        pauseAnimations,
+        _,
+        startAnimations,
+        changeToNextStep,
+    ) = timerControllers
+    val combineWeightState by dataStore.getWeightSetting()
+        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+    val coroutineScope = rememberCoroutineScope()
+    val ambientController = LocalAmbientModeProvider.current
+
+    val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
+        indexOfCurrentStep = allSteps.indexOf(currentStep.value),
+        allSteps = allSteps,
+        combineWeightState = combineWeightState,
+    )
     val startButtonOnClick: () -> Unit = {
         if (currentStep.value != null) {
             if (animatedProgressValue.isRunning) {
@@ -118,83 +193,77 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>, onTimerRunning: (Boolean) -
             false
         }
     }
-    Scaffold(
-        timeText = {
-            TimeText()
-        }
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center,
+        CircularProgressIndicator(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(4.dp),
+            progress = animatedProgressValue.value,
+            indicatorColor = if (ambientController.isAmbient) {
+                Color.White
+            } else {
+                animatedProgressColor.value
+            },
+            startAngle = 300f,
+            endAngle = 240f,
+        )
+        Column(
+            modifier = Modifier
+                .padding(4.dp)
+                .aspectRatio(1f)
+                .fillMaxSize()
+                .animateContentSize(),
+            Arrangement.Center,
+            Alignment.CenterHorizontally,
         ) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(4.dp),
-                progress = animatedProgressValue.value,
-                indicatorColor = if (ambientController.isAmbient) {
-                    Color.White
-                } else {
-                    animatedProgressColor.value
-                },
-                startAngle = 300f,
-                endAngle = 240f,
-            )
-            Column(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .aspectRatio(1f)
-                    .fillMaxSize()
-                    .animateContentSize(),
-                Arrangement.Center,
-                Alignment.CenterHorizontally,
+            AnimatedVisibility(
+                visible = currentStep.value == null && !isDone,
             ) {
-                AnimatedVisibility(
-                    visible = currentStep.value == null && !isDone,
-                ) {
-                    Text(
-                        text = recipe.name,
-                        color = MaterialTheme.colors.onSurface,
-                        maxLines = 2,
-                        style = MaterialTheme.typography.title1,
-                    )
-                }
-                AnimatedVisibility(
-                    visible = currentStep.value != null && !isDone,
-                ) {
-                    Column {
-                        if (currentStep.value != null) {
-                            TimeText(
-                                currentStep = currentStep.value!!,
-                                animatedProgressValue = animatedProgressValue.value,
-                                color = MaterialTheme.colors.onSurface,
-                                maxLines = 2,
-                                style = MaterialTheme.typography.title2,
-                                paddingHorizontal = 2.dp,
-                                showMillis = false,
-                            )
-                            StepNameText(
-                                currentStep = currentStep.value!!,
-                                color = MaterialTheme.colors.onSurface,
-                                style = MaterialTheme.typography.title3,
-                                maxLines = 1,
-                                paddingHorizontal = 2.dp,
-                            )
-                            TimerValue(
-                                currentStep = currentStep.value!!,
-                                animatedProgressValue = animatedProgressValue.value,
-                                alreadyDoneWeight = alreadyDoneWeight,
-                                color = MaterialTheme.colors.onSurface,
-                                maxLines = 1,
-                                style = MaterialTheme.typography.title1,
-                            )
-                        }
+                Text(
+                    text = recipe.name,
+                    color = MaterialTheme.colors.onSurface,
+                    maxLines = 2,
+                    style = MaterialTheme.typography.title1,
+                )
+            }
+            AnimatedVisibility(
+                visible = currentStep.value != null && !isDone,
+            ) {
+                Column {
+                    if (currentStep.value != null) {
+                        TimeText(
+                            currentStep = currentStep.value!!,
+                            animatedProgressValue = animatedProgressValue.value,
+                            color = MaterialTheme.colors.onSurface,
+                            maxLines = 2,
+                            style = MaterialTheme.typography.title2,
+                            paddingHorizontal = 2.dp,
+                            showMillis = false,
+                        )
+                        StepNameText(
+                            currentStep = currentStep.value!!,
+                            color = MaterialTheme.colors.onSurface,
+                            style = MaterialTheme.typography.title3,
+                            maxLines = 1,
+                            paddingHorizontal = 2.dp,
+                        )
+                        TimerValue(
+                            currentStep = currentStep.value!!,
+                            animatedProgressValue = animatedProgressValue.value,
+                            alreadyDoneWeight = alreadyDoneWeight,
+                            color = MaterialTheme.colors.onSurface,
+                            maxLines = 1,
+                            style = MaterialTheme.typography.title1,
+                        )
                     }
                 }
-                AnimatedVisibility(visible = !ambientController.isAmbient) {
-                    Spacer(Modifier.height(6.dp))
-                    StartButton(isTimerRunning, startButtonOnClick)
-                }
+            }
+            AnimatedVisibility(visible = !ambientController.isAmbient) {
+                Spacer(Modifier.height(6.dp))
+                StartButton(isTimerRunning, startButtonOnClick)
             }
         }
     }
@@ -204,5 +273,5 @@ fun RecipeDetails(recipe: Recipe, steps: List<Step>, onTimerRunning: (Boolean) -
 @Preview
 @Composable
 fun TimerPreview() {
-    RecipeDetails(Recipe(name = "test"), steps = emptyList(), onTimerRunning = {})
+    RecipeDetails(recipe = Recipe(name = "test"), steps = emptyList(), onTimerRunning = {})
 }
