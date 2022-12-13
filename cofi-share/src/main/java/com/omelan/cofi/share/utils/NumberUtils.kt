@@ -33,7 +33,7 @@ fun Int.toStringDuration(
     }
 
     return "$minutesString:$secondsString" + if (millisString.isNotBlank()) {
-        ":$millisString"
+        ".$millisString"
     } else {
         ""
     }
