@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalPagerApi::class)
+@file:OptIn(ExperimentalPagerApi::class, ExperimentalComposeUiApi::class)
 
 package com.omelan.cofi.wearos.presentation.pages
 
@@ -6,13 +6,22 @@ import android.provider.Settings
 import android.view.KeyEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.rotary.onRotaryScrollEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +41,8 @@ import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
 import com.omelan.cofi.wearos.presentation.components.ListenKeyEvents
 import com.omelan.cofi.wearos.presentation.components.StartButton
 import kotlinx.coroutines.launch
+import java.math.RoundingMode
+import kotlin.math.roundToInt
 
 
 @Composable
@@ -58,6 +69,8 @@ fun RecipeDetails(
     val dataStore = DataStore(LocalContext.current)
 
     val ambientController = LocalAmbientModeProvider.current
+    var weightMultiplier by remember { mutableStateOf(1.0f) }
+    var timeMultiplier by remember { mutableStateOf(1.0f) }
     val timerControllers = Timer.createTimerControllers(
         steps = steps,
         onRecipeEnd = { },
@@ -106,11 +119,11 @@ fun RecipeDetails(
         pageIndicator = {
             HorizontalPageIndicator(
                 pageIndicatorState = pageIndicatorState,
-                modifier = Modifier.padding(bottom = 10.dp),
+                modifier = Modifier.padding(10.dp),
             )
         },
     ) {
-        HorizontalPager(count = 2, modifier = modifier, state = pagerState) { page ->
+        HorizontalPager(count = 3, modifier = modifier, state = pagerState) { page ->
             when (page) {
                 0 -> TimerPage(
                     timerControllers = timerControllers,
@@ -119,14 +132,61 @@ fun RecipeDetails(
                     dataStore = dataStore,
                 )
 
-                1 -> TimerPage(
-                    timerControllers = timerControllers,
-                    allSteps = steps,
-                    recipe = recipe,
-                    dataStore = dataStore,
+                1 -> Row {
+                    MultiplierPage(
+                        multiplier = weightMultiplier,
+                        changeMultiplier = { weightMultiplier = it },
+                    )
+                }
+
+                2 -> MultiplierPage(
+                    multiplier = timeMultiplier,
+                    changeMultiplier = { timeMultiplier = it },
                 )
             }
         }
+    }
+}
+
+const val step = 0.1f
+val range = 0f..3f
+val steps = (range.endInclusive / step).roundToInt() + 1
+
+@Composable
+fun MultiplierPage(
+    multiplier: Float,
+    changeMultiplier: (Float) -> Unit,
+) {
+    var rotaryPosition by remember { mutableStateOf(0f) }
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+    Stepper(
+        modifier = Modifier
+            .onRotaryScrollEvent {
+                when (it.verticalScrollPixels.compareTo(rotaryPosition)) {
+                    1 -> changeMultiplier(multiplier + step)
+                    0 -> {}
+                    -1 -> changeMultiplier(multiplier - step)
+                }
+                rotaryPosition = it.verticalScrollPixels
+                true
+            }
+            .focusRequester(focusRequester)
+            .focusable(),
+        value = multiplier,
+        onValueChange = {
+            val rounded = it.toBigDecimal().setScale(1, RoundingMode.HALF_EVEN).toFloat()
+            changeMultiplier(rounded)
+        },
+        steps = steps,
+        valueRange = range,
+        decreaseIcon = { Icon(Icons.Rounded.Refresh, contentDescription = "") },
+        increaseIcon = { Icon(Icons.Rounded.Add, contentDescription = "") },
+    ) {
+        Text(text = multiplier.toString())
     }
 }
 
