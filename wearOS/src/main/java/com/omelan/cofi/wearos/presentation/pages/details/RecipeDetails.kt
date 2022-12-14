@@ -5,7 +5,6 @@
 
 
 import android.provider.Settings
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
@@ -113,7 +112,6 @@ fun RecipeDetails(
 
 
     val pagerState = rememberPagerState()
-    Log.e("PAGE", pagerState.currentPage.toString())
     val animatedSelectedPage by animateFloatAsState(
         targetValue = pagerState.currentPage.toFloat(),
         animationSpec = TweenSpec(durationMillis = 500),
