@@ -1,5 +1,6 @@
 package com.omelan.cofi.wearos.presentation
 
+import RecipeDetails
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.WindowManager
@@ -20,7 +21,6 @@ import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavHostState
 import com.omelan.cofi.wearos.presentation.components.KeyEventHandler
-import com.omelan.cofi.wearos.presentation.pages.RecipeDetails
 import com.omelan.cofi.wearos.presentation.pages.RecipeList
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
 
