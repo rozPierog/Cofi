@@ -34,6 +34,8 @@ fun TimerPage(
     allSteps: List<Step>,
     recipe: Recipe,
     dataStore: DataStore,
+    weightMultiplier: Float,
+    timeMultiplier: Float,
 ) {
     val (
         currentStep,
@@ -56,6 +58,7 @@ fun TimerPage(
         indexOfCurrentStep = allSteps.indexOf(currentStep.value),
         allSteps = allSteps,
         combineWeightState = combineWeightState,
+        weightMultiplier = weightMultiplier,
     )
     val startButtonOnClick: () -> Unit = {
         if (currentStep.value != null) {
@@ -134,7 +137,7 @@ fun TimerPage(
                     if (currentStep.value != null) {
                         TimeText(
                             currentStep = currentStep.value!!,
-                            animatedProgressValue = animatedProgressValue.value,
+                            animatedProgressValue = animatedProgressValue.value * timeMultiplier,
                             color = MaterialTheme.colors.onSurface,
                             maxLines = 2,
                             style = MaterialTheme.typography.title2,
@@ -151,6 +154,7 @@ fun TimerPage(
                         TimerValue(
                             currentStep = currentStep.value!!,
                             animatedProgressValue = animatedProgressValue.value,
+                            weightMultiplier = weightMultiplier,
                             alreadyDoneWeight = alreadyDoneWeight,
                             color = MaterialTheme.colors.onSurface,
                             maxLines = 1,

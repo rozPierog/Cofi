@@ -85,6 +85,21 @@ fun RecipeDetails(
             }
         }
     }
+    val pagerState = rememberPagerState()
+    val animatedSelectedPage by animateFloatAsState(
+        targetValue = pagerState.currentPage.toFloat(),
+        animationSpec = TweenSpec(durationMillis = 500),
+    )
+    val pageIndicatorState: PageIndicatorState = remember {
+        object : PageIndicatorState {
+            override val pageOffset: Float
+                get() = animatedSelectedPage - pagerState.currentPage
+            override val selectedPage: Int
+                get() = pagerState.currentPage
+            override val pageCount: Int
+                get() = pagerState.pageCount
+        }
+    }
     val timerControllers = Timer.createTimerControllers(
         steps = steps,
         onRecipeEnd = { },
@@ -106,26 +121,15 @@ fun RecipeDetails(
             ambientController.setAmbientOffloadEnabled(false)
         }
     }
+    LaunchedEffect(ambientController.isAmbient) {
+        if (ambientController.isAmbient) {
+            pagerState.scrollToPage(0)
+        }
+    }
     LaunchedEffect(timerControllers.currentStep.value) {
         timerControllers.progressAnimation(Unit)
     }
 
-
-    val pagerState = rememberPagerState()
-    val animatedSelectedPage by animateFloatAsState(
-        targetValue = pagerState.currentPage.toFloat(),
-        animationSpec = TweenSpec(durationMillis = 500),
-    )
-    val pageIndicatorState: PageIndicatorState = remember {
-        object : PageIndicatorState {
-            override val pageOffset: Float
-                get() = animatedSelectedPage - pagerState.currentPage
-            override val selectedPage: Int
-                get() = pagerState.currentPage
-            override val pageCount: Int
-                get() = pagerState.pageCount
-        }
-    }
     Scaffold(
         timeText = {
             TimeText()
@@ -144,6 +148,8 @@ fun RecipeDetails(
                     allSteps = steps,
                     recipe = recipe,
                     dataStore = dataStore,
+                    weightMultiplier = weightMultiplier,
+                    timeMultiplier = timeMultiplier,
                 )
 
                 1 -> Row {
