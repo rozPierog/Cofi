@@ -22,6 +22,7 @@ import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavHostState
 import com.omelan.cofi.wearos.presentation.components.KeyEventHandler
 import com.omelan.cofi.wearos.presentation.pages.RecipeList
+import com.omelan.cofi.wearos.presentation.pages.Settings
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
 
 class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvider {
@@ -61,6 +62,9 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
                                 goToDetails = { recipe ->
                                     navController.navigate(route = "recipe_details/${recipe.id}")
                                 },
+                                openSettings = {
+                                    navController.navigate("settings")
+                                },
                             )
                         }
                         composable(
@@ -91,6 +95,9 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
                                     }
                                 },
                             )
+                        }
+                        composable("settings") {
+                            Settings()
                         }
                     }
                 }

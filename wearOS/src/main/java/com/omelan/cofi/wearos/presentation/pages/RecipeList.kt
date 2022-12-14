@@ -1,5 +1,5 @@
 @file:OptIn(
-    ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class,
+    ExperimentalAnimationApi::class,
     ExperimentalHorologistComposeLayoutApi::class,
 )
 
@@ -11,9 +11,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
@@ -36,20 +37,20 @@ import com.omelan.cofi.wearos.presentation.components.RecipeListItem
 import com.omelan.cofi.wearos.presentation.utils.WearUtils
 
 @Composable
-fun RecipeList(goToDetails: (Recipe) -> Unit) {
+fun RecipeList(goToDetails: (Recipe) -> Unit, openSettings: () -> Unit) {
     val recipeViewModel: RecipeViewModel = viewModel()
     val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = emptyList())
-    RecipeList(recipes = recipes, goToDetails = goToDetails)
+    RecipeList(recipes = recipes, goToDetails = goToDetails, openSettings = openSettings)
 }
 
 @Composable
 fun RecipeList(
     recipes: List<Recipe>,
     goToDetails: (Recipe) -> Unit = {},
+    openSettings: () -> Unit = {},
 ) {
     var showOpenPhoneAppItem by remember { mutableStateOf(false) }
     var showConfirmation by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
     val mainActivity = LocalContext.current.getActivity()
     WearUtils.ObserveIfPhoneAppInstalled { hasPhoneApp ->
         showOpenPhoneAppItem = !hasPhoneApp
@@ -111,6 +112,11 @@ fun RecipeList(
             items(recipes) {
                 RecipeListItem(recipe = it) {
                     goToDetails(it)
+                }
+            }
+            item {
+                Button(onClick = openSettings) {
+                    Icon(Icons.Rounded.Settings, contentDescription = "")
                 }
             }
         }
