@@ -33,7 +33,10 @@ import kotlin.math.roundToInt
 
 
 @Composable
-fun RecipeDetails(modifier: Modifier = Modifier, recipeId: Int, onTimerRunning: (Boolean) -> Unit) {
+fun RecipeDetails(
+    modifier: Modifier = Modifier, recipeId: Int,
+    onTimerRunning: (Boolean) -> Unit, canSwipeToClose: (Boolean) -> Unit,
+) {
     val recipeViewModel: RecipeViewModel = viewModel()
     val stepsViewModel: StepsViewModel = viewModel()
     val recipe by recipeViewModel.getRecipe(recipeId).observeAsState(initial = Recipe(name = ""))
@@ -43,6 +46,7 @@ fun RecipeDetails(modifier: Modifier = Modifier, recipeId: Int, onTimerRunning: 
         recipe = recipe,
         steps = steps,
         onTimerRunning = onTimerRunning,
+        canSwipeToClose = canSwipeToClose,
     )
 }
 
@@ -52,6 +56,7 @@ fun RecipeDetails(
     recipe: Recipe,
     steps: List<Step>,
     onTimerRunning: (Boolean) -> Unit,
+    canSwipeToClose: (Boolean) -> Unit,
 ) {
     val dataStore = DataStore(LocalContext.current)
 
@@ -126,6 +131,13 @@ fun RecipeDetails(
             pagerState.scrollToPage(0)
         }
     }
+    LaunchedEffect(pagerState.currentPage) {
+        if (pagerState.currentPage == 0) {
+            canSwipeToClose(true)
+        } else {
+            canSwipeToClose(false)
+        }
+    }
     LaunchedEffect(timerControllers.currentStep.value) {
         timerControllers.progressAnimation(Unit)
     }
@@ -156,7 +168,7 @@ fun RecipeDetails(
                     MultiplierPage(
                         multiplier = weightMultiplier,
                         changeMultiplier = { weightMultiplier = it },
-                        requestFocus = pagerState.currentPage == 1
+                        requestFocus = pagerState.currentPage == 1,
                     ) {
                         Text(text = "x$it")
                         ParamWithIcon(
@@ -173,7 +185,7 @@ fun RecipeDetails(
                 2 -> MultiplierPage(
                     multiplier = timeMultiplier,
                     changeMultiplier = { timeMultiplier = it },
-                    requestFocus = pagerState.currentPage == 2
+                    requestFocus = pagerState.currentPage == 2,
                 ) {
                     Text(text = "x$it")
                     ParamWithIcon(

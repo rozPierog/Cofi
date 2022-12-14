@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.WindowManager
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
@@ -14,6 +13,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.wear.ambient.AmbientModeSupport
 import androidx.wear.ambient.AmbientModeSupport.AmbientCallback
+import androidx.wear.compose.material.SwipeToDismissBoxDefaults
 import androidx.wear.compose.material.edgeSwipeToDismiss
 import androidx.wear.compose.material.rememberSwipeToDismissBoxState
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
@@ -43,6 +43,9 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
             val swipeDismissableNavHostState =
                 rememberSwipeDismissableNavHostState(edgeSwipeToDismissBoxState)
             val navController = rememberSwipeDismissableNavController()
+            var edgeSwipeWidth by remember {
+                mutableStateOf(0.dp)
+            }
             CompositionLocalProvider(
                 LocalKeyEventHandlers provides keyEventHandlers,
                 LocalAmbientModeProvider provides ambientController,
@@ -67,14 +70,24 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
                             val id = it.arguments?.getInt("id")
                                 ?: throw Exception("Expected recipe id, got Null")
                             RecipeDetails(
-                                modifier = Modifier.edgeSwipeToDismiss(edgeSwipeToDismissBoxState, 10.dp),
-                                id,
+                                modifier = Modifier.edgeSwipeToDismiss(
+                                    edgeSwipeToDismissBoxState,
+                                    edgeSwipeWidth,
+                                ),
+                                recipeId = id,
                                 onTimerRunning = { isTimerRunning ->
                                     val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                                     if (isTimerRunning) {
                                         window.addFlags(flag)
                                     } else {
                                         window.clearFlags(flag)
+                                    }
+                                },
+                                canSwipeToClose = { canSwipeToClose ->
+                                    edgeSwipeWidth = if (canSwipeToClose) {
+                                        SwipeToDismissBoxDefaults.EdgeWidth
+                                    } else {
+                                        0.dp
                                     }
                                 },
                             )
