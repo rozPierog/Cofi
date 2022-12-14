@@ -1,4 +1,7 @@
-@file:OptIn(ExperimentalAnimationApi::class)
+@file:OptIn(
+    ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class,
+    ExperimentalHorologistComposeLayoutApi::class,
+)
 
 package com.omelan.cofi.wearos.presentation.pages
 
@@ -10,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -20,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.material.*
 import androidx.wear.compose.material.dialog.Confirmation
+import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
+import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
 import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeIcon
 import com.omelan.cofi.share.RecipeViewModel
@@ -42,6 +49,7 @@ fun RecipeList(
 ) {
     var showOpenPhoneAppItem by remember { mutableStateOf(false) }
     var showConfirmation by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
     val mainActivity = LocalContext.current.getActivity()
     WearUtils.ObserveIfPhoneAppInstalled { hasPhoneApp ->
         showOpenPhoneAppItem = !hasPhoneApp
@@ -52,6 +60,11 @@ fun RecipeList(
         }
     }
     val lazyListState = rememberScalingLazyListState()
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
     Scaffold(
         positionIndicator = {
             PositionIndicator(scalingLazyListState = lazyListState)
@@ -66,13 +79,14 @@ fun RecipeList(
         ScalingLazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .rotaryWithScroll(focusRequester, scrollableState = lazyListState)
                 .background(MaterialTheme.colors.background),
             state = lazyListState,
             verticalArrangement = Arrangement.spacedBy(4.dp),
             autoCentering = AutoCenteringParams(itemIndex = 1, itemOffset = 0),
         ) {
             item {
-                Text(text = "Cofi")
+                Text(text = stringResource(id = R.string.app_name))
             }
             if (showOpenPhoneAppItem && mainActivity != null) {
                 item {
