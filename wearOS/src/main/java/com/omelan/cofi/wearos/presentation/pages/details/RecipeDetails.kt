@@ -5,6 +5,7 @@
 
 
 import android.provider.Settings
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
@@ -111,7 +112,8 @@ fun RecipeDetails(
     }
 
 
-    val pagerState = rememberPagerState(0)
+    val pagerState = rememberPagerState()
+    Log.e("PAGE", pagerState.currentPage.toString())
     val animatedSelectedPage by animateFloatAsState(
         targetValue = pagerState.currentPage.toFloat(),
         animationSpec = TweenSpec(durationMillis = 500),
@@ -150,6 +152,7 @@ fun RecipeDetails(
                     MultiplierPage(
                         multiplier = weightMultiplier,
                         changeMultiplier = { weightMultiplier = it },
+                        requestFocus = pagerState.currentPage == 1
                     ) {
                         Text(text = "x$it")
                         ParamWithIcon(
@@ -166,6 +169,7 @@ fun RecipeDetails(
                 2 -> MultiplierPage(
                     multiplier = timeMultiplier,
                     changeMultiplier = { timeMultiplier = it },
+                    requestFocus = pagerState.currentPage == 2
                 ) {
                     Text(text = "x$it")
                     ParamWithIcon(

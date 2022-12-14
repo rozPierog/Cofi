@@ -36,13 +36,16 @@ fun Float.roundToTens() = this.toBigDecimal().setScale(1, RoundingMode.HALF_EVEN
 fun MultiplierPage(
     multiplier: Float,
     changeMultiplier: (Float) -> Unit,
+    requestFocus: Boolean = false,
     content: @Composable RowScope.(multiplier: Float) -> Unit,
 ) {
     var rotaryPosition by remember { mutableStateOf(0f) }
     val focusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
+    LaunchedEffect(requestFocus) {
+        if (requestFocus) {
+            focusRequester.requestFocus()
+        }
     }
     Stepper(
         modifier = Modifier
