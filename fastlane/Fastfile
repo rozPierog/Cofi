@@ -77,10 +77,13 @@ platform :android do
 
 "
     date = Time.now.strftime("%F")
-    version = get_version_name(
+    versionAndroid = get_version_name(
       app_project_dir: '**/app',
     )
-    new_changelog["\n## [Unreleased]\n"] = "\n## [#{version}] - #{date}\n"
+    versionWearOS = get_version_name(
+      app_project_dir: '**/wearOS',
+    )
+    new_changelog["\n## [Unreleased]\n"] = "\n## [#{versionAndroid}|#{versionWearOS}] - #{date}\n"
     File.open("../docs/Changelog.md", "w") { |f| f.write new_changelog.split("\n##").insert(1, unreleased).join("\n##") }
   end
 
