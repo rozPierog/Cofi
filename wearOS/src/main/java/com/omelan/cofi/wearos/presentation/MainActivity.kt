@@ -23,8 +23,8 @@ import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavHostState
 import com.omelan.cofi.wearos.presentation.components.KeyEventHandler
 import com.omelan.cofi.wearos.presentation.pages.RecipeList
-import com.omelan.cofi.wearos.presentation.pages.Settings
 import com.omelan.cofi.wearos.presentation.pages.settings.LicensesList
+import com.omelan.cofi.wearos.presentation.pages.settings.Settings
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
 
 class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvider {
