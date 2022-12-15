@@ -121,7 +121,7 @@ fun Settings(navigateToLicenses: () -> Unit) {
                 )
             }
             item {
-                Text(text = "Other")
+                Text(text = stringResource(id = R.string.step_type_other))
             }
             item {
                 Card(onClick = navigateToLicenses) {
