@@ -18,7 +18,7 @@ class NumberUtilsKtTest : TestCase() {
 
     fun testToStringDurationFullOptions() {
         val testMillis = 303100
-        val expectedString = "05:03:10"
+        val expectedString = "05:03.10"
         assertEquals(
             expectedString,
             testMillis.toStringDuration(

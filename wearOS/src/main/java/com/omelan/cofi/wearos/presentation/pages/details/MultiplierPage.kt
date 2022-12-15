@@ -37,7 +37,6 @@ fun MultiplierPage(
     requestFocus: Boolean = false,
     content: @Composable RowScope.(multiplier: Float) -> Unit,
 ) {
-    var rotaryPosition by remember { mutableStateOf(0f) }
     val focusRequester = remember { FocusRequester() }
 
     LaunchedEffect(requestFocus) {
@@ -62,7 +61,6 @@ fun MultiplierPage(
                             .coerceIn(range),
                     )
                 }
-                rotaryPosition = it.verticalScrollPixels
                 true
             }
             .focusRequester(focusRequester)
