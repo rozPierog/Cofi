@@ -44,6 +44,7 @@ class ScreenshotCreator {
             CofiTheme {
                 RecipeList(
                    goToDetails = {},
+                    openSettings = {},
                 )
             }
         }

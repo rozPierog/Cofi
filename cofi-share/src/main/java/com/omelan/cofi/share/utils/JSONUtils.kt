@@ -1,7 +1,7 @@
-package com.omelan.cofi.utils
+package com.omelan.cofi.share.utils
 
-import com.omelan.cofi.model.Dependency
-import com.omelan.cofi.model.License
+import com.omelan.cofi.share.model.Dependency
+import com.omelan.cofi.share.model.License
 import org.json.JSONArray
 import org.json.JSONObject
 

@@ -40,14 +40,15 @@ object WearUtils {
         return false
     }
 
-    fun openAppInStoreOnPhone(
+    fun openLinkOnPhone(
+        link: String,
         activity: ComponentActivity,
         onSuccess: () -> Unit,
     ) {
         val remoteActivityHelper = RemoteActivityHelper(activity)
         val intent = Intent(Intent.ACTION_VIEW)
             .addCategory(Intent.CATEGORY_BROWSABLE)
-            .setData(Uri.parse(COFI_PLAY_STORE_LINK))
+            .setData(Uri.parse(link))
 
         activity.lifecycleScope.launch {
             try {
@@ -58,6 +59,10 @@ object WearUtils {
                 throw cancellationException
             }
         }
+    }
+
+    fun openAppInStoreOnPhone(activity: ComponentActivity, onSuccess: () -> Unit) {
+        openLinkOnPhone(COFI_PLAY_STORE_LINK, activity, onSuccess)
     }
 
     @Composable

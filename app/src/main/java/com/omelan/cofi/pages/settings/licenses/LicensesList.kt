@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
+import com.omelan.cofi.share.utils.parseJsonToDependencyList
 import com.omelan.cofi.utils.getDefaultPadding
-import com.omelan.cofi.utils.parseJsonToDependencyList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

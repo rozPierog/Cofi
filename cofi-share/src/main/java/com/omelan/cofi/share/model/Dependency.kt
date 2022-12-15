@@ -1,4 +1,4 @@
-package com.omelan.cofi.model
+package com.omelan.cofi.share.model
 
 data class License(val license: String, val license_url: String)
 

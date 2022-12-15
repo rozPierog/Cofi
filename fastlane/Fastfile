@@ -23,7 +23,7 @@ platform :android do
 
   desc "Generate licenses"
   lane :licenses do
-    gradle(task: "licenseFullReleaseReport")
+    gradle(task: "app:licenseFullReleaseReport wearOS:licenseFullReleaseReport")
   end
 
   desc "Bump version codes and name"
@@ -86,7 +86,8 @@ platform :android do
 
   desc "Deploy a new version to the Google Play Store"
   lane :deploy_gps do |options|
-    gradle(task: "clean app:bundlePlayStoreRelease wearOS:bundleRelease")
+    gradle(task: "clean app:licensePlayStoreRelease app:bundlePlayStoreRelease
+    wearOS:licenseRelease wearOS:bundleRelease")
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
       skip_upload_apk: true,
@@ -107,7 +108,8 @@ platform :android do
 
   desc "Deploy a new version to Github Releases"
   lane :deploy_github do |options|
-    gradle(task: "clean app:assembleFullRelease app:assemblePlayStoreRelease wearOS:assembleRelease")
+    gradle(task: "clean app:licenseFullRelease app:assembleFullRelease app:licensePlayStoreRelease
+     app:assemblePlayStoreRelease wearOS:licenseRelease wearOS:assembleRelease")
     versionName = get_version_name(
       app_project_dir: '**/app',
     )
@@ -127,7 +129,7 @@ platform :android do
 
   desc "Builds an Instant App"
   lane :build_instant do
-    gradle(task: "clean app:bundleInstantRelease")
+    gradle(task: "clean app:licenseInstantRelease app:bundleInstantRelease")
     UI.important "⚠️ Fastlane does not support uploading instant apps to google play console ⚠️"
     UI.important "⚠️ Remember to upload instant app bundle to Play Console! ⚠️"
     sh("open", "app/build/outputs/bundle/instantRelease")

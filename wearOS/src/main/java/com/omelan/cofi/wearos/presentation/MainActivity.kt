@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import androidx.wear.ambient.AmbientModeSupport
 import androidx.wear.ambient.AmbientModeSupport.AmbientCallback
 import androidx.wear.compose.material.SwipeToDismissBoxDefaults
@@ -23,6 +24,7 @@ import androidx.wear.compose.navigation.rememberSwipeDismissableNavHostState
 import com.omelan.cofi.wearos.presentation.components.KeyEventHandler
 import com.omelan.cofi.wearos.presentation.pages.RecipeList
 import com.omelan.cofi.wearos.presentation.pages.Settings
+import com.omelan.cofi.wearos.presentation.pages.settings.LicensesList
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
 
 class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvider {
@@ -96,8 +98,17 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
                                 },
                             )
                         }
-                        composable("settings") {
-                            Settings()
+                        navigation("list", route = "settings") {
+                            composable("list") {
+                                Settings(
+                                    navigateToLicenses = {
+                                        navController.navigate("licenses")
+                                    },
+                                )
+                            }
+                            composable("licenses") {
+                                LicensesList()
+                            }
                         }
                     }
                 }

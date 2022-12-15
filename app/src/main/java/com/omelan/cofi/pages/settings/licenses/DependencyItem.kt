@@ -14,9 +14,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.omelan.cofi.model.Dependency
-import com.omelan.cofi.model.License
 import com.omelan.cofi.pages.settings.settingsItemModifier
+import com.omelan.cofi.share.model.Dependency
+import com.omelan.cofi.share.model.License
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.URL_ANNOTATION
 import com.omelan.cofi.utils.appendLink

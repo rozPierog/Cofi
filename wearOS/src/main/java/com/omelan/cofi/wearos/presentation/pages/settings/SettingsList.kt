@@ -7,7 +7,7 @@ import androidx.wear.compose.material.*
 import com.omelan.cofi.share.R
 
 @Composable
-fun Settings() {
+fun Settings(navigateToLicenses: () -> Unit) {
     val lazyListState = rememberScalingLazyListState()
     Scaffold(
         vignette = {
@@ -22,8 +22,8 @@ fun Settings() {
                 Text(text = stringResource(id = R.string.settings_title))
             }
             item {
-                Card(onClick = { /*TODO*/ }) {
-
+                Card(onClick = navigateToLicenses) {
+                    Text(text = stringResource(id = R.string.settings_licenses_item))
                 }
             }
         }
