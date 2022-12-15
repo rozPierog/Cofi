@@ -135,7 +135,7 @@ platform :android do
     gradle(task: "clean app:licenseInstantRelease app:bundleInstantRelease")
     UI.important "⚠️ Fastlane does not support uploading instant apps to google play console ⚠️"
     UI.important "⚠️ Remember to upload instant app bundle to Play Console! ⚠️"
-    sh("open", "app/build/outputs/bundle/instantRelease")
+    sh("open", "../app/build/outputs/bundle/instantRelease")
   end
 
   lane :create_screenshots do
