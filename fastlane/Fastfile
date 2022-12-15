@@ -21,11 +21,6 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Generate licenses"
-  lane :licenses do
-    gradle(task: "app:licenseFullReleaseReport wearOS:licenseFullReleaseReport")
-  end
-
   desc "Bump version codes and name"
   lane :bump_version do |options|
     codes = %w{production beta alpha internal}
@@ -47,14 +42,16 @@ platform :android do
       value: (newest_code + 2).to_s,
       app_project_dir: '**/wearOS',
     )
-    increment_version_name(
-      app_project_dir: '**/app',
-      bump_type: options[:bump_type],
-    )
-     increment_version_name(
-      app_project_dir: '**/wearOS',
-      bump_type: options[:bump_type],
-    )
+    if options[:bump_type] != "don't"
+        increment_version_name(
+          app_project_dir: '**/app',
+          bump_type: options[:bump_type],
+        )
+         increment_version_name(
+          app_project_dir: '**/wearOS',
+          bump_type: options[:bump_type],
+        )
+    end
   end
 
   desc "Prepare changelog"
@@ -144,16 +141,17 @@ platform :android do
 
   desc "Perform deploy for all"
   lane :deploy do
-    bump_type = UI.select "How to bump version:", %w{major minor patch}
+    bump_type = UI.select "How to bump version:", %w{major minor patch don't}
     prerelease = prompt(
       text: "is this a prerelease: ",
       boolean: true
     )
     test
     create_screenshots
-    licenses
     bump_version(bump_type: bump_type)
-    prepare_changelog
+    if bump_type != "don't"
+        prepare_changelog
+    end
     git_commit(path: ["./*.gradle"], message: "Prepare for release")
     push_to_git_remote
     deploy_gps(prerelease: prerelease)
