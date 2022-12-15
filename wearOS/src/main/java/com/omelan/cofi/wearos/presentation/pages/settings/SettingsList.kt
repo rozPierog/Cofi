@@ -1,10 +1,11 @@
 package com.omelan.cofi.wearos.presentation.pages.settings
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.*
 import com.omelan.cofi.share.*
@@ -16,9 +17,8 @@ fun Settings(navigateToLicenses: () -> Unit) {
     val dataStore = DataStore(LocalContext.current)
     val lazyListState = rememberScalingLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    var getSettingsFromPhone by remember {
-        mutableStateOf(false)
-    }
+    val getSettingsFromPhone by dataStore.getSyncSettingsFromPhoneSetting()
+        .collectAsState(initial = SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE)
     val stepChangeSound by dataStore.getStepChangeSoundSetting()
         .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
     val stepChangeVibration by dataStore.getStepChangeVibrationSetting()
@@ -41,10 +41,9 @@ fun Settings(navigateToLicenses: () -> Unit) {
                 ToggleChip(
                     checked = getSettingsFromPhone,
                     onCheckedChange = {
-                        getSettingsFromPhone = it
-//                        coroutineScope.launch {
-//                            dataStore.setStepChangeSound(it)
-//                        }
+                        coroutineScope.launch {
+                            dataStore.setSyncSettingsFromPhone(it)
+                        }
                     },
                     label = {
                         Text(text = "Get settings from the phone")
@@ -93,15 +92,11 @@ fun Settings(navigateToLicenses: () -> Unit) {
             item {
                 ToggleChip(
                     label = {
-                        Column {
-//                            Text(text = stringResource(id = R.string.settings_combine_weight_item))
-                            Text(
-                                text = stringResource(
-                                    stringToCombineWeight(weightSettings).settingsStringId,
-                                ),
-                                fontWeight = FontWeight.Light,
-                            )
-                        }
+                        Text(
+                            text = stringResource(
+                                stringToCombineWeight(weightSettings).settingsStringId,
+                            ),
+                        )
                     },
                     enabled = !getSettingsFromPhone,
                     onCheckedChange = {
@@ -117,6 +112,9 @@ fun Settings(navigateToLicenses: () -> Unit) {
                     checked = true,
                     toggleControl = {},
                 )
+            }
+            item {
+                Text(text = "Other")
             }
             item {
                 Card(onClick = navigateToLicenses) {

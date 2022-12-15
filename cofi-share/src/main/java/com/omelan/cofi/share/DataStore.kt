@@ -31,6 +31,11 @@ class DataStore(private val context: Context) {
         stringToDismissedInfoBoxes(it[DISMISSED_INFO] ?: DISMISSED_INFO_DEFAULT_VALUE)
     }
 
+    fun getSyncSettingsFromPhoneSetting() = context.dataStore.data.map { preferences ->
+        preferences[SYNC_SETTINGS_FROM_PHONE] ?: SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE
+    }
+
+
     suspend fun setDismissedInfoBoxes(newValue: Map<String, Boolean>) = context.dataStore.edit {
         it[DISMISSED_INFO] = JSONObject(newValue).toString()
     }
@@ -44,6 +49,12 @@ class DataStore(private val context: Context) {
     suspend fun setStepChangeVibration(value: Boolean) {
         context.dataStore.edit {
             it[STEP_VIBRATION_ENABLED] = value
+        }
+    }
+
+    suspend fun setSyncSettingsFromPhone(value: Boolean) {
+        context.dataStore.edit {
+            it[SYNC_SETTINGS_FROM_PHONE] = value
         }
     }
 

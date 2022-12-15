@@ -8,6 +8,7 @@ import com.omelan.cofi.share.model.AppDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.json.JSONArray
@@ -31,7 +32,14 @@ class CofiWearableListenerService : WearableListenerService() {
                 val jsonArray = JSONArray(jsonString)
                 when (channel.path) {
                     "cofi/recipes", "cofi/steps" -> saveDBDataFromChannel(jsonArray, channel.path)
-                    "cofi/settings" -> saveSettingsFromChannel(jsonArray)
+                    "cofi/settings" -> {
+                        if (DataStore(this@CofiWearableListenerService)
+                                .getSyncSettingsFromPhoneSetting().first()
+                        ) {
+                            saveSettingsFromChannel(jsonArray)
+                        }
+                    }
+
                     else -> throw Exception("UNEXPECTED PATH ${channel.path}")
                 }
             }
