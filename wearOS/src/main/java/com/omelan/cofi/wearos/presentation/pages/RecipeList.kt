@@ -1,11 +1,7 @@
-@file:OptIn(
-    ExperimentalAnimationApi::class,
-    ExperimentalHorologistComposeLayoutApi::class,
-)
+@file:OptIn(ExperimentalHorologistComposeLayoutApi::class)
 
 package com.omelan.cofi.wearos.presentation.pages
 
-import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -25,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.material.*
-import androidx.wear.compose.material.dialog.Confirmation
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
 import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
 import com.omelan.cofi.share.Recipe
@@ -33,6 +28,7 @@ import com.omelan.cofi.share.RecipeIcon
 import com.omelan.cofi.share.RecipeViewModel
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.wearos.R
+import com.omelan.cofi.wearos.presentation.components.OpenOnPhoneConfirm
 import com.omelan.cofi.wearos.presentation.components.RecipeListItem
 import com.omelan.cofi.wearos.presentation.utils.WearUtils
 
@@ -120,23 +116,7 @@ fun RecipeList(
                 }
             }
         }
-        AnimatedVisibility(
-            visible = showConfirmation,
-            enter = fadeIn() + scaleIn(),
-            exit = fadeOut() + scaleOut(),
-        ) {
-            Confirmation(
-                onTimeout = { showConfirmation = false },
-                icon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.common_full_open_on_phone),
-                        contentDescription = "",
-                    )
-                },
-            ) {
-                Text(text = stringResource(id = R.string.common_open_on_phone))
-            }
-        }
+        OpenOnPhoneConfirm(isVisible = showConfirmation, onTimeout = { showConfirmation = false })
     }
 
 }

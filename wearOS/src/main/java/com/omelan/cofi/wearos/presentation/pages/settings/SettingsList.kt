@@ -1,20 +1,24 @@
 package com.omelan.cofi.wearos.presentation.pages.settings
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.*
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
+import com.omelan.cofi.wearos.BuildConfig
+import com.omelan.cofi.wearos.presentation.components.OpenOnPhoneConfirm
+import com.omelan.cofi.wearos.presentation.utils.WearUtils
 import kotlinx.coroutines.launch
 
 @Composable
 fun Settings(navigateToLicenses: () -> Unit) {
-    val dataStore = DataStore(LocalContext.current)
+    val activity = LocalContext.current as ComponentActivity
+    val dataStore = DataStore(activity)
     val lazyListState = rememberScalingLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val getSettingsFromPhone by dataStore.getSyncSettingsFromPhoneSetting()
@@ -25,6 +29,9 @@ fun Settings(navigateToLicenses: () -> Unit) {
         .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
     val weightSettings by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+    var showConfirmation by remember {
+        mutableStateOf(false)
+    }
     Scaffold(
         vignette = {
             Vignette(vignettePosition = VignettePosition.TopAndBottom)
@@ -121,7 +128,28 @@ fun Settings(navigateToLicenses: () -> Unit) {
                     Text(text = stringResource(id = R.string.settings_licenses_item))
                 }
             }
+            item {
+                Card(
+                    onClick = {
+                        WearUtils.openLinkOnPhone(
+                            "https://github.com/rozPierog/Cofi/blob/main/docs/Changelog.md",
+                            activity = activity,
+                            onSuccess = { showConfirmation = true },
+                        )
+                    },
+                ) {
+                    Column {
+                        Text(text = stringResource(id = R.string.app_version))
+                        Text(
+                            text = BuildConfig.VERSION_NAME,
+                            fontWeight = FontWeight.Light,
+                        )
+
+                    }
+                }
+            }
         }
+        OpenOnPhoneConfirm(isVisible = showConfirmation, onTimeout = { showConfirmation = false })
     }
 }
 

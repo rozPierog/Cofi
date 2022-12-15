@@ -1,9 +1,8 @@
-@file:OptIn(ExperimentalHorologistComposeLayoutApi::class, ExperimentalAnimationApi::class)
+@file:OptIn(ExperimentalHorologistComposeLayoutApi::class)
 
 package com.omelan.cofi.wearos.presentation.pages.settings
 
 import androidx.activity.ComponentActivity
-import androidx.compose.animation.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,18 +11,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.*
-import androidx.wear.compose.material.dialog.Confirmation
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
 import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Dependency
 import com.omelan.cofi.share.model.License
 import com.omelan.cofi.share.utils.parseJsonToDependencyList
+import com.omelan.cofi.wearos.presentation.components.OpenOnPhoneConfirm
 import com.omelan.cofi.wearos.presentation.utils.WearUtils.openLinkOnPhone
 
 @Composable
@@ -63,23 +61,7 @@ fun LicensesList() {
                 DependencyItem(dependency = dependency, afterOpen = { showConfirmation = true })
             }
         }
-        AnimatedVisibility(
-            visible = showConfirmation,
-            enter = fadeIn() + scaleIn(),
-            exit = fadeOut() + scaleOut(),
-        ) {
-            Confirmation(
-                onTimeout = { showConfirmation = false },
-                icon = {
-                    Icon(
-                        painter = painterResource(id = com.omelan.cofi.wearos.R.drawable.common_full_open_on_phone),
-                        contentDescription = "",
-                    )
-                },
-            ) {
-                Text(text = stringResource(id = com.omelan.cofi.wearos.R.string.common_open_on_phone))
-            }
-        }
+        OpenOnPhoneConfirm(isVisible = showConfirmation, onTimeout = { showConfirmation = false })
     }
 
 }
