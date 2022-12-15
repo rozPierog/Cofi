@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -112,7 +110,10 @@ fun RecipeList(
             }
             item {
                 Button(onClick = openSettings) {
-                    Icon(Icons.Rounded.Settings, contentDescription = "")
+                    Icon(
+                        painterResource(id = R.drawable.round_settings_24),
+                        contentDescription = "",
+                    )
                 }
             }
         }

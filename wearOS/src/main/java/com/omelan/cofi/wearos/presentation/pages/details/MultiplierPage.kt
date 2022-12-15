@@ -8,8 +8,6 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -75,7 +73,12 @@ fun MultiplierPage(
         },
         steps = steps - 2,
         valueRange = range,
-        increaseIcon = { Icon(Icons.Rounded.Add, contentDescription = "") },
+        increaseIcon = {
+            Icon(
+                painterResource(id = R.drawable.round_add_24),
+                contentDescription = "",
+            )
+        },
         decreaseIcon = {
             Icon(
                 painterResource(id = R.drawable.round_remove_24),
@@ -124,6 +127,6 @@ fun MultiplierPagePreview() {
     }
     MultiplierPage(multiplier = multi, changeMultiplier = { multi = it }) {
         Text(text = it.toString())
-        ParamWithIcon(iconRes = R.drawable.ic_coffee, value = "${15*multi}g")
+        ParamWithIcon(iconRes = R.drawable.ic_coffee, value = "${15 * multi}g")
     }
 }
