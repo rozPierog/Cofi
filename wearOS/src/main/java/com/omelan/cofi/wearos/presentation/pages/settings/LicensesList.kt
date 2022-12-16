@@ -46,6 +46,9 @@ fun LicensesList() {
         positionIndicator = {
             PositionIndicator(scalingLazyListState)
         },
+        timeText = {
+            TimeText()
+        },
     ) {
         ScalingLazyColumn(
             modifier = Modifier.rotaryWithScroll(

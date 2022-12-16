@@ -39,6 +39,9 @@ fun Settings(navigateToLicenses: () -> Unit) {
         positionIndicator = {
             PositionIndicator(scalingLazyListState = lazyListState)
         },
+        timeText = {
+            TimeText()
+        },
     ) {
         ScalingLazyColumn(state = lazyListState) {
             item {
