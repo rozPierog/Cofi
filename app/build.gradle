@@ -29,7 +29,7 @@ android {
         targetSdkVersion 33
         compileSdkVersion 33
         versionCode 114
-        versionName "1.12.0"
+        versionName "1.13.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs 'en', 'pl', 'it', 'de', 'tr', 'nl'
