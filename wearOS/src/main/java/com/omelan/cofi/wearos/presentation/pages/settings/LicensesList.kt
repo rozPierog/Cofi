@@ -3,6 +3,7 @@
 package com.omelan.cofi.wearos.presentation.pages.settings
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,10 +52,12 @@ fun LicensesList() {
         },
     ) {
         ScalingLazyColumn(
-            modifier = Modifier.rotaryWithScroll(
-                focusRequester = focusRequester,
-                scrollableState = scalingLazyListState,
-            ),
+            modifier = Modifier
+                .background(MaterialTheme.colors.background)
+                .rotaryWithScroll(
+                    focusRequester = focusRequester,
+                    scrollableState = scalingLazyListState,
+                ),
             state = scalingLazyListState,
         ) {
             item {

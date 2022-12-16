@@ -1,13 +1,20 @@
+@file:OptIn(ExperimentalHorologistComposeLayoutApi::class)
+
 package com.omelan.cofi.wearos.presentation.pages.settings
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.*
+import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
+import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.wearos.BuildConfig
@@ -20,6 +27,11 @@ fun Settings(navigateToLicenses: () -> Unit) {
     val activity = LocalContext.current as ComponentActivity
     val dataStore = DataStore(activity)
     val lazyListState = rememberScalingLazyListState()
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
     val coroutineScope = rememberCoroutineScope()
     val getSettingsFromPhone by dataStore.getSyncSettingsFromPhoneSetting()
         .collectAsState(initial = SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE)
@@ -43,7 +55,12 @@ fun Settings(navigateToLicenses: () -> Unit) {
             TimeText()
         },
     ) {
-        ScalingLazyColumn(state = lazyListState) {
+        ScalingLazyColumn(
+            state = lazyListState,
+            modifier = Modifier
+                .background(MaterialTheme.colors.background)
+                .rotaryWithScroll(focusRequester, scrollableState = lazyListState),
+        ) {
             item {
                 Text(text = stringResource(id = R.string.settings_title))
             }
