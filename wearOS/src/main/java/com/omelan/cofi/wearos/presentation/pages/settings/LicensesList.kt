@@ -48,7 +48,7 @@ fun LicensesList() {
             PositionIndicator(scalingLazyListState)
         },
         timeText = {
-            TimeText()
+            TimeText(Modifier.scrollAway(scalingLazyListState))
         },
     ) {
         ScalingLazyColumn(

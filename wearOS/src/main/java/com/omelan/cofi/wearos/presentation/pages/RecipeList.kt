@@ -66,7 +66,7 @@ fun RecipeList(
             PositionIndicator(scalingLazyListState = lazyListState)
         },
         timeText = {
-            TimeText()
+            TimeText(Modifier.scrollAway(lazyListState))
         },
         vignette = {
             Vignette(vignettePosition = VignettePosition.TopAndBottom)

@@ -52,7 +52,7 @@ fun Settings(navigateToLicenses: () -> Unit) {
             PositionIndicator(scalingLazyListState = lazyListState)
         },
         timeText = {
-            TimeText()
+            TimeText(Modifier.scrollAway(lazyListState))
         },
     ) {
         ScalingLazyColumn(
