@@ -1,10 +1,10 @@
 ### Added
-- Added Always on Display when timer is running
-- If wearOS device doesn't support AoD then keep screen on during timer
+- Added settings page to the WearOS app
+- Added multipliers to the WearOS app
+- Added Position indicator, Vignette, and Rotary control to the WearOS app
 
 ### Changed
-- fixed keyboard issue when adding steps after certain number
-- changed Icon Bottom Sheet during recipe edit slightly
+- Change milliseconds display
 
 ### Removed
 

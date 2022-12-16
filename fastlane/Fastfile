@@ -86,8 +86,7 @@ platform :android do
 
   desc "Deploy a new version to the Google Play Store"
   lane :deploy_gps do |options|
-    gradle(task: "clean app:licensePlayStoreRelease app:bundlePlayStoreRelease
-    wearOS:licenseRelease wearOS:bundleRelease")
+    gradle(task: "app:licensePlayStoreRelease app:bundlePlayStoreRelease wearOS:licenseRelease wearOS:bundleRelease")
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
       skip_upload_apk: true,
@@ -108,8 +107,7 @@ platform :android do
 
   desc "Deploy a new version to Github Releases"
   lane :deploy_github do |options|
-    gradle(task: "clean app:licenseFullRelease app:assembleFullRelease app:licensePlayStoreRelease
-     app:assemblePlayStoreRelease wearOS:licenseRelease wearOS:assembleRelease")
+    gradle(task: "app:licenseFullRelease app:assembleFullRelease app:licensePlayStoreRelease app:assemblePlayStoreRelease wearOS:licenseRelease wearOS:assembleRelease")
     versionName = get_version_name(
       app_project_dir: '**/app',
     )
@@ -129,7 +127,7 @@ platform :android do
 
   desc "Builds an Instant App"
   lane :build_instant do
-    gradle(task: "clean app:licenseInstantRelease app:bundleInstantRelease")
+    gradle(task: "app:licenseInstantRelease app:bundleInstantRelease")
     UI.important "⚠️ Fastlane does not support uploading instant apps to google play console ⚠️"
     UI.important "⚠️ Remember to upload instant app bundle to Play Console! ⚠️"
     sh("open", "../app/build/outputs/bundle/instantRelease")
@@ -154,8 +152,9 @@ platform :android do
     end
     git_commit(path: ["./*.gradle"], message: "Prepare for release")
     push_to_git_remote
-    deploy_gps(prerelease: prerelease)
+    gradle(task: "clean")
     deploy_github(prerelease: prerelease)
+    deploy_gps(prerelease: prerelease)
     build_instant
   end
 end

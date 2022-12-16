@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.13.0|1.4.0] - 2022-12-16
+
+### Added
 - Added settings page to the WearOS app
 - Added multipliers to the WearOS app
 - Added Position indicator, Vignette, and Rotary control to the WearOS app
