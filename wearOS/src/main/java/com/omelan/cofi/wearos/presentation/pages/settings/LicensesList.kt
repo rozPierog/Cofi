@@ -12,13 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.*
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
 import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
-import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Dependency
 import com.omelan.cofi.share.model.License
 import com.omelan.cofi.share.utils.parseJsonToDependencyList
@@ -33,7 +31,7 @@ fun LicensesList() {
     }.parseJsonToDependencyList()
     var showConfirmation by remember { mutableStateOf(false) }
 
-    val scalingLazyListState = rememberScalingLazyListState()
+    val scalingLazyListState = rememberScalingLazyListState(0, 0)
     val focusRequester = remember {
         FocusRequester()
     }
@@ -48,7 +46,7 @@ fun LicensesList() {
             PositionIndicator(scalingLazyListState)
         },
         timeText = {
-            TimeText(Modifier.scrollAway(scalingLazyListState))
+            TimeText(Modifier.scrollAway(scalingLazyListState, 0))
         },
     ) {
         ScalingLazyColumn(
@@ -59,10 +57,8 @@ fun LicensesList() {
                     scrollableState = scalingLazyListState,
                 ),
             state = scalingLazyListState,
+            autoCentering = AutoCenteringParams(0, 0),
         ) {
-            item {
-                Text(stringResource(id = R.string.settings_licenses_title))
-            }
             items(dependencyList) { dependency ->
                 DependencyItem(dependency = dependency, afterOpen = { showConfirmation = true })
             }
