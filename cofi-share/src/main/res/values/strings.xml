@@ -105,4 +105,5 @@ Temperature: For light roast – brought to a boil and used immediately. For dar
     <string name="recipe_details_multiply_weight">Weight multiplier</string>
     <string name="infoBox_wearOS_title">Cofi is now on WearOS</string>
     <string name="infoBox_wearOS_body">Download Cofi app for your WearOS watch!</string>
+    <string name="settings_sync_with_phone">Get settings from the phone</string>
 </resources>

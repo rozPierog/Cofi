@@ -53,12 +53,16 @@ fun Settings(navigateToLicenses: () -> Unit) {
                         }
                     },
                     label = {
-                        Text(text = "Get settings from the phone")
+                        Text(text = stringResource(id = R.string.settings_sync_with_phone))
                     },
                     toggleControl = {
-                        Icon(
-                            ToggleChipDefaults.switchIcon(getSettingsFromPhone),
-                            "",
+                        Switch(
+                            checked = getSettingsFromPhone,
+                            onCheckedChange = {
+                                coroutineScope.launch {
+                                    dataStore.setSyncSettingsFromPhone(it)
+                                }
+                            },
                         )
                     },
                 )
@@ -75,7 +79,17 @@ fun Settings(navigateToLicenses: () -> Unit) {
                     label = {
                         Text(text = stringResource(id = R.string.settings_step_sound_item))
                     },
-                    toggleControl = { Icon(ToggleChipDefaults.switchIcon(stepChangeSound), "") },
+                    toggleControl = {
+                        Switch(
+                            checked = stepChangeSound,
+                            enabled = !getSettingsFromPhone,
+                            onCheckedChange = {
+                                coroutineScope.launch {
+                                    dataStore.setStepChangeSound(it)
+                                }
+                            },
+                        )
+                    },
                 )
             }
             item {
@@ -92,7 +106,15 @@ fun Settings(navigateToLicenses: () -> Unit) {
 
                     },
                     toggleControl = {
-                        Icon(ToggleChipDefaults.switchIcon(stepChangeVibration), "")
+                        Switch(
+                            checked = stepChangeVibration,
+                            enabled = !getSettingsFromPhone,
+                            onCheckedChange = {
+                                coroutineScope.launch {
+                                    dataStore.setStepChangeVibration(it)
+                                }
+                            },
+                        )
                     },
                 )
             }
