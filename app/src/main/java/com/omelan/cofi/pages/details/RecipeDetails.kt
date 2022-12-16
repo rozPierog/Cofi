@@ -120,6 +120,7 @@ fun RecipeDetails(
         steps = steps,
         onRecipeEnd = { onRecipeEnd(recipe) },
         dataStore = dataStore,
+        doneTrackColor = MaterialTheme.colorScheme.primary,
     )
 
     val copyAutomateLink = rememberCopyAutomateLink(snackbarState, recipeId)

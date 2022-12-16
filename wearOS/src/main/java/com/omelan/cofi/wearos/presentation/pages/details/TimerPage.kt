@@ -2,6 +2,8 @@
 import android.view.KeyEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -10,14 +12,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.CircularProgressIndicator
+import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
-import com.omelan.cofi.share.COMBINE_WEIGHT_DEFAULT_VALUE
-import com.omelan.cofi.share.DataStore
-import com.omelan.cofi.share.Recipe
-import com.omelan.cofi.share.Step
+import com.google.android.horologist.compose.layout.fillMaxRectangle
+import com.omelan.cofi.share.*
+import com.omelan.cofi.share.R
 import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
 import com.omelan.cofi.share.components.TimerValue
@@ -102,7 +108,7 @@ fun TimerPage(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(4.dp),
-            progress = animatedProgressValue.value,
+            progress = if (isDone) 1f else animatedProgressValue.value,
             indicatorColor = if (ambientController.isAmbient) {
                 Color.White
             } else {
@@ -113,13 +119,31 @@ fun TimerPage(
         )
         Column(
             modifier = Modifier
-                .padding(4.dp)
-                .aspectRatio(1f)
-                .fillMaxSize()
+                .fillMaxRectangle()
                 .animateContentSize(),
             Arrangement.Center,
             Alignment.CenterHorizontally,
         ) {
+            AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
+                Column(
+                    modifier = Modifier.animateContentSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.timer_enjoy),
+                        color = MaterialTheme.colors.onSurface,
+                        maxLines = 2,
+                        style = MaterialTheme.typography.title1,
+                        textAlign = TextAlign.Center,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_coffee),
+                        contentDescription = "",
+                    )
+                }
+            }
             AnimatedVisibility(
                 visible = currentStep.value == null && !isDone,
             ) {
@@ -127,7 +151,9 @@ fun TimerPage(
                     text = recipe.name,
                     color = MaterialTheme.colors.onSurface,
                     maxLines = 2,
+                    textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.title1,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
             AnimatedVisibility(
@@ -164,7 +190,7 @@ fun TimerPage(
                 }
             }
             AnimatedVisibility(visible = !ambientController.isAmbient) {
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(12.dp))
                 StartButton(isTimerRunning, startButtonOnClick)
             }
         }

@@ -76,6 +76,7 @@ object Timer {
         steps: List<Step>,
         onRecipeEnd: () -> Unit,
         dataStore: DataStore,
+        doneTrackColor: Color,
     ): TimerControllers {
         val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
             .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
@@ -171,6 +172,12 @@ object Timer {
         val startAnimations: suspend () -> Unit = suspend {
             coroutineScope.launch {
                 progressAnimation(Unit)
+            }
+        }
+
+        LaunchedEffect(isDone) {
+            if (isDone) {
+                animatedProgressColor.animateTo(doneTrackColor, tween())
             }
         }
 
