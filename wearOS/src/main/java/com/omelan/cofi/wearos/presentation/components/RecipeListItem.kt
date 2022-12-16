@@ -1,24 +1,30 @@
+@file:OptIn(ExperimentalWearMaterialApi::class, ExperimentalAnimationApi::class)
+
 package com.omelan.cofi.wearos.presentation.components
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
+import androidx.annotation.DrawableRes
+import androidx.compose.animation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Card
-import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.*
 import com.omelan.cofi.share.Recipe
 
 @Composable
-fun RecipeListItem(modifier: Modifier = Modifier, recipe: Recipe, onClick: () -> Unit) {
+private fun RecipeListItemRaw(
+    modifier: Modifier = Modifier,
+    @DrawableRes iconRes: Int? = null,
+    text: String = "",
+    onClick: () -> Unit = {},
+) {
     Card(
         modifier = modifier,
         onClick = onClick,
@@ -26,20 +32,62 @@ fun RecipeListItem(modifier: Modifier = Modifier, recipe: Recipe, onClick: () ->
         role = Role.Button,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                painter = painterResource(id = recipe.recipeIcon.icon),
-                contentDescription = recipe.name,
-            )
+            Box(modifier = modifier.size(ChipDefaults.IconSize)) {
+                if (iconRes != null) {
+                    Icon(
+                        painter = painterResource(id = iconRes),
+                        contentDescription = text,
+                        Modifier.size(ChipDefaults.IconSize),
+                    )
+                }
+            }
             Spacer(modifier = Modifier.width(8.dp))
-            Text(recipe.name)
+            Text(
+                modifier = modifier.weight(1f),
+                text = text,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
         }
     }
+}
+
+@Composable
+fun RecipeListItem(modifier: Modifier = Modifier, recipe: Recipe?, onClick: () -> Unit = {}) {
+    val placeholderState = rememberPlaceholderState {
+        recipe?.name != null
+    }
+    if (!placeholderState.isShowContent) {
+        LaunchedEffect(placeholderState) {
+            placeholderState.startPlaceholderAnimation()
+        }
+    }
+    AnimatedContent(targetState = recipe, transitionSpec = {
+        fadeIn() with fadeOut()
+    }) {
+        if (it != null) {
+            RecipeListItemRaw(
+                onClick = onClick,
+                text = it.name,
+                iconRes = it.recipeIcon.icon,
+            )
+        } else {
+            RecipeListItemRaw(
+                modifier.placeholderShimmer(placeholderState),
+                onClick = onClick,
+                text = "",
+            )
+        }
+    }
+
+
 }
 
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND)
 @Composable
 fun RecipeListItemPreview() {
-    RecipeListItem(recipe = Recipe(id = 0, name = "test")) {
-
+    Column {
+        RecipeListItem(recipe = Recipe(id = 0, name = "test"))
+        RecipeListItem(recipe = null)
     }
 }

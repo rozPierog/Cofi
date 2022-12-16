@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalHorologistComposeLayoutApi::class)
+@file:OptIn(ExperimentalHorologistComposeLayoutApi::class, ExperimentalWearMaterialApi::class)
 
 package com.omelan.cofi.wearos.presentation.pages
 
@@ -33,13 +33,14 @@ import com.omelan.cofi.wearos.presentation.utils.WearUtils
 @Composable
 fun RecipeList(goToDetails: (Recipe) -> Unit, openSettings: () -> Unit) {
     val recipeViewModel: RecipeViewModel = viewModel()
-    val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = emptyList())
+    val recipes by recipeViewModel.getAllRecipes()
+        .observeAsState(initial = listOf(null, null, null, null, null))
     RecipeList(recipes = recipes, goToDetails = goToDetails, openSettings = openSettings)
 }
 
 @Composable
 fun RecipeList(
-    recipes: List<Recipe>,
+    recipes: List<Recipe?>,
     goToDetails: (Recipe) -> Unit = {},
     openSettings: () -> Unit = {},
 ) {
@@ -78,7 +79,6 @@ fun RecipeList(
                 .background(MaterialTheme.colors.background),
             state = lazyListState,
             verticalArrangement = Arrangement.spacedBy(4.dp),
-            autoCentering = AutoCenteringParams(itemIndex = 1, itemOffset = 0),
         ) {
             item {
                 Text(text = stringResource(id = R.string.app_name))
@@ -105,7 +105,7 @@ fun RecipeList(
             }
             items(recipes) {
                 RecipeListItem(recipe = it) {
-                    goToDetails(it)
+                    if (it != null) goToDetails(it)
                 }
             }
             item {
