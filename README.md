@@ -43,6 +43,7 @@
     <td><img src="fastlane/metadata/android/en-US/images/tenInchScreenshots/1_en-US.png" ></td>
     <td><img src="fastlane/metadata/android/en-US/images/tenInchScreenshots/6_en-US.png" ></td>
     <td><img src="fastlane/metadata/android/en-US/images/tenInchScreenshots/3_en-US.png"></td>
+    <td><img src="fastlane/metadata/android/en-US/images/tenInchScreenshots/2_en-US.png"></td>
   </tr>
   <tr>
     <td>WearOS</td>
@@ -51,9 +52,11 @@
   </tr>
 </table>
 
-## [Changelog](docs/Changelog.md)
+## [Changelog](docs/Changelog.md) 
+<a href="docs/Changelog.md">
+    <img src="https://img.shields.io/github/v/release/rozPierog/Cofi.svg?include_prereleases?logo=github">
+</a>
 
----
 <!-- # [Read more](https://rozpierog.github.io/Cofi) -->
 
 # Contribute
