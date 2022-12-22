@@ -32,11 +32,17 @@
 # Screenshots
 <table>
   <tr>
-    <td>Android</td>
+    <td>Phone</td>
     <td><img src="docs/assets/cofi_showcase.gif" ></td>
     <td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" ></td>
     <td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" ></td>
     <td><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png"></td>
+  </tr>
+  <tr>
+    <td>Tablet/Foldable</td>
+    <td><img src="fastlane/metadata/android/en-US/images/tenInchScreenshots/1_en-US.png" ></td>
+    <td><img src="fastlane/metadata/android/en-US/images/tenInchScreenshots/6_en-US.png" ></td>
+    <td><img src="fastlane/metadata/android/en-US/images/tenInchScreenshots/3_en-US.png"></td>
   </tr>
   <tr>
     <td>WearOS</td>
@@ -45,9 +51,10 @@
   </tr>
 </table>
 
-# [Changelog](docs/Changelog.md)
+## [Changelog](docs/Changelog.md)
 
-# [Read more](https://rozpierog.github.io/Cofi)
+---
+<!-- # [Read more](https://rozpierog.github.io/Cofi) -->
 
 # Contribute
 

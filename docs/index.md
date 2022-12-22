@@ -9,22 +9,45 @@ title: Home
 
 # Why Cofi?
 
-I've built Cofi after getting frustrated with the lack of privacy-respecting, small, and fast, timers. None of the apps in the Play Store could be used in the way, that I want to use them. Additionally, it was a great way to try out _new_ Android development ways, like: **Jetpack Compose**, **DataStore**, and build features that I've never done before.
+As a passionate coffee lover and amateur barista, I've always been on the hunt for the perfect cup of coffee. That's why I created the free and open-source coffee brew timer for Android. With this app, you can easily time your coffee brews and achieve the perfect flavor every time.
+
+I know how important it is to have complete control over your brew time, and that's exactly what this app provides. Whether you're using a French press, pour-over, or any other brewing method, our app makes it easy to keep track of your brew time and achieve the perfect flavor.
 
 ## Features:
 
-- **No artificial limits** - create any recipe you want, no matter how outrageous it might seem,
-- **Deeplinks to recipes** - you can add it to automation software or NFC tag to open your favorite recipe with one tap,
-- **Picture in Picture** - need to respond to a text while brewing? The timer will pop into small movable windows that will stay with you for the entire brew,
-- **Absolutely no tracking** - not even a crash report will make its way back to me. Everything you do in the app stays with you,
-- **Smallest footprint possible** - I'm going to be surprised if it ever breaks 7MB on your device
-- **Instant app (Google Play Store only)** - the whole app is accessible as an Instant Experience, no need to install anything if you don't want it.
+- **Open-source and free to use**
+- **No artificial limits** on what you can add to the app
+- Timer for your coffee brews
+- Customizable time settings for different brewing methods
+- Easy-to-use interface with a clean design and the latest material design
+- **Picture-in-picture** mode for multitasking
+- **WearOS app** for easy timing on your smartwatch
+- Absolutely **no user tracking or data collection**
+
+I know how frustrating it can be to settle for a mediocre cup of coffee. That's why I want to help you brew like a pro and enjoy the perfect cup every time. Download Cofi now and start your journey to coffee perfection!
+
 
 ## How it looks?
-
-<p align="center">
-  <img src="assets/cofi_showcase.gif" width="50%">
-</p>
+<table align="center">
+  <tr>
+    <td>Phone</td>
+    <td><img src="assets/cofi_showcase.gif" ></td>
+    <td><img src="../fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" ></td>
+    <td><img src="../fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" ></td>
+    <td><img src="../fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png"></td>
+  </tr>
+  <tr>
+    <td>Tablet/Foldable</td>
+    <td><img src="../fastlane/metadata/android/en-US/images/tenInchScreenshots/1_en-US.png" ></td>
+    <td><img src="../fastlane/metadata/android/en-US/images/tenInchScreenshots/6_en-US.png" ></td>
+    <td><img src="../fastlane/metadata/android/en-US/images/tenInchScreenshots/3_en-US.png"></td>
+  </tr>
+  <tr>
+    <td>WearOS</td>
+    <td><img src="../fastlane/metadata/android/en-US/images/wearScreenshots/1_en-US.png" ></td>
+    <td><img src="../fastlane/metadata/android/en-US/images/wearScreenshots/2_en-US.png" ></td>
+  </tr>
+</table>
 
 ## Download
 <p align="center">
