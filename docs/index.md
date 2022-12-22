@@ -28,26 +28,11 @@ I know how frustrating it can be to settle for a mediocre cup of coffee. That's 
 
 
 ## How it looks?
-<table align="center">
-  <tr>
-    <td>Phone</td>
-    <td><img src="assets/cofi_showcase.gif" ></td>
-    <td><img src="../fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" ></td>
-    <td><img src="../fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" ></td>
-    <td><img src="../fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png"></td>
-  </tr>
-  <tr>
-    <td>Tablet/Foldable</td>
-    <td><img src="../fastlane/metadata/android/en-US/images/tenInchScreenshots/1_en-US.png" ></td>
-    <td><img src="../fastlane/metadata/android/en-US/images/tenInchScreenshots/6_en-US.png" ></td>
-    <td><img src="../fastlane/metadata/android/en-US/images/tenInchScreenshots/3_en-US.png"></td>
-  </tr>
-  <tr>
-    <td>WearOS</td>
-    <td><img src="../fastlane/metadata/android/en-US/images/wearScreenshots/1_en-US.png" ></td>
-    <td><img src="../fastlane/metadata/android/en-US/images/wearScreenshots/2_en-US.png" ></td>
-  </tr>
-</table>
+<p align="center">
+  <img src="assets/cofi_showcase.gif" width="50%">
+</p>
+
+## [Github page](https://github.com/rozPierog/Cofi)
 
 ## Download
 <p align="center">
