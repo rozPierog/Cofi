@@ -92,7 +92,7 @@ object Timer {
         val coroutineScope = rememberCoroutineScope()
 
         val context = LocalContext.current
-        val haptics = Haptics(context)
+        val haptics = remember { Haptics(context) }
         val mediaPlayer = remember { MediaPlayer.create(context, R.raw.ding) }
 
         val indexOfCurrentStep = steps.indexOf(currentStep.value)
