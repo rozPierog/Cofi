@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Italian translation - thanks @cmendoza2000
+- New recipe icons to choose - sponsored by @ThatOneCalculator
 
 ### Changed
 

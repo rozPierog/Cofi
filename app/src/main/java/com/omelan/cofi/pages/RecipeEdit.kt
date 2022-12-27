@@ -11,9 +11,7 @@ package com.omelan.cofi.pages
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -51,6 +49,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.flowlayout.FlowMainAxisAlignment
+import com.google.accompanist.flowlayout.FlowRow
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
@@ -123,7 +123,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -350,24 +350,26 @@ fun RecipeEdit(
             }
         }
     }
-
+    val iconScrollState = rememberScrollState()
     ModalBottomSheetLayout(
         sheetShape = shapes.modal,
         sheetBackgroundColor = MaterialTheme.colorScheme.surfaceVariant,
         sheetState = bottomSheetScaffoldState,
         sheetContent = {
-            Row(
+            FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .navigationBarsPadding()
+                    .verticalScroll(iconScrollState)
                     .imePadding()
                     .padding(getDefaultPadding(skipNavigationBarPadding = true)),
+                lastLineMainAxisAlignment = FlowMainAxisAlignment.Center,
             ) {
                 RecipeIcon.values().map {
                     IconButton(
                         onClick = { pickIcon(it) },
                         modifier = Modifier
-                            .weight(1f)
+                            .fillMaxSize(0.25f)
                             .padding(vertical = Spacing.big),
                     ) {
                         Icon(

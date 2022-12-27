@@ -17,6 +17,12 @@ enum class RecipeIcon(@DrawableRes val icon: Int) {
     Grinder(R.drawable.ic_coffee_grinder),
     Chemex(R.drawable.ic_chemex),
     Aeropress(R.drawable.ic_aeropress),
+    Bripe(R.drawable.ic_bripe),
+    ColdBrew(R.drawable.ic_cold_brew),
+    Espresso(R.drawable.ic_espresso),
+    Mokapot(R.drawable.ic_mokapot),
+    Siphon(R.drawable.ic_siphon),
+    VietnamesePress(R.drawable.ic_vietnamese_press),
 }
 
 open class RecipeIconTypeConverter {
@@ -33,6 +39,12 @@ open class RecipeIconTypeConverter {
             RecipeIcon.Grinder.name -> RecipeIcon.Grinder
             RecipeIcon.Chemex.name -> RecipeIcon.Chemex
             RecipeIcon.Aeropress.name -> RecipeIcon.Aeropress
+            RecipeIcon.Bripe.name -> RecipeIcon.Bripe
+            RecipeIcon.ColdBrew.name -> RecipeIcon.ColdBrew
+            RecipeIcon.Espresso.name -> RecipeIcon.Espresso
+            RecipeIcon.Mokapot.name -> RecipeIcon.Mokapot
+            RecipeIcon.Siphon.name -> RecipeIcon.Siphon
+            RecipeIcon.VietnamesePress.name -> RecipeIcon.VietnamesePress
             else -> RecipeIcon.Grinder
         }
     }
@@ -86,6 +98,7 @@ private const val jsonId = "id"
 private const val jsonDescription = "description"
 private const val jsonRecipeIcon = "recipeIcon"
 const val jsonSteps = "steps"
+
 @Entity
 data class Recipe(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
