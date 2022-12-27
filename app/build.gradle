@@ -32,9 +32,8 @@ android {
         versionName "1.13.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs 'en', 'pl', 'it', 'de', 'tr', 'nl'
+        resConfigs 'en', 'de', 'es', 'it', 'nl', 'pl', 'tr'
         manifestPlaceholders = [profileable: false]
-
     }
 
     buildTypes {
