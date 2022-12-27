@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.13.1|1.4.1] - 2022-12-27
+
+### Added
 - Italian translation - thanks @cmendoza2000
 - New recipe icons to choose - sponsored by @ThatOneCalculator
 

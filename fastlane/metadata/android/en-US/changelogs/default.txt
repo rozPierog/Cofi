@@ -1,10 +1,8 @@
 ### Added
-- Added settings page to the WearOS app
-- Added multipliers to the WearOS app
-- Added Position indicator, Vignette, and Rotary control to the WearOS app
+- Italian translation - thanks @cmendoza2000
+- New recipe icons to choose - sponsored by @ThatOneCalculator
 
 ### Changed
-- Change milliseconds display
 
 ### Removed
 
