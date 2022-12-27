@@ -27,27 +27,11 @@ enum class RecipeIcon(@DrawableRes val icon: Int) {
 
 open class RecipeIconTypeConverter {
     @TypeConverter
-    open fun recipeIconToString(type: RecipeIcon): String {
-        return type.name
-    }
+    open fun recipeIconToString(type: RecipeIcon) = type.name
 
     @TypeConverter
-    open fun stringToRecipeIcon(type: String): RecipeIcon {
-        return when (type) {
-            RecipeIcon.V60.name -> RecipeIcon.V60
-            RecipeIcon.FrenchPress.name -> RecipeIcon.FrenchPress
-            RecipeIcon.Grinder.name -> RecipeIcon.Grinder
-            RecipeIcon.Chemex.name -> RecipeIcon.Chemex
-            RecipeIcon.Aeropress.name -> RecipeIcon.Aeropress
-            RecipeIcon.Bripe.name -> RecipeIcon.Bripe
-            RecipeIcon.ColdBrew.name -> RecipeIcon.ColdBrew
-            RecipeIcon.Espresso.name -> RecipeIcon.Espresso
-            RecipeIcon.Mokapot.name -> RecipeIcon.Mokapot
-            RecipeIcon.Siphon.name -> RecipeIcon.Siphon
-            RecipeIcon.VietnamesePress.name -> RecipeIcon.VietnamesePress
-            else -> RecipeIcon.Grinder
-        }
-    }
+    open fun stringToRecipeIcon(type: String) =
+        RecipeIcon.values().find { type == it.name } ?: RecipeIcon.Grinder
 }
 
 @Dao
