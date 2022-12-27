@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Cofi</string>
+    <string name="list_header" translatable="false">Cofi</string>
+    <string name="step_type_add_coffee">Añadir café</string>
+    <string name="step_type_water">Añadir agua</string>
+    <string name="step_type_wait">Esperar</string>
+    <string name="step_type_other">Otros</string>
+    <string name="step_add_name">Nombre</string>
+    <string name="step_add_duration">Duración (s)</string>
+    <string name="step_add_weight">Peso (g)</string>
+    <string name="step_add_save">Guardar</string>
+    <string name="recipe_unsaved_title">Tiene cambios sin guardar</string>
+    <string name="recipe_unsaved_text">¿Quieres descartarlos?</string>
+    <string name="recipe_delete_title">¿Está seguro?</string>
+    <string name="recipe_delete_text">Esto eliminará esta receta permanentemente</string>
+    <string name="recipe_edit_name">Nombre</string>
+    <string name="recipe_edit_description">Descripción</string>
+    <string name="recipe_edit_description_button">Añadir descripción</string>
+    <string name="recipe_edit_title">Editar receta</string>
+    <string name="recipe_add_new_title">Crear nueva receta</string>
+    <string name="recipe_details_automation_dialog_title">Enlace directo</string>
+    <string name="recipe_details_automation_dialog_text">Utilice este enlace para ir directamente a esta receta. Escríbela en una etiqueta NFC o crea una tarea automatizada en Tasker para facilitarte el café de la mañana.
+        ADVERTENCIA: ¡No puedes compartir la receta de esta manera!</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="button_delete">Borrar</string>
+    <string name="button_discard">Descartar</string>
+    <string name="button_continue_editing">Seguir editando</string>
+    <string name="button_copy">Copiar</string>
+    <string name="snackbar_copied">Copiado</string>
+    <string name="settings_licenses_title">Licencias de código abierto</string>
+    <string name="settings_title">Configuración</string>
+    <string name="settings_about_item">Acerca de la aplicación</string>
+    <string name="settings_pip_item">Imagen en imagen</string>
+    <string name="settings_step_sound_item">Sonido de cambio de paso</string>
+    <string name="settings_bug_item">Informar de un error o sugerir una función</string>
+    <string name="settings_combine_weight_item">Combinar peso</string>
+    <string name="settings_combine_weight_all">Combinar todos los pesos</string>
+    <string name="settings_combine_weight_water">Combinar sólo el peso del agua</string>
+    <string name="settings_combine_weight_none">No combinar peso</string>
+    <string name="settings_about_title">Acerca de</string>
+    <string name="settings_licenses_item">Agradecimientos</string>
+    <string name="settings_github_item">Repositorio de Github</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Copia de seguridad de la receta %d</item>
+        <item quantity="other">Copia de seguridad de las recetas %d</item>
+    </plurals>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Receta %d restaurada</item>
+        <item quantity="other">Recetas %d restauradas</item>
+    </plurals>
+    <string name="button_show">Mostrar</string>
+    <string name="step_add_remove">Eliminar</string>
+    <string name="timer_enjoy">Disfruta de tu café</string>
+    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_description">Receta creada por: James Hoffmann
+        Fuente: https://youtu.be/AI4ynXzkSQo
+        Tamaño del molido: medio fino
+        Temperatura: cuanto más caliente, mejor (especialmente con los tostados más ligeros)</string>
+    <string name="prepopulate_step_coffee">Añadir el café</string>
+    <string name="prepopulate_step_water">Añada agua</string>
+    <string name="prepopulate_step_swirl">Agitar</string>
+    <string name="prepopulate_step_wait">Esperar</string>
+    <string name="prepopulate_step_plunge">Sumerja justo hasta debajo de la superficie y vierta</string>
+    <string name="prepopulate_step_stir_crust">Remover la corteza</string>
+    <string name="prepopulate_step_scoop_coffee">Recoger la espuma y los trozos de café de la parte superior</string>
+    <string name="prepopulate_frenchPress_name">Prensa francesa</string>
+    <string name="prepopulate_frenchPress_description">Receta creada por: James Hoffmann
+        Fuente: https://youtu.be/st571DYYTR8
+        Tamaño del molido: medio
+        Se puede servir después de 5min del último paso, pero cuanto más tiempo se mantenga mejor se pone</string>.
+    <string name="hoffmann_credits_title">Recetas predeterminadas de James Hoffmann</string>
+    <string name="hoffmann_credits_subtitle">Ir a su canal de Youtube</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_chemex_description">Receta creada por: James Hoffmann
+        Fuente: https://youtu.be/ikt-X5x7yoc
+        Molido: medio fino
+        Temperatura: cuanto más caliente, mejor (especialmente con tostados ligeros)
+        Asegúrese de que la parte más rígida del filtro está en el lado de drenaje
+        Vigila para no bloquear el aire que sale de la cafetera</string>.
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="prepopulate_aero_step_piston">Coloque el pistón 1 cm dentro de la cafetera</string>
+    <string name="prepopulate_aero_step_press">Presione suavemente el pistón</string>
+    <string name="prepopulate_aero_description">Receta creada por: James Hoffmann
+        Fuente: https://youtu.be/j6VlT_jUVPc
+        Tamaño del molido: Para un tueste ligero, el extremo más fino del medio. Cuanto más oscuro sea, más preferirá
+        aumentar la dosis y engrosar el molido
+        Temperatura: Para tueste claro - llevar a ebullición y utilizar inmediatamente. Para tueste oscuro Para tueste oscuro - 85-90℃</string>
+    <string name="tereszkiewicz_credits_title">Icono de la aplicación por: Hubert Tereszkiewicz</string>
+    <string name="tereszkiewicz_credits_subtitle">Echa un vistazo a su Dribbble</string>
+    <string name="recipe_create_title">Añadir receta</string>
+    <string name="recipe_clone_title">¿Clonar esta receta?</string>
+    <string name="recipe_clone_text">Esto creará un duplicado de esta receta</string>
+    <string name="recipe_clone_suffix">%1$s - Copiar</string>
+    <string name="app_version">Versión de la aplicación</string>
+    <string name="recipe_details_noTime">Pulse Inicio para continuar</string>
+    <string name="step_add_duration_explainer">La duración del paso determina el tiempo que tardará una acción (en segundos). Si desea crear un paso que retenga toda la receta hasta que le lean, déjelo vacío.</string>
+    <string name="settings_backup">Copia de seguridad</string>
+    <string name="settings_restore">Restaurar</string>
+    <string name="settings_addDefault">Añadir recetas por defecto</string>
+    <string name="settings_timer_item">Ajustes del temporizador</string>
+    <string name="settings_backup_item">Copia de seguridad/restauración</string>
+    <string name="settings_step_vibrate_item">Vibración de cambio de paso</string>
+    <string name="recipe_details_multiply_time">Multiplicador de tiempo</string>
+    <string name="recipe_details_multiply_weight">Multiplicador de peso</string>
+    <string name="infoBox_wearOS_title">Cofi ya está en WearOS</string>
+    <string name="infoBox_wearOS_body">¡Descarga la aplicación Cofi para tu reloj WearOS!</string>
+    <string name="settings_sync_with_phone">Obtener ajustes desde el teléfono</string>
+</resources>
