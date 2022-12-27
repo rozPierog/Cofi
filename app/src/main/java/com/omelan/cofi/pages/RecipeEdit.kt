@@ -123,7 +123,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
