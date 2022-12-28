@@ -10,7 +10,6 @@ import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -19,6 +18,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.toggleableState
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import kotlinx.coroutines.launch
@@ -45,8 +47,14 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier
             .navigationBarsPadding()
-            .testTag("recipe_start")
-            .toggleable(isTimerRunning) {},
+            .semantics {
+                this.toggleableState = if (isTimerRunning) {
+                    ToggleableState.On
+                } else {
+                    ToggleableState.Off
+                }
+            }
+            .testTag("recipe_start"),
     ) {
         Icon(
             painter = rememberAnimatedVectorPainter(icon, atEnd),
