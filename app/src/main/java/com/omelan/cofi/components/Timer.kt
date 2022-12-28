@@ -9,11 +9,13 @@ import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.progressSemantics
-import androidx.compose.material.Divider
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -99,6 +101,11 @@ fun Timer(
     } else {
         15.dp
     }
+    val calculatedAnimatedProgress = remember {
+        derivedStateOf {
+            animatedProgressValue.value * timeMultiplier
+        }
+    }
 
     Box(
         contentAlignment = Alignment.Center,
@@ -162,6 +169,7 @@ fun Timer(
             ) {
                 if (currentStep != null) {
                     TimeText(
+                        modifier = Modifier.weight(1f, true),
                         currentStep = currentStep,
                         animatedProgressValue = (animatedProgressValue.value * timeMultiplier),
                         color = MaterialTheme.colorScheme.onSurface,
@@ -181,15 +189,16 @@ fun Timer(
                         style = if (isInPiP) {
                             MaterialTheme.typography.titleSmall
                         } else {
-                            MaterialTheme.typography.titleMedium
+                            MaterialTheme.typography.titleLarge
                         },
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                     )
                     Divider()
                     TimerValue(
+                        modifier = Modifier.weight(1f, true),
                         currentStep = currentStep,
-                        animatedProgressValue = (animatedProgressValue.value * timeMultiplier),
+                        animatedProgressValue = calculatedAnimatedProgress.value,
                         alreadyDoneWeight = alreadyDoneWeight,
                         weightMultiplier = weightMultiplier,
                         color = MaterialTheme.colorScheme.onSurface,

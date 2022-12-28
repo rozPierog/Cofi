@@ -5,10 +5,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -59,6 +56,11 @@ fun TimerPage(
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
     val coroutineScope = rememberCoroutineScope()
     val ambientController = LocalAmbientModeProvider.current
+    val isAmbient = remember {
+        derivedStateOf {
+            ambientController.isAmbient
+        }
+    }
 
     val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
         indexOfCurrentStep = allSteps.indexOf(currentStep.value),
@@ -109,7 +111,7 @@ fun TimerPage(
                 .fillMaxSize()
                 .padding(4.dp),
             progress = if (isDone) 1f else animatedProgressValue.value,
-            indicatorColor = if (ambientController.isAmbient) {
+            indicatorColor = if (isAmbient.value) {
                 Color.White
             } else {
                 animatedProgressColor.value
@@ -189,7 +191,7 @@ fun TimerPage(
                     }
                 }
             }
-            AnimatedVisibility(visible = !ambientController.isAmbient) {
+            AnimatedVisibility(visible = !isAmbient.value) {
                 Spacer(Modifier.height(12.dp))
                 StartButton(isTimerRunning, startButtonOnClick)
             }
