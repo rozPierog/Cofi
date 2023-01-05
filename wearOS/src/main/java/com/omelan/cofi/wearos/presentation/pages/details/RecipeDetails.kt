@@ -5,6 +5,7 @@
 
 
 import android.provider.Settings
+import android.provider.Settings.SettingNotFoundException
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
@@ -113,7 +114,11 @@ fun RecipeDetails(
     )
     val context = LocalContext.current
     val ambientEnabled: Boolean = remember(LocalLifecycleOwner.current) {
-        Settings.Global.getInt(context.contentResolver, "ambient_enabled") == 1
+        try {
+            Settings.Global.getInt(context.contentResolver, "ambient_enabled") == 1
+        } catch (e: SettingNotFoundException) {
+            false
+        }
     }
 
     LaunchedEffect(timerControllers.isTimerRunning) {
