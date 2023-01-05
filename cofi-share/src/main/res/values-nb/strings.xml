@@ -1,0 +1,109 @@
+<resources>
+    <string name="app_name" translatable="false">Cofi</string>
+    <string name="list_header" translatable="false">Cofi</string>
+    <string name="step_type_add_coffee">Tilsett kaffe</string>
+    <string name="step_type_water">Tilsett vann</string>
+    <string name="step_type_wait">Vent</string>
+    <string name="step_type_other">Annet</string>
+    <string name="step_add_name">Navn</string>
+    <string name="step_add_duration">Varighet (s)</string>
+    <string name="step_add_weight">Vekt (g)</string>
+    <string name="step_add_save">Lagre</string>
+    <string name="recipe_unsaved_title">Du har ulagrede endringer</string>
+    <string name="recipe_unsaved_text">Vil du forkaste de?</string>
+    <string name="recipe_delete_title">Er du sikker?</string>
+    <string name="recipe_delete_text">Dette vil fjerne oppskriften for alltid</string>
+    <string name="recipe_edit_name">Navn</string>
+    <string name="recipe_edit_description">Beskrivelse</string>
+    <string name="recipe_edit_description_button">Legg til beskrivelse</string>
+    <string name="recipe_edit_title">Rediger oppskrift</string>
+    <string name="recipe_add_new_title">Opprett oppskrift</string>
+    <string name="recipe_details_automation_dialog_title">Direkte lenke</string>
+    <string name="recipe_details_automation_dialog_text">"Bruk denne lenken til å gå direkte til oppskriften. Skriv det til en NFC tag eller opprett en automatiseringsoppgave i Tasker for å gjøre morgenkaffen ritualen enklere.
+ADVARSEL: Det er ikke mulig å dele oppskriften slik!"</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="button_cancel">Avbryt</string>
+    <string name="button_delete">Slett</string>
+    <string name="button_discard">Forkast</string>
+    <string name="button_continue_editing">Fortsett å redigere</string>
+    <string name="button_copy">Kopier</string>
+    <string name="snackbar_copied">Kopiert!</string>
+    <string name="settings_licenses_title">Åpen kildekode lisenser</string>
+    <string name="settings_title">Innstillinger</string>
+    <string name="settings_about_item">Om Appen</string>
+    <string name="settings_pip_item">Bilde-I-Bilde</string>
+    <string name="settings_step_sound_item">Ny trinn lyd</string>
+    <string name="settings_bug_item">Rapporter en feil eller foreslå noe nytt</string>
+    <string name="settings_combine_weight_item">Vekt kombinering</string>
+    <string name="settings_combine_weight_all">Kombiner alle vekter</string>
+    <string name="settings_combine_weight_water">Kombiner kun vekten av vann</string>
+    <string name="settings_combine_weight_none">Ikke kombiner vekt</string>
+    <string name="settings_about_title">Om Appen</string>
+    <string name="settings_licenses_item">Anerkjennelser</string>
+    <string name="settings_github_item">Github Repository</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Sikkerhetskopierte %d oppskrift</item>
+        <item quantity="other">Sikkerhetskopierte %d oppskrifter</item>
+    </plurals>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Gjenopprettet %d oppskrift</item>
+        <item quantity="other">Gjennomprettet %d Oppskrifter</item>
+    </plurals>
+    <string name="button_show">Vis</string>
+    <string name="step_add_remove">Fjern</string>
+    <string name="timer_enjoy">Håper det smaker!</string>
+    <string name="prepopulate_v60_name">Den Ultimate V60en</string>
+    <string name="prepopulate_v60_description">"Oppskrift av: James Hoffmann
+Kilde: https://youtu.be/AI4ynXzkSQo
+Kvernstørrelse: middels fin
+Temperatur: desto varmere, desto bedre (spesielt for mer lysbrent kaffe)"</string>
+    <string name="prepopulate_step_coffee">Tilsett kaffe</string>
+    <string name="prepopulate_step_water">Tilsett vann</string>
+    <string name="prepopulate_step_swirl">Virvel</string>
+    <string name="prepopulate_step_wait">Vent</string>
+    <string name="prepopulate_step_plunge">Sett stemplet rett under kaffe overflaten og hell</string>
+    <string name="prepopulate_step_stir_crust">Rør gruten</string>
+    <string name="prepopulate_step_scoop_coffee">Øs opp skummen og kaffe bitene fra toppen</string>
+    <string name="prepopulate_frenchPress_name">French Press</string>
+    <string name="prepopulate_frenchPress_description">"Oppskrift av: James Hoffmann
+Kilde: https://youtu.be/st571DYYTR8
+Kvernstørrelse: middels
+Kaffen er klar 5 minutter etter det siste steget, men smaken blir bedre og bedre desto lenger man venter</string>
+    <string name="hoffmann_credits_title">Standard oppskrifter av James Hoffmann</string>
+    <string name="hoffmann_credits_subtitle">Gå til hans Youtube kanal</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_chemex_description">"Oppskrift av: James Hoffmann
+Kilde: https://youtu.be/ikt-X5x7yoc
+Kvernstørrelse: middels fin
+Temperatur: desto varmere, desto bedre (spesielt for mer lysbrent kaffe)
+Forsikre deg at den tykke siden av filteret er plassert mot helletuten
+Pass på å ikke blokkere noe av luften som kommer ut av enheten</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="prepopulate_aero_step_piston">Plasser stempelet 1cm nedi enheten</string>
+    <string name="prepopulate_aero_step_press">Press forsiktig på stemplet</string>
+    <string name="prepopulate_aero_description">Oppskrift av: James Hoffmann
+Kilde: https://youtu.be/j6VlT_jUVPc
+Kvernstørrelse: For lysbrent kaffe er en mer finmalt medium bra. For mørkere brent kaffe kan det være nyttig å øke kaffedosen og bruke mer grovmalt kaffe
+            Temperatur: For lysbrent kaffe - bruk vannet så snart den begynner å koke. For mer mørkbrent kaffe - 85–90℃</string>
+    <string name="tereszkiewicz_credits_title">App-ikon av: Hubert Tereszkiewicz</string>
+    <string name="tereszkiewicz_credits_subtitle">Sjekk ut hans Dribbble</string>
+    <string name="recipe_create_title">Legg til oppskrift</string>
+    <string name="recipe_clone_title">Dupliser denne oppskriften?</string>
+    <string name="recipe_clone_text">Dette vill lage et duplikat av denne oppskriften</string>
+    <string name="recipe_clone_suffix">%1$s - Kopier</string>
+    <string name="app_version">App versjon</string>
+    <string name="recipe_details_noTime">Tryykk start for å fortsette</string>
+    <string name="step_add_duration_explainer">Trinn varighet bestemmer hvor lenge en trinn varer (i sekunder). Om du vill opprette en trinn som ikke er tidsbegrenset kan dette stå tomt.</string>
+    <string name="settings_backup">Sikkerhetskopier</string>
+    <string name="settings_restore">Gjenopprett</string>
+    <string name="settings_addDefault">Legg til standard oppskrift</string>
+    <string name="settings_timer_item">Timer instillinger</string>
+    <string name="settings_backup_item">Backup/Gjenopprett</string>
+    <string name="settings_step_vibrate_item">Vibrer ved hvert trinn</string>
+    <string name="recipe_details_multiply_time">Tids multiplikator</string>
+    <string name="recipe_details_multiply_weight">Vekt multiplikator</string>
+    <string name="infoBox_wearOS_title">Cofi er nå tilgjengelig på WearOS</string>
+    <string name="infoBox_wearOS_body">Last ned Cofi appen for din WearOS smartklokke!</string>
+    <string name="settings_sync_with_phone">Synkroniser instillinger fra telefonen</string>
+</resources>

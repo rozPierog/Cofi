@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Norwegian (Bokmål) translation - thanks @deltainium
 
 ### Changed
-
+- fixed crash on WearOS 2 devices
+- changed style of timer on Android app
+- added animations to step change in both WearOS and Android app
+- fixed highlight when clicking on an edge of the Start FAB
 ### Removed
 
 
