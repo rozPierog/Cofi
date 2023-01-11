@@ -22,8 +22,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.Step
+import com.omelan.cofi.utils.roundToDecimals
 import com.omelan.cofi.utils.toStringDuration
 import com.omelan.cofi.utils.toStringShort
+import kotlin.math.roundToInt
 
 @Composable
 fun ColumnScope.TimerValue(
@@ -57,11 +59,22 @@ fun ColumnScope.TimerValue(
                     (currentStepValue * weightMultiplier) + alreadyDoneWeight
                 }
             }
+            val targetString = currentTargetValue.value.toStringShort()
+            val shouldShowDecimals = remember {
+                derivedStateOf {
+                    targetString.contains(".")
+                }
+            }
+            val currentValueString: Number = if (shouldShowDecimals.value) {
+                currentValueWithMultiplier.roundToDecimals()
+            } else {
+                currentValueWithMultiplier.roundToInt()
+            }
             Text(
                 text = stringResource(
                     id = R.string.timer_progress_weight,
-                    currentValueWithMultiplier.toStringShort(),
-                    currentTargetValue.value.toStringShort(),
+                    currentValueString,
+                    targetString,
                 ),
                 color = color,
                 maxLines = maxLines,

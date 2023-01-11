@@ -88,6 +88,9 @@ fun String.safeToInt(): Int {
         }
     }
 }
-fun Double.toStringShort() = DecimalFormat("0.#").format(this)
+fun Double.toStringShort(): String = DecimalFormat("0.#").format(this)
 fun Float.roundToDecimals(scale: Int = 1) = this.toBigDecimal()
     .setScale(scale, RoundingMode.HALF_EVEN).toFloat()
+
+fun Double.roundToDecimals(scale: Int = 1) = this.toBigDecimal()
+    .setScale(scale, RoundingMode.HALF_EVEN).toDouble()
