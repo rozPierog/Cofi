@@ -20,16 +20,13 @@ import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Stepper
 import androidx.wear.compose.material.Text
+import com.omelan.cofi.utils.roundToDecimals
 import com.omelan.cofi.wearos.R
-import java.math.RoundingMode
 import kotlin.math.roundToInt
 
 const val step = 0.1f
 val range = 0f..3f
 val steps = (range.endInclusive / step).roundToInt() + 1
-
-fun Float.roundToTens() = this.toBigDecimal().setScale(1, RoundingMode.HALF_EVEN).toFloat()
-
 @Composable
 fun MultiplierPage(
     multiplier: Float,
@@ -51,13 +48,13 @@ fun MultiplierPage(
                 when {
                     scroll > 0 -> changeMultiplier(
                         (multiplier + step)
-                            .roundToTens()
+                            .roundToDecimals()
                             .coerceIn(range),
                     )
 
                     scroll < 0 -> changeMultiplier(
                         (multiplier - step)
-                            .roundToTens()
+                            .roundToDecimals()
                             .coerceIn(range),
                     )
                 }
@@ -67,7 +64,7 @@ fun MultiplierPage(
             .focusable(),
         value = multiplier,
         onValueChange = {
-            changeMultiplier(it.roundToTens())
+            changeMultiplier(it.roundToDecimals())
         },
         steps = steps - 2,
         valueRange = range,

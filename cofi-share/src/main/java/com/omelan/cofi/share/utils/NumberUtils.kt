@@ -1,5 +1,8 @@
 package com.omelan.cofi.utils
 
+import android.icu.text.DecimalFormat
+import java.math.RoundingMode
+
 fun Int.toMillis() = this * 1000
 
 fun Int.toStringDuration(
@@ -85,3 +88,6 @@ fun String.safeToInt(): Int {
         }
     }
 }
+fun Double.toStringShort() = DecimalFormat("0.#").format(this)
+fun Float.roundToDecimals(scale: Int = 1) = this.toBigDecimal()
+    .setScale(scale, RoundingMode.HALF_EVEN).toFloat()

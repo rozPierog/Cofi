@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.Dp
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.utils.toStringDuration
-import kotlin.math.roundToInt
+import com.omelan.cofi.utils.toStringShort
 
 @Composable
 fun ColumnScope.TimerValue(
@@ -46,22 +46,22 @@ fun ColumnScope.TimerValue(
         ) {
             val currentStepValue = it.value ?: return@AnimatedContent
             val currentValueFromProgress = remember(currentStepValue, animatedProgressValue) {
-                (currentStepValue * animatedProgressValue).toInt()
+                (currentStepValue * animatedProgressValue)
 
             }
             val currentValueWithMultiplier = remember(currentValueFromProgress, weightMultiplier) {
-                (currentValueFromProgress * weightMultiplier).roundToInt() + alreadyDoneWeight
+                (currentValueFromProgress * weightMultiplier) + alreadyDoneWeight
             }
             val currentTargetValue = remember(currentStepValue, weightMultiplier) {
                 derivedStateOf {
-                    (currentStepValue * weightMultiplier).roundToInt() + alreadyDoneWeight
+                    (currentStepValue * weightMultiplier) + alreadyDoneWeight
                 }
             }
             Text(
                 text = stringResource(
                     id = R.string.timer_progress_weight,
-                    currentValueWithMultiplier,
-                    currentTargetValue.value,
+                    currentValueWithMultiplier.toStringShort(),
+                    currentTargetValue.value.toStringShort(),
                 ),
                 color = color,
                 maxLines = maxLines,
@@ -77,7 +77,7 @@ fun ColumnScope.TimerValue(
 }
 
 @Composable
-fun ColumnScope.StepNameText(
+fun StepNameText(
     currentStep: Step,
     color: Color,
     style: TextStyle,

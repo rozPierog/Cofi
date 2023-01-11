@@ -23,6 +23,7 @@ import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.toMillis
 import com.omelan.cofi.utils.toStringDuration
+import com.omelan.cofi.utils.toStringShort
 import kotlin.math.roundToInt
 
 private data class CoffeeWaterTime(
@@ -84,7 +85,7 @@ fun RecipeInfo(
                 Param(
                     modifier = Modifier.testTag("recipe_info_coffee"),
                     icon = painterResource(id = R.drawable.ic_coffee_grinder),
-                    text = "${(stepInfo.coffeeWeight * weightMultiplier).roundToInt()}g",
+                    text = "${(stepInfo.coffeeWeight * weightMultiplier).toStringShort()}g",
                     compactStyle = compactStyle,
                 )
             }

@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.ui.Spacing
-import java.math.RoundingMode
+import com.omelan.cofi.utils.roundToDecimals
 import kotlin.math.roundToInt
 
 @Composable
@@ -82,8 +82,7 @@ private fun SliderWithValue(value: MutableState<Float>) {
             steps = steps,
             value = value.value,
             onValueChange = {
-                val rounded = it.toBigDecimal().setScale(1, RoundingMode.HALF_EVEN).toFloat()
-                value.value = rounded
+                value.value = it.roundToDecimals()
             },
             modifier = Modifier.weight(1f, true),
         )
