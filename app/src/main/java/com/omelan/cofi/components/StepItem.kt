@@ -108,7 +108,7 @@ fun StepListItemPreview() {
                 "In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
-            value = 60,
+            value = 60.0,
             orderInRecipe = 0,
         ),
         stepProgress = StepProgress.Current,

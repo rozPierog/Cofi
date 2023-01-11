@@ -104,10 +104,10 @@ fun StepAddCard(
                 time = if (stepTime.isBlank()) null else stepTime.safeToInt().toMillis(),
                 type = pickedType ?: StepType.OTHER,
                 value = if (stepValue.isNotBlank() &&
-                    stepValue.toInt() != 0 &&
+                    stepValue.toDoubleOrNull() != 0.0 &&
                     pickedType != StepType.WAIT
                 ) {
-                    stepValue.toInt()
+                    stepValue.toDoubleOrNull()
                 } else {
                     null
                 },
@@ -215,7 +215,7 @@ fun StepAddCard(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
                         value = stepValue,
                         onValueChange = { value ->
-                            stepValue = ensureNumbersOnly(value) ?: stepValue
+                            stepValue = ensureNumbersOnly(value, true) ?: stepValue
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(

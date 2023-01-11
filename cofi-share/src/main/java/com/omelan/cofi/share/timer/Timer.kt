@@ -50,16 +50,16 @@ object Timer {
                 when (combineWeightState) {
                     CombineWeight.ALL.name -> (
                             doneSteps.sumOf {
-                                it.value ?: 0
+                                it.value ?: 0.0
                             } * weightMultiplier
                             ).roundToInt()
 
                     CombineWeight.WATER.name -> (
                             doneSteps.sumOf {
                                 if (it.type === StepType.WATER) {
-                                    it.value ?: 0
+                                    it.value ?: 0.0
                                 } else {
-                                    0
+                                    0.0
                                 }
                             } * weightMultiplier
                             ).roundToInt()

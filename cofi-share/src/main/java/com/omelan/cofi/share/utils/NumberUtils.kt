@@ -39,18 +39,35 @@ fun Int.toStringDuration(
     }
 }
 
-fun ensureNumbersOnly(string: String): String? {
+fun ensureNumbersOnly(string: String, allowFloatingPoint: Boolean = false): String? {
     if (string.isEmpty()) {
         return string
     }
-    val maxInt: Int = Int.MAX_VALUE / 1000
+
     return try {
-        val stringValue = string.trim().toInt()
-        if (stringValue > maxInt || stringValue < 0) {
-            null
+        if (allowFloatingPoint) {
+            val maxDouble: Double = Double.MAX_VALUE / 1000.0
+
+            val stringValue = string.trim().toDouble()
+            if (stringValue in 0.1..maxDouble) {
+                if (string.endsWith(".") || string.endsWith(".0")) {
+                    string.removePrefix("0")
+                } else {
+                    stringValue.toString().removeSuffix(".0")
+                }
+            } else {
+                null
+            }
         } else {
-            stringValue.toString()
+            val maxInt: Int = Int.MAX_VALUE / 1000
+            val stringValue = string.trim().toInt()
+            if (stringValue in 1..maxInt) {
+                stringValue.toString()
+            } else {
+                null
+            }
         }
+
     } catch (e: NumberFormatException) {
         null
     }

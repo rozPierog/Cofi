@@ -60,5 +60,15 @@ class NumberUtilsKtTest : TestCase() {
         ).forEach {
             assertEquals(it.value, ensureNumbersOnly(it.key))
         }
+        mapOf(
+            "01.1" to "1.1",
+            " 21.1" to "21.1",
+            "21.100000" to "21.1",
+            "a21.1" to null,
+            "1.7976931348623156E305" to "1.7976931348623156E305",
+            "1.7976931348623156E306" to null,
+        ).forEach {
+            assertEquals(it.value, ensureNumbersOnly(it.key, true))
+        }
     }
 }
