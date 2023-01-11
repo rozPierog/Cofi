@@ -73,9 +73,9 @@ fun RecipeDetails(
         derivedStateOf {
             steps.sumOf {
                 if (it.type == StepType.WATER) {
-                    it.value ?: 0
+                    it.value ?: 0.0
                 } else {
-                    0
+                    0.0
                 }
             }
         }
@@ -84,9 +84,9 @@ fun RecipeDetails(
         derivedStateOf {
             steps.sumOf {
                 if (it.type == StepType.ADD_COFFEE) {
-                    it.value ?: 0
+                    it.value ?: 0.0
                 } else {
-                    0
+                    0.0
                 }
             }
         }
