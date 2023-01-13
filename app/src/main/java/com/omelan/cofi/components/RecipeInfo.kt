@@ -97,7 +97,7 @@ fun RecipeInfo(
                 Param(
                     modifier = Modifier.testTag("recipe_info_water"),
                     icon = painterResource(id = R.drawable.ic_water),
-                    text = "${(stepInfo.waterWeight * weightMultiplier).roundToInt()}g",
+                    text = "${(stepInfo.waterWeight * weightMultiplier).toStringShort()}g",
                     compactStyle = compactStyle,
                 )
             }
