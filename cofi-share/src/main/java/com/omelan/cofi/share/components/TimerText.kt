@@ -57,12 +57,12 @@ fun ColumnScope.TimerValue(
                 }
             }
             val targetString = currentTargetValue.toStringShort()
-            val shouldShowDecimals = remember {
+            val shouldShowDecimals by remember {
                 derivedStateOf {
                     targetString.contains(".")
                 }
             }
-            val currentValueString: Number = if (shouldShowDecimals.value) {
+            val currentValueString: Number = if (shouldShowDecimals) {
                 currentValueWithMultiplier.roundToDecimals()
             } else {
                 currentValueWithMultiplier.roundToInt()
