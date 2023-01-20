@@ -87,9 +87,6 @@ fun RecipeEdit(
         mutableStateOf(recipeToEdit.description.isNotBlank())
     }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
-    val tooltipStates = remember {
-        RecipeIcon.values().associateWith { TooltipState() }
-    }
     var name by remember(recipeToEdit) {
         mutableStateOf(
             TextFieldValue(
@@ -367,14 +364,13 @@ fun RecipeEdit(
                 modifier = Modifier
                     .fillMaxWidth()
                     .navigationBarsPadding()
-                    .verticalScroll(iconScrollState)
-                    .imePadding()
-                    .padding(getDefaultPadding(skipNavigationBarPadding = true)),
+                    .imePadding().waterfallPadding()
+                    .verticalScroll(iconScrollState).padding(Spacing.small),
                 lastLineMainAxisAlignment = FlowMainAxisAlignment.Center,
                 mainAxisAlignment = FlowMainAxisAlignment.Center,
                 crossAxisAlignment = FlowCrossAxisAlignment.Center,
-                mainAxisSpacing = Spacing.big,
-                crossAxisSpacing = Spacing.big,
+                mainAxisSpacing = Spacing.medium,
+                crossAxisSpacing = Spacing.medium,
                 ) {
                 RecipeIcon.values().map {
                     PlainTooltipBox(tooltip = { Text(stringResource(id = it.nameResId)) }) {
