@@ -88,7 +88,7 @@ fun Timer(
     modifier: Modifier = Modifier,
     currentStep: Step?,
     allSteps: List<Step> = emptyList(),
-    alreadyDoneWeight: Int = 0,
+    alreadyDoneWeight: Float = 0f,
     animatedProgressValue: Animatable<Float, AnimationVector1D>,
     animatedProgressColor: Animatable<Color, AnimationVector4D>,
     isInPiP: Boolean,

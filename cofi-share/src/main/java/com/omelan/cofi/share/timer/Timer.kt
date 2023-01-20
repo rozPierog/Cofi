@@ -11,10 +11,10 @@ import androidx.compose.ui.platform.LocalContext
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.utils.Haptics
+import com.omelan.cofi.utils.roundToDecimals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.math.roundToInt
 
 
 fun <R, T> suspendCompat(block: suspend (T) -> R): suspend (T) -> R = block
@@ -39,7 +39,7 @@ object Timer {
         allSteps: List<Step>,
         combineWeightState: String,
         weightMultiplier: Float = 1f,
-    ): State<Int> {
+    ): State<Float> {
         val doneSteps = if (indexOfCurrentStep == -1) {
             listOf()
         } else {
@@ -52,7 +52,7 @@ object Timer {
                             doneSteps.sumOf {
                                 it.value ?: 0.0
                             } * weightMultiplier
-                            ).roundToInt()
+                            ).roundToDecimals().toFloat()
 
                     CombineWeight.WATER.name -> (
                             doneSteps.sumOf {
@@ -62,10 +62,10 @@ object Timer {
                                     0.0
                                 }
                             } * weightMultiplier
-                            ).roundToInt()
+                            ).roundToDecimals().toFloat()
 
-                    CombineWeight.NONE.name -> 0
-                    else -> 0
+                    CombineWeight.NONE.name -> 0f
+                    else -> 0f
                 }
             }
         }
