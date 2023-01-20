@@ -2,6 +2,7 @@ package com.omelan.cofi.share
 
 import android.app.Application
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -11,27 +12,27 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 
-enum class RecipeIcon(@DrawableRes val icon: Int) {
-    V60(R.drawable.ic_drip),
-    FrenchPress(R.drawable.ic_french_press),
-    Grinder(R.drawable.ic_coffee_grinder),
-    Chemex(R.drawable.ic_chemex),
-    Aeropress(R.drawable.ic_aeropress),
-    Bripe(R.drawable.ic_bripe),
-    ColdBrew(R.drawable.ic_cold_brew),
-    Espresso(R.drawable.ic_espresso),
-    Mokapot(R.drawable.ic_mokapot),
-    Siphon(R.drawable.ic_siphon),
-    VietnamesePress(R.drawable.ic_vietnamese_press),
+enum class RecipeIcon(@DrawableRes val icon: Int, @StringRes val nameResId: Int) {
+    Grinder(R.drawable.ic_coffee_grinder, R.string.name_grinder),
+    V60(R.drawable.ic_drip, R.string.name_v60),
+    Chemex(R.drawable.ic_chemex, R.string.prepopulate_chemex_name),
+    AeroPress(R.drawable.ic_aeropress, R.string.prepopulate_aero_name),
+    VietnamesePress(R.drawable.ic_vietnamese_press, R.string.name_vietnamese_press),
+    FrenchPress(R.drawable.ic_french_press, R.string.prepopulate_frenchPress_name),
+    Mokapot(R.drawable.ic_mokapot, R.string.name_mokapot),
+    Espresso(R.drawable.ic_espresso, R.string.name_espresso),
+    ColdBrew(R.drawable.ic_cold_brew, R.string.name_cold_brew),
+    Siphon(R.drawable.ic_siphon, R.string.name_siphon),
+    Bripe(R.drawable.ic_bripe, R.string.name_bripe),
 }
 
 open class RecipeIconTypeConverter {
     @TypeConverter
-    open fun recipeIconToString(type: RecipeIcon) = type.name
+    open fun recipeIconToString(type: RecipeIcon) = type.name.lowercase()
 
     @TypeConverter
     open fun stringToRecipeIcon(type: String) =
-        RecipeIcon.values().find { type == it.name } ?: RecipeIcon.Grinder
+        RecipeIcon.values().find { type.lowercase() == it.name.lowercase() } ?: RecipeIcon.Grinder
 }
 
 @Dao

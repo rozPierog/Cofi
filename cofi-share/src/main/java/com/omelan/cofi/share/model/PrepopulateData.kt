@@ -51,7 +51,7 @@ class PrepopulateData(context: Context) {
             id = aeroPress,
             name = resources.getString(R.string.prepopulate_aero_name),
             description = resources.getString(R.string.prepopulate_aero_description),
-            recipeIcon = RecipeIcon.Aeropress,
+            recipeIcon = RecipeIcon.AeroPress,
         ),
     )
     val steps = listOf(

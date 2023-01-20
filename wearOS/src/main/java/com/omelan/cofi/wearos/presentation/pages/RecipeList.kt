@@ -148,7 +148,7 @@ fun DefaultPreview() {
             id = 4,
             name = stringResource(R.string.prepopulate_aero_name),
             description = stringResource(R.string.prepopulate_aero_description),
-            recipeIcon = RecipeIcon.Aeropress,
+            recipeIcon = RecipeIcon.AeroPress,
         ),
     )
     RecipeList(recipes)

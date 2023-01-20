@@ -35,7 +35,7 @@ class RecipeDetailsTest {
             "at nulla aliquet, molestie magna at, mattis tortor. Aenean eleifend justo ipsum," +
             " sed convallis lectus viverra at. ",
         name = "Test Recipe",
-        recipeIcon = RecipeIcon.Aeropress,
+        recipeIcon = RecipeIcon.AeroPress,
         lastFinished = 0L,
     )
 
