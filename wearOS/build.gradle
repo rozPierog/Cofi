@@ -100,7 +100,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.activity:activity-compose:1.6.1'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha04"
     implementation "androidx.wear:wear-input:1.1.0"
     implementation 'androidx.wear:wear:1.2.0'
 

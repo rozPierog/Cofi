@@ -27,7 +27,7 @@ android {
         applicationId "com.omelan.cofi"
         minSdkVersion 25
         targetSdkVersion 33
-        compileSdkVersion 33
+        compileSdk 33
         versionCode 123
         versionName "1.13.2"
 
