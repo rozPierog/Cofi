@@ -14,6 +14,7 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.ExperimentalMaterialApi
@@ -31,6 +32,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -40,6 +42,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.OffsetMapping
@@ -49,6 +52,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
 import com.omelan.cofi.LocalPiPState
@@ -83,6 +87,9 @@ fun RecipeEdit(
         mutableStateOf(recipeToEdit.description.isNotBlank())
     }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
+    val tooltipStates = remember {
+        RecipeIcon.values().associateWith { TooltipState() }
+    }
     var name by remember(recipeToEdit) {
         mutableStateOf(
             TextFieldValue(
@@ -123,7 +130,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -175,7 +182,7 @@ fun RecipeEdit(
         collapse()
         delay(100)
         try {
-            nameFocusRequester.requestFocus()
+//            nameFocusRequester.requestFocus()
         } catch (e: IllegalStateException) {
             // do nothing - it's not vital part of the app, just QoL feature
         }
@@ -185,7 +192,7 @@ fun RecipeEdit(
             descriptionFocusRequester.requestFocus()
         } else {
             delay(100)
-            nameFocusRequester.requestFocus()
+//            nameFocusRequester.requestFocus()
         }
     }
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
@@ -364,19 +371,27 @@ fun RecipeEdit(
                     .imePadding()
                     .padding(getDefaultPadding(skipNavigationBarPadding = true)),
                 lastLineMainAxisAlignment = FlowMainAxisAlignment.Center,
-            ) {
+                mainAxisAlignment = FlowMainAxisAlignment.Center,
+                crossAxisAlignment = FlowCrossAxisAlignment.Center,
+                mainAxisSpacing = Spacing.big,
+                crossAxisSpacing = Spacing.big,
+                ) {
                 RecipeIcon.values().map {
-                    IconButton(
-                        onClick = { pickIcon(it) },
-                        modifier = Modifier
-                            .fillMaxSize(0.25f)
-                            .padding(vertical = Spacing.big),
-                    ) {
-                        Icon(
-                            painter = painterResource(id = it.icon),
-                            tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = it.name,
-                        )
+                    PlainTooltipBox(tooltip = { Text(stringResource(id = it.nameResId)) }) {
+                        Box(
+                            modifier = Modifier
+                                .size(72.dp)
+                                .clip(CircleShape)
+                                .clickable(role = Role.Button) { pickIcon(it) },
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Icon(
+                                painter = painterResource(id = it.icon),
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                contentDescription = it.name,
+                                modifier = Modifier.size(36.dp),
+                            )
+                        }
                     }
                 }
             }
