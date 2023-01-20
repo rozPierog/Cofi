@@ -127,7 +127,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -371,7 +371,7 @@ fun RecipeEdit(
                 crossAxisAlignment = FlowCrossAxisAlignment.Center,
                 mainAxisSpacing = Spacing.medium,
                 crossAxisSpacing = Spacing.medium,
-                ) {
+            ) {
                 RecipeIcon.values().map {
                     PlainTooltipBox(tooltip = { Text(stringResource(id = it.nameResId)) }) {
                         Box(
