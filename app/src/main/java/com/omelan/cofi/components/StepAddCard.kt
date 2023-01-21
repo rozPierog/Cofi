@@ -104,10 +104,10 @@ fun StepAddCard(
                 time = if (stepTime.isBlank()) null else stepTime.safeToInt().toMillis(),
                 type = pickedType ?: StepType.OTHER,
                 value = if (stepValue.isNotBlank() &&
-                    stepValue.toDoubleOrNull() != 0.0 &&
+                    stepValue.toFloatOrNull() != 0f &&
                     pickedType != StepType.WAIT
                 ) {
-                    stepValue.toDoubleOrNull()
+                    stepValue.toFloatOrNull()
                 } else {
                     null
                 },

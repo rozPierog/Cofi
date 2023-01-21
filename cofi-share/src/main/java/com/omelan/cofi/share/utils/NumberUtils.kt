@@ -49,10 +49,10 @@ fun ensureNumbersOnly(string: String, allowFloatingPoint: Boolean = false): Stri
 
     return try {
         if (allowFloatingPoint) {
-            val maxDouble: Double = Double.MAX_VALUE / 1000.0
+            val maxFloat: Float = Float.MAX_VALUE / 1000f
 
-            val stringValue = string.trim().toDouble()
-            if (stringValue in 0.1..maxDouble) {
+            val stringValue = string.trim().toFloat()
+            if (stringValue in 0.1f..maxFloat) {
                 if (string.endsWith(".") || string.endsWith(".0")) {
                     string.removePrefix("0")
                 } else {
@@ -88,9 +88,6 @@ fun String.safeToInt(): Int {
         }
     }
 }
-fun Double.toStringShort(): String = DecimalFormat("0.#").format(this)
+fun Float.toStringShort(): String = DecimalFormat("0.#").format(this)
 fun Float.roundToDecimals(scale: Int = 1) = this.toBigDecimal()
     .setScale(scale, RoundingMode.HALF_EVEN).toFloat()
-
-fun Double.roundToDecimals(scale: Int = 1) = this.toBigDecimal()
-    .setScale(scale, RoundingMode.HALF_EVEN).toDouble()

@@ -48,21 +48,19 @@ object Timer {
         return remember(combineWeightState, indexOfCurrentStep, weightMultiplier) {
             derivedStateOf {
                 when (combineWeightState) {
-                    CombineWeight.ALL.name -> (
-                            doneSteps.sumOf {
-                                it.value ?: 0.0
-                            } * weightMultiplier
-                            ).roundToDecimals().toFloat()
+                    CombineWeight.ALL.name ->
+                        (doneSteps.sumOf { it.value?.toDouble() ?: 0.0 } * weightMultiplier)
+                            .toFloat().roundToDecimals()
 
                     CombineWeight.WATER.name -> (
                             doneSteps.sumOf {
-                                if (it.type === StepType.WATER) {
-                                    it.value ?: 0.0
+                                if (it.type === StepType.WATER && it.value != null) {
+                                    it.value.toDouble()
                                 } else {
                                     0.0
                                 }
                             } * weightMultiplier
-                            ).roundToDecimals().toFloat()
+                            ).toFloat().roundToDecimals()
 
                     CombineWeight.NONE.name -> 0f
                     else -> 0f

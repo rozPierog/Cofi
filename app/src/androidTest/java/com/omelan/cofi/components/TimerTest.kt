@@ -47,7 +47,7 @@ class TimerTest {
             name = "Test",
             time = 5000,
             type = StepType.ADD_COFFEE,
-            value = 500,
+            value = 500f,
             orderInRecipe = 0,
         )
         composeTestRule.setContent {

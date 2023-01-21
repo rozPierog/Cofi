@@ -250,7 +250,7 @@ fun TimerPreviewPiP() {
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets ",
             time = 5 * 1000,
             type = StepType.WATER,
-            value = 300.0,
+            value = 300.0f,
             orderInRecipe = 0,
         ),
         animatedProgressValue = Animatable(0.2f),

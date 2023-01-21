@@ -27,15 +27,15 @@ import com.omelan.cofi.utils.toStringShort
 import kotlin.math.roundToInt
 
 private data class CoffeeWaterTime(
-    val coffeeWeight: Double = 0.0,
-    val waterWeight: Double = 0.0,
+    val coffeeWeight: Float = 0f,
+    val waterWeight: Float = 0f,
     val duration: Int = 0,
 ) {
-    fun addCoffee(weight: Double?, time: Int?): CoffeeWaterTime =
-        this.copy(coffeeWeight = coffeeWeight + (weight ?: 0.0), duration = duration + (time ?: 0))
+    fun addCoffee(weight: Float?, time: Int?): CoffeeWaterTime =
+        this.copy(coffeeWeight = coffeeWeight + (weight ?: 0f), duration = duration + (time ?: 0))
 
-    fun addWater(weight: Double?, time: Int?): CoffeeWaterTime =
-        this.copy(waterWeight = waterWeight + (weight ?: 0.0), duration = duration + (time ?: 0))
+    fun addWater(weight: Float?, time: Int?): CoffeeWaterTime =
+        this.copy(waterWeight = waterWeight + (weight ?: 0f), duration = duration + (time ?: 0))
 
     fun addTime(time: Int?): CoffeeWaterTime = this.copy(duration = duration + (time ?: 0))
 }
@@ -176,13 +176,13 @@ fun RecipeInfoPreview() {
         steps = listOf(
             Step(
                 name = stringResource(R.string.prepopulate_step_coffee),
-                value = 30.0,
+                value = 30.0f,
                 time = 5.toMillis(),
                 type = StepType.ADD_COFFEE,
             ),
             Step(
                 name = stringResource(R.string.prepopulate_step_water),
-                value = 60.0,
+                value = 60.0f,
                 time = 5.toMillis(),
                 type = StepType.WATER,
             ),
@@ -200,13 +200,13 @@ fun RecipeInfoPreview() {
                 name = stringResource(R.string.prepopulate_step_water),
                 time = 30.toMillis(),
                 type = StepType.WATER,
-                value = 240.0,
+                value = 240.0f,
             ),
             Step(
                 name = stringResource(R.string.prepopulate_step_water),
                 time = 30.toMillis(),
                 type = StepType.WATER,
-                value = 200.0,
+                value = 200.0f,
             ),
             Step(
                 name = stringResource(R.string.prepopulate_step_swirl),
@@ -225,13 +225,13 @@ fun RecipeInfoCompactPreview() {
         steps = listOf(
             Step(
                 name = stringResource(R.string.prepopulate_step_coffee),
-                value = 30.0,
+                value = 30.0f,
                 time = 5.toMillis(),
                 type = StepType.ADD_COFFEE,
             ),
             Step(
                 name = stringResource(R.string.prepopulate_step_water),
-                value = 60.0,
+                value = 60.0f,
                 time = 5.toMillis(),
                 type = StepType.WATER,
             ),
@@ -249,13 +249,13 @@ fun RecipeInfoCompactPreview() {
                 name = stringResource(R.string.prepopulate_step_water),
                 time = 30.toMillis(),
                 type = StepType.WATER,
-                value = 240.0,
+                value = 240.0f,
             ),
             Step(
                 name = stringResource(R.string.prepopulate_step_water),
                 time = 30.toMillis(),
                 type = StepType.WATER,
-                value = 200.0,
+                value = 200.0f,
             ),
             Step(
                 name = stringResource(R.string.prepopulate_step_swirl),
