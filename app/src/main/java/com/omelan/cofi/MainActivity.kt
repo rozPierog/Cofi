@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -98,9 +99,15 @@ class MainActivity : MonetCompatActivity() {
 
     private fun blockPip() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            setPictureInPictureParams(
-                PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
-            )
+            try {
+                setPictureInPictureParams(
+                    PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
+                )
+            } catch (e: IllegalStateException) {
+                if (BuildConfig.DEBUG) {
+                    Log.e("blockPip", "Tried to block pip but couldn't ${e.message}")
+                }
+            }
         }
     }
 
@@ -140,8 +147,8 @@ class MainActivity : MonetCompatActivity() {
                         )
                         val shortcut =
                             ShortcutInfoCompat.Builder(this@MainActivity, recipeId.toString())
-                                .setShortLabel(recipe.name)
-                                .setLongLabel(recipe.name)
+                                .setShortLabel(recipe.name.ifEmpty { recipeId.toString() })
+                                .setLongLabel(recipe.name.ifEmpty { recipeId.toString() })
                                 .setIcon(
                                     IconCompat.createWithResource(
                                         this@MainActivity,
@@ -274,19 +281,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                            slideIntoContainer(
-                                AnimatedContentScope.SlideDirection.End,
-                                animationSpec = tween(tweenDuration),
-                                initialOffset = { fullWidth -> -fullWidth / 5 },
-                            )
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.End,
+                                    animationSpec = tween(tweenDuration),
+                                    initialOffset = { fullWidth -> -fullWidth / 5 },
+                                )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                            slideOutOfContainer(
-                                AnimatedContentScope.SlideDirection.Start,
-                                animationSpec = tween(tweenDuration),
-                                targetOffset = { fullWidth -> fullWidth / 5 },
-                            )
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Start,
+                                    animationSpec = tween(tweenDuration),
+                                    targetOffset = { fullWidth -> fullWidth / 5 },
+                                )
                     },
                 ) {
 //                    composable("list_color") {

@@ -1,5 +1,6 @@
 package com.omelan.cofi.wearos.presentation
 
+import android.util.Log
 import com.google.android.gms.wearable.ChannelClient
 import com.google.android.gms.wearable.Wearable
 import com.google.android.gms.wearable.WearableListenerService
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
@@ -28,12 +30,21 @@ class CofiWearableListenerService : WearableListenerService() {
     ) {
         CoroutineScope(Dispatchers.IO + Job()).launch {
             channelClient.getInputStream(channel).await().use {
-                val jsonString = String(it.readBytes(), StandardCharsets.UTF_8)
-                val jsonArray = JSONArray(jsonString)
+                val jsonArray = try {
+                    val jsonString = String(it.readBytes(), StandardCharsets.UTF_8)
+                    JSONArray(jsonString)
+                } catch (e: JSONException) {
+                    if (BuildConfig.DEBUG) {
+                        Log.e("saveDataFromChannel", "Data isn't JSON")
+                    }
+                    // Ignore the issue, it will retry again later anyway
+                    return@use
+                }
                 when (channel.path) {
                     "cofi/recipes", "cofi/steps" -> saveDBDataFromChannel(jsonArray, channel.path)
                     "cofi/settings" -> {
-                        if (DataStore(this@CofiWearableListenerService)
+                        if (
+                            DataStore(this@CofiWearableListenerService)
                                 .getSyncSettingsFromPhoneSetting().first()
                         ) {
                             saveSettingsFromChannel(jsonArray)
