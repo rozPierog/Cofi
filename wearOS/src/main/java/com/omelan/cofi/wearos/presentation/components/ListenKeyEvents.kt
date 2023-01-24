@@ -11,7 +11,7 @@ typealias KeyEventHandler = (Int, KeyEvent) -> Boolean
 @Composable
 fun ListenKeyEvents(handler: KeyEventHandler) {
     val handlerState = rememberUpdatedState(handler)
-    val eventHandlers = LocalKeyEventHandlers.current
+    val eventHandlers = LocalKeyEventHandlers.current ?: return
     DisposableEffect(handlerState) {
         val localHandler: KeyEventHandler = { keyCode, keyEvent ->
             handlerState.value(keyCode, keyEvent)

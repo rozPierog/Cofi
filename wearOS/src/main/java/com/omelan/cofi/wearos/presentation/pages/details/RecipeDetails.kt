@@ -123,17 +123,17 @@ fun RecipeDetails(
 
     LaunchedEffect(timerControllers.isTimerRunning) {
         if (ambientEnabled) {
-            ambientController.setAmbientOffloadEnabled(timerControllers.isTimerRunning)
+            ambientController?.setAmbientOffloadEnabled(timerControllers.isTimerRunning)
         }
         onTimerRunning(timerControllers.isTimerRunning)
     }
     DisposableEffect(LocalLifecycleOwner.current) {
         onDispose {
-            ambientController.setAmbientOffloadEnabled(false)
+            ambientController?.setAmbientOffloadEnabled(false)
         }
     }
-    LaunchedEffect(ambientController.isAmbient) {
-        if (ambientController.isAmbient) {
+    LaunchedEffect(ambientController?.isAmbient) {
+        if (ambientController?.isAmbient == true) {
             pagerState.scrollToPage(0)
         }
     }

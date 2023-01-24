@@ -4,6 +4,8 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Icon
@@ -37,6 +39,7 @@ fun StartButton(
         }
     }
     Button(
+        modifier = Modifier.testTag("start_button"),
         onClick = onClick,
         shape = RoundedCornerShape(animatedFabRadii.value),
     ) {
