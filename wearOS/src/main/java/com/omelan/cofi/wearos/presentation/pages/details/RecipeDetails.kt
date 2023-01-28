@@ -111,6 +111,7 @@ fun RecipeDetails(
         onRecipeEnd = { },
         dataStore = dataStore,
         doneTrackColor = MaterialTheme.colors.primary,
+        timeMultiplier = timeMultiplier,
     )
     val context = LocalContext.current
     val ambientEnabled: Boolean = remember(LocalLifecycleOwner.current) {

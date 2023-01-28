@@ -75,6 +75,7 @@ object Timer {
         onRecipeEnd: () -> Unit,
         dataStore: DataStore,
         doneTrackColor: Color,
+        timeMultiplier: Float = 1f,
     ): TimerControllers {
         val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
             .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
@@ -127,7 +128,7 @@ object Timer {
             val safeCurrentStep = currentStep.value ?: return@suspendCompat
             isDone = false
             isTimerRunning = true
-            val currentStepTime = safeCurrentStep.time
+            val currentStepTime = safeCurrentStep.time?.times(timeMultiplier)
             if (currentStepTime == null) {
                 animatedProgressValue.snapTo(1f)
                 isTimerRunning = false
