@@ -41,10 +41,7 @@ import com.omelan.cofi.R
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.utils.ensureNumbersOnly
-import com.omelan.cofi.utils.requestFocusSafer
-import com.omelan.cofi.utils.safeToInt
-import com.omelan.cofi.utils.toMillis
+import com.omelan.cofi.utils.*
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
 
@@ -179,6 +176,12 @@ fun StepAddCard(
                     onValueChange = { value ->
                         stepTime = ensureNumbersOnly(value) ?: stepTime
                     },
+                    supportingText = {
+                        val duration = (stepTime.toIntOrNull()?.times(1000))
+                        if (duration != null) {
+                            Text(text = duration.toStringDuration())
+                        }
+                    },
                     trailingIcon = {
                         IconButton(onClick = { timeExplainerIsOpen = true }) {
                             Icon(Icons.Rounded.Info, contentDescription = "")
@@ -209,6 +212,7 @@ fun StepAddCard(
                     modifier = Modifier
                         .testTag("step_time")
                         .padding(Spacing.xSmall)
+                        .animateContentSize()
                         .fillMaxWidth(),
                 )
                 AnimatedVisibility(visible = pickedType?.isNotWaitStepType() == true) {
