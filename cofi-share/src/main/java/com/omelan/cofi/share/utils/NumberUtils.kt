@@ -46,33 +46,29 @@ fun ensureNumbersOnly(string: String, allowFloatingPoint: Boolean = false): Stri
     if (string.isEmpty()) {
         return string
     }
-
-    return try {
+    val maxInt: Int = Int.MAX_VALUE / 1000
+    val trimmedText = string.trim()
+    try {
         if (allowFloatingPoint) {
-            val maxFloat: Float = Float.MAX_VALUE / 1000f
-
-            val stringValue = string.trim().toFloat()
-            if (stringValue in 0.1f..maxFloat) {
-                if (string.endsWith(".") || string.endsWith(".0")) {
-                    string.removePrefix("0")
-                } else {
-                    stringValue.toString().removeSuffix(".0")
+            if (trimmedText.toFloat() in 0f..maxInt.toFloat()) {
+                val decimalSeparator = DecimalFormat().decimalFormatSymbols.decimalSeparator
+                val decimalPlace = string.split(decimalSeparator).getOrNull(1)
+                if (decimalPlace != null && decimalPlace.length > 1) {
+                    return null
                 }
+                return string
             } else {
-                null
+                return null
             }
         } else {
-            val maxInt: Int = Int.MAX_VALUE / 1000
-            val stringValue = string.trim().toInt()
-            if (stringValue in 1..maxInt) {
-                stringValue.toString()
+            return if (trimmedText.toInt() in 0..maxInt) {
+                string
             } else {
                 null
             }
         }
-
     } catch (e: NumberFormatException) {
-        null
+        return null
     }
 }
 
@@ -88,6 +84,7 @@ fun String.safeToInt(): Int {
         }
     }
 }
+
 fun Float.toStringShort(): String = DecimalFormat("0.#").format(this)
 fun Float.roundToDecimals(scale: Int = 1) = this.toBigDecimal()
     .setScale(scale, RoundingMode.HALF_EVEN).toFloat()
