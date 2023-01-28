@@ -144,6 +144,11 @@ fun RecipeDetails(
             onTimerRunning(false)
         }
     }
+    LaunchedEffect(ratioBottomSheetState.targetValue) {
+        if (ratioBottomSheetState.targetValue != ModalBottomSheetValue.Hidden  && isTimerRunning) {
+            pauseAnimations()
+        }
+    }
 
     suspend fun startRecipe() = coroutineScope.launch {
         collapse()
