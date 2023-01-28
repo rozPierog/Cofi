@@ -127,7 +127,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -364,8 +364,10 @@ fun RecipeEdit(
                 modifier = Modifier
                     .fillMaxWidth()
                     .navigationBarsPadding()
-                    .imePadding().waterfallPadding()
-                    .verticalScroll(iconScrollState).padding(Spacing.small),
+                    .imePadding()
+                    .waterfallPadding()
+                    .verticalScroll(iconScrollState)
+                    .padding(Spacing.small),
                 lastLineMainAxisAlignment = FlowMainAxisAlignment.Center,
                 mainAxisAlignment = FlowMainAxisAlignment.Center,
                 crossAxisAlignment = FlowCrossAxisAlignment.Center,
@@ -376,7 +378,8 @@ fun RecipeEdit(
                     PlainTooltipBox(tooltip = { Text(stringResource(id = it.nameResId)) }) {
                         Box(
                             modifier = Modifier
-                                .size(72.dp)
+                                .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
+                                .aspectRatio(1f)
                                 .clip(CircleShape)
                                 .clickable(role = Role.Button) { pickIcon(it) },
                             contentAlignment = Alignment.Center,
