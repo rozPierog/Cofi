@@ -186,7 +186,7 @@ fun RecipeEdit(
     }
     LaunchedEffect(showDescription) {
         if (showDescription && recipeToEdit.description.isBlank()) {
-            descriptionFocusRequester.requestFocus()
+//            descriptionFocusRequester.requestFocus()
         } else {
             delay(100)
 //            nameFocusRequester.requestFocus()
