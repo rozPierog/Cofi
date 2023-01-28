@@ -142,6 +142,9 @@ fun RecipeDetails(
         if (pagerState.currentPage == 0) {
             canSwipeToClose(true)
         } else {
+            if (timerControllers.isTimerRunning) {
+                timerControllers.pauseAnimations()
+            }
             canSwipeToClose(false)
         }
     }
