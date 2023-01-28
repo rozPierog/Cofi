@@ -64,7 +64,7 @@ import com.omelan.cofi.share.Step
 import com.omelan.cofi.ui.*
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding
-import kotlinx.coroutines.delay
+import com.omelan.cofi.utils.requestFocusSafer
 import kotlinx.coroutines.launch
 
 @Composable
@@ -127,7 +127,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -175,21 +175,11 @@ fun RecipeEdit(
         }
     }
 
-    LaunchedEffect(Unit) {
-        collapse()
-        delay(100)
-        try {
-//            nameFocusRequester.requestFocus()
-        } catch (e: IllegalStateException) {
-            // do nothing - it's not vital part of the app, just QoL feature
-        }
-    }
     LaunchedEffect(showDescription) {
         if (showDescription && recipeToEdit.description.isBlank()) {
-//            descriptionFocusRequester.requestFocus()
+            descriptionFocusRequester.requestFocusSafer()
         } else {
-            delay(100)
-//            nameFocusRequester.requestFocus()
+            nameFocusRequester.requestFocusSafer()
         }
     }
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
@@ -230,6 +220,9 @@ fun RecipeEdit(
                         .fillMaxWidth()
                         .focusRequester(nameFocusRequester)
                         .onFocusChanged {
+                            if (it.isFocused) {
+                                collapse()
+                            }
                             nameHasFocus = it.isFocused
                         }
                         .testTag("recipe_edit_name"),
