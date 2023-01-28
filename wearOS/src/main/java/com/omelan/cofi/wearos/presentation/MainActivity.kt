@@ -119,10 +119,10 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
     override fun getAmbientCallback() = object : AmbientCallback() {}
 }
 
-val LocalKeyEventHandlers = compositionLocalOf<MutableList<KeyEventHandler>> {
-    error("LocalKeyEventHandlers is not provided")
+val LocalKeyEventHandlers = compositionLocalOf<MutableList<KeyEventHandler>?> {
+    null
 }
 
-val LocalAmbientModeProvider = compositionLocalOf<AmbientModeSupport.AmbientController> {
-    error("AmbientModeProvider is not provided")
+val LocalAmbientModeProvider = compositionLocalOf<AmbientModeSupport.AmbientController?> {
+    null
 }

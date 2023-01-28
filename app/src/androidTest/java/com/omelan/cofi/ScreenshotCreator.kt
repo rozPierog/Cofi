@@ -13,11 +13,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onRoot
-import androidx.compose.ui.test.performClick
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
@@ -51,7 +48,8 @@ class ScreenshotCreator {
     }
 
     private fun saveScreenshot(name: String) {
-        val screenShot = composeTestRule.onRoot().captureToImage().asAndroidBitmap()
+        val screenShot =
+            composeTestRule.onAllNodes(isRoot(), false).onFirst().captureToImage().asAndroidBitmap()
         ScreenshotsHelpers.saveBitmap(
             context = context,
             bitmap = screenShot,

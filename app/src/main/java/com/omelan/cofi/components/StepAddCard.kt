@@ -42,6 +42,7 @@ import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.ensureNumbersOnly
+import com.omelan.cofi.utils.requestFocusSafer
 import com.omelan.cofi.utils.safeToInt
 import com.omelan.cofi.utils.toMillis
 import kotlinx.coroutines.android.awaitFrame
@@ -93,7 +94,7 @@ fun StepAddCard(
     LaunchedEffect(key1 = isExpanded) {
         if (isExpanded) {
             onTypeSelect()
-            nameFocusRequester.requestFocus()
+            nameFocusRequester.requestFocusSafer()
         }
     }
     fun saveStep() {
@@ -228,7 +229,11 @@ fun StepAddCard(
                         ),
                         keyboardActions = KeyboardActions(
                             onDone = { saveStep() },
-                            onPrevious = { nameFocusRequester.requestFocus() },
+                            onPrevious = {
+                                coroutineScope.launch {
+                                    nameFocusRequester.requestFocusSafer()
+                                }
+                            },
                         ),
                         modifier = Modifier
                             .testTag("step_value")

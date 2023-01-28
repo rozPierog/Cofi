@@ -58,7 +58,7 @@ fun TimerPage(
     val ambientController = LocalAmbientModeProvider.current
     val isAmbient = remember {
         derivedStateOf {
-            ambientController.isAmbient
+            ambientController?.isAmbient ?: false
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -28,7 +29,9 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.net.toUri
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -53,6 +56,8 @@ import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.InstantUtils
 import com.omelan.cofi.utils.WearUtils
 import com.omelan.cofi.utils.checkPiPPermission
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -77,8 +82,10 @@ class MainActivity : MonetCompatActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            lifecycleScope.launchWhenCreated {
-                monet.awaitMonetReady()
+            CoroutineScope(Dispatchers.Main).launch {
+                repeatOnLifecycle(Lifecycle.State.CREATED) {
+                    monet.awaitMonetReady()
+                }
             }
         }
         this.setContent(null) {
@@ -98,9 +105,15 @@ class MainActivity : MonetCompatActivity() {
 
     private fun blockPip() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            setPictureInPictureParams(
-                PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
-            )
+            try {
+                setPictureInPictureParams(
+                    PictureInPictureParams.Builder().setAutoEnterEnabled(false).build(),
+                )
+            } catch (e: IllegalStateException) {
+                if (BuildConfig.DEBUG) {
+                    Log.e("blockPip", "Tried to block pip but couldn't ${e.message}")
+                }
+            }
         }
     }
 
@@ -140,8 +153,8 @@ class MainActivity : MonetCompatActivity() {
                         )
                         val shortcut =
                             ShortcutInfoCompat.Builder(this@MainActivity, recipeId.toString())
-                                .setShortLabel(recipe.name)
-                                .setLongLabel(recipe.name)
+                                .setShortLabel(recipe.name.ifEmpty { recipeId.toString() })
+                                .setLongLabel(recipe.name.ifEmpty { recipeId.toString() })
                                 .setIcon(
                                     IconCompat.createWithResource(
                                         this@MainActivity,

@@ -14,6 +14,7 @@ import org.json.JSONObject
 
 enum class RecipeIcon(@DrawableRes val icon: Int, @StringRes val nameResId: Int) {
     Grinder(R.drawable.ic_coffee_grinder, R.string.name_grinder),
+    Cup(R.drawable.ic_cup, R.string.name_cup),
     V60(R.drawable.ic_drip, R.string.name_v60),
     Chemex(R.drawable.ic_chemex, R.string.prepopulate_chemex_name),
     AeroPress(R.drawable.ic_aeropress, R.string.prepopulate_aero_name),
@@ -24,6 +25,7 @@ enum class RecipeIcon(@DrawableRes val icon: Int, @StringRes val nameResId: Int)
     ColdBrew(R.drawable.ic_cold_brew, R.string.name_cold_brew),
     Siphon(R.drawable.ic_siphon, R.string.name_siphon),
     Bripe(R.drawable.ic_bripe, R.string.name_bripe),
+    Cezve(R.drawable.ic_cezve, R.string.name_cezve),
 }
 
 open class RecipeIconTypeConverter {

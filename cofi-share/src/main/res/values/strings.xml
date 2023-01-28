@@ -114,4 +114,6 @@ Temperature: For light roast – brought to a boil and used immediately. For dar
     <string name="name_cold_brew">Cold brew</string>
     <string name="name_siphon">Siphon</string>
     <string name="name_bripe" translatable="false">Bripe</string>
+    <string name="name_cezve">Cezve</string>
+    <string name="name_cup">Cup</string>
 </resources>
