@@ -50,6 +50,9 @@ fun ensureNumbersOnly(string: String, allowFloatingPoint: Boolean = false): Stri
     val trimmedText = string.trim()
     try {
         if (allowFloatingPoint) {
+            if (trimmedText == ".") {
+                return string
+            }
             if (trimmedText.toFloat() in 0f..maxInt.toFloat()) {
                 val decimalSeparator = DecimalFormat().decimalFormatSymbols.decimalSeparator
                 val decimalPlace = string.split(decimalSeparator).getOrNull(1)
