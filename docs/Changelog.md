@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.14.0|1.5.0] - 2023-02-03
+
+### Added
 - two new icons: a cup, and a cezve - sponsored by @YurishoSan
 
 ### Changed

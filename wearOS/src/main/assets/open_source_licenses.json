@@ -87,11 +87,11 @@
   {
     "project": "Android AppCompat Library",
     "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
-    "version": "1.5.1",
+    "version": "1.6.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.6.0",
     "year": "2011",
     "licenses": [
       {
@@ -99,16 +99,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.appcompat:appcompat:1.5.1"
+    "dependency": "androidx.appcompat:appcompat:1.6.0"
   },
   {
     "project": "Android Arch-Common",
     "description": "Android Arch-Common",
-    "version": "2.1.0",
+    "version": "2.2.0-alpha01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0-alpha01",
     "year": "2017",
     "licenses": [
       {
@@ -116,16 +116,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.arch.core:core-common:2.1.0"
+    "dependency": "androidx.arch.core:core-common:2.2.0-alpha01"
   },
   {
     "project": "Android Arch-Runtime",
     "description": "Android Arch-Runtime",
-    "version": "2.1.0",
+    "version": "2.2.0-alpha01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0-alpha01",
     "year": "2017",
     "licenses": [
       {
@@ -133,7 +133,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.arch.core:core-runtime:2.1.0"
+    "dependency": "androidx.arch.core:core-runtime:2.2.0-alpha01"
   },
   {
     "project": "Android ConstraintLayout",
@@ -206,11 +206,11 @@
   {
     "project": "Android DB",
     "description": "Android DB",
-    "version": "2.3.0-rc01",
+    "version": "2.3.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.3.0-rc01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.3.0",
     "year": "2017",
     "licenses": [
       {
@@ -218,7 +218,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.sqlite:sqlite:2.3.0-rc01"
+    "dependency": "androidx.sqlite:sqlite:2.3.0"
   },
   {
     "project": "Android Emoji2 Compat",
@@ -257,11 +257,11 @@
   {
     "project": "Android Lifecycle Kotlin Extensions",
     "description": "Kotlin extensions for \u0027lifecycle\u0027 artifact",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2019",
     "licenses": [
       {
@@ -269,16 +269,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha04"
   },
   {
     "project": "Android Lifecycle LiveData",
     "description": "Android Lifecycle LiveData",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2017",
     "licenses": [
       {
@@ -286,16 +286,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-livedata:2.6.0-alpha04"
   },
   {
     "project": "Android Lifecycle LiveData Core",
     "description": "Android Lifecycle LiveData Core",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2017",
     "licenses": [
       {
@@ -303,7 +303,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.6.0-alpha04"
   },
   {
     "project": "Android Lifecycle Process",
@@ -325,11 +325,11 @@
   {
     "project": "Android Lifecycle Runtime",
     "description": "Android Lifecycle Runtime",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2017",
     "licenses": [
       {
@@ -337,16 +337,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-runtime:2.6.0-alpha04"
   },
   {
     "project": "Android Lifecycle ViewModel",
     "description": "Android Lifecycle ViewModel",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2017",
     "licenses": [
       {
@@ -354,16 +354,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.6.0-alpha04"
   },
   {
     "project": "Android Lifecycle ViewModel Kotlin Extensions",
     "description": "Kotlin extensions for \u0027viewmodel\u0027 artifact",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2018",
     "licenses": [
       {
@@ -371,16 +371,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha04"
   },
   {
     "project": "Android Lifecycle ViewModel with SavedState",
     "description": "Android Lifecycle ViewModel",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2018",
     "licenses": [
       {
@@ -388,16 +388,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0-alpha04"
   },
   {
     "project": "Android Lifecycle-Common",
     "description": "Android Lifecycle-Common",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2017",
     "licenses": [
       {
@@ -405,16 +405,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-common:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-common:2.6.0-alpha04"
   },
   {
     "project": "Android Lifecycle-Common for Java 8 Language",
     "description": "Android Lifecycle-Common for Java 8 Language",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2017",
     "licenses": [
       {
@@ -422,7 +422,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-common-java8:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-common-java8:2.6.0-alpha04"
   },
   {
     "project": "Android Navigation Common",
@@ -614,11 +614,11 @@
   {
     "project": "Android Resources Library",
     "description": "The Resources Library is a static library that you can add to your Android application in order to use resource APIs that backport the latest APIs to older versions of the platform. Compatible on devices running API 14 or later.",
-    "version": "1.5.1",
+    "version": "1.6.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.6.0",
     "year": "2019",
     "licenses": [
       {
@@ -626,16 +626,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.appcompat:appcompat-resources:1.5.1"
+    "dependency": "androidx.appcompat:appcompat-resources:1.6.0"
   },
   {
     "project": "Android Room Kotlin Extensions",
     "description": "Android Room Kotlin Extensions",
-    "version": "2.5.0-rc01",
+    "version": "2.5.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.5.0-rc01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.5.0",
     "year": "2019",
     "licenses": [
       {
@@ -643,16 +643,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.room:room-ktx:2.5.0-rc01"
+    "dependency": "androidx.room:room-ktx:2.5.0"
   },
   {
     "project": "Android Room-Common",
     "description": "Android Room-Common",
-    "version": "2.5.0-rc01",
+    "version": "2.5.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.5.0-rc01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.5.0",
     "year": "2017",
     "licenses": [
       {
@@ -660,16 +660,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.room:room-common:2.5.0-rc01"
+    "dependency": "androidx.room:room-common:2.5.0"
   },
   {
     "project": "Android Room-Runtime",
     "description": "Android Room-Runtime",
-    "version": "2.5.0-rc01",
+    "version": "2.5.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.5.0-rc01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.5.0",
     "year": "2017",
     "licenses": [
       {
@@ -677,7 +677,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.room:room-runtime:2.5.0-rc01"
+    "dependency": "androidx.room:room-runtime:2.5.0"
   },
   {
     "project": "Android Support AnimatedVectorDrawable",
@@ -1022,11 +1022,11 @@
   {
     "project": "Android Support SQLite - Framework Implementation",
     "description": "The implementation of Support SQLite library using the framework code.",
-    "version": "2.3.0-rc01",
+    "version": "2.3.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.3.0-rc01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.3.0",
     "year": "2017",
     "licenses": [
       {
@@ -1034,7 +1034,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.sqlite:sqlite-framework:2.3.0-rc01"
+    "dependency": "androidx.sqlite:sqlite-framework:2.3.0"
   },
   {
     "project": "Android Support VectorDrawable",
@@ -1090,11 +1090,11 @@
   {
     "project": "Android Wear Compose Foundation",
     "description": "WearOS Compose Foundation Library. This library makes it easier for developersto write Jetpack Compose applications for Wearable devices by providing functionality to support wearable specific devices sizes, shapes and navigation gestures. It builds upon the Jetpack Compose libraries.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.1",
     "year": "2021",
     "licenses": [
       {
@@ -1102,16 +1102,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.wear.compose:compose-foundation:1.1.0"
+    "dependency": "androidx.wear.compose:compose-foundation:1.1.1"
   },
   {
     "project": "Android Wear Compose Material",
     "description": "WearOS Compose Material Library. This library makes it easier for developers to write Jetpack Compose applications for Wearable devices that implement Wear Material Design UX guidelines and specifications. It builds upon the Jetpack Compose libraries.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.1",
     "year": "2021",
     "licenses": [
       {
@@ -1119,16 +1119,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.wear.compose:compose-material:1.1.0"
+    "dependency": "androidx.wear.compose:compose-material:1.1.1"
   },
   {
     "project": "Android Wear Compose Navigation",
     "description": "WearOS Compose Navigation Library. This library makes it easier for developersto write Jetpack Compose applications for Wearable devices by providing functionality to support navigation. It builds upon the Jetpack Compose libraries.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.1",
     "year": "2021",
     "licenses": [
       {
@@ -1136,7 +1136,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.wear.compose:compose-navigation:1.1.0"
+    "dependency": "androidx.wear.compose:compose-navigation:1.1.1"
   },
   {
     "project": "Android Wear Remote Interactions",
@@ -1226,7 +1226,7 @@
   {
     "project": "AndroidX Test Library",
     "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
-    "version": "1.1.4",
+    "version": "1.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
@@ -1238,24 +1238,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.test.ext:junit-ktx:1.1.4"
-  },
-  {
-    "project": "AndroidX Test Library",
-    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
-    "version": "1.1.4",
-    "developers": [
-      "The Android Open Source Project"
-    ],
-    "url": "https://developer.android.com/testing",
-    "year": "2015",
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "androidx.test.ext:junit:1.1.4"
+    "dependency": "androidx.test:monitor:1.6.1"
   },
   {
     "project": "AndroidX Test Library",
@@ -1277,23 +1260,6 @@
   {
     "project": "AndroidX Test Library",
     "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
-    "version": "1.6.0",
-    "developers": [
-      "The Android Open Source Project"
-    ],
-    "url": "https://developer.android.com/testing",
-    "year": "2015",
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "androidx.test:monitor:1.6.0"
-  },
-  {
-    "project": "AndroidX Test Library",
-    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
     "version": "1.0.1",
     "developers": [
       "The Android Open Source Project"
@@ -1311,6 +1277,23 @@
   {
     "project": "AndroidX Test Library",
     "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
+    "version": "1.1.5",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/testing",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.test.ext:junit:1.1.5"
+  },
+  {
+    "project": "AndroidX Test Library",
+    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
     "version": "1.4.2",
     "developers": [
       "The Android Open Source Project"
@@ -1324,6 +1307,23 @@
       }
     ],
     "dependency": "androidx.test.services:storage:1.4.2"
+  },
+  {
+    "project": "AndroidX Test Library",
+    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
+    "version": "1.1.5",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/testing",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.test.ext:junit-ktx:1.1.5"
   },
   {
     "project": "AndroidX Test Library",
@@ -1431,11 +1431,11 @@
   {
     "project": "Compose Animation",
     "description": "Compose animation library",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.3.3",
     "year": "2019",
     "licenses": [
       {
@@ -1443,16 +1443,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.animation:animation:1.3.2"
+    "dependency": "androidx.compose.animation:animation:1.3.3"
   },
   {
     "project": "Compose Animation Core",
     "description": "Animation engine and animation primitives that are the building blocks of the Compose animation library",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.3.3",
     "year": "2019",
     "licenses": [
       {
@@ -1460,7 +1460,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.animation:animation-core:1.3.2"
+    "dependency": "androidx.compose.animation:animation-core:1.3.3"
   },
   {
     "project": "Compose Foundation",
@@ -1482,11 +1482,11 @@
   {
     "project": "Compose Geometry",
     "description": "Compose classes related to dimensions without units",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.3",
     "year": "2020",
     "licenses": [
       {
@@ -1494,16 +1494,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-geometry:1.3.2"
+    "dependency": "androidx.compose.ui:ui-geometry:1.3.3"
   },
   {
     "project": "Compose Graphics",
     "description": "Compose graphics",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.3",
     "year": "2020",
     "licenses": [
       {
@@ -1511,7 +1511,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-graphics:1.3.2"
+    "dependency": "androidx.compose.ui:ui-graphics:1.3.3"
   },
   {
     "project": "Compose Layouts",
@@ -1533,11 +1533,11 @@
   {
     "project": "Compose LiveData integration",
     "description": "Compose integration with LiveData",
-    "version": "1.3.1",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.3.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.3.3",
     "year": "2020",
     "licenses": [
       {
@@ -1545,7 +1545,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.runtime:runtime-livedata:1.3.1"
+    "dependency": "androidx.compose.runtime:runtime-livedata:1.3.3"
   },
   {
     "project": "Compose Material Components",
@@ -1618,11 +1618,11 @@
   {
     "project": "Compose Runtime",
     "description": "Tree composition support for code generated by the Compose compiler plugin and corresponding public API",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.3.3",
     "year": "2019",
     "licenses": [
       {
@@ -1630,16 +1630,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.runtime:runtime:1.3.2"
+    "dependency": "androidx.compose.runtime:runtime:1.3.3"
   },
   {
     "project": "Compose Saveable",
     "description": "Compose components that allow saving and restoring the local ui state",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.3.3",
     "year": "2020",
     "licenses": [
       {
@@ -1647,16 +1647,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.runtime:runtime-saveable:1.3.2"
+    "dependency": "androidx.compose.runtime:runtime-saveable:1.3.3"
   },
   {
     "project": "Compose Tooling",
     "description": "Compose tooling library. This library exposes information to our tools for better IDE support.",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.3",
     "year": "2019",
     "licenses": [
       {
@@ -1664,16 +1664,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-tooling:1.3.2"
+    "dependency": "androidx.compose.ui:ui-tooling:1.3.3"
   },
   {
     "project": "Compose Tooling API",
     "description": "Compose tooling library API. This library provides the API required to declare @Preview composables in user apps.",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.3",
     "year": "2021",
     "licenses": [
       {
@@ -1681,16 +1681,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-tooling-preview:1.3.2"
+    "dependency": "androidx.compose.ui:ui-tooling-preview:1.3.3"
   },
   {
     "project": "Compose Tooling Data",
     "description": "Compose tooling library data. This library provides data about compose for different tooling purposes.",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.3",
     "year": "2021",
     "licenses": [
       {
@@ -1698,16 +1698,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-tooling-data:1.3.2"
+    "dependency": "androidx.compose.ui:ui-tooling-data:1.3.3"
   },
   {
     "project": "Compose UI primitives",
     "description": "Compose UI primitives. This library contains the primitives that form the Compose UI Toolkit, such as drawing, measurement and layout.",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.3",
     "year": "2019",
     "licenses": [
       {
@@ -1715,16 +1715,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui:1.3.2"
+    "dependency": "androidx.compose.ui:ui:1.3.3"
   },
   {
     "project": "Compose UI Text",
     "description": "Compose Text primitives and utilities",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.3",
     "year": "2019",
     "licenses": [
       {
@@ -1732,16 +1732,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-text:1.3.2"
+    "dependency": "androidx.compose.ui:ui-text:1.3.3"
   },
   {
     "project": "Compose Unit",
     "description": "Compose classes for simple units",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.3",
     "year": "2020",
     "licenses": [
       {
@@ -1749,16 +1749,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-unit:1.3.2"
+    "dependency": "androidx.compose.ui:ui-unit:1.3.3"
   },
   {
     "project": "Compose Util",
     "description": "Internal Compose utilities used by other modules",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.3.3",
     "year": "2020",
     "licenses": [
       {
@@ -1766,7 +1766,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-util:1.3.2"
+    "dependency": "androidx.compose.ui:ui-util:1.3.3"
   },
   {
     "project": "Core Kotlin Extensions",
@@ -1964,7 +1964,7 @@
   {
     "project": "Kotlin Stdlib",
     "description": "Kotlin Standard Library for JVM",
-    "version": "1.7.20",
+    "version": "1.8.0",
     "developers": [
       "Kotlin Team"
     ],
@@ -1976,12 +1976,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib:1.7.20"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib:1.8.0"
   },
   {
     "project": "Kotlin Stdlib Common",
     "description": "Kotlin Common Standard Library",
-    "version": "1.7.20",
+    "version": "1.8.0",
     "developers": [
       "Kotlin Team"
     ],
@@ -1993,12 +1993,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-common:1.7.20"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-common:1.8.0"
   },
   {
     "project": "Kotlin Stdlib Jdk7",
     "description": "Kotlin Standard Library JDK 7 extension",
-    "version": "1.7.20",
+    "version": "1.8.0",
     "developers": [
       "Kotlin Team"
     ],
@@ -2010,12 +2010,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.20"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0"
   },
   {
     "project": "Kotlin Stdlib Jdk8",
     "description": "Kotlin Standard Library JDK 8 extension",
-    "version": "1.7.20",
+    "version": "1.8.0",
     "developers": [
       "Kotlin Team"
     ],
@@ -2027,7 +2027,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0"
   },
   {
     "project": "kotlinx-coroutines-android",
@@ -2100,11 +2100,11 @@
   {
     "project": "Lifecycle Runtime Compose",
     "description": "Compose integration with Lifecycle",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2021",
     "licenses": [
       {
@@ -2112,16 +2112,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime-compose:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-runtime-compose:2.6.0-alpha04"
   },
   {
     "project": "Lifecycle ViewModel Compose",
     "description": "Compose integration with Lifecycle ViewModel",
-    "version": "2.6.0-alpha03",
+    "version": "2.6.0-alpha04",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha03",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
     "year": "2021",
     "licenses": [
       {
@@ -2129,7 +2129,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha04"
   },
   {
     "project": "Material Components for Android",

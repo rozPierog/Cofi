@@ -1,10 +1,10 @@
 ### Added
-- Norwegian (Bokmål) translation - thanks @deltainium
+- two new icons: a cup, and a cezve - sponsored by @YurishoSan
 
 ### Changed
-- fixed crash on WearOS 2 devices
-- changed style of timer on Android app
-- added animations to step change in both WearOS and Android app
-- fixed highlight when clicking on an edge of the Start FAB
+- Step value can now be expressed with a decimal point
+- fixed issues with how multiplier worked
+- updated dependencies
+
 ### Removed
 
