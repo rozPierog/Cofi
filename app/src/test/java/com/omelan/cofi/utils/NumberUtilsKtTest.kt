@@ -51,8 +51,8 @@ class NumberUtilsKtTest : TestCase() {
             "a" to null,
             "-" to null,
             "1" to "1",
-            "23 " to "23",
-            " 17" to "17",
+            "23 " to "23 ",
+            " 17" to " 17",
             "2!" to null,
             "2147483647" to null,
             "1073741822" to null,
@@ -60,5 +60,16 @@ class NumberUtilsKtTest : TestCase() {
         ).forEach {
             assertEquals(it.value, ensureNumbersOnly(it.key))
         }
+        // TODO: fix me (add mocks of android.icu.text.DecimalFormat)
+//        mapOf(
+//            "01.1" to "1.1",
+//            " 21.1" to " 21.1",
+//            "21.100000" to "21.1",
+//            "a21.1" to null,
+//            "1.7976931348623156E305" to "1.7",
+//            "1.7976931348623156E306" to null,
+//        ).forEach {
+//            assertEquals(it.value, ensureNumbersOnly(it.key, true))
+//        }
     }
 }

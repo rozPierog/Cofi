@@ -35,9 +35,7 @@ fun LicensesList() {
     val focusRequester = remember {
         FocusRequester()
     }
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
+
     Scaffold(
         vignette = {
             Vignette(vignettePosition = VignettePosition.TopAndBottom)
@@ -65,7 +63,9 @@ fun LicensesList() {
         }
         OpenOnPhoneConfirm(isVisible = showConfirmation, onTimeout = { showConfirmation = false })
     }
-
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 }
 
 @Composable

@@ -11,10 +11,10 @@ import androidx.compose.ui.platform.LocalContext
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.utils.Haptics
+import com.omelan.cofi.utils.roundToDecimals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.math.roundToInt
 
 
 fun <R, T> suspendCompat(block: suspend (T) -> R): suspend (T) -> R = block
@@ -39,7 +39,7 @@ object Timer {
         allSteps: List<Step>,
         combineWeightState: String,
         weightMultiplier: Float = 1f,
-    ): State<Int> {
+    ): State<Float> {
         val doneSteps = if (indexOfCurrentStep == -1) {
             listOf()
         } else {
@@ -48,24 +48,22 @@ object Timer {
         return remember(combineWeightState, indexOfCurrentStep, weightMultiplier) {
             derivedStateOf {
                 when (combineWeightState) {
-                    CombineWeight.ALL.name -> (
-                            doneSteps.sumOf {
-                                it.value ?: 0
-                            } * weightMultiplier
-                            ).roundToInt()
+                    CombineWeight.ALL.name ->
+                        (doneSteps.sumOf { it.value?.toDouble() ?: 0.0 } * weightMultiplier)
+                            .toFloat().roundToDecimals()
 
                     CombineWeight.WATER.name -> (
                             doneSteps.sumOf {
-                                if (it.type === StepType.WATER) {
-                                    it.value ?: 0
+                                if (it.type === StepType.WATER && it.value != null) {
+                                    it.value.toDouble()
                                 } else {
-                                    0
+                                    0.0
                                 }
                             } * weightMultiplier
-                            ).roundToInt()
+                            ).toFloat().roundToDecimals()
 
-                    CombineWeight.NONE.name -> 0
-                    else -> 0
+                    CombineWeight.NONE.name -> 0f
+                    else -> 0f
                 }
             }
         }
@@ -77,6 +75,7 @@ object Timer {
         onRecipeEnd: () -> Unit,
         dataStore: DataStore,
         doneTrackColor: Color,
+        timeMultiplier: Float = 1f,
     ): TimerControllers {
         val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
             .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
@@ -129,7 +128,7 @@ object Timer {
             val safeCurrentStep = currentStep.value ?: return@suspendCompat
             isDone = false
             isTimerRunning = true
-            val currentStepTime = safeCurrentStep.time
+            val currentStepTime = safeCurrentStep.time?.times(timeMultiplier)
             if (currentStepTime == null) {
                 animatedProgressValue.snapTo(1f)
                 isTimerRunning = false

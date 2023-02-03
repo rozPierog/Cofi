@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +20,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.Step
+import com.omelan.cofi.utils.roundToDecimals
 import com.omelan.cofi.utils.toStringDuration
+import com.omelan.cofi.utils.toStringShort
 import kotlin.math.roundToInt
 
 @Composable
@@ -31,7 +31,7 @@ fun ColumnScope.TimerValue(
     currentStep: Step,
     animatedProgressValue: Float,
     weightMultiplier: Float = 1f,
-    alreadyDoneWeight: Int = 0,
+    alreadyDoneWeight: Float = 0f,
     color: Color,
     maxLines: Int,
     style: TextStyle,
@@ -46,22 +46,32 @@ fun ColumnScope.TimerValue(
         ) {
             val currentStepValue = it.value ?: return@AnimatedContent
             val currentValueFromProgress = remember(currentStepValue, animatedProgressValue) {
-                (currentStepValue * animatedProgressValue).toInt()
-
+                (currentStepValue * animatedProgressValue)
             }
             val currentValueWithMultiplier = remember(currentValueFromProgress, weightMultiplier) {
-                (currentValueFromProgress * weightMultiplier).roundToInt() + alreadyDoneWeight
+                (currentValueFromProgress * weightMultiplier) + alreadyDoneWeight
             }
-            val currentTargetValue = remember(currentStepValue, weightMultiplier) {
+            val currentTargetValue by remember(currentStepValue, weightMultiplier) {
                 derivedStateOf {
-                    (currentStepValue * weightMultiplier).roundToInt() + alreadyDoneWeight
+                    (currentStepValue * weightMultiplier) + alreadyDoneWeight
                 }
+            }
+            val targetString = currentTargetValue.toStringShort()
+            val shouldShowDecimals by remember {
+                derivedStateOf {
+                    targetString.contains(".")
+                }
+            }
+            val currentValueString: Number = if (shouldShowDecimals) {
+                currentValueWithMultiplier.roundToDecimals()
+            } else {
+                currentValueWithMultiplier.roundToInt()
             }
             Text(
                 text = stringResource(
                     id = R.string.timer_progress_weight,
-                    currentValueWithMultiplier,
-                    currentTargetValue.value,
+                    currentValueString,
+                    targetString,
                 ),
                 color = color,
                 maxLines = maxLines,
@@ -77,7 +87,7 @@ fun ColumnScope.TimerValue(
 }
 
 @Composable
-fun ColumnScope.StepNameText(
+fun StepNameText(
     currentStep: Step,
     color: Color,
     style: TextStyle,

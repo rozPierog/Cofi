@@ -121,6 +121,7 @@ fun RecipeDetails(
         onRecipeEnd = { onRecipeEnd(recipe) },
         dataStore = dataStore,
         doneTrackColor = MaterialTheme.colorScheme.primary,
+        timeMultiplier = timeMultiplier.value,
     )
 
     val copyAutomateLink = rememberCopyAutomateLink(snackbarState, recipeId)
@@ -141,6 +142,11 @@ fun RecipeDetails(
     DisposableEffect(true) {
         onDispose {
             onTimerRunning(false)
+        }
+    }
+    LaunchedEffect(ratioBottomSheetState.targetValue) {
+        if (ratioBottomSheetState.targetValue != ModalBottomSheetValue.Hidden && isTimerRunning) {
+            pauseAnimations()
         }
     }
 

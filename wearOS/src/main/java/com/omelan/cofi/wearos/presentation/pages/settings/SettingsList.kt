@@ -17,7 +17,6 @@ import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistC
 import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
-import com.omelan.cofi.wearos.BuildConfig
 import com.omelan.cofi.wearos.presentation.components.OpenOnPhoneConfirm
 import com.omelan.cofi.wearos.presentation.utils.WearUtils
 import kotlinx.coroutines.launch
@@ -29,9 +28,6 @@ fun Settings(navigateToLicenses: () -> Unit) {
     val lazyListState = rememberScalingLazyListState()
     val focusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
     val coroutineScope = rememberCoroutineScope()
     val getSettingsFromPhone by dataStore.getSyncSettingsFromPhoneSetting()
         .collectAsState(initial = SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE)
@@ -192,6 +188,9 @@ fun Settings(navigateToLicenses: () -> Unit) {
             }
         }
         OpenOnPhoneConfirm(isVisible = showConfirmation, onTimeout = { showConfirmation = false })
+    }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
     }
 }
 

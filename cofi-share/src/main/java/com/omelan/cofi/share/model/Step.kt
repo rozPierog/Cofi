@@ -124,7 +124,7 @@ data class Step(
     val name: String,
     val time: Int? = null,
     val type: StepType,
-    val value: Int? = null,
+    val value: Float? = null,
 ) : SharedData {
     override fun serialize(): JSONObject = JSONObject().let {
         it.put(jsonId, id)
@@ -149,13 +149,19 @@ fun JSONObject.getIntOrNull(key: String) = try {
     null
 }
 
+fun JSONObject.getFloatOrNull(key: String) = try {
+    getDouble(key).toFloat()
+} catch (e: Exception) {
+    null
+}
+
 fun JSONObject.toStep(withId: Boolean = false, recipeId: Long? = null) = if (withId) {
     Step(
         id = getInt(jsonId),
         name = getString(jsonName),
         recipeId = recipeId?.toInt() ?: getInt(jsonRecipeId),
         time = getIntOrNull(jsonTime),
-        value = getIntOrNull(jsonValue),
+        value = getFloatOrNull(jsonValue),
         orderInRecipe = getInt(jsonOrderInRecipe),
         type = StepTypeConverter().stringToStepType(getString(jsonType)),
     )
@@ -164,7 +170,7 @@ fun JSONObject.toStep(withId: Boolean = false, recipeId: Long? = null) = if (wit
         name = getString(jsonName),
         recipeId = recipeId?.toInt() ?: getInt(jsonRecipeId),
         time = getIntOrNull(jsonTime),
-        value = getIntOrNull(jsonValue),
+        value = getFloatOrNull(jsonValue),
         orderInRecipe = getInt(jsonOrderInRecipe),
         type = StepTypeConverter().stringToStepType(getString(jsonType)),
     )

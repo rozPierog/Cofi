@@ -41,10 +41,7 @@ import com.omelan.cofi.R
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.utils.ensureNumbersOnly
-import com.omelan.cofi.utils.requestFocusSafer
-import com.omelan.cofi.utils.safeToInt
-import com.omelan.cofi.utils.toMillis
+import com.omelan.cofi.utils.*
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
 
@@ -91,12 +88,6 @@ fun StepAddCard(
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val isExpanded = pickedType != null
     val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(key1 = isExpanded) {
-        if (isExpanded) {
-            onTypeSelect()
-            nameFocusRequester.requestFocusSafer()
-        }
-    }
     fun saveStep() {
         focusManager.clearFocus()
         save(
@@ -105,10 +96,10 @@ fun StepAddCard(
                 time = if (stepTime.isBlank()) null else stepTime.safeToInt().toMillis(),
                 type = pickedType ?: StepType.OTHER,
                 value = if (stepValue.isNotBlank() &&
-                    stepValue.toInt() != 0 &&
+                    stepValue.toFloatOrNull() != 0f &&
                     pickedType != StepType.WAIT
                 ) {
-                    stepValue.toInt()
+                    stepValue.toFloatOrNull()
                 } else {
                     null
                 },
@@ -179,6 +170,12 @@ fun StepAddCard(
                     onValueChange = { value ->
                         stepTime = ensureNumbersOnly(value) ?: stepTime
                     },
+                    supportingText = {
+                        val duration = (stepTime.toIntOrNull()?.times(1000))
+                        if (duration != null) {
+                            Text(text = duration.toStringDuration())
+                        }
+                    },
                     trailingIcon = {
                         IconButton(onClick = { timeExplainerIsOpen = true }) {
                             Icon(Icons.Rounded.Info, contentDescription = "")
@@ -209,6 +206,7 @@ fun StepAddCard(
                     modifier = Modifier
                         .testTag("step_time")
                         .padding(Spacing.xSmall)
+                        .animateContentSize()
                         .fillMaxWidth(),
                 )
                 AnimatedVisibility(visible = pickedType?.isNotWaitStepType() == true) {
@@ -216,7 +214,7 @@ fun StepAddCard(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
                         value = stepValue,
                         onValueChange = { value ->
-                            stepValue = ensureNumbersOnly(value) ?: stepValue
+                            stepValue = ensureNumbersOnly(value, true) ?: stepValue
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(
@@ -307,6 +305,12 @@ fun StepAddCard(
                 Text(text = stringResource(id = R.string.step_add_duration_explainer))
             },
         )
+    }
+    LaunchedEffect(key1 = isExpanded) {
+        if (isExpanded) {
+            onTypeSelect()
+            nameFocusRequester.requestFocusSafer()
+        }
     }
 }
 

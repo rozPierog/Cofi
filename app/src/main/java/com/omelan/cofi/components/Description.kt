@@ -83,9 +83,9 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     descriptionWithLinks
                         .getStringAnnotations(URL_ANNOTATION, it, it)
                         .firstOrNull()?.let { stringAnnotation ->
-                            uriHandler.openUri(stringAnnotation.item)
-                            return@ClickableText
-                        }
+                        uriHandler.openUri(stringAnnotation.item)
+                        return@ClickableText
+                    }
                     if (showExpandButton) {
                         isExpanded = !isExpanded
                     }

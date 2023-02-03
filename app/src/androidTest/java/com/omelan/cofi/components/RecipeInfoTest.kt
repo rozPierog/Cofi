@@ -10,6 +10,7 @@ import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.toMillis
 import com.omelan.cofi.utils.toStringDuration
+import com.omelan.cofi.utils.toStringShort
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,7 +31,7 @@ class RecipeInfoTest {
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
-                            value = 30,
+                            value = 30f,
                             time = 5.toMillis(),
                             type = StepType.ADD_COFFEE,
                         ),
@@ -58,13 +59,13 @@ class RecipeInfoTest {
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
-                            value = 30,
+                            value = 30f,
                             time = 5.toMillis(),
                             type = StepType.ADD_COFFEE,
                         ),
                         Step(
                             name = stringResource(R.string.prepopulate_step_water),
-                            value = 60,
+                            value = 60f,
                             time = 5.toMillis(),
                             type = StepType.WATER,
                         ),
@@ -136,13 +137,13 @@ class RecipeInfoTest {
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
-                            value = 0,
+                            value = 0f,
                             time = 0.toMillis(),
                             type = StepType.ADD_COFFEE,
                         ),
                         Step(
                             name = stringResource(R.string.prepopulate_step_water),
-                            value = 0,
+                            value = 0f,
                             time = 0.toMillis(),
                             type = StepType.WATER,
                         ),
@@ -201,7 +202,7 @@ class RecipeInfoTest {
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
-                            value = 0,
+                            value = 0f,
                             time = 300.toMillis(),
                             type = StepType.ADD_COFFEE,
                         ),
@@ -255,7 +256,7 @@ class RecipeInfoTest {
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_water),
-                            value = 0,
+                            value = 0f,
                             time = 5.toMillis(),
                             type = StepType.WATER,
                         ),
@@ -282,7 +283,7 @@ class RecipeInfoTest {
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_water),
-                            value = 5,
+                            value = 5f,
                             time = null,
                             type = StepType.WATER,
                         ),
@@ -309,7 +310,7 @@ class RecipeInfoTest {
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_water),
-                            value = 5,
+                            value = 5f,
                             time = 0,
                             type = StepType.WATER,
                         ),
@@ -336,7 +337,7 @@ class RecipeInfoTest {
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
-                            value = 5,
+                            value = 5f,
                             time = null,
                             type = StepType.ADD_COFFEE,
                         ),
@@ -363,7 +364,7 @@ class RecipeInfoTest {
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
-                            value = 5,
+                            value = 5f,
                             time = 0.toMillis(),
                             type = StepType.ADD_COFFEE,
                         ),
@@ -390,7 +391,7 @@ class RecipeInfoTest {
                     steps = listOf(
                         Step(
                             name = stringResource(R.string.prepopulate_step_coffee),
-                            value = 5,
+                            value = 5f,
                             time = 0.toMillis(),
                             type = StepType.ADD_COFFEE,
                         ),
@@ -410,8 +411,8 @@ class RecipeInfoTest {
 
     @Test
     fun sumValueCoffeeAndTime() {
-        val value1 = 5
-        val value2 = 12
+        val value1 = 5f
+        val value2 = 12f
         val time1 = 6
         val time2 = 13
         fun checkAsserts() {
@@ -424,7 +425,7 @@ class RecipeInfoTest {
                 .assertIsDisplayed()
                 .onChildren()
                 .filterToOne(hasTestTag("recipe_info_text"))
-                .assertTextEquals("${value1 + value2}g")
+                .assertTextEquals("${(value1 + value2).toStringShort()}g")
         }
 
         val compactStyle = mutableStateOf(false)
@@ -461,8 +462,8 @@ class RecipeInfoTest {
 
     @Test
     fun sumValueWaterAndTime() {
-        val value1 = 5
-        val value2 = 6
+        val value1 = 5f
+        val value2 = 6f
         val time1 = 7
         val time2 = 8
         fun checkAsserts() {
@@ -475,7 +476,7 @@ class RecipeInfoTest {
                 .assertIsDisplayed()
                 .onChildren()
                 .filterToOne(hasTestTag("recipe_info_text"))
-                .assertTextEquals("${value1 + value2}g")
+                .assertTextEquals("${(value1 + value2).toStringShort()}g")
         }
 
         val compactStyle = mutableStateOf(false)

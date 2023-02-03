@@ -96,4 +96,4 @@ ij_kotlin_wrap_first_method_in_call_chain = false
 ij_kotlin_allow_trailing_comma_on_call_site = true
 ij_kotlin_allow_trailing_comma = true
 
-ktlint_disabled_rules=no-wildcard-imports
+ktlint_standard_no-wildcard-imports=disabled

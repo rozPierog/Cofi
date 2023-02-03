@@ -25,7 +25,7 @@ class StepAddCardTest {
         }
         composeTestRule.onNodeWithTag(
             "step_type_button_${
-            StepType.WAIT.name.lowercase(Locale.getDefault())
+                StepType.WAIT.name.lowercase(Locale.getDefault())
             }",
         )
             .assertExists()

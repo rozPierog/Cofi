@@ -1,5 +1,8 @@
 package com.omelan.cofi.utils
 
+import android.icu.text.DecimalFormat
+import java.math.RoundingMode
+
 fun Int.toMillis() = this * 1000
 
 fun Int.toStringDuration(
@@ -39,20 +42,36 @@ fun Int.toStringDuration(
     }
 }
 
-fun ensureNumbersOnly(string: String): String? {
+fun ensureNumbersOnly(string: String, allowFloatingPoint: Boolean = false): String? {
     if (string.isEmpty()) {
         return string
     }
     val maxInt: Int = Int.MAX_VALUE / 1000
-    return try {
-        val stringValue = string.trim().toInt()
-        if (stringValue > maxInt || stringValue < 0) {
-            null
+    val trimmedText = string.trim()
+    try {
+        if (allowFloatingPoint) {
+            if (trimmedText == ".") {
+                return string
+            }
+            if (trimmedText.toFloat() in 0f..maxInt.toFloat()) {
+                val decimalSeparator = DecimalFormat().decimalFormatSymbols.decimalSeparator
+                val decimalPlace = string.split(decimalSeparator).getOrNull(1)
+                if (decimalPlace != null && decimalPlace.length > 1) {
+                    return null
+                }
+                return string
+            } else {
+                return null
+            }
         } else {
-            stringValue.toString()
+            return if (trimmedText.toInt() in 0..maxInt) {
+                string
+            } else {
+                null
+            }
         }
     } catch (e: NumberFormatException) {
-        null
+        return null
     }
 }
 
@@ -68,3 +87,7 @@ fun String.safeToInt(): Int {
         }
     }
 }
+
+fun Float.toStringShort(): String = DecimalFormat("0.#").format(this)
+fun Float.roundToDecimals(scale: Int = 1) = this.toBigDecimal()
+    .setScale(scale, RoundingMode.HALF_EVEN).toFloat()

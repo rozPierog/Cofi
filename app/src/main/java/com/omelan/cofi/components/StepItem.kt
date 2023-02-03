@@ -26,6 +26,7 @@ import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.toMillis
 import com.omelan.cofi.utils.toStringDuration
+import com.omelan.cofi.utils.toStringShort
 import kotlin.math.roundToInt
 
 enum class StepProgress { Current, Done, Upcoming }
@@ -79,7 +80,7 @@ fun StepListItem(
         )
         if (step.value != null) {
             Text(
-                text = "${(step.value!! * weightMultiplier).roundToInt()}g",
+                text = "${(step.value!! * weightMultiplier).toStringShort()}g",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(horizontal = Spacing.small),
@@ -108,7 +109,7 @@ fun StepListItemPreview() {
                 "In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
-            value = 60,
+            value = 60.0f,
             orderInRecipe = 0,
         ),
         stepProgress = StepProgress.Current,

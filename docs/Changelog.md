@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- two new icons: a cup, and a cezve - sponsored by @YurishoSan
+- added tooltips when long pressing icons in the Icon Picker
 
 ### Changed
+- Step value can now be expressed with a decimal point
+- fixed issues with how multiplier worked
+- updated dependencies
 
 ### Removed
 

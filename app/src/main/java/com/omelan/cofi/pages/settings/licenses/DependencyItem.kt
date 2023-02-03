@@ -77,9 +77,9 @@ fun DependencyItem(dependency: Dependency) {
                 licenses
                     .getStringAnnotations(URL_ANNOTATION, it, it)
                     .firstOrNull()?.let { stringAnnotation ->
-                        uriHandler.openUri(stringAnnotation.item)
-                        return@ClickableText
-                    }
+                    uriHandler.openUri(stringAnnotation.item)
+                    return@ClickableText
+                }
             },
             modifier = Modifier.padding(bottom = Spacing.normal),
         )

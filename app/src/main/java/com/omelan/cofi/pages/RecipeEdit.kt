@@ -127,7 +127,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -172,14 +172,6 @@ fun RecipeEdit(
         coroutineScope.launch {
             bottomSheetScaffoldState.hide()
             pickedIcon = icon
-        }
-    }
-
-    LaunchedEffect(showDescription) {
-        if (showDescription && recipeToEdit.description.isBlank()) {
-            descriptionFocusRequester.requestFocusSafer()
-        } else {
-            nameFocusRequester.requestFocusSafer()
         }
     }
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
@@ -484,6 +476,13 @@ fun RecipeEdit(
                 },
                 onDismiss = { showCloneModal = false },
             )
+        }
+    }
+    LaunchedEffect(showDescription) {
+        if (showDescription && recipeToEdit.description.isBlank()) {
+            descriptionFocusRequester.requestFocusSafer()
+        } else {
+            nameFocusRequester.requestFocusSafer()
         }
     }
 }
