@@ -58,9 +58,6 @@ fun RecipeList(
     val lazyListState = rememberScalingLazyListState()
     val focusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
     Scaffold(
         positionIndicator = {
             PositionIndicator(scalingLazyListState = lazyListState)
@@ -119,7 +116,9 @@ fun RecipeList(
         }
         OpenOnPhoneConfirm(isVisible = showConfirmation, onTimeout = { showConfirmation = false })
     }
-
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 }
 
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)

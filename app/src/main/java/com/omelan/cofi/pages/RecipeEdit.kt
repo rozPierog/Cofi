@@ -174,14 +174,6 @@ fun RecipeEdit(
             pickedIcon = icon
         }
     }
-
-    LaunchedEffect(showDescription) {
-        if (showDescription && recipeToEdit.description.isBlank()) {
-            descriptionFocusRequester.requestFocusSafer()
-        } else {
-            nameFocusRequester.requestFocusSafer()
-        }
-    }
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
         item {
             Row(verticalAlignment = Alignment.Bottom) {
@@ -484,6 +476,13 @@ fun RecipeEdit(
                 },
                 onDismiss = { showCloneModal = false },
             )
+        }
+    }
+    LaunchedEffect(showDescription) {
+        if (showDescription && recipeToEdit.description.isBlank()) {
+            descriptionFocusRequester.requestFocusSafer()
+        } else {
+            nameFocusRequester.requestFocusSafer()
         }
     }
 }

@@ -36,11 +36,6 @@ fun MultiplierPage(
 ) {
     val focusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(requestFocus) {
-        if (requestFocus) {
-            focusRequester.requestFocus()
-        }
-    }
     Stepper(
         modifier = Modifier
             .onRotaryScrollEvent {
@@ -98,6 +93,11 @@ fun MultiplierPage(
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 content(it)
             }
+        }
+    }
+    LaunchedEffect(requestFocus) {
+        if (requestFocus) {
+            focusRequester.requestFocus()
         }
     }
 }

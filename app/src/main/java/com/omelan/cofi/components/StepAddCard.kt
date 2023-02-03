@@ -88,12 +88,6 @@ fun StepAddCard(
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val isExpanded = pickedType != null
     val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(key1 = isExpanded) {
-        if (isExpanded) {
-            onTypeSelect()
-            nameFocusRequester.requestFocusSafer()
-        }
-    }
     fun saveStep() {
         focusManager.clearFocus()
         save(
@@ -311,6 +305,12 @@ fun StepAddCard(
                 Text(text = stringResource(id = R.string.step_add_duration_explainer))
             },
         )
+    }
+    LaunchedEffect(key1 = isExpanded) {
+        if (isExpanded) {
+            onTypeSelect()
+            nameFocusRequester.requestFocusSafer()
+        }
     }
 }
 

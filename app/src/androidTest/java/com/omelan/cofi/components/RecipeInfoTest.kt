@@ -10,6 +10,7 @@ import com.omelan.cofi.share.StepType
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.toMillis
 import com.omelan.cofi.utils.toStringDuration
+import com.omelan.cofi.utils.toStringShort
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -424,7 +425,7 @@ class RecipeInfoTest {
                 .assertIsDisplayed()
                 .onChildren()
                 .filterToOne(hasTestTag("recipe_info_text"))
-                .assertTextEquals("${value1 + value2}g")
+                .assertTextEquals("${(value1 + value2).toStringShort()}g")
         }
 
         val compactStyle = mutableStateOf(false)
@@ -475,7 +476,7 @@ class RecipeInfoTest {
                 .assertIsDisplayed()
                 .onChildren()
                 .filterToOne(hasTestTag("recipe_info_text"))
-                .assertTextEquals("${value1 + value2}g")
+                .assertTextEquals("${(value1 + value2).toStringShort()}g")
         }
 
         val compactStyle = mutableStateOf(false)
