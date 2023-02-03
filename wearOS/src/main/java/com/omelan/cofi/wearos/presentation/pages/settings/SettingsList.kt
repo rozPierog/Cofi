@@ -21,6 +21,7 @@ import com.omelan.cofi.wearos.presentation.components.OpenOnPhoneConfirm
 import com.omelan.cofi.wearos.presentation.utils.WearUtils
 import kotlinx.coroutines.launch
 
+
 @Composable
 fun Settings(navigateToLicenses: () -> Unit) {
     val activity = LocalContext.current as ComponentActivity
@@ -39,6 +40,10 @@ fun Settings(navigateToLicenses: () -> Unit) {
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
     var showConfirmation by remember {
         mutableStateOf(false)
+    }
+    val context = LocalContext.current
+    val versionName = remember {
+        context.packageManager.getPackageInfo(context.packageName, 0).versionName
     }
     Scaffold(
         vignette = {
@@ -179,7 +184,7 @@ fun Settings(navigateToLicenses: () -> Unit) {
                     Column {
                         Text(text = stringResource(id = R.string.app_version))
                         Text(
-                            text = BuildConfig.VERSION_NAME,
+                            text = versionName,
                             fontWeight = FontWeight.Light,
                         )
 
