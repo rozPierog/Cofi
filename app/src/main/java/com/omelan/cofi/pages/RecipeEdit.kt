@@ -127,7 +127,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -174,6 +174,7 @@ fun RecipeEdit(
             pickedIcon = icon
         }
     }
+
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
         item {
             Row(verticalAlignment = Alignment.Bottom) {
@@ -212,9 +213,6 @@ fun RecipeEdit(
                         .fillMaxWidth()
                         .focusRequester(nameFocusRequester)
                         .onFocusChanged {
-                            if (it.isFocused) {
-                                collapse()
-                            }
                             nameHasFocus = it.isFocused
                         }
                         .testTag("recipe_edit_name"),
@@ -349,7 +347,6 @@ fun RecipeEdit(
                 modifier = Modifier
                     .fillMaxWidth()
                     .navigationBarsPadding()
-                    .imePadding()
                     .waterfallPadding()
                     .verticalScroll(iconScrollState)
                     .padding(Spacing.small),
@@ -360,24 +357,25 @@ fun RecipeEdit(
                 crossAxisSpacing = Spacing.medium,
             ) {
                 RecipeIcon.values().map {
-                    PlainTooltipBox(tooltip = { Text(stringResource(id = it.nameResId)) }) {
-                        Box(
-                            modifier = Modifier
-                                .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
-                                .aspectRatio(1f)
-                                .clip(CircleShape)
-                                .clickable(role = Role.Button) { pickIcon(it) },
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Icon(
-                                painter = painterResource(id = it.icon),
-                                tint = MaterialTheme.colorScheme.onSurface,
-                                contentDescription = it.name,
-                                modifier = Modifier.size(36.dp),
-                            )
-                        }
+                    // TODO: Revisit tooltips later, for now it makes app sluggish
+//                    PlainTooltipBox(tooltip = { Text(stringResource(id = it.nameResId)) }) {
+                    Box(
+                        modifier = Modifier
+                            .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
+                            .aspectRatio(1f)
+                            .clip(CircleShape)
+                            .clickable(role = Role.Button) { pickIcon(it) },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            painter = painterResource(id = it.icon),
+                            tint = MaterialTheme.colorScheme.onSurface,
+                            contentDescription = it.name,
+                            modifier = Modifier.size(36.dp),
+                        )
                     }
                 }
+//                }
             }
         },
     ) {
