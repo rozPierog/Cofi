@@ -145,7 +145,7 @@ fun RecipeDetails(
         }
     }
     LaunchedEffect(ratioBottomSheetState.targetValue) {
-        if (ratioBottomSheetState.targetValue != ModalBottomSheetValue.Hidden  && isTimerRunning) {
+        if (ratioBottomSheetState.targetValue != ModalBottomSheetValue.Hidden && isTimerRunning) {
             pauseAnimations()
         }
     }
