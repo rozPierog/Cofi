@@ -49,6 +49,7 @@
     <td>WearOS</td>
     <td><img src="fastlane/metadata/android/en-US/images/wearScreenshots/1_en-US.png" ></td>
     <td><img src="fastlane/metadata/android/en-US/images/wearScreenshots/2_en-US.png" ></td>
+    <td><img src="fastlane/metadata/android/en-US/images/wearScreenshots/3_en-US.png" ></td>
   </tr>
 </table>
 
