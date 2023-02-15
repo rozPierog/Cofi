@@ -18,12 +18,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -61,7 +58,9 @@ import com.omelan.cofi.components.*
 import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeIcon
 import com.omelan.cofi.share.Step
-import com.omelan.cofi.ui.*
+import com.omelan.cofi.ui.CofiTheme
+import com.omelan.cofi.ui.Spacing
+import com.omelan.cofi.ui.createTextSelectionColors
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding
 import com.omelan.cofi.utils.requestFocusSafer
@@ -106,10 +105,7 @@ fun RecipeEdit(
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
 
-    val bottomSheetScaffoldState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true,
-    )
+    var isIconSheetVisible by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
@@ -127,7 +123,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -148,10 +144,8 @@ fun RecipeEdit(
             stepWithOpenEditor = null
             return@BackHandler
         }
-        if (bottomSheetScaffoldState.isVisible) {
-            coroutineScope.launch {
-                bottomSheetScaffoldState.hide()
-            }
+        if (isIconSheetVisible) {
+            isIconSheetVisible = false
             return@BackHandler
         }
         safeGoBack()
@@ -170,7 +164,7 @@ fun RecipeEdit(
 
     fun pickIcon(icon: RecipeIcon) {
         coroutineScope.launch {
-            bottomSheetScaffoldState.hide()
+            isIconSheetVisible = false
             pickedIcon = icon
         }
     }
@@ -190,11 +184,7 @@ fun RecipeEdit(
                     onClick = {
                         keyboardController?.hide()
                         coroutineScope.launch {
-                            if (bottomSheetScaffoldState.isVisible) {
-                                bottomSheetScaffoldState.hide()
-                            } else {
-                                bottomSheetScaffoldState.show()
-                            }
+                            isIconSheetVisible = !isIconSheetVisible
                         }
                     },
                 ) {
@@ -338,11 +328,8 @@ fun RecipeEdit(
         }
     }
     val iconScrollState = rememberScrollState()
-    ModalBottomSheetLayout(
-        sheetShape = shapes.modal,
-        sheetBackgroundColor = MaterialTheme.colorScheme.surfaceVariant,
-        sheetState = bottomSheetScaffoldState,
-        sheetContent = {
+    if (isIconSheetVisible) {
+        Material3BottomSheet(onDismissRequest = { isIconSheetVisible = false }) {
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -377,105 +364,105 @@ fun RecipeEdit(
                 }
 //                }
             }
-        },
-    ) {
-        Scaffold(
-            modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
-            topBar = {
-                PiPAwareAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = safeGoBack) {
-                            Icon(Icons.Rounded.ArrowBack, contentDescription = null)
-                        }
-                    },
-                    actions = {
-                        if (isEditing) {
-                            IconButton(onClick = { showCloneModal = true }) {
-                                Icon(
-                                    painterResource(id = R.drawable.ic_copy),
-                                    contentDescription = null,
-                                )
-                            }
-                            IconButton(onClick = { showDeleteModal = true }) {
-                                Icon(
-                                    painterResource(id = R.drawable.ic_delete),
-                                    contentDescription = null,
-                                )
-                            }
-                        }
-                        IconButton(
-                            modifier = Modifier.testTag("recipe_edit_save"),
-                            onClick = onSave,
-                            enabled = canSave,
-                        ) {
+        }
+    }
+    Scaffold(
+        modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
+        topBar = {
+            PiPAwareAppBar(
+                navigationIcon = {
+                    IconButton(onClick = safeGoBack) {
+                        Icon(Icons.Rounded.ArrowBack, contentDescription = null)
+                    }
+                },
+                actions = {
+                    if (isEditing) {
+                        IconButton(onClick = { showCloneModal = true }) {
                             Icon(
-                                painterResource(id = R.drawable.ic_save),
+                                painterResource(id = R.drawable.ic_copy),
                                 contentDescription = null,
                             )
                         }
-                    },
-                    title = {
-                        Text(
-                            text = if (isEditing) {
-                                stringResource(id = R.string.recipe_edit_title)
-                            } else {
-                                stringResource(id = R.string.recipe_add_new_title)
-                            },
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    },
-                    scrollBehavior = appBarBehavior,
-                )
-            },
-        ) {
-            CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
-                BoxWithConstraints {
-                    if (isPhoneLayout) {
-                        PhoneLayout(
-                            it,
-                            lazyListState,
-                            renderNameAndDescriptionEdit,
-                            renderSteps,
-                        )
-                    } else {
-                        TabletLayout(
-                            it,
-                            lazyListState,
-                            renderNameAndDescriptionEdit,
-                            renderSteps,
+                        IconButton(onClick = { showDeleteModal = true }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_delete),
+                                contentDescription = null,
+                            )
+                        }
+                    }
+                    IconButton(
+                        modifier = Modifier.testTag("recipe_edit_save"),
+                        onClick = onSave,
+                        enabled = canSave,
+                    ) {
+                        Icon(
+                            painterResource(id = R.drawable.ic_save),
+                            contentDescription = null,
                         )
                     }
+                },
+                title = {
+                    Text(
+                        text = if (isEditing) {
+                            stringResource(id = R.string.recipe_edit_title)
+                        } else {
+                            stringResource(id = R.string.recipe_add_new_title)
+                        },
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                },
+                scrollBehavior = appBarBehavior,
+            )
+        },
+    ) {
+        CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
+            BoxWithConstraints {
+                if (isPhoneLayout) {
+                    PhoneLayout(
+                        it,
+                        lazyListState,
+                        renderNameAndDescriptionEdit,
+                        renderSteps,
+                    )
+                } else {
+                    TabletLayout(
+                        it,
+                        lazyListState,
+                        renderNameAndDescriptionEdit,
+                        renderSteps,
+                    )
                 }
             }
         }
-        if (showDeleteModal && isEditing) {
-            DeleteDialog(onConfirm = deleteRecipe, onDismiss = { showDeleteModal = false })
-        }
-        if (showSaveModal) {
-            SaveDialog(
-                canSave = canSave,
-                onSave = onSave,
-                onDiscard = goBack,
-                onDismiss = { showSaveModal = false },
-            )
-        }
-        if (showCloneModal) {
-            CloneDialog(
-                onConfirm = {
-                    cloneRecipe(
-                        recipeToEdit.copy(
-                            name = name.text,
-                            description = description.text,
-                            recipeIcon = pickedIcon,
-                        ),
-                        steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) },
-                    )
-                },
-                onDismiss = { showCloneModal = false },
-            )
-        }
     }
+    if (showDeleteModal && isEditing) {
+        DeleteDialog(onConfirm = deleteRecipe, onDismiss = { showDeleteModal = false })
+    }
+    if (showSaveModal) {
+        SaveDialog(
+            canSave = canSave,
+            onSave = onSave,
+            onDiscard = goBack,
+            onDismiss = { showSaveModal = false },
+        )
+    }
+    if (showCloneModal) {
+        CloneDialog(
+            onConfirm = {
+                cloneRecipe(
+                    recipeToEdit.copy(
+                        name = name.text,
+                        description = description.text,
+                        recipeIcon = pickedIcon,
+                    ),
+                    steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) },
+                )
+            },
+            onDismiss = { showCloneModal = false },
+        )
+    }
+
     LaunchedEffect(showDescription) {
         if (showDescription && recipeToEdit.description.isBlank()) {
             descriptionFocusRequester.requestFocusSafer()

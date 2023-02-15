@@ -32,8 +32,8 @@ android {
         versionName "1.14.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments clearPackageData: 'true'
         resConfigs 'en', 'de', 'es', 'it', 'nb', 'nl', 'pl', 'tr'
+        testInstrumentationRunnerArguments clearPackageData: 'true'
         manifestPlaceholders = [profileable: false]
     }
 
@@ -157,7 +157,7 @@ dependencies {
 
     // Material Design
     implementation "androidx.compose.material:material"
-    implementation "androidx.compose.material3:material3:1.1.0-alpha05"
+    implementation "androidx.compose.material3:material3:1.1.0-alpha06"
     implementation "androidx.compose.material3:material3-window-size-class"
 
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
