@@ -24,6 +24,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -39,6 +40,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
+import com.omelan.cofi.components.SupportCofi
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.RecipeList
 import com.omelan.cofi.pages.details.RecipeDetails
@@ -135,10 +137,19 @@ class MainActivity : MonetCompatActivity() {
         db: AppDatabase,
     ) {
         val pipState = LocalPiPState.current
+        val dataStore = DataStore(LocalContext.current)
+        val coroutineScope = rememberCoroutineScope()
+        val alreadyAskedForSupport by dataStore.getAskedForSupport().collectAsState(initial = true)
+        var hasDoneThisRecipeMoreThanOnce by remember {
+            mutableStateOf(false)
+        }
         RecipeDetails(
             recipeId = recipeId,
             onRecipeEnd = { recipe ->
                 lifecycleScope.launch {
+                    if (recipe.lastFinished != 0L) {
+                        hasDoneThisRecipeMoreThanOnce = true
+                    }
                     db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
                 }
                 if (InstantUtils.isInstantApp(this@MainActivity) && !pipState) {
@@ -172,6 +183,14 @@ class MainActivity : MonetCompatActivity() {
             onTimerRunning = onTimerRunning,
             windowSizeClass = windowSizeClass,
         )
+        if (!alreadyAskedForSupport && hasDoneThisRecipeMoreThanOnce) {
+            SupportCofi(
+                onDismissRequest = {
+                    coroutineScope.launch { dataStore.setAskedForSupport() }
+                },
+            )
+        }
+
     }
 
     @Composable
@@ -287,19 +306,19 @@ class MainActivity : MonetCompatActivity() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
-                            slideIntoContainer(
-                                AnimatedContentScope.SlideDirection.End,
-                                animationSpec = tween(tweenDuration),
-                                initialOffset = { fullWidth -> -fullWidth / 5 },
-                            )
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.End,
+                                    animationSpec = tween(tweenDuration),
+                                    initialOffset = { fullWidth -> -fullWidth / 5 },
+                                )
                     },
                     exitTransition = {
                         fadeOut(tween(tweenDuration)) +
-                            slideOutOfContainer(
-                                AnimatedContentScope.SlideDirection.Start,
-                                animationSpec = tween(tweenDuration),
-                                targetOffset = { fullWidth -> fullWidth / 5 },
-                            )
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Start,
+                                    animationSpec = tween(tweenDuration),
+                                    targetOffset = { fullWidth -> fullWidth / 5 },
+                                )
                     },
                 ) {
 //                    composable("list_color") {

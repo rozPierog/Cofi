@@ -73,9 +73,6 @@ fun RecipeList(
             }
         }
     }
-    SupportCofi {
-
-    }
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {

@@ -17,13 +17,18 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.omelan.cofi.BuildConfig
 import com.omelan.cofi.share.R
 
 @Composable
 fun SupportCofi(onDismissRequest: () -> Unit) {
     val uriHandler = LocalUriHandler.current
 
-    Material3Dialog(onDismissRequest = onDismissRequest) {
+    Material3Dialog(
+        onDismissRequest = onDismissRequest,
+        onCancel = null,
+        onSave = onDismissRequest,
+    ) {
         Column(Modifier.padding(24.dp)) {
             CompositionLocalProvider(LocalContentColor provides iconContentColor) {
                 Box(
@@ -77,12 +82,26 @@ fun SupportCofi(onDismissRequest: () -> Unit) {
             leadingContent = { Text("🐘") },
             headlineText = { Text(text = stringResource(id = R.string.support_dialog_mastodon)) },
         )
-        ListItem(
-            modifier = Modifier.clickable {
-                uriHandler.openUri("https://ko-fi.com/leonomelan")
-            },
-            leadingContent = { Text("☕️") },
-            headlineText = { Text(text = stringResource(id = R.string.support_dialog_kofi)) },
-        )
+        when (BuildConfig.FLAVOR) {
+            "full" -> ListItem(
+                modifier = Modifier.clickable {
+                    uriHandler.openUri("https://ko-fi.com/leonomelan")
+                },
+                leadingContent = { Text("☕️") },
+                headlineText = { Text(text = stringResource(id = R.string.support_dialog_kofi)) },
+            )
+
+            "instant", "playStore" -> ListItem(
+                modifier = Modifier.clickable {
+                    uriHandler.openUri(
+                        "https://play.google.com/store/apps/details?id=com.omelan.cofi",
+                    )
+                },
+                leadingContent = { Text("✍️") },
+                headlineText = { Text(text = stringResource(id = R.string.support_dialog_review)) },
+            )
+
+            else -> {}
+        }
     }
 }

@@ -121,4 +121,5 @@ Temperature: For light roast – brought to a boil and used immediately. For dar
     <string name="support_dialog_github">Star Cofi on Github</string>
     <string name="support_dialog_mastodon">Follow me on Mastodon</string>
     <string name="support_dialog_kofi">Buy me a coffee</string>
+    <string name="support_dialog_review">Write a review</string>
 </resources>
