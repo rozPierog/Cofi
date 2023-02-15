@@ -28,10 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.omelan.cofi.R
-import com.omelan.cofi.components.PiPAwareAppBar
-import com.omelan.cofi.components.RecipeItem
-import com.omelan.cofi.components.RecipeListInfoBox
-import com.omelan.cofi.components.createAppBarBehavior
+import com.omelan.cofi.components.*
 import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.RecipeViewModel
 import com.omelan.cofi.share.StepsViewModel
@@ -75,6 +72,9 @@ fun RecipeList(
                 lazyGridState.animateScrollToItem(0)
             }
         }
+    }
+    SupportCofi {
+
     }
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

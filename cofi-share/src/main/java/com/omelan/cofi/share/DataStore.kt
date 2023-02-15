@@ -35,6 +35,10 @@ class DataStore(private val context: Context) {
         preferences[SYNC_SETTINGS_FROM_PHONE] ?: SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE
     }
 
+    fun getAskedForSupport() = context.dataStore.data.map {
+        it[ASKED_FOR_SUPPORT] ?: ASKED_FOR_SUPPORT_DEFAULT_VALUE
+    }
+
 
     suspend fun setDismissedInfoBoxes(newValue: Map<String, Boolean>) = context.dataStore.edit {
         it[DISMISSED_INFO] = JSONObject(newValue).toString()
@@ -83,6 +87,11 @@ class DataStore(private val context: Context) {
     suspend fun selectCombineMethod(combineMethod: CombineWeight) {
         context.dataStore.edit {
             it[COMBINE_WEIGHT] = combineMethod.name
+        }
+    }
+    suspend fun setAskedForSupport() {
+         context.dataStore.edit {
+            it[ASKED_FOR_SUPPORT] = true
         }
     }
 }
