@@ -116,4 +116,9 @@ Temperature: For light roast – brought to a boil and used immediately. For dar
     <string name="name_bripe" translatable="false">Bripe</string>
     <string name="name_cezve">Cezve</string>
     <string name="name_cup">Cup</string>
+    <string name="support_dialog_title">Enjoying Cofi?</string>
+    <string name="support_dialog_body">I would greatly appreciate your support! You can help me continue doing what I love by choosing one or more of the following</string>
+    <string name="support_dialog_github">Star Cofi on Github</string>
+    <string name="support_dialog_mastodon">Follow me on Mastodon</string>
+    <string name="support_dialog_kofi">Buy me a coffee</string>
 </resources>

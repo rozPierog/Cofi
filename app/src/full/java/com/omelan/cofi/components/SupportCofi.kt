@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.share.R
 
@@ -32,7 +33,7 @@ fun SupportCofi(onDismissRequest: () -> Unit) {
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_monochrome),
-                        contentDescription = "",
+                        contentDescription = stringResource(id = R.string.app_name),
                     )
                 }
             }
@@ -44,7 +45,7 @@ fun SupportCofi(onDismissRequest: () -> Unit) {
                             .padding(PaddingValues(bottom = 16.dp))
                             .align(Alignment.CenterHorizontally),
                     ) {
-                        Text(text = "Enjoying Cofi?")
+                        Text(text = stringResource(id = R.string.support_dialog_title))
                     }
                 }
             }
@@ -57,31 +58,31 @@ fun SupportCofi(onDismissRequest: () -> Unit) {
                             .padding(PaddingValues(bottom = 16.dp))
                             .align(Alignment.Start),
                     ) {
-                        Text(text = "I would greatly appreciate your support! You can help me continue doing what I love by choosing one or more of the following")
+                        Text(text = stringResource(id = R.string.support_dialog_body))
                     }
                 }
             }
         }
         ListItem(
             modifier = Modifier.clickable {
-                uriHandler.openUri("https://github.com/rozPierog/Cofi/stargazers")
+                uriHandler.openUri("https://github.com/rozPierog/Cofi")
             },
             leadingContent = { Text("⭐") },
-            headlineText = { Text(text = "Star Cofi on Github") },
+            headlineText = { Text(text = stringResource(id = R.string.support_dialog_github)) },
         )
         ListItem(
             modifier = Modifier.clickable {
                 uriHandler.openUri("https://fosstodon.org/@LeonOmelan")
             },
             leadingContent = { Text("🐘") },
-            headlineText = { Text(text = "Follow me on Mastodon") },
+            headlineText = { Text(text = stringResource(id = R.string.support_dialog_mastodon)) },
         )
         ListItem(
             modifier = Modifier.clickable {
                 uriHandler.openUri("https://ko-fi.com/leonomelan")
             },
             leadingContent = { Text("☕️") },
-            headlineText = { Text(text = "Buy me a coffee") },
+            headlineText = { Text(text = stringResource(id = R.string.support_dialog_kofi)) },
         )
     }
 }
