@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Material3BottomSheet(
-    sheetState: SheetState = rememberSheetState(),
+    sheetState: SheetState = rememberSheetState(skipHalfExpanded = true),
     onDismissRequest: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {

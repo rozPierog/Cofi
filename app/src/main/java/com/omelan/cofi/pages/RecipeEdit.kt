@@ -4,7 +4,7 @@
     ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalComposeUiApi::class,
     ExperimentalFoundationApi::class,
-    ExperimentalMaterialApi::class,
+    ExperimentalMaterialApi::class, ExperimentalLayoutApi::class,
 )
 
 package com.omelan.cofi.pages
@@ -49,9 +49,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
-import com.google.accompanist.flowlayout.FlowMainAxisAlignment
-import com.google.accompanist.flowlayout.FlowRow
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
@@ -328,44 +325,6 @@ fun RecipeEdit(
         }
     }
     val iconScrollState = rememberScrollState()
-    if (isIconSheetVisible) {
-        Material3BottomSheet(onDismissRequest = { isIconSheetVisible = false }) {
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .navigationBarsPadding()
-                    .waterfallPadding()
-                    .verticalScroll(iconScrollState)
-                    .padding(Spacing.small),
-                lastLineMainAxisAlignment = FlowMainAxisAlignment.Center,
-                mainAxisAlignment = FlowMainAxisAlignment.Center,
-                crossAxisAlignment = FlowCrossAxisAlignment.Center,
-                mainAxisSpacing = Spacing.medium,
-                crossAxisSpacing = Spacing.medium,
-            ) {
-                RecipeIcon.values().map {
-                    // TODO: Revisit tooltips later, for now it makes app sluggish
-//                    PlainTooltipBox(tooltip = { Text(stringResource(id = it.nameResId)) }) {
-                    Box(
-                        modifier = Modifier
-                            .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
-                            .aspectRatio(1f)
-                            .clip(CircleShape)
-                            .clickable(role = Role.Button) { pickIcon(it) },
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Icon(
-                            painter = painterResource(id = it.icon),
-                            tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = it.name,
-                            modifier = Modifier.size(36.dp),
-                        )
-                    }
-                }
-//                }
-            }
-        }
-    }
     Scaffold(
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         topBar = {
@@ -433,6 +392,39 @@ fun RecipeEdit(
                         renderSteps,
                     )
                 }
+            }
+        }
+    }
+    if (isIconSheetVisible) {
+        Material3BottomSheet(onDismissRequest = { isIconSheetVisible = false }) {
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .waterfallPadding()
+                    .padding(Spacing.small),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                RecipeIcon.values().map {
+                    // TODO: Revisit tooltips later, for now it makes app sluggish
+//                    PlainTooltipBox(tooltip = { Text(stringResource(id = it.nameResId)) }) {
+                    Box(
+                        modifier = Modifier
+                            .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
+                            .aspectRatio(1f)
+                            .clip(CircleShape)
+                            .clickable(role = Role.Button) { pickIcon(it) },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            painter = painterResource(id = it.icon),
+                            tint = MaterialTheme.colorScheme.onSurface,
+                            contentDescription = it.name,
+                            modifier = Modifier.size(36.dp),
+                        )
+                    }
+                }
+//                }
             }
         }
     }
