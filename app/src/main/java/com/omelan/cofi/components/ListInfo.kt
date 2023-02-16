@@ -28,6 +28,7 @@ fun LazyGridItemScope.RecipeListInfoBox(
     onDismiss: () -> Unit,
     title: @Composable () -> Unit,
     text: @Composable () -> Unit,
+    icon: (@Composable () -> Unit)? = null,
 ) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp
@@ -83,8 +84,15 @@ fun LazyGridItemScope.RecipeListInfoBox(
                 Icon(Icons.Rounded.Close, contentDescription = "")
             }
         }
-        ProvideTextStyle(MaterialTheme.typography.bodyLarge) {
-            text()
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
+        ) {
+            icon?.let { it() }
+            ProvideTextStyle(MaterialTheme.typography.bodyLarge) {
+                text()
+            }
         }
+
     }
 }
