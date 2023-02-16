@@ -88,11 +88,3 @@ fun LazyGridItemScope.RecipeListInfoBox(
         }
     }
 }
-
-// @Preview
-// @Composable
-// fun PreviewRecipeListInfoBox() {
-//    RecipeListInfoBox(onClick = {}, onDismiss = {}) {
-//        Text(text = "BLEH BLEH")
-//    }
-// }

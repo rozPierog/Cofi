@@ -130,7 +130,7 @@ fun RecipeList(
                                 horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
                             ) {
                                 Icon(
-                                    painterResource(id = R.drawable.ic_timer),
+                                    painterResource(id = R.drawable.ic_watch),
                                     contentDescription = "",
                                 )
                                 Text(text = stringResource(id = R.string.infoBox_wearOS_body))
