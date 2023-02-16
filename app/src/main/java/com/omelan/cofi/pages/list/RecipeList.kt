@@ -1,6 +1,5 @@
-package com.omelan.cofi.pages
+package com.omelan.cofi.pages.list
 
-import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -16,25 +15,16 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
-import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.RecipeViewModel
 import com.omelan.cofi.share.StepsViewModel
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
-import com.omelan.cofi.utils.WearUtils
-import com.omelan.cofi.utils.WearUtils.ObserveIfWearAppInstalled
 import com.omelan.cofi.utils.getDefaultPadding
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,23 +43,7 @@ fun RecipeList(
     val isMultiColumn by remember(configuration.screenWidthDp) {
         derivedStateOf { configuration.screenWidthDp > 600 }
     }
-    val activity = LocalContext.current as Activity
-    val lifecycleOwner = LocalLifecycleOwner.current
-    var wearNodesWithoutApp by remember {
-        mutableStateOf(listOf<String>())
-    }
     val lazyGridState = rememberLazyGridState()
-    val coroutineScope = rememberCoroutineScope()
-    val dataStore = DataStore(activity)
-    val dismissedBoxes by dataStore.getDismissedInfoBoxes().collectAsState(initial = null)
-    ObserveIfWearAppInstalled {
-        wearNodesWithoutApp = it
-        if (it.isNotEmpty()) {
-            coroutineScope.launch {
-                lazyGridState.animateScrollToItem(0)
-            }
-        }
-    }
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -110,44 +84,10 @@ fun RecipeList(
             horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
             state = lazyGridState,
         ) {
-            if (wearNodesWithoutApp.isNotEmpty() && dismissedBoxes != null &&
-                dismissedBoxes?.containsKey("wearOS") == false
-            ) {
-                item(key = "wearOS") {
-                    RecipeListInfoBox(
-                        title = {
-                            Text(
-                                text = stringResource(id = R.string.infoBox_wearOS_title),
-                                fontWeight = FontWeight.Bold,
-                            )
-                        },
-                        icon = {
-                            Icon(
-                                painterResource(id = R.drawable.ic_watch), "",
-                                modifier = Modifier.size(28.dp),
-                            )
-                        },
-                        text = { Text(text = stringResource(id = R.string.infoBox_wearOS_body)) },
-                        onClick = {
-                            WearUtils.openPlayStoreOnWearDevicesWithoutApp(
-                                lifecycleOwner,
-                                activity,
-                                wearNodesWithoutApp,
-                            )
-                        },
-                        onDismiss = {
-                            val newMap = if (dismissedBoxes != null) {
-                                dismissedBoxes!!.toMutableMap()
-                            } else {
-                                mutableMapOf()
-                            }
-                            newMap["wearOS"] = true
-                            coroutineScope.launch {
-                                dataStore.setDismissedInfoBoxes(newMap)
-                            }
-                        },
-                    )
-                }
+            item("header_info") {
+                RecipeListHeaderInfo(animateToTop = {
+                    lazyGridState.animateScrollToItem(0)
+                })
             }
             items(recipes, key = { recipe -> recipe.id }) { recipe ->
                 RecipeItem(

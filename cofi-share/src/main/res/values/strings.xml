@@ -123,4 +123,6 @@ Temperature: For light roast – brought to a boil and used immediately. For dar
     <string name="support_dialog_kofi">Buy me a coffee</string>
     <string name="support_dialog_review">Write a review</string>
     <string name="support_title">Support Cofi</string>
+    <string name="infoBox_update_title">Cofi has been updated</string>
+    <string name="infoBox_update_body">Click here to read what\'s new</string>
 </resources>

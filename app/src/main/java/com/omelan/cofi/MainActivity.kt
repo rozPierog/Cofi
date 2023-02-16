@@ -42,8 +42,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.components.SupportCofi
 import com.omelan.cofi.pages.RecipeEdit
-import com.omelan.cofi.pages.RecipeList
 import com.omelan.cofi.pages.details.RecipeDetails
+import com.omelan.cofi.pages.list.RecipeList
 import com.omelan.cofi.pages.settings.AppSettings
 import com.omelan.cofi.pages.settings.AppSettingsAbout
 import com.omelan.cofi.pages.settings.BackupRestoreSettings

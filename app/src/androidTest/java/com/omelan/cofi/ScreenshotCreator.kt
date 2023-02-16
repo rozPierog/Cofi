@@ -17,8 +17,8 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.omelan.cofi.pages.RecipeEdit
-import com.omelan.cofi.pages.RecipeList
 import com.omelan.cofi.pages.details.RecipeDetails
+import com.omelan.cofi.pages.list.RecipeList
 import com.omelan.cofi.share.model.PrepopulateData
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.ScreenshotsHelpers

@@ -39,6 +39,10 @@ class DataStore(private val context: Context) {
         it[ASKED_FOR_SUPPORT] ?: ASKED_FOR_SUPPORT_DEFAULT_VALUE
     }
 
+    fun getLastSeenUpdateNoticeVersion() = context.dataStore.data.map {
+        it[UPDATE_NOTICE_VERSION] ?: UPDATE_NOTICE_VERSION_DEFAULT_VALUE
+    }
+
 
     suspend fun setDismissedInfoBoxes(newValue: Map<String, Boolean>) = context.dataStore.edit {
         it[DISMISSED_INFO] = JSONObject(newValue).toString()
@@ -89,9 +93,16 @@ class DataStore(private val context: Context) {
             it[COMBINE_WEIGHT] = combineMethod.name
         }
     }
+
     suspend fun setAskedForSupport() {
-         context.dataStore.edit {
+        context.dataStore.edit {
             it[ASKED_FOR_SUPPORT] = true
+        }
+    }
+
+    suspend fun setLastSeenUpdateNoticeVersion(versionCode: Int) {
+        context.dataStore.edit {
+            it[UPDATE_NOTICE_VERSION] = versionCode
         }
     }
 }
