@@ -112,10 +112,12 @@ Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 8
     <string name="name_espresso">Ekspres</string>
     <string name="name_cold_brew">Cold brew</string>
     <string name="name_siphon">Syfon</string>
+    <string name="name_cup">Kubek</string>
     <string name="support_dialog_title">Lubisz Cofi?</string>
     <string name="support_dialog_body">Możesz wesprzeć moją pracę, wybierając jedną lub więcej z poniższych opcji</string>
     <string name="support_dialog_github">Daj gwiazdkę na Githubie</string>
     <string name="support_dialog_mastodon">Śledź mnie na Mastodonie</string>
     <string name="support_dialog_kofi">Kup mi kawę</string>
     <string name="support_dialog_review">Napisz opinię</string>
+    <string name="support_title">Wesprzyj Cofi</string>
 </resources>

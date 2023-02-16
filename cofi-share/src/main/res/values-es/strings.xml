@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Cofi</string>
-    <string name="list_header" translatable="false">Cofi</string>
     <string name="step_type_add_coffee">Añadir café</string>
     <string name="step_type_water">Añadir agua</string>
     <string name="step_type_wait">Esperar</string>
