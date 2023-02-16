@@ -1,48 +1,41 @@
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 
 package com.omelan.cofi.pages.details
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
-import androidx.compose.material3.surfaceColorAtElevation
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
+import com.omelan.cofi.components.Material3BottomSheet
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.roundToDecimals
 import kotlin.math.roundToInt
 
 @Composable
 fun RatioBottomSheet(
-    sheetState: ModalBottomSheetState,
     timeMultiplier: MutableState<Float>,
     weightMultiplier: MutableState<Float>,
-    content: @Composable () -> Unit,
+    onDismissRequest: () -> Unit,
 ) {
-    ModalBottomSheetLayout(
-        sheetShape = RoundedCornerShape(topEnd = 12.dp, topStart = 12.dp),
-        sheetState = sheetState,
-        sheetBackgroundColor = MaterialTheme.colorScheme.surfaceColorAtElevation(6.dp),
-        sheetContent = {
-            Column(modifier = Modifier.safeContentPadding()) {
-                SheetContent(
-                    timeMultiplier,
-                    weightMultiplier,
-                )
-            }
-        },
-        content = content,
-    )
+    Material3BottomSheet(onDismissRequest = onDismissRequest) {
+        Column(modifier = Modifier
+            .waterfallPadding()
+            .padding(horizontal = Spacing.big)) {
+            SheetContent(
+                timeMultiplier,
+                weightMultiplier,
+            )
+        }
+    }
 }
 
 @Composable
