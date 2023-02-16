@@ -7,8 +7,9 @@ import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Build
+import androidx.compose.material.icons.rounded.Face
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.omelan.cofi.BuildConfig
 import com.omelan.cofi.R
 import com.omelan.cofi.components.PiPAwareAppBar
+import com.omelan.cofi.components.SupportCofi
 import com.omelan.cofi.components.createAppBarBehavior
 import com.omelan.cofi.utils.getDefaultPadding
 
@@ -29,6 +31,9 @@ import com.omelan.cofi.utils.getDefaultPadding
 fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
     val uriHandler = LocalUriHandler.current
     val appBarBehavior = createAppBarBehavior()
+    var showSupportCofi by remember {
+        mutableStateOf(false)
+    }
     Scaffold(
         topBar = {
             PiPAwareAppBar(
@@ -150,6 +155,26 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
+                    text = {
+                        Text(
+                            text = stringResource(id = R.string.support_title),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Rounded.Face,
+                            contentDescription = null,
+                        )
+                    },
+                    modifier = Modifier.settingsItemModifier(
+                        onClick = { showSupportCofi = true },
+                    ),
+                )
+            }
+            item {
+                ListItem(
                     overlineText = {
                         Text(
                             text = stringResource(R.string.app_version),
@@ -175,6 +200,9 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     ),
                 )
             }
+        }
+        if (showSupportCofi) {
+            SupportCofi(onDismissRequest = { showSupportCofi = false })
         }
     }
 }
