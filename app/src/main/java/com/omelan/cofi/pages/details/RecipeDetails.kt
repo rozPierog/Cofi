@@ -252,7 +252,9 @@ fun RecipeDetails(
     val renderSteps: LazyListScope.() -> Unit = {
         itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
             StepListItem(
-                modifier = Modifier.testTag("recipe_step"),
+                modifier = Modifier
+                    .testTag("recipe_step")
+                    .animateItemPlacement(),
                 step = step,
                 stepProgress = getCurrentStepProgress(index),
                 onClick = { newStep: Step ->
@@ -267,7 +269,10 @@ fun RecipeDetails(
                 weightMultiplier = weightMultiplier.value,
                 timeMultiplier = timeMultiplier.value,
             )
-            Divider(color = MaterialTheme.colorScheme.surfaceVariant)
+            Divider(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                modifier = Modifier.animateItemPlacement(),
+            )
         }
     }
 
