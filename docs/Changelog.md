@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-
+- Next step will now be displayed near the timer (you can turn that off in settings)
+- added missing German translations
+- Added "Support Cofi" Dialog when user finishes their second recipe and in the settings
+- Added button to download WearOS app in settings
+- Added box with info that app has been updated with a link to this changelog
 ### Changed
-
+- Tweaked Bottom Sheets across the app to be more Material You-like
 ### Removed
 
 
