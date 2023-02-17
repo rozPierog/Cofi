@@ -400,12 +400,11 @@ fun RecipeEdit(
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .waterfallPadding().safeContentPadding().safeGesturesPadding()
-                    .padding(Spacing.small)
+                    .waterfallPadding().safeGesturesPadding()
                     // TODO: remove me when bottom sheet is fixed on tablets
                     .padding(bottom = Spacing.big + Spacing.medium),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.Bottom,
             ) {
                 RecipeIcon.values().map {
                     // TODO: Revisit tooltips later, for now it makes app sluggish
