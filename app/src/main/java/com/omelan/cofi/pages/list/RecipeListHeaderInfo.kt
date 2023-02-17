@@ -3,6 +3,7 @@ package com.omelan.cofi.pages.list
 import android.app.Activity
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -22,7 +23,7 @@ import com.omelan.cofi.utils.WearUtils
 import kotlinx.coroutines.launch
 
 @Composable
-fun LazyGridItemScope.RecipeListHeaderInfo(animateToTop: suspend () -> Unit) {
+fun createRecipeListHeaderInfo(animateToTop: suspend () -> Unit): (LazyGridScope.() -> Unit) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val dataStore = DataStore(context)
@@ -54,26 +55,42 @@ fun LazyGridItemScope.RecipeListHeaderInfo(animateToTop: suspend () -> Unit) {
         }
     }
 
-    when {
-        showUpdateNotice -> NewUpdateNotice(onDismiss = {
-            coroutineScope.launch {
-                dataStore.setLastSeenUpdateNoticeVersion(BuildConfig.VERSION_CODE)
+    return when {
+        showUpdateNotice -> {
+            {
+                item {
+                    NewUpdateNotice(
+                        onDismiss = {
+                            coroutineScope.launch {
+                                dataStore.setLastSeenUpdateNoticeVersion(BuildConfig.VERSION_CODE)
+                            }
+                        },
+                    )
+                }
             }
-        })
-        showWearOSNotice -> WatchOsNotice(
-            wearNodesWithoutApp = wearNodesWithoutApp,
-            onDismiss = {
-                val newMap = if (dismissedBoxes != null) {
-                    dismissedBoxes!!.toMutableMap()
-                } else {
-                    mutableMapOf()
+        }
+
+
+        showWearOSNotice -> {
+            {
+                item {
+                    WatchOsNotice(
+                        wearNodesWithoutApp = wearNodesWithoutApp,
+                        onDismiss = {
+                            val newMap = dismissedBoxes?.toMutableMap() ?: mutableMapOf()
+                            newMap["wearOS"] = true
+                            coroutineScope.launch {
+                                dataStore.setDismissedInfoBoxes(newMap)
+                            }
+                        },
+                    )
                 }
-                newMap["wearOS"] = true
-                coroutineScope.launch {
-                    dataStore.setDismissedInfoBoxes(newMap)
-                }
-            },
-        )
+            }
+        }
+
+        else -> {
+            {}
+        }
     }
 }
 

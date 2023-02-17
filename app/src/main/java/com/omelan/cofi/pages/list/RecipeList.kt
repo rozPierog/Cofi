@@ -44,6 +44,11 @@ fun RecipeList(
         derivedStateOf { configuration.screenWidthDp > 600 }
     }
     val lazyGridState = rememberLazyGridState()
+    val headerInfoBox = createRecipeListHeaderInfo(
+        animateToTop = {
+            lazyGridState.animateScrollToItem(0)
+        },
+    )
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -84,11 +89,7 @@ fun RecipeList(
             horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
             state = lazyGridState,
         ) {
-            item("header_info") {
-                RecipeListHeaderInfo(animateToTop = {
-                    lazyGridState.animateScrollToItem(0)
-                })
-            }
+            headerInfoBox()
             items(recipes, key = { recipe -> recipe.id }) { recipe ->
                 RecipeItem(
                     recipe = recipe,
