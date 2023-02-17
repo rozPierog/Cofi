@@ -36,7 +36,7 @@ fun rememberIsPhoneLayout(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
+                    (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
         }
     }
     return isPhoneLayout
@@ -46,7 +46,7 @@ fun rememberIsPhoneLayout(
 fun TabletLayout(
     paddingValues: PaddingValues,
     description: (@Composable () -> Unit)? = null,
-    timer: @Composable (Modifier) -> Unit,
+    timer: LazyListScope.() -> Unit,
     steps: LazyListScope.() -> Unit,
     isInPiP: Boolean,
 ) {
@@ -64,12 +64,13 @@ fun TabletLayout(
 
         horizontalArrangement = Arrangement.Center,
     ) {
-        timer(
+        LazyColumn(
             Modifier
                 .fillMaxWidth(0.5f)
                 .align(Alignment.CenterVertically)
                 .padding(getDefaultPadding(additionalBottomPadding = 0.dp)),
-        )
+        ) { timer() }
+
         if (!isInPiP) {
             LazyColumn(
                 modifier = Modifier.padding(horizontal = Spacing.normal),
@@ -90,7 +91,7 @@ fun TabletLayout(
 fun PhoneLayout(
     paddingValues: PaddingValues,
     description: (@Composable () -> Unit)? = null,
-    timer: @Composable (Modifier) -> Unit,
+    timer: LazyListScope.() -> Unit,
     steps: LazyListScope.() -> Unit,
     isInPiP: Boolean,
     lazyListState: LazyListState,
@@ -111,9 +112,7 @@ fun PhoneLayout(
                 description()
             }
         }
-        item {
-            timer(Modifier)
-        }
+        timer()
         if (!isInPiP) {
             steps()
         }

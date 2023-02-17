@@ -33,13 +33,12 @@ fun LazyGridItemScope.RecipeListInfoBox(
         }
     }
     SwipeToDismiss(
+        modifier = Modifier.animateItemPlacement(),
         state = dismissState,
         background = {},
         directions = setOf(DismissDirection.StartToEnd),
     ) {
         RecipeListItemBackground(
-            modifier = Modifier
-                .animateItemPlacement(),
             contentPadding = PaddingValues(start = Spacing.big, bottom = Spacing.big),
             onClick = onClick,
         ) {

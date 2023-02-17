@@ -1,25 +1,34 @@
 @file:OptIn(
     ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalMaterial3Api::class,
-    ExperimentalMaterialApi::class,
+    ExperimentalFoundationApi::class,
 )
 
 package com.omelan.cofi.pages.details
 
 import android.os.Build
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toAndroidRect
@@ -33,6 +42,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
@@ -123,6 +133,14 @@ fun RecipeDetails(
         timeMultiplier = timeMultiplier.value,
     )
 
+    val nextStep = remember(indexOfCurrentStep, steps) {
+        if (steps.isEmpty() || indexOfCurrentStep == -1 || indexOfCurrentStep == steps.lastIndex) {
+            null
+        } else {
+            steps[indexOfCurrentStep + 1]
+        }
+    }
+
     val copyAutomateLink = rememberCopyAutomateLink(snackbarState, recipeId)
 
     val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
@@ -174,35 +192,46 @@ fun RecipeDetails(
         null
     }
     val activity = LocalContext.current.getActivity()
-    val renderTimer: @Composable (Modifier) -> Unit = {
-        Timer(
-            modifier = it
-                .testTag("recipe_timer")
-                .onGloballyPositioned { coordinates ->
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        coroutineScope.launch(Dispatchers.IO) {
-                            setPiPSettings(
-                                activity,
-                                isTimerRunning,
-                                coordinates
-                                    .boundsInWindow()
-                                    .toAndroidRect(),
-                            )
+    val renderTimer: LazyListScope.() -> Unit = {
+        item("timer") {
+            Timer(
+                modifier = Modifier
+                    .testTag("recipe_timer")
+                    .onGloballyPositioned { coordinates ->
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            coroutineScope.launch(Dispatchers.IO) {
+                                setPiPSettings(
+                                    activity,
+                                    isTimerRunning,
+                                    coordinates
+                                        .boundsInWindow()
+                                        .roundToIntRect()
+                                        .toAndroidRect(),
+                                )
+                            }
                         }
-                    }
-                },
-            currentStep = currentStep.value,
-            allSteps = steps,
-            animatedProgressValue = animatedProgressValue,
-            animatedProgressColor = animatedProgressColor,
-            isInPiP = isInPiP,
-            alreadyDoneWeight = alreadyDoneWeight,
-            isDone = isDone,
-            weightMultiplier = weightMultiplier.value,
-            timeMultiplier = timeMultiplier.value,
-        )
+                    },
+                currentStep = currentStep.value,
+                allSteps = steps,
+                animatedProgressValue = animatedProgressValue,
+                animatedProgressColor = animatedProgressColor,
+                isInPiP = isInPiP,
+                alreadyDoneWeight = alreadyDoneWeight,
+                isDone = isDone,
+                weightMultiplier = weightMultiplier.value,
+                timeMultiplier = timeMultiplier.value,
+            )
+        }
+        nextStep?.let {
+            item("up_next") {
+                Spacer(modifier = Modifier.height(Spacing.big))
+                UpNext(modifier = Modifier.fillMaxWidth().animateItemPlacement(), step = nextStep)
+            }
+        }
         if (!isInPiP) {
-            Spacer(modifier = Modifier.height(Spacing.big))
+            item("timer_spacer") {
+                Spacer(modifier = Modifier.height(Spacing.big))
+            }
         }
     }
     val getCurrentStepProgress: (Int) -> StepProgress = { index ->
@@ -269,9 +298,7 @@ fun RecipeDetails(
                     }
                 },
                 actions = {
-                    IconButton(
-                        onClick = { ratioSheetIsVisible = true },
-                    ) {
+                    IconButton(onClick = { ratioSheetIsVisible = true }) {
                         Icon(
                             painterResource(id = R.drawable.ic_scale),
                             contentDescription = null,
