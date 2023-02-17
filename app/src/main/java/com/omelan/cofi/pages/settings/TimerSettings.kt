@@ -14,6 +14,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -46,6 +47,9 @@ fun TimerSettings(goBack: () -> Unit) {
     val isStepVibrationEnabled by dataStore.getStepChangeVibrationSetting()
         .collectAsState(STEP_VIBRATION_DEFAULT_VALUE)
     val isPiPEnabled by dataStore.getPiPSetting().collectAsState(PIP_DEFAULT_VALUE)
+    val isNextStepEnabled by dataStore.getNextStepSetting().collectAsState(
+        NEXT_STEP_ENABLED_DEFAULT_VALUE,
+    )
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(COMBINE_WEIGHT_DEFAULT_VALUE)
     var showCombineWeightDialog by remember { mutableStateOf(false) }
@@ -55,6 +59,9 @@ fun TimerSettings(goBack: () -> Unit) {
     val hasPiPPermission = checkPiPPermission(context)
     val togglePiP: () -> Unit = {
         coroutineScope.launch { dataStore.togglePipSetting() }
+    }
+    val toggleNextStep: () -> Unit = {
+        coroutineScope.launch { dataStore.toggleNextStepEnabled() }
     }
     val toggleStepChangeSound: () -> Unit = {
         coroutineScope.launch { dataStore.toggleStepChangeSound() }
@@ -184,6 +191,30 @@ fun TimerSettings(goBack: () -> Unit) {
             }
             item {
                 ListItem(
+                    text = {
+                        Text(text = stringResource(id = R.string.settings_step_next_step_item))
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Rounded.ArrowForward,
+                            contentDescription = null,
+                        )
+                    },
+                    modifier = Modifier
+                        .settingsItemModifier(onClick = toggleStepChangeVibration)
+                        .testTag("settings_timer_list_item_nextStep"),
+                    trailing = {
+                        Switch(
+                            modifier = Modifier.testTag("settings_timer_switch_nextStep"),
+                            checked = isNextStepEnabled,
+                            onCheckedChange = { toggleNextStep() },
+                            colors = switchColors,
+                        )
+                    },
+                )
+            }
+            item {
+                ListItem(
                     overlineText = {
                         Text(text = stringResource(id = R.string.settings_combine_weight_item))
                     },
@@ -201,9 +232,11 @@ fun TimerSettings(goBack: () -> Unit) {
                             contentDescription = null,
                         )
                     },
-                    modifier = Modifier.settingsItemModifier(
-                        onClick = { showCombineWeightDialog = true },
-                    ).testTag("settings_timer_list_item_weight"),
+                    modifier = Modifier
+                        .settingsItemModifier(
+                            onClick = { showCombineWeightDialog = true },
+                        )
+                        .testTag("settings_timer_list_item_weight"),
                 )
                 if (showCombineWeightDialog) {
                     CombineWeightDialog(
@@ -233,10 +266,12 @@ fun CombineWeightDialog(
         CombineWeight.values().forEach {
             ListItem(
                 text = { Text(stringResource(id = it.settingsStringId)) },
-                modifier = Modifier.selectable(
-                    selected = combineWeightState == it.name,
-                    onClick = { selectCombineMethod(it) },
-                ).testTag("settings_timer_list_item_weight_dialog"),
+                modifier = Modifier
+                    .selectable(
+                        selected = combineWeightState == it.name,
+                        onClick = { selectCombineMethod(it) },
+                    )
+                    .testTag("settings_timer_list_item_weight_dialog"),
                 icon = {
                     RadioButton(
                         selected = combineWeightState == it.name,

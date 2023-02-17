@@ -114,7 +114,9 @@ fun RecipeDetails(
     val dataStore = DataStore(LocalContext.current)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
-
+    val isNextStepEnabled by dataStore.getNextStepSetting().collectAsState(
+        NEXT_STEP_ENABLED_DEFAULT_VALUE,
+    )
     val (
         currentStep,
         isDone,
@@ -228,7 +230,7 @@ fun RecipeDetails(
     val renderUpNext: LazyListScope.() -> Unit = {
         item("up_next") {
             AnimatedVisibility(
-                nextStep != null && !isInPiP,
+                nextStep != null && !isInPiP && isNextStepEnabled,
                 enter = fadeIn() + scaleIn(),
                 exit = fadeOut() + scaleOut(),
             ) {

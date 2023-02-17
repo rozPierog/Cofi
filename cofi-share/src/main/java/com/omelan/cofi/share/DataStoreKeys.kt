@@ -9,6 +9,7 @@ import org.json.JSONObject
 val PIP_ENABLED = booleanPreferencesKey("pip_enabled")
 val STEP_SOUND_ENABLED = booleanPreferencesKey("ding_enabled")
 val STEP_VIBRATION_ENABLED = booleanPreferencesKey("step_vibration_enabled")
+val NEXT_STEP_ENABLED = booleanPreferencesKey("next_step_enabled")
 val COMBINE_WEIGHT = stringPreferencesKey("combine_weight")
 val DISMISSED_INFO = stringPreferencesKey("dismissed_info_boxes")
 val SYNC_SETTINGS_FROM_PHONE = booleanPreferencesKey("sync_settings_from_phone")
@@ -18,6 +19,7 @@ val UPDATE_NOTICE_VERSION = intPreferencesKey("update_notice_version")
 const val PIP_DEFAULT_VALUE = true
 const val STEP_SOUND_DEFAULT_VALUE = true
 const val STEP_VIBRATION_DEFAULT_VALUE = true
+const val NEXT_STEP_ENABLED_DEFAULT_VALUE = true
 const val DISMISSED_INFO_DEFAULT_VALUE = "{}"
 val COMBINE_WEIGHT_DEFAULT_VALUE = CombineWeight.WATER.name
 const val SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE = true

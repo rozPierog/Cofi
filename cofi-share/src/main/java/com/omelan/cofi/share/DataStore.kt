@@ -27,6 +27,10 @@ class DataStore(private val context: Context) {
         preferences[STEP_VIBRATION_ENABLED] ?: STEP_VIBRATION_DEFAULT_VALUE
     }
 
+    fun getNextStepSetting() = context.dataStore.data.map { preferences ->
+        preferences[NEXT_STEP_ENABLED] ?: NEXT_STEP_ENABLED_DEFAULT_VALUE
+    }
+
     fun getDismissedInfoBoxes() = context.dataStore.data.map {
         stringToDismissedInfoBoxes(it[DISMISSED_INFO] ?: DISMISSED_INFO_DEFAULT_VALUE)
     }
@@ -57,6 +61,14 @@ class DataStore(private val context: Context) {
     suspend fun setStepChangeVibration(value: Boolean) {
         context.dataStore.edit {
             it[STEP_VIBRATION_ENABLED] = value
+        }
+    }
+
+    suspend fun toggleNextStepEnabled() {
+        context.dataStore.edit {
+            val currentNextStepEnabledState =
+                it[NEXT_STEP_ENABLED] ?: NEXT_STEP_ENABLED_DEFAULT_VALUE
+            it[NEXT_STEP_ENABLED] = !currentNextStepEnabledState
         }
     }
 

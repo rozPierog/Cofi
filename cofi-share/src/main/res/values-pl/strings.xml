@@ -122,4 +122,5 @@ Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 8
     <string name="support_title">Wesprzyj Cofi</string>
     <string name="infoBox_update_title">Cofi zostało zaktualizowane</string>
     <string name="infoBox_update_body">Kliknij żeby zobaczyć co się zmieniło</string>
+    <string name="settings_step_next_step_item">Pokazuj następny krok</string>
 </resources>
