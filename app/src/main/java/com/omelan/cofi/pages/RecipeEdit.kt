@@ -400,8 +400,10 @@ fun RecipeEdit(
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .waterfallPadding()
-                    .padding(Spacing.small),
+                    .waterfallPadding().safeContentPadding().safeGesturesPadding()
+                    .padding(Spacing.small)
+                    // TODO: remove me when bottom sheet is fixed on tablets
+                    .padding(bottom = Spacing.big + Spacing.medium),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
