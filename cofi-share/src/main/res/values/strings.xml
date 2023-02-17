@@ -126,4 +126,6 @@ Temperature: For light roast – brought to a boil and used immediately. For dar
     <string name="infoBox_update_title">Cofi has been updated</string>
     <string name="infoBox_update_body">Click here to read what\'s new</string>
     <string name="settings_step_next_step_item">Show next step</string>
+    <string name="recipe_details_upNext">Up next:</string>
+    <string name="settings_wearOS_item">Download for WearOS</string>
 </resources>

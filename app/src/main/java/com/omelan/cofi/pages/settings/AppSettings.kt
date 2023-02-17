@@ -109,7 +109,7 @@ fun AppSettings(
             if (wearNodesWithoutApp.isNotEmpty()) {
                 item {
                     ListItem(
-                        text = { Text(text = stringResource(id = R.string.infoBox_wearOS_body)) },
+                        text = { Text(text = stringResource(id = R.string.settings_wearOS_item)) },
                         icon = {
                             Icon(
                                 painterResource(id = R.drawable.ic_watch),
