@@ -46,7 +46,8 @@ fun rememberIsPhoneLayout(
 fun TabletLayout(
     paddingValues: PaddingValues,
     description: (@Composable () -> Unit)? = null,
-    timer: LazyListScope.() -> Unit,
+    timer: @Composable (Modifier) -> Unit,
+    upNext: LazyListScope.() -> Unit,
     steps: LazyListScope.() -> Unit,
     isInPiP: Boolean,
 ) {
@@ -64,23 +65,23 @@ fun TabletLayout(
 
         horizontalArrangement = Arrangement.Center,
     ) {
-        LazyColumn(
+        timer(
             Modifier
                 .fillMaxWidth(0.5f)
                 .align(Alignment.CenterVertically)
                 .padding(getDefaultPadding(additionalBottomPadding = 0.dp)),
-        ) { timer() }
-
+        )
         if (!isInPiP) {
             LazyColumn(
                 modifier = Modifier.padding(horizontal = Spacing.normal),
                 contentPadding = PaddingValues(bottom = Spacing.bigFab, top = Spacing.big),
             ) {
-                if ((description != null)) {
-                    item {
+                description?.let {
+                    item("description") {
                         description()
                     }
                 }
+                upNext()
                 steps()
             }
         }
@@ -91,7 +92,8 @@ fun TabletLayout(
 fun PhoneLayout(
     paddingValues: PaddingValues,
     description: (@Composable () -> Unit)? = null,
-    timer: LazyListScope.() -> Unit,
+    timer: @Composable (Modifier) -> Unit,
+    upNext: LazyListScope.() -> Unit,
     steps: LazyListScope.() -> Unit,
     isInPiP: Boolean,
     lazyListState: LazyListState,
@@ -108,11 +110,14 @@ fun PhoneLayout(
         state = lazyListState,
     ) {
         if (!isInPiP && (description != null)) {
-            item {
+            item("description") {
                 description()
             }
         }
-        timer()
+        item("timer") {
+            timer(Modifier)
+        }
+        upNext()
         if (!isInPiP) {
             steps()
         }

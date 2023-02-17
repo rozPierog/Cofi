@@ -193,36 +193,39 @@ fun RecipeDetails(
         null
     }
     val activity = LocalContext.current.getActivity()
-    val renderTimer: LazyListScope.() -> Unit = {
-        item("timer") {
-            Timer(
-                modifier = Modifier
-                    .testTag("recipe_timer")
-                    .onGloballyPositioned { coordinates ->
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            coroutineScope.launch(Dispatchers.IO) {
-                                setPiPSettings(
-                                    activity,
-                                    isTimerRunning,
-                                    coordinates
-                                        .boundsInWindow()
-                                        .roundToIntRect()
-                                        .toAndroidRect(),
-                                )
-                            }
+    val renderTimer: @Composable (Modifier) -> Unit = {
+        Timer(
+            modifier = Modifier
+                .testTag("recipe_timer")
+                .onGloballyPositioned { coordinates ->
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        coroutineScope.launch(Dispatchers.IO) {
+                            setPiPSettings(
+                                activity,
+                                isTimerRunning,
+                                coordinates
+                                    .boundsInWindow()
+                                    .roundToIntRect()
+                                    .toAndroidRect(),
+                            )
                         }
-                    },
-                currentStep = currentStep.value,
-                allSteps = steps,
-                animatedProgressValue = animatedProgressValue,
-                animatedProgressColor = animatedProgressColor,
-                isInPiP = isInPiP,
-                alreadyDoneWeight = alreadyDoneWeight,
-                isDone = isDone,
-                weightMultiplier = weightMultiplier.value,
-                timeMultiplier = timeMultiplier.value,
-            )
+                    }
+                },
+            currentStep = currentStep.value,
+            allSteps = steps,
+            animatedProgressValue = animatedProgressValue,
+            animatedProgressColor = animatedProgressColor,
+            isInPiP = isInPiP,
+            alreadyDoneWeight = alreadyDoneWeight,
+            isDone = isDone,
+            weightMultiplier = weightMultiplier.value,
+            timeMultiplier = timeMultiplier.value,
+        )
+        if (!isInPiP) {
+            Spacer(modifier = Modifier.height(Spacing.big))
         }
+    }
+    val renderUpNext: LazyListScope.() -> Unit = {
         item("up_next") {
             AnimatedVisibility(
                 nextStep != null && !isInPiP,
@@ -233,14 +236,9 @@ fun RecipeDetails(
                     modifier = Modifier
                         .fillMaxWidth()
                         .animateItemPlacement()
-                        .padding(top = Spacing.big),
+                        .padding(top = if (isPhoneLayout) Spacing.big else Spacing.small),
                     step = nextStep ?: Step(name = "", type = StepType.WAIT),
                 )
-            }
-        }
-        if (!isInPiP) {
-            item("timer_spacer") {
-                Spacer(modifier = Modifier.height(Spacing.big))
             }
         }
     }
@@ -370,9 +368,17 @@ fun RecipeDetails(
             )
         }
         if (isPhoneLayout) {
-            PhoneLayout(it, renderDescription, renderTimer, renderSteps, isInPiP, lazyListState)
+            PhoneLayout(
+                it,
+                renderDescription,
+                renderTimer,
+                renderUpNext,
+                renderSteps,
+                isInPiP,
+                lazyListState,
+            )
         } else {
-            TabletLayout(it, renderDescription, renderTimer, renderSteps, isInPiP)
+            TabletLayout(it, renderDescription, renderTimer, renderUpNext, renderSteps, isInPiP)
         }
     }
 
