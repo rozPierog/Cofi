@@ -1,12 +1,16 @@
-Warum Cofi?
+Als leidenschaftlicher Kaffeeliebhaber und Amateur-Barista war ich immer auf der Suche nach der perfekten Tasse Kaffee. Deshalb habe ich den kostenlosen und Open-Source-Kaffee-Brüh-Timer für Android entwickelt. Mit dieser App können Sie ganz einfach die Brühzeit Ihres Kaffees messen und jedes Mal den perfekten Geschmack erzielen.
 
-Ich habe Cofi entwickelt, nachdem ich frustriert war über den Mangel an kleinen und schnellen Timern, die die Privatsphäre respektieren. Keiner der anderen Timer konnte auf die Art und Weise benutzt werden, wie ich sie benutzen wollte. Hier ist er also! Cofi ist ein Quelloffener, schneller Timer, der nur das tut, was er muss und nicht mehr.
+Ich weiß, wie wichtig es ist, die vollständige Kontrolle über Ihre Brühzeit zu haben, und genau das bietet Ihnen diese App. Egal, ob Sie eine French Press, einen Handfilter oder eine andere Brühmethode verwenden, unsere App erleichtert es Ihnen, Ihre Brühzeit im Auge zu behalten und den perfekten Geschmack zu erzielen.
 
 Funktionen:
 
-- Keine künstlichen Grenzen – Erstelle jedes Rezept, egal wie ausgefallen es ist.
-- Deeplinks zu Rezepten – Füge es zur Automatisierungssoftware oder zum NFC-Tag hinzu, um dein Lieblingsrezept mit einem Fingertipp zu öffnen.
-- Bild-im-Bild – Musst du während des Brühens auf eine Nachricht reagieren? Der Timer wird in einem kleinen, beweglichen Fenster angezeigt, das dich während des gesamten Brühvorgangs begleitet.
-- Absolut kein Tracking – Nicht einmal eine Absturzmeldung wird zu mir gesendet. Alles, was du in der App machst, bleibt bei dir.
-- Kleinstmöglicher Speicherplatzbedarf – Ich werde überrascht sein, wenn die App jemals 7 MB auf deinem Gerät überschreitet.
-- Instant App – Die gesamte App ist sofort verfügbar. Du musst nichts installieren, wenn du nicht willst.
+- Open-Source und kostenlos
+- Keine künstlichen Einschränkungen bei der Nutzung der App
+- Timer für die Kaffeebrühung
+- Anpassbare Zeit-Einstellungen für verschiedene Brühmethoden
+- Benutzerfreundliche Oberfläche mit einem sauberen Design und dem neuesten Material Design
+- Picture-in-Picture-Modus zum Multitasking
+- WearOS-App für einfaches Timing auf Ihrer Smartwatch
+- Kein Tracking oder Sammeln von Benutzerdaten
+
+Ich weiß, wie frustrierend es sein kann, sich mit einer mittelmäßigen Tasse Kaffee zufrieden zu geben. Deshalb möchte ich Ihnen helfen, wie ein Profi zu brühen und jedes Mal die perfekte Tasse zu genießen. Laden Sie jetzt Cofi herunter und beginnen Sie Ihre Reise zur Kaffee-Perfektion!

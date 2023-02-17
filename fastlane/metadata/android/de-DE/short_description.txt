@@ -1,1 +1,1 @@
-Quelloffener Timer für die Kaffeezubereitung
+Open-Source Kaffee-Timer. Einfache Bedienoberfläche. Perfekter Kaffee jedes Mal
