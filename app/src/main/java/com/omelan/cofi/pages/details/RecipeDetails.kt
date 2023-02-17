@@ -1,12 +1,13 @@
 @file:OptIn(
     ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class,
+    ExperimentalFoundationApi::class, ExperimentalAnimationApi::class,
 )
 
 package com.omelan.cofi.pages.details
 
 import android.os.Build
+import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
@@ -222,10 +223,19 @@ fun RecipeDetails(
                 timeMultiplier = timeMultiplier.value,
             )
         }
-        nextStep?.let {
-            item("up_next") {
-                Spacer(modifier = Modifier.height(Spacing.big))
-                UpNext(modifier = Modifier.fillMaxWidth().animateItemPlacement(), step = nextStep)
+        item("up_next") {
+            AnimatedVisibility(
+                nextStep != null && !isInPiP,
+                enter = fadeIn() + scaleIn(),
+                exit = fadeOut() + scaleOut(),
+            ) {
+                UpNext(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animateItemPlacement()
+                        .padding(top = Spacing.big),
+                    step = nextStep ?: Step(name = "", type = StepType.WAIT),
+                )
             }
         }
         if (!isInPiP) {
