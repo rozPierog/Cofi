@@ -39,7 +39,7 @@ platform :android do
     )
     set_value_in_build(
       key: 'versionCode',
-      value: (newest_code + 2).to_s,
+      value: (newest_code + 1).to_s,
       app_project_dir: '**/wearOS',
     )
     if options[:bump_type] != "don't"
