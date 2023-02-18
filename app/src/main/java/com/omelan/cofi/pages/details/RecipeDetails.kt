@@ -49,6 +49,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
+import com.omelan.cofi.model.DataStore
+import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.utils.getActivity

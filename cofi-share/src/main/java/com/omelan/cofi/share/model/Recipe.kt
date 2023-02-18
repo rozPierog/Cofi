@@ -13,19 +13,19 @@ import org.json.JSONObject
 
 
 enum class RecipeIcon(@DrawableRes val icon: Int, @StringRes val nameResId: Int) {
-    Grinder(R.drawable.ic_coffee_grinder, R.string.name_grinder),
-    Cup(R.drawable.ic_cup, R.string.name_cup),
-    V60(R.drawable.ic_drip, R.string.name_v60),
-    Chemex(R.drawable.ic_chemex, R.string.prepopulate_chemex_name),
-    AeroPress(R.drawable.ic_aeropress, R.string.prepopulate_aero_name),
-    VietnamesePress(R.drawable.ic_vietnamese_press, R.string.name_vietnamese_press),
-    FrenchPress(R.drawable.ic_french_press, R.string.prepopulate_frenchPress_name),
-    Mokapot(R.drawable.ic_mokapot, R.string.name_mokapot),
-    Espresso(R.drawable.ic_espresso, R.string.name_espresso),
-    ColdBrew(R.drawable.ic_cold_brew, R.string.name_cold_brew),
-    Siphon(R.drawable.ic_siphon, R.string.name_siphon),
-    Bripe(R.drawable.ic_bripe, R.string.name_bripe),
-    Cezve(R.drawable.ic_cezve, R.string.name_cezve),
+    Grinder(R.drawable.recipe_icon_coffee_grinder, R.string.name_grinder),
+    Cup(R.drawable.recipe_icon_cup, R.string.name_cup),
+    V60(R.drawable.recipe_icon_drip, R.string.name_v60),
+    Chemex(R.drawable.recipe_icon_chemex, R.string.prepopulate_chemex_name),
+    AeroPress(R.drawable.recipe_icon_aeropress, R.string.prepopulate_aero_name),
+    VietnamesePress(R.drawable.recipe_icon_vietnamese_press, R.string.name_vietnamese_press),
+    FrenchPress(R.drawable.recipe_icon_french_press, R.string.prepopulate_frenchPress_name),
+    Mokapot(R.drawable.recipe_icon_mokapot, R.string.name_mokapot),
+    Espresso(R.drawable.recipe_icon_espresso, R.string.name_espresso),
+    ColdBrew(R.drawable.recipe_icon_cold_brew, R.string.name_cold_brew),
+    Siphon(R.drawable.recipe_icon_siphon, R.string.name_siphon),
+    Bripe(R.drawable.recipe_icon_bripe, R.string.name_bripe),
+    Cezve(R.drawable.recipe_icon_cezve, R.string.name_cezve),
 }
 
 open class RecipeIconTypeConverter {

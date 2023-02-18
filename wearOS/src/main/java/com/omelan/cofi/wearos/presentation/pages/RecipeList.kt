@@ -108,7 +108,7 @@ fun RecipeList(
             item {
                 Button(onClick = openSettings) {
                     Icon(
-                        painterResource(id = R.drawable.round_settings_24),
+                        painterResource(id = R.drawable.ic_settings),
                         contentDescription = "",
                     )
                 }

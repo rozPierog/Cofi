@@ -18,6 +18,8 @@ import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.wearos.presentation.components.OpenOnPhoneConfirm
+import com.omelan.cofi.wearos.presentation.model.DataStore
+import com.omelan.cofi.wearos.presentation.model.SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE
 import com.omelan.cofi.wearos.presentation.utils.WearUtils
 import kotlinx.coroutines.launch
 

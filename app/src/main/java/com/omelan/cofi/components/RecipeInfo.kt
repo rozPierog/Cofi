@@ -84,7 +84,7 @@ fun RecipeInfo(
             ) {
                 Param(
                     modifier = Modifier.testTag("recipe_info_coffee"),
-                    icon = painterResource(id = R.drawable.ic_coffee_grinder),
+                    icon = painterResource(id = R.drawable.recipe_icon_coffee_grinder),
                     text = "${(stepInfo.coffeeWeight * weightMultiplier).toStringShort()}g",
                     compactStyle = compactStyle,
                 )

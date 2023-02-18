@@ -140,7 +140,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     },
                     icon = {
                         Icon(
-                            painterResource(id = R.drawable.ic_coffee_grinder),
+                            painterResource(id = R.drawable.recipe_icon_coffee_grinder),
                             contentDescription = null,
                         )
                     },

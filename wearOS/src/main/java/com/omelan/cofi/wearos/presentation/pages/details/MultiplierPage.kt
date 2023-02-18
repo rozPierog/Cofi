@@ -65,13 +65,13 @@ fun MultiplierPage(
         valueRange = range,
         increaseIcon = {
             Icon(
-                painterResource(id = R.drawable.round_add_24),
+                painterResource(id = R.drawable.ic_add),
                 contentDescription = "",
             )
         },
         decreaseIcon = {
             Icon(
-                painterResource(id = R.drawable.round_remove_24),
+                painterResource(id = R.drawable.ic_remove),
                 contentDescription = "",
             )
         },

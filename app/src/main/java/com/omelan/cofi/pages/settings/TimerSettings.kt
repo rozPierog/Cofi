@@ -31,6 +31,9 @@ import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3Dialog
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
+import com.omelan.cofi.model.DataStore
+import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
+import com.omelan.cofi.model.PIP_DEFAULT_VALUE
 import com.omelan.cofi.share.*
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
