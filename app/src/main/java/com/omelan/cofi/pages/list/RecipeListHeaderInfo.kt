@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.omelan.cofi.BuildConfig
 import com.omelan.cofi.R
 import com.omelan.cofi.components.RecipeListInfoBox
-import com.omelan.cofi.share.DataStore
+import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.utils.WearUtils
 import kotlinx.coroutines.launch
 

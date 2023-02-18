@@ -6,14 +6,11 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
 import org.json.JSONObject
 
-class DataStore(private val context: Context) {
+open class DataStore(private val context: Context) {
     companion object {
         val Context.dataStore by preferencesDataStore(name = "settings")
     }
 
-    fun getPiPSetting() = context.dataStore.data.map { preferences ->
-        preferences[PIP_ENABLED] ?: PIP_DEFAULT_VALUE
-    }
 
     fun getWeightSetting() = context.dataStore.data.map { preferences ->
         preferences[COMBINE_WEIGHT] ?: COMBINE_WEIGHT_DEFAULT_VALUE
@@ -27,9 +24,6 @@ class DataStore(private val context: Context) {
         preferences[STEP_VIBRATION_ENABLED] ?: STEP_VIBRATION_DEFAULT_VALUE
     }
 
-    fun getNextStepSetting() = context.dataStore.data.map { preferences ->
-        preferences[NEXT_STEP_ENABLED] ?: NEXT_STEP_ENABLED_DEFAULT_VALUE
-    }
 
     fun getDismissedInfoBoxes() = context.dataStore.data.map {
         stringToDismissedInfoBoxes(it[DISMISSED_INFO] ?: DISMISSED_INFO_DEFAULT_VALUE)
@@ -39,13 +33,7 @@ class DataStore(private val context: Context) {
         preferences[SYNC_SETTINGS_FROM_PHONE] ?: SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE
     }
 
-    fun getAskedForSupport() = context.dataStore.data.map {
-        it[ASKED_FOR_SUPPORT] ?: ASKED_FOR_SUPPORT_DEFAULT_VALUE
-    }
 
-    fun getLastSeenUpdateNoticeVersion() = context.dataStore.data.map {
-        it[UPDATE_NOTICE_VERSION] ?: UPDATE_NOTICE_VERSION_DEFAULT_VALUE
-    }
 
 
     suspend fun setDismissedInfoBoxes(newValue: Map<String, Boolean>) = context.dataStore.edit {
@@ -64,24 +52,9 @@ class DataStore(private val context: Context) {
         }
     }
 
-    suspend fun toggleNextStepEnabled() {
-        context.dataStore.edit {
-            val currentNextStepEnabledState =
-                it[NEXT_STEP_ENABLED] ?: NEXT_STEP_ENABLED_DEFAULT_VALUE
-            it[NEXT_STEP_ENABLED] = !currentNextStepEnabledState
-        }
-    }
-
     suspend fun setSyncSettingsFromPhone(value: Boolean) {
         context.dataStore.edit {
             it[SYNC_SETTINGS_FROM_PHONE] = value
-        }
-    }
-
-    suspend fun togglePipSetting() {
-        context.dataStore.edit {
-            val currentPiPState = it[PIP_ENABLED] ?: PIP_DEFAULT_VALUE
-            it[PIP_ENABLED] = !currentPiPState
         }
     }
 
@@ -103,18 +76,6 @@ class DataStore(private val context: Context) {
     suspend fun selectCombineMethod(combineMethod: CombineWeight) {
         context.dataStore.edit {
             it[COMBINE_WEIGHT] = combineMethod.name
-        }
-    }
-
-    suspend fun setAskedForSupport() {
-        context.dataStore.edit {
-            it[ASKED_FOR_SUPPORT] = true
-        }
-    }
-
-    suspend fun setLastSeenUpdateNoticeVersion(versionCode: Int) {
-        context.dataStore.edit {
-            it[UPDATE_NOTICE_VERSION] = versionCode
         }
     }
 }

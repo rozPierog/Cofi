@@ -10,7 +10,7 @@ import android.util.Rational
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import com.omelan.cofi.MainActivity
-import com.omelan.cofi.share.DataStore
+import com.omelan.cofi.model.DataStore
 import kotlinx.coroutines.flow.first
 
 @RequiresApi(Build.VERSION_CODES.O)

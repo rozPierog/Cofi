@@ -41,6 +41,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.components.SupportCofi
+import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.details.RecipeDetails
 import com.omelan.cofi.pages.list.RecipeList
@@ -49,7 +50,6 @@ import com.omelan.cofi.pages.settings.AppSettingsAbout
 import com.omelan.cofi.pages.settings.BackupRestoreSettings
 import com.omelan.cofi.pages.settings.TimerSettings
 import com.omelan.cofi.pages.settings.licenses.LicensesList
-import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.Recipe
 import com.omelan.cofi.share.RecipeViewModel
 import com.omelan.cofi.share.StepsViewModel
