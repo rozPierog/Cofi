@@ -4,13 +4,11 @@ import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
-import org.json.JSONObject
 
 open class DataStore(private val context: Context) {
     companion object {
         val Context.dataStore by preferencesDataStore(name = "settings")
     }
-
 
     fun getWeightSetting() = context.dataStore.data.map { preferences ->
         preferences[COMBINE_WEIGHT] ?: COMBINE_WEIGHT_DEFAULT_VALUE
@@ -25,21 +23,6 @@ open class DataStore(private val context: Context) {
     }
 
 
-    fun getDismissedInfoBoxes() = context.dataStore.data.map {
-        stringToDismissedInfoBoxes(it[DISMISSED_INFO] ?: DISMISSED_INFO_DEFAULT_VALUE)
-    }
-
-    fun getSyncSettingsFromPhoneSetting() = context.dataStore.data.map { preferences ->
-        preferences[SYNC_SETTINGS_FROM_PHONE] ?: SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE
-    }
-
-
-
-
-    suspend fun setDismissedInfoBoxes(newValue: Map<String, Boolean>) = context.dataStore.edit {
-        it[DISMISSED_INFO] = JSONObject(newValue).toString()
-    }
-
     suspend fun setStepChangeSound(value: Boolean) {
         context.dataStore.edit {
             it[STEP_SOUND_ENABLED] = value
@@ -52,11 +35,6 @@ open class DataStore(private val context: Context) {
         }
     }
 
-    suspend fun setSyncSettingsFromPhone(value: Boolean) {
-        context.dataStore.edit {
-            it[SYNC_SETTINGS_FROM_PHONE] = value
-        }
-    }
 
     suspend fun toggleStepChangeSound() {
         context.dataStore.edit {
