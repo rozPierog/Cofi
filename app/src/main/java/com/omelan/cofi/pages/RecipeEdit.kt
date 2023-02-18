@@ -4,7 +4,8 @@
     ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalComposeUiApi::class,
     ExperimentalFoundationApi::class,
-    ExperimentalMaterialApi::class, ExperimentalLayoutApi::class,
+    ExperimentalMaterialApi::class,
+    ExperimentalLayoutApi::class,
 )
 
 package com.omelan.cofi.pages
@@ -120,7 +121,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 

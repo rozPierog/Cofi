@@ -1,7 +1,8 @@
 @file:OptIn(
     ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class, ExperimentalAnimationApi::class,
+    ExperimentalFoundationApi::class,
+    ExperimentalAnimationApi::class,
 )
 
 package com.omelan.cofi.pages.details
@@ -278,7 +279,6 @@ fun RecipeDetails(
         }
     }
 
-
     Scaffold(
         modifier = Modifier.nestedScroll(appBarBehavior.nestedScrollConnection),
         snackbarHost = {
@@ -388,7 +388,6 @@ fun RecipeDetails(
             TabletLayout(it, renderDescription, renderTimer, renderUpNext, renderSteps, isInPiP)
         }
     }
-
 
     if (showAutomateLinkDialog) {
         DirectLinkDialog(

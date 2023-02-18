@@ -36,7 +36,7 @@ fun rememberIsPhoneLayout(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
+                (configuration.screenHeightDp / configuration.screenWidthDp.toFloat() > 1.3)
         }
     }
     return isPhoneLayout

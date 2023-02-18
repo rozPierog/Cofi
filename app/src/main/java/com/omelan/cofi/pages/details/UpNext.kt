@@ -36,7 +36,10 @@ fun UpNext(modifier: Modifier = Modifier, step: Step) {
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(Spacing.medium),
         ) {
-            Text(text = stringResource(id = R.string.recipe_details_upNext), style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = stringResource(id = R.string.recipe_details_upNext),
+                style = MaterialTheme.typography.titleMedium,
+            )
             AnimatedContent(
                 targetState = step,
                 transitionSpec = slideUpDown { target, initial ->
@@ -47,5 +50,4 @@ fun UpNext(modifier: Modifier = Modifier, step: Step) {
             }
         }
     }
-
 }

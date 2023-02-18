@@ -46,7 +46,7 @@ fun createRecipeListHeaderInfo(animateToTop: suspend () -> Unit): (LazyGridScope
     val showWearOSNotice by remember {
         derivedStateOf {
             wearNodesWithoutApp.isNotEmpty() && dismissedBoxes != null &&
-                    dismissedBoxes?.containsKey("wearOS") == false
+                dismissedBoxes?.containsKey("wearOS") == false
         }
     }
     val showUpdateNotice by remember {
@@ -69,7 +69,6 @@ fun createRecipeListHeaderInfo(animateToTop: suspend () -> Unit): (LazyGridScope
                 }
             }
         }
-
 
         showWearOSNotice -> {
             {
@@ -108,7 +107,8 @@ fun LazyGridItemScope.WatchOsNotice(wearNodesWithoutApp: List<String>, onDismiss
         },
         icon = {
             Icon(
-                painterResource(id = R.drawable.ic_watch), "",
+                painterResource(id = R.drawable.ic_watch),
+                "",
                 modifier = Modifier.size(28.dp),
             )
         },
