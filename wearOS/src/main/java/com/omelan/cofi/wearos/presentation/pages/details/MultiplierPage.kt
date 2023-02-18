@@ -122,6 +122,6 @@ fun MultiplierPagePreview() {
     }
     MultiplierPage(multiplier = multi, changeMultiplier = { multi = it }) {
         Text(text = it.toString())
-        ParamWithIcon(iconRes = R.drawable.ic_coffee, value = "${15 * multi}g")
+        ParamWithIcon(iconRes = R.drawable.ic_coffee, value = "${15 * it}g")
     }
 }
