@@ -23,16 +23,13 @@ class DataStore(val context: Context) : DataStoreShared(context) {
         it[UPDATE_NOTICE_VERSION] ?: UPDATE_NOTICE_VERSION_DEFAULT_VALUE
     }
 
-
     fun getDismissedInfoBoxes() = context.dataStore.data.map {
         stringToDismissedInfoBoxes(it[DISMISSED_INFO] ?: DISMISSED_INFO_DEFAULT_VALUE)
     }
 
-
     suspend fun setDismissedInfoBoxes(newValue: Map<String, Boolean>) = context.dataStore.edit {
         it[DISMISSED_INFO] = JSONObject(newValue).toString()
     }
-
 
     suspend fun toggleNextStepEnabled() {
         context.dataStore.edit {
