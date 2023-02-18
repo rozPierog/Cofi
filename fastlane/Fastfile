@@ -58,6 +58,17 @@ platform :android do
   lane :prepare_changelog do
     changelog_md_file = File.open("../docs/Changelog.md")
     unreleased_changelog = changelog_md_file.read.split("\n## ")[1].lines[2..-1].join
+    sections = unreleased_changelog.split(/(###.*)/)
+    if sections[6].nil? || sections[6].strip == ""
+    	sections = sections[0,5] + sections[7..-1]
+    end
+    if sections[4].nil? || sections[4].strip == ""
+    	sections = sections[0,3] + sections[5..-1]
+    end
+    if sections[2].nil? || sections[2].strip == ""
+    	sections = sections[0,1] + sections[3..-1]
+    end
+    unreleased_changelog = sections.join("\n")
     UI.important unreleased_changelog
     File.open("metadata/android/en-US/changelogs/default.txt", "w") { |f| f.write unreleased_changelog }
 
