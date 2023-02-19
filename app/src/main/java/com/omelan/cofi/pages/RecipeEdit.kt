@@ -4,7 +4,6 @@
     ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalComposeUiApi::class,
     ExperimentalFoundationApi::class,
-    ExperimentalMaterialApi::class,
     ExperimentalLayoutApi::class,
 )
 
@@ -88,7 +87,7 @@ fun RecipeEdit(
     var showDeleteModal by remember { mutableStateOf(false) }
     var showCloneModal by remember { mutableStateOf(false) }
     var showSaveModal by remember { mutableStateOf(false) }
-    var iconSheetState = rememberSheetState(skipHalfExpanded = true)
+    val iconSheetState = rememberSheetState(skipHalfExpanded = true)
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
 
     var showDescription by remember(recipeToEdit.description) {
