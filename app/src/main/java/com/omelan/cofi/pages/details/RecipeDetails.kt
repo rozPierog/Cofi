@@ -184,10 +184,10 @@ fun RecipeDetails(
 
     val isPhoneLayout = rememberIsPhoneLayout(windowSizeClass)
 
-    val renderDescription: @Composable (() -> Unit)? = if (recipe.description.isNotBlank()) {
+    val renderDescription: @Composable ((Modifier) -> Unit)? = if (recipe.description.isNotBlank()) {
         {
             Description(
-                modifier = Modifier
+                modifier = it
                     .fillMaxWidth()
                     .testTag("recipe_description"),
                 descriptionText = recipe.description,

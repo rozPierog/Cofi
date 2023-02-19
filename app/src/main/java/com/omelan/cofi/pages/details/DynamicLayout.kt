@@ -1,7 +1,8 @@
-@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalFoundationApi::class)
 
 package com.omelan.cofi.pages.details
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -45,7 +46,7 @@ fun rememberIsPhoneLayout(
 @Composable
 fun TabletLayout(
     paddingValues: PaddingValues,
-    description: (@Composable () -> Unit)? = null,
+    description: (@Composable (Modifier) -> Unit)? = null,
     timer: @Composable (Modifier) -> Unit,
     upNext: LazyListScope.() -> Unit,
     steps: LazyListScope.() -> Unit,
@@ -78,7 +79,7 @@ fun TabletLayout(
             ) {
                 description?.let {
                     item("description") {
-                        description()
+                        description(Modifier.animateItemPlacement())
                     }
                 }
                 upNext()
@@ -91,7 +92,7 @@ fun TabletLayout(
 @Composable
 fun PhoneLayout(
     paddingValues: PaddingValues,
-    description: (@Composable () -> Unit)? = null,
+    description: (@Composable (Modifier) -> Unit)? = null,
     timer: @Composable (Modifier) -> Unit,
     upNext: LazyListScope.() -> Unit,
     steps: LazyListScope.() -> Unit,
@@ -111,11 +112,11 @@ fun PhoneLayout(
     ) {
         if (!isInPiP && (description != null)) {
             item("description") {
-                description()
+                description(Modifier.animateItemPlacement())
             }
         }
         item("timer") {
-            timer(Modifier)
+            timer(Modifier.animateItemPlacement())
         }
         upNext()
         if (!isInPiP) {
