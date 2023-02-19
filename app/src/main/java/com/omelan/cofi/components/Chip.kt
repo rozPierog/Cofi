@@ -13,9 +13,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.ui.Spacing
+
+private const val ANIMATION_DURATION = 300
+private val animationSpecDp =
+    tween<Dp>(durationMillis = ANIMATION_DURATION, easing = FastOutSlowInEasing)
+private val animationSpecColor =
+    tween<Color>(durationMillis = ANIMATION_DURATION, easing = FastOutSlowInEasing)
 
 @Composable
 fun Chip(
@@ -26,7 +34,7 @@ fun Chip(
 ) {
     val fabShape by animateDpAsState(
         targetValue = if (!isChecked) 12.dp else 14.dp,
-        animationSpec = tween(durationMillis = 150, easing = FastOutSlowInEasing),
+        animationSpec = animationSpecDp,
     )
     val borderColor by animateColorAsState(
         targetValue = if (isChecked) {
@@ -34,6 +42,7 @@ fun Chip(
         } else {
             MaterialTheme.colorScheme.outline
         },
+        animationSpec = animationSpecColor,
     )
     val containerColor by animateColorAsState(
         targetValue = if (!isChecked) {
@@ -41,6 +50,7 @@ fun Chip(
         } else {
             MaterialTheme.colorScheme.secondaryContainer
         },
+        animationSpec = animationSpecColor,
     )
     val contentColor by animateColorAsState(
         targetValue = if (!isChecked) {
@@ -48,6 +58,7 @@ fun Chip(
         } else {
             MaterialTheme.colorScheme.onSecondaryContainer
         },
+        animationSpec = animationSpecColor,
     )
     Button(
         onClick = { onCheck(!isChecked) },
