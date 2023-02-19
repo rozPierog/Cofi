@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
@@ -61,7 +60,6 @@ import com.omelan.cofi.share.RecipeIcon
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.ui.createTextSelectionColors
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding
 import com.omelan.cofi.utils.requestFocusSafer
@@ -80,13 +78,22 @@ fun RecipeEdit(
         DpSize(1920.dp, 1080.dp),
     ),
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val configuration = LocalConfiguration.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
+    val lazyListState = rememberLazyListState()
+    val (nameFocusRequester, descriptionFocusRequester) = remember { FocusRequester.createRefs() }
+
     var showDeleteModal by remember { mutableStateOf(false) }
     var showCloneModal by remember { mutableStateOf(false) }
     var showSaveModal by remember { mutableStateOf(false) }
+    var isIconSheetVisible by remember { mutableStateOf(false) }
+    var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
+
     var showDescription by remember(recipeToEdit.description) {
         mutableStateOf(recipeToEdit.description.isNotBlank())
     }
-    var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
     var name by remember(recipeToEdit) {
         mutableStateOf(
             TextFieldValue(
@@ -103,19 +110,16 @@ fun RecipeEdit(
             ),
         )
     }
+
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
 
-    var isIconSheetVisible by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
-    val keyboardController = LocalSoftwareKeyboardController.current
-    val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
-    val lazyListState = rememberLazyListState()
-    val textSelectionColors = MaterialTheme.createTextSelectionColors()
-    val (nameFocusRequester, descriptionFocusRequester) = remember { FocusRequester.createRefs() }
 
-    val canSave = name.text.isNotBlank() && steps.isNotEmpty()
-    val configuration = LocalConfiguration.current
+    val canSave by remember {
+        derivedStateOf {
+            name.text.isNotBlank() && steps.isNotEmpty()
+        }
+    }
 
     val isPhoneLayout by remember(
         windowSizeClass.widthSizeClass,
@@ -143,10 +147,6 @@ fun RecipeEdit(
     BackHandler {
         if (stepWithOpenEditor != null) {
             stepWithOpenEditor = null
-            return@BackHandler
-        }
-        if (isIconSheetVisible) {
-            isIconSheetVisible = false
             return@BackHandler
         }
         safeGoBack()
@@ -378,7 +378,6 @@ fun RecipeEdit(
             )
         },
     ) {
-        CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
             BoxWithConstraints {
                 if (isPhoneLayout) {
                     PhoneLayout(
@@ -396,14 +395,14 @@ fun RecipeEdit(
                     )
                 }
             }
-        }
     }
     if (isIconSheetVisible) {
         Material3BottomSheet(onDismissRequest = { isIconSheetVisible = false }) {
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .waterfallPadding().safeGesturesPadding()
+                    .waterfallPadding()
+                    .safeGesturesPadding()
                     // TODO: remove me when bottom sheet is fixed on tablets
                     .padding(bottom = Spacing.big + Spacing.medium),
                 horizontalArrangement = Arrangement.SpaceEvenly,
