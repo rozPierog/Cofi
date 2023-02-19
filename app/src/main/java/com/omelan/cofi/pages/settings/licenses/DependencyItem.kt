@@ -83,7 +83,7 @@ fun DependencyItem(dependency: Dependency) {
             },
             modifier = Modifier.padding(bottom = Spacing.normal),
         )
-        Divider(color = MaterialTheme.colorScheme.onBackground.copy(0.12f))
+        Divider()
     }
 }
 
