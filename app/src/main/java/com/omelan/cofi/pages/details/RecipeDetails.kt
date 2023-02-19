@@ -257,8 +257,7 @@ fun RecipeDetails(
         itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
             StepListItem(
                 modifier = Modifier
-                    .testTag("recipe_step")
-                    .animateItemPlacement(),
+                    .testTag("recipe_step"),
                 step = step,
                 stepProgress = when {
                     index < indexOfCurrentStep -> StepProgress.Done
@@ -277,10 +276,7 @@ fun RecipeDetails(
                 weightMultiplier = weightMultiplier.value,
                 timeMultiplier = timeMultiplier.value,
             )
-            Divider(
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                modifier = Modifier.animateItemPlacement(),
-            )
+            Divider()
         }
     }
 
