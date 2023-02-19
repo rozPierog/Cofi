@@ -188,19 +188,20 @@ fun RecipeDetails(
 
     val isPhoneLayout = rememberIsPhoneLayout(windowSizeClass)
 
-    val renderDescription: @Composable ((Modifier) -> Unit)? = if (recipe.description.isNotBlank()) {
-        {
-            Description(
-                modifier = it
-                    .fillMaxWidth()
-                    .testTag("recipe_description"),
-                descriptionText = recipe.description,
-            )
-            Spacer(modifier = Modifier.height(Spacing.big))
+    val renderDescription: @Composable ((Modifier) -> Unit)? =
+        if (recipe.description.isNotBlank()) {
+            {
+                Description(
+                    modifier = it
+                        .fillMaxWidth()
+                        .testTag("recipe_description"),
+                    descriptionText = recipe.description,
+                )
+                Spacer(modifier = Modifier.height(Spacing.big))
+            }
+        } else {
+            null
         }
-    } else {
-        null
-    }
 
     val renderTimer: @Composable (Modifier) -> Unit = {
         val activity = LocalContext.current.getActivity()

@@ -113,7 +113,6 @@ fun RecipeEdit(
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
 
-
     val canSave by remember {
         derivedStateOf {
             name.text.isNotBlank() && steps.isNotEmpty()
@@ -127,7 +126,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
