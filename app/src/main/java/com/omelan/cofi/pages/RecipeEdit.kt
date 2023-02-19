@@ -88,7 +88,7 @@ fun RecipeEdit(
     var showDeleteModal by remember { mutableStateOf(false) }
     var showCloneModal by remember { mutableStateOf(false) }
     var showSaveModal by remember { mutableStateOf(false) }
-    var isIconSheetVisible by remember { mutableStateOf(false) }
+    var iconSheetState = rememberSheetState(skipHalfExpanded = true)
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
 
     var showDescription by remember(recipeToEdit.description) {
@@ -128,7 +128,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -163,13 +163,6 @@ fun RecipeEdit(
         )
     }
 
-    fun pickIcon(icon: RecipeIcon) {
-        coroutineScope.launch {
-            isIconSheetVisible = false
-            pickedIcon = icon
-        }
-    }
-
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
         item {
             Row(verticalAlignment = Alignment.Bottom) {
@@ -185,7 +178,11 @@ fun RecipeEdit(
                     onClick = {
                         keyboardController?.hide()
                         coroutineScope.launch {
-                            isIconSheetVisible = !isIconSheetVisible
+                            if (iconSheetState.isVisible) {
+                                iconSheetState.hide()
+                            } else {
+                                iconSheetState.show()
+                            }
                         }
                     },
                 ) {
@@ -378,26 +375,30 @@ fun RecipeEdit(
             )
         },
     ) {
-            BoxWithConstraints {
-                if (isPhoneLayout) {
-                    PhoneLayout(
-                        it,
-                        lazyListState,
-                        renderNameAndDescriptionEdit,
-                        renderSteps,
-                    )
-                } else {
-                    TabletLayout(
-                        it,
-                        lazyListState,
-                        renderNameAndDescriptionEdit,
-                        renderSteps,
-                    )
-                }
+        BoxWithConstraints {
+            if (isPhoneLayout) {
+                PhoneLayout(
+                    it,
+                    lazyListState,
+                    renderNameAndDescriptionEdit,
+                    renderSteps,
+                )
+            } else {
+                TabletLayout(
+                    it,
+                    lazyListState,
+                    renderNameAndDescriptionEdit,
+                    renderSteps,
+                )
             }
+        }
     }
-    if (isIconSheetVisible) {
-        Material3BottomSheet(onDismissRequest = { isIconSheetVisible = false }) {
+    if (iconSheetState.isVisible || iconSheetState.targetValue != SheetValue.Hidden) {
+        Material3BottomSheet(onDismissRequest = {
+            coroutineScope.launch {
+                iconSheetState.hide()
+            }
+        }, sheetState = iconSheetState) {
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -416,7 +417,14 @@ fun RecipeEdit(
                             .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
                             .aspectRatio(1f)
                             .clip(CircleShape)
-                            .clickable(role = Role.Button) { pickIcon(it) },
+                            .clickable(role = Role.Button) {
+                                coroutineScope.launch {
+                                    launch {
+                                        iconSheetState.hide()
+                                    }
+                                    pickedIcon = it
+                                }
+                            },
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
