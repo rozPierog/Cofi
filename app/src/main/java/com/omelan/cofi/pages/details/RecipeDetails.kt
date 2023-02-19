@@ -100,26 +100,27 @@ fun RecipeDetails(
         derivedStateOf { recipe.id }
     }
 
-    var showAutomateLinkDialog by remember { mutableStateOf(false) }
-
-    val weightMultiplier = remember { mutableStateOf(1.0f) }
-    val timeMultiplier = remember { mutableStateOf(1.0f) }
-
-    var ratioSheetIsVisible by remember {
-        mutableStateOf(false)
-    }
-
     val coroutineScope = rememberCoroutineScope()
-    val snackbarState = SnackbarHostState()
-    val lazyListState = rememberLazyListState()
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
+    val snackbarState = remember { SnackbarHostState() }
+    val copyAutomateLink = rememberCopyAutomateLink(snackbarState, recipeId)
+
+    val lazyListState = rememberLazyListState()
 
     val dataStore = DataStore(LocalContext.current)
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
-    val isNextStepEnabled by dataStore.getNextStepSetting().collectAsState(
-        NEXT_STEP_ENABLED_DEFAULT_VALUE,
-    )
+    val isNextStepEnabled by dataStore.getNextStepSetting()
+        .collectAsState(initial = NEXT_STEP_ENABLED_DEFAULT_VALUE)
+
+    var showAutomateLinkDialog by remember { mutableStateOf(false) }
+
+    val weightMultiplier = remember { mutableStateOf(1.0f) }
+    val timeMultiplier = remember { mutableStateOf(1.0f) }
+    var ratioSheetIsVisible by remember {
+        mutableStateOf(false)
+    }
+
     val (
         currentStep,
         isDone,
@@ -146,8 +147,6 @@ fun RecipeDetails(
             steps[indexOfCurrentStep + 1]
         }
     }
-
-    val copyAutomateLink = rememberCopyAutomateLink(snackbarState, recipeId)
 
     val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
         indexOfCurrentStep = indexOfCurrentStep,
@@ -184,6 +183,7 @@ fun RecipeDetails(
     }
 
     val isPhoneLayout = rememberIsPhoneLayout(windowSizeClass)
+
     val renderDescription: @Composable (() -> Unit)? = if (recipe.description.isNotBlank()) {
         {
             Description(
@@ -197,8 +197,9 @@ fun RecipeDetails(
     } else {
         null
     }
-    val activity = LocalContext.current.getActivity()
+
     val renderTimer: @Composable (Modifier) -> Unit = {
+        val activity = LocalContext.current.getActivity()
         Timer(
             modifier = Modifier
                 .testTag("recipe_timer")
@@ -241,19 +242,13 @@ fun RecipeDetails(
                     modifier = Modifier
                         .fillMaxWidth()
                         .animateItemPlacement()
-                        .padding(top = if (isPhoneLayout) Spacing.big else Spacing.small),
+                        .padding(bottom = Spacing.normal),
                     step = nextStep ?: Step(name = "", type = StepType.WAIT),
                 )
             }
         }
     }
-    val getCurrentStepProgress: (Int) -> StepProgress = { index ->
-        when {
-            index < indexOfCurrentStep -> StepProgress.Done
-            indexOfCurrentStep == index -> StepProgress.Current
-            else -> StepProgress.Upcoming
-        }
-    }
+
     val renderSteps: LazyListScope.() -> Unit = {
         itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
             StepListItem(
@@ -261,7 +256,11 @@ fun RecipeDetails(
                     .testTag("recipe_step")
                     .animateItemPlacement(),
                 step = step,
-                stepProgress = getCurrentStepProgress(index),
+                stepProgress = when {
+                    index < indexOfCurrentStep -> StepProgress.Done
+                    indexOfCurrentStep == index -> StepProgress.Current
+                    else -> StepProgress.Upcoming
+                },
                 onClick = { newStep: Step ->
                     coroutineScope.launch {
                         if (newStep == currentStep.value) {
