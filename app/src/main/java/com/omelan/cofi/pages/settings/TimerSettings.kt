@@ -43,7 +43,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun TimerSettings(goBack: () -> Unit) {
     val context = LocalContext.current
-    val snackbarState = SnackbarHostState()
+    val snackbarState = remember { SnackbarHostState() }
+
     val dataStore = DataStore(context)
     val isStepSoundEnabled by dataStore.getStepChangeSoundSetting()
         .collectAsState(STEP_SOUND_DEFAULT_VALUE)

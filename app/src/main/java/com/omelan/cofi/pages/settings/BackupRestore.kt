@@ -48,7 +48,7 @@ import java.util.Locale
 @Composable
 fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
     val context = LocalContext.current
-    val snackbarState = SnackbarHostState()
+    val snackbarState = remember { SnackbarHostState() }
     var showDefaultRecipeDialog by remember { mutableStateOf(false) }
     var showBackupDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
