@@ -113,7 +113,7 @@ fun RecipeEdit(
     var steps by remember(stepsToEdit) { mutableStateOf(stepsToEdit) }
     var stepWithOpenEditor by remember { mutableStateOf<Step?>(null) }
 
-    val canSave by remember {
+    val canSave by remember(name.text, steps) {
         derivedStateOf {
             name.text.isNotBlank() && steps.isNotEmpty()
         }
