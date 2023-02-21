@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.*
@@ -288,7 +287,7 @@ fun RecipeDetails(
                 hostState = snackbarState,
                 modifier = Modifier.padding(Spacing.medium),
             ) {
-                Snackbar(shape = RoundedCornerShape(50)) {
+                Snackbar {
                     Text(text = it.visuals.message)
                 }
             }
