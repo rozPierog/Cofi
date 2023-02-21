@@ -6,10 +6,8 @@
 package com.omelan.cofi.pages.settings
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
@@ -43,7 +41,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun TimerSettings(goBack: () -> Unit) {
     val context = LocalContext.current
-    val snackbarState = remember { SnackbarHostState() }
 
     val dataStore = DataStore(context)
     val isStepSoundEnabled by dataStore.getStepChangeSoundSetting()
@@ -74,10 +71,6 @@ fun TimerSettings(goBack: () -> Unit) {
         coroutineScope.launch { dataStore.toggleStepChangeVibration() }
     }
 
-    val switchColors = SwitchDefaults.colors(
-        checkedThumbColor = MaterialTheme.colorScheme.secondary,
-        checkedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
-    )
     Scaffold(
         topBar = {
             PiPAwareAppBar(
@@ -95,16 +88,6 @@ fun TimerSettings(goBack: () -> Unit) {
                 },
                 scrollBehavior = appBarBehavior,
             )
-        },
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarState,
-                modifier = Modifier.padding(getDefaultPadding()),
-            ) {
-                Snackbar(shape = RoundedCornerShape(50)) {
-                    Text(text = it.visuals.message)
-                }
-            }
         },
     ) {
         LazyColumn(
@@ -140,7 +123,6 @@ fun TimerSettings(goBack: () -> Unit) {
                             checked = if (!hasPiPPermission) false else isPiPEnabled,
                             onCheckedChange = { togglePiP() },
                             enabled = hasPiPPermission,
-                            colors = switchColors,
                         )
                     },
                 )
@@ -164,7 +146,6 @@ fun TimerSettings(goBack: () -> Unit) {
                             modifier = Modifier.testTag("settings_timer_switch_sound"),
                             checked = isStepSoundEnabled,
                             onCheckedChange = { toggleStepChangeSound() },
-                            colors = switchColors,
                         )
                     },
                 )
@@ -188,7 +169,6 @@ fun TimerSettings(goBack: () -> Unit) {
                             modifier = Modifier.testTag("settings_timer_switch_vibration"),
                             checked = isStepVibrationEnabled,
                             onCheckedChange = { toggleStepChangeVibration() },
-                            colors = switchColors,
                         )
                     },
                 )
@@ -212,7 +192,6 @@ fun TimerSettings(goBack: () -> Unit) {
                             modifier = Modifier.testTag("settings_timer_switch_nextStep"),
                             checked = isNextStepEnabled,
                             onCheckedChange = { toggleNextStep() },
-                            colors = switchColors,
                         )
                     },
                 )
@@ -237,9 +216,7 @@ fun TimerSettings(goBack: () -> Unit) {
                         )
                     },
                     modifier = Modifier
-                        .settingsItemModifier(
-                            onClick = { showCombineWeightDialog = true },
-                        )
+                        .settingsItemModifier(onClick = { showCombineWeightDialog = true })
                         .testTag("settings_timer_list_item_weight"),
                 )
                 if (showCombineWeightDialog) {
