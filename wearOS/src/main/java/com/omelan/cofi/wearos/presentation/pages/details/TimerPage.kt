@@ -1,4 +1,3 @@
-
 import android.view.KeyEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -116,6 +115,11 @@ fun TimerPage(
             } else {
                 animatedProgressColor.value
             },
+            trackColor = if (isAmbient.value) {
+                MaterialTheme.colors.onBackground.copy(alpha = 0.1f)
+            } else {
+                animatedProgressColor.value.copy(alpha = 0.2f)
+            },
             startAngle = 300f,
             endAngle = 240f,
         )
@@ -148,7 +152,7 @@ fun TimerPage(
             }
             AnimatedVisibility(
                 visible = currentStep.value == null && !isDone,
-                modifier = Modifier.weight(1f, true)
+                modifier = Modifier.weight(1f, true),
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(
