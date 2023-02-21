@@ -1,7 +1,11 @@
+@file:OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
+
 package com.omelan.cofi.components
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -40,6 +44,9 @@ private data class CoffeeWaterTime(
     fun addTime(time: Int?): CoffeeWaterTime = this.copy(duration = duration + (time ?: 0))
 }
 
+val enter = scaleIn(initialScale = 0.5f) + fadeIn()
+val exit = scaleOut() + fadeOut()
+
 @Composable
 fun RecipeInfo(
     modifier: Modifier = Modifier,
@@ -70,48 +77,56 @@ fun RecipeInfo(
             .testTag("recipe_info_box"),
         contentAlignment = Alignment.Center,
     ) {
-        Row(
+        LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(Spacing.normal),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            AnimatedVisibility(
-                visible = stepInfo.coffeeWeight * weightMultiplier > 0,
-                enter = fadeIn() + expandVertically(expandFrom = Alignment.CenterVertically),
-                exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically),
-            ) {
-                Param(
-                    modifier = Modifier.testTag("recipe_info_coffee"),
-                    icon = painterResource(id = R.drawable.recipe_icon_coffee_grinder),
-                    text = "${(stepInfo.coffeeWeight * weightMultiplier).toStringShort()}g",
-                    compactStyle = compactStyle,
-                )
+            item {
+                AnimatedVisibility(
+                    modifier = Modifier.animateItemPlacement(),
+                    visible = stepInfo.coffeeWeight * weightMultiplier > 0,
+                    enter = enter,
+                    exit = exit,
+                ) {
+                    Param(
+                        modifier = Modifier.testTag("recipe_info_coffee"),
+                        icon = painterResource(id = R.drawable.recipe_icon_coffee_grinder),
+                        text = "${(stepInfo.coffeeWeight * weightMultiplier).toStringShort()}g",
+                        compactStyle = compactStyle,
+                    )
+                }
             }
-            AnimatedVisibility(
-                visible = stepInfo.waterWeight * weightMultiplier > 0,
-                enter = fadeIn() + expandVertically(expandFrom = Alignment.CenterVertically),
-                exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically),
-            ) {
-                Param(
-                    modifier = Modifier.testTag("recipe_info_water"),
-                    icon = painterResource(id = R.drawable.ic_water),
-                    text = "${(stepInfo.waterWeight * weightMultiplier).toStringShort()}g",
-                    compactStyle = compactStyle,
-                )
+            item {
+                AnimatedVisibility(
+                    modifier = Modifier.animateItemPlacement(),
+                    visible = stepInfo.waterWeight * weightMultiplier > 0,
+                    enter = enter,
+                    exit = exit,
+                ) {
+                    Param(
+                        modifier = Modifier.testTag("recipe_info_water"),
+                        icon = painterResource(id = R.drawable.ic_water),
+                        text = "${(stepInfo.waterWeight * weightMultiplier).toStringShort()}g",
+                        compactStyle = compactStyle,
+                    )
+                }
             }
-            AnimatedVisibility(
-                visible = !isSmall && (stepInfo.duration * timeMultiplier) > 0,
-                enter = fadeIn() + expandVertically(expandFrom = Alignment.CenterVertically),
-                exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically),
-            ) {
-                Param(
-                    modifier = Modifier.testTag("recipe_info_time"),
-                    icon = painterResource(id = R.drawable.ic_timer),
-                    text = (stepInfo.duration * timeMultiplier).roundToInt().toStringDuration(),
-                    compactStyle = compactStyle,
-                )
+            item {
+                AnimatedVisibility(
+                    visible = !isSmall && (stepInfo.duration * timeMultiplier) > 0,
+                    enter = enter,
+                    exit = exit,
+                ) {
+                    Param(
+                        modifier = Modifier.testTag("recipe_info_time"),
+                        icon = painterResource(id = R.drawable.ic_timer),
+                        text = (stepInfo.duration * timeMultiplier).roundToInt().toStringDuration(),
+                        compactStyle = compactStyle,
+                    )
+                }
             }
         }
         if (!compactStyle) {
