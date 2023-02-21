@@ -123,7 +123,7 @@ fun TimerPage(
             modifier = Modifier
                 .fillMaxRectangle()
                 .animateContentSize(),
-            Arrangement.Center,
+            Arrangement.SpaceBetween,
             Alignment.CenterHorizontally,
         ) {
             AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
@@ -148,15 +148,18 @@ fun TimerPage(
             }
             AnimatedVisibility(
                 visible = currentStep.value == null && !isDone,
+                modifier = Modifier.weight(1f, true)
             ) {
-                Text(
-                    text = recipe.name,
-                    color = MaterialTheme.colors.onSurface,
-                    maxLines = 2,
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.title1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                Box(contentAlignment = Alignment.Center) {
+                    Text(
+                        text = recipe.name,
+                        color = MaterialTheme.colors.onSurface,
+                        maxLines = 2,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.title1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
             AnimatedVisibility(
                 visible = currentStep.value != null && !isDone,
