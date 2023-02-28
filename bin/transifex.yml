@@ -6,5 +6,12 @@ git:
       source_file: cofi-share/src/main/res/values/strings.xml
       source_language: en
       translation_files_expression: cofi-share/src/main/res/values-<lang>/strings.xml
+
+    - filter_type: dir
+      file_format: TXT
+      source_file_dir: fastlane/metadata/android/en-US/
+      source_file_extension: txt
+      source_language: en-US
+      translation_files_expression: fastlane/metadata/android/<lang>/
   settings:
     pr_branch_name: transifex_<br_unique_id>
