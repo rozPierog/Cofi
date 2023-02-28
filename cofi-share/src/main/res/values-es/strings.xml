@@ -68,7 +68,7 @@
     <string name="prepopulate_frenchPress_description">Receta creada por: James Hoffmann
         Fuente: https://youtu.be/st571DYYTR8
         Tamaño del molido: medio
-        Se puede servir después de 5min del último paso, pero cuanto más tiempo se mantenga mejor se pone</string>.
+        Se puede servir después de 5min del último paso, pero cuanto más tiempo se mantenga mejor se pone</string>
     <string name="hoffmann_credits_title">Recetas predeterminadas de James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Ir a su canal de Youtube</string>
     <string name="prepopulate_chemex_name">Chemex</string>
@@ -77,7 +77,7 @@
         Molido: medio fino
         Temperatura: cuanto más caliente, mejor (especialmente con tostados ligeros)
         Asegúrese de que la parte más rígida del filtro está en el lado de drenaje
-        Vigila para no bloquear el aire que sale de la cafetera</string>.
+        Vigila para no bloquear el aire que sale de la cafetera</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Coloque el pistón 1 cm dentro de la cafetera</string>
     <string name="prepopulate_aero_step_press">Presione suavemente el pistón</string>
