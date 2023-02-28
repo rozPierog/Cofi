@@ -1,0 +1,10 @@
+---
+git:
+  filters:
+    - filter_type: file
+      file_format: ANDROID
+      source_file: cofi-share/src/main/res/values/strings.xml
+      source_language: en
+      translation_files_expression: cofi-share/src/main/res/values-<lang>/strings.xml
+  settings:
+    pr_branch_name: transifex_<br_unique_id>
