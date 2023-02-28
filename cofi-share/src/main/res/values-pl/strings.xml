@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="step_type_add_coffee">Dodaj kawę</string>
     <string name="step_type_water">Dodaj wodę</string>
@@ -8,6 +7,8 @@
     <string name="step_add_duration">Czas trwania (s)</string>
     <string name="step_add_weight">Waga (g)</string>
     <string name="step_add_save">Zapisz</string>
+    <string name="recipe_unsaved_title">Masz niezapisane zmiany</string>
+    <string name="recipe_unsaved_text">Chcesz je porzucić?</string>
     <string name="recipe_delete_title">Jesteś pewien?</string>
     <string name="recipe_delete_text">Nie będzie można przywrócić tego przepisu</string>
     <string name="recipe_edit_name">Nazwa</string>
@@ -16,29 +17,27 @@
     <string name="recipe_edit_title">Edytuj przepis</string>
     <string name="recipe_add_new_title">Dodaj nowy przepis</string>
     <string name="recipe_details_automation_dialog_title">Bezpośredni link</string>
-    <string name="recipe_details_automation_dialog_text">"Użyj linku, aby przejść do bezpośrednio tego przepisu. Zapisz go na tagu NFC albo użyj automatyzacji w aplikacji takiej jak Tasker, żeby ułatwić robienie porannej kawy.
-UWAGA: ten link nie służy do dzielenia się przepisem z innymi"</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Anuluj</string>
     <string name="button_delete">Usuń</string>
+    <string name="button_discard">Porzuć</string>
+    <string name="button_continue_editing">Edytuj dalej</string>
     <string name="button_copy">Kopiuj</string>
     <string name="snackbar_copied">Skopiowane!</string>
     <string name="settings_licenses_title">Licencje open source</string>
     <string name="settings_title">Ustawienia</string>
     <string name="settings_about_item">O aplikacji</string>
-    <string name="settings_about_title">O aplikacji</string>
-    <string name="settings_licenses_item">Licencje</string>
-    <string name="settings_github_item">Repozytorium na Github</string>
-    <string name="button_show">Pokaż</string>
-    <string name="step_add_remove">Usuń</string>
-    <string name="timer_enjoy">Czas na kawę</string>
     <string name="settings_pip_item">Obraz w obrazie</string>
+    <string name="settings_step_sound_item">Dźwięk zmiany kroku</string>
     <string name="settings_bug_item">Zgłoś błąd albo zasugeruj zmianę</string>
     <string name="settings_combine_weight_item">Sumowanie wagi</string>
     <string name="settings_combine_weight_all">Sumuj całą wagę</string>
     <string name="settings_combine_weight_water">Sumuj wagę wody</string>
     <string name="settings_combine_weight_none">Nie sumuj wagi</string>
+    <string name="settings_about_title">O aplikacji</string>
+    <string name="settings_licenses_item">Licencje</string>
+    <string name="settings_github_item">Repozytorium na Github</string>
     <plurals name="settings_snackbar_backup">
         <item quantity="one">Zapisano %d przepis</item>
         <item quantity="few">Zapisano %d przepisy</item>
@@ -51,49 +50,21 @@ UWAGA: ten link nie służy do dzielenia się przepisem z innymi"</string>
         <item quantity="many">Przywrócono %d przepisów</item>
         <item quantity="other">Przywrócono %d przepisów</item>
     </plurals>
+    <string name="button_show">Pokaż</string>
+    <string name="step_add_remove">Usuń</string>
+    <string name="timer_enjoy">Czas na kawę</string>
     <string name="prepopulate_v60_name">V60</string>
-    <string name="prepopulate_v60_description">"Przepis od: James Hoffmann
-Źródło: https://youtu.be/AI4ynXzkSQo
-Grubość mielenia: średnio
-Temperature: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)"</string>
     <string name="prepopulate_step_coffee">Dodaj kawę</string>
     <string name="prepopulate_step_water">Dodaj wodę</string>
     <string name="prepopulate_step_swirl">Zamieszaj</string>
     <string name="prepopulate_step_wait">Czekaj</string>
-    <string name="prepopulate_frenchPress_name">Prasa Francuska</string>
-    <string name="prepopulate_frenchPress_description">"Przepis od: James Hoffmann
-Źródło: https://youtu.be/st571DYYTR8
-Grubość mielenia: średnio/grubo
-Przelać można już po 5minutach ostatniego kroku, ale im dłużej poczekasz tym lepszy będzie smak"</string>
-    <string name="prepopulate_step_scoop_coffee">Wyłów pływające kawałki kawy</string>
-    <string name="prepopulate_step_stir_crust">Zamieszaj powierzchnie</string>
     <string name="prepopulate_step_plunge">Wciśnij prasę zaraz pod powierzchnie i przelej</string>
-    <string name="hoffmann_credits_subtitle">Przejdź do jego kanału na Youtube</string>
+    <string name="prepopulate_step_stir_crust">Zamieszaj powierzchnie</string>
+    <string name="prepopulate_step_scoop_coffee">Wyłów pływające kawałki kawy</string>
+    <string name="prepopulate_frenchPress_name">Prasa Francuska</string>
     <string name="hoffmann_credits_title">Początkowe przepisy od James Hoffmann</string>
+    <string name="hoffmann_credits_subtitle">Przejdź do jego kanału na Youtube</string>
     <string name="prepopulate_chemex_name">Chemex</string>
-    <string name="prepopulate_chemex_description">"Przepis od: James Hoffmann
-Źródło: https://youtu.be/ikt-X5x7yoc
-Grubość mielenia: średnio
-Temperatura: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)
-Upewnij się, że najgrubsza strona filtra jest po stronie lejka
-Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze musie gdzieś uciekać"</string>
-    <string name="tereszkiewicz_credits_title">Ikona aplikacji: Hubert Tereszkiewicz</string>
-    <string name="tereszkiewicz_credits_subtitle">Sprawdź jego Dribbble!</string>
-    <string name="recipe_create_title">Dodaj przepis</string>
-    <string name="settings_step_sound_item">Dźwięk zmiany kroku</string>
-    <string name="button_continue_editing">Edytuj dalej</string>
-    <string name="button_discard">Porzuć</string>
-    <string name="recipe_unsaved_text">Chcesz je porzucić?</string>
-    <string name="recipe_unsaved_title">Masz niezapisane zmiany</string>
-    <string name="recipe_clone_title">Skopiować ten przepis?</string>
-    <string name="recipe_clone_text">Stworzy to duplikat tego przepisu</string>
-    <string name="recipe_clone_suffix">%1$s - Kopia</string>
-    <string name="recipe_details_noTime">Wciśnij start żeby kontunuować</string>
-    <string name="app_version">Wersja aplikacji</string>
-    <string name="step_add_duration_explainer">Czas trwania decyduje, ile masz czasu na skończenie tego kroku (w sekundach). Jeśli chcesz stworzyć krok, który wstrzymuje przepis, do czasu aż jesteś gotowy, pozostaw to pole puste.</string>
-    <string name="settings_backup">Kopia zapasowa</string>
-    <string name="settings_restore">Przywróć kopię zapasową</string>
-    <string name="settings_addDefault">Dodaj początkowe przepisy</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Umieść tłok na 1 cm w zaparzaczu</string>
     <string name="prepopulate_aero_step_press">Wciskaj delikatnie tłok</string>
@@ -101,6 +72,18 @@ Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze 
 Źródło: https://youtu.be/j6VlT_jUVPc
 Grubość mielenia: Dla jasno palonych – średnio-drobno. Im ciemniejsza kawa tym grubiej powinna być zmielona
 Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 85–90℃</string>
+    <string name="tereszkiewicz_credits_title">Ikona aplikacji: Hubert Tereszkiewicz</string>
+    <string name="tereszkiewicz_credits_subtitle">Sprawdź jego Dribbble!</string>
+    <string name="recipe_create_title">Dodaj przepis</string>
+    <string name="recipe_clone_title">Skopiować ten przepis?</string>
+    <string name="recipe_clone_text">Stworzy to duplikat tego przepisu</string>
+    <string name="recipe_clone_suffix">%1$s - Kopia</string>
+    <string name="app_version">Wersja aplikacji</string>
+    <string name="recipe_details_noTime">Wciśnij start żeby kontunuować</string>
+    <string name="step_add_duration_explainer">Czas trwania decyduje, ile masz czasu na skończenie tego kroku (w sekundach). Jeśli chcesz stworzyć krok, który wstrzymuje przepis, do czasu aż jesteś gotowy, pozostaw to pole puste.</string>
+    <string name="settings_backup">Kopia zapasowa</string>
+    <string name="settings_restore">Przywróć kopię zapasową</string>
+    <string name="settings_addDefault">Dodaj początkowe przepisy</string>
     <string name="settings_timer_item">Ustawienia odliczania</string>
     <string name="settings_backup_item">Kopia zapasowa i przywracanie</string>
     <string name="settings_step_vibrate_item">Wibracja przy zmianie kroku</string>
@@ -114,6 +97,7 @@ Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 8
     <string name="name_espresso">Ekspres</string>
     <string name="name_cold_brew">Cold brew</string>
     <string name="name_siphon">Syfon</string>
+    <string name="name_cezve">Dżezwa</string>
     <string name="name_cup">Kubek</string>
     <string name="support_dialog_title">Lubisz Cofi?</string>
     <string name="support_dialog_body">Możesz wesprzeć moją pracę, wybierając jedną lub więcej z poniższych opcji</string>
@@ -123,7 +107,6 @@ Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 8
     <string name="support_dialog_review">Napisz opinię</string>
     <string name="support_title">Wesprzyj Cofi</string>
     <string name="infoBox_update_title">Cofi zostało zaktualizowane</string>
-    <string name="infoBox_update_body">Kliknij żeby zobaczyć co się zmieniło</string>
     <string name="settings_step_next_step_item">Pokazuj następny krok</string>
     <string name="recipe_details_upNext">Następny krok:</string>
     <string name="settings_wearOS_item">Pobierz na WearOS</string>
