@@ -79,7 +79,7 @@ Per le tostature scure – 85-90℃</string>
     <string name="settings_addDefault">Aggiungi ricette predefinite</string>
     <string name="settings_restore">Ripristina</string>
     <string name="settings_backup">Backup</string>
-    <string name="step_add_duration_explainer">La durata del passaggio determina la durata dell\'azione (in secondi). Se si vuole creare un passaggio che contiene l\'intera ricetta finché non viene letta, basta lasciare lo spazio vuoto.</string>.
+    <string name="step_add_duration_explainer">La durata del passaggio determina la durata dell\'azione (in secondi). Se si vuole creare un passaggio che contiene l\'intera ricetta finché non viene letta, basta lasciare lo spazio vuoto.</string>
     <string name="recipe_details_noTime">Premi Start per continuare</string>
     <string name="button_show">Mostra</string>
     <string name="recipe_edit_description_button">Aggiungi descrizione</string>
