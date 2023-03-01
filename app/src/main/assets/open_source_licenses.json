@@ -53,11 +53,11 @@
   {
     "project": "Activity",
     "description": "Provides the base Activity subclass and the relevant hooks to build a composable structure on top.",
-    "version": "1.6.1",
+    "version": "1.7.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.6.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.7.0-beta01",
     "year": "2018",
     "licenses": [
       {
@@ -65,7 +65,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.activity:activity:1.6.1"
+    "dependency": "androidx.activity:activity:1.7.0-beta01"
   },
   {
     "project": "Activity Compose",
@@ -87,11 +87,11 @@
   {
     "project": "Activity Kotlin Extensions",
     "description": "Kotlin extensions for \u0027activity\u0027 artifact",
-    "version": "1.6.1",
+    "version": "1.7.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.6.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.7.0-beta01",
     "year": "2018",
     "licenses": [
       {
@@ -99,7 +99,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.activity:activity-ktx:1.6.1"
+    "dependency": "androidx.activity:activity-ktx:1.7.0-beta01"
   },
   {
     "project": "Android App Startup Runtime",
@@ -138,11 +138,11 @@
   {
     "project": "Android Arch-Common",
     "description": "Android Arch-Common",
-    "version": "2.2.0-beta01",
+    "version": "2.2.0-rc01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0-rc01",
     "year": "2017",
     "licenses": [
       {
@@ -150,16 +150,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.arch.core:core-common:2.2.0-beta01"
+    "dependency": "androidx.arch.core:core-common:2.2.0-rc01"
   },
   {
     "project": "Android Arch-Runtime",
     "description": "Android Arch-Runtime",
-    "version": "2.2.0-beta01",
+    "version": "2.2.0-rc01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0-rc01",
     "year": "2017",
     "licenses": [
       {
@@ -167,7 +167,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.arch.core:core-runtime:2.2.0-beta01"
+    "dependency": "androidx.arch.core:core-runtime:2.2.0-rc01"
   },
   {
     "project": "Android DataStore",
@@ -223,11 +223,11 @@
   {
     "project": "Android Emoji2 Compat",
     "description": "Core library to enable emoji compatibility in Kitkat and newer devices to avoid the empty emoji characters.",
-    "version": "1.3.0-beta01",
+    "version": "1.3.0-beta02",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/emoji2#1.3.0-beta01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/emoji2#1.3.0-beta02",
     "year": "2017",
     "licenses": [
       {
@@ -235,7 +235,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.emoji2:emoji2:1.3.0-beta01"
+    "dependency": "androidx.emoji2:emoji2:1.3.0-beta02"
   },
   {
     "project": "Android Emoji2 Compat view helpers",
@@ -257,11 +257,11 @@
   {
     "project": "Android Lifecycle Kotlin Extensions",
     "description": "Kotlin extensions for \u0027lifecycle\u0027 artifact",
-    "version": "2.6.0-alpha05",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2019",
     "licenses": [
       {
@@ -269,16 +269,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha05"
+    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle LiveData",
     "description": "Android Lifecycle LiveData",
-    "version": "2.6.0-alpha05",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -286,16 +286,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata:2.6.0-alpha05"
+    "dependency": "androidx.lifecycle:lifecycle-livedata:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle LiveData Core",
     "description": "Android Lifecycle LiveData Core",
-    "version": "2.6.0-alpha05",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -303,7 +303,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.6.0-alpha05"
+    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle Process",
@@ -325,11 +325,11 @@
   {
     "project": "Android Lifecycle Runtime",
     "description": "Android Lifecycle Runtime",
-    "version": "2.6.0-alpha05",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -337,16 +337,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime:2.6.0-alpha05"
+    "dependency": "androidx.lifecycle:lifecycle-runtime:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle ViewModel",
     "description": "Android Lifecycle ViewModel",
-    "version": "2.6.0-alpha05",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -354,16 +354,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.6.0-alpha05"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle ViewModel Kotlin Extensions",
     "description": "Kotlin extensions for \u0027viewmodel\u0027 artifact",
-    "version": "2.6.0-alpha05",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2018",
     "licenses": [
       {
@@ -371,16 +371,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha05"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle ViewModel with SavedState",
     "description": "Android Lifecycle ViewModel",
-    "version": "2.6.0-alpha05",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2018",
     "licenses": [
       {
@@ -388,16 +388,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0-alpha05"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle-Common",
     "description": "Android Lifecycle-Common",
-    "version": "2.6.0-alpha05",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -405,16 +405,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-common:2.6.0-alpha05"
+    "dependency": "androidx.lifecycle:lifecycle-common:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle-Common for Java 8 Language",
     "description": "Android Lifecycle-Common for Java 8 Language",
-    "version": "2.6.0-alpha05",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -422,7 +422,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-common-java8:2.6.0-alpha05"
+    "dependency": "androidx.lifecycle:lifecycle-common-java8:2.6.0-beta01"
   },
   {
     "project": "Android Navigation Common",
@@ -1192,11 +1192,11 @@
   {
     "project": "Compose Foundation",
     "description": "Higher level abstractions of the Compose UI primitives. This library is design system agnostic, providing the high-level building blocks for both application and design-system developers",
-    "version": "1.4.0-alpha05",
+    "version": "1.4.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.4.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.4.0-beta01",
     "year": "2018",
     "licenses": [
       {
@@ -1204,16 +1204,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.foundation:foundation:1.4.0-alpha05"
+    "dependency": "androidx.compose.foundation:foundation:1.4.0-beta01"
   },
   {
     "project": "Compose Geometry",
     "description": "Compose classes related to dimensions without units",
-    "version": "1.4.0-alpha05",
+    "version": "1.4.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-beta01",
     "year": "2020",
     "licenses": [
       {
@@ -1221,16 +1221,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-geometry:1.4.0-alpha05"
+    "dependency": "androidx.compose.ui:ui-geometry:1.4.0-beta01"
   },
   {
     "project": "Compose Graphics",
     "description": "Compose graphics",
-    "version": "1.4.0-alpha05",
+    "version": "1.4.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-beta01",
     "year": "2020",
     "licenses": [
       {
@@ -1238,16 +1238,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-graphics:1.4.0-alpha05"
+    "dependency": "androidx.compose.ui:ui-graphics:1.4.0-beta01"
   },
   {
     "project": "Compose Layouts",
     "description": "Compose layout implementations",
-    "version": "1.4.0-alpha05",
+    "version": "1.4.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.4.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.4.0-beta01",
     "year": "2019",
     "licenses": [
       {
@@ -1255,7 +1255,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.foundation:foundation-layout:1.4.0-alpha05"
+    "dependency": "androidx.compose.foundation:foundation-layout:1.4.0-beta01"
   },
   {
     "project": "Compose LiveData integration",
@@ -1345,11 +1345,11 @@
   {
     "project": "Compose Material3 Components",
     "description": "Compose Material You Design Components library",
-    "version": "1.1.0-alpha05",
+    "version": "1.1.0-alpha06",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material3#1.1.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-material3#1.1.0-alpha06",
     "year": "2021",
     "licenses": [
       {
@@ -1357,7 +1357,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.material3:material3:1.1.0-alpha05"
+    "dependency": "androidx.compose.material3:material3:1.1.0-alpha06"
   },
   {
     "project": "Compose Navigation",
@@ -1379,11 +1379,11 @@
   {
     "project": "Compose Runtime",
     "description": "Tree composition support for code generated by the Compose compiler plugin and corresponding public API",
-    "version": "1.4.0-alpha05",
+    "version": "1.4.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.4.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.4.0-beta01",
     "year": "2019",
     "licenses": [
       {
@@ -1391,16 +1391,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.runtime:runtime:1.4.0-alpha05"
+    "dependency": "androidx.compose.runtime:runtime:1.4.0-beta01"
   },
   {
     "project": "Compose Saveable",
     "description": "Compose components that allow saving and restoring the local ui state",
-    "version": "1.4.0-alpha05",
+    "version": "1.4.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.4.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.4.0-beta01",
     "year": "2020",
     "licenses": [
       {
@@ -1408,7 +1408,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.runtime:runtime-saveable:1.4.0-alpha05"
+    "dependency": "androidx.compose.runtime:runtime-saveable:1.4.0-beta01"
   },
   {
     "project": "Compose Tooling API",
@@ -1430,11 +1430,11 @@
   {
     "project": "Compose UI primitives",
     "description": "Compose UI primitives. This library contains the primitives that form the Compose UI Toolkit, such as drawing, measurement and layout.",
-    "version": "1.4.0-alpha05",
+    "version": "1.4.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-beta01",
     "year": "2019",
     "licenses": [
       {
@@ -1442,16 +1442,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui:1.4.0-alpha05"
+    "dependency": "androidx.compose.ui:ui:1.4.0-beta01"
   },
   {
     "project": "Compose UI Text",
     "description": "Compose Text primitives and utilities",
-    "version": "1.4.0-alpha05",
+    "version": "1.4.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-beta01",
     "year": "2019",
     "licenses": [
       {
@@ -1459,16 +1459,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-text:1.4.0-alpha05"
+    "dependency": "androidx.compose.ui:ui-text:1.4.0-beta01"
   },
   {
     "project": "Compose Unit",
     "description": "Compose classes for simple units",
-    "version": "1.4.0-alpha05",
+    "version": "1.4.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-beta01",
     "year": "2020",
     "licenses": [
       {
@@ -1476,16 +1476,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-unit:1.4.0-alpha05"
+    "dependency": "androidx.compose.ui:ui-unit:1.4.0-beta01"
   },
   {
     "project": "Compose Util",
     "description": "Internal Compose utilities used by other modules",
-    "version": "1.4.0-alpha05",
+    "version": "1.4.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.4.0-beta01",
     "year": "2020",
     "licenses": [
       {
@@ -1493,7 +1493,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.compose.ui:ui-util:1.4.0-alpha05"
+    "dependency": "androidx.compose.ui:ui-util:1.4.0-beta01"
   },
   {
     "project": "Core Kotlin Extensions",
@@ -1750,11 +1750,11 @@
   {
     "project": "Lifecycle ViewModel Compose",
     "description": "Compose integration with Lifecycle ViewModel",
-    "version": "2.6.0-alpha05",
+    "version": "2.5.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha05",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1",
     "year": "2021",
     "licenses": [
       {
@@ -1762,7 +1762,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha05"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
   },
   {
     "project": "Palette Kotlin Extensions",

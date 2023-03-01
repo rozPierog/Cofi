@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.18.0|1.9.0] - 2023-03-01
+
+### Added
 - Next step will now be displayed near the timer (you can turn that off in settings)
 - added missing German translations
 - Added "Support Cofi" Dialog when user finishes their second recipe and in the settings

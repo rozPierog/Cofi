@@ -104,11 +104,11 @@
   {
     "project": "Android Arch-Common",
     "description": "Android Arch-Common",
-    "version": "2.2.0-alpha01",
+    "version": "2.2.0-rc01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0-alpha01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0-rc01",
     "year": "2017",
     "licenses": [
       {
@@ -116,16 +116,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.arch.core:core-common:2.2.0-alpha01"
+    "dependency": "androidx.arch.core:core-common:2.2.0-rc01"
   },
   {
     "project": "Android Arch-Runtime",
     "description": "Android Arch-Runtime",
-    "version": "2.2.0-alpha01",
+    "version": "2.2.0-rc01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0-alpha01",
+    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0-rc01",
     "year": "2017",
     "licenses": [
       {
@@ -133,7 +133,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.arch.core:core-runtime:2.2.0-alpha01"
+    "dependency": "androidx.arch.core:core-runtime:2.2.0-rc01"
   },
   {
     "project": "Android ConstraintLayout",
@@ -257,11 +257,11 @@
   {
     "project": "Android Lifecycle Kotlin Extensions",
     "description": "Kotlin extensions for \u0027lifecycle\u0027 artifact",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2019",
     "licenses": [
       {
@@ -269,16 +269,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle LiveData",
     "description": "Android Lifecycle LiveData",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -286,16 +286,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-livedata:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle LiveData Core",
     "description": "Android Lifecycle LiveData Core",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -303,7 +303,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle Process",
@@ -325,11 +325,11 @@
   {
     "project": "Android Lifecycle Runtime",
     "description": "Android Lifecycle Runtime",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -337,16 +337,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-runtime:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle ViewModel",
     "description": "Android Lifecycle ViewModel",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -354,16 +354,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle ViewModel Kotlin Extensions",
     "description": "Kotlin extensions for \u0027viewmodel\u0027 artifact",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2018",
     "licenses": [
       {
@@ -371,16 +371,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle ViewModel with SavedState",
     "description": "Android Lifecycle ViewModel",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2018",
     "licenses": [
       {
@@ -388,16 +388,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle-Common",
     "description": "Android Lifecycle-Common",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -405,16 +405,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-common:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-common:2.6.0-beta01"
   },
   {
     "project": "Android Lifecycle-Common for Java 8 Language",
     "description": "Android Lifecycle-Common for Java 8 Language",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2017",
     "licenses": [
       {
@@ -422,7 +422,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-common-java8:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-common-java8:2.6.0-beta01"
   },
   {
     "project": "Android Navigation Common",
@@ -1090,11 +1090,11 @@
   {
     "project": "Android Wear Compose Foundation",
     "description": "WearOS Compose Foundation Library. This library makes it easier for developersto write Jetpack Compose applications for Wearable devices by providing functionality to support wearable specific devices sizes, shapes and navigation gestures. It builds upon the Jetpack Compose libraries.",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.2",
     "year": "2021",
     "licenses": [
       {
@@ -1102,16 +1102,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.wear.compose:compose-foundation:1.1.1"
+    "dependency": "androidx.wear.compose:compose-foundation:1.1.2"
   },
   {
     "project": "Android Wear Compose Material",
     "description": "WearOS Compose Material Library. This library makes it easier for developers to write Jetpack Compose applications for Wearable devices that implement Wear Material Design UX guidelines and specifications. It builds upon the Jetpack Compose libraries.",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.2",
     "year": "2021",
     "licenses": [
       {
@@ -1119,16 +1119,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.wear.compose:compose-material:1.1.1"
+    "dependency": "androidx.wear.compose:compose-material:1.1.2"
   },
   {
     "project": "Android Wear Compose Navigation",
     "description": "WearOS Compose Navigation Library. This library makes it easier for developersto write Jetpack Compose applications for Wearable devices by providing functionality to support navigation. It builds upon the Jetpack Compose libraries.",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/wear-compose#1.1.2",
     "year": "2021",
     "licenses": [
       {
@@ -1136,7 +1136,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.wear.compose:compose-navigation:1.1.1"
+    "dependency": "androidx.wear.compose:compose-navigation:1.1.2"
   },
   {
     "project": "Android Wear Remote Interactions",
@@ -2100,11 +2100,11 @@
   {
     "project": "Lifecycle Runtime Compose",
     "description": "Compose integration with Lifecycle",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2021",
     "licenses": [
       {
@@ -2112,16 +2112,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime-compose:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-runtime-compose:2.6.0-beta01"
   },
   {
     "project": "Lifecycle ViewModel Compose",
     "description": "Compose integration with Lifecycle ViewModel",
-    "version": "2.6.0-alpha04",
+    "version": "2.6.0-beta01",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-alpha04",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.0-beta01",
     "year": "2021",
     "licenses": [
       {
@@ -2129,7 +2129,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha04"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-beta01"
   },
   {
     "project": "Material Components for Android",
