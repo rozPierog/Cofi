@@ -30,7 +30,7 @@ android {
         minSdk 25
         targetSdk 33
         versionCode 127
-        versionName "1.8.0"
+        versionName "1.9.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs 'en', 'de', 'es', 'it', 'nl', 'nb', 'pl', 'tr'
 
