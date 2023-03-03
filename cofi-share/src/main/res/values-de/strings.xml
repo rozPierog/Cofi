@@ -79,7 +79,7 @@ Achte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite bef
     <string name="recipe_clone_suffix">%1$s - Kopie</string>
     <string name="app_version">App-Version</string>
     <string name="recipe_details_noTime">Drücke Start zum Fortfahren</string>
-    <string name="step_add_duration_explainer">Die Schrittdauer legt fest, wie lange die Aktion dauert (in Sekunden). Lasse das Feld leer, um das ganze Rezept anzuzeigen, bis du es gelesen hast.</string>
+    <string name="step_add_duration_explainer">Die Schrittdauer legt fest, wie lange die Aktion dauert (in Sekunden). Um das Rezept zu pausieren, lasse das Feld leer.</string>
     <string name="settings_backup">Sichern</string>
     <string name="settings_restore">Wiederherstellen</string>
     <string name="settings_addDefault">Standard Rezepte einfügen</string>
