@@ -94,7 +94,7 @@ Temperature: For light roast – brought to a boil and used immediately. For dar
     <string name="recipe_clone_suffix">%1$s - Copy</string>
     <string name="app_version">App version</string>
     <string name="recipe_details_noTime">Press start to continue</string>
-    <string name="step_add_duration_explainer">Step duration determines how long an action will take (in seconds). If you want to create a step that will hold whole recipe till you are read, just leave it empty.</string>
+    <string name="step_add_duration_explainer">Step duration determines how long an action will take (in seconds). If you want to create a step that contains the entire recipe till you are ready, just leave it empty.</string>
     <string name="settings_backup">Backup</string>
     <string name="settings_restore">Restore</string>
     <string name="settings_addDefault">Add default recipes</string>
