@@ -17,7 +17,7 @@
     <string name="recipe_edit_title">Rezept bearbeiten</string>
     <string name="recipe_add_new_title">Neues Rezept erstellen</string>
     <string name="recipe_details_automation_dialog_title">Direktlink</string>
-    <string name="recipe_details_automation_dialog_text">Verwenden diesen Link, um direkt zu diesem Rezept zu gelangen. Speicher ihn auf einem NFC-Tag oder erstelle eine Automatisierungsaufgabe in Tasker. WARNUNG: Das Rezept kann auf diese Weise nicht geteilt werden!</string>
+    <string name="recipe_details_automation_dialog_text">Verwende diesen Link, um das Rezept direkt aufzurufen. Speichere ihn auf einem NFC-Tag oder erstelle eine Automatisierungsaufgabe in Tasker. WARNUNG: Das Rezept kann auf diese Weise nicht geteilt werden!</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Abbrechen</string>
@@ -79,7 +79,7 @@ Achte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite bef
     <string name="recipe_clone_suffix">%1$s - Kopie</string>
     <string name="app_version">App-Version</string>
     <string name="recipe_details_noTime">Drücke Start zum Fortfahren</string>
-    <string name="step_add_duration_explainer">Die Schrittdauer legt fest, wie lange die Aktion dauert (in Sekunden). Lasse das Feld leer, um einen Schritt zu erstellen, der das ganze Rezept enthält, bis du es gelesen hast.</string>
+    <string name="step_add_duration_explainer">Die Schrittdauer legt fest, wie lange die Aktion dauert (in Sekunden). Um das Rezept zu pausieren, lasse das Feld leer.</string>
     <string name="settings_backup">Sichern</string>
     <string name="settings_restore">Wiederherstellen</string>
     <string name="settings_addDefault">Standard Rezepte einfügen</string>
@@ -106,7 +106,7 @@ Achte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite bef
     <string name="support_dialog_review">Eine Bewertung schreiben</string>
     <string name="support_title">Cofi unterstützen</string>
     <string name="infoBox_update_title">Cofi wurde aktualisiert</string>
-    <string name="infoBox_update_body">Klicke hier, um zu lesen, was neu ist</string>
+    <string name="infoBox_update_body">Zur Anzeige der Neuerungen hier klicken</string>
     <string name="settings_step_next_step_item">Nächsten Schritt anzeigen</string>
     <string name="recipe_details_upNext">Als nächstes:</string>
     <string name="settings_wearOS_item">Für WearOS herunterladen</string>
