@@ -14,6 +14,9 @@
   <a href="https://liberapay.com/LeonOmelan/">
     <img src="https://img.shields.io/liberapay/patrons/LeonOmelan.svg?logo=liberapay">
   </a>
+  <a href="https://hosted.weblate.org/engage/cofi/">
+    <img src="https://hosted.weblate.org/widgets/cofi/-/svg-badge.svg" alt="Translation status" />
+    </a>
 </p>
 
 # Download
@@ -67,6 +70,11 @@
 - [New feature](docs/Contribute/CONTRIBUTING.md#featuresimprovements)
 - [Bugfix](docs/Contribute/CONTRIBUTING.md#bugfixes)
 
+# Translations
+
+<a href="https://hosted.weblate.org/engage/cofi/">
+<img src="https://hosted.weblate.org/widgets/cofi/-/multi-auto.svg" alt="Translation status" />
+</a>
 
 # License
 
