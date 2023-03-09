@@ -20,7 +20,7 @@
     <string name="recipe_edit_title">Edit recipe</string>
     <string name="recipe_add_new_title">Create new recipe</string>
     <string name="recipe_details_automation_dialog_title">Direct link</string>
-    <string name="recipe_details_automation_dialog_text">Use this link to go directly into this recipe. Write it to NFC tag or create automation task in Tasker to make your morning coffee easier. 
+    <string name="recipe_details_automation_dialog_text">Use this link to go directly into this recipe. Write it to NFC tag or create automation task in Tasker to make your morning coffee easier.
 \nWARNING: You cannot share recipe this way!</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
@@ -67,26 +67,25 @@ Temperature: the hotter, the better (especially with lighter roasts)"</string>
     <string name="prepopulate_step_stir_crust">Stir crust</string>
     <string name="prepopulate_step_scoop_coffee">Scoop up foam and coffee bits off the top</string>
     <string name="prepopulate_frenchPress_name">French Press</string>
-    <string name="prepopulate_frenchPress_description">"Recipe created by: James Hoffmann
-Source: https://youtu.be/st571DYYTR8
-Grind size: medium
-You can pour after 5min of last step, but the longer you keep it the better it gets"</string>
+    <string name="prepopulate_frenchPress_description">Recipe created by: James Hoffmann
+\nSource: https://youtu.be/st571DYYTR8
+\nGrind size: medium
+\nYou can pour after 5min of last step, but the longer you keep it the better it gets</string>
     <string name="hoffmann_credits_title">Default recipes by James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Go to his Youtube channel</string>
     <string name="prepopulate_chemex_name">Chemex</string>
-    <string name="prepopulate_chemex_description">"Recipe created by: James Hoffmann
-Source: https://youtu.be/ikt-X5x7yoc
-Grind size: medium fine
-Temperature: the hotter, the better (especially with lighter roasts)
-Make sure that stiffest part of filter is at the drainage side
-Keep an eye out not to block air moving out of the brewer"</string>
+    <string name="prepopulate_chemex_description">Recipe created by: James Hoffmann
+\nSource: https://youtu.be/ikt-X5x7yoc
+\nGrind size: medium fine Temperature: the hotter, the better (especially with lighter roasts)
+\nMake sure that stiffest part of filter is at the drainage side
+\nKeep an eye out not to block air moving out of the brewer</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Place the piston 1cm into the brewer</string>
     <string name="prepopulate_aero_step_press">Press the piston gently</string>
     <string name="prepopulate_aero_description">Recipe created by: James Hoffmann
-Source: https://youtu.be/j6VlT_jUVPc
-Grind size: For light roast – finer end of medium. The darker you go the more you may prefer to increase the dose and coarsen the grind
-Temperature: For light roast – brought to a boil and used immediately. For dark roasts – 85–90℃</string>
+\nSource: https://youtu.be/j6VlT_jUVPc
+\nGrind size: For light roast – finer end of medium. The darker you go the more you may prefer to increase the dose and coarsen the grind
+\nTemperature: For light roast – brought to a boil and used immediately. For dark roasts – 85–90℃</string>
     <string name="tereszkiewicz_credits_title">App icon by: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Check out his Dribbble</string>
     <string name="recipe_create_title">Add recipe</string>
