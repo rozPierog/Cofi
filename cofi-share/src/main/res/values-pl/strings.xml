@@ -16,7 +16,8 @@
     <string name="recipe_edit_title">Edytuj przepis</string>
     <string name="recipe_add_new_title">Dodaj nowy przepis</string>
     <string name="recipe_details_automation_dialog_title">Bezpośredni link</string>
-    <string name="recipe_details_automation_dialog_text">Użyj linku, aby przejść do bezpośrednio tego przepisu. Zapisz go na tagu NFC albo użyj automatyzacji w aplikacji takiej jak Tasker, żeby ułatwić robienie porannej kawy. UWAGA: ten link nie służy do dzielenia się przepisem z innymi!</string>
+    <string name="recipe_details_automation_dialog_text">Użyj linku, aby przejść do bezpośrednio tego przepisu. Zapisz go na tagu NFC albo użyj automatyzacji w aplikacji takiej jak Tasker, żeby ułatwić robienie porannej kawy.
+\nUWAGA: ten link nie służy do dzielenia się przepisem z innymi!</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Anuluj</string>
@@ -60,22 +61,22 @@ Temperature: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)"</strin
     <string name="prepopulate_step_swirl">Zamieszaj</string>
     <string name="prepopulate_step_wait">Czekaj</string>
     <string name="prepopulate_frenchPress_name">Prasa Francuska</string>
-    <string name="prepopulate_frenchPress_description">"Przepis od: James Hoffmann
-Źródło: https://youtu.be/st571DYYTR8
-Grubość mielenia: średnio/grubo
-Przelać można już po 5minutach ostatniego kroku, ale im dłużej poczekasz tym lepszy będzie smak"</string>
+    <string name="prepopulate_frenchPress_description">Przepis od: James Hoffmann
+\nŹródło: https://youtu.be/st571DYYTR8
+\nGrubość mielenia: średnio/grubo
+\nPrzelać można już po 5minutach ostatniego kroku, ale im dłużej poczekasz tym lepszy będzie smak</string>
     <string name="prepopulate_step_scoop_coffee">Wyłów pływające kawałki kawy</string>
     <string name="prepopulate_step_stir_crust">Zamieszaj powierzchnie</string>
     <string name="prepopulate_step_plunge">Wciśnij prasę zaraz pod powierzchnie i przelej</string>
     <string name="hoffmann_credits_subtitle">Przejdź do jego kanału na Youtube</string>
     <string name="hoffmann_credits_title">Początkowe przepisy od James Hoffmann</string>
     <string name="prepopulate_chemex_name">Chemex</string>
-    <string name="prepopulate_chemex_description">"Przepis od: James Hoffmann
-Źródło: https://youtu.be/ikt-X5x7yoc
-Grubość mielenia: średnio
-Temperatura: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)
-Upewnij się, że najgrubsza strona filtra jest po stronie lejka
-Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze musie gdzieś uciekać"</string>
+    <string name="prepopulate_chemex_description">Przepis od: James Hoffmann
+\nŹródło: https://youtu.be/ikt-X5x7yoc
+\nGrubość mielenia: średnio
+\nTemperatura: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)
+\nUpewnij się, że najgrubsza strona filtra jest po stronie lejka
+\nFiltr nie powinien idealnie przywierać do ścianek z każdej strony, powietrze musi gdzieś uciekać</string>
     <string name="tereszkiewicz_credits_title">Ikona aplikacji: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Sprawdź jego Dribbble</string>
     <string name="recipe_create_title">Dodaj przepis</string>
@@ -97,9 +98,10 @@ Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze 
     <string name="prepopulate_aero_step_piston">Umieść tłok na 1 cm w zaparzaczu</string>
     <string name="prepopulate_aero_step_press">Wciskaj delikatnie tłok</string>
     <string name="prepopulate_aero_description">Przepis od: James Hoffmann
-Źródło: https://youtu.be/j6VlT_jUVPc
-Grubość mielenia: Dla jasno palonych – średnio-drobno. Im ciemniejsza kawa tym grubiej powinna być zmielona
-Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 85–90℃</string>
+\nŹródło: https://youtu.be/j6VlT_jUVPc
+\nGrubość mielenia: Dla jasno palonych – średnio-drobno.
+\nIm ciemniejsza kawa tym grubiej powinna być zmielona
+\nTemperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 85–90℃</string>
     <string name="settings_timer_item">Ustawienia odliczania</string>
     <string name="settings_backup_item">Kopia zapasowa i przywracanie</string>
     <string name="settings_step_vibrate_item">Wibracja przy zmianie kroku</string>
