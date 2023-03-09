@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Added Hindi translation - thanks @AmaryllisVFX
-- Improved German and English translation - thanks @marcsenn
-- 
+- Added Hindi translation - Thanks @AmaryllisVFX
+- Added Chinese translation - Thanks @mrz5802
+
 ### Changed
+- Improved German and English translation - Thanks @marcsenn
 
 ### Removed
 

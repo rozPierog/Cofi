@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Cofi</string>
+    <string name="list_header" translatable="false">Cofi</string>
+    <string name="step_type_add_coffee">添加咖啡</string>
+    <string name="step_type_water">添加水</string>
+    <string name="step_type_wait">等候</string>
+    <string name="step_type_other">其他</string>
+    <string name="step_add_name">名字</string>
+    <string name="step_add_duration">持续时间 (s)</string>
+    <string name="step_add_weight">重量 (g)</string>
+    <string name="step_add_save">保存</string>
+    <string name="recipe_unsaved_title">您有未保存的更改</string>
+    <string name="recipe_unsaved_text">是否要丢弃它们？</string>
+    <string name="recipe_delete_title">你确定吗？</string>
+    <string name="recipe_delete_text">这将永久删除此配方</string>
+    <string name="recipe_edit_name">名字</string>
+    <string name="recipe_edit_description">说明</string>
+    <string name="recipe_edit_description_button">添加说明</string>
+    <string name="recipe_edit_title">编辑配方</string>
+    <string name="recipe_add_new_title">创建新的配方</string>
+    <string name="recipe_details_automation_dialog_title">直达链接</string>
+    <string name="recipe_details_automation_dialog_text">"使用此链接直接进入此配方。将其写入NFC标签或在Tasker中创建自动化任务，使您的早晨咖啡更轻松。
+    警告：您不能以这种方式分享食谱！"</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="button_cancel">取消</string>
+    <string name="button_delete">删除</string>
+    <string name="button_discard">丢弃</string>
+    <string name="button_continue_editing">继续编辑</string>
+    <string name="button_copy">复制</string>
+    <string name="snackbar_copied">复制！</string>
+    <string name="settings_licenses_title">开源许可证</string>
+    <string name="settings_title">设置</string>
+    <string name="settings_about_item">关于此APP</string>
+    <string name="settings_pip_item">画中画</string>
+    <string name="settings_step_sound_item">步骤变化声音</string>
+    <string name="settings_bug_item">报告错误或建议功能</string>
+    <string name="settings_combine_weight_item">混合重量</string>
+    <string name="settings_combine_weight_all">结合每个重量</string>
+    <string name="settings_combine_weight_water">仅结合水重量</string>
+    <string name="settings_combine_weight_none">不混合重量</string>
+    <string name="settings_about_title">关于</string>
+    <string name="settings_licenses_item">版权声明</string>
+    <string name="settings_github_item">Github存储库</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="other">备份 %d 多个配方</item>
+    </plurals>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="other">还原 %d 多个配方</item>
+    </plurals>
+    <string name="button_show">显示</string>
+    <string name="step_add_remove">移除</string>
+    <string name="timer_enjoy">享受你的咖啡吧</string>
+    <string name="prepopulate_v60_name">终极 V60</string>
+    <string name="prepopulate_v60_description">"食谱创建者：詹姆斯·霍夫曼
+Source: https://youtu.be/AI4ynXzkSQo
+研磨尺寸：中细
+温度：越热越好（尤其是较轻的烘烤）"</string>
+    <string name="prepopulate_step_coffee">添加咖啡</string>
+    <string name="prepopulate_step_water">添加水</string>
+    <string name="prepopulate_step_swirl">旋动</string>
+    <string name="prepopulate_step_wait">等候</string>
+    <string name="prepopulate_step_plunge">将水浸到地面下方，然后倒入</string>
+    <string name="prepopulate_step_stir_crust">搅拌混合</string>
+    <string name="prepopulate_step_scoop_coffee">从顶部挖出泡沫和咖啡渣</string>
+    <string name="prepopulate_frenchPress_name">法压壶</string>
+    <string name="prepopulate_frenchPress_description">"食谱创建者：詹姆斯·霍夫曼
+Source: https://youtu.be/st571DYYTR8
+研磨尺寸：中等
+你可以在最后一步5分钟后倒，但保持时间越长，效果越好"</string>
+    <string name="hoffmann_credits_title">詹姆斯·霍夫曼的默认食谱</string>
+    <string name="hoffmann_credits_subtitle">转到他的Youtube频道</string>
+    <string name="prepopulate_chemex_name">Chemex手冲</string>
+    <string name="prepopulate_chemex_description">"食谱创建者：詹姆斯·霍夫曼
+Source: https://youtu.be/ikt-X5x7yoc
+研磨尺寸：中细
+温度：越热越好（尤其是烤得越轻）
+确保过滤器最硬的部分位于排水侧
+注意不要阻挡空气从冲泡器中流出"</string>
+    <string name="prepopulate_aero_name">爱乐压</string>
+    <string name="prepopulate_aero_step_piston">将活塞放入冲泡器1cm</string>
+    <string name="prepopulate_aero_step_press">轻轻按压活塞</string>
+    <string name="prepopulate_aero_description">食谱创建者：詹姆斯·霍夫曼
+Source: https://youtu.be/j6VlT_jUVPc
+研磨尺寸：适用于轻度烘烤–介质的较细端。你走得越深，你可能越倾向于增加剂量并使研磨变得粗糙
+温度：用于轻度烘烤–煮沸后立即使用。用于黑暗烘烤–85–90℃</string>
+    <string name="tereszkiewicz_credits_title">应用程序图标作者：Hubert Tereszkiewicz</string>
+    <string name="tereszkiewicz_credits_subtitle">看看他的Dribble</string>
+    <string name="recipe_create_title">添加配方</string>
+    <string name="recipe_clone_title">克隆这个配方？</string>
+    <string name="recipe_clone_text">这将创建此配方的副本</string>
+    <string name="recipe_clone_suffix">%1$s - 复制</string>
+    <string name="app_version">添加版本</string>
+    <string name="recipe_details_noTime">按开始继续</string>
+    <string name="step_add_duration_explainer">步骤持续时间决定一个操作需要多长时间（以秒为单位）。留空以暂停配方，直到准备好为止。</string>
+    <string name="settings_backup">Backup</string>
+    <string name="settings_restore">Restore</string>
+    <string name="settings_addDefault">添加默认配方</string>
+    <string name="settings_timer_item">计时器设置</string>
+    <string name="settings_backup_item">备份/恢复</string>
+    <string name="settings_step_vibrate_item">步骤变化震动</string>
+    <string name="recipe_details_multiply_time">时间倍数</string>
+    <string name="recipe_details_multiply_weight">重量倍数</string>
+    <string name="infoBox_wearOS_title">Cofi可在WearOS上运行</string>
+    <string name="infoBox_wearOS_body">为您的WearOS手表下载Cofi应用程序！</string>
+    <string name="settings_sync_with_phone">从手机获取设置</string>
+    <string name="name_grinder">咖啡研磨机</string>
+    <string name="name_v60" translatable="false">V60</string>
+    <string name="name_vietnamese_press">Phin过滤器</string>
+    <string name="name_mokapot" translatable="false">摩卡壶</string>
+    <string name="name_espresso">蒸馏咖啡机</string>
+    <string name="name_cold_brew">冷萃酝酿</string>
+    <string name="name_siphon">虹吸壶</string>
+    <string name="name_bripe" translatable="false">Bripe咖啡冲泡管</string>
+    <string name="name_cezve">Cezve咖啡壶</string>
+    <string name="name_cup">杯</string>
+    <string name="support_dialog_title">喜欢 Cofi?</string>
+    <string name="support_dialog_body">非常感谢您的支持！你可以选择以下一项或多项来帮助我继续做我喜欢的事</string>
+    <string name="support_dialog_github">Github点个星星</string>
+    <string name="support_dialog_mastodon">跟我一起去Mastodon</string>
+    <string name="support_dialog_kofi">给我买杯咖啡</string>
+    <string name="support_dialog_review">写评论</string>
+    <string name="support_title">支持 Cofi</string>
+    <string name="infoBox_update_title">Cofi已更新</string>
+    <string name="infoBox_update_body">单击此处阅读最新动态</string>
+    <string name="settings_step_next_step_item">显示下一步</string>
+    <string name="recipe_details_upNext">下一个:</string>
+    <string name="settings_wearOS_item">下载WearOS版本</string>
+</resources>
