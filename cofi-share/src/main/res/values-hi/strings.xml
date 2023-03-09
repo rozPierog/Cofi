@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name" translatable="false">Cofi</string>
+    <string name="list_header" translatable="false">Cofi</string>
+    <string name="step_type_add_coffee">कॉफ़ी डालिये</string>
+    <string name="step_type_water">पानी डालिये</string>
+    <string name="step_type_wait">ठहरिये</string>
+    <string name="step_type_other">अन्य</string>
+    <string name="step_add_name">नाम</string>
+    <string name="step_add_duration">समय (सेकंड)</string>
+    <string name="step_add_weight">वजन (ग्राम)</string>
+    <string name="step_add_save">सेव</string>
+    <string name="recipe_unsaved_title">आपके परिवर्तन सेव नहीं किये गए हैं</string>
+    <string name="recipe_unsaved_text">क्या आप इन्हे हटाना चाहते है?</string>
+    <string name="recipe_delete_title">क्या आप निश्चित है</string>
+    <string name="recipe_delete_text">यह कार्य इस रेसिपी को स्थायी रूप से विनाश कर देगा</string>
+    <string name="recipe_edit_name">नाम</string>
+    <string name="recipe_edit_description">वर्णन</string>
+    <string name="recipe_edit_description_button">वर्णन करें</string>
+    <string name="recipe_edit_title">इस रेसिपी को बदले</string>
+    <string name="recipe_add_new_title">नयी रेसिपी बनाये</string>
+    <string name="recipe_details_automation_dialog_title">विशिष्ट लिंक</string>
+    <string name="recipe_details_automation_dialog_text">"इस रेसिपी में सीधे जाने के लिए इस लिंक का उपयोग करें। अपनी सुबह की कॉफी को आसान बनाने के लिए इसे एनएफसी टैग में लिखें या टास्कर ऍप में ऑटोमेशन टास्क बनाएं।
+चेतावनी: आप इस तरह रेसिपी बाँट नहीं सकते!"</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="button_cancel">निरस्त करे</string>
+    <string name="button_delete">मिटाये</string>
+    <string name="button_discard">हटाएं</string>
+    <string name="button_continue_editing">बदलाव जारी रखे</string>
+    <string name="button_copy">कॉपी</string>
+    <string name="snackbar_copied">कॉपी कर लिया</string>
+    <string name="settings_licenses_title">ओपन सोर्स लाइसेंस</string>
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="settings_about_item">ऐप के बारे में</string>
+    <string name="settings_pip_item">चित्र में चित्र</string>
+    <string name="settings_step_sound_item">स्टेप बदलने की ध्वनि</string>
+    <string name="settings_bug_item">कोई गलती की सूचना दे या कोई फीचर का सुझाव दे</string>
+    <string name="settings_combine_weight_item">वजन मिलाएं</string>
+    <string name="settings_combine_weight_all">सारे वजन मिलाएं</string>
+    <string name="settings_combine_weight_water">सिर्फ पानी का वजन मिलाएं</string>
+    <string name="settings_combine_weight_none">कोई वजन ना मिलाएं</string>
+    <string name="settings_about_title">इस बारे में</string>
+    <string name="settings_licenses_item">आभार</string>
+    <string name="settings_github_item">गिटहब रिपॉजिटरी</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">%d रेसिपी बैकअप की</item>
+        <item quantity="other">%d रेसिपीज बैकअप किये</item>
+    </plurals>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">%d रेसिपीज दी</item>
+        <item quantity="other">%d रेसिपीज लौटाए</item>
+    </plurals>
+    <string name="button_show">दिखाए</string>
+    <string name="step_add_remove">हटाएं</string>
+    <string name="timer_enjoy">अपनी कॉफी का आनंद लें</string>
+    <string name="prepopulate_v60_name">अल्टीमेट  V60</string>
+    <string name="prepopulate_v60_description">"रेसिपी बनाने वाले : जेम्स हॉफमन
+स्रोत: https://youtu.be/AI4ynXzkSQo
+पीसने का आकार: मध्यम छोटा
+तापमान: जितना गरम उतना बेहतर (विशेष रूप से हल्के रोस्ट के साथ)"</string>
+    <string name="prepopulate_step_coffee">कॉफ़ी डालिये</string>
+    <string name="prepopulate_step_water">पानी डालिये</string>
+    <string name="prepopulate_step_swirl">घुमाये</string>
+    <string name="prepopulate_step_wait">ठहरिये</string>
+    <string name="prepopulate_step_plunge">प्लंजर को सतह के ठीक निचे तक दबाये और कॉफ़ी को कप में डाले</string>
+    <string name="prepopulate_step_stir_crust">ऊपरी परत को हिलाये</string>
+    <string name="prepopulate_step_scoop_coffee">ऊपर से झाग और कॉफी के कण निकाल लें</string>
+    <string name="prepopulate_frenchPress_name">फ्रेंच प्रेस</string>
+    <string name="prepopulate_frenchPress_description">"रेसिपी बनाने वाले : जेम्स हॉफमन
+स्रोत: https://youtu.be/st571DYYTR8
+पीसने का आकार: मध्यम
+आप आखरी स्टेप के 5 मिनट बाद कॉफ़ी डाल सकते हैं, लेकिन आप इसे जितनी देर तक रखेंगे, यह उतना ही बेहतर होता जाएगा"</string>
+    <string name="hoffmann_credits_title">डिफ़ॉल्ट रेसिपी जेम्स हॉफमन के द्वारा</string>
+    <string name="hoffmann_credits_subtitle">उनके यूट्यूब चैनल पर जाए</string>
+    <string name="prepopulate_chemex_name">केमेक्स</string>
+    <string name="prepopulate_chemex_description">"रेसिपी बनाने वाले : जेम्स हॉफमन
+स्रोत: https://youtu.be/ikt-X5x7yoc
+पीसने का आकार: मध्यम छोटा
+तापमान: जितना गरम उतना बेहतर (विशेष रूप से हल्के रोस्ट के साथ)
+ध्यान दे कि फिल्टर का सबसे कठोर हिस्सा जल निकासी की तरफ है
+केमेक्स से बाहर निकलने वाली हवा को अवरुद्ध न करने का ध्यान रखें"</string>
+    <string name="prepopulate_aero_name">ऐरोप्रेस </string>
+    <string name="prepopulate_aero_step_piston">पिस्टन को 1 सेमी ब्रूअर में रखें</string>
+    <string name="prepopulate_aero_step_press">पिस्टन को हल्के से दबाएं</string>
+    <string name="prepopulate_aero_description">रेसिपी बनाने वाले : जेम्स हॉफमन
+स्रोत: https://youtu.be/j6VlT_jUVPc
+पीसने का आकार: हल्के रोस्ट के लिए - माध्यम का महीन अंत। जितना डार्क रोस्ट उतना अधिक आप कॉफ़ी की मात्रा बढ़ाना और पीस को मोटा करना पसंद कर सकते हैं
+तापमान: हल्के रोस्ट के लिए - उबालकर तुरंत इस्तेमाल करें। डार्क रोस्ट के लिए - 85–90℃</string>
+    <string name="tereszkiewicz_credits_title">ऐप आइकन: ह्यूबर्ट टेरेस्ज़किविक्ज़</string>
+    <string name="tereszkiewicz_credits_subtitle">उनका ड्रिबल देखें</string>
+    <string name="recipe_create_title">रेसिपी बनाये</string>
+    <string name="recipe_clone_title">इस रेसिपी की नकल करें?</string>
+    <string name="recipe_clone_text">यह इस रेसिपी की एक नकल बनाएगा</string>
+    <string name="recipe_clone_suffix">%1$s - की नकल</string>
+    <string name="app_version">ऍप वर्जन</string>
+    <string name="recipe_details_noTime">शुरू करने के लिए स्टार्ट बटन दबाये</string>
+    <string name="step_add_duration_explainer">स्टेप अवधि निर्धारित करती है कि कोई कार्य कितनी देर तक चलेगा (सेकंड में)। जब तक आप तैयार न हों तब तक रेसिपी को रोकने के लिए खाली छोड़ दें।</string>
+    <string name="settings_backup">बैकअप</string>
+    <string name="settings_restore">रिस्टोर</string>
+    <string name="settings_addDefault">डिफ़ॉल्ट रेसिपीज लौटाए</string>
+    <string name="settings_timer_item">टाइमर सेटिंग्स</string>
+    <string name="settings_backup_item">बैकअप/रिस्टोर</string>
+    <string name="settings_step_vibrate_item">स्टेप बदलने का कंपन</string>
+    <string name="recipe_details_multiply_time">समय गुणक</string>
+    <string name="recipe_details_multiply_weight">वजन गुणक</string>
+    <string name="infoBox_wearOS_title">कॉफी अब वेअरओएस पर उपलब्ध है </string>
+    <string name="infoBox_wearOS_body">अपनी वेअरओएस घडी के लिए कॉफी ऍप डाउनलोड करे </string>
+    <string name="settings_sync_with_phone">फोन से सेटिंग्स प्राप्त करें</string>
+    <string name="name_grinder">कॉफी ग्राइंडर</string>
+    <string name="name_v60" translatable="false">V60</string>
+    <string name="name_vietnamese_press">फिन फ़िल्टर</string>
+    <string name="name_mokapot" translatable="false">मोका पॉट</string>
+    <string name="name_espresso">एस्प्रेसो मशीन</string>
+    <string name="name_cold_brew">कोल्ड ब्रू</string>
+    <string name="name_siphon">साइफन</string>
+    <string name="name_bripe" translatable="false">Bripe</string>
+    <string name="name_cezve">चेज़वे</string>
+    <string name="name_cup">कप</string>
+    <string name="support_dialog_title">क्या आप कॉफी ऐप का आनंद ले रहे हैं?</string>
+    <string name="support_dialog_body">मैं आपके सहायता की बहुत सराहना करूंगा! आप निम्न में से एक या अधिक को चुनकर मेरी पसंद का काम जारी रखने में मेरी मदद कर सकते हैं</string>
+    <string name="support_dialog_github">कॉफी को गिटहब पर स्टार करे</string>
+    <string name="support_dialog_mastodon">मुझे मास्टोडॉन पर फॉलो करें</string>
+    <string name="support_dialog_kofi">मेरे लिए कॉफी खरीदें</string>
+    <string name="support_dialog_review">रिव्यु लिखिए</string>
+    <string name="support_title">कॉफी को सहायता दे</string>
+    <string name="infoBox_update_title">कॉफी अपडेट हुआ है</string>
+    <string name="infoBox_update_body">कॉफी में क्या नया है जानने के लिए इसे दबाये</string>
+    <string name="settings_step_next_step_item">अगला स्टेप दिखाएं</string>
+    <string name="recipe_details_upNext">अगला:</string>
+    <string name="settings_wearOS_item">वेयरओएस के लिए डाउनलोड करें</string>
+</resources>
