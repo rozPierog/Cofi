@@ -16,8 +16,7 @@
     <string name="recipe_edit_title">Edytuj przepis</string>
     <string name="recipe_add_new_title">Dodaj nowy przepis</string>
     <string name="recipe_details_automation_dialog_title">Bezpośredni link</string>
-    <string name="recipe_details_automation_dialog_text">"Użyj linku, aby przejść do bezpośrednio tego przepisu. Zapisz go na tagu NFC albo użyj automatyzacji w aplikacji takiej jak Tasker, żeby ułatwić robienie porannej kawy.
-UWAGA: ten link nie służy do dzielenia się przepisem z innymi"</string>
+    <string name="recipe_details_automation_dialog_text">Użyj linku, aby przejść do bezpośrednio tego przepisu. Zapisz go na tagu NFC albo użyj automatyzacji w aplikacji takiej jak Tasker, żeby ułatwić robienie porannej kawy. UWAGA: ten link nie służy do dzielenia się przepisem z innymi!</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Anuluj</string>
@@ -78,7 +77,7 @@ Temperatura: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)
 Upewnij się, że najgrubsza strona filtra jest po stronie lejka
 Filtr nie powienien idealnie przywierać do scianek z każdej strony, powietrze musie gdzieś uciekać"</string>
     <string name="tereszkiewicz_credits_title">Ikona aplikacji: Hubert Tereszkiewicz</string>
-    <string name="tereszkiewicz_credits_subtitle">Sprawdź jego Dribbble!</string>
+    <string name="tereszkiewicz_credits_subtitle">Sprawdź jego Dribbble</string>
     <string name="recipe_create_title">Dodaj przepis</string>
     <string name="settings_step_sound_item">Dźwięk zmiany kroku</string>
     <string name="button_continue_editing">Edytuj dalej</string>
@@ -127,4 +126,5 @@ Temperatura: Dla jasno palonych - zaraz po zgotowaniu. Dla ciemno palonych – 8
     <string name="settings_step_next_step_item">Pokazuj następny krok</string>
     <string name="recipe_details_upNext">Następny krok:</string>
     <string name="settings_wearOS_item">Pobierz na WearOS</string>
+    <string name="name_cezve">Dżezwa</string>
 </resources>
