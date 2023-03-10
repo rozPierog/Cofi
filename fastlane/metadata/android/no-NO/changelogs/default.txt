@@ -1,0 +1,10 @@
+### Tillagt
+
+- Neste steg vil nå vises ved siden av tidsuret (du kan skru det av i innstillingene)
+- Manglende tyske oversettelser lagt til
+- Tillagt «Støtt Cofi»-dialog når brukeren fullfører andre oppskrift og i innstillingene
+- Tillagt knapp for å laste ned WearOS-programmet i innstillingene
+- Tillagt boks med info om programmet oppdatert med lenke til denne endringsloggen
+
+### Endret
+- Endrede bunnlag i hele programmet for å være mer i tråd med materiell design
