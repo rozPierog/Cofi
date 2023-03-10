@@ -16,7 +16,7 @@
   </a>
   <a href="https://hosted.weblate.org/engage/cofi/">
     <img src="https://hosted.weblate.org/widgets/cofi/-/svg-badge.svg" alt="Translation status" />
-    </a>
+  </a>
 </p>
 
 # Download
@@ -56,7 +56,7 @@
   </tr>
 </table>
 
-## [Changelog](docs/Changelog.md) 
+## [Changelog](docs/Changelog.md)
 <a href="docs/Changelog.md">
     <img src="https://img.shields.io/github/v/release/rozPierog/Cofi.svg?include_prereleases?logo=github">
 </a>
@@ -65,7 +65,7 @@
 
 # Contribute
 
-- [New language](docs/Contribute/Language.md)
+- [Translation](docs/Contribute/Language.md)
 - [New default recipe](docs/Contribute/Recipe.md)
 - [New feature](docs/Contribute/CONTRIBUTING.md#featuresimprovements)
 - [Bugfix](docs/Contribute/CONTRIBUTING.md#bugfixes)
@@ -73,7 +73,7 @@
 # Translations
 
 <a href="https://hosted.weblate.org/engage/cofi/">
-<img src="https://hosted.weblate.org/widgets/cofi/-/multi-auto.svg" alt="Translation status" />
+  <img src="https://hosted.weblate.org/widgets/cofi/-/multi-auto.svg" alt="Translation status" />
 </a>
 
 # License
