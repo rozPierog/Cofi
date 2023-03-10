@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="step_type_add_coffee">Tilsett kaffe</string>
     <string name="step_type_water">Tilsett vann</string>
@@ -104,4 +105,23 @@ Kvernstørrelse: For lysbrent kaffe er en mer finmalt medium bra. For mørkere b
     <string name="infoBox_wearOS_title">Cofi er nå tilgjengelig på WearOS</string>
     <string name="infoBox_wearOS_body">Last ned Cofi appen for din WearOS smartklokke!</string>
     <string name="settings_sync_with_phone">Synkroniser instillinger fra telefonen</string>
+    <string name="name_grinder">Kaffekvern</string>
+    <string name="name_espresso">Espressomaskin</string>
+    <string name="name_vietnamese_press">Phin-filter</string>
+    <string name="name_cold_brew">Kaldbrygget</string>
+    <string name="name_siphon">Vakuumkannekaffe</string>
+    <string name="support_dialog_github">Stjernemerk Cofi på GitHub</string>
+    <string name="support_dialog_mastodon">Følg meg på Mastodon</string>
+    <string name="name_cup">Kopp</string>
+    <string name="infoBox_update_title">Ny versjon av Cofi installert</string>
+    <string name="infoBox_update_body">Klikk her for å lese hva som er nytt</string>
+    <string name="settings_step_next_step_item">Vis neste steg</string>
+    <string name="settings_wearOS_item">Last ned for WearOS</string>
+    <string name="recipe_details_upNext">Neste:</string>
+    <string name="support_dialog_title">Liker du Cofi\?</string>
+    <string name="support_dialog_kofi">Kjøp meg en kaffe</string>
+    <string name="support_dialog_review">Skriv en vurdering</string>
+    <string name="support_title">Støtt Cofi</string>
+    <string name="name_cezve">Cezve</string>
+    <string name="support_dialog_body">Setter stor pris på din støtte. Hjelp meg å holde på med det jeg elsker ved å gjøre én eller flere av følgende</string>
 </resources>
