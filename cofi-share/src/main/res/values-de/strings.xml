@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="step_type_add_coffee">Kaffee hinzufügen</string>
     <string name="step_type_water">Wasser hinzufügen</string>
@@ -100,7 +101,7 @@ Achte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite bef
     <string name="name_cup">Tasse</string>
     <string name="support_dialog_title">Gefällt dir Cofi?</string>
     <string name="support_dialog_body">Ich würde mich sehr über deine Unterstützung freuen! Du kannst mir helfen, weiterhin das zu tun, was ich liebe, indem du eine oder mehrere der folgenden Optionen auswählst:</string>
-    <string name="support_dialog_github">Cofi auf Github bewerten</string>
+    <string name="support_dialog_github">Cofi auf GitHub bewerten</string>
     <string name="support_dialog_mastodon">Mir auf Mastodon folgen</string>
     <string name="support_dialog_kofi">Mir einen Kaffee spendieren</string>
     <string name="support_dialog_review">Eine Bewertung schreiben</string>
