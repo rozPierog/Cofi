@@ -18,7 +18,8 @@
     <string name="recipe_edit_title">Tarifi düzenle</string>
     <string name="recipe_add_new_title">Yeni tarif oluştur</string>
     <string name="recipe_details_automation_dialog_title">Direkt link</string>
-    <string name="recipe_details_automation_dialog_text">Direkt tarife gitmek için bu linki kullanın.  Sabahınızı kolaylaştırmak için Tasker\'da otomasyon görevi oluşturun veya NFC etiketine yazın. UYARI: Bu şekilde tarifi paylaşmazsınız!</string>
+    <string name="recipe_details_automation_dialog_text">Direkt tarife gitmek için bu linki kullanın. Sabahınızı kolaylaştırmak için Tasker\'da otomasyon görevi oluşturun veya NFC etiketine yazın.
+\nUYARI: Bu şekilde tarifi paylaşmazsınız!</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">İptal</string>
@@ -55,15 +56,16 @@ Sıcaklık: daha sıcak daha iyi</string>
     <string name="prepopulate_step_stir_crust">Tortuyu karıştır</string>
     <string name="prepopulate_step_scoop_coffee">Üstteki köpük ve kahve parçalarını alın</string>
     <string name="prepopulate_frenchPress_name">Fransız Baskısı (French Press)</string>
-    <string name="prepopulate_frenchPress_description">Tarifi oluşturan: James- Hoffman Kaynak: https://youtu.be/st571DYYTR8
-Öğütme boyutu: orta
-Son adımın 5 dakikasından sonra dökebilirsiniz ancak ne kadar beklerseniz o kadar iyi olur</string>
+    <string name="prepopulate_frenchPress_description">Tarifi oluşturan: James- Hoffman
+\nKaynak: https://youtu.be/st571DYYTR8
+\nÖğütme boyutu: orta
+\nSon adımın 5 dakikasından sonra dökebilirsiniz ancak ne kadar beklerseniz o kadar iyi olur</string>
     <string name="hoffmann_credits_title">Varsayılan tarifler James Hoffman tarafından</string>
     <string name="hoffmann_credits_subtitle">Onun YouTube kanalına git</string>
     <string name="prepopulate_chemex_name">Chemex</string>
-    <string name="prepopulate_chemex_description">Tarifi oluşturan: James Hoffmann Kaynak: https://youtu.be/ikt-X5x7yoc
-Öğütme boyutu: orta
-Sıcaklık: ne kadar sıcak o kadar iyi olur</string>
+    <string name="prepopulate_chemex_description">Tarifi oluşturan: James Hoffmann
+\nKaynak: https://youtu.be/ikt-X5x7yoc
+\nÖğütme boyutu: orta Sıcaklık: ne kadar sıcak o kadar iyi olur</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Pistonu brewer\'ın 1cm içine koyun</string>
     <string name="prepopulate_aero_step_press">Pistonu yavaşça itin</string>
@@ -84,4 +86,12 @@ Sıcaklık: ne kadar sıcak o kadar iyi olur</string>
     <string name="settings_timer_item">Zamanlayıcı ayarları</string>
     <string name="settings_backup_item">Yedekle/Yenile</string>
     <string name="settings_step_vibrate_item">Adım değiştirdiğinde titreş</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">%d adet tarif yedekten geri yüklendi</item>
+        <item quantity="other">%d adet tarif yedekten geri yüklendi</item>
+    </plurals>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">%d adet tarifin yedeği alındı</item>
+        <item quantity="other">%d adet tarifin yedeği alındı</item>
+    </plurals>
 </resources>
