@@ -1,0 +1,17 @@
+Som entisuastisk kaffedrikker og amatørbarista har jeg alltid vært på jakt etter den perfekte koppen kaffe. Derfor laget jeg dette frie kaffebryggingstidsuret for Android.
+Du kan enkelt ta tiden på dine brygg og treffe smaken perfekt hver gang.
+
+Jeg vet hvor viktig det er å ha full kontroll over bryggetiden, og det er akkurat det dette programmet tilbyr. Om du bruker kaffepresse, kaffetrakter eller en annen metode.
+
+Funksjoner:
+
+- Fritt og gratis å bruke
+- Ingen kunstige begrensninger av hva du kan gjøre med programmet
+- Tidsur for dine kaffebrygg
+- Tilpass tidsinnstillingen for forskjellige bryggemetoder
+- Enkelt brukergrensesnitt med et rent design og det nyeste materielle designet
+- Bilde-i-bilde -modus for fleroppgaveløsning
+- WearOS-program for enkel integrasjon med din smartklokke
+- Ingen sporing eller datainnsamling
+
+Jeg vet hvor frustrerende det kan være å hanskes med en middelmådig kaffe. Derfor vil jeg hjelpe deg å brygge som en proff og få perfekt resultat hver gang.
