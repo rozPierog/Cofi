@@ -1,0 +1,16 @@
+Como apasionado del café y barista aficionado, siempre he estado a la caza de la taza de café perfecta. Por eso he creado el temporizador de preparación de café gratuito y de código abierto para Android. Con esta aplicación, puedes cronometrar fácilmente tus infusiones de café y conseguir siempre el sabor perfecto.
+
+Sé lo importante que es tener un control total sobre el tiempo de preparación, y eso es exactamente lo que ofrece esta aplicación. Si usted está usando una prensa francesa, pour-over, o cualquier otro método de elaboración de la cerveza, nuestra aplicación hace que sea fácil hacer un seguimiento de su tiempo de preparación y lograr el sabor perfecto.
+
+Características:
+
+- De código abierto y de uso gratuito
+- Sin límites artificiales sobre lo que puede añadir a la aplicación
+- Temporizador para tus infusiones de café
+- Ajustes de tiempo personalizables para diferentes métodos de preparación
+- Interfaz fácil de usar con un diseño limpio y el último material design
+- Modo imagen en imagen para multitarea
+- Aplicación WearOS para facilitar el cronometraje en su reloj inteligente
+- Sin ningún tipo de seguimiento del usuario ni recopilación de datos
+
+Sé lo frustrante que puede ser conformarse con una taza de café mediocre. Es por eso que quiero ayudarlo a preparar cerveza como un profesional y disfrutar de la taza perfecta en todo momento. ¡Descarga Cofi ahora y comienza tu viaje hacia la perfección del café!
