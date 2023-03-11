@@ -19,7 +19,7 @@
     <string name="recipe_add_new_title">Crear nueva receta</string>
     <string name="recipe_details_automation_dialog_title">Enlace directo</string>
     <string name="recipe_details_automation_dialog_text">Utilice este enlace para ir directamente a esta receta. Escríbela en una etiqueta NFC o crea una tarea automatizada en Tasker para facilitarte el café de la mañana.
-        ADVERTENCIA: ¡No puedes compartir la receta de esta manera!</string>
+\nADVERTENCIA: ¡No puedes compartir la receta de esta manera!</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Cancelar</string>
@@ -27,7 +27,7 @@
     <string name="button_discard">Descartar</string>
     <string name="button_continue_editing">Seguir editando</string>
     <string name="button_copy">Copiar</string>
-    <string name="snackbar_copied">Copiado</string>
+    <string name="snackbar_copied">¡Copiado!</string>
     <string name="settings_licenses_title">Licencias de código abierto</string>
     <string name="settings_title">Configuración</string>
     <string name="settings_about_item">Acerca de la aplicación</string>
@@ -43,16 +43,18 @@
     <string name="settings_github_item">Repositorio de Github</string>
     <plurals name="settings_snackbar_backup">
         <item quantity="one">Copia de seguridad de la receta %d</item>
-        <item quantity="other">Copia de seguridad de las recetas %d</item>
+        <item quantity="many">Copias de seguridad de las recetas %d</item>
+        <item quantity="other">Copias de seguridad de las recetas %d</item>
     </plurals>
     <plurals name="settings_snackbar_restore">
         <item quantity="one">Receta %d restaurada</item>
+        <item quantity="many">Recetas %d restauradas</item>
         <item quantity="other">Recetas %d restauradas</item>
     </plurals>
     <string name="button_show">Mostrar</string>
     <string name="step_add_remove">Eliminar</string>
     <string name="timer_enjoy">Disfruta de tu café</string>
-    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_name">Último V60</string>
     <string name="prepopulate_v60_description">Receta creada por: James Hoffmann
         Fuente: https://youtu.be/AI4ynXzkSQo
         Tamaño del molido: medio fino
@@ -66,26 +68,24 @@
     <string name="prepopulate_step_scoop_coffee">Recoger la espuma y los trozos de café de la parte superior</string>
     <string name="prepopulate_frenchPress_name">Prensa francesa</string>
     <string name="prepopulate_frenchPress_description">Receta creada por: James Hoffmann
-        Fuente: https://youtu.be/st571DYYTR8
-        Tamaño del molido: medio
-        Se puede servir después de 5min del último paso, pero cuanto más tiempo se mantenga mejor se pone</string>
+\nFuente: https://youtu.be/st571DYYTR8
+\nTamaño del molido: medio
+\nSe puede verter después de 5 minutos del último paso, pero cuanto más tiempo se mantenga mejor se pone</string>
     <string name="hoffmann_credits_title">Recetas predeterminadas de James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Ir a su canal de Youtube</string>
     <string name="prepopulate_chemex_name">Chemex</string>
     <string name="prepopulate_chemex_description">Receta creada por: James Hoffmann
-        Fuente: https://youtu.be/ikt-X5x7yoc
-        Molido: medio fino
-        Temperatura: cuanto más caliente, mejor (especialmente con tostados ligeros)
-        Asegúrese de que la parte más rígida del filtro está en el lado de drenaje
-        Vigila para no bloquear el aire que sale de la cafetera</string>
+\nFuente: https://youtu.be/ikt-X5x7yoc
+\nTamaño del molido: medio fino Temperatura: cuanto más caliente, mejor (especialmente con los tostados más ligeros)
+\nAsegúrese de que la parte más rígida del filtro esté en el lado del drenaje
+\nVigile para no bloquear el aire que sale de la cafetera</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Coloque el pistón 1 cm dentro de la cafetera</string>
     <string name="prepopulate_aero_step_press">Presione suavemente el pistón</string>
     <string name="prepopulate_aero_description">Receta creada por: James Hoffmann
-        Fuente: https://youtu.be/j6VlT_jUVPc
-        Tamaño del molido: Para un tueste ligero, el extremo más fino del medio. Cuanto más oscuro sea, más preferirá
-        aumentar la dosis y engrosar el molido
-        Temperatura: Para tueste claro - llevar a ebullición y utilizar inmediatamente. Para tueste oscuro Para tueste oscuro - 85-90℃</string>
+\nFuente: https://youtu.be/j6VlT_jUVPc
+\nTamaño del grano: Para un tueste ligero, más fino o medio. Cuanto más oscuro sea, preferirá aumentar la dosis y moler más grueso.
+\nTemperatura: Para un tueste claro: se lleva a ebullición y se utiliza inmediatamente. Para el tueste oscuro, 85-90℃</string>
     <string name="tereszkiewicz_credits_title">Icono de la aplicación por: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Echa un vistazo a su Dribbble</string>
     <string name="recipe_create_title">Añadir receta</string>
@@ -106,4 +106,23 @@
     <string name="infoBox_wearOS_title">Cofi ya está en WearOS</string>
     <string name="infoBox_wearOS_body">¡Descarga la aplicación Cofi para tu reloj WearOS!</string>
     <string name="settings_sync_with_phone">Obtener ajustes desde el teléfono</string>
+    <string name="name_grinder">Molinillo de café</string>
+    <string name="name_vietnamese_press">Filtro de phine</string>
+    <string name="name_espresso">Máquina Espresso</string>
+    <string name="name_cold_brew">Cerveza fría</string>
+    <string name="name_siphon">Sifón</string>
+    <string name="name_cezve">Cezve (café turco)</string>
+    <string name="name_cup">Taza</string>
+    <string name="support_dialog_title">¿Te gusta Cofi\?</string>
+    <string name="support_dialog_body">Le agradecería mucho su apoyo. Puedes ayudarme a seguir haciendo lo que me gusta eligiendo una o más de las siguientes opciones</string>
+    <string name="support_dialog_mastodon">Sígueme en Mastodon</string>
+    <string name="support_dialog_kofi">Invítame a un café</string>
+    <string name="support_dialog_review">Escribe una opinión</string>
+    <string name="support_title">Apoyo a Cofi</string>
+    <string name="infoBox_update_title">Cofi ha sido actualizado</string>
+    <string name="infoBox_update_body">Haga clic aquí para leer las novedades</string>
+    <string name="settings_step_next_step_item">Mostrar el paso siguiente</string>
+    <string name="recipe_details_upNext">Próximamente:</string>
+    <string name="settings_wearOS_item">Descargar para WearOS</string>
+    <string name="support_dialog_github">Califique Cofi en GitHub</string>
 </resources>
