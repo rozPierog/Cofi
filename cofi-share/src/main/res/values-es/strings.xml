@@ -27,7 +27,7 @@
     <string name="button_discard">Descartar</string>
     <string name="button_continue_editing">Seguir editando</string>
     <string name="button_copy">Copiar</string>
-    <string name="snackbar_copied">Copiado</string>
+    <string name="snackbar_copied">¡Copiado!</string>
     <string name="settings_licenses_title">Licencias de código abierto</string>
     <string name="settings_title">Configuración</string>
     <string name="settings_about_item">Acerca de la aplicación</string>
@@ -43,16 +43,18 @@
     <string name="settings_github_item">Repositorio de Github</string>
     <plurals name="settings_snackbar_backup">
         <item quantity="one">Copia de seguridad de la receta %d</item>
-        <item quantity="other">Copia de seguridad de las recetas %d</item>
+        <item quantity="many">Copias de seguridad de las recetas %d</item>
+        <item quantity="other">Copias de seguridad de las recetas %d</item>
     </plurals>
     <plurals name="settings_snackbar_restore">
         <item quantity="one">Receta %d restaurada</item>
+        <item quantity="many">Recetas %d restauradas</item>
         <item quantity="other">Recetas %d restauradas</item>
     </plurals>
     <string name="button_show">Mostrar</string>
     <string name="step_add_remove">Eliminar</string>
     <string name="timer_enjoy">Disfruta de tu café</string>
-    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_name">Último V60</string>
     <string name="prepopulate_v60_description">Receta creada por: James Hoffmann
         Fuente: https://youtu.be/AI4ynXzkSQo
         Tamaño del molido: medio fino
