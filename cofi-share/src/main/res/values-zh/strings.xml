@@ -72,12 +72,12 @@ Source: https://youtu.be/st571DYYTR8
     <string name="hoffmann_credits_title">詹姆斯·霍夫曼的默认食谱</string>
     <string name="hoffmann_credits_subtitle">转到他的Youtube频道</string>
     <string name="prepopulate_chemex_name">Chemex手冲</string>
-    <string name="prepopulate_chemex_description">"食谱创建者：詹姆斯·霍夫曼
-Source: https://youtu.be/ikt-X5x7yoc
-研磨尺寸：中细
-温度：越热越好（尤其是烤得越轻）
-确保过滤器最硬的部分位于排水侧
-注意不要阻挡空气从冲泡器中流出"</string>
+    <string name="prepopulate_chemex_description">食谱创建者：詹姆斯·霍夫曼
+\nSource: https://youtu.be/ikt-X5x7yoc
+\n研磨尺寸：中细
+\n温度：越热越好（尤其是烤得越轻
+\n确保过滤器最硬的部分位于排水侧 
+\n注意不要阻挡空气从冲泡器中流出</string>
     <string name="prepopulate_aero_name">爱乐压</string>
     <string name="prepopulate_aero_step_piston">将活塞放入冲泡器1cm</string>
     <string name="prepopulate_aero_step_press">轻轻按压活塞</string>
