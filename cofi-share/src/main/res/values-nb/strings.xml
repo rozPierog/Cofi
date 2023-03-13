@@ -72,12 +72,12 @@ Kaffen er klar 5 minutter etter det siste steget, men smaken blir bedre og bedre
     <string name="hoffmann_credits_title">Standard oppskrifter av James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Gå til hans Youtube kanal</string>
     <string name="prepopulate_chemex_name">Chemex</string>
-    <string name="prepopulate_chemex_description">"Oppskrift av: James Hoffmann
-Kilde: https://youtu.be/ikt-X5x7yoc
-Kvernstørrelse: middels fin
-Temperatur: desto varmere, desto bedre (spesielt for mer lysbrent kaffe)
-Forsikre deg at den tykke siden av filteret er plassert mot helletuten
-Pass på å ikke blokkere noe av luften som kommer ut av enheten</string>
+    <string name="prepopulate_chemex_description">Oppskrift av: James Hoffmann
+\nKilde: https://youtu.be/ikt-X5x7yoc
+\nKvernstørrelse: middels fin
+\nTemperatur: desto varmere, desto bedre (spesielt for mer lysbrent kaffe)
+\nForsikre deg at den tykke siden av filteret er plassert mot helletuten
+\nPass på å ikke blokkere noe av luften som kommer ut av enheten</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Plasser stempelet 1cm nedi enheten</string>
     <string name="prepopulate_aero_step_press">Press forsiktig på stemplet</string>
