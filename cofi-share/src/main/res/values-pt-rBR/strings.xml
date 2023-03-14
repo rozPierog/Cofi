@@ -35,4 +35,9 @@
     <string name="recipe_add_new_title">Criar nova receita</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="recipe_details_multiply_weight">Multiplicador de peso</string>
+    <string name="step_type_wait">Espere</string>
+    <string name="recipe_delete_title">Tem certeza\?</string>
+    <string name="recipe_delete_text">Isto apagará esta receita permanentemente</string>
+    <string name="recipe_unsaved_title">Você tem mudanças não salvas</string>
+    <string name="recipe_unsaved_text">Deseja descartá-las\?</string>
 </resources>
