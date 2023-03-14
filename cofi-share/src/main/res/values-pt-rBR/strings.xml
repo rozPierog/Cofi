@@ -4,7 +4,6 @@
     <string name="step_add_weight">Peso (g)</string>
     <string name="step_type_add_coffee">Adicione café</string>
     <string name="step_type_water">Adicione água</string>
-    <string name="step_type_wait"></string>
     <string name="recipe_details_automation_dialog_title">Link direto</string>
     <string name="button_cancel">Cancelar</string>
     <string name="button_delete">Apagar</string>
