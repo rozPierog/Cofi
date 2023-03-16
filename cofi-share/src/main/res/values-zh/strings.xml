@@ -20,8 +20,8 @@
     <string name="recipe_edit_title">编辑配方</string>
     <string name="recipe_add_new_title">创建新的配方</string>
     <string name="recipe_details_automation_dialog_title">直达链接</string>
-    <string name="recipe_details_automation_dialog_text">"使用此链接直接进入此配方。将其写入NFC标签或在Tasker中创建自动化任务，使您的早晨咖啡更轻松。
-    警告：您不能以这种方式分享食谱！"</string>
+    <string name="recipe_details_automation_dialog_text">使用此链接直接进入此配方。将其写入NFC标签或在Tasker中创建自动化任务，使您的早晨咖啡更轻松。
+\n警告：您不能以这种方式分享食谱！</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">取消</string>
@@ -65,15 +65,15 @@ Source: https://youtu.be/AI4ynXzkSQo
     <string name="prepopulate_step_stir_crust">搅拌混合</string>
     <string name="prepopulate_step_scoop_coffee">从顶部挖出泡沫和咖啡渣</string>
     <string name="prepopulate_frenchPress_name">法压壶</string>
-    <string name="prepopulate_frenchPress_description">"食谱创建者：詹姆斯·霍夫曼
-Source: https://youtu.be/st571DYYTR8
-研磨尺寸：中等
-你可以在最后一步5分钟后倒，但保持时间越长，效果越好"</string>
+    <string name="prepopulate_frenchPress_description">食谱创建者：詹姆斯·霍夫曼
+\n来源：https://youtu.be/st571DYYTR8
+\n研磨尺寸：中等
+\n你可以在最后一步5分钟后倒，但保持时间越长，效果越好</string>
     <string name="hoffmann_credits_title">詹姆斯·霍夫曼的默认食谱</string>
     <string name="hoffmann_credits_subtitle">转到他的Youtube频道</string>
     <string name="prepopulate_chemex_name">Chemex手冲</string>
     <string name="prepopulate_chemex_description">食谱创建者：詹姆斯·霍夫曼
-\nSource: https://youtu.be/ikt-X5x7yoc
+\n来源: https://youtu.be/ikt-X5x7yoc
 \n研磨尺寸：中细
 \n温度：越热越好（尤其是烤得越轻
 \n确保过滤器最硬的部分位于排水侧 
@@ -82,9 +82,9 @@ Source: https://youtu.be/st571DYYTR8
     <string name="prepopulate_aero_step_piston">将活塞放入冲泡器1cm</string>
     <string name="prepopulate_aero_step_press">轻轻按压活塞</string>
     <string name="prepopulate_aero_description">食谱创建者：詹姆斯·霍夫曼
-Source: https://youtu.be/j6VlT_jUVPc
-研磨尺寸：适用于轻度烘烤–介质的较细端。你走得越深，你可能越倾向于增加剂量并使研磨变得粗糙
-温度：用于轻度烘烤–煮沸后立即使用。用于黑暗烘烤–85–90℃</string>
+\n来源: https://youtu.be/j6VlT_jUVPc
+\n研磨尺寸：适用于轻度烘烤–介质的较细端。你走得越深，你可能越倾向于增加剂量并使研磨变得粗糙
+\n温度：用于轻度烘烤–煮沸后立即使用。用于黑暗烘烤–85–90℃</string>
     <string name="tereszkiewicz_credits_title">应用程序图标作者：Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">看看他的Dribble</string>
     <string name="recipe_create_title">添加配方</string>
@@ -95,7 +95,7 @@ Source: https://youtu.be/j6VlT_jUVPc
     <string name="recipe_details_noTime">按开始继续</string>
     <string name="step_add_duration_explainer">步骤持续时间决定一个操作需要多长时间（以秒为单位）。留空以暂停配方，直到准备好为止。</string>
     <string name="settings_backup">Backup</string>
-    <string name="settings_restore">Restore</string>
+    <string name="settings_restore">恢复</string>
     <string name="settings_addDefault">添加默认配方</string>
     <string name="settings_timer_item">计时器设置</string>
     <string name="settings_backup_item">备份/恢复</string>
