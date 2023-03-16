@@ -40,4 +40,15 @@
     <string name="recipe_delete_text">Isto apagará esta receita permanentemente</string>
     <string name="recipe_unsaved_title">Você tem mudanças não salvas</string>
     <string name="recipe_unsaved_text">Deseja descartá-las\?</string>
+    <string name="step_type_other">Outro</string>
+    <string name="prepopulate_step_water">Adicione água</string>
+    <string name="settings_addDefault">Adicionar receitas padrão</string>
+    <string name="recipe_details_noTime">Pressione em iniciar para continuar</string>
+    <string name="recipe_details_multiply_time">Multiplicador de tempo</string>
+    <string name="support_dialog_review">Escrever uma avaliação</string>
+    <string name="settings_step_next_step_item">Mostrar próximo passo</string>
+    <string name="support_title">Apoie o Cofi</string>
+    <string name="infoBox_update_body">Clique aqui para ler o que há de novo</string>
+    <string name="infoBox_update_title">O Cofi foi atualizado</string>
+    <string name="name_cup">Xícara</string>
 </resources>
