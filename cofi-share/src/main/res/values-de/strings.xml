@@ -18,7 +18,8 @@
     <string name="recipe_edit_title">Rezept bearbeiten</string>
     <string name="recipe_add_new_title">Neues Rezept erstellen</string>
     <string name="recipe_details_automation_dialog_title">Direktlink</string>
-    <string name="recipe_details_automation_dialog_text">Verwende diesen Link, um das Rezept direkt aufzurufen. Speichere ihn auf einem NFC-Tag oder erstelle eine Automatisierungsaufgabe in Tasker. WARNUNG: Das Rezept kann auf diese Weise nicht geteilt werden!</string>
+    <string name="recipe_details_automation_dialog_text">Verwende diesen Link, um direkt zu diesem Rezept zu gelangen. Schreibe ihn auf einen NFC-Tag oder erstelle eine Automatisierungsaufgabe in Tasker, um deinen Morgenkaffee einfacher zu machen.
+\nWARNUNG: Du kannst das Rezept auf diese Weise nicht teilen!</string>
     <string name="timer_progress_weight">%1$s g/%2$s g</string>
     <string name="timer_step_name_time">%1$s (%2$s s)</string>
     <string name="button_cancel">Abbrechen</string>
@@ -111,4 +112,12 @@ Schenke frühestens 5 Minuten nach dem letzten Schritt ein. Je länger du wartes
     <string name="settings_step_next_step_item">Nächsten Schritt anzeigen</string>
     <string name="recipe_details_upNext">Als nächstes:</string>
     <string name="settings_wearOS_item">Für WearOS herunterladen</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Es wurde %d Rezept gesichert</item>
+        <item quantity="other">Es wurden %d Rezepte gesichert</item>
+    </plurals>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Es wurde %d Rezept wiederhergestellt</item>
+        <item quantity="other">Es wurden %d Rezepte wiederhergestellt</item>
+    </plurals>
 </resources>
