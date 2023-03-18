@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="timer_progress_weight">%1$sg/%2$sg</string>
-    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="timer_progress_weight">%1$s g/%2$s g</string>
+    <string name="timer_step_name_time">%1$s (%2$s s)</string>
     <string name="step_type_add_coffee">Aggiungi il caffè</string>
     <string name="step_type_water">Aggiungi l\'acqua</string>
     <string name="step_type_wait">Attendi</string>
@@ -16,17 +16,17 @@
     <string name="recipe_edit_description">Descrizione</string>
     <string name="recipe_edit_title">Modifica ricetta</string>
     <string name="recipe_add_new_title">Crea nuova ricetta</string>
-    <string name="recipe_details_automation_dialog_title">Link diretto</string>
-    <string name="recipe_details_automation_dialog_text">Accedi alla ricetta tramite questo link. Crea una tag NFC o un\'attività di automazione in Tasker per rendere più facile il tuo caffè mattutino.
+    <string name="recipe_details_automation_dialog_title">Collegamento diretto</string>
+    <string name="recipe_details_automation_dialog_text">Accedi alla ricetta tramite questo collegamento. Crea un\'etichetta NFC o un\'attività di automazione in Tasker per rendere più facile il tuo caffè mattutino.
 \nATTENZIONE: non puoi condividere la ricetta in questo modo!</string>
     <string name="button_cancel">Annulla</string>
     <string name="button_delete">Elimina</string>
     <string name="button_copy">Copia</string>
     <string name="snackbar_copied">Copiato!</string>
-    <string name="settings_licenses_title">Apri licenze</string>
+    <string name="settings_licenses_title">Licenze codice aperto</string>
     <string name="settings_title">Impostazioni</string>
     <string name="settings_about_item">A proposito dell\'app</string>
-    <string name="settings_pip_item">Picture in picture</string>
+    <string name="settings_pip_item">Immagine nell\'immagine</string>
     <string name="settings_bug_item">Segnala un bug o suggerisci una funzionalità</string>
     <string name="settings_combine_weight_item">Combina il peso</string>
     <string name="settings_combine_weight_all">Combina ogni peso</string>
@@ -59,7 +59,7 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="prepopulate_step_plunge">Immergi appena sotto la superficie e versa</string>
     <string name="prepopulate_step_stir_crust">mescolare la superfice</string>
     <string name="prepopulate_step_scoop_coffee">Raccogli schiuma e pezzetti di caffè dalla parte superiore</string>
-    <string name="prepopulate_frenchPress_name">Pressa Francese</string>
+    <string name="prepopulate_frenchPress_name">Caffettiera a stantuffo</string>
     <string name="hoffmann_credits_subtitle">Vai sul suo canale Youtube</string>
     <string name="prepopulate_chemex_name">Chemex</string>
     <string name="hoffmann_credits_title">Ricette predefinite di James Hoffmann</string>
@@ -67,13 +67,13 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="tereszkiewicz_credits_subtitle">Guarda il suo Dribbble</string>
     <string name="settings_step_sound_item">Emetti un suono tra i passaggi</string>
     <string name="recipe_create_title">Aggiungi ricetta</string>
-    <string name="settings_step_vibrate_item">Modifica vibrazione</string>
-    <string name="settings_backup_item">Backup/Restore</string>
+    <string name="settings_step_vibrate_item">Vibrazione con cambio di passo</string>
+    <string name="settings_backup_item">Backup e ripristino</string>
     <string name="settings_timer_item">Impostazioni Timer</string>
     <string name="prepopulate_aero_description">Ricetta di: James Hoffmann
 \nFonte: https://youtu.be/j6VlT_jUVPc
 \nMacinatura: Per una tostatura leggera – macinatura media. Più il caffè è scuro, più bisogna aumentare la macinatura
-\nTemperatura: Per le tostature chiare – portare ad ebollizione e utilizzare immediatamente. Per le tostature scure – 85-90℃</string>
+\nTemperatura: Per le tostature chiare – portare ad ebollizione e utilizzare immediatamente. Per le tostature scure – 85-90 ℃</string>
     <string name="prepopulate_aero_step_press">Premere il pistone delicatamente</string>
     <string name="prepopulate_aero_step_piston">Inserire il pistone di 1 cm nell\'infusore</string>
     <string name="prepopulate_aero_name">AeroPress</string>
@@ -81,7 +81,7 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="settings_restore">Ripristina</string>
     <string name="settings_backup">Backup</string>
     <string name="step_add_duration_explainer">La durata del passaggio determina la durata dell\'azione (in secondi). Se si vuole creare un passaggio che contiene l\'intera ricetta finché non viene letta, basta lasciare lo spazio vuoto.</string>
-    <string name="recipe_details_noTime">Premi Start per continuare</string>
+    <string name="recipe_details_noTime">Premi Inizia per continuare</string>
     <string name="button_show">Mostra</string>
     <string name="recipe_edit_description_button">Aggiungi descrizione</string>
     <string name="app_version">Versione dell\'app</string>
@@ -93,9 +93,9 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="recipe_unsaved_text">Vuoi scartare la ricetta?</string>
     <string name="recipe_unsaved_title">Alcune modifiche non sono state salvate</string>
     <plurals name="settings_snackbar_backup">
-        <item quantity="one">Ricetta scaricata al %d</item>
-        <item quantity="many">Ricetta scaricata al %d</item>
-        <item quantity="other"></item>
+        <item quantity="one">%d ricetta salvata</item>
+        <item quantity="many">%d ricette salvate</item>
+        <item quantity="other">%d ricette salvate</item>
     </plurals>
     <string name="infoBox_wearOS_title">Cofi è ora disponibile anche su WearOS</string>
     <string name="infoBox_wearOS_body">Scarica l\'app Cofi anche per il tuo smartwatch WearOS!</string>
@@ -120,4 +120,9 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="support_dialog_review">Scrivi una recenzione</string>
     <string name="infoBox_update_title">L\'app Cofi è stata aggiornata</string>
     <string name="settings_wearOS_item">Scarica per WearOS</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">%d ricetta ripristinata</item>
+        <item quantity="many">%d ricette ripristinate</item>
+        <item quantity="other">%d ricette ripristinate</item>
+    </plurals>
 </resources>

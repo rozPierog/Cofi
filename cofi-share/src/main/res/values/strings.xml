@@ -76,7 +76,8 @@ Temperature: the hotter, the better (especially with lighter roasts)"</string>
     <string name="prepopulate_chemex_name">Chemex</string>
     <string name="prepopulate_chemex_description">Recipe created by: James Hoffmann
 \nSource: https://youtu.be/ikt-X5x7yoc
-\nGrind size: medium fine Temperature: the hotter, the better (especially with lighter roasts)
+\nGrind size: medium fine
+\nTemperature: the hotter, the better (especially with lighter roasts)
 \nMake sure that stiffest part of filter is at the drainage side
 \nKeep an eye out not to block air moving out of the brewer</string>
     <string name="prepopulate_aero_name">AeroPress</string>

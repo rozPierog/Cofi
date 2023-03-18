@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="step_type_add_coffee">Voeg koffie toe</string>
     <string name="step_type_water">Voeg water toe</string>
@@ -71,12 +72,12 @@ Je kan het 5 minuten na de laatste stap gieten, maar hoe langer je wacht hoe bet
     <string name="hoffmann_credits_title">Standaard recepten door James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Ga naar zijn Youtube kanaal</string>
     <string name="prepopulate_chemex_name">Chemex</string>
-    <string name="prepopulate_chemex_description">"Recept gemaakt door: James Hoffmann
-Bron: https://youtu.be/ikt-X5x7yoc
-Grind: medium fijn
-Temperature: hoe warmer, hoe beter (zeker met lichtere brandingen)
-Zorg ervoor dat de stijfste kant van de filter langs de gietkant is.
-Let erop dat je de luchtuitgang van het toestel niet blokkeerd."</string>
+    <string name="prepopulate_chemex_description">Recept gemaakt door: James Hoffmann
+\nBron: https://youtu.be/ikt-X5x7yoc
+\nGrind: medium fijn
+\nTemperature: hoe warmer, hoe beter (zeker met lichtere brandingen)
+\nZorg ervoor dat de stijfste kant van de filter langs de gietkant is.
+\nLet erop dat je de luchtuitgang van het toestel niet blokkeerd</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Plaats de piston 1cm in het toestel</string>
     <string name="prepopulate_aero_step_press">Druk licht op de piston</string>

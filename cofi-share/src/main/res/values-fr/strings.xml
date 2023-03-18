@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recipe_add_new_title">Créer une nouvelle recette</string>
+    <string name="step_type_add_coffee">Ajouter du café</string>
+    <string name="recipe_unsaved_text">Voulez-vous les abandonner \?</string>
+    <string name="recipe_delete_title">Êtes-vous sûr·e \?</string>
+    <string name="recipe_delete_text">Ceci supprimera cette recette de manière permanente</string>
+    <string name="recipe_edit_name">Nom</string>
+    <string name="recipe_edit_description">Description</string>
+    <string name="recipe_edit_title">Modifier la recette</string>
+    <string name="settings_pip_item">Image dans l\'image</string>
+    <string name="settings_step_sound_item">Son de changement d\'étape</string>
+    <string name="button_show">Afficher</string>
+    <string name="prepopulate_aero_step_press">Appuyer doucement sur le piston</string>
+    <string name="tereszkiewicz_credits_title">Icône de l\'application par : Hubert Tereszkiewicz</string>
+    <string name="recipe_create_title">Ajouter une recette</string>
+    <string name="step_add_name">Nom</string>
+    <string name="step_add_weight">Poids (g)</string>
+    <string name="name_vietnamese_press">Filtre Phin</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">%d recette restaurée</item>
+        <item quantity="many">%d recettes restaurées</item>
+        <item quantity="other">%d recettes restaurées</item>
+    </plurals>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">%d recette sauvergardée</item>
+        <item quantity="many">%d recettes sauvergardées</item>
+        <item quantity="other">%d recettes sauvergardées</item>
+    </plurals>
+    <string name="step_type_water">Ajouter de l\'eau</string>
+    <string name="step_type_wait">Attendre</string>
+    <string name="step_add_save">Enregistrer</string>
+    <string name="recipe_unsaved_title">Vous avez des changements non sauvegardés</string>
+    <string name="step_type_other">Autre</string>
+    <string name="step_add_duration">Durée (s)</string>
+    <string name="recipe_edit_description_button">Ajouter une description</string>
+    <string name="recipe_details_automation_dialog_title">Lien direct</string>
+    <string name="timer_step_name_time">%1$s (%2$s s)</string>
+    <string name="recipe_details_automation_dialog_text">Utilisez ce lien pour accéder directement à cette recette. Inscrivez-la sur une balise CCP (NFC) ou créez une tâche d\'automatisation dans Tasker pour faciliter votre café du matin.
+\nATTENTION : Vous ne pouvez pas partager la recette de cette manière !</string>
+    <string name="settings_licenses_title">Licences à code ouvert</string>
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_about_item">À propos de l\'appli</string>
+    <string name="timer_progress_weight">%1$s g/%2$s g</string>
+    <string name="button_continue_editing">Poursuivre la modification</string>
+    <string name="button_cancel">Annuler</string>
+    <string name="settings_bug_item">Signaler une erreur ou suggérer une fonctionnalité</string>
+    <string name="button_copy">Copier</string>
+    <string name="settings_combine_weight_item">Combiner le poids</string>
+    <string name="button_delete">Supprimer</string>
+    <string name="button_discard">Abandonner</string>
+    <string name="snackbar_copied">Copié !</string>
+    <string name="settings_combine_weight_all">Combinez tous les poids</string>
+    <string name="settings_combine_weight_water">Combiner uniquement le poids de l\'eau</string>
+    <string name="settings_combine_weight_none">Ne pas combiner les poids</string>
+    <string name="settings_about_title">À propos</string>
+    <string name="settings_licenses_item">Remerciements</string>
+    <string name="settings_github_item">Dépôt GitHub</string>
+    <string name="timer_enjoy">Savourez votre café</string>
+    <string name="prepopulate_step_plunge">Plonger juste en dessous de la surface et verser</string>
+    <string name="step_add_remove">Retirer</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="name_espresso">Machine à expresso</string>
+    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_step_wait">Attendre</string>
+    <string name="prepopulate_step_swirl">Touiller</string>
+    <string name="prepopulate_v60_description">Recette créée par : James Hoffmann Source : https://youtu.be/AI4ynXzkSQo Taille de la mouture : moyennement fine Température : plus c\'est chaud, mieux c\'est (surtout avec les torréfiés légers)</string>
+    <string name="prepopulate_step_coffee">Ajouter du café</string>
+    <string name="prepopulate_step_water">Ajouter de l\'eau</string>
+    <string name="prepopulate_frenchPress_name">Cafetière à piston</string>
+    <string name="prepopulate_step_stir_crust">Remuer la surface</string>
+    <string name="prepopulate_frenchPress_description">Recette créée par : James Hoffmann
+\nSource : https://youtu.be/st571DYYTR8
+\nTaille de mouture : moyenne
+\nVous pouvez verser après 5 minutes de la dernière étape, mais plus vous le gardez, mieux c\'est</string>
+    <string name="prepopulate_step_scoop_coffee">Récupérer la mousse et les morceaux de café sur le dessus</string>
+    <string name="name_cezve">Cezve</string>
+    <string name="infoBox_wearOS_title">Cofi est maintenant sur WearOS</string>
+    <string name="hoffmann_credits_title">Recettes par défaut de James Hoffmann</string>
+    <string name="hoffmann_credits_subtitle">Allez sur sa chaîne YouTube</string>
+    <string name="prepopulate_chemex_description">Recette créée par : James Hoffmann
+\nSource : https://youtu.be/ikt-X5x7yoc
+\nTaille de la mouture : moyennement fine
+\nTempérature : plus c\'est chaud, mieux c\'est (surtout avec les torréfactions légères)
+\nAssurez-vous que la partie la plus rigide du filtre se trouve du côté de l\'évacuation.
+\nVeillez à ne pas bloquer l\'air qui s\'échappe de la cafetière</string>
+    <string name="prepopulate_aero_description">Recette créée par : James Hoffmann
+\nSource : https://youtu.be/j6VlT_jUVPc
+\nTaille de la mouture : Pour une torréfaction légère - la partie la plus fine de la mouture moyenne. Plus la torréfaction est foncée, plus il est préférable d\'augmenter la dose et d\'utiliser une mouture plus grossière.
+\nTempérature : Pour les torréfactions légères - porter à ébullition et utiliser immédiatement. Pour les torréfactions foncées - 85-90 ℃</string>
+    <string name="recipe_details_upNext">Suivant :</string>
+    <string name="recipe_details_noTime">Appuyez sur Démarrer pour continuer</string>
+    <string name="prepopulate_aero_step_piston">Placer le piston à 1 cm dans la cafetière</string>
+    <string name="recipe_clone_suffix">%1$s - Copie</string>
+    <string name="tereszkiewicz_credits_subtitle">Consultez son travail sur Dribbble</string>
+    <string name="recipe_clone_title">Cloner cette recette \?</string>
+    <string name="recipe_clone_text">Ceci créera une copie de cette recette</string>
+    <string name="name_cold_brew">Infusion froide</string>
+    <string name="name_siphon">Siphon</string>
+    <string name="app_version">Version de l\'appli</string>
+    <string name="settings_timer_item">Paramètres de la minuterie</string>
+    <string name="name_grinder">Moulin à café</string>
+    <string name="support_dialog_title">Vous aimez Cofi \?</string>
+    <string name="support_dialog_body">J\'apprécierais beaucoup votre soutien ! Vous pouvez m\'aider à continuer à faire ce que j\'aime en choisissant une ou plusieurs des options suivantes</string>
+    <string name="support_title">Soutenir Cofi</string>
+    <string name="infoBox_update_title">Cofi a été mis à jour</string>
+    <string name="settings_backup">Sauvegarder</string>
+    <string name="name_cup">Tasse</string>
+    <string name="support_dialog_github">Évaluer Cofi sur GitHub</string>
+    <string name="support_dialog_kofi">M\'offrir un café</string>
+    <string name="support_dialog_review">Rédiger une évaluation</string>
+    <string name="infoBox_update_body">Cliquez ici pour lire les nouveautés</string>
+    <string name="settings_step_next_step_item">Afficher l\'étape suivante</string>
+    <string name="settings_wearOS_item">Télécharger pour WearOS</string>
+    <string name="settings_restore">Restaurer</string>
+    <string name="support_dialog_mastodon">Me suivre sur Mastodon</string>
+    <string name="settings_addDefault">Ajouter des recettes par défaut</string>
+    <string name="recipe_details_multiply_time">Multiplicateur de temps</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="settings_step_vibrate_item">Vibrations par paliers</string>
+    <string name="step_add_duration_explainer">La durée de l\'étape détermine la durée de l\'action (en secondes). Laisser vide pour mettre la recette en pause jusqu\'à ce que vous soyez prêt·e.</string>
+    <string name="settings_backup_item">Sauvegarde/Restauration</string>
+    <string name="recipe_details_multiply_weight">Multiplicateur de poids</string>
+    <string name="infoBox_wearOS_body">Téléchargez l\'application Cofi pour votre montre WearOS !</string>
+    <string name="settings_sync_with_phone">Obtenir les paramètres du téléphone</string>
+</resources>

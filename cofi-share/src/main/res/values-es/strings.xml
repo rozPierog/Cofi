@@ -76,7 +76,8 @@
     <string name="prepopulate_chemex_name">Chemex</string>
     <string name="prepopulate_chemex_description">Receta creada por: James Hoffmann
 \nFuente: https://youtu.be/ikt-X5x7yoc
-\nTamaño del molido: medio fino Temperatura: cuanto más caliente, mejor (especialmente con los tostados más ligeros)
+\nTamaño del molido: medio fino
+\nTemperatura: cuanto más caliente, mejor (especialmente con los tostados más ligeros)
 \nAsegúrese de que la parte más rígida del filtro esté en el lado del drenaje
 \nVigile para no bloquear el aire que sale de la cafetera</string>
     <string name="prepopulate_aero_name">AeroPress</string>

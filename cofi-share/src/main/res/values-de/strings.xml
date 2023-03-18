@@ -19,15 +19,15 @@
     <string name="recipe_add_new_title">Neues Rezept erstellen</string>
     <string name="recipe_details_automation_dialog_title">Direktlink</string>
     <string name="recipe_details_automation_dialog_text">Verwende diesen Link, um das Rezept direkt aufzurufen. Speichere ihn auf einem NFC-Tag oder erstelle eine Automatisierungsaufgabe in Tasker. WARNUNG: Das Rezept kann auf diese Weise nicht geteilt werden!</string>
-    <string name="timer_progress_weight">%1$sg/%2$sg</string>
-    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="timer_progress_weight">%1$s g/%2$s g</string>
+    <string name="timer_step_name_time">%1$s (%2$s s)</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_delete">Löschen</string>
     <string name="button_discard">Verwerfen</string>
     <string name="button_continue_editing">Bearbeitung fortsetzen</string>
     <string name="button_copy">Kopieren</string>
     <string name="snackbar_copied">Kopiert!</string>
-    <string name="settings_licenses_title">Open-Source-Lizenzen</string>
+    <string name="settings_licenses_title">Quelloffene Lizenzen</string>
     <string name="settings_title">Einstellungen</string>
     <string name="settings_about_item">Über die App</string>
     <string name="settings_pip_item">Bild-im-Bild</string>
@@ -55,7 +55,7 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="prepopulate_step_plunge">Siebträger bis knapp unter die Wasseroberfläche eintauchen und einschenken</string>
     <string name="prepopulate_step_stir_crust">Umrühren</string>
     <string name="prepopulate_step_scoop_coffee">Schaum und Kaffeepulver von der Oberfläche abschöpfen</string>
-    <string name="prepopulate_frenchPress_name">French Press</string>
+    <string name="prepopulate_frenchPress_name">Pressstempelkanne</string>
     <string name="prepopulate_frenchPress_description">"Rezept erstellt von: James Hoffmann
 Quelle: https://youtu.be/st571DYYTR8
 Mahlgrad: mittel
@@ -63,13 +63,13 @@ Schenke frühestens 5 Minuten nach dem letzten Schritt ein. Je länger du wartes
     <string name="hoffmann_credits_title">Standard-Rezepte von James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Besuche seinen Youtube-Kanal</string>
     <string name="prepopulate_chemex_name">Chemex</string>
-    <string name="prepopulate_chemex_description">"Rezept erstellt von: James Hoffmann
-Quelle: https://youtu.be/ikt-X5x7yoc
-Mahlgrad: mittelfein
-Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)
-Achte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite befindet und die Luft aus dem Brüher strömt."</string>
+    <string name="prepopulate_chemex_description">Rezept erstellt von: James Hoffmann
+\nQuelle: https://youtu.be/ikt-X5x7yoc
+\nMahlgrad: mittelfein
+\nTemperatur: je heißer, desto besser (vor allem bei helleren Röstungen)
+\nAchte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite befindet und die Luft aus dem Brüher strömt</string>
     <string name="prepopulate_aero_name">AeroPress</string>
-    <string name="prepopulate_aero_step_piston">Kolben 1cm in den Brüher stecken</string>
+    <string name="prepopulate_aero_step_piston">Kolben 1 cm in den Brüher stecken</string>
     <string name="prepopulate_aero_step_press">Kolben nur leicht drücken</string>
     <string name="prepopulate_aero_description">Rezept erstellt von: James Hoffmann Quelle: https://youtu.be/j6VlT_jUVPc Mahlgrad: Für leichtere Röstung - Ende von medium. Je dunkler du wirst, desto mehr solltests du möglicherweise die Dosis erhöhen und die Mahltemperatur vergröbern: Für leichte Röstung - aufkochen und direkt verwenden. Für dunkle Röstung – 85–90℃</string>
     <string name="tereszkiewicz_credits_title">App-Icon von: Hubert Tereszkiewicz</string>
@@ -83,7 +83,7 @@ Achte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite bef
     <string name="step_add_duration_explainer">Die Schrittdauer legt fest, wie lange die Aktion dauert (in Sekunden). Um das Rezept zu pausieren, lasse das Feld leer.</string>
     <string name="settings_backup">Sichern</string>
     <string name="settings_restore">Wiederherstellen</string>
-    <string name="settings_addDefault">Standard Rezepte einfügen</string>
+    <string name="settings_addDefault">Standard-Rezepte einfügen</string>
     <string name="settings_timer_item">Timer-Einstellung</string>
     <string name="settings_backup_item">Sichern/Wiederherstellen</string>
     <string name="settings_step_vibrate_item">Vibration beim Schrittwechsel</string>
