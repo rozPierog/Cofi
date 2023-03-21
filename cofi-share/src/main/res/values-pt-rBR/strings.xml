@@ -65,4 +65,6 @@
     <string name="name_vietnamese_press">Filtro Phin</string>
     <string name="name_cold_brew">Cold brew</string>
     <string name="settings_wearOS_item">Download para WearOS</string>
+    <string name="support_dialog_title">Curtindo o Cofi\?</string>
+    <string name="support_dialog_mastodon">Siga-me no Mastodon</string>
 </resources>
