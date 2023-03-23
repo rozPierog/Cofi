@@ -51,4 +51,20 @@
     <string name="infoBox_update_body">Clique aqui para ler o que há de novo</string>
     <string name="infoBox_update_title">O Cofi foi atualizado</string>
     <string name="name_cup">Xícara</string>
+    <string name="step_add_duration">Duração (ões)</string>
+    <string name="settings_combine_weight_item">Combinar peso</string>
+    <string name="settings_bug_item">Reportar um bug ou sugerir um recurso</string>
+    <string name="settings_combine_weight_none">Não combinar peso</string>
+    <string name="settings_pip_item">Picture in picture</string>
+    <string name="settings_step_sound_item">Som de mudança de passo</string>
+    <string name="settings_combine_weight_all">Combinar todos os pesos</string>
+    <string name="settings_combine_weight_water">Combinar apenas com peso da água</string>
+    <string name="hoffmann_credits_title">Receitas padrão por James Hoffmann</string>
+    <string name="hoffmann_credits_subtitle">Ir para seu canal YouTube</string>
+    <string name="name_espresso">Máquina de Expresso</string>
+    <string name="name_vietnamese_press">Filtro Phin</string>
+    <string name="name_cold_brew">Cold brew</string>
+    <string name="settings_wearOS_item">Download para WearOS</string>
+    <string name="support_dialog_title">Curtindo o Cofi\?</string>
+    <string name="support_dialog_mastodon">Siga-me no Mastodon</string>
 </resources>

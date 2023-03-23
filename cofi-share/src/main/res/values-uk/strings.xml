@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="step_type_other">Інше</string>
+    <string name="step_add_name">Ім’я</string>
+    <string name="step_add_duration">Тривалість (с)</string>
+    <string name="step_add_weight">Вага (г)</string>
+    <string name="recipe_unsaved_text">Ви хочете їх викинути\?</string>
+    <string name="recipe_delete_title">Ви впевнені\?</string>
+    <string name="recipe_edit_description_button">Додати опис</string>
+    <string name="recipe_details_automation_dialog_text">Скористайтеся цим посиланням, щоб перейти безпосередньо до цього рецепту. Запишіть його в теґ NFC або створіть завдання автоматизації в Tasker, щоб полегшити ранкову каву.
+\nУВАГА: Ви не можете ділитися рецептом таким чином!</string>
+    <string name="timer_progress_weight">%1$sг/%2$sг</string>
+    <string name="timer_step_name_time">%1$s (%2$sс)</string>
+    <string name="button_cancel">Скасувати</string>
+    <string name="button_delete">Видалити</string>
+    <string name="button_discard">Відхилити</string>
+    <string name="snackbar_copied">Скопійовано!</string>
+    <string name="settings_pip_item">Картинка в картинці</string>
+    <string name="settings_step_sound_item">Крок зміни звуку</string>
+    <string name="settings_bug_item">Повідомити про помилку або запропонувати функцію</string>
+    <string name="settings_combine_weight_item">Комбінована вага</string>
+    <string name="settings_combine_weight_water">Об\'єднувати тільки вагу води</string>
+    <string name="settings_combine_weight_none">Не комбінувати вагу</string>
+    <string name="settings_about_title">Про застосунок</string>
+    <string name="settings_licenses_item">Подяки</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Резервна копія %d рецепту</item>
+        <item quantity="few">Резервна копія %d рецептів</item>
+        <item quantity="many">Резервна копія %d рецептів</item>
+        <item quantity="other">Резервна копія %d рецептів</item>
+    </plurals>
+    <string name="button_show">Показати</string>
+    <string name="step_add_remove">Вилучити</string>
+    <string name="prepopulate_step_coffee">Додати каву</string>
+    <string name="prepopulate_step_water">Додати води</string>
+    <string name="prepopulate_step_swirl">Перемішати</string>
+    <string name="prepopulate_step_wait">Зачекайте</string>
+    <string name="prepopulate_step_plunge">Занурте трохи нижче поверхні і вилийте</string>
+    <string name="prepopulate_step_stir_crust">Перемішати скоринку</string>
+    <string name="prepopulate_step_scoop_coffee">Зачерпніть пінку та кавові крихти зверху</string>
+    <string name="prepopulate_frenchPress_name">French Press</string>
+    <string name="hoffmann_credits_subtitle">Перейти на його Youtube-канал</string>
+    <string name="hoffmann_credits_title">Рецепти за замовчуванням від Джеймса Хофмана</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_aero_step_piston">Помістіть поршень на 1 см у заварник</string>
+    <string name="prepopulate_aero_step_press">Обережно натисніть на поршень</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="tereszkiewicz_credits_title">Іконка застосунку від: Губерт Терешкевич</string>
+    <string name="tereszkiewicz_credits_subtitle">Перевірте його Dribbble</string>
+    <string name="recipe_create_title">Додати рецепт</string>
+    <string name="recipe_clone_title">Клонувати цей рецепт\?</string>
+    <string name="app_version">Версія застосунку</string>
+    <string name="settings_backup">Резервне копіювання</string>
+    <string name="settings_addDefault">Додати рецепти за замовчуванням</string>
+    <string name="settings_timer_item">Налаштування таймера</string>
+    <string name="settings_backup_item">Резервне копіювання/Відновлення</string>
+    <string name="recipe_details_multiply_weight">Множник ваги</string>
+    <string name="infoBox_wearOS_title">Cofi тепер на WearOS</string>
+    <string name="infoBox_wearOS_body">Завантажте застосунок Cofi для вашого годинника WearOS!</string>
+    <string name="settings_sync_with_phone">Отримати налаштування з телефону</string>
+    <string name="name_vietnamese_press">Фільтр Phin</string>
+    <string name="name_espresso">Еспресо машина</string>
+    <string name="name_cold_brew">Холодна заварка</string>
+    <string name="name_siphon">Сифон</string>
+    <string name="name_cup">Кубок</string>
+    <string name="support_dialog_title">Подобається Cofi\?</string>
+    <string name="support_dialog_github">Зірку Cofi на GitHub</string>
+    <string name="support_dialog_kofi">Buy me a coffee</string>
+    <string name="support_dialog_review">Написати відгук</string>
+    <string name="infoBox_update_body">Натисніть тут, щоб прочитати, що нового</string>
+    <string name="settings_step_next_step_item">Показати наступний крок</string>
+    <string name="step_type_add_coffee">Додати каву</string>
+    <string name="step_type_water">Додати води</string>
+    <string name="step_type_wait">Зачекайте</string>
+    <string name="settings_wearOS_item">Завантажити для WearOS</string>
+    <string name="recipe_add_new_title">Створити новий рецепт</string>
+    <string name="step_add_save">Зберегти</string>
+    <string name="recipe_unsaved_title">У вас є незбережені зміни</string>
+    <string name="recipe_delete_text">Цей рецепт буде видалено назавжди</string>
+    <string name="recipe_edit_name">Ім’я</string>
+    <string name="recipe_edit_description">Опис</string>
+    <string name="settings_title">Налаштування</string>
+    <string name="recipe_edit_title">Редагувати рецепт</string>
+    <string name="recipe_details_automation_dialog_title">Пряме посилання</string>
+    <string name="button_continue_editing">Продовжити редагування</string>
+    <string name="button_copy">Копіювати</string>
+    <string name="settings_licenses_title">Ліцензії з відкритим кодом</string>
+    <string name="settings_about_item">Про застосунок</string>
+    <string name="settings_combine_weight_all">Поєднувати кожну вагу</string>
+    <string name="settings_github_item">Репозиторій Github</string>
+    <string name="timer_enjoy">Насолоджуйтесь кавою</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Відновлено %d рецепт</item>
+        <item quantity="few">Відновлено %d рецепти</item>
+        <item quantity="many">Відновлено %d рецептів</item>
+        <item quantity="other">Відновлено %d рецептів</item>
+    </plurals>
+    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="recipe_clone_text">Це створить дублікат цього рецепта</string>
+    <string name="recipe_details_noTime">Натисніть старт, щоб продовжити</string>
+    <string name="prepopulate_aero_description">Рецепт створений: Джеймс Гофманн
+\nДжерело: https://youtu.be/j6VlT_jUVPc
+\nРозмір помелу: Для світлого обсмаження - середньо-дрібний. Чим темніша кава, тим грубіший помел.
+\nТемпература: Для світлого обсмажування - доведіть до кипіння і використовуйте негайно. Для темного обсмажування - 85-90 ℃</string>
+    <string name="recipe_clone_suffix">%1$s - Копіювати</string>
+    <string name="step_add_duration_explainer">Тривалість кроку визначає, скільки часу триватиме дія (в секундах). Залиште порожнім, щоб призупинити рецепт до готовності.</string>
+    <string name="settings_restore">Відновлення</string>
+    <string name="settings_step_vibrate_item">Крок зміни вібрації</string>
+    <string name="recipe_details_multiply_time">Множник часу</string>
+    <string name="name_grinder">Кавомолка</string>
+    <string name="name_cezve">Джезва</string>
+    <string name="support_dialog_body">Я був би дуже вдячний за вашу підтримку! Ви можете допомогти мені продовжувати займатися улюбленою справою, обравши один або декілька з наступних способів</string>
+    <string name="support_title">Підтримка Cofi</string>
+    <string name="support_dialog_mastodon">Слідкуйте за мною на Mastodon</string>
+    <string name="infoBox_update_title">Cofi оновлено</string>
+    <string name="recipe_details_upNext">Далі:</string>
+    <string name="prepopulate_v60_description">Рецепт створив: Джеймс Хофман Джерело: https://youtu.be/AI4ynXzkSQo Розмір помелу: середньо-дрібний Температура: чим гарячіше, тим краще (особливо для легкого смаження)</string>
+    <string name="prepopulate_frenchPress_description">Рецепт створив: Джеймс Хофман
+\nДжерело: https://youtu.be/st571DYYTR8
+\nРозмір помелу: середній
+\nМожна виливати через 5 хвилин після останнього етапу, але чим довше ви тримаєте його, тим краще він стає</string>
+    <string name="prepopulate_chemex_description">Рецепт створив: Джеймс Хофман
+\nДжерело: https://youtu.be/ikt-X5x7yoc
+\nРозмір помелу: середньо-дрібний
+\nТемпература: чим гарячіше, тим краще (особливо для легкого обсмажування)
+\nПереконайтеся, що найжорсткіша частина фільтра знаходиться на стороні зливу
+\nФільтр не повинен ідеально прилягати до стінок з обох боків, повітря має кудись виходити</string>
+</resources>
