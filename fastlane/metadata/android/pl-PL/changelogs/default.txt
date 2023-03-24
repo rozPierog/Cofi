@@ -1,0 +1,11 @@
+### Dodano
+
+- Następny krok będzie teraz wyświetlany przy timerze (można to wyłączyć w ustawieniach)
+- dodano brakujące tłumaczenia na język niemiecki
+- Dodano okno "Wspomóż Cofi", gdy użytkownik kończy swój drugi przepis i w ustawieniach
+- Dodano przycisk do pobrania aplikacji na WearOS w ustawieniach
+- Dodano pole z informacją, że aplikacja została zaktualizowana z linkiem do tego changelogu
+
+### Zmieniono
+
+- Dostosowano dolne arkusze w całej aplikacji, aby były bardziej podobne do motywu Material You
