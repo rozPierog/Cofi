@@ -30,8 +30,6 @@ fun RatioBottomSheet(
         Column(
             modifier = Modifier
                 .waterfallPadding()
-                // TODO: remove me when bottom sheet is fixed on tablets
-                .padding(bottom = Spacing.big + Spacing.medium)
                 .padding(horizontal = Spacing.big),
         ) {
             SheetContent(

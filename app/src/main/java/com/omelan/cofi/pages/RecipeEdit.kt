@@ -407,9 +407,7 @@ fun RecipeEdit(
                 modifier = Modifier
                     .fillMaxWidth()
                     .waterfallPadding()
-                    .safeGesturesPadding()
-                    // TODO: remove me when bottom sheet is fixed on tablets
-                    .padding(bottom = Spacing.big + Spacing.medium),
+                    .safeGesturesPadding(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.Bottom,
             ) {
