@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Material3BottomSheet(
-    sheetState: SheetState = rememberSheetState(skipHalfExpanded = true),
+    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     onDismissRequest: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -29,7 +29,7 @@ fun Material3BottomSheet(
     }
     val modalBottomSheetShapeDp by animateDpAsState(
         targetValue = if (sheetState.targetValue == SheetValue.Hidden) 0.dp else 28.dp,
-        animationSpec = tween(),
+        animationSpec = tween(), label = "Bottom Sheet top radii",
     )
     val modalBottomSheetShape =
         RoundedCornerShape(topEnd = modalBottomSheetShapeDp, topStart = modalBottomSheetShapeDp)

@@ -87,7 +87,7 @@ fun RecipeEdit(
     var showDeleteModal by remember { mutableStateOf(false) }
     var showCloneModal by remember { mutableStateOf(false) }
     var showSaveModal by remember { mutableStateOf(false) }
-    val iconSheetState = rememberSheetState(skipHalfExpanded = true)
+    val iconSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
 
     var showDescription by remember(recipeToEdit.description) {
@@ -126,7 +126,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -210,7 +210,10 @@ fun RecipeEdit(
         }
         item {
             val linkColor = MaterialTheme.colorScheme.secondary
-            AnimatedContent(targetState = showDescription) {
+            AnimatedContent(
+                targetState = showDescription,
+                label = "Description animated content",
+            ) {
                 if (!showDescription) {
                     TextButton(
                         modifier = Modifier.testTag("recipe_edit_description_button"),
@@ -392,11 +395,14 @@ fun RecipeEdit(
         }
     }
     if (iconSheetState.isVisible || iconSheetState.targetValue != SheetValue.Hidden) {
-        Material3BottomSheet(onDismissRequest = {
-            coroutineScope.launch {
-                iconSheetState.hide()
-            }
-        }, sheetState = iconSheetState) {
+        Material3BottomSheet(
+            onDismissRequest = {
+                coroutineScope.launch {
+                    iconSheetState.hide()
+                }
+            },
+            sheetState = iconSheetState,
+        ) {
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
