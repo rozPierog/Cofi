@@ -148,6 +148,11 @@ platform :android do
       `cd .. && ./bin/createScreenshots`
   end
 
+  desc "Removes default.txt changelog"
+  lane :clean_changelog do
+    sh("rm", "-rf", "metadata/android/en-US/changelogs/default.txt")
+  end
+
   desc "Perform deploy for all"
   lane :deploy do
     bump_type = UI.select "How to bump version:", %w{major minor patch don't}
@@ -167,5 +172,6 @@ platform :android do
     deploy_github(prerelease: prerelease)
     deploy_gps(prerelease: prerelease)
     build_instant
+    clean_changelog
   end
 end
