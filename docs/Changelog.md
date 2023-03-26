@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added Hindi translation - Thanks @AmaryllisVFX
 - Added Chinese translation - Thanks @mrz5802
+- Added Ukrainian translation - Thanks @Kefir2105
+- Added French translation - Thanks @J. Lavoie
+- Added Portuguese translation - Thanks @fnogcps
 
 ### Changed
-- Improved German and English translation - Thanks @marcsenn
+- Improved translations
 
 ### Removed
 
