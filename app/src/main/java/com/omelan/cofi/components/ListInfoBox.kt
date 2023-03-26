@@ -51,7 +51,11 @@ fun RecipeListInfoBox(
                     title()
                 }
                 IconButton(onClick = onDismiss) {
-                    Icon(Icons.Rounded.Close, contentDescription = "")
+                    Icon(
+                        Icons.Rounded.Close,
+                        contentDescription = "",
+                        tint = MaterialTheme.colorScheme.onSurface,
+                    )
                 }
             }
             Row(
