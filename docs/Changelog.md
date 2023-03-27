@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.18.1|1.9.1] - 2023-03-26
+
+### Added
 - Added Hindi translation - Thanks @AmaryllisVFX
 - Added Chinese translation - Thanks @mrz5802
 - Added Ukrainian translation - Thanks @Kefir2105
