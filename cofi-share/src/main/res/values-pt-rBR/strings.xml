@@ -76,4 +76,6 @@
     </plurals>
     <string name="prepopulate_frenchPress_name">Prensa Francesa</string>
     <string name="recipe_clone_text">Isto criará uma réplica desta receita</string>
+    <string name="prepopulate_v60_name">Hario V60</string>
+    <string name="settings_backup_item">Backup/Restauração</string>
 </resources>
