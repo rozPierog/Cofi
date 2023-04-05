@@ -67,4 +67,15 @@
     <string name="settings_wearOS_item">Download para WearOS</string>
     <string name="support_dialog_title">Curtindo o Cofi\?</string>
     <string name="support_dialog_mastodon">Siga-me no Mastodon</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">%d Receita restaurada</item>
+        <item quantity="many">%d Receitas restauradas</item>
+        <item quantity="other">%d Receitas restauradas</item>
+    </plurals>
+    <string name="prepopulate_frenchPress_name">Prensa Francesa</string>
+    <string name="recipe_clone_text">Isto criará uma réplica desta receita</string>
+    <string name="prepopulate_v60_name">Hario V60</string>
+    <string name="settings_backup_item">Backup/Restauração</string>
 </resources>
