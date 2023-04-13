@@ -57,10 +57,7 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="prepopulate_step_stir_crust">Umrühren</string>
     <string name="prepopulate_step_scoop_coffee">Schaum und Kaffeepulver von der Oberfläche abschöpfen</string>
     <string name="prepopulate_frenchPress_name">Pressstempelkanne</string>
-    <string name="prepopulate_frenchPress_description">"Rezept erstellt von: James Hoffmann
-Quelle: https://youtu.be/st571DYYTR8
-Mahlgrad: mittel
-Schenke frühestens 5 Minuten nach dem letzten Schritt ein. Je länger du wartest, desto besser wirds."</string>
+    <string name="prepopulate_frenchPress_description">Rezept erstellt von: James Hoffmann Quelle: https://youtu.be/st571DYYTR8 Größe: mittel Du kannst nach 5 Minuten des letzten Schritts abgießen, aber je länger Sie es aufbewahren, desto besser wird es..</string>
     <string name="hoffmann_credits_title">Standard-Rezepte von James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Besuche seinen Youtube-Kanal</string>
     <string name="prepopulate_chemex_name">Chemex</string>

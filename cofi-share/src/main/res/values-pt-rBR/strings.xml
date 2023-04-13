@@ -78,4 +78,7 @@
     <string name="recipe_clone_text">Isto criará uma réplica desta receita</string>
     <string name="prepopulate_v60_name">Hario V60</string>
     <string name="settings_backup_item">Backup/Restauração</string>
+    <string name="settings_backup">Cópia de segurança</string>
+    <string name="support_dialog_github">Curta o Cofi no GitHub</string>
+    <string name="support_dialog_kofi">Compre-me um café</string>
 </resources>
