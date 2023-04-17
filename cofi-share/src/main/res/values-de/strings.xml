@@ -57,7 +57,10 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="prepopulate_step_stir_crust">Umrühren</string>
     <string name="prepopulate_step_scoop_coffee">Schaum und Kaffeepulver von der Oberfläche abschöpfen</string>
     <string name="prepopulate_frenchPress_name">Pressstempelkanne</string>
-    <string name="prepopulate_frenchPress_description">Rezept erstellt von: James Hoffmann Quelle: https://youtu.be/st571DYYTR8 Größe: mittel Du kannst nach 5 Minuten des letzten Schritts abgießen, aber je länger Sie es aufbewahren, desto besser wird es..</string>
+    <string name="prepopulate_frenchPress_description">Rezept erstellt von: James Hoffmann
+\nQuelle: https://youtu.be/st571DYYTR8
+\nMahlgrad: mittel
+\nDu kannst 5 Minuten nach dem letzten Schritt schon einschenken, aber je länger du wartest, desto besser wird es.</string>
     <string name="hoffmann_credits_title">Standard-Rezepte von James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Besuche seinen Youtube-Kanal</string>
     <string name="prepopulate_chemex_name">Chemex</string>
@@ -69,7 +72,10 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Kolben 1 cm in den Brüher stecken</string>
     <string name="prepopulate_aero_step_press">Kolben nur leicht drücken</string>
-    <string name="prepopulate_aero_description">Rezept erstellt von: James Hoffmann Quelle: https://youtu.be/j6VlT_jUVPc Mahlgrad: Für leichtere Röstung - Ende von medium. Je dunkler du wirst, desto mehr solltests du möglicherweise die Dosis erhöhen und die Mahltemperatur vergröbern: Für leichte Röstung - aufkochen und direkt verwenden. Für dunkle Röstung – 85–90℃</string>
+    <string name="prepopulate_aero_description">Rezept erstellt von: James Hoffmann
+\nQuelle: https://youtu.be/j6VlT_jUVPc
+\nMahlgrad: Für eine leichte Röstung - feineres Ende von medium. Je dunkler du gehst, desto mehr kannst du bevorzugen die Dosis zu erhöhen und den Mahlgrad zu vergröbern.
+\nTemperatur: Für eine leichte Röstung - aufkochen und direkt verwenden. Für dunkle Röstung – 85–90℃</string>
     <string name="tereszkiewicz_credits_title">App-Icon von: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Schaue seine Arbeit auf Dribbble an</string>
     <string name="recipe_create_title">Rezept hinzufügen</string>
@@ -98,7 +104,7 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="name_cezve">Cezve</string>
     <string name="name_cup">Tasse</string>
     <string name="support_dialog_title">Gefällt dir Cofi?</string>
-    <string name="support_dialog_body">Ich würde mich sehr über deine Unterstützung freuen! Du kannst mir helfen, weiterhin das zu tun, was ich liebe, indem du eine oder mehrere der folgenden Optionen auswählst:</string>
+    <string name="support_dialog_body">Ich würde mich sehr über deine Unterstützung freuen! Du kannst mir helfen, weiterhin das zu tun, was ich liebe, indem du eine oder mehrere der folgenden Optionen auswählst</string>
     <string name="support_dialog_github">Cofi auf GitHub bewerten</string>
     <string name="support_dialog_mastodon">Mir auf Mastodon folgen</string>
     <string name="support_dialog_kofi">Mir einen Kaffee spendieren</string>
