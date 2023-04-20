@@ -48,7 +48,7 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="prepopulate_frenchPress_description">Ricetta creata da: James Hoffmann
 \nFonte: https://youtu.be/st571DYYTR8
 \nMacinatura: media
-\nIl tuo caffè sarà pronto dopo 5 minuti dall\'ultimo passaggio, ma l\'aroma sarà migliore se infuso più a lungo.</string>
+\nIl tuo caffè sarà pronto dopo 5 minuti dall\'ultimo passaggio, ma l\'aroma sarà migliore se infuso più a lungo</string>
     <string name="prepopulate_chemex_description">Ricetta creata da: James Hoffmann
 \nFonte: https://youtu.be/ikt-X5x7yoc
 \nMacinatura: medio fine
@@ -125,5 +125,5 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
         <item quantity="many">%d ricette ripristinate</item>
         <item quantity="other">%d ricette ripristinate</item>
     </plurals>
-    <string name="recipe_details_upNext">Successivo:</string>
+    <string name="recipe_details_upNext">Prossimo:</string>
 </resources>
