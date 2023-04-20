@@ -248,6 +248,7 @@ class MainActivity : MonetCompatActivity() {
                     db.recipeDao().deleteById(recipeId = recipeId)
                     db.stepDao().deleteAllStepsForRecipe(recipeId = recipeId)
                 }
+                ShortcutManagerCompat.removeDynamicShortcuts(this, listOf(recipeId.toString()))
                 navController.navigate("list") {
                     this.popUpTo("list") {
                         inclusive = true

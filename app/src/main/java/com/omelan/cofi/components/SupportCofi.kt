@@ -80,7 +80,9 @@ fun SupportCofi(onDismissRequest: () -> Unit) {
                 uriHandler.openUri("https://fosstodon.org/@LeonOmelan")
             },
             leadingContent = { Text("🐘") },
-            headlineContent = { Text(text = stringResource(id = R.string.support_dialog_mastodon)) },
+            headlineContent = {
+                Text(text = stringResource(id = R.string.support_dialog_mastodon))
+            },
         )
         when (BuildConfig.FLAVOR) {
             "full" -> ListItem(
@@ -88,7 +90,9 @@ fun SupportCofi(onDismissRequest: () -> Unit) {
                     uriHandler.openUri("https://ko-fi.com/leonomelan")
                 },
                 leadingContent = { Text("☕️") },
-                headlineContent = { Text(text = stringResource(id = R.string.support_dialog_kofi)) },
+                headlineContent = {
+                    Text(text = stringResource(id = R.string.support_dialog_kofi))
+                },
             )
 
             "instant", "playStore" -> ListItem(
@@ -98,7 +102,9 @@ fun SupportCofi(onDismissRequest: () -> Unit) {
                     )
                 },
                 leadingContent = { Text("✍️") },
-                headlineContent = { Text(text = stringResource(id = R.string.support_dialog_review)) },
+                headlineContent = {
+                    Text(text = stringResource(id = R.string.support_dialog_review))
+                },
             )
 
             else -> {}
