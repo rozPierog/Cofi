@@ -11,7 +11,7 @@
     <string name="recipe_unsaved_title">Kaydedilmemiş değişiklikler var</string>
     <string name="recipe_unsaved_text">Çıkarmak istiyor musunuz?</string>
     <string name="recipe_delete_title">Emin misiniz?</string>
-    <string name="recipe_delete_text">Bu tarifi kalıcı olarak kaldıracak.</string>
+    <string name="recipe_delete_text">Bu tarifi kalıcı olarak kaldıracak</string>
     <string name="recipe_edit_name">İsim</string>
     <string name="recipe_edit_description">Açıklama</string>
     <string name="recipe_edit_description_button">Açıklama ekle</string>
@@ -65,12 +65,17 @@ Sıcaklık: daha sıcak daha iyi</string>
     <string name="prepopulate_chemex_name">Chemex</string>
     <string name="prepopulate_chemex_description">Tarifi oluşturan: James Hoffmann
 \nKaynak: https://youtu.be/ikt-X5x7yoc
-\nÖğütme boyutu: orta Sıcaklık: ne kadar sıcak o kadar iyi olur</string>
+\nÖğütme boyutu: orta
+\nSıcaklık: ne kadar sıcak o kadar iyi olur (özellikle hafif kavrulmuş kahvelerde)
+\nFiltrenin en sert kısmının akım tarafında olmasına dikkat edin
+\nÇıkan havayı engellememeye dikkat edin</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Pistonu brewer\'ın 1cm içine koyun</string>
     <string name="prepopulate_aero_step_press">Pistonu yavaşça itin</string>
-    <string name="prepopulate_aero_description">Tarifi oluşturan: James Hoffmann Kaynak: https://youtu.be/j6VlT_jUVPc
-Öğütme boyutu: ortanın hafif üstü</string>
+    <string name="prepopulate_aero_description">Tarifi oluşturan: James Hoffmann
+\nKaynak: https://youtu.be/j6VlT_jUVPc
+\nÖğütme boyutu: hafif kavrulmuş için – ortadan biraz küçük. Daha koyu kavrulmuş kahveler için dozu arttırıp öğütme boyutunu arttırmak isteyebilirsiniz.
+\nSıcaklık: hafif kavrulmuş için – kaynatıp hemen kullanılmalı. Koyu kavrulmuş kahveler için – 85–90℃</string>
     <string name="tereszkiewicz_credits_title">Uygulama iconlarını yapan: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Onun Dribbble\'ına bak</string>
     <string name="recipe_create_title">Tarif ekle</string>
@@ -94,4 +99,28 @@ Sıcaklık: daha sıcak daha iyi</string>
         <item quantity="one">%d adet tarifin yedeği alındı</item>
         <item quantity="other">%d adet tarifin yedeği alındı</item>
     </plurals>
+    <string name="recipe_details_multiply_time">Zaman çarpanı</string>
+    <string name="recipe_details_multiply_weight">Ağırlık çarpanı</string>
+    <string name="infoBox_wearOS_title">Cofi artık WearOS için mevcut</string>
+    <string name="infoBox_wearOS_body">Cofi uygulamasını WearOS saatiniz için indirin!</string>
+    <string name="settings_sync_with_phone">Ayarları telefondan al</string>
+    <string name="name_grinder">Kahve öğütücü</string>
+    <string name="name_vietnamese_press">Phin Filtresi</string>
+    <string name="name_espresso">Espresso Makinesi</string>
+    <string name="name_cold_brew">Soğuk demleme</string>
+    <string name="name_siphon">Sifon</string>
+    <string name="name_cezve">Cezve</string>
+    <string name="name_cup">Fincan</string>
+    <string name="support_dialog_title">Cofi\'yi beğendiniz mi\?</string>
+    <string name="support_dialog_body">Desteğinizden çok memnun olurum! Sevdiğim bu işi yapmama yardım etmek için bunlardan birini seçebilirsiniz</string>
+    <string name="support_dialog_mastodon">Beni Mastodon\'da takip edin</string>
+    <string name="support_dialog_kofi">Bana bir kahve ısmarlayın</string>
+    <string name="support_dialog_review">Yorum yazın</string>
+    <string name="support_title">Cofi\'yi destekleyin</string>
+    <string name="infoBox_update_title">Cofi güncellendi</string>
+    <string name="infoBox_update_body">Nelerin yeni olduğunu görmek için buraya basın</string>
+    <string name="settings_step_next_step_item">Sonraki adımı göster</string>
+    <string name="recipe_details_upNext">Sonraki:</string>
+    <string name="settings_wearOS_item">WearOS için indirin</string>
+    <string name="support_dialog_github">Cofi\'ye Github\'da yıldız verin</string>
 </resources>

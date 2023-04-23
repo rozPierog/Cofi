@@ -29,7 +29,8 @@ fun Material3BottomSheet(
     }
     val modalBottomSheetShapeDp by animateDpAsState(
         targetValue = if (sheetState.targetValue == SheetValue.Hidden) 0.dp else 28.dp,
-        animationSpec = tween(), label = "Bottom Sheet top radii",
+        animationSpec = tween(),
+        label = "Bottom Sheet top radii",
     )
     val modalBottomSheetShape =
         RoundedCornerShape(topEnd = modalBottomSheetShapeDp, topStart = modalBottomSheetShapeDp)

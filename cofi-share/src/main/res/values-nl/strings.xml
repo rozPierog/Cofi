@@ -18,8 +18,8 @@
     <string name="recipe_edit_title">Recept bewerken</string>
     <string name="recipe_add_new_title">Recept toevoegen</string>
     <string name="recipe_details_automation_dialog_title">Directe link</string>
-    <string name="recipe_details_automation_dialog_text">"Gebruik deze link om meteen naar het recept te gaan. Maak een NFC tag ermee, of maak een automatisatie opdracht in Tasker om uw ochtendkoffie eenvoudiger te maken.
-OPGELET: U kan het recept op deze manier niet delen!"</string>
+    <string name="recipe_details_automation_dialog_text">"Gebruik deze link om meteen naar het recept te gaan. Maak een NFC tag ermee, of creëer een automatisatie  taak in Tasker om uw ochtendkoffie eenvoudiger te maken.
+\nOPGELET: U kan het recept op deze manier niet delen!"</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Annuleren</string>
@@ -65,10 +65,10 @@ Temperatuur: hoe warmer, hoe beter (zeker met lichtere brandingen)"</string>
     <string name="prepopulate_step_stir_crust">Roeren</string>
     <string name="prepopulate_step_scoop_coffee">Verwijder schuim en koffieresten van de top</string>
     <string name="prepopulate_frenchPress_name">French Press</string>
-    <string name="prepopulate_frenchPress_description">"Recept gemaakt door: James Hoffmann
-Bron: https://youtu.be/st571DYYTR8
-Grind: medium
-Je kan het 5 minuten na de laatste stap gieten, maar hoe langer je wacht hoe beter."</string>
+    <string name="prepopulate_frenchPress_description">Recept gemaakt door: James Hoffmann
+\nBron: https://youtu.be/st571DYYTR8
+\nMaal grootte: gemiddeld 
+\nJe kan het 5 minuten na de laatste stap gieten, maar hoe langer je wacht hoe beter.</string>
     <string name="hoffmann_credits_title">Standaard recepten door James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Ga naar zijn Youtube kanaal</string>
     <string name="prepopulate_chemex_name">Chemex</string>
@@ -82,9 +82,9 @@ Je kan het 5 minuten na de laatste stap gieten, maar hoe langer je wacht hoe bet
     <string name="prepopulate_aero_step_piston">Plaats de piston 1cm in het toestel</string>
     <string name="prepopulate_aero_step_press">Druk licht op de piston</string>
     <string name="prepopulate_aero_description">Recept gemaakt door: James Hoffmann
-Bron: https://youtu.be/j6VlT_jUVPc
-Grind : Voor een lichte roast - fijne kant van medium. Hoe donkerder je wenst te gaan, hoe groffer je korrel en hoe hoger je dossering dient te zijn.
-Temperatuur: Voor een lichte branding - aan het koken brengen en meteen gebruiken. Voor een donkerdere – 85–90℃</string>
+\nBron: https://youtu.be/j6VlT_jUVPc 
+\nMaal grootte: Voor een lichte roast - fijne kant van medium. Hoe donkerder je wenst te gaan, hoe groffer je korrel en hoe hoger je dossering dient te zijn. 
+\nTemperatuur: Met lichte branding - aan het koken brengen en meteen gebruiken. Met donkerdere branding – 85–90℃</string>
     <string name="tereszkiewicz_credits_title">App icoon door: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Bekijk zijn Dribbble</string>
     <string name="recipe_create_title">Recept toevoegen</string>
@@ -100,4 +100,13 @@ Temperatuur: Voor een lichte branding - aan het koken brengen en meteen gebruike
     <string name="settings_timer_item">Timer instellingen</string>
     <string name="settings_backup_item">Backup/Herstel</string>
     <string name="settings_step_vibrate_item">Stap verandering vibratie</string>
+    <string name="recipe_details_multiply_time">Tijdvermenigvuldiger</string>
+    <string name="recipe_details_multiply_weight">Gewichtsvermenigvuldiger</string>
+    <string name="infoBox_wearOS_title">Gori is nu beschikbaar voor WearOS</string>
+    <string name="infoBox_wearOS_body">Download de Cofi-app voor je WearOS-horloge!</string>
+    <string name="settings_sync_with_phone">Instellingen ophalen van de telefoon</string>
+    <string name="name_grinder">Koffiemolen</string>
+    <string name="name_vietnamese_press">Phin-filter</string>
+    <string name="name_espresso">Espresso machine</string>
+    <string name="name_cold_brew">Koude Brew</string>
 </resources>
