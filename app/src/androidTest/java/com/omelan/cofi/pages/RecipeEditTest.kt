@@ -127,13 +127,13 @@ class RecipeEditTest {
 //        composeTestRule.onNodeWithTag("recipe_edit_description")
 //            .performTextReplacement(expectedRecipe.description)
 //        composeTestRule.onNodeWithText(startingStep.name, useUnmergedTree = true).performClick()
-////        composeTestRule.waitUntil {
-////            composeTestRule
-////                .onAllNodesWithTag(
-////                    "step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}",
-////                )
-////                .fetchSemanticsNodes().size == 1
-////        }
+//        composeTestRule.waitUntil {
+//            composeTestRule
+//                .onAllNodesWithTag(
+//                    "step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}",
+//                )
+//                .fetchSemanticsNodes().size == 1
+//        }
 //        composeTestRule.waitUntilExactlyOneExists(
 //            hasTestTag(
 //                "step_type_button_${expectedStep.type.name.lowercase(Locale.getDefault())}",
