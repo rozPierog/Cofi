@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -14,12 +14,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
-        resConfigs 'en', 'de', 'es', 'it', 'nl', 'pl', 'tr'
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
-        }
+        resConfigs 'en', 'de', 'es', 'fr', 'hi', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'tr', 'uk', 'zh'
     }
 
     buildTypes {
@@ -33,19 +28,40 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+    kotlin {
+        jvmToolchain(17)
     }
     buildFeatures { // Enables Jetpack Compose for this module
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.0"
+        kotlinCompilerExtensionVersion = "1.4.6"
     }
 }
+
+ksp {
+    arg(new RoomSchemaArgProvider(new File(projectDir, "schemas")))
+}
+
+class RoomSchemaArgProvider implements CommandLineArgumentProvider {
+
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    File schemaDir
+
+    RoomSchemaArgProvider(File schemaDir) {
+        this.schemaDir = schemaDir
+    }
+
+    @Override
+    Iterable<String> asArguments() {
+        return ["room.schemaLocation=${schemaDir.path}".toString()]
+    }
+}
+
 
 dependencies {
     implementation platform("androidx.compose:compose-bom:$compose_bom_version")
@@ -61,7 +77,7 @@ dependencies {
 
     api "androidx.room:room-runtime:$room_version"
     api 'androidx.test.ext:junit-ktx:1.1.5'
-    kapt "androidx.room:room-compiler:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
     api "androidx.room:room-ktx:$room_version"
     androidTestApi "androidx.room:room-testing:$room_version"
     androidTestApi "androidx.arch.core:core-testing:2.2.0"
