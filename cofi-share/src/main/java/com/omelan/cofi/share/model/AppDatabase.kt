@@ -49,6 +49,7 @@ val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2, MIGRATION_2_3)
         AutoMigration(from = 4, to = 5),
     ],
     entities = [Recipe::class, Step::class],
+    exportSchema = true,
 )
 @TypeConverters(StepTypeConverter::class, RecipeIconTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {

@@ -32,7 +32,7 @@ android {
         versionCode 130
         versionName "1.9.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs 'en', 'de', 'es', 'it', 'nl', 'nb', 'pl', 'tr'
+        resConfigs 'en', 'de', 'es', 'fr', 'hi', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'tr', 'uk', 'zh'
 
         vectorDrawables {
             useSupportLibrary true
@@ -55,17 +55,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+    kotlin {
+        jvmToolchain(17)
     }
     buildFeatures {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.0'
+        kotlinCompilerExtensionVersion '1.4.6'
     }
     packagingOptions {
         resources {
@@ -88,7 +88,7 @@ dependencies {
     implementation project(path: ':cofi-share')
     implementation platform("androidx.compose:compose-bom:$compose_bom_version")
 
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'com.google.android.gms:play-services-wearable:18.0.0'
     implementation "androidx.wear:wear-remote-interactions:1.0.0"
     implementation "androidx.wear.compose:compose-material:$wear_compose_version"
@@ -100,12 +100,12 @@ dependencies {
     implementation "com.google.accompanist:accompanist-pager:0.28.0"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    implementation 'androidx.activity:activity-compose:1.7.0'
+    implementation 'androidx.activity:activity-compose:1.7.1'
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
     implementation "androidx.wear:wear-input:1.1.0"
     implementation 'androidx.wear:wear:1.2.0'
 
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.0"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.2"
     debugImplementation "androidx.compose.ui:ui-tooling"
     debugImplementation "androidx.compose.ui:ui-test-manifest"
     androidTestImplementation 'androidx.test:core:1.5.0'

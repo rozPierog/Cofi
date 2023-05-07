@@ -85,18 +85,17 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
 
     }
 
-
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.0"
+        kotlinCompilerExtensionVersion = "1.4.6"
     }
     packagingOptions {
         resources {
@@ -157,7 +156,7 @@ dependencies {
 
     // Material Design
     implementation "androidx.compose.material:material"
-    implementation "androidx.compose.material3:material3:1.1.0-beta01"
+    implementation "androidx.compose.material3:material3:1.1.0-rc01"
     implementation "androidx.compose.material3:material3-window-size-class"
 
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
@@ -173,10 +172,10 @@ dependencies {
     implementation "com.google.accompanist:accompanist-navigation-animation:0.26.4-beta"
     implementation "androidx.compose.animation:animation-graphics"
 
-    implementation "androidx.activity:activity-compose:1.7.0"
+    implementation "androidx.activity:activity-compose:1.7.1"
 
     // UI Tests
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.0"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.2"
     testImplementation 'junit:junit:4.13.2'
 }
 
