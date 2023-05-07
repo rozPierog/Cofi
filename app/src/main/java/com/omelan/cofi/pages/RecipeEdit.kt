@@ -297,7 +297,7 @@ fun RecipeEdit(
                 StepListItem(
                     step = step,
                     stepProgress = StepProgress.Upcoming,
-                    onLongClick = { stepWithOpenEditor = it },
+                    onClick = { stepWithOpenEditor = it },
                 )
             }
         }

@@ -45,6 +45,7 @@ fun StepListItem(
     weightMultiplier: Float = 1.0f,
     timeMultiplier: Float = 1.0f,
     onLongClick: ((Step) -> Unit)? = null,
+    onClick: ((Step) -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val icon = AnimatedImageVector.animatedVectorResource(R.drawable.step_done_anim)
@@ -62,18 +63,22 @@ fun StepListItem(
             .heightIn(min = 42.dp)
             .combinedClickable(
                 onClick = {
-                    onLongClick?.let {
-                        Toast
-                            .makeText(
-                                context,
-                                R.string.recipe_details_change_step_toast,
-                                Toast.LENGTH_SHORT,
-                            )
-                            .show()
+                    if (onClick == null) {
+                        onLongClick?.let {
+                            Toast
+                                .makeText(
+                                    context,
+                                    R.string.recipe_details_change_step_toast,
+                                    Toast.LENGTH_SHORT,
+                                )
+                                .show()
+                        }
+                    } else {
+                        onClick(step)
                     }
                 },
                 onLongClick = { onLongClick?.let { it(step) } },
-                enabled = onLongClick != null,
+                enabled = onLongClick != null || onClick != null,
                 role = Role.Button,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(bounded = true),
