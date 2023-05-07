@@ -70,6 +70,7 @@ platform :android do
     end
     unreleased_changelog = sections.join("\n")
     UI.important unreleased_changelog
+    Dir.mkdir("metadata/android/en-US/changelogs") unless Dir.exist?("metadata/android/en-US/changelogs")
     File.open("metadata/android/en-US/changelogs/default.txt", "w") { |f| f.write unreleased_changelog }
 
     changelog_md_file = File.open("../docs/Changelog.md")
