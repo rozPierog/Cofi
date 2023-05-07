@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Shortcuts will now get removed when removing the recipe
+- Changing steps during recipe now requires a long press
 
 ### Removed
 
