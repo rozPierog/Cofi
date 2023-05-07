@@ -264,7 +264,7 @@ fun RecipeDetails(
                     indexOfCurrentStep == index -> StepProgress.Current
                     else -> StepProgress.Upcoming
                 },
-                onClick = { newStep: Step ->
+                onLongClick = { newStep: Step ->
                     coroutineScope.launch {
                         if (newStep == currentStep.value) {
                             return@launch

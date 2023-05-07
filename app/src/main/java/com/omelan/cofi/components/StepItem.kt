@@ -1,12 +1,17 @@
-@file:OptIn(ExperimentalAnimationGraphicsApi::class, ExperimentalAnimationGraphicsApi::class)
+@file:OptIn(
+    ExperimentalAnimationGraphicsApi::class,
+    ExperimentalFoundationApi::class,
+)
 
 package com.omelan.cofi.components
 
+import android.widget.Toast
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ripple.rememberRipple
@@ -16,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,8 +44,9 @@ fun StepListItem(
     stepProgress: StepProgress,
     weightMultiplier: Float = 1.0f,
     timeMultiplier: Float = 1.0f,
-    onClick: ((Step) -> Unit)? = null,
+    onLongClick: ((Step) -> Unit)? = null,
 ) {
+    val context = LocalContext.current
     val icon = AnimatedImageVector.animatedVectorResource(R.drawable.step_done_anim)
     var atEnd by remember { mutableStateOf(false) }
     val painter = when (stepProgress) {
@@ -53,9 +60,20 @@ fun StepListItem(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 42.dp)
-            .clickable(
-                onClick = { onClick?.let { it(step) } },
-                enabled = onClick != null,
+            .combinedClickable(
+                onClick = {
+                    onLongClick?.let {
+                        Toast
+                            .makeText(
+                                context,
+                                R.string.recipe_details_change_step_toast,
+                                Toast.LENGTH_SHORT,
+                            )
+                            .show()
+                    }
+                },
+                onLongClick = { onLongClick?.let { it(step) } },
+                enabled = onLongClick != null,
                 role = Role.Button,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(bounded = true),
@@ -85,7 +103,7 @@ fun StepListItem(
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(horizontal = Spacing.small),
 
-            )
+                )
         }
         if (step.time != null) {
             Text(
@@ -105,8 +123,8 @@ fun StepListItemPreview() {
         step = Step(
             id = 0,
             name = "Somebody once told me the world is gonna roll me I ain't the sharpest " +
-                "tool in the shed She was looking kind of dumb with her finger and her thumb " +
-                "In the shape of an \"L\" on her forehead",
+                    "tool in the shed She was looking kind of dumb with her finger and her thumb " +
+                    "In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
             value = 60.0f,

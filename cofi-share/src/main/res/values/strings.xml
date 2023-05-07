@@ -129,4 +129,5 @@ Temperature: the hotter, the better (especially with lighter roasts)"</string>
     <string name="settings_step_next_step_item">Show next step</string>
     <string name="recipe_details_upNext">Up next:</string>
     <string name="settings_wearOS_item">Download for WearOS</string>
+    <string name="recipe_details_change_step_toast">Press and hold to change step</string>
 </resources>
