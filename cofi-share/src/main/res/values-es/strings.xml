@@ -126,4 +126,5 @@
     <string name="recipe_details_upNext">Próximamente:</string>
     <string name="settings_wearOS_item">Descargar para WearOS</string>
     <string name="support_dialog_github">Califique Cofi en GitHub</string>
+    <string name="recipe_details_change_step_toast">Manten pulsado para cambiar de paso</string>
 </resources>
