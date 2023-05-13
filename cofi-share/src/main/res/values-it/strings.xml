@@ -126,4 +126,5 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
         <item quantity="other">%d ricette ripristinate</item>
     </plurals>
     <string name="recipe_details_upNext">Prossimo:</string>
+    <string name="recipe_details_change_step_toast">Tieni premuto per cambiare passo</string>
 </resources>
