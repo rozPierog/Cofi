@@ -123,4 +123,5 @@
     <string name="recipe_details_multiply_weight">Multiplicateur de poids</string>
     <string name="infoBox_wearOS_body">Téléchargez l\'application Cofi pour votre montre WearOS !</string>
     <string name="settings_sync_with_phone">Obtenir les paramètres du téléphone</string>
+    <string name="recipe_details_change_step_toast">Appuyer et maintenir pour changer d\'étape</string>
 </resources>
