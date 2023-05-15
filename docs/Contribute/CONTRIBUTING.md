@@ -9,7 +9,7 @@ Cofi is built using **Jetpack Compose**
 
 To fully use **Jetpack Compose** you need [Android Studio Arctic Fox 2020.3.1](https://developer.android.com/studio/preview/features#2020.3.1) or higher.
 
-Android Studio 2020.3.1+ forces use of [Gradle Plugin 7.0+](https://android-developers.googleblog.com/2020/12/announcing-android-gradle-plugin.html) and that means that **Java 11 is required**
+ **Java 19 is required**
 
 # Bugfixes
 
