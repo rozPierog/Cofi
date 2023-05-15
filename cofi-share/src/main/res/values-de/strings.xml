@@ -60,7 +60,7 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="prepopulate_frenchPress_description">Rezept erstellt von: James Hoffmann
 \nQuelle: https://youtu.be/st571DYYTR8
 \nMahlgrad: mittel
-\nDu kannst 5 Minuten nach dem letzten Schritt schon einschenken, aber je länger du wartest, desto besser wird es.</string>
+\nDu kannst 5 Minuten nach dem letzten Schritt schon einschenken, aber je länger du wartest, desto besser wird es</string>
     <string name="hoffmann_credits_title">Standard-Rezepte von James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Besuche seinen Youtube-Kanal</string>
     <string name="prepopulate_chemex_name">Chemex</string>
@@ -123,4 +123,5 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
         <item quantity="one">Es wurde %d Rezept wiederhergestellt</item>
         <item quantity="other">Es wurden %d Rezepte wiederhergestellt</item>
     </plurals>
+    <string name="recipe_details_change_step_toast">Gedrückt halten, um den Schritt zu ändern</string>
 </resources>
