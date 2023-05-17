@@ -123,4 +123,5 @@ Sıcaklık: daha sıcak daha iyi</string>
     <string name="recipe_details_upNext">Sonraki:</string>
     <string name="settings_wearOS_item">WearOS için indirin</string>
     <string name="support_dialog_github">Cofi\'ye Github\'da yıldız verin</string>
+    <string name="recipe_details_change_step_toast">Adımı değiştirmek için basılı tutun</string>
 </resources>
