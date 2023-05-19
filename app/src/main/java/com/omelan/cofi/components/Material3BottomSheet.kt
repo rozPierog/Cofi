@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 
@@ -68,6 +69,7 @@ fun Material3BottomSheet(
     Box(
         Modifier
             .fillMaxSize()
+            .zIndex(3f)
             .drawBehind {
                 drawRect(color = scrimColor, alpha = scrimAlpha)
             },
