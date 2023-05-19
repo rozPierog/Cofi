@@ -128,4 +128,5 @@ Temperature: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)"</strin
     <string name="recipe_details_upNext">Następny krok:</string>
     <string name="settings_wearOS_item">Pobierz na WearOS</string>
     <string name="name_cezve">Dżezwa</string>
+    <string name="recipe_details_change_step_toast">Naciśnij i przytrzymaj, aby zmienić krok</string>
 </resources>
