@@ -16,8 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3BottomSheet
+import com.omelan.cofi.share.utils.roundToDecimals
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.utils.roundToDecimals
 import kotlin.math.roundToInt
 
 @Composable

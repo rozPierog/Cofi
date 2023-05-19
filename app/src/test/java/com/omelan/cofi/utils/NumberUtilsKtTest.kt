@@ -1,5 +1,9 @@
 package com.omelan.cofi.utils
 
+import com.omelan.cofi.share.utils.ensureNumbersOnly
+import com.omelan.cofi.share.utils.safeToInt
+import com.omelan.cofi.share.utils.toMillis
+import com.omelan.cofi.share.utils.toStringDuration
 import junit.framework.TestCase
 
 class NumberUtilsKtTest : TestCase() {

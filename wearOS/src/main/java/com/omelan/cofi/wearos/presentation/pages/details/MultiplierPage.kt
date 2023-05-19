@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Stepper
 import androidx.wear.compose.material.Text
-import com.omelan.cofi.utils.roundToDecimals
+import com.omelan.cofi.share.utils.roundToDecimals
 import com.omelan.cofi.wearos.R
 import kotlin.math.roundToInt
 

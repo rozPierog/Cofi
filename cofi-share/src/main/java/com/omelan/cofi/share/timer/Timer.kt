@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.utils.Haptics
-import com.omelan.cofi.utils.roundToDecimals
+import com.omelan.cofi.share.utils.roundToDecimals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

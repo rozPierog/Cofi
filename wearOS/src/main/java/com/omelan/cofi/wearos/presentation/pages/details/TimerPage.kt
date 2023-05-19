@@ -181,6 +181,7 @@ fun TimerPage(
                         )
                         StepNameText(
                             currentStep = currentStep.value!!,
+                            timeMultiplier = timeMultiplier,
                             color = MaterialTheme.colors.onSurface,
                             style = MaterialTheme.typography.title3,
                             maxLines = 1,

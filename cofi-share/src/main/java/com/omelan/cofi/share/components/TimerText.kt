@@ -20,9 +20,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.Step
-import com.omelan.cofi.utils.roundToDecimals
-import com.omelan.cofi.utils.toStringDuration
-import com.omelan.cofi.utils.toStringShort
+import com.omelan.cofi.share.utils.roundToDecimals
+import com.omelan.cofi.share.utils.toStringDuration
+import com.omelan.cofi.share.utils.toStringShort
 import kotlin.math.roundToInt
 
 @Composable
@@ -43,6 +43,7 @@ fun ColumnScope.TimerValue(
             transitionSpec = slideUpDown { target, initial ->
                 (target.orderInRecipe ?: 0) > (initial.orderInRecipe ?: 0)
             },
+            label = "animated_timer_value",
         ) {
             val currentStepValue = it.value ?: return@AnimatedContent
             val currentValueFromProgress = remember(currentStepValue, animatedProgressValue) {
@@ -89,6 +90,7 @@ fun ColumnScope.TimerValue(
 @Composable
 fun StepNameText(
     currentStep: Step,
+    timeMultiplier: Float = 1f,
     color: Color,
     style: TextStyle,
     maxLines: Int,
@@ -103,13 +105,14 @@ fun StepNameText(
         transitionSpec = slideUpDown { target, initial ->
             (target.orderInRecipe ?: 0) > (initial.orderInRecipe ?: 0)
         },
+        label = "animated_timer_text",
     ) {
         Text(
             text = if (it.time != null) {
                 stringResource(
                     id = R.string.timer_step_name_time,
                     it.name,
-                    it.time / 1000,
+                    ((it.time * timeMultiplier) / 1000).toStringShort(),
                 )
             } else {
                 it.name

@@ -2,7 +2,7 @@ package com.omelan.cofi.share.model
 
 import android.content.Context
 import com.omelan.cofi.share.*
-import com.omelan.cofi.utils.toMillis
+import com.omelan.cofi.share.utils.toMillis
 
 class PrepopulateData(context: Context) {
     private val resources = context.resources

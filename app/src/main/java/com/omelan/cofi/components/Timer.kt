@@ -185,6 +185,7 @@ fun Timer(
                     Divider()
                     StepNameText(
                         currentStep = currentStep,
+                        timeMultiplier = timeMultiplier,
                         color = MaterialTheme.colorScheme.onSurface,
                         style = if (isInPiP) {
                             MaterialTheme.typography.titleSmall

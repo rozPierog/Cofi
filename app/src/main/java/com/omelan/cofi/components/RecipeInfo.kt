@@ -24,10 +24,10 @@ import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.StepType
+import com.omelan.cofi.share.utils.toMillis
+import com.omelan.cofi.share.utils.toStringDuration
+import com.omelan.cofi.share.utils.toStringShort
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.utils.toMillis
-import com.omelan.cofi.utils.toStringDuration
-import com.omelan.cofi.utils.toStringShort
 import kotlin.math.roundToInt
 
 private data class CoffeeWaterTime(

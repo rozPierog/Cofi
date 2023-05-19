@@ -40,8 +40,12 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.omelan.cofi.R
 import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.StepType
+import com.omelan.cofi.share.utils.ensureNumbersOnly
+import com.omelan.cofi.share.utils.safeToInt
+import com.omelan.cofi.share.utils.toMillis
+import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.utils.*
+import com.omelan.cofi.utils.requestFocusSafer
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
 

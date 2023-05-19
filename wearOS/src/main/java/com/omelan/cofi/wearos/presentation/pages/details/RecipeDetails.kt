@@ -25,7 +25,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.timer.Timer
-import com.omelan.cofi.utils.toStringDuration
+import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
 import com.omelan.cofi.wearos.presentation.pages.details.MultiplierPage
