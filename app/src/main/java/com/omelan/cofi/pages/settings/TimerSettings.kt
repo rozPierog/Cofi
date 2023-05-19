@@ -185,7 +185,7 @@ fun TimerSettings(goBack: () -> Unit) {
                         )
                     },
                     modifier = Modifier
-                        .settingsItemModifier(onClick = toggleStepChangeVibration)
+                        .settingsItemModifier(onClick = toggleNextStep)
                         .testTag("settings_timer_list_item_nextStep"),
                     trailing = {
                         Switch(
