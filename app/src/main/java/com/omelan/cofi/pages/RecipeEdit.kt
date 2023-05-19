@@ -14,7 +14,7 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
@@ -126,7 +126,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -412,32 +412,45 @@ fun RecipeEdit(
                 verticalAlignment = Alignment.Bottom,
             ) {
                 RecipeIcon.values().map {
+                    val tooltipState = remember { PlainTooltipState() }
                     // TODO: Revisit tooltips later, for now it makes app sluggish
-//                    PlainTooltipBox(tooltip = { Text(stringResource(id = it.nameResId)) }) {
+
                     Box(
                         modifier = Modifier
                             .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
                             .aspectRatio(1f)
                             .clip(CircleShape)
-                            .clickable(role = Role.Button) {
-                                coroutineScope.launch {
-                                    launch {
-                                        iconSheetState.hide()
+                            .combinedClickable(
+                                role = Role.Button,
+                                onClick = {
+                                    coroutineScope.launch {
+                                        launch {
+                                            iconSheetState.hide()
+                                        }
+                                        pickedIcon = it
                                     }
-                                    pickedIcon = it
-                                }
-                            },
+                                },
+                                onLongClick = {
+                                    coroutineScope.launch {
+                                        tooltipState.show()
+                                    }
+                                },
+                            ),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Icon(
-                            painter = painterResource(id = it.icon),
-                            tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = it.name,
-                            modifier = Modifier.size(36.dp),
-                        )
+                        PlainTooltipBox(
+                            tooltip = { Text(stringResource(id = it.nameResId)) },
+                            tooltipState = tooltipState,
+                        ) {
+                            Icon(
+                                painter = painterResource(id = it.icon),
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                contentDescription = it.name,
+                                modifier = Modifier.size(36.dp),
+                            )
+                        }
                     }
                 }
-//                }
             }
         }
     }
