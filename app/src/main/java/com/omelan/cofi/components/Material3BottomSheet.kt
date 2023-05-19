@@ -2,6 +2,7 @@
 
 package com.omelan.cofi.components
 
+import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -12,12 +13,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 
 @Composable
@@ -45,20 +49,38 @@ fun Material3BottomSheet(
     )
     val modalBottomSheetShape =
         RoundedCornerShape(topEnd = modalBottomSheetShapeDp, topStart = modalBottomSheetShapeDp)
+    // TODO: remove me when material 3 starts respecting navigation bar
     val scrimColor = MaterialTheme.colorScheme.scrim
+    val contentColor = MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
+    val systemUiController = rememberSystemUiController()
+    val window = (LocalContext.current as Activity).window
+    DisposableEffect(sheetState.currentValue) {
+        val oldNavColor = Color(window.navigationBarColor)
+        if (sheetState.currentValue != SheetValue.Hidden) {
+            systemUiController.setNavigationBarColor(contentColor)
+        } else {
+            systemUiController.setNavigationBarColor(oldNavColor)
+        }
+        onDispose {
+            systemUiController.setNavigationBarColor(oldNavColor)
+        }
+    }
     Box(
-        Modifier.fillMaxSize().drawBehind {
-            drawRect(color = scrimColor, alpha = scrimAlpha)
+        Modifier
+            .fillMaxSize()
+            .drawBehind {
+                drawRect(color = scrimColor, alpha = scrimAlpha)
 
-        },
+            },
     ) {
-        ModalBottomSheet(
-            onDismissRequest = onDismissRequest,
-            shape = modalBottomSheetShape,
-            sheetState = sheetState,
-            content = content,
-            scrimColor = Color.Transparent,
-        )
+            ModalBottomSheet(
+                onDismissRequest = onDismissRequest,
+                shape = modalBottomSheetShape,
+                sheetState = sheetState,
+                content = content,
+                scrimColor = Color.Transparent,
+//                modifier = Modifier.offset(y = 70.dp)
+                )
     }
 
 }
