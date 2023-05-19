@@ -18,8 +18,8 @@
     <string name="recipe_edit_title">Recept bewerken</string>
     <string name="recipe_add_new_title">Recept toevoegen</string>
     <string name="recipe_details_automation_dialog_title">Directe link</string>
-    <string name="recipe_details_automation_dialog_text">"Gebruik deze link om meteen naar het recept te gaan. Maak een NFC tag ermee, of creëer een automatisatie  taak in Tasker om uw ochtendkoffie eenvoudiger te maken.
-\nOPGELET: U kan het recept op deze manier niet delen!"</string>
+    <string name="recipe_details_automation_dialog_text">Gebruik deze link om meteen naar het recept te gaan. Maak een NFC tag ermee, of creëer een automatisatie taak in Tasker om uw ochtendkoffie eenvoudiger te maken.
+\nOPGELET: U kan het recept op deze manier niet delen!</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Annuleren</string>
@@ -52,7 +52,7 @@
     <string name="button_show">Toon</string>
     <string name="step_add_remove">Verberg</string>
     <string name="timer_enjoy">Geniet van uw koffie</string>
-    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_name">Ultieme V60</string>
     <string name="prepopulate_v60_description">"Recept gemaakt door: James Hoffmann
 Bron: https://youtu.be/AI4ynXzkSQo
 Grind: medium fijn
@@ -67,8 +67,8 @@ Temperatuur: hoe warmer, hoe beter (zeker met lichtere brandingen)"</string>
     <string name="prepopulate_frenchPress_name">French Press</string>
     <string name="prepopulate_frenchPress_description">Recept gemaakt door: James Hoffmann
 \nBron: https://youtu.be/st571DYYTR8
-\nMaal grootte: gemiddeld 
-\nJe kan het 5 minuten na de laatste stap gieten, maar hoe langer je wacht hoe beter.</string>
+\nMaal grootte: gemiddeld
+\nJe kan het 5 minuten na de laatste stap gieten, maar hoe langer je wacht hoe beter</string>
     <string name="hoffmann_credits_title">Standaard recepten door James Hoffmann</string>
     <string name="hoffmann_credits_subtitle">Ga naar zijn Youtube kanaal</string>
     <string name="prepopulate_chemex_name">Chemex</string>
@@ -109,4 +109,20 @@ Temperatuur: hoe warmer, hoe beter (zeker met lichtere brandingen)"</string>
     <string name="name_vietnamese_press">Phin-filter</string>
     <string name="name_espresso">Espresso machine</string>
     <string name="name_cold_brew">Koude Brew</string>
+    <string name="infoBox_update_body">Klik hier om te lezen wat er nieuw is</string>
+    <string name="settings_step_next_step_item">Toon volgende stap</string>
+    <string name="support_dialog_review">Schrijf een beoordeling</string>
+    <string name="support_title">Steun Cofi</string>
+    <string name="infoBox_update_title">Cofi is bijgewerkt</string>
+    <string name="recipe_details_upNext">Volgende:</string>
+    <string name="settings_wearOS_item">Downloaden voor WearOS</string>
+    <string name="name_siphon">Overhevelen</string>
+    <string name="name_cezve">Cez</string>
+    <string name="name_cup">Beker</string>
+    <string name="support_dialog_title">Geniet je van Cofi\?</string>
+    <string name="support_dialog_body">Ik zou uw steun zeer op prijs stellen! U kunt mij helpen te blijven doen waar ik van hou door een of meer van de volgende dingen te kiezen</string>
+    <string name="support_dialog_mastodon">Volg mij op Mastodon</string>
+    <string name="support_dialog_kofi">Koop een koffie voor me</string>
+    <string name="support_dialog_github">Star Cofi op GitHub</string>
+    <string name="recipe_details_change_step_toast">Ingedrukt houden om van stap te veranderen</string>
 </resources>
