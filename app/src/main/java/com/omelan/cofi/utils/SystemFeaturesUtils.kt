@@ -4,7 +4,6 @@ import android.app.AppOpsManager
 import android.content.Context
 import android.os.Build
 
-
 fun checkPiPPermission(context: Context): Boolean {
     val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
     return when {

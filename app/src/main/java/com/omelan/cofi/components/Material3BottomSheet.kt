@@ -70,17 +70,14 @@ fun Material3BottomSheet(
             .fillMaxSize()
             .drawBehind {
                 drawRect(color = scrimColor, alpha = scrimAlpha)
-
             },
     ) {
-            ModalBottomSheet(
-                onDismissRequest = onDismissRequest,
-                shape = modalBottomSheetShape,
-                sheetState = sheetState,
-                content = content,
-                scrimColor = Color.Transparent,
-//                modifier = Modifier.offset(y = 70.dp)
-                )
+        ModalBottomSheet(
+            onDismissRequest = onDismissRequest,
+            shape = modalBottomSheetShape,
+            sheetState = sheetState,
+            content = content,
+            scrimColor = Color.Transparent,
+        )
     }
-
 }
