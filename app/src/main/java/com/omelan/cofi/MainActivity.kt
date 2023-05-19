@@ -58,6 +58,7 @@ import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.InstantUtils
 import com.omelan.cofi.utils.WearUtils
 import com.omelan.cofi.utils.checkPiPPermission
+import com.omelan.cofi.utils.isUsingGestures
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -293,10 +294,12 @@ class MainActivity : MonetCompatActivity() {
                 color = Color.Transparent,
                 darkIcons = darkIcons,
             )
-            systemUiController.setNavigationBarColor(
-                color = MaterialTheme.colorScheme.background.copy(alpha = 0.8F),
-                darkIcons = darkIcons,
-            )
+            if (!isUsingGestures(applicationContext)) {
+                systemUiController.setNavigationBarColor(
+                    color = MaterialTheme.colorScheme.background.copy(alpha = 0.8F),
+                    darkIcons = darkIcons,
+                )
+            }
             CompositionLocalProvider(
                 LocalPiPState provides isInPiP,
             ) {

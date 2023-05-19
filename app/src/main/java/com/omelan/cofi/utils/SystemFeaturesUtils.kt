@@ -4,6 +4,7 @@ import android.app.AppOpsManager
 import android.content.Context
 import android.os.Build
 
+
 fun checkPiPPermission(context: Context): Boolean {
     val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
     return when {
@@ -19,4 +20,10 @@ fun checkPiPPermission(context: Context): Boolean {
         ) == AppOpsManager.MODE_ALLOWED
         else -> false
     }
+}
+
+fun isUsingGestures(context: Context): Boolean {
+    val resources = context.resources
+    val resourceId = resources.getIdentifier("config_navBarInteractionMode", "integer", "android")
+    return if (resourceId > 0) resources.getInteger(resourceId) == 2 else false
 }
