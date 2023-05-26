@@ -7,6 +7,8 @@
 
 package com.omelan.cofi.pages.details
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -44,18 +46,106 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.*
+import com.google.accompanist.navigation.animation.composable
 import com.omelan.cofi.LocalPiPState
+import com.omelan.cofi.MainActivity
 import com.omelan.cofi.R
+import com.omelan.cofi.appDeepLinkUrl
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
 import com.omelan.cofi.share.*
+import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.ui.Spacing
+import com.omelan.cofi.utils.InstantUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Date
+
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.recipeDetails(
+    navController: NavController,
+    goBack: () -> Unit,
+    onTimerRunning: (Boolean) -> Unit,
+    windowSizeClass: WindowSizeClass,
+    db: AppDatabase,
+) {
+    composable(
+        "recipe/{recipeId}",
+        arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
+        deepLinks = listOf(
+            navDeepLink {
+                uriPattern = "$appDeepLinkUrl/recipe/{recipeId}"
+            },
+        ),
+    ) { backStackEntry ->
+        val recipeId = backStackEntry.arguments?.getInt("recipeId")
+            ?: throw IllegalStateException("No Recipe ID")
+        val pipState = LocalPiPState.current
+        val context = LocalContext.current
+        val dataStore = DataStore(context)
+        val coroutineScope = rememberCoroutineScope()
+        val alreadyAskedForSupport by dataStore.getAskedForSupport().collectAsState(initial = true)
+        var hasDoneThisRecipeMoreThanOnce by remember {
+            mutableStateOf(false)
+        }
+        RecipeDetails(
+            recipeId = recipeId,
+            onRecipeEnd = { recipe ->
+                coroutineScope.launch {
+                    if (recipe.lastFinished != 0L) {
+                        hasDoneThisRecipeMoreThanOnce = true
+                    }
+                    db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
+                }
+                if (InstantUtils.isInstantApp(context) && !pipState) {
+                    InstantUtils.showInstallPrompt(context as Activity)
+                } else {
+                    coroutineScope.launch {
+                        val deepLinkIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            "$appDeepLinkUrl/recipe/$recipeId".toUri(),
+                            context,
+                            MainActivity::class.java,
+                        )
+                        val shortcut =
+                            ShortcutInfoCompat.Builder(context, recipeId.toString())
+                                .setShortLabel(recipe.name.ifEmpty { recipeId.toString() })
+                                .setLongLabel(recipe.name.ifEmpty { recipeId.toString() })
+                                .setIcon(
+                                    IconCompat.createWithResource(
+                                        context,
+                                        recipe.recipeIcon.icon,
+                                    ),
+                                )
+                                .setIntent(deepLinkIntent)
+                                .build()
+                        ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
+                    }
+                }
+            },
+            goBack = goBack,
+            goToEdit = { navController.navigate(route = "edit/$recipeId") },
+            onTimerRunning = onTimerRunning,
+            windowSizeClass = windowSizeClass,
+        )
+        if (!alreadyAskedForSupport && hasDoneThisRecipeMoreThanOnce) {
+            SupportCofi(
+                onDismissRequest = {
+                    coroutineScope.launch { dataStore.setAskedForSupport() }
+                },
+            )
+        }
+    }
+}
 
 @Composable
 fun RecipeDetails(
