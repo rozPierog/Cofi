@@ -30,7 +30,7 @@ android {
         minSdk 25
         targetSdk 33
         versionCode 141
-        versionName "1.9.6"
+        versionName "1.9.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs 'en', 'de', 'es', 'fr', 'hi', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'tr', 'uk', 'zh'
 
