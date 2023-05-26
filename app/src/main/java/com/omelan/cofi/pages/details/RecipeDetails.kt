@@ -60,6 +60,7 @@ import com.omelan.cofi.appDeepLinkUrl
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
+import com.omelan.cofi.pages.Destinations
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.timer.Timer
@@ -73,13 +74,15 @@ import java.util.Date
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.recipeDetails(
     navController: NavController,
-    goBack: () -> Unit,
     onTimerRunning: (Boolean) -> Unit,
     windowSizeClass: WindowSizeClass,
     db: AppDatabase,
+    goBack: () -> Unit = {
+        navController.popBackStack()
+    },
 ) {
     composable(
-        "recipe/{recipeId}",
+        Destinations.RECIPE_DETAILS,
         arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
         deepLinks = listOf(
             navDeepLink {

@@ -72,8 +72,14 @@ import com.omelan.cofi.utils.getDefaultPadding
 import com.omelan.cofi.utils.requestFocusSafer
 import kotlinx.coroutines.launch
 
-fun NavGraphBuilder.addRecipe(goBack: () -> Unit, db: AppDatabase) {
-    composable("add_recipe") {
+fun NavGraphBuilder.addRecipe(
+    navController: NavController,
+    db: AppDatabase,
+    goBack: () -> Unit = {
+        navController.popBackStack()
+    },
+) {
+    composable(Destinations.RECIPE_ADD) {
         val coroutineScope = rememberCoroutineScope()
         RecipeEdit(
             saveRecipe = { recipe, steps ->
@@ -90,11 +96,13 @@ fun NavGraphBuilder.addRecipe(goBack: () -> Unit, db: AppDatabase) {
 
 fun NavGraphBuilder.recipeEdit(
     navController: NavController,
-    goBack: () -> Unit,
     db: AppDatabase,
+    goBack: () -> Unit = {
+        navController.popBackStack()
+    },
 ) {
     composable(
-        "edit/{recipeId}",
+        Destinations.RECIPE_EDIT,
         arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
     ) { backStackEntry ->
         val recipeId = backStackEntry.arguments?.getInt("recipeId")

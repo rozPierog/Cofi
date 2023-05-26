@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.animation.composable
+import com.omelan.cofi.pages.Destinations
 import com.omelan.cofi.pages.settings.licenses.LicensesList
 
 fun Modifier.settingsItemModifier(
@@ -36,54 +37,51 @@ fun Modifier.settingsItemModifier(
 
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.settings(navController: NavController, goBack: () -> Unit) {
-    navigation(startDestination = "settings_list", route = "settings") {
-        composable("settings_list") {
+fun NavGraphBuilder.settings(
+    navController: NavController,
+    goBack: () -> Unit = {
+        navController.popBackStack()
+    },
+) {
+    navigation(startDestination = Destinations.SETTINGS_LIST, route = Destinations.SETTINGS) {
+        composable(Destinations.SETTINGS_LIST) {
             AppSettings(
                 goBack = goBack,
                 goToAbout = {
-                    navController.navigate("about")
+                    navController.navigate(Destinations.SETTINGS_ABOUT)
                 },
                 goToBackupRestore = {
-                    navController.navigate("backup")
+                    navController.navigate(Destinations.SETTINGS_BACKUP)
                 },
                 goToTimerSettings = {
-                    navController.navigate("timer")
+                    navController.navigate(Destinations.SETTINGS_TIMER)
                 },
             )
         }
-        composable("timer") {
+        composable(Destinations.SETTINGS_TIMER) {
             TimerSettings(goBack = goBack)
         }
-        composable("backup") {
+        composable(Destinations.SETTINGS_BACKUP) {
             BackupRestoreSettings(
                 goBack = goBack,
                 goToRoot = {
-                    navController.navigate("list") {
-                        popUpTo("list") {
+                    navController.navigate(Destinations.SETTINGS_LIST) {
+                        popUpTo(Destinations.SETTINGS_LIST) {
                             inclusive = true
                         }
                     }
                 },
             )
         }
-        composable("about") {
+        composable(Destinations.SETTINGS_ABOUT) {
             AppSettingsAbout(
                 goBack = goBack,
                 openLicenses = {
-                    navController.navigate("licenses")
+                    navController.navigate(Destinations.SETTINGS_LICENSES)
                 },
             )
         }
-        composable("about") {
-            AppSettingsAbout(
-                goBack = goBack,
-                openLicenses = {
-                    navController.navigate("licenses")
-                },
-            )
-        }
-        composable("licenses") {
+        composable(Destinations.SETTINGS_LICENSES) {
             LicensesList(goBack = goBack)
         }
     }

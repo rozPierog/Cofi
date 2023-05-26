@@ -24,6 +24,7 @@ import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
+import com.omelan.cofi.pages.Destinations
 import com.omelan.cofi.share.RecipeViewModel
 import com.omelan.cofi.share.StepsViewModel
 import com.omelan.cofi.ui.Spacing
@@ -32,7 +33,7 @@ import com.omelan.cofi.utils.getDefaultPadding
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.recipeList(navController: NavController) {
-    composable("list") {
+    composable(Destinations.RECIPE_LIST) {
         RecipeList(
             navigateToRecipe = { recipeId -> navController.navigate(route = "recipe/$recipeId") },
             addNewRecipe = { navController.navigate(route = "add_recipe") },

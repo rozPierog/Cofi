@@ -33,6 +33,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kieronquinn.monetcompat.BuildConfig
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.model.DataStore
+import com.omelan.cofi.pages.Destinations
 import com.omelan.cofi.pages.addRecipe
 import com.omelan.cofi.pages.details.recipeDetails
 import com.omelan.cofi.pages.list.recipeList
@@ -109,9 +110,6 @@ class MainActivity : MonetCompatActivity() {
         val navController = rememberAnimatedNavController()
         val db = AppDatabase.getInstance(this)
         val isInPiP by mainActivityViewModel.pipState.observeAsState(false)
-        val goBack: () -> Unit = {
-            navController.popBackStack()
-        }
         val systemUiController = rememberSystemUiController()
         val windowSizeClass = calculateWindowSizeClass(this)
         val intent by mainActivityViewModel.intent.observeAsState()
@@ -135,7 +133,7 @@ class MainActivity : MonetCompatActivity() {
             ) {
                 AnimatedNavHost(
                     navController,
-                    startDestination = "list",
+                    startDestination = Destinations.RECIPE_LIST,
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
                         fadeIn(tween(tweenDuration)) +
@@ -162,10 +160,10 @@ class MainActivity : MonetCompatActivity() {
 //                        }, monet)
 //                    }
                     recipeList(navController = navController)
-                    recipeDetails(navController, goBack, onTimerRunning, windowSizeClass, db)
-                    recipeEdit(navController, goBack, db)
-                    addRecipe(goBack, db)
-                    settings(navController, goBack)
+                    recipeDetails(navController, onTimerRunning, windowSizeClass, db)
+                    recipeEdit(navController, db)
+                    addRecipe(navController, db)
+                    settings(navController)
                 }
             }
         }
