@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.18.7|1.9.7] - 2023-05-26
+
+### Added
 - Added tooltips when long pressing icons in icon picker
 
 ### Changed
