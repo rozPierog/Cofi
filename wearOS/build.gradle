@@ -100,7 +100,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-pager:0.30.1"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    implementation 'androidx.activity:activity-compose:1.7.1'
+    implementation 'androidx.activity:activity-compose:1.7.2'
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
     implementation "androidx.wear:wear-input:1.1.0"
     implementation 'androidx.wear:wear:1.2.0'

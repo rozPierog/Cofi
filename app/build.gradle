@@ -171,7 +171,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-navigation-animation:0.30.1"
     implementation "androidx.compose.animation:animation-graphics"
 
-    implementation "androidx.activity:activity-compose:1.7.1"
+    implementation "androidx.activity:activity-compose:1.7.2"
 
     // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.3"
