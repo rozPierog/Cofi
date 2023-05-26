@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Tweaked transition animation between screens, app should feel smoother now
 
 ### Removed
 
