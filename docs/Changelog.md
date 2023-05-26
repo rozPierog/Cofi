@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added tooltips when long pressing icons in icon picker
 
 ### Changed
+- fixed Bottom sheet not going under system bars
+- Fixed "show next step" toggle in settings
+- Fixed time multiplier not changing seconds in step name
 
 ### Removed
+- Removed background behind navigation bar if user uses gesture navigation
 
 
 ## [1.18.6|1.9.6] - 2023-05-15
