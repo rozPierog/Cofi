@@ -35,9 +35,15 @@ import com.omelan.cofi.utils.getDefaultPadding
 fun NavGraphBuilder.recipeList(navController: NavController) {
     composable(Destinations.RECIPE_LIST) {
         RecipeList(
-            navigateToRecipe = { recipeId -> navController.navigate(route = "recipe/$recipeId") },
-            addNewRecipe = { navController.navigate(route = "add_recipe") },
-            goToSettings = { navController.navigate(route = "settings") },
+            navigateToRecipe = { recipeId ->
+                navController.navigate(
+                    route = Destinations.recipeDetails(
+                        recipeId,
+                    ),
+                )
+            },
+            addNewRecipe = { navController.navigate(route = Destinations.RECIPE_ADD) },
+            goToSettings = { navController.navigate(route = Destinations.SETTINGS) },
         )
     }
 }

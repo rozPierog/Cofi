@@ -136,7 +136,7 @@ fun NavGraphBuilder.recipeDetails(
                 }
             },
             goBack = goBack,
-            goToEdit = { navController.navigate(route = "edit/$recipeId") },
+            goToEdit = { navController.navigate(route = Destinations.recipeEdit(recipeId)) },
             onTimerRunning = onTimerRunning,
             windowSizeClass = windowSizeClass,
         )

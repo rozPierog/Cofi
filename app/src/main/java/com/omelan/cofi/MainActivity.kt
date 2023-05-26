@@ -9,11 +9,7 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -41,9 +37,7 @@ import com.omelan.cofi.pages.recipeEdit
 import com.omelan.cofi.pages.settings.settings
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.ui.CofiTheme
-import com.omelan.cofi.utils.WearUtils
-import com.omelan.cofi.utils.checkPiPPermission
-import com.omelan.cofi.utils.isUsingGestures
+import com.omelan.cofi.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -56,8 +50,6 @@ val LocalPiPState = staticCompositionLocalOf<Boolean> {
 }
 
 const val appDeepLinkUrl = "https://rozpierog.github.io"
-
-const val tweenDuration = 200
 
 @ExperimentalMaterial3WindowSizeClassApi
 @OptIn(ExperimentalAnimationApi::class)
@@ -135,22 +127,10 @@ class MainActivity : MonetCompatActivity() {
                     navController,
                     startDestination = Destinations.RECIPE_LIST,
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
-                    enterTransition = {
-                        fadeIn(tween(tweenDuration)) +
-                                slideIntoContainer(
-                                    AnimatedContentScope.SlideDirection.End,
-                                    animationSpec = tween(tweenDuration),
-                                    initialOffset = { fullWidth -> -fullWidth / 5 },
-                                )
-                    },
-                    exitTransition = {
-                        fadeOut(tween(tweenDuration)) +
-                                slideOutOfContainer(
-                                    AnimatedContentScope.SlideDirection.Start,
-                                    animationSpec = tween(tweenDuration),
-                                    targetOffset = { fullWidth -> fullWidth / 5 },
-                                )
-                    },
+                    enterTransition = { slideIn(AnimatedContentScope.SlideDirection.End) },
+                    exitTransition = { slideOut(AnimatedContentScope.SlideDirection.Start) },
+                    popEnterTransition = { slideIn(AnimatedContentScope.SlideDirection.Start) },
+                    popExitTransition = { slideOut(AnimatedContentScope.SlideDirection.End) },
                 ) {
 //                    composable("list_color") {
 //                        ColorPicker(goToList = {
