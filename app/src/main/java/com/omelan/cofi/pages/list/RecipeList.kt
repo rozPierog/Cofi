@@ -24,8 +24,8 @@ import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
-import com.omelan.cofi.share.RecipeViewModel
-import com.omelan.cofi.share.StepsViewModel
+import com.omelan.cofi.share.model.RecipeViewModel
+import com.omelan.cofi.share.model.StepsViewModel
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType

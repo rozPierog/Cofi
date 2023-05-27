@@ -10,6 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
+import com.omelan.cofi.share.model.Step
+import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.Haptics
 import com.omelan.cofi.share.utils.roundToDecimals
 import kotlinx.coroutines.Dispatchers

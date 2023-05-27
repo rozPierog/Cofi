@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import com.omelan.cofi.share.R
-import com.omelan.cofi.share.Step
+import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.utils.roundToDecimals
 import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.share.utils.toStringShort

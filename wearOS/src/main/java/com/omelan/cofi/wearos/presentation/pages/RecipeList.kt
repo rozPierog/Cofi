@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalHorologistComposeLayoutApi::class, ExperimentalWearMaterialApi::class)
+@file:OptIn(ExperimentalHorologistComposeLayoutApi::class)
 
 package com.omelan.cofi.wearos.presentation.pages
 
@@ -24,9 +24,9 @@ import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.composable
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
 import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
-import com.omelan.cofi.share.Recipe
-import com.omelan.cofi.share.RecipeIcon
-import com.omelan.cofi.share.RecipeViewModel
+import com.omelan.cofi.share.model.Recipe
+import com.omelan.cofi.share.model.RecipeIcon
+import com.omelan.cofi.share.model.RecipeViewModel
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.wearos.R

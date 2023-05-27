@@ -23,7 +23,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3Dialog
@@ -33,7 +32,6 @@ import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
 import com.omelan.cofi.model.PIP_DEFAULT_VALUE
 import com.omelan.cofi.share.*
-import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
@@ -264,15 +262,5 @@ fun CombineWeightDialog(
                 },
             )
         }
-    }
-}
-
-@ExperimentalMaterial3Api
-@ExperimentalMaterialApi
-@Preview
-@Composable
-fun SettingsTimerPreview() {
-    CofiTheme() {
-        TimerSettings(goBack = { })
     }
 }

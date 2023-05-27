@@ -18,8 +18,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.omelan.cofi.share.Recipe
-import com.omelan.cofi.share.Step
+import com.omelan.cofi.share.model.Recipe
+import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes

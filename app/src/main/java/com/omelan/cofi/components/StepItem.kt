@@ -27,8 +27,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
-import com.omelan.cofi.share.Step
-import com.omelan.cofi.share.StepType
+import com.omelan.cofi.share.model.Step
+import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.toMillis
 import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.share.utils.toStringShort

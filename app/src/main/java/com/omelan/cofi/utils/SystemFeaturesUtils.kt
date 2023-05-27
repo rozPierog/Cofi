@@ -1,5 +1,6 @@
 package com.omelan.cofi.utils
 
+import android.annotation.SuppressLint
 import android.app.AppOpsManager
 import android.content.Context
 import android.os.Build
@@ -21,6 +22,7 @@ fun checkPiPPermission(context: Context): Boolean {
     }
 }
 
+@SuppressLint("DiscouragedApi")
 fun isUsingGestures(context: Context): Boolean {
     val resources = context.resources
     val resourceId = resources.getIdentifier("config_navBarInteractionMode", "integer", "android")

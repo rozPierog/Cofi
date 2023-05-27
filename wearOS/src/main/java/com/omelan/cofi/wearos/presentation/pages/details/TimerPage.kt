@@ -20,11 +20,14 @@ import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.google.android.horologist.compose.layout.fillMaxRectangle
-import com.omelan.cofi.share.*
+import com.omelan.cofi.share.COMBINE_WEIGHT_DEFAULT_VALUE
+import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
 import com.omelan.cofi.share.components.TimerValue
+import com.omelan.cofi.share.model.Recipe
+import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.timer.TimerControllers
 import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider

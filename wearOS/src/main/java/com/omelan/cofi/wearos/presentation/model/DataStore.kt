@@ -5,7 +5,7 @@ import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.map
 import com.omelan.cofi.share.DataStore as DataStoreShared
 
-class DataStore(val context: Context): DataStoreShared(context) {
+class DataStore(private val context: Context): DataStoreShared(context) {
     fun getSyncSettingsFromPhoneSetting() = context.dataStore.data.map { preferences ->
         preferences[SYNC_SETTINGS_FROM_PHONE] ?: SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE
     }

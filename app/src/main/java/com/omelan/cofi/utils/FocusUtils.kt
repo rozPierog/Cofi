@@ -1,3 +1,5 @@
+@file:Suppress("UnusedReceiverParameter", "UnusedReceiverParameter")
+
 package com.omelan.cofi.utils
 
 import androidx.compose.ui.focus.FocusRequester

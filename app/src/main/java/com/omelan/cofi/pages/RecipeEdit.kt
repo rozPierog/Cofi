@@ -63,8 +63,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
-import com.omelan.cofi.share.*
-import com.omelan.cofi.share.model.AppDatabase
+import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.Spacing

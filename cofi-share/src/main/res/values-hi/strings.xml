@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Cofi</string>
-    <string name="list_header" translatable="false">Cofi</string>
     <string name="step_type_add_coffee">कॉफ़ी डालिये</string>
     <string name="step_type_water">पानी डालिये</string>
     <string name="step_type_wait">ठहरिये</string>
@@ -107,13 +105,11 @@
     <string name="infoBox_wearOS_body">अपनी वेअरओएस घडी के लिए कॉफी ऍप डाउनलोड करे </string>
     <string name="settings_sync_with_phone">फोन से सेटिंग्स प्राप्त करें</string>
     <string name="name_grinder">कॉफी ग्राइंडर</string>
-    <string name="name_v60" translatable="false">V60</string>
     <string name="name_vietnamese_press">फिन फ़िल्टर</string>
-    <string name="name_mokapot" translatable="false">मोका पॉट</string>
+    <string name="name_mokapot">मोका पॉट</string>
     <string name="name_espresso">एस्प्रेसो मशीन</string>
     <string name="name_cold_brew">कोल्ड ब्रू</string>
     <string name="name_siphon">साइफन</string>
-    <string name="name_bripe" translatable="false">Bripe</string>
     <string name="name_cezve">चेज़वे</string>
     <string name="name_cup">कप</string>
     <string name="support_dialog_title">क्या आप कॉफी ऐप का आनंद ले रहे हैं?</string>

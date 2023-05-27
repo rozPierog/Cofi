@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@file:OptIn(ExperimentalFoundationApi::class)
 
 package com.omelan.cofi.components
 
@@ -38,8 +38,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.omelan.cofi.R
-import com.omelan.cofi.share.Step
-import com.omelan.cofi.share.StepType
+import com.omelan.cofi.share.model.Step
+import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.ensureNumbersOnly
 import com.omelan.cofi.share.utils.safeToInt
 import com.omelan.cofi.share.utils.toMillis
