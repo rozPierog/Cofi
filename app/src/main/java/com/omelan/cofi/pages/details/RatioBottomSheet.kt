@@ -1,7 +1,12 @@
-@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@file:OptIn(
+    ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class,
+    ExperimentalAnimationApi::class,
+)
 
 package com.omelan.cofi.pages.details
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3BottomSheet
+import com.omelan.cofi.share.components.slideUpDown
 import com.omelan.cofi.share.utils.roundToDecimals
 import com.omelan.cofi.ui.Spacing
 import kotlin.math.roundToInt
@@ -81,14 +87,20 @@ private fun SliderWithValue(value: MutableState<Float>) {
             },
             modifier = Modifier.weight(1f, true),
         )
-        Text(
-            color = MaterialTheme.colorScheme.onSurface,
-            text = "${value.value}",
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .padding(horizontal = Spacing.normal),
-        )
+        AnimatedContent(
+            targetState = value.value,
+            transitionSpec = slideUpDown { target, initial -> target > initial },
+            label = "slider value",
+        ) {
+            Text(
+                color = MaterialTheme.colorScheme.onSurface,
+                text = it.toString(),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(horizontal = Spacing.normal),
+            )
+        }
 //        OutlinedTextField(
 //            modifier = Modifier
 //                .weight(1f)
