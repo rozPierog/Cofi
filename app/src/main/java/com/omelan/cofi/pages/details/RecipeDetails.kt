@@ -60,9 +60,9 @@ import com.omelan.cofi.appDeepLinkUrl
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
-import com.omelan.cofi.pages.Destinations
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.model.AppDatabase
+import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.ui.Spacing

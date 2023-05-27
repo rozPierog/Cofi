@@ -1,4 +1,4 @@
-package com.omelan.cofi.pages
+package com.omelan.cofi.share.pages
 
 object Destinations {
     const val RECIPE_LIST = "list"

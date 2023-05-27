@@ -29,13 +29,13 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kieronquinn.monetcompat.BuildConfig
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.model.DataStore
-import com.omelan.cofi.pages.Destinations
 import com.omelan.cofi.pages.addRecipe
 import com.omelan.cofi.pages.details.recipeDetails
 import com.omelan.cofi.pages.list.recipeList
 import com.omelan.cofi.pages.recipeEdit
 import com.omelan.cofi.pages.settings.settings
 import com.omelan.cofi.share.model.AppDatabase
+import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.*
 import kotlinx.coroutines.CoroutineScope

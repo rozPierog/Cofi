@@ -14,8 +14,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.animation.composable
-import com.omelan.cofi.pages.Destinations
 import com.omelan.cofi.pages.settings.licenses.LicensesList
+import com.omelan.cofi.share.pages.Destinations
 
 fun Modifier.settingsItemModifier(
     onClick: () -> Unit,

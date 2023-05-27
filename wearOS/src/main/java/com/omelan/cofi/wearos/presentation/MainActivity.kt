@@ -21,6 +21,7 @@ import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavHostState
+import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.wearos.presentation.components.KeyEventHandler
 import com.omelan.cofi.wearos.presentation.pages.RecipeList
 import com.omelan.cofi.wearos.presentation.pages.settings.LicensesList
@@ -57,20 +58,20 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
                     SwipeDismissableNavHost(
                         navController = navController,
                         state = swipeDismissableNavHostState,
-                        startDestination = "recipe_list",
+                        startDestination = Destinations.RECIPE_LIST,
                     ) {
-                        composable("recipe_list") {
+                        composable(Destinations.RECIPE_LIST) {
                             RecipeList(
                                 goToDetails = { recipe ->
-                                    navController.navigate(route = "recipe_details/${recipe.id}")
+                                    navController.navigate(Destinations.recipeDetails(recipe.id))
                                 },
                                 openSettings = {
-                                    navController.navigate("settings")
+                                    navController.navigate(Destinations.SETTINGS)
                                 },
                             )
                         }
                         composable(
-                            "recipe_details/{id}",
+                            Destinations.RECIPE_DETAILS,
                             arguments = listOf(navArgument("id") { type = NavType.IntType }),
                         ) {
                             val id = it.arguments?.getInt("id")
@@ -98,15 +99,15 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
                                 },
                             )
                         }
-                        navigation("list", route = "settings") {
-                            composable("list") {
+                        navigation(Destinations.SETTINGS_LIST, route = Destinations.SETTINGS) {
+                            composable(Destinations.SETTINGS_LIST) {
                                 Settings(
                                     navigateToLicenses = {
-                                        navController.navigate("licenses")
+                                        navController.navigate(Destinations.SETTINGS_LICENSES)
                                     },
                                 )
                             }
-                            composable("licenses") {
+                            composable(Destinations.SETTINGS_LICENSES) {
                                 LicensesList()
                             }
                         }
