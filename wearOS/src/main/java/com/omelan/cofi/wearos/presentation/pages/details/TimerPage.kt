@@ -1,3 +1,5 @@
+package com.omelan.cofi.wearos.presentation.pages.details
+
 import android.view.KeyEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
