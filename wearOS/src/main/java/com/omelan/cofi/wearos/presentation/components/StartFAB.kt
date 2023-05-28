@@ -14,30 +14,20 @@ import androidx.wear.compose.material.Icon
 import com.omelan.cofi.wearos.R
 
 @Composable
-fun StartButton(
-    isTimerRunning: Boolean,
-    onClick: () -> Unit,
-) {
+fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
     val animatedFabRadii by animateFloatAsState(
         if (isTimerRunning) 28.0f else 100f,
         tween(if (isTimerRunning) 300 else 500),
+        label = "Fab Radius",
     )
-
     val icon = remember(isTimerRunning) {
-        if (isTimerRunning) {
-            R.drawable.ic_pause
-        } else {
-            R.drawable.ic_play
-        }
+        if (isTimerRunning) R.drawable.ic_pause else R.drawable.ic_play
     }
     Button(
         modifier = Modifier.testTag("start_button"),
         onClick = onClick,
         shape = RoundedCornerShape(animatedFabRadii),
     ) {
-        Icon(
-            painter = painterResource(icon),
-            contentDescription = null,
-        )
+        Icon(painter = painterResource(icon), contentDescription = null)
     }
 }

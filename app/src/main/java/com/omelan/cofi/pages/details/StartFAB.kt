@@ -2,7 +2,7 @@
 
 package com.omelan.cofi.pages.details
 
-import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
@@ -23,27 +23,17 @@ import androidx.compose.ui.semantics.toggleableState
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
-import kotlinx.coroutines.launch
 
 @Composable
 fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
-    val animatedFabRadii = remember { Animatable(100f) }
     val icon = AnimatedImageVector.animatedVectorResource(R.drawable.play_anim)
-    var atEnd by remember { mutableStateOf(false) }
-
-    LaunchedEffect(isTimerRunning) {
-        launch {
-            atEnd = isTimerRunning
-        }
-        launch {
-            animatedFabRadii.animateTo(
-                if (isTimerRunning) 28.0f else 100f,
-                tween(if (isTimerRunning) 300 else 500),
-            )
-        }
-    }
+    val animatedFabRadii by animateFloatAsState(
+        if (isTimerRunning) 28.0f else 100f,
+        tween(if (isTimerRunning) 300 else 500),
+        label = "Fab Radius"
+    )
     LargeFloatingActionButton(
-        shape = RoundedCornerShape(animatedFabRadii.value.dp),
+        shape = RoundedCornerShape(animatedFabRadii.dp),
         onClick = onClick,
         modifier = Modifier
             .navigationBarsPadding()
@@ -57,7 +47,7 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
             .testTag("recipe_start"),
     ) {
         Icon(
-            painter = rememberAnimatedVectorPainter(icon, atEnd),
+            painter = rememberAnimatedVectorPainter(icon, isTimerRunning),
             tint = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize),
             contentDescription = null,
