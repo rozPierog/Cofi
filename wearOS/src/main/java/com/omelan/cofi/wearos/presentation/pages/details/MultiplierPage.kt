@@ -88,6 +88,7 @@ fun MultiplierPage(
                     SizeTransform(clip = false),
                 )
             },
+            label = "Multiplier ticker",
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 content(it)

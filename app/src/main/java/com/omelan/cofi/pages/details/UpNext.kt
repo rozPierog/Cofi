@@ -45,6 +45,7 @@ fun UpNext(modifier: Modifier = Modifier, step: Step) {
                 transitionSpec = slideUpDown { target, initial ->
                     (target.orderInRecipe ?: 0) > (initial.orderInRecipe ?: 0)
                 },
+                label = "Next step",
             ) {
                 StepListItem(step = it, stepProgress = StepProgress.Upcoming)
             }
