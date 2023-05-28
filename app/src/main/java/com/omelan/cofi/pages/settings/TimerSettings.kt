@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3Dialog
@@ -32,6 +33,7 @@ import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
 import com.omelan.cofi.model.PIP_DEFAULT_VALUE
 import com.omelan.cofi.share.*
+import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
@@ -241,7 +243,13 @@ fun CombineWeightDialog(
     selectCombineMethod: (CombineWeight) -> Unit,
     combineWeightState: String,
 ) {
-    Material3Dialog(onDismissRequest = dismiss) {
+    Material3Dialog(
+        onDismissRequest = dismiss,
+        title = {
+            Text(text = stringResource(id = R.string.settings_combine_weight_item))
+
+        },
+    ) {
         CombineWeight.values().forEach {
             ListItem(
                 text = { Text(stringResource(id = it.settingsStringId)) },
@@ -262,5 +270,17 @@ fun CombineWeightDialog(
                 },
             )
         }
+    }
+}
+
+@Composable
+@Preview
+fun PreviewCombineWeightDialog() {
+    CofiTheme {
+        CombineWeightDialog(
+            dismiss = { /*TODO*/ },
+            selectCombineMethod = {},
+            combineWeightState = "",
+        )
     }
 }
