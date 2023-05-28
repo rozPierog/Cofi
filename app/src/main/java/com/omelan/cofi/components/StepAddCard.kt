@@ -12,10 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -244,31 +241,36 @@ fun StepAddCard(
                     )
                 }
                 Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.End,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = Spacing.big),
                 ) {
+                    if (stepToEdit != null) {
+                        OutlinedButton(
+                            onClick = { save(null) },
+                            modifier = Modifier.testTag("step_remove"),
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_delete),
+                                contentDescription = null,
+                            )
+                            Text(stringResource(id = R.string.step_add_remove))
+                        }
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
                     PillButton(
                         modifier = Modifier.testTag("step_save"),
                         text = stringResource(id = R.string.step_add_save),
-                        painter = rememberVectorPainter(Icons.Rounded.Add),
+                        painter = rememberVectorPainter(Icons.Rounded.Done),
                         enabled = stepName.text.isNotBlank(),
                         onClick = { saveStep() },
                     )
-                    if (stepToEdit != null) {
-                        PillButton(
-                            modifier = Modifier.testTag("step_remove"),
-                            text = stringResource(id = R.string.step_add_remove),
-                            painter = painterResource(id = R.drawable.ic_delete),
-                            onClick = { save(null) },
-                        )
-                    }
                 }
                 if (stepToEdit != null) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         PillButton(
                             painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowUp),
@@ -336,7 +338,7 @@ fun PillButton(
             }
         }
     } else {
-        OutlinedIconButton(
+        FilledTonalIconButton(
             onClick = onClick,
             enabled = enabled,
             modifier = modifier,
