@@ -187,10 +187,10 @@ fun RecipeEdit(
     val lazyListState = rememberLazyListState()
     val (nameFocusRequester, descriptionFocusRequester) = remember { FocusRequester.createRefs() }
 
-    var showDeleteModal by remember { mutableStateOf(false) }
-    var showCloneModal by remember { mutableStateOf(false) }
-    var showSaveModal by remember { mutableStateOf(false) }
-    val iconSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var isDeleteModalVisible by remember { mutableStateOf(false) }
+    var isCloneModalVisible by remember { mutableStateOf(false) }
+    var isSaveModalVisible by remember { mutableStateOf(false) }
+    var isIconPickerVisible by remember { mutableStateOf(false) }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
 
     var showDescription by remember(recipeToEdit.description) {
@@ -239,7 +239,7 @@ fun RecipeEdit(
             description.text != recipeToEdit.description ||
             pickedIcon != recipeToEdit.recipeIcon
         ) {
-            showSaveModal = true
+            isSaveModalVisible = true
         } else {
             goBack()
         }
@@ -279,11 +279,7 @@ fun RecipeEdit(
                     onClick = {
                         keyboardController?.hide()
                         coroutineScope.launch {
-                            if (iconSheetState.isVisible) {
-                                iconSheetState.hide()
-                            } else {
-                                iconSheetState.show()
-                            }
+                            isIconPickerVisible = !isIconPickerVisible
                         }
                     },
                 ) {
@@ -440,13 +436,13 @@ fun RecipeEdit(
                 },
                 actions = {
                     if (isEditing) {
-                        IconButton(onClick = { showCloneModal = true }) {
+                        IconButton(onClick = { isCloneModalVisible = true }) {
                             Icon(
                                 painterResource(id = R.drawable.ic_copy),
                                 contentDescription = null,
                             )
                         }
-                        IconButton(onClick = { showDeleteModal = true }) {
+                        IconButton(onClick = { isDeleteModalVisible = true }) {
                             Icon(
                                 painterResource(id = R.drawable.ic_delete),
                                 contentDescription = null,
@@ -497,78 +493,21 @@ fun RecipeEdit(
             }
         }
     }
-    if (iconSheetState.isVisible || iconSheetState.targetValue != SheetValue.Hidden) {
-        Material3BottomSheet(
-            onDismissRequest = {
-                coroutineScope.launch {
-                    iconSheetState.hide()
-                }
-            },
-            sheetState = iconSheetState,
-        ) {
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .waterfallPadding()
-                    .safeGesturesPadding(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.Bottom,
-            ) {
-                RecipeIcon.values().map {
-                    val tooltipState = remember { PlainTooltipState() }
-                    // TODO: Revisit tooltips later, for now it makes app sluggish
-
-                    Box(
-                        modifier = Modifier
-                            .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
-                            .aspectRatio(1f)
-                            .clip(CircleShape)
-                            .combinedClickable(
-                                role = Role.Button,
-                                onClick = {
-                                    coroutineScope.launch {
-                                        launch {
-                                            iconSheetState.hide()
-                                        }
-                                        pickedIcon = it
-                                    }
-                                },
-                                onLongClick = {
-                                    coroutineScope.launch {
-                                        tooltipState.show()
-                                    }
-                                },
-                            ),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        PlainTooltipBox(
-                            tooltip = { Text(stringResource(id = it.nameResId)) },
-                            tooltipState = tooltipState,
-                        ) {
-                            Icon(
-                                painter = painterResource(id = it.icon),
-                                tint = MaterialTheme.colorScheme.onSurface,
-                                contentDescription = it.name,
-                                modifier = Modifier.size(36.dp),
-                            )
-                        }
-                    }
-                }
-            }
-        }
+    if (isIconPickerVisible) {
+        IconPickerBottomSheet({ pickedIcon = it }, { isIconPickerVisible = false })
     }
-    if (showDeleteModal && isEditing) {
-        DeleteDialog(onConfirm = deleteRecipe, onDismiss = { showDeleteModal = false })
+    if (isDeleteModalVisible && isEditing) {
+        DeleteDialog(onConfirm = deleteRecipe, onDismiss = { isDeleteModalVisible = false })
     }
-    if (showSaveModal) {
+    if (isSaveModalVisible) {
         SaveDialog(
             canSave = canSave,
             onSave = onSave,
             onDiscard = goBack,
-            onDismiss = { showSaveModal = false },
+            onDismiss = { isSaveModalVisible = false },
         )
     }
-    if (showCloneModal) {
+    if (isCloneModalVisible) {
         CloneDialog(
             onConfirm = {
                 cloneRecipe(
@@ -580,7 +519,7 @@ fun RecipeEdit(
                     steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) },
                 )
             },
-            onDismiss = { showCloneModal = false },
+            onDismiss = { isCloneModalVisible = false },
         )
     }
 
@@ -589,6 +528,60 @@ fun RecipeEdit(
             descriptionFocusRequester.requestFocusSafer()
         } else {
             nameFocusRequester.requestFocusSafer()
+        }
+    }
+}
+
+@Composable
+private fun IconPickerBottomSheet(
+    setPickedIcon: (RecipeIcon) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val coroutineScope = rememberCoroutineScope()
+
+    Material3BottomSheet(onDismissRequest = onDismiss) {
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .waterfallPadding()
+                .safeGesturesPadding(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.Bottom,
+        ) {
+            RecipeIcon.values().map {
+                val tooltipState = remember { PlainTooltipState() }
+                Box(
+                    modifier = Modifier
+                        .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
+                        .aspectRatio(1f)
+                        .clip(CircleShape)
+                        .combinedClickable(
+                            role = Role.Button,
+                            onClick = {
+                                onDismiss()
+                                setPickedIcon(it)
+                            },
+                            onLongClick = {
+                                coroutineScope.launch {
+                                    tooltipState.show()
+                                }
+                            },
+                        ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    PlainTooltipBox(
+                        tooltip = { Text(stringResource(id = it.nameResId)) },
+                        tooltipState = tooltipState,
+                    ) {
+                        Icon(
+                            painter = painterResource(id = it.icon),
+                            tint = MaterialTheme.colorScheme.onSurface,
+                            contentDescription = it.name,
+                            modifier = Modifier.size(36.dp),
+                        )
+                    }
+                }
+            }
         }
     }
 }
