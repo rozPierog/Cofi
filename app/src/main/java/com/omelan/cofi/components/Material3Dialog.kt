@@ -25,7 +25,7 @@ fun Material3Dialog(
     onSave: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = onDismissRequest,
     title: (@Composable BoxScope.() -> Unit)? = null,
-    icon:  (@Composable BoxScope.() -> Unit)? = null,
+    icon: (@Composable BoxScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Dialog(onDismissRequest = onDismissRequest, properties = properties) {
@@ -94,9 +94,12 @@ fun DialogPreview() {
             },
         ) {
             CombineWeight.values().forEach {
-                Text(it.name, modifier = Modifier
-                    .fillMaxWidth()
-                    .height(25.dp))
+                Text(
+                    it.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(25.dp),
+                )
             }
         }
     }
