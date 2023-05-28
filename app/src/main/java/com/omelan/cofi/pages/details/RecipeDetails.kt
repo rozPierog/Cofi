@@ -207,8 +207,8 @@ fun RecipeDetails(
 
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
 
-    val weightMultiplier = remember { mutableStateOf(1.0f) }
-    val timeMultiplier = remember { mutableStateOf(1.0f) }
+    var weightMultiplier by remember { mutableStateOf(1.0f) }
+    var timeMultiplier by remember { mutableStateOf(1.0f) }
     var ratioSheetIsVisible by remember {
         mutableStateOf(false)
     }
@@ -229,7 +229,7 @@ fun RecipeDetails(
         onRecipeEnd = { onRecipeEnd(recipe) },
         dataStore = dataStore,
         doneTrackColor = MaterialTheme.colorScheme.primary,
-        timeMultiplier = timeMultiplier.value,
+        timeMultiplier = timeMultiplier,
     )
 
     val nextStep = remember(indexOfCurrentStep, steps) {
@@ -244,7 +244,7 @@ fun RecipeDetails(
         indexOfCurrentStep = indexOfCurrentStep,
         allSteps = steps,
         combineWeightState = combineWeightState,
-        weightMultiplier = weightMultiplier.value,
+        weightMultiplier = weightMultiplier,
     )
 
     LaunchedEffect(currentStep.value) {
@@ -321,8 +321,8 @@ fun RecipeDetails(
             isInPiP = isInPiP,
             alreadyDoneWeight = alreadyDoneWeight,
             isDone = isDone,
-            weightMultiplier = weightMultiplier.value,
-            timeMultiplier = timeMultiplier.value,
+            weightMultiplier = weightMultiplier,
+            timeMultiplier = timeMultiplier,
         )
         if (!isInPiP) {
             Spacer(modifier = Modifier.height(Spacing.big))
@@ -366,8 +366,8 @@ fun RecipeDetails(
                         currentStep.value = (newStep)
                     }
                 },
-                weightMultiplier = weightMultiplier.value,
-                timeMultiplier = timeMultiplier.value,
+                weightMultiplier = weightMultiplier,
+                timeMultiplier = timeMultiplier,
             )
             Divider()
         }
@@ -462,10 +462,10 @@ fun RecipeDetails(
         if (ratioSheetIsVisible) {
             RatioBottomSheet(
                 timeMultiplier = timeMultiplier,
+                setTimeMultiplier = { newValue -> timeMultiplier = newValue },
                 weightMultiplier = weightMultiplier,
-                onDismissRequest = {
-                    ratioSheetIsVisible = false
-                },
+                setWeightMultiplier = { newValue -> weightMultiplier = newValue },
+                onDismissRequest = { ratioSheetIsVisible = false },
             )
         }
         if (isPhoneLayout) {

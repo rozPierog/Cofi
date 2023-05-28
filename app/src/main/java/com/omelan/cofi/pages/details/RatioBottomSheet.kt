@@ -10,7 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,8 +23,10 @@ import kotlin.math.roundToInt
 
 @Composable
 fun RatioBottomSheet(
-    timeMultiplier: MutableState<Float>,
-    weightMultiplier: MutableState<Float>,
+    timeMultiplier: Float,
+    setTimeMultiplier: (Float) -> Unit,
+    weightMultiplier: Float,
+    setWeightMultiplier: (Float) -> Unit,
     onDismissRequest: () -> Unit,
 ) {
     Material3BottomSheet(onDismissRequest = onDismissRequest) {
@@ -36,7 +37,9 @@ fun RatioBottomSheet(
         ) {
             SheetContent(
                 timeMultiplier,
+                setTimeMultiplier,
                 weightMultiplier,
+                setWeightMultiplier,
             )
         }
     }
@@ -44,13 +47,15 @@ fun RatioBottomSheet(
 
 @Composable
 private fun SheetContent(
-    timeMultiplier: MutableState<Float>,
-    weightMultiplier: MutableState<Float>,
+    timeMultiplier: Float,
+    setTimeMultiplier: (Float) -> Unit,
+    weightMultiplier: Float,
+    setWeightMultiplier: (Float) -> Unit,
 ) {
     Title(stringResource(id = R.string.recipe_details_multiply_weight))
-    SliderWithValue(value = weightMultiplier)
+    SliderWithValue(weightMultiplier, setWeightMultiplier)
     Title(stringResource(id = R.string.recipe_details_multiply_time))
-    SliderWithValue(value = timeMultiplier)
+    SliderWithValue(timeMultiplier, setTimeMultiplier)
 }
 
 @Composable
@@ -68,7 +73,7 @@ val range = 0f..3f
 val steps = (range.endInclusive / step).roundToInt() + 1
 
 @Composable
-private fun SliderWithValue(value: MutableState<Float>) {
+private fun SliderWithValue(value: Float, setValue: (Float) -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -77,14 +82,12 @@ private fun SliderWithValue(value: MutableState<Float>) {
         Slider(
             valueRange = range,
             steps = steps,
-            value = value.value,
-            onValueChange = {
-                value.value = it.roundToDecimals()
-            },
+            value = value,
+            onValueChange = { setValue(it.roundToDecimals()) },
             modifier = Modifier.weight(1f, true),
         )
         AnimatedContent(
-            targetState = value.value,
+            targetState = value,
             transitionSpec = slideUpDown { target, initial -> target > initial },
             label = "slider value",
         ) {
@@ -97,18 +100,5 @@ private fun SliderWithValue(value: MutableState<Float>) {
                     .padding(horizontal = Spacing.normal),
             )
         }
-//        OutlinedTextField(
-//            modifier = Modifier
-//                .weight(1f)
-//                .align(Alignment.CenterVertically),
-//            value = "${value.value}",
-//            onValueChange = { value.value = it.toFloat() },
-//            keyboardOptions = KeyboardOptions(
-//                keyboardType = KeyboardType.Decimal,
-//                autoCorrect = false,
-//                capitalization = KeyboardCapitalization.None,
-//                imeAction = ImeAction.None,
-//            ),
-//        )
     }
 }
