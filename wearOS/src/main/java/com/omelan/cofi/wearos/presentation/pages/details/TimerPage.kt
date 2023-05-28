@@ -32,7 +32,7 @@ import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.timer.TimerControllers
 import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
 import com.omelan.cofi.wearos.presentation.components.ListenKeyEvents
-import com.omelan.cofi.wearos.presentation.components.StartButton
+import com.omelan.cofi.wearos.presentation.components.StartFAB
 import kotlinx.coroutines.launch
 
 @Composable
@@ -206,7 +206,7 @@ fun TimerPage(
             }
             AnimatedVisibility(visible = !isAmbient.value) {
                 Spacer(Modifier.height(12.dp))
-                StartButton(isTimerRunning, startButtonOnClick)
+                StartFAB(isTimerRunning, startButtonOnClick)
             }
         }
     }
