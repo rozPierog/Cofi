@@ -22,7 +22,8 @@ import kotlinx.coroutines.withContext
 fun <R, T> suspendCompat(block: suspend (T) -> R): suspend (T) -> R = block
 
 data class TimerControllers(
-    val currentStep: MutableState<Step?>,
+    val currentStep: Step?,
+    val changeCurrentStep: (Step?) -> Unit,
     val isDone: Boolean,
     val isTimerRunning: Boolean,
     val indexOfCurrentStep: Int,
@@ -83,7 +84,7 @@ object Timer {
             .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
         val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
             .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
-        val currentStep = remember { mutableStateOf<Step?>(null) }
+        var currentStep by remember { mutableStateOf<Step?>(null) }
         var isDone by remember { mutableStateOf(false) }
         var isTimerRunning by remember { mutableStateOf(false) }
         val animatedProgressValue = remember { Animatable(0f) }
@@ -96,7 +97,7 @@ object Timer {
         val haptics = remember { Haptics(context) }
         val mediaPlayer = remember { MediaPlayer.create(context, R.raw.ding) }
 
-        val indexOfCurrentStep = steps.indexOf(currentStep.value)
+        val indexOfCurrentStep = steps.indexOf(currentStep)
         val indexOfLastStep = steps.lastIndex
 
         val pauseAnimations = suspend {
@@ -108,9 +109,9 @@ object Timer {
         val changeToNextStep = suspendCompat { silent: Boolean ->
             animatedProgressValue.snapTo(0f)
             if (indexOfCurrentStep != indexOfLastStep) {
-                currentStep.value = steps[indexOfCurrentStep + 1]
+                currentStep = steps[indexOfCurrentStep + 1]
             } else {
-                currentStep.value = null
+                currentStep = null
                 isTimerRunning = false
                 isDone = true
                 onRecipeEnd()
@@ -127,7 +128,7 @@ object Timer {
         }
 
         val progressAnimation = suspendCompat<Unit, Unit> {
-            val safeCurrentStep = currentStep.value ?: return@suspendCompat
+            val safeCurrentStep = currentStep ?: return@suspendCompat
             isDone = false
             isTimerRunning = true
             val currentStepTime = safeCurrentStep.time?.times(timeMultiplier)
@@ -184,6 +185,7 @@ object Timer {
 
         return TimerControllers(
             currentStep,
+            {currentStep = it},
             isDone,
             isTimerRunning,
             indexOfCurrentStep,

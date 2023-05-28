@@ -215,6 +215,7 @@ fun RecipeDetails(
 
     val (
         currentStep,
+        changeCurrentStep,
         isDone,
         isTimerRunning,
         indexOfCurrentStep,
@@ -247,7 +248,7 @@ fun RecipeDetails(
         weightMultiplier = weightMultiplier,
     )
 
-    LaunchedEffect(currentStep.value) {
+    LaunchedEffect(currentStep) {
         progressAnimation(Unit)
     }
     LaunchedEffect(isTimerRunning) {
@@ -314,7 +315,7 @@ fun RecipeDetails(
                         }
                     }
                 },
-            currentStep = currentStep.value,
+            currentStep = currentStep,
             allSteps = steps,
             animatedProgressValue = animatedProgressValue,
             animatedProgressColor = animatedProgressColor,
@@ -359,11 +360,11 @@ fun RecipeDetails(
                 },
                 onLongClick = { newStep: Step ->
                     coroutineScope.launch {
-                        if (newStep == currentStep.value) {
+                        if (newStep == currentStep) {
                             return@launch
                         }
                         animatedProgressValue.snapTo(0f)
-                        currentStep.value = (newStep)
+                        changeCurrentStep(newStep)
                     }
                 },
                 weightMultiplier = weightMultiplier,
@@ -434,12 +435,12 @@ fun RecipeDetails(
                 StartFAB(
                     isTimerRunning = isTimerRunning,
                     onClick = {
-                        if (currentStep.value != null) {
+                        if (currentStep != null) {
                             if (animatedProgressValue.isRunning) {
                                 coroutineScope.launch { pauseAnimations() }
                             } else {
                                 coroutineScope.launch {
-                                    if (currentStep.value?.time == null) {
+                                    if (currentStep.time == null) {
                                         changeToNextStep(false)
                                     } else {
                                         startAnimations()

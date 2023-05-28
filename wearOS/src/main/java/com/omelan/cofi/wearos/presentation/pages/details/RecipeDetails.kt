@@ -190,7 +190,7 @@ fun RecipeDetails(
             canSwipeToClose(false)
         }
     }
-    LaunchedEffect(timerControllers.currentStep.value) {
+    LaunchedEffect(timerControllers.currentStep) {
         timerControllers.progressAnimation(Unit)
     }
 
