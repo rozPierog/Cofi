@@ -268,9 +268,7 @@ fun StepAddCard(
                 if (stepToEdit != null) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = Spacing.big),
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         PillButton(
                             painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowUp),
@@ -326,19 +324,24 @@ fun PillButton(
     painter: Painter,
     onClick: () -> Unit,
 ) {
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-        ),
-        enabled = enabled,
-        modifier = modifier,
-    ) {
-        Icon(painter = painter, contentDescription = null, modifier = Modifier.size(22.dp))
-        if (!text.isNullOrBlank()) {
-            Spacer(modifier = Modifier.width(Spacing.small))
-            Text(text = text)
+    if (!text.isNullOrBlank()) {
+        FilledTonalButton(
+            onClick = onClick, enabled = enabled,
+            modifier = modifier,
+        ) {
+            Icon(painter = painter, contentDescription = null, modifier = Modifier.size(22.dp))
+            if (text.isNotBlank()) {
+                Spacer(modifier = Modifier.width(Spacing.small))
+                Text(text = text)
+            }
+        }
+    } else {
+        OutlinedIconButton(
+            onClick = onClick,
+            enabled = enabled,
+            modifier = modifier,
+        ) {
+            Icon(painter = painter, contentDescription = null, modifier = Modifier.size(22.dp))
         }
     }
 }
