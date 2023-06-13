@@ -124,4 +124,5 @@ Kvernstørrelse: For lysbrent kaffe er en mer finmalt medium bra. For mørkere b
     <string name="support_title">Støtt Cofi</string>
     <string name="name_cezve">Cezve</string>
     <string name="support_dialog_body">Setter stor pris på din støtte. Hjelp meg å holde på med det jeg elsker ved å gjøre én eller flere av følgende</string>
+    <string name="recipe_details_change_step_toast">Trykk og hold for å endre steg</string>
 </resources>
