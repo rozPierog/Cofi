@@ -17,9 +17,14 @@ import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.ChannelClient
 import com.google.android.gms.wearable.Wearable
-import com.omelan.cofi.share.*
+import com.omelan.cofi.share.COMBINE_WEIGHT
+import com.omelan.cofi.share.DataStore
+import com.omelan.cofi.share.STEP_SOUND_ENABLED
+import com.omelan.cofi.share.STEP_VIBRATION_ENABLED
 import com.omelan.cofi.share.model.AppDatabase
+import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.SharedData
+import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.verify_cofi_wear_app
 import kotlinx.coroutines.*
