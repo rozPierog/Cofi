@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="step_type_add_coffee">Дадаць каву</string>
+    <string name="step_type_wait">Пачакаць</string>
+    <string name="step_type_other">Іншае</string>
+    <string name="step_add_weight">Вага (г)</string>
+    <string name="step_add_save">Захаваць</string>
+    <string name="recipe_edit_name">Назва</string>
+    <string name="step_add_name">Назва</string>
+    <string name="recipe_edit_description">Апісанне</string>
+    <string name="step_type_water">Дадаць ваду</string>
+    <string name="recipe_edit_description_button">Дадаць апісанне</string>
+    <string name="recipe_edit_title">Рэдагаваць рэцэпт</string>
+</resources>
