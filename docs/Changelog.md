@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added a button to open recipe description on WearOS
 
 ### Changed
 - Tweaked transition animation between screens, app should feel smoother now
