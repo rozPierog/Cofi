@@ -46,6 +46,7 @@ fun TimerPage(
 ) {
     val (
         currentStep,
+        _,
         isDone,
         isTimerRunning,
         _,
@@ -67,18 +68,18 @@ fun TimerPage(
     }
 
     val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
-        indexOfCurrentStep = allSteps.indexOf(currentStep.value),
+        indexOfCurrentStep = allSteps.indexOf(currentStep),
         allSteps = allSteps,
         combineWeightState = combineWeightState,
         weightMultiplier = weightMultiplier,
     )
     val startButtonOnClick: () -> Unit = {
-        if (currentStep.value != null) {
+        if (currentStep != null) {
             if (animatedProgressValue.isRunning) {
                 coroutineScope.launch { pauseAnimations() }
             } else {
                 coroutineScope.launch {
-                    if (currentStep.value?.time == null) {
+                    if (currentStep.time == null) {
                         changeToNextStep(false)
                     } else {
                         startAnimations()
@@ -156,7 +157,7 @@ fun TimerPage(
                 }
             }
             AnimatedVisibility(
-                visible = currentStep.value == null && !isDone,
+                visible = currentStep == null && !isDone,
                 modifier = Modifier.weight(1f, true),
             ) {
                 Box(contentAlignment = Alignment.Center) {
@@ -171,12 +172,12 @@ fun TimerPage(
                 }
             }
             AnimatedVisibility(
-                visible = currentStep.value != null && !isDone,
+                visible = currentStep != null && !isDone,
             ) {
                 Column {
-                    if (currentStep.value != null) {
+                    if (currentStep != null) {
                         TimeText(
-                            currentStep = currentStep.value!!,
+                            currentStep = currentStep,
                             animatedProgressValue = animatedProgressValue.value * timeMultiplier,
                             color = MaterialTheme.colors.onSurface,
                             maxLines = 2,
@@ -185,7 +186,7 @@ fun TimerPage(
                             showMillis = false,
                         )
                         StepNameText(
-                            currentStep = currentStep.value!!,
+                            currentStep = currentStep,
                             timeMultiplier = timeMultiplier,
                             color = MaterialTheme.colors.onSurface,
                             style = MaterialTheme.typography.title3,
@@ -193,7 +194,7 @@ fun TimerPage(
                             paddingHorizontal = 2.dp,
                         )
                         TimerValue(
-                            currentStep = currentStep.value!!,
+                            currentStep = currentStep,
                             animatedProgressValue = animatedProgressValue.value,
                             weightMultiplier = weightMultiplier,
                             alreadyDoneWeight = alreadyDoneWeight,
