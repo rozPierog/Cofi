@@ -114,7 +114,10 @@
     <string name="support_dialog_mastodon">Слідкуйте за мною на Mastodon</string>
     <string name="infoBox_update_title">Cofi оновлено</string>
     <string name="recipe_details_upNext">Далі:</string>
-    <string name="prepopulate_v60_description">Рецепт створив: Джеймс Хофман Джерело: https://youtu.be/AI4ynXzkSQo Розмір помелу: середньо-дрібний Температура: чим гарячіше, тим краще (особливо для легкого смаження)</string>
+    <string name="prepopulate_v60_description">Рецепт створив: Джеймс Хофман
+\nДжерело: https://youtu.be/AI4ynXzkSQo
+\nРозмір помелу: середньо-дрібний
+\nТемпература: чим гарячіше, тим краще (особливо для легкого смаження)</string>
     <string name="prepopulate_frenchPress_description">Рецепт створив: Джеймс Хофман
 \nДжерело: https://youtu.be/st571DYYTR8
 \nРозмір помелу: середній
@@ -126,4 +129,5 @@
 \nПереконайтеся, що найжорсткіша частина фільтра знаходиться на стороні зливу
 \nФільтр не повинен ідеально прилягати до стінок з обох боків, повітря має кудись виходити</string>
     <string name="recipe_details_change_step_toast">Натисніть і утримуйте, щоб змінити крок</string>
+    <string name="recipe_details_read_description">Читати опис</string>
 </resources>
