@@ -544,7 +544,7 @@ private fun IconPickerBottomSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .waterfallPadding()
-                .safeGesturesPadding(),
+                .navigationBarsPadding(),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.Bottom,
         ) {

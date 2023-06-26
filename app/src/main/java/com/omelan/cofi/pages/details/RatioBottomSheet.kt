@@ -33,6 +33,7 @@ fun RatioBottomSheet(
         Column(
             modifier = Modifier
                 .waterfallPadding()
+                .navigationBarsPadding()
                 .padding(horizontal = Spacing.big),
         ) {
             SheetContent(
