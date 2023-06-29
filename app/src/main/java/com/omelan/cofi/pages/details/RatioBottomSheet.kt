@@ -25,6 +25,7 @@ import com.omelan.cofi.share.components.slideUpDown
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.roundToDecimals
+import com.omelan.cofi.share.utils.toStringShort
 import com.omelan.cofi.ui.Spacing
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -164,6 +165,7 @@ private fun ManualContent(
     }
     Title(stringResource(id = R.string.recipe_details_multiply_weight))
     Row(
+        modifier = Modifier.padding(top = Spacing.normal),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
     ) {
@@ -206,13 +208,15 @@ private fun ManualContent(
         )
     }
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = Spacing.big),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         predefinedMultipliers.forEach {
             com.omelan.cofi.components.Chip(
-                value = "${it}x",
+                value = "${it.toStringShort()}x",
                 onCheck = { checked ->
                     if (checked) {
                         setWeightMultiplier(it)
