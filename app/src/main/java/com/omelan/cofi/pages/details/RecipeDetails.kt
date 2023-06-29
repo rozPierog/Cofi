@@ -467,6 +467,7 @@ fun RecipeDetails(
                 weightMultiplier = weightMultiplier,
                 setWeightMultiplier = { newValue -> weightMultiplier = newValue },
                 onDismissRequest = { ratioSheetIsVisible = false },
+                allSteps = steps,
             )
         }
         if (isPhoneLayout) {

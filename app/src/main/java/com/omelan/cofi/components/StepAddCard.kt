@@ -29,7 +29,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -165,11 +164,11 @@ fun StepAddCard(
                         }
                         .fillMaxWidth(),
                 )
-                OutlinedTextField(
+                OutlinedNumbersField(
                     label = { Text(text = stringResource(id = R.string.step_add_duration)) },
                     value = stepTime,
                     onValueChange = { value ->
-                        stepTime = ensureNumbersOnly(value) ?: stepTime
+                        stepTime = value
                     },
                     supportingText = {
                         val duration = (stepTime.toIntOrNull()?.times(1000))
@@ -182,19 +181,15 @@ fun StepAddCard(
                             Icon(Icons.Rounded.Info, contentDescription = "")
                         }
                     },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = if (pickedType?.isNotWaitStepType() == true) {
-                            ImeAction.Next
+                    imeAction = if (pickedType?.isNotWaitStepType() == true) {
+                        ImeAction.Next
+                    } else {
+                        if (stepName.text.isNotBlank()) {
+                            ImeAction.Done
                         } else {
-                            if (stepName.text.isNotBlank()) {
-                                ImeAction.Done
-                            } else {
-                                ImeAction.Previous
-                            }
-                        },
-                    ),
+                            ImeAction.Previous
+                        }
+                    },
                     keyboardActions = KeyboardActions(
                         onPrevious = { focusManager.moveFocus(FocusDirection.Up) },
                         onNext = {
@@ -211,21 +206,17 @@ fun StepAddCard(
                         .fillMaxWidth(),
                 )
                 AnimatedVisibility(visible = pickedType?.isNotWaitStepType() == true) {
-                    OutlinedTextField(
+                    OutlinedNumbersField(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
                         value = stepValue,
                         onValueChange = { value ->
                             stepValue = ensureNumbersOnly(value, true) ?: stepValue
                         },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = if (stepName.text.isNotBlank()) {
-                                ImeAction.Done
-                            } else {
-                                ImeAction.Previous
-                            },
-                        ),
+                        imeAction = if (stepName.text.isNotBlank()) {
+                            ImeAction.Done
+                        } else {
+                            ImeAction.Previous
+                        },
                         keyboardActions = KeyboardActions(
                             onDone = { saveStep() },
                             onPrevious = {

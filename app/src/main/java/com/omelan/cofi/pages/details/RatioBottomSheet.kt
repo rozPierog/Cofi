@@ -4,23 +4,32 @@ package com.omelan.cofi.pages.details
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3BottomSheet
+import com.omelan.cofi.components.OutlinedNumbersField
 import com.omelan.cofi.share.components.slideUpDown
+import com.omelan.cofi.share.model.Step
+import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.roundToDecimals
 import com.omelan.cofi.ui.Spacing
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RatioBottomSheet(
     timeMultiplier: Float,
@@ -28,26 +37,88 @@ fun RatioBottomSheet(
     weightMultiplier: Float,
     setWeightMultiplier: (Float) -> Unit,
     onDismissRequest: () -> Unit,
+    allSteps: List<Step>,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val pagerState = rememberPagerState()
     Material3BottomSheet(onDismissRequest = onDismissRequest) {
-        Column(
-            modifier = Modifier
-                .waterfallPadding()
-                .navigationBarsPadding()
-                .padding(horizontal = Spacing.big),
-        ) {
-            SheetContent(
-                timeMultiplier,
-                setTimeMultiplier,
-                weightMultiplier,
-                setWeightMultiplier,
+        TabRow(selectedTabIndex = pagerState.currentPage) {
+            Tab(
+                selected = pagerState.currentPage == 0,
+                onClick = {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(0)
+                    }
+                },
+                icon = {
+                    Icon(Icons.Rounded.LocationOn, contentDescription = null)
+                },
+                text = {
+                    Text(text = "Sliders")
+                },
             )
+            Tab(
+                selected = pagerState.currentPage == 1,
+                text = {
+                    Text(text = "Manual")
+                },
+                icon = {
+                    Icon(Icons.Rounded.Edit, contentDescription = null)
+                },
+                onClick = {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(1)
+                    }
+                },
+            )
+        }
+
+        HorizontalPager(
+            pageCount = 2,
+            state = pagerState,
+//            modifier = Modifier
+//                .animateContentSize()
+//                .imePadding(),
+        ) {
+            when (it) {
+                0 ->
+                    Column(
+                        modifier = Modifier
+                            .waterfallPadding()
+                            .navigationBarsPadding()
+                            .padding(horizontal = Spacing.big)
+                            .padding(top = Spacing.big),
+                    ) {
+                        SliderContent(
+                            timeMultiplier,
+                            setTimeMultiplier,
+                            weightMultiplier,
+                            setWeightMultiplier,
+                        )
+                    }
+
+                1 -> Column(
+                    modifier = Modifier
+                        .waterfallPadding()
+                        .navigationBarsPadding()
+                        .padding(horizontal = Spacing.big)
+                        .padding(top = Spacing.big),
+                ) {
+                    ManualContent(
+                        timeMultiplier,
+                        setTimeMultiplier,
+                        weightMultiplier,
+                        setWeightMultiplier,
+                        allSteps,
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun SheetContent(
+private fun SliderContent(
     timeMultiplier: Float,
     setTimeMultiplier: (Float) -> Unit,
     weightMultiplier: Float,
@@ -55,6 +126,102 @@ private fun SheetContent(
 ) {
     Title(stringResource(id = R.string.recipe_details_multiply_weight))
     SliderWithValue(weightMultiplier, setWeightMultiplier)
+    Title(stringResource(id = R.string.recipe_details_multiply_time))
+    SliderWithValue(timeMultiplier, setTimeMultiplier)
+}
+
+val predefinedMultipliers = arrayOf(0.5f, 1f, 2f, 3f)
+
+@Composable
+private fun ManualContent(
+    timeMultiplier: Float,
+    setTimeMultiplier: (Float) -> Unit,
+    weightMultiplier: Float,
+    setWeightMultiplier: (Float) -> Unit,
+    allSteps: List<Step>,
+) {
+    val combinedWaterWeight by remember(allSteps) {
+        derivedStateOf {
+            allSteps.sumOf {
+                if (it.type == StepType.WATER) {
+                    it.value?.toDouble() ?: 0.0
+                } else {
+                    0.0
+                }
+            }.toFloat()
+        }
+    }
+    val combinedCoffeeWeight by remember(allSteps) {
+        derivedStateOf {
+            allSteps.sumOf {
+                if (it.type == StepType.ADD_COFFEE) {
+                    it.value?.toDouble() ?: 0.0
+                } else {
+                    0.0
+                }
+            }.toFloat()
+        }
+    }
+    Title(stringResource(id = R.string.recipe_details_multiply_weight))
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
+    ) {
+        OutlinedNumbersField(
+            modifier = Modifier.weight(1f, true),
+            value = (combinedCoffeeWeight * weightMultiplier).toString(),
+            onValueChange = {
+                setWeightMultiplier(
+                    ((it.toFloatOrNull() ?: combinedCoffeeWeight) / combinedCoffeeWeight),
+                )
+            },
+            suffix = {
+                Text(text = "g")
+            },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.recipe_icon_coffee_grinder),
+                    contentDescription = null,
+                )
+            },
+        )
+        Text(text = ":")
+        OutlinedNumbersField(
+            modifier = Modifier.weight(1f, true),
+            value = (combinedWaterWeight * weightMultiplier).toString(),
+            onValueChange = {
+                setWeightMultiplier(
+                    ((it.toFloatOrNull() ?: combinedWaterWeight) / combinedWaterWeight),
+                )
+            },
+            suffix = {
+                Text(text = "g")
+            },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_water),
+                    contentDescription = null,
+                )
+            },
+        )
+    }
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        predefinedMultipliers.forEach {
+            com.omelan.cofi.components.Chip(
+                value = "${it}x",
+                onCheck = { checked ->
+                    if (checked) {
+                        setWeightMultiplier(it)
+                    }
+                },
+                isChecked = weightMultiplier == it,
+            )
+        }
+    }
     Title(stringResource(id = R.string.recipe_details_multiply_time))
     SliderWithValue(timeMultiplier, setTimeMultiplier)
 }
