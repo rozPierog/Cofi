@@ -6,15 +6,12 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -27,7 +24,6 @@ import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.roundToDecimals
 import com.omelan.cofi.share.utils.toStringShort
 import com.omelan.cofi.ui.Spacing
-import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -40,107 +36,36 @@ fun RatioBottomSheet(
     onDismissRequest: () -> Unit,
     allSteps: List<Step>,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
     Material3BottomSheet(onDismissRequest = onDismissRequest) {
-        TabRow(selectedTabIndex = pagerState.currentPage) {
-            Tab(
-                selected = pagerState.currentPage == 0,
-                onClick = {
-                    coroutineScope.launch {
-                        pagerState.animateScrollToPage(0)
-                    }
-                },
-                icon = {
-                    Icon(Icons.Rounded.LocationOn, contentDescription = null)
-                },
-                text = {
-                    Text(text = "Sliders")
-                },
-            )
-            Tab(
-                selected = pagerState.currentPage == 1,
-                text = {
-                    Text(text = "Manual")
-                },
-                icon = {
-                    Icon(Icons.Rounded.Edit, contentDescription = null)
-                },
-                onClick = {
-                    coroutineScope.launch {
-                        pagerState.animateScrollToPage(1)
-                    }
-                },
-            )
-        }
-
-        HorizontalPager(
-            pageCount = 2,
-            state = pagerState,
-//            modifier = Modifier
-//                .animateContentSize()
-//                .imePadding(),
+        Column(
+            modifier = Modifier
+                .waterfallPadding()
+                .navigationBarsPadding()
+                .padding(horizontal = Spacing.big)
+                .padding(top = Spacing.big),
         ) {
-            when (it) {
-                0 ->
-                    Column(
-                        modifier = Modifier
-                            .waterfallPadding()
-                            .navigationBarsPadding()
-                            .padding(horizontal = Spacing.big)
-                            .padding(top = Spacing.big),
-                    ) {
-                        SliderContent(
-                            timeMultiplier,
-                            setTimeMultiplier,
-                            weightMultiplier,
-                            setWeightMultiplier,
-                        )
-                    }
-
-                1 -> Column(
-                    modifier = Modifier
-                        .waterfallPadding()
-                        .navigationBarsPadding()
-                        .padding(horizontal = Spacing.big)
-                        .padding(top = Spacing.big),
-                ) {
-                    ManualContent(
-                        timeMultiplier,
-                        setTimeMultiplier,
-                        weightMultiplier,
-                        setWeightMultiplier,
-                        allSteps,
-                    )
-                }
-            }
+            ManualContent(
+                timeMultiplier,
+                setTimeMultiplier,
+                weightMultiplier,
+                setWeightMultiplier,
+                allSteps,
+            )
         }
     }
-}
-
-@Composable
-private fun SliderContent(
-    timeMultiplier: Float,
-    setTimeMultiplier: (Float) -> Unit,
-    weightMultiplier: Float,
-    setWeightMultiplier: (Float) -> Unit,
-) {
-    Title(stringResource(id = R.string.recipe_details_multiply_weight))
-    SliderWithValue(weightMultiplier, setWeightMultiplier)
-    Title(stringResource(id = R.string.recipe_details_multiply_time))
-    SliderWithValue(timeMultiplier, setTimeMultiplier)
 }
 
 val predefinedMultipliers = arrayOf(0.5f, 1f, 2f, 3f)
 
 @Composable
-private fun ManualContent(
+private fun ColumnScope.ManualContent(
     timeMultiplier: Float,
     setTimeMultiplier: (Float) -> Unit,
     weightMultiplier: Float,
     setWeightMultiplier: (Float) -> Unit,
     allSteps: List<Step>,
 ) {
+    val focusRequester = remember { FocusRequester() }
     val combinedWaterWeight by remember(allSteps) {
         derivedStateOf {
             allSteps.sumOf {
@@ -163,6 +88,11 @@ private fun ManualContent(
             }.toFloat()
         }
     }
+
+    LaunchedEffect(true) {
+        focusRequester.requestFocus()
+    }
+
     Title(stringResource(id = R.string.recipe_details_multiply_weight))
     Row(
         modifier = Modifier.padding(top = Spacing.normal),
@@ -170,7 +100,9 @@ private fun ManualContent(
         horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
     ) {
         OutlinedNumbersField(
-            modifier = Modifier.weight(1f, true),
+            modifier = Modifier
+                .weight(1f, true)
+                .focusRequester(focusRequester),
             value = (combinedCoffeeWeight * weightMultiplier).toString(),
             onValueChange = {
                 setWeightMultiplier(
