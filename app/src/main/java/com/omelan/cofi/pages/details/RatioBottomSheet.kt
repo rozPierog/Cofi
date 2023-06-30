@@ -14,6 +14,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3BottomSheet
@@ -92,8 +93,15 @@ private fun ColumnScope.ManualContent(
     LaunchedEffect(true) {
         focusRequester.requestFocus()
     }
-
     Title(stringResource(id = R.string.recipe_details_multiply_weight))
+    Spacer(modifier = Modifier.height(Spacing.normal))
+    Subtitle(
+        text = stringResource(
+            id = R.string.recipe_details_recipeRatio,
+            (combinedWaterWeight / combinedCoffeeWeight).toStringShort(),
+        ),
+    )
+
     Row(
         modifier = Modifier.padding(top = Spacing.normal),
         verticalAlignment = Alignment.CenterVertically,
@@ -169,6 +177,17 @@ fun Title(text: String) {
         textAlign = TextAlign.Start,
         style = MaterialTheme.typography.titleSmall,
         color = MaterialTheme.colorScheme.onSurface,
+    )
+}
+
+@Composable
+fun Subtitle(text: String) {
+    Text(
+        text = text,
+        textAlign = TextAlign.Start,
+        style = MaterialTheme.typography.titleSmall,
+        fontWeight = FontWeight.Light,
+        color = MaterialTheme.colorScheme.secondary,
     )
 }
 
