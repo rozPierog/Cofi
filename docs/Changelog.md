@@ -8,14 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Added a button to open recipe description on WearOS
+- Inputs to change weight of the recipe in recipe multiplier modal
 
 ### Changed
 - Tweaked transition animation between screens, app should feel smoother now
 - Tweaked modals across the app
 - Tweak design of adding steps - sorry for broken muscle memory
+- Fixed layout on tablets and foldables
+- Improved number input responsibility
 
 ### Removed
-
+- Removed slider from weight multiplier in favor of chips and manual input
 
 ## [1.18.7|1.9.7] - 2023-05-26
 
