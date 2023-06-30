@@ -36,7 +36,6 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.omelan.cofi.R
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
-import com.omelan.cofi.share.utils.ensureNumbersOnly
 import com.omelan.cofi.share.utils.safeToInt
 import com.omelan.cofi.share.utils.toMillis
 import com.omelan.cofi.share.utils.toStringDuration
@@ -167,6 +166,7 @@ fun StepAddCard(
                 OutlinedNumbersField(
                     label = { Text(text = stringResource(id = R.string.step_add_duration)) },
                     value = stepTime,
+                    allowFloat = false,
                     onValueChange = { value ->
                         stepTime = value
                     },
@@ -210,7 +210,7 @@ fun StepAddCard(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
                         value = stepValue,
                         onValueChange = { value ->
-                            stepValue = ensureNumbersOnly(value, true) ?: stepValue
+                            stepValue = value
                         },
                         imeAction = if (stepName.text.isNotBlank()) {
                             ImeAction.Done

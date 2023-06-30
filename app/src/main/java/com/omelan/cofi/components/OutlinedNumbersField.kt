@@ -12,6 +12,7 @@ import com.omelan.cofi.share.utils.ensureNumbersOnly
 @Composable
 fun OutlinedNumbersField(
     modifier: Modifier = Modifier,
+    allowFloat: Boolean = true,
     label: @Composable (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
@@ -35,10 +36,10 @@ fun OutlinedNumbersField(
         singleLine = true,
         value = value,
         onValueChange = { newValue ->
-            onValueChange(ensureNumbersOnly(newValue, true) ?: value)
+            onValueChange(ensureNumbersOnly(newValue, value, allowFloat))
         },
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
+            keyboardType = KeyboardType.Decimal,
             imeAction = imeAction,
         ),
         keyboardActions = keyboardActions,

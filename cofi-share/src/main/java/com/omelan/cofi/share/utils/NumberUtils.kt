@@ -42,36 +42,34 @@ fun Int.toStringDuration(
     }
 }
 
-fun ensureNumbersOnly(string: String, allowFloatingPoint: Boolean = false): String? {
-    if (string.isEmpty()) {
-        return string
-    }
+fun ensureNumbersOnly(newValue: String, oldValue: String, allowFloat: Boolean): String {
     val maxInt: Int = Int.MAX_VALUE / 1000
-    val trimmedText = string.trim()
-    try {
-        if (allowFloatingPoint) {
-            if (trimmedText == ".") {
-                return string
-            }
-            if (trimmedText.toFloat() in 0f..maxInt.toFloat()) {
-                val decimalSeparator = DecimalFormat().decimalFormatSymbols.decimalSeparator
-                val decimalPlace = string.split(decimalSeparator).getOrNull(1)
-                if (decimalPlace != null && decimalPlace.length > 1) {
-                    return null
-                }
-                return string
-            } else {
-                return null
-            }
+    if (newValue.isEmpty()) {
+        return newValue
+    }
+    if (!allowFloat) {
+        val convertedNumber = newValue.toIntOrNull()
+        return if (convertedNumber != null && convertedNumber in 0..maxInt) {
+            newValue
         } else {
-            return if (trimmedText.toInt() in 0..maxInt) {
-                string
-            } else {
-                null
-            }
+            oldValue
         }
-    } catch (e: NumberFormatException) {
-        return null
+    }
+
+    val decimalSeparator = DecimalFormat().decimalFormatSymbols.decimalSeparator
+
+    if (newValue == oldValue.filter { it != decimalSeparator }) {
+        return oldValue
+    }
+    val fixedNewValue = if (newValue.count { it == decimalSeparator } > 1) {
+        newValue.substringBeforeLast(".", missingDelimiterValue = "")
+    } else newValue
+
+    val convertedNumber = fixedNewValue.toDoubleOrNull()
+    return if (convertedNumber != null && convertedNumber in 0.0..maxInt.toDouble()) {
+        fixedNewValue
+    } else {
+        oldValue
     }
 }
 
