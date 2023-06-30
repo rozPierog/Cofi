@@ -11,4 +11,24 @@
     <string name="step_type_water">Дадаць ваду</string>
     <string name="recipe_edit_description_button">Дадаць апісанне</string>
     <string name="recipe_edit_title">Рэдагаваць рэцэпт</string>
+    <string name="step_add_duration">Працягласць (с)</string>
+    <string name="recipe_unsaved_title">Незахаваныя змены</string>
+    <string name="recipe_unsaved_text">Хочаш скасаваць змены\?</string>
+    <string name="recipe_delete_title">Ты ўпэўнены\?</string>
+    <string name="recipe_add_new_title">Дадаць новы рэцэпт</string>
+    <string name="recipe_details_automation_dialog_title">Прамая спасылка</string>
+    <string name="timer_progress_weight">%1$sг/%2$sг</string>
+    <string name="timer_step_name_time">%1$s (%2$sс)</string>
+    <string name="button_delete">Выдаліць</string>
+    <string name="button_cancel">Скасаваць</string>
+    <string name="button_discard">Адхіліць</string>
+    <string name="button_continue_editing">Працягнуць рэдагаванне</string>
+    <string name="button_copy">Капіяваць</string>
+    <string name="snackbar_copied">Скапіявана!</string>
+    <string name="settings_licenses_title">Ліцэнзіі адкрытага зыходнага кода</string>
+    <string name="settings_title">Налады</string>
+    <string name="settings_about_item">Пра прыкладанне</string>
+    <string name="settings_pip_item">Нарыс у нарысе</string>
+    <string name="settings_step_sound_item">Гук змены крока</string>
+    <string name="recipe_delete_text">Гэта выдаліць гэты рэцэпт назаўсёды</string>
 </resources>

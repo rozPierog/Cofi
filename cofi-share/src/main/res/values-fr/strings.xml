@@ -64,7 +64,10 @@
     <string name="prepopulate_v60_name">Ultimate V60</string>
     <string name="prepopulate_step_wait">Attendre</string>
     <string name="prepopulate_step_swirl">Touiller</string>
-    <string name="prepopulate_v60_description">Recette créée par : James Hoffmann Source : https://youtu.be/AI4ynXzkSQo Taille de la mouture : moyennement fine Température : plus c\'est chaud, mieux c\'est (surtout avec les torréfiés légers)</string>
+    <string name="prepopulate_v60_description">Recette créée par : James Hoffmann
+\nSource : https://youtu.be/AI4ynXzkSQo
+\nTaille de la mouture : moyennement fine
+\nTempérature : plus c\'est chaud, mieux c\'est (surtout avec les torréfiés légers)</string>
     <string name="prepopulate_step_coffee">Ajouter du café</string>
     <string name="prepopulate_step_water">Ajouter de l\'eau</string>
     <string name="prepopulate_frenchPress_name">Cafetière à piston</string>
@@ -124,4 +127,5 @@
     <string name="infoBox_wearOS_body">Téléchargez l\'application Cofi pour votre montre WearOS !</string>
     <string name="settings_sync_with_phone">Obtenir les paramètres du téléphone</string>
     <string name="recipe_details_change_step_toast">Appuyer et maintenir pour changer d\'étape</string>
+    <string name="recipe_details_read_description">Lire la description</string>
 </resources>
