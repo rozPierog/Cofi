@@ -124,4 +124,5 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
         <item quantity="other">Es wurden %d Rezepte wiederhergestellt</item>
     </plurals>
     <string name="recipe_details_change_step_toast">Gedrückt halten, um den Schritt zu ändern</string>
+    <string name="recipe_details_read_description">Beschreibung lesen</string>
 </resources>

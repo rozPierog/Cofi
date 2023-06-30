@@ -1,2 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Zálohován %d recept</item>
+        <item quantity="few">Zálohovány %d recepty</item>
+        <item quantity="other">Zálohovány %d recepty</item>
+    </plurals>
+    <string name="timer_enjoy">Užijte si svou kávu</string>
+    <string name="prepopulate_step_coffee">Přidejte kávu</string>
+    <string name="prepopulate_step_swirl">Zamíchejte</string>
+    <string name="prepopulate_step_wait">Vyčkejte</string>
+    <string name="hoffmann_credits_title">Základní recepty vytvořil James Hoffmann</string>
+    <string name="recipe_details_read_description">Přečíst popis</string>
+    <string name="prepopulate_chemex_description">Recept vytvořil: James Hoffmann
+\nZdroj: https://youtu.be/ikt-X5x7yoc
+\nHrubost mletí: středně dobrá
+\nTeplota: čím teplejší, tím lepší (obzvláště s nízkým pražením)
+\nUjistěte se že nejtužší část filtru je na drenážní části
+\nMyslete na to aby jste nezablokovali vzduch odcházející z vařiče</string>
+    <string name="tereszkiewicz_credits_title">Ikonu aplikace vytvořil: Hubert Tereszkiewicz</string>
+    <string name="name_cold_brew">Cold Brew</string>
+    <string name="name_vietnamese_press">Phin Filtr</string>
+    <string name="support_dialog_kofi">Kupte mi kávu</string>
+    <string name="support_dialog_review">Napište recenzi</string>
+    <string name="support_title">Podpořte Cofi</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Obnoven %d recept</item>
+        <item quantity="few">Obnoveny %d recepty</item>
+        <item quantity="other">Obnoveny %d recepty</item>
+    </plurals>
+    <string name="step_type_add_coffee">Přidejte kávu</string>
+    <string name="step_type_water">Přidejte vodu</string>
+    <string name="step_type_other">Ostatní</string>
+    <string name="step_type_wait">Vyčkejte</string>
+    <string name="recipe_delete_title">Jste si jisti\?</string>
+    <string name="recipe_details_automation_dialog_title">Přímý odkaz</string>
+    <string name="recipe_unsaved_title">Máte neuložené změny</string>
+    <string name="recipe_unsaved_text">Přejete si je zrušit\?</string>
+    <string name="recipe_add_new_title">Vytvořit nový recept</string>
+    <string name="step_add_name">Název</string>
+    <string name="step_add_duration">Doba trvání (s)</string>
+    <string name="step_add_weight">Váha (g)</string>
+    <string name="step_add_save">Uložit</string>
+    <string name="recipe_delete_text">Toto odstraní tento recept permanentně</string>
+    <string name="recipe_edit_name">Název</string>
+    <string name="recipe_edit_description_button">Přidat popis</string>
+    <string name="recipe_edit_description">Popis</string>
+    <string name="recipe_edit_title">Upravit recept</string>
+    <string name="recipe_details_automation_dialog_text">Použijte tento odkaz aby jste se dostali přímo k tomuto receptu. Nahrajte jej na NFC tag nebo vytvořte automatický úkol v Tasker aby jste si ulehčili práci s ranní kávou.
+\nVAROVÁNÍ: Tímto způsobem nemůžete sdílet svůj recept!</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="button_cancel">Zrušit</string>
+    <string name="button_delete">Smazat</string>
+    <string name="button_discard">Vyřadit</string>
+    <string name="button_continue_editing">Pokračovat v úpravách</string>
+    <string name="button_copy">Kopírovat</string>
+    <string name="snackbar_copied">Zkopírováno!</string>
+    <string name="settings_licenses_title">Licence s veřejným zdrojem</string>
+    <string name="settings_title">Nastavení</string>
+    <string name="settings_about_item">O Aplikaci</string>
+    <string name="settings_pip_item">Obraz v obraze</string>
+    <string name="settings_bug_item">Nahlásit bug nebo navrhnout funkci</string>
+    <string name="settings_combine_weight_item">Zkombinovat váhu</string>
+    <string name="settings_combine_weight_all">Zkombinovat všechny váhy</string>
+    <string name="settings_combine_weight_water">Zkombinovat pouze váhu vody</string>
+    <string name="settings_combine_weight_none">Nekombinovat váhu</string>
+    <string name="settings_about_title">O</string>
+    <string name="settings_github_item">GitHub Repozitář</string>
+    <string name="settings_step_sound_item">Zvuk změny kroku</string>
+    <string name="settings_licenses_item">Licence</string>
+    <string name="button_show">Zobrazit</string>
+    <string name="step_add_remove">Odstranit</string>
+    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_description">Recept vytvořil: James Hoffmann
+\nZdroj: https://youtu.be/AI4ynXzkSQo
+\nHrubost mletí: střední
+\nTeplota: čím teplejší, tím lepší (obzvláště u nízkého pražení)</string>
+    <string name="prepopulate_step_water">Přidejte vodu</string>
+    <string name="prepopulate_step_plunge">Ponořte pouze pod povrch a nalijte</string>
+    <string name="prepopulate_step_stir_crust">Zamíchejte krustu</string>
+    <string name="prepopulate_step_scoop_coffee">Odebrte pěnu a zbytky kousků kávy z vršku</string>
+    <string name="prepopulate_frenchPress_name">Francouzský Press</string>
+    <string name="prepopulate_frenchPress_description">Recept vytvořil: James Hoffmann
+\nZdroj: https://youtu.be/st571DYYTR8
+\nHrubost mletí: střední
+\nMůžete nalévat po 5 minutách od posledního kroku, ale čím déle vyčkáte, tím lépe</string>
+    <string name="hoffmann_credits_subtitle">Jeho Youtube kanál</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="prepopulate_aero_step_piston">Umístěte píst 1cm do vařiče</string>
+    <string name="prepopulate_aero_step_press">Jemně zmáčkněte píst</string>
+    <string name="prepopulate_aero_description">Recept vytvořil: James Hoffmann
+\nZdroj: https://youtu.be/j6VlT_jUVPc
+\nHrubost mletí: Pro jemné pražení - lepší konec středního. Čím tmavější pražení zvolíte tím více můžete preferovat větší dávku a hrubší mletí
+\nTeplota: Pro jemné pražení - přiveďte k varu a vypijte ihned. Pro tmavší pražení - 85-90°C</string>
+    <string name="recipe_create_title">Přidat recept</string>
+    <string name="recipe_clone_title">Duplikovat recept\?</string>
+    <string name="recipe_clone_text">Toto vytvoří duplikát tohoto receptu</string>
+    <string name="recipe_clone_suffix">%1$s - Kopírovat</string>
+    <string name="app_version">Verze aplikace</string>
+    <string name="recipe_details_noTime">Stiskněte začít pro pokračování</string>
+    <string name="tereszkiewicz_credits_subtitle">Podívejte se na jeho Dribbble</string>
+    <string name="step_add_duration_explainer">Délka kroku určuje jak dlouho bude akce trvat (v sekundách). Nechte prázdné pro pozastavení receptu dokud nejste připraveni.</string>
+    <string name="settings_backup">Záloha</string>
+    <string name="settings_restore">Obnovit</string>
+    <string name="settings_addDefault">Přidat základní recepty</string>
+    <string name="settings_timer_item">Nastavení časovače</string>
+    <string name="settings_backup_item">Zálohovat/Obnovit</string>
+    <string name="settings_step_vibrate_item">Vibrace změny kroku</string>
+    <string name="recipe_details_multiply_time">Násobitel času</string>
+    <string name="recipe_details_multiply_weight">Násobitel váhy</string>
+    <string name="infoBox_wearOS_title">Cofi je nyní na WearOS</string>
+    <string name="infoBox_wearOS_body">Stáhněte aplikaci Cofi na vaše WearOS hodinky!</string>
+    <string name="settings_sync_with_phone">Získejte nastavení z vašeho telefonu</string>
+    <string name="name_grinder">Mlýnek na kávu</string>
+    <string name="name_espresso">Přístroj na Espresso</string>
+    <string name="name_siphon">Syfon</string>
+    <string name="name_cezve">Cezve</string>
+    <string name="name_cup">Hrnek</string>
+    <string name="support_dialog_title">Líbí se vám Cofi\?</string>
+    <string name="support_dialog_body">Byl bych velice rád za vaši podporu! Můžete mi pomoci s děláním toho co mám rád vybránín jednoho nebo více z následujících</string>
+    <string name="support_dialog_github">Dejte Cofi hvězdičku na GitHubu</string>
+    <string name="support_dialog_mastodon">Sledujte mě na Mastodonu</string>
+    <string name="infoBox_update_title">Cofi byla aktualizována</string>
+    <string name="infoBox_update_body">Klikněte zde pro zjištění co je nového</string>
+    <string name="settings_step_next_step_item">Zobrazit další krok</string>
+    <string name="recipe_details_upNext">Nadcházející:</string>
+    <string name="settings_wearOS_item">Stáhnout pro WearOS</string>
+    <string name="recipe_details_change_step_toast">Stiskněte a podržte pro změnění kroku</string>
+</resources>

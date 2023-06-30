@@ -56,9 +56,9 @@
     <string name="timer_enjoy">Disfruta de tu café</string>
     <string name="prepopulate_v60_name">Último V60</string>
     <string name="prepopulate_v60_description">Receta creada por: James Hoffmann
-        Fuente: https://youtu.be/AI4ynXzkSQo
-        Tamaño del molido: medio fino
-        Temperatura: cuanto más caliente, mejor (especialmente con los tostados más ligeros)</string>
+\nFuente: https://youtu.be/AI4ynXzkSQo
+\nMolido: medio fino
+\nTemperatura: cuanto más caliente, mejor (especialmente con tostados ligeros)</string>
     <string name="prepopulate_step_coffee">Añadir el café</string>
     <string name="prepopulate_step_water">Añada agua</string>
     <string name="prepopulate_step_swirl">Agitar</string>
@@ -127,4 +127,5 @@
     <string name="settings_wearOS_item">Descargar para WearOS</string>
     <string name="support_dialog_github">Califique Cofi en GitHub</string>
     <string name="recipe_details_change_step_toast">Manten pulsado para cambiar de paso</string>
+    <string name="recipe_details_read_description">Leer la descripción</string>
 </resources>
