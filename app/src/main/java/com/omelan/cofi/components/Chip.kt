@@ -34,7 +34,8 @@ fun Chip(
 ) {
     val fabShape by animateDpAsState(
         targetValue = if (!isChecked) 12.dp else 14.dp,
-        animationSpec = animationSpecDp, label = "Chip Shape",
+        animationSpec = animationSpecDp,
+        label = "Chip Shape",
     )
     val borderColor by animateColorAsState(
         targetValue = if (isChecked) {
@@ -43,7 +44,7 @@ fun Chip(
             MaterialTheme.colorScheme.outline
         },
         animationSpec = animationSpecColor,
-        label = "Chip border color"
+        label = "Chip border color",
     )
     val containerColor by animateColorAsState(
         targetValue = if (!isChecked) {
@@ -52,7 +53,7 @@ fun Chip(
             MaterialTheme.colorScheme.secondaryContainer
         },
         animationSpec = animationSpecColor,
-        label = "Chip container color"
+        label = "Chip container color",
     )
     val contentColor by animateColorAsState(
         targetValue = if (!isChecked) {
@@ -61,7 +62,7 @@ fun Chip(
             MaterialTheme.colorScheme.onSecondaryContainer
         },
         animationSpec = animationSpecColor,
-        label = "Chip content color"
+        label = "Chip content color",
     )
     Button(
         onClick = { onCheck(!isChecked) },

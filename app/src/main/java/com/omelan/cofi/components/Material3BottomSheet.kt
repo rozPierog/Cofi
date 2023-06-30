@@ -61,7 +61,7 @@ fun Material3BottomSheet(
             shape = modalBottomSheetShape,
             sheetState = sheetState,
             content = content,
-            windowInsets= WindowInsets(0),
+            windowInsets = WindowInsets(0),
             scrimColor = Color.Transparent,
         )
     }

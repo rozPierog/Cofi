@@ -103,7 +103,6 @@ fun SupportCofi(onDismissRequest: () -> Unit) {
 fun PreviewSupportCofi() {
     CofiTheme {
         SupportCofi {
-
         }
     }
 }

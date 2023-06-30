@@ -319,7 +319,8 @@ fun PillButton(
 ) {
     if (!text.isNullOrBlank()) {
         FilledTonalButton(
-            onClick = onClick, enabled = enabled,
+            onClick = onClick,
+            enabled = enabled,
             modifier = modifier,
         ) {
             Icon(painter = painter, contentDescription = null, modifier = Modifier.size(22.dp))

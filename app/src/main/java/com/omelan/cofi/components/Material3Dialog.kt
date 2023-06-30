@@ -37,7 +37,9 @@ fun Material3Dialog(
         ) {
             Column(modifier = Modifier.padding(vertical = Spacing.big)) {
                 icon?.let {
-                    CompositionLocalProvider(LocalContentColor provides AlertDialogDefaults.iconContentColor) {
+                    CompositionLocalProvider(
+                        LocalContentColor provides AlertDialogDefaults.iconContentColor,
+                    ) {
                         Box(
                             Modifier
                                 .padding(PaddingValues(bottom = Spacing.small))
@@ -48,7 +50,9 @@ fun Material3Dialog(
                     }
                 }
                 title?.let {
-                    CompositionLocalProvider(LocalContentColor provides AlertDialogDefaults.titleContentColor) {
+                    CompositionLocalProvider(
+                        LocalContentColor provides AlertDialogDefaults.titleContentColor,
+                    ) {
                         val textStyle = MaterialTheme.typography.headlineSmall
                         ProvideTextStyle(textStyle) {
                             Box(
@@ -88,7 +92,8 @@ fun Material3Dialog(
 fun DialogPreview() {
     CofiTheme {
         Material3Dialog(
-            onDismissRequest = { /*TODO*/ }, onSave = {},
+            onDismissRequest = { },
+            onSave = {},
             title = {
                 Text(text = stringResource(id = R.string.settings_combine_weight_item))
             },
@@ -110,8 +115,6 @@ fun DialogPreview() {
 fun PreviewSupportCofi2() {
     CofiTheme {
         SupportCofi {
-
         }
     }
 }
-

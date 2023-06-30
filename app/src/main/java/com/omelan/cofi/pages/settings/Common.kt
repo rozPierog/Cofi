@@ -35,7 +35,6 @@ fun Modifier.settingsItemModifier(
     return@composed modifier.height(56.dp)
 }
 
-
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.settings(
     navController: NavController,

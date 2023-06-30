@@ -46,4 +46,3 @@ fun OutlinedNumbersField(
         modifier = modifier,
     )
 }
-

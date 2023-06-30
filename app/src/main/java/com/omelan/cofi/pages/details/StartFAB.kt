@@ -30,7 +30,7 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
     val animatedFabRadii by animateFloatAsState(
         if (isTimerRunning) 28.0f else 100f,
         tween(if (isTimerRunning) 300 else 500),
-        label = "Fab Radius"
+        label = "Fab Radius",
     )
     LargeFloatingActionButton(
         shape = RoundedCornerShape(animatedFabRadii.dp),

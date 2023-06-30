@@ -247,7 +247,6 @@ fun CombineWeightDialog(
         onDismissRequest = dismiss,
         title = {
             Text(text = stringResource(id = R.string.settings_combine_weight_item))
-
         },
     ) {
         CombineWeight.values().forEach {
