@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3BottomSheet
 import com.omelan.cofi.components.OutlinedNumbersField
-import com.omelan.cofi.share.components.slideUpDown
+import com.omelan.cofi.share.components.slideLeftRight
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.roundToDecimals
@@ -211,7 +211,7 @@ private fun SliderWithValue(value: Float, setValue: (Float) -> Unit) {
         )
         AnimatedContent(
             targetState = value,
-            transitionSpec = slideUpDown { target, initial -> target > initial },
+            transitionSpec = slideLeftRight { target, initial -> target > initial },
             label = "slider value",
         ) {
             Text(
