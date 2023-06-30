@@ -58,9 +58,11 @@ fun ensureNumbersOnly(newValue: String, oldValue: String, allowFloat: Boolean): 
 
     val decimalSeparator = DecimalFormat().decimalFormatSymbols.decimalSeparator
 
+    // Case when user clicked ⌫ before '.'
     if (newValue == oldValue.filter { it != decimalSeparator }) {
         return oldValue
     }
+    // Check if there is more than one decimal separator and try to rescue value
     val fixedNewValue = if (newValue.count { it == decimalSeparator } > 1) {
         newValue.substringBeforeLast(".", missingDelimiterValue = "")
     } else newValue
