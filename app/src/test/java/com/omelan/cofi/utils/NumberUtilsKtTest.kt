@@ -49,31 +49,23 @@ class NumberUtilsKtTest : TestCase() {
     }
 
     fun testEnsureNumbersOnly() {
-        mapOf(
-            "" to "",
-            " " to null,
-            "a" to null,
-            "-" to null,
-            "1" to "1",
-            "23 " to "23 ",
-            " 17" to " 17",
-            "2!" to null,
-            "2147483647" to null,
-            "1073741822" to null,
-            "2147483" to "2147483",
+        listOf(
+            // newValue, oldValue, expectedValue
+            Triple("", ".", ""),
+            Triple(" ", "", ""),
+            Triple("a", "", ""),
+            Triple("-", "", ""),
+            Triple("1", "", "1"),
+            Triple("23 ", "2 ", "2 "),
+            Triple(" 17", "1", "1"),
+            Triple("17", "1", "17"),
+            Triple("2!", "2", "2"),
+            Triple("2147483647", "", ""),
+            Triple("1073741822", "", ""),
+            Triple("2147483", "", "2147483"),
         ).forEach {
-            assertEquals(it.value, ensureNumbersOnly(it.key))
+            assertEquals(it.third, ensureNumbersOnly(it.first, it.second, false))
         }
         // TODO: fix me (add mocks of android.icu.text.DecimalFormat)
-//        mapOf(
-//            "01.1" to "1.1",
-//            " 21.1" to " 21.1",
-//            "21.100000" to "21.1",
-//            "a21.1" to null,
-//            "1.7976931348623156E305" to "1.7",
-//            "1.7976931348623156E306" to null,
-//        ).forEach {
-//            assertEquals(it.value, ensureNumbersOnly(it.key, true))
-//        }
     }
 }

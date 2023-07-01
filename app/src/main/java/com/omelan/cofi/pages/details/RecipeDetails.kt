@@ -299,7 +299,7 @@ fun RecipeDetails(
     val renderTimer: @Composable (Modifier) -> Unit = {
         val activity = LocalContext.current.getActivity()
         Timer(
-            modifier = Modifier
+            modifier = it
                 .testTag("recipe_timer")
                 .onGloballyPositioned { coordinates ->
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -467,6 +467,7 @@ fun RecipeDetails(
                 weightMultiplier = weightMultiplier,
                 setWeightMultiplier = { newValue -> weightMultiplier = newValue },
                 onDismissRequest = { ratioSheetIsVisible = false },
+                allSteps = steps,
             )
         }
         if (isPhoneLayout) {
