@@ -1,7 +1,7 @@
 package com.omelan.cofi.share.model
 
 import android.content.Context
-import com.omelan.cofi.share.*
+import com.omelan.cofi.share.R
 import com.omelan.cofi.share.utils.toMillis
 
 class PrepopulateData(context: Context) {
@@ -59,7 +59,7 @@ class PrepopulateData(context: Context) {
             id = cleverDripperId,
             name = resources.getString(R.string.prepopulate_clever_dripper_name),
             description = resources.getString(R.string.prepopulate_clever_dripper_description),
-            recipeIcon = RecipeIcon.CleverDripper,
+            recipeIcon = RecipeIcon.V60,
         ),
     )
     val steps = listOf(

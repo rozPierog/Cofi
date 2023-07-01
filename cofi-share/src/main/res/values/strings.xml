@@ -119,7 +119,7 @@ Temperature: the hotter, the better (especially with lighter roasts)"</string>
     <string name="infoBox_wearOS_body">Download Cofi app for your WearOS watch!</string>
     <string name="settings_sync_with_phone">Get settings from the phone</string>
     <string name="name_grinder">Coffee grinder</string>
-    <string name="name_v60" translatable="false">V60</string>
+    <string name="name_drip">Drip</string>
     <string name="name_vietnamese_press">Phin Filter</string>
     <string name="name_mokapot" translatable="false">Moka Pot</string>
     <string name="name_espresso">Espresso Machine</string>
