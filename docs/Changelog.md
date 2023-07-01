@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- New default recipe - Clever Dripper
 - Added a button to open recipe description on WearOS
 - Inputs to change weight of the recipe in recipe multiplier modal
 

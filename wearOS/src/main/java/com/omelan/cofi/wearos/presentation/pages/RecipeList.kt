@@ -166,6 +166,12 @@ fun DefaultPreview() {
             description = stringResource(R.string.prepopulate_aero_description),
             recipeIcon = RecipeIcon.AeroPress,
         ),
+        Recipe(
+            id = 5,
+            name = stringResource(R.string.prepopulate_clever_dripper_name),
+            description = stringResource(R.string.prepopulate_clever_dripper_description),
+            recipeIcon = RecipeIcon.CleverDripper,
+        ),
     )
     RecipeList(recipes)
 }

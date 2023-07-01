@@ -10,6 +10,7 @@ class PrepopulateData(context: Context) {
     private val frenchPressId = 2
     private val chemexId = 3
     private val aeroPress = 4
+    private val cleverDripperId = 5
     private var _stepId = 0
     private fun autoStepId(): Int {
         _stepId += 1
@@ -21,6 +22,7 @@ class PrepopulateData(context: Context) {
         frenchPressId to 0,
         chemexId to 0,
         aeroPress to 0,
+        cleverDripperId to 0,
     )
     private fun autoOrderInRecipe(recipeId: Int): Int {
         val currentOrder = _orderInRecipeMap[recipeId] ?: 0
@@ -52,6 +54,12 @@ class PrepopulateData(context: Context) {
             name = resources.getString(R.string.prepopulate_aero_name),
             description = resources.getString(R.string.prepopulate_aero_description),
             recipeIcon = RecipeIcon.AeroPress,
+        ),
+        Recipe(
+            id = cleverDripperId,
+            name = resources.getString(R.string.prepopulate_clever_dripper_name),
+            description = resources.getString(R.string.prepopulate_clever_dripper_description),
+            recipeIcon = RecipeIcon.CleverDripper,
         ),
     )
     val steps = listOf(
@@ -294,6 +302,73 @@ class PrepopulateData(context: Context) {
             time = 30.toMillis(),
             type = StepType.OTHER,
             orderInRecipe = autoOrderInRecipe(aeroPress),
+        ),
+        // Clever Dripper
+        Step(
+            id = autoStepId(),
+            recipeId = cleverDripperId,
+            name = resources.getString(R.string.prepopulate_clever_dripper_step_rinse),
+            time = 10.toMillis(),
+            type = StepType.OTHER,
+            orderInRecipe = autoOrderInRecipe(cleverDripperId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = cleverDripperId,
+            name = resources.getString(R.string.prepopulate_step_water),
+            value = 300.0f,
+            time = 15.toMillis(),
+            type = StepType.WATER,
+            orderInRecipe = autoOrderInRecipe(cleverDripperId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = cleverDripperId,
+            name = resources.getString(R.string.prepopulate_step_coffee),
+            value = 18.0f,
+            time = 5.toMillis(),
+            type = StepType.ADD_COFFEE,
+            orderInRecipe = autoOrderInRecipe(cleverDripperId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = cleverDripperId,
+            name = resources.getString(R.string.prepopulate_step_swirl),
+            time = 10.toMillis(),
+            type = StepType.OTHER,
+            orderInRecipe = autoOrderInRecipe(cleverDripperId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = cleverDripperId,
+            name = resources.getString(R.string.prepopulate_step_wait),
+            time = 120.toMillis(),
+            type = StepType.WAIT,
+            orderInRecipe = autoOrderInRecipe(cleverDripperId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = cleverDripperId,
+            name = resources.getString(R.string.prepopulate_clever_dripper_step_break_crust),
+            time = 10.toMillis(),
+            type = StepType.OTHER,
+            orderInRecipe = autoOrderInRecipe(cleverDripperId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = cleverDripperId,
+            name = resources.getString(R.string.prepopulate_step_wait),
+            time = 30.toMillis(),
+            type = StepType.WAIT,
+            orderInRecipe = autoOrderInRecipe(cleverDripperId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = cleverDripperId,
+            name = resources.getString(R.string.prepopulate_clever_dripper_step_draw_down),
+            time = 60.toMillis(),
+            type = StepType.OTHER,
+            orderInRecipe = autoOrderInRecipe(cleverDripperId),
         ),
     )
 }
