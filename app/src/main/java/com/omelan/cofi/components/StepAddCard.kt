@@ -181,14 +181,10 @@ fun StepAddCard(
                             Icon(Icons.Rounded.Info, contentDescription = "")
                         }
                     },
-                    imeAction = if (pickedType?.isNotWaitStepType() == true) {
-                        ImeAction.Next
-                    } else {
-                        if (stepName.text.isNotBlank()) {
-                            ImeAction.Done
-                        } else {
-                            ImeAction.Previous
-                        }
+                    imeAction = when {
+                        pickedType?.isNotWaitStepType() == true -> ImeAction.Next
+                        stepName.text.isNotBlank() -> ImeAction.Done
+                        else -> ImeAction.Previous
                     },
                     keyboardActions = KeyboardActions(
                         onPrevious = { focusManager.moveFocus(FocusDirection.Up) },
