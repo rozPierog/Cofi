@@ -102,8 +102,8 @@ platform :android do
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
       skip_upload_apk: true,
-      aab_paths: ["app/build/outputs/bundle/playStoreRelease/app-playStore-release.aab",
-      "wearOS/build/outputs/bundle/release/wearOS-release.aab"]
+      aab_paths: ["app/build/outputs/bundle/playStoreRelease/app-playStore-release.aab"]
+#       ,"wearOS/build/outputs/bundle/release/wearOS-release.aab"]
     )
   end
 
@@ -161,13 +161,13 @@ platform :android do
       text: "is this a prerelease: ",
       boolean: true
     )
-#     test
-#     create_screenshots
+    test
+    create_screenshots
     bump_version(bump_type: bump_type)
     if bump_type != "don't"
         prepare_changelog
     end
-    git_commit(path: ["./*.gradle"], message: "Prepare for release")
+    git_commit(path: ["./*.gradle"], message: "Prepare for release", allow_nothing_to_commit: true)
     push_to_git_remote
     gradle(task: "clean")
     deploy_github(prerelease: prerelease)

@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+## [1.19.0|1.10.0] - 2023-07-01
+
+### Added
 - New default recipes - 1 Cup V60, Clever Dripper
 - Added a button to open description on WearOS
 - Inputs to change weight of the recipe in recipe multiplier modal
@@ -19,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved number input responsibility
 
 ### Removed
-- Removed slider from weight multiplier in favor of chips and manual input
+- Removed slider from weight multiplier in favor of chips and input
 
 ## [1.18.7|1.9.7] - 2023-05-26
 

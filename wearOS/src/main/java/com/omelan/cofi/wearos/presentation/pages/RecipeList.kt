@@ -170,7 +170,7 @@ fun DefaultPreview() {
             id = 5,
             name = stringResource(R.string.prepopulate_clever_dripper_name),
             description = stringResource(R.string.prepopulate_clever_dripper_description),
-            recipeIcon = RecipeIcon.CleverDripper,
+            recipeIcon = RecipeIcon.V60,
         ),
     )
     RecipeList(recipes)
