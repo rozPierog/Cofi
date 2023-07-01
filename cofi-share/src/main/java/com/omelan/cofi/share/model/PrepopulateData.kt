@@ -11,6 +11,7 @@ class PrepopulateData(context: Context) {
     private val chemexId = 3
     private val aeroPress = 4
     private val cleverDripperId = 5
+    private val v601CupId = 6
     private var _stepId = 0
     private fun autoStepId(): Int {
         _stepId += 1
@@ -23,6 +24,7 @@ class PrepopulateData(context: Context) {
         chemexId to 0,
         aeroPress to 0,
         cleverDripperId to 0,
+        v601CupId to 0,
     )
     private fun autoOrderInRecipe(recipeId: Int): Int {
         val currentOrder = _orderInRecipeMap[recipeId] ?: 0
@@ -35,6 +37,12 @@ class PrepopulateData(context: Context) {
             id = v60Id,
             name = resources.getString(R.string.prepopulate_v60_name),
             description = resources.getString(R.string.prepopulate_v60_description),
+            recipeIcon = RecipeIcon.V60,
+        ),
+        Recipe(
+            id = v601CupId,
+            name = resources.getString(R.string.prepopulate_v60_1cup_name),
+            description = resources.getString(R.string.prepopulate_v60_1cup_description),
             recipeIcon = RecipeIcon.V60,
         ),
         Recipe(
@@ -123,6 +131,104 @@ class PrepopulateData(context: Context) {
             time = 5.toMillis(),
             type = StepType.OTHER,
             orderInRecipe = autoOrderInRecipe(v60Id),
+        ),
+        // V60 1 cup
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            name = resources.getString(R.string.prepopulate_step_coffee),
+            time = 10.toMillis(),
+            value = 15f,
+            type = StepType.ADD_COFFEE,
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            name = resources.getString(R.string.prepopulate_step_water),
+            time = 10.toMillis(),
+            type = StepType.WATER,
+            value = 50f,
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.OTHER,
+            name = resources.getString(R.string.prepopulate_step_swirl),
+            time = 5.toMillis(),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.WAIT,
+            name = resources.getString(R.string.prepopulate_step_wait),
+            time = 30.toMillis()
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.WATER,
+            name = resources.getString(R.string.prepopulate_step_water),
+            value = 50f,
+            time = 15.toMillis(),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.WAIT,
+            name = resources.getString(R.string.prepopulate_step_wait),
+            time = 10.toMillis()
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.WATER,
+            name = resources.getString(R.string.prepopulate_step_water),
+            value = 50f,
+            time = 10.toMillis(),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.WAIT,
+            name = resources.getString(R.string.prepopulate_step_wait),
+            time = 10.toMillis()
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.WATER,
+            name = resources.getString(R.string.prepopulate_step_water),
+            value = 50f,
+            time = 10.toMillis(),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.WAIT,
+            name = resources.getString(R.string.prepopulate_step_wait),
+            time = 10.toMillis()
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.WATER,
+            name = resources.getString(R.string.prepopulate_step_water),
+            value = 50f,
+            time = 10.toMillis(),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.WAIT,
+            name = resources.getString(R.string.prepopulate_step_wait),
+            time = 10.toMillis()
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = v601CupId,
+            type = StepType.OTHER,
+            name = resources.getString(R.string.prepopulate_step_swirl),
+            time = 5.toMillis()
         ),
         // French Press
         Step(
