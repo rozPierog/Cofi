@@ -130,4 +130,21 @@ Temperature: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)"</strin
     <string name="name_cezve">Dżezwa</string>
     <string name="recipe_details_change_step_toast">Naciśnij i przytrzymaj, aby zmienić krok</string>
     <string name="recipe_details_read_description">Przeczytaj opis</string>
+    <string name="prepopulate_v60_1cup_name">1 Kubek V60</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Rozbij \"skórkę\", mieszając lub lekko wstrząsając</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Umieścić na kubku i pozwolić kawie całkowicie się przelać</string>
+    <string name="name_drip">Przelew</string>
+    <string name="recipe_details_recipeRatio">Proporcja przepisu: 1:%1$s</string>
+    <string name="prepopulate_v60_1cup_description">Przepis od: James Hoffmann
+\nŹródło: https://youtu.be/1oB1oDrDkHM
+\nZanim zaczniesz, rozgrzej swoje V60 przelewając go razem z filtrem gorącą wodą. To nagrzeje przelew i przygotuje papier do parzenia kawy.
+\nGrubość mielenia: drobno/średnio-drobno
+\nTemperatura: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Przepłucz filtr gorącą wodą</string>
+    <string name="prepopulate_clever_dripper_description">Przepis od: James Hoffmann
+\nŹródło: https://youtu.be/RpOdennxP24
+\nGrubość mielenia: średnio-drobno
+\nTemperatura: 100℃
+\nZłóż filtr wzdłuż obu szwów, aby lepiej pasował do zaparzacza
+\nMaksymalna ilość wody to 500 ml, ale zalecane jest 400 ml lub mniej</string>
 </resources>
