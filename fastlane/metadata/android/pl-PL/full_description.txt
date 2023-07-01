@@ -1,10 +1,16 @@
-Dlaczego Cofi?
+Jako pasjonat kawy i barista-amator zawsze szukałem filiżanki idealnej kawy. Właśnie dlatego stworzyłem darmowy, i o otwartym źródle, minutnik do parzenia kawy dla Androida. Dzięki tej aplikacji możesz łatwo zaplanować parzenie kawy i uzyskać doskonały smak za każdym razem.
 
-Cofi jest dla ciebie. Nie zbiera o tobie żadnych danych, zajmuje jak najmniej miejsca, i ma jeden cel.
+Wiem, jak ważna jest pełna kontrola nad czasem parzenia i dokładnie to zapewnia ta aplikacja. Niezależnie od tego, czy używasz francuskiej prasy, przelewu, czy innej metody parzenia, moja aplikacja ułatwia śledzenie czasu parzenia i osiągnięcie idealnego smaku.
 
-Czym się wyróżnia:
+Cechy:
 
-- Wyobraźnia twoim limitem - możesz tworzyć przepisy takie jakie ci się podobają, bez ograniczeń wagi, czasu, czy ilości kroków,
-- Obraz w obrazie - jeśli musisz zrobić coś innego podczas gdy minutnik leci, Cofi zminimalizuje się do małego okienka które będzie zawsze widoczne.
-- Zero zbierania danych - wszystkie dane zostają u ciebie, ja nic z tego nie mam,
-- Aplikacja tak mała jak to możliwe - szanuje miejsce na twoim telefonie i wiem, że minutnik nie powinien zajmować więcej niż parę MB,
+- Otwarte źródło i bezpłatne korzystanie
+- Brak sztucznych ograniczeń co do tego, co możesz dodać do aplikacji
+- Minutnik do zaparzania kawy
+- Konfigurowalne ustawienia czasu dla różnych metod parzenia
+- Łatwy w obsłudze interfejs o przejrzystym wyglądzie i designie Material You
+- Tryb obrazu w obrazie do wielozadaniowości
+- Aplikacja WearOS do łatwego mierzenia czasu na smartwatchu
+- Całkowity brak śledzenia użytkownika lub gromadzenia danych
+
+Wiem, jak frustrujące może być zadowalanie się przeciętną filiżanką kawy. Dlatego chcę pomóc Ci parzyć jak profesjonalista i cieszyć się idealną filiżanką za każdym razem. Pobierz teraz Cofi i rozpocznij swoją podróż do kawowej perfekcji!
