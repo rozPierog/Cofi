@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="step_type_add_coffee">कॉफ़ी डालिये</string>
     <string name="step_type_water">पानी डालिये</string>
@@ -81,9 +82,9 @@
     <string name="prepopulate_aero_step_piston">पिस्टन को 1 सेमी ब्रूअर में रखें</string>
     <string name="prepopulate_aero_step_press">पिस्टन को हल्के से दबाएं</string>
     <string name="prepopulate_aero_description">रेसिपी बनाने वाले : जेम्स हॉफमन
-स्रोत: https://youtu.be/j6VlT_jUVPc
-पीसने का आकार: हल्के रोस्ट के लिए - माध्यम का महीन अंत। जितना डार्क रोस्ट उतना अधिक आप कॉफ़ी की मात्रा बढ़ाना और पीस को मोटा करना पसंद कर सकते हैं
-तापमान: हल्के रोस्ट के लिए - उबालकर तुरंत इस्तेमाल करें। डार्क रोस्ट के लिए - 85–90℃</string>
+\nस्रोत: https://youtu.be/j6VlT_jUVPc
+\nपीसने का आकार: हल्के रोस्ट के लिए - माध्यम का महीन अंत। जितना डार्क रोस्ट उतना अधिक आप कॉफ़ी की मात्रा बढ़ाना और पीस को मोटा करना पसंद कर सकते हैं
+\nतापमान: हल्के रोस्ट के लिए - उबालकर तुरंत इस्तेमालकरें। डार्क रोस्ट के लिए - 85–90℃</string>
     <string name="tereszkiewicz_credits_title">ऐप आइकन: ह्यूबर्ट टेरेस्ज़किविक्ज़</string>
     <string name="tereszkiewicz_credits_subtitle">उनका ड्रिबल देखें</string>
     <string name="recipe_create_title">रेसिपी बनाये</string>
