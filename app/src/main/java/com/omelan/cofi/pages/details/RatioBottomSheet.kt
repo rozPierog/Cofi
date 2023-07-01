@@ -113,9 +113,9 @@ private fun ColumnScope.ManualContent(
                 .focusRequester(focusRequester),
             value = (combinedCoffeeWeight * weightMultiplier).toString(),
             onValueChange = {
-                setWeightMultiplier(
-                    ((it.toFloatOrNull() ?: combinedCoffeeWeight) / combinedCoffeeWeight),
-                )
+                val newWeightMultiplier =
+                    ((it.toFloatOrNull() ?: combinedCoffeeWeight) / combinedCoffeeWeight)
+                setWeightMultiplier(if (newWeightMultiplier.isNaN()) 0f else newWeightMultiplier)
             },
             suffix = {
                 Text(text = "g")
@@ -132,9 +132,9 @@ private fun ColumnScope.ManualContent(
             modifier = Modifier.weight(1f, true),
             value = (combinedWaterWeight * weightMultiplier).toString(),
             onValueChange = {
-                setWeightMultiplier(
-                    ((it.toFloatOrNull() ?: combinedWaterWeight) / combinedWaterWeight),
-                )
+                val newWeightMultiplier =
+                    ((it.toFloatOrNull() ?: combinedWaterWeight) / combinedWaterWeight)
+                setWeightMultiplier(if (newWeightMultiplier.isNaN()) 0f else newWeightMultiplier)
             },
             suffix = {
                 Text(text = "g")
