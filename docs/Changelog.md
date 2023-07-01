@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- New default recipe - Clever Dripper
-- Added a button to open recipe description on WearOS
+- New default recipes - 1 Cup V60, Clever Dripper
+- Added a button to open description on WearOS
 - Inputs to change weight of the recipe in recipe multiplier modal
 
 ### Changed
-- Tweaked transition animation between screens, app should feel smoother now
+- Tweaked transition animation between screens
 - Tweaked modals across the app
 - Tweak design of adding steps - sorry for broken muscle memory
 - Fixed layout on tablets and foldables
