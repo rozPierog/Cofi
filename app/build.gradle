@@ -28,8 +28,8 @@ android {
         minSdkVersion 25
         targetSdkVersion 33
         compileSdk 33
-        versionCode 143
-        versionName "1.18.7"
+        versionCode 146
+        versionName "1.19.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs 'en', 'de', 'es', 'fr', 'hi', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'tr', 'uk', 'zh'
