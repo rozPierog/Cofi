@@ -93,7 +93,7 @@
 \nSource: https://youtu.be/j6VlT_jUVPc
 \nGrind size: For light roast – finer end of medium. The darker you go the more you may prefer to increase the dose and coarsen the grind
 \nTemperature: For light roast – brought to a boil and used immediately. For dark roasts – 85–90℃</string>
-    <string name="prepopulate_clever_dripper_name">Clever Dripper</string>
+    <string name="prepopulate_clever_dripper_name" translatable="false">Clever Dripper</string>
     <string name="prepopulate_clever_dripper_step_rinse">Rinse the filter with hot water</string>
     <string name="prepopulate_clever_dripper_step_break_crust">Break crust by either stirring or giving it a little shake</string>
     <string name="prepopulate_clever_dripper_step_draw_down">Place on top of cup and allow it to draw fully down</string>
