@@ -82,9 +82,9 @@ Kaffen er klar 5 minutter etter det siste steget, men smaken blir bedre og bedre
     <string name="prepopulate_aero_step_piston">Plasser stempelet 1cm nedi enheten</string>
     <string name="prepopulate_aero_step_press">Press forsiktig på stemplet</string>
     <string name="prepopulate_aero_description">Oppskrift av: James Hoffmann
-Kilde: https://youtu.be/j6VlT_jUVPc
-Kvernstørrelse: For lysbrent kaffe er en mer finmalt medium bra. For mørkere brent kaffe kan det være nyttig å øke kaffedosen og bruke mer grovmalt kaffe
-            Temperatur: For lysbrent kaffe - bruk vannet så snart den begynner å koke. For mer mørkbrent kaffe - 85–90℃</string>
+\nKilde: https://youtu.be/j6VlT_jUVPc
+\nKvernstørrelse: For lysbrent kaffe er en mer finmalt medium bra. For mørkere brent kaffe kan det være nyttig å øke kaffedosen og bruke mer grovmalt kaffe
+\nTemperatur: For lysbrent kaffe - bruk vannet så snart den begynner å koke. For mer mørkbrent kaffe - 85–90℃</string>
     <string name="tereszkiewicz_credits_title">App-ikon av: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Sjekk ut hans Dribbble</string>
     <string name="recipe_create_title">Legg til oppskrift</string>
