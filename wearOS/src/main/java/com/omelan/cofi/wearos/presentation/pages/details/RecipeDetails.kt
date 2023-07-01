@@ -1,37 +1,78 @@
-@file:OptIn(
-    ExperimentalPagerApi::class, ExperimentalComposeUiApi::class,
-    ExperimentalAnimationApi::class,
-)
+@file:OptIn(ExperimentalFoundationApi::class)
+
+package com.omelan.cofi.wearos.presentation.pages.details
 
 
 import android.provider.Settings
 import android.provider.Settings.SettingNotFoundException
-import androidx.compose.animation.ExperimentalAnimationApi
+import android.view.Window
+import android.view.WindowManager
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import androidx.wear.compose.material.*
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
+import androidx.wear.compose.navigation.composable
 import com.omelan.cofi.share.*
+import com.omelan.cofi.share.model.*
+import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
-import com.omelan.cofi.wearos.presentation.pages.details.MultiplierPage
-import com.omelan.cofi.wearos.presentation.pages.details.ParamWithIcon
 import kotlin.math.roundToInt
 
+fun NavGraphBuilder.recipeDetails(
+    edgeSwipeToDismissBoxState: SwipeToDismissBoxState,
+    window: Window,
+) {
+    composable(
+        Destinations.RECIPE_DETAILS,
+        arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
+    ) {
+        var edgeSwipeWidth by remember { mutableStateOf(0.dp) }
+        val id = it.arguments?.getInt("recipeId")
+            ?: throw Exception("Expected recipe id, got Null")
+        RecipeDetails(
+            modifier = Modifier.edgeSwipeToDismiss(
+                edgeSwipeToDismissBoxState,
+                edgeSwipeWidth,
+            ),
+            recipeId = id,
+            onTimerRunning = { isTimerRunning ->
+                val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                if (isTimerRunning) {
+                    window.addFlags(flag)
+                } else {
+                    window.clearFlags(flag)
+                }
+            },
+            canSwipeToClose = { canSwipeToClose ->
+                edgeSwipeWidth =
+                    if (canSwipeToClose) {
+                        SwipeToDismissBoxDefaults.EdgeWidth
+                    } else {
+                        0.dp
+                    }
+            },
+        )
+    }
+}
+
+const val PAGE_COUNT = 3
 
 @Composable
 fun RecipeDetails(
@@ -95,6 +136,7 @@ fun RecipeDetails(
     val animatedSelectedPage by animateFloatAsState(
         targetValue = pagerState.currentPage.toFloat(),
         animationSpec = TweenSpec(durationMillis = 500),
+        label = "Selected page",
     )
     val pageIndicatorState: PageIndicatorState = remember {
         object : PageIndicatorState {
@@ -103,7 +145,7 @@ fun RecipeDetails(
             override val selectedPage: Int
                 get() = pagerState.currentPage
             override val pageCount: Int
-                get() = pagerState.pageCount
+                get() = PAGE_COUNT
         }
     }
     val timerControllers = Timer.createTimerControllers(
@@ -148,7 +190,7 @@ fun RecipeDetails(
             canSwipeToClose(false)
         }
     }
-    LaunchedEffect(timerControllers.currentStep.value) {
+    LaunchedEffect(timerControllers.currentStep) {
         timerControllers.progressAnimation(Unit)
     }
 
@@ -163,7 +205,7 @@ fun RecipeDetails(
             )
         },
     ) {
-        HorizontalPager(count = 3, modifier = modifier, state = pagerState) { page ->
+        HorizontalPager(pageCount = PAGE_COUNT, modifier = modifier, state = pagerState) { page ->
             when (page) {
                 0 -> TimerPage(
                     timerControllers = timerControllers,

@@ -1,54 +1,173 @@
-@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 
 package com.omelan.cofi.pages.details
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3BottomSheet
+import com.omelan.cofi.components.OutlinedNumbersField
+import com.omelan.cofi.share.components.slideLeftRight
+import com.omelan.cofi.share.model.Step
+import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.roundToDecimals
+import com.omelan.cofi.share.utils.toStringShort
 import com.omelan.cofi.ui.Spacing
 import kotlin.math.roundToInt
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RatioBottomSheet(
-    timeMultiplier: MutableState<Float>,
-    weightMultiplier: MutableState<Float>,
+    timeMultiplier: Float,
+    setTimeMultiplier: (Float) -> Unit,
+    weightMultiplier: Float,
+    setWeightMultiplier: (Float) -> Unit,
     onDismissRequest: () -> Unit,
+    allSteps: List<Step>,
 ) {
     Material3BottomSheet(onDismissRequest = onDismissRequest) {
         Column(
             modifier = Modifier
                 .waterfallPadding()
-                .padding(horizontal = Spacing.big),
+                .navigationBarsPadding()
+                .padding(horizontal = Spacing.big)
+                .padding(top = Spacing.big),
         ) {
-            SheetContent(
+            ManualContent(
                 timeMultiplier,
+                setTimeMultiplier,
                 weightMultiplier,
+                setWeightMultiplier,
+                allSteps,
             )
         }
     }
 }
 
+val predefinedMultipliers = arrayOf(0.5f, 1f, 2f, 3f)
+
 @Composable
-private fun SheetContent(
-    timeMultiplier: MutableState<Float>,
-    weightMultiplier: MutableState<Float>,
+private fun ColumnScope.ManualContent(
+    timeMultiplier: Float,
+    setTimeMultiplier: (Float) -> Unit,
+    weightMultiplier: Float,
+    setWeightMultiplier: (Float) -> Unit,
+    allSteps: List<Step>,
 ) {
+    val focusRequester = remember { FocusRequester() }
+    val combinedWaterWeight by remember(allSteps) {
+        derivedStateOf {
+            allSteps.sumOf {
+                if (it.type == StepType.WATER) {
+                    it.value?.toDouble() ?: 0.0
+                } else {
+                    0.0
+                }
+            }.toFloat()
+        }
+    }
+    val combinedCoffeeWeight by remember(allSteps) {
+        derivedStateOf {
+            allSteps.sumOf {
+                if (it.type == StepType.ADD_COFFEE) {
+                    it.value?.toDouble() ?: 0.0
+                } else {
+                    0.0
+                }
+            }.toFloat()
+        }
+    }
+
+    LaunchedEffect(true) {
+        focusRequester.requestFocus()
+    }
     Title(stringResource(id = R.string.recipe_details_multiply_weight))
-    SliderWithValue(value = weightMultiplier)
+    Spacer(modifier = Modifier.height(Spacing.normal))
+    Subtitle(
+        text = stringResource(
+            id = R.string.recipe_details_recipeRatio,
+            (combinedWaterWeight / combinedCoffeeWeight).toStringShort(),
+        ),
+    )
+
+    Row(
+        modifier = Modifier.padding(top = Spacing.normal),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
+    ) {
+        OutlinedNumbersField(
+            modifier = Modifier
+                .weight(1f, true)
+                .focusRequester(focusRequester),
+            value = (combinedCoffeeWeight * weightMultiplier).toString(),
+            onValueChange = {
+                setWeightMultiplier(
+                    ((it.toFloatOrNull() ?: combinedCoffeeWeight) / combinedCoffeeWeight),
+                )
+            },
+            suffix = {
+                Text(text = "g")
+            },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.recipe_icon_coffee_grinder),
+                    contentDescription = null,
+                )
+            },
+        )
+        Text(text = ":")
+        OutlinedNumbersField(
+            modifier = Modifier.weight(1f, true),
+            value = (combinedWaterWeight * weightMultiplier).toString(),
+            onValueChange = {
+                setWeightMultiplier(
+                    ((it.toFloatOrNull() ?: combinedWaterWeight) / combinedWaterWeight),
+                )
+            },
+            suffix = {
+                Text(text = "g")
+            },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_water),
+                    contentDescription = null,
+                )
+            },
+        )
+    }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = Spacing.big),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        predefinedMultipliers.forEach {
+            com.omelan.cofi.components.Chip(
+                value = "${it.toStringShort()}x",
+                onCheck = { checked ->
+                    if (checked) {
+                        setWeightMultiplier(it)
+                    }
+                },
+                isChecked = weightMultiplier == it,
+            )
+        }
+    }
     Title(stringResource(id = R.string.recipe_details_multiply_time))
-    SliderWithValue(value = timeMultiplier)
+    SliderWithValue(timeMultiplier, setTimeMultiplier)
 }
 
 @Composable
@@ -61,12 +180,23 @@ fun Title(text: String) {
     )
 }
 
+@Composable
+fun Subtitle(text: String) {
+    Text(
+        text = text,
+        textAlign = TextAlign.Start,
+        style = MaterialTheme.typography.titleSmall,
+        fontWeight = FontWeight.Light,
+        color = MaterialTheme.colorScheme.secondary,
+    )
+}
+
 const val step = 0.1f
 val range = 0f..3f
 val steps = (range.endInclusive / step).roundToInt() + 1
 
 @Composable
-private fun SliderWithValue(value: MutableState<Float>) {
+private fun SliderWithValue(value: Float, setValue: (Float) -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -75,32 +205,23 @@ private fun SliderWithValue(value: MutableState<Float>) {
         Slider(
             valueRange = range,
             steps = steps,
-            value = value.value,
-            onValueChange = {
-                value.value = it.roundToDecimals()
-            },
+            value = value,
+            onValueChange = { setValue(it.roundToDecimals()) },
             modifier = Modifier.weight(1f, true),
         )
-        Text(
-            color = MaterialTheme.colorScheme.onSurface,
-            text = "${value.value}",
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .padding(horizontal = Spacing.normal),
-        )
-//        OutlinedTextField(
-//            modifier = Modifier
-//                .weight(1f)
-//                .align(Alignment.CenterVertically),
-//            value = "${value.value}",
-//            onValueChange = { value.value = it.toFloat() },
-//            keyboardOptions = KeyboardOptions(
-//                keyboardType = KeyboardType.Decimal,
-//                autoCorrect = false,
-//                capitalization = KeyboardCapitalization.None,
-//                imeAction = ImeAction.None,
-//            ),
-//        )
+        AnimatedContent(
+            targetState = value,
+            transitionSpec = slideLeftRight { target, initial -> target > initial },
+            label = "slider value",
+        ) {
+            Text(
+                color = MaterialTheme.colorScheme.onSurface,
+                text = it.toString(),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(horizontal = Spacing.normal),
+            )
+        }
     }
 }

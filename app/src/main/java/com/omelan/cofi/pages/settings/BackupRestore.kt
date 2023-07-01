@@ -31,12 +31,7 @@ import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3Dialog
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
-import com.omelan.cofi.share.Recipe
-import com.omelan.cofi.share.jsonSteps
-import com.omelan.cofi.share.model.AppDatabase
-import com.omelan.cofi.share.model.PrepopulateData
-import com.omelan.cofi.share.toRecipe
-import com.omelan.cofi.share.toSteps
+import com.omelan.cofi.share.model.*
 import com.omelan.cofi.utils.getDefaultPadding
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -216,6 +211,9 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
         }
     }
     val steps by db.stepDao().getAll().observeAsState(initial = listOf())
+    if (steps.isEmpty()) {
+        return
+    }
     val stepsWithRecipeId = steps.groupBy { it.recipeId }
     val launcher = rememberLauncherForActivityResult(CreateDocument("application/json")) {
         if (it == null) {
@@ -235,9 +233,7 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
         dismiss()
     }
 
-    // TODO: Underlying Dialog doesn't change size when content changes size, maybe rewrite it?
     Material3Dialog(
-        modifier = Modifier.fillMaxSize(),
         onDismissRequest = dismiss,
         onSave = {
             val c = Calendar.getInstance().time
@@ -250,8 +246,10 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
             val formattedDate: String = format.format(c)
             launcher.launch("cofi_backup_$formattedDate.json")
         },
+        title = { Text(text = stringResource(id = R.string.settings_backup)) },
     ) {
-        LazyColumn(Modifier.weight(1f, true)) {
+        Divider()
+        LazyColumn(modifier = Modifier.weight(1f)) {
             items(recipes) {
                 val isSelected = recipesToBackup.contains(it)
                 val onCheck: () -> Unit = {
@@ -267,6 +265,7 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
                 )
             }
         }
+        Divider()
     }
 }
 
@@ -295,7 +294,9 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
                 dismiss()
             }
         },
+        title = { Text(text = stringResource(id = R.string.settings_addDefault)) },
     ) {
+        Divider()
         LazyColumn {
             items(prepopulateData.recipes) {
                 val isSelected = recipesToAdd.contains(it)
@@ -311,6 +312,7 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
                 )
             }
         }
+        Divider()
     }
 }
 

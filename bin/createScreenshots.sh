@@ -44,4 +44,4 @@ done
 
 ./gradlew -Pandroid.testInstrumentationRunnerArguments.class=com.omelan.cofi.ScreenshotCreator connectedFullDebugAndroidTest
 
-./bin/pullScreenshots
+./bin/pullScreenshots.sh

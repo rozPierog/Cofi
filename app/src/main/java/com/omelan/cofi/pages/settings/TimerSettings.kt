@@ -243,7 +243,12 @@ fun CombineWeightDialog(
     selectCombineMethod: (CombineWeight) -> Unit,
     combineWeightState: String,
 ) {
-    Material3Dialog(onDismissRequest = dismiss) {
+    Material3Dialog(
+        onDismissRequest = dismiss,
+        title = {
+            Text(text = stringResource(id = R.string.settings_combine_weight_item))
+        },
+    ) {
         CombineWeight.values().forEach {
             ListItem(
                 text = { Text(stringResource(id = it.settingsStringId)) },
@@ -267,12 +272,14 @@ fun CombineWeightDialog(
     }
 }
 
-@ExperimentalMaterial3Api
-@ExperimentalMaterialApi
-@Preview
 @Composable
-fun SettingsTimerPreview() {
-    CofiTheme() {
-        TimerSettings(goBack = { })
+@Preview
+fun PreviewCombineWeightDialog() {
+    CofiTheme {
+        CombineWeightDialog(
+            dismiss = { /*TODO*/ },
+            selectCombineMethod = {},
+            combineWeightState = "",
+        )
     }
 }

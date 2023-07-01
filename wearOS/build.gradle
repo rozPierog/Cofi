@@ -30,7 +30,7 @@ android {
         minSdk 25
         targetSdk 33
         versionCode 141
-        versionName "1.9.6"
+        versionName "1.9.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs 'en', 'de', 'es', 'fr', 'hi', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'tr', 'uk', 'zh'
 
@@ -100,7 +100,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-pager:0.30.1"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    implementation 'androidx.activity:activity-compose:1.7.1'
+    implementation 'androidx.activity:activity-compose:1.7.2'
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
     implementation "androidx.wear:wear-input:1.1.0"
     implementation 'androidx.wear:wear:1.2.0'

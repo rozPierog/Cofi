@@ -3,7 +3,7 @@ package com.omelan.cofi.components
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import com.omelan.cofi.share.StepType
+import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.ui.CofiTheme
 import org.junit.Rule
 import org.junit.Test

@@ -1,5 +1,6 @@
 package com.omelan.cofi.pages.list
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -18,13 +19,34 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import com.google.accompanist.navigation.animation.composable
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
-import com.omelan.cofi.share.RecipeViewModel
-import com.omelan.cofi.share.StepsViewModel
+import com.omelan.cofi.share.model.RecipeViewModel
+import com.omelan.cofi.share.model.StepsViewModel
+import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.getDefaultPadding
+
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.recipeList(navController: NavController) {
+    composable(Destinations.RECIPE_LIST) {
+        RecipeList(
+            navigateToRecipe = { recipeId ->
+                navController.navigate(
+                    route = Destinations.recipeDetails(
+                        recipeId,
+                    ),
+                )
+            },
+            addNewRecipe = { navController.navigate(route = Destinations.RECIPE_ADD) },
+            goToSettings = { navController.navigate(route = Destinations.SETTINGS) },
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

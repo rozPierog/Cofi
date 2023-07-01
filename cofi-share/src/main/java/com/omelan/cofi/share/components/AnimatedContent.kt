@@ -15,3 +15,15 @@ fun <S> slideUpDown(isAboveCheck: (S, S) -> Boolean): AnimatedContentScope<S>.()
         SizeTransform(clip = false),
     )
 }
+
+fun <S> slideLeftRight(isAboveCheck: (S, S) -> Boolean): AnimatedContentScope<S>.() -> ContentTransform = {
+    if (isAboveCheck(targetState, initialState)) {
+        slideInHorizontally { width -> -width } + fadeIn() with
+                slideOutHorizontally { width -> width } + fadeOut()
+    } else {
+        slideInHorizontally { width -> width } + fadeIn() with
+                slideOutHorizontally { width -> -width } + fadeOut()
+    }.using(
+        SizeTransform(clip = false),
+    )
+}

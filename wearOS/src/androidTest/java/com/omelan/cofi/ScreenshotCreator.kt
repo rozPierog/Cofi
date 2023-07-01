@@ -1,6 +1,5 @@
 package com.omelan.cofi
 
-import RecipeDetails
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -11,9 +10,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.omelan.cofi.share.model.PrepopulateData
-import com.omelan.cofi.utils.ScreenshotsHelpers
+import com.omelan.cofi.share.utils.ScreenshotsHelpers
 import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
 import com.omelan.cofi.wearos.presentation.pages.RecipeList
+import com.omelan.cofi.wearos.presentation.pages.details.RecipeDetails
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
 import org.junit.Rule
 import org.junit.Test

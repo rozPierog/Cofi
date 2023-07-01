@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.components.StepListItem
 import com.omelan.cofi.components.StepProgress
-import com.omelan.cofi.share.Step
 import com.omelan.cofi.share.components.slideUpDown
+import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
@@ -45,6 +45,7 @@ fun UpNext(modifier: Modifier = Modifier, step: Step) {
                 transitionSpec = slideUpDown { target, initial ->
                     (target.orderInRecipe ?: 0) > (initial.orderInRecipe ?: 0)
                 },
+                label = "Next step",
             ) {
                 StepListItem(step = it, stepProgress = StepProgress.Upcoming)
             }

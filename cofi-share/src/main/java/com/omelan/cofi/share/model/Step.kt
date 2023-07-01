@@ -1,4 +1,4 @@
-package com.omelan.cofi.share
+package com.omelan.cofi.share.model
 
 import android.app.Application
 import androidx.annotation.DrawableRes
@@ -8,8 +8,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.omelan.cofi.share.model.AppDatabase
-import com.omelan.cofi.share.model.SharedData
+import com.omelan.cofi.share.*
+import com.omelan.cofi.share.R
 import org.json.JSONArray
 import org.json.JSONObject
 

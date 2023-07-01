@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@file:OptIn(ExperimentalFoundationApi::class)
 
 package com.omelan.cofi.components
 
@@ -12,10 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -32,15 +29,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.omelan.cofi.R
-import com.omelan.cofi.share.Step
-import com.omelan.cofi.share.StepType
-import com.omelan.cofi.share.utils.ensureNumbersOnly
+import com.omelan.cofi.share.model.Step
+import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.safeToInt
 import com.omelan.cofi.share.utils.toMillis
 import com.omelan.cofi.share.utils.toStringDuration
@@ -168,11 +163,12 @@ fun StepAddCard(
                         }
                         .fillMaxWidth(),
                 )
-                OutlinedTextField(
+                OutlinedNumbersField(
                     label = { Text(text = stringResource(id = R.string.step_add_duration)) },
                     value = stepTime,
+                    allowFloat = false,
                     onValueChange = { value ->
-                        stepTime = ensureNumbersOnly(value) ?: stepTime
+                        stepTime = value
                     },
                     supportingText = {
                         val duration = (stepTime.toIntOrNull()?.times(1000))
@@ -185,19 +181,11 @@ fun StepAddCard(
                             Icon(Icons.Rounded.Info, contentDescription = "")
                         }
                     },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = if (pickedType?.isNotWaitStepType() == true) {
-                            ImeAction.Next
-                        } else {
-                            if (stepName.text.isNotBlank()) {
-                                ImeAction.Done
-                            } else {
-                                ImeAction.Previous
-                            }
-                        },
-                    ),
+                    imeAction = when {
+                        pickedType?.isNotWaitStepType() == true -> ImeAction.Next
+                        stepName.text.isNotBlank() -> ImeAction.Done
+                        else -> ImeAction.Previous
+                    },
                     keyboardActions = KeyboardActions(
                         onPrevious = { focusManager.moveFocus(FocusDirection.Up) },
                         onNext = {
@@ -214,21 +202,17 @@ fun StepAddCard(
                         .fillMaxWidth(),
                 )
                 AnimatedVisibility(visible = pickedType?.isNotWaitStepType() == true) {
-                    OutlinedTextField(
+                    OutlinedNumbersField(
                         label = { Text(text = stringResource(id = R.string.step_add_weight)) },
                         value = stepValue,
                         onValueChange = { value ->
-                            stepValue = ensureNumbersOnly(value, true) ?: stepValue
+                            stepValue = value
                         },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = if (stepName.text.isNotBlank()) {
-                                ImeAction.Done
-                            } else {
-                                ImeAction.Previous
-                            },
-                        ),
+                        imeAction = if (stepName.text.isNotBlank()) {
+                            ImeAction.Done
+                        } else {
+                            ImeAction.Previous
+                        },
                         keyboardActions = KeyboardActions(
                             onDone = { saveStep() },
                             onPrevious = {
@@ -244,33 +228,36 @@ fun StepAddCard(
                     )
                 }
                 Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.End,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = Spacing.big),
                 ) {
+                    if (stepToEdit != null) {
+                        OutlinedButton(
+                            onClick = { save(null) },
+                            modifier = Modifier.testTag("step_remove"),
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_delete),
+                                contentDescription = null,
+                            )
+                            Text(stringResource(id = R.string.step_add_remove))
+                        }
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
                     PillButton(
                         modifier = Modifier.testTag("step_save"),
                         text = stringResource(id = R.string.step_add_save),
-                        painter = rememberVectorPainter(Icons.Rounded.Add),
+                        painter = rememberVectorPainter(Icons.Rounded.Done),
                         enabled = stepName.text.isNotBlank(),
                         onClick = { saveStep() },
                     )
-                    if (stepToEdit != null) {
-                        PillButton(
-                            modifier = Modifier.testTag("step_remove"),
-                            text = stringResource(id = R.string.step_add_remove),
-                            painter = painterResource(id = R.drawable.ic_delete),
-                            onClick = { save(null) },
-                        )
-                    }
                 }
                 if (stepToEdit != null) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = Spacing.big),
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         PillButton(
                             painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowUp),
@@ -326,19 +313,25 @@ fun PillButton(
     painter: Painter,
     onClick: () -> Unit,
 ) {
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-        ),
-        enabled = enabled,
-        modifier = modifier,
-    ) {
-        Icon(painter = painter, contentDescription = null, modifier = Modifier.size(22.dp))
-        if (!text.isNullOrBlank()) {
-            Spacer(modifier = Modifier.width(Spacing.small))
-            Text(text = text)
+    if (!text.isNullOrBlank()) {
+        FilledTonalButton(
+            onClick = onClick,
+            enabled = enabled,
+            modifier = modifier,
+        ) {
+            Icon(painter = painter, contentDescription = null, modifier = Modifier.size(22.dp))
+            if (text.isNotBlank()) {
+                Spacer(modifier = Modifier.width(Spacing.small))
+                Text(text = text)
+            }
+        }
+    } else {
+        FilledTonalIconButton(
+            onClick = onClick,
+            enabled = enabled,
+            modifier = modifier,
+        ) {
+            Icon(painter = painter, contentDescription = null, modifier = Modifier.size(22.dp))
         }
     }
 }

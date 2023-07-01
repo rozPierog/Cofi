@@ -8,10 +8,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - New default recipe - Clever Dripper
+- Added a button to open recipe description on WearOS
+- Inputs to change weight of the recipe in recipe multiplier modal
 
 ### Changed
+- Tweaked transition animation between screens, app should feel smoother now
+- Tweaked modals across the app
+- Tweak design of adding steps - sorry for broken muscle memory
+- Fixed layout on tablets and foldables
+- Improved number input responsibility
 
 ### Removed
+- Removed slider from weight multiplier in favor of chips and manual input
+
+## [1.18.7|1.9.7] - 2023-05-26
+
+### Added
+- Added tooltips when long pressing icons in icon picker
+
+### Changed
+- fixed Bottom sheet not going under system bars
+- Fixed "show next step" toggle in settings
+- Fixed time multiplier not changing seconds in step name
+
+### Removed
+- Removed background behind navigation bar if user uses gesture navigation
 
 
 ## [1.18.6|1.9.6] - 2023-05-15

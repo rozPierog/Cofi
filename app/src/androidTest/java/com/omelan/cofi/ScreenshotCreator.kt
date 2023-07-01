@@ -20,8 +20,8 @@ import com.omelan.cofi.pages.RecipeEdit
 import com.omelan.cofi.pages.details.RecipeDetails
 import com.omelan.cofi.pages.list.RecipeList
 import com.omelan.cofi.share.model.PrepopulateData
+import com.omelan.cofi.share.utils.ScreenshotsHelpers
 import com.omelan.cofi.ui.CofiTheme
-import com.omelan.cofi.utils.ScreenshotsHelpers
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

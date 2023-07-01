@@ -1,0 +1,16 @@
+Jako vášnivý milovník kávy a amatérský barista, jsem vždy usiloval o ten nejlepší šálek kávy. To je důvod proč jsem vytvořil neplacený a veřejný časovač kávy pro Android. S touto aplikací můžete jednoduše změřit vaření vaší kávy a pokaždé dosáhnout perfektní chuti.
+
+Vím, že je důležité mít plnou kontrolu nad časem vaření a to je přesně to, co tato aplikace poskytuje. Používáte-li French Press, překapávanou kávu nebo jakoukoliv jinou metodu, naše aplikace vám umožní jednoduše změřit dobu vaření vaší kávy a dosáhnutí perfektní chuti.
+
+Funkce:
+
+- Veřejný zdroj a zdarma
+- Žádné umělé limity na to co můžete do aplikace přidat
+- Časovač pro přípravu vaší kávy
+- Upravitelné nastavení času pro metodu přípravy
+- Prostředí jednoduché na používání s jednoduchým designem a nejnovějším materiálovým designem
+- Obraz v obraze pro více možností použivání telefonu
+- WearOS aplikace pro jednoduché měření vašeho času
+- Absolutně žádné sledování ani sběr dat
+
+Vím jak frustrující může být vyrovnávání s normální kávou. Proto chci pomoci připravovat kávu jako profesionál a pokaždé si užít perfektní kávu. Stáhněte si Cofi nyní a začněte svou cestu k perfektní kávě!

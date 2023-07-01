@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
+@file:OptIn(ExperimentalAnimationApi::class)
 
 package com.omelan.cofi.wearos.presentation.pages.details
 
@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -89,6 +88,7 @@ fun MultiplierPage(
                     SizeTransform(clip = false),
                 )
             },
+            label = "Multiplier ticker",
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 content(it)

@@ -29,7 +29,7 @@ android {
         targetSdkVersion 33
         compileSdk 33
         versionCode 143
-        versionName "1.18.6"
+        versionName "1.18.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs 'en', 'de', 'es', 'fr', 'hi', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'tr', 'uk', 'zh'
@@ -63,7 +63,7 @@ android {
         }
     }
 
-    flavorDimensions "version"
+    flavorDimensions.add("version")
     productFlavors {
         instant {
             dimension "version"
@@ -155,13 +155,13 @@ dependencies {
 
     // Material Design
     implementation "androidx.compose.material:material"
-    implementation "androidx.compose.material3:material3:1.1.0"
+    implementation "androidx.compose.material3:material3:1.1.1"
     implementation "androidx.compose.material3:material3-window-size-class"
 
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     // Navigation
-    implementation "androidx.navigation:navigation-compose:2.5.3"
+    implementation "androidx.navigation:navigation-compose:2.6.0"
 
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata"
@@ -171,26 +171,33 @@ dependencies {
     implementation "com.google.accompanist:accompanist-navigation-animation:0.30.1"
     implementation "androidx.compose.animation:animation-graphics"
 
-    implementation "androidx.activity:activity-compose:1.7.1"
+    implementation "androidx.activity:activity-compose:1.7.2"
 
     // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.3"
     testImplementation 'junit:junit:4.13.2'
 }
 
-task ktlint(type: JavaExec, group: "verification") {
+tasks.register("ktlintCheck", JavaExec) {
+    group = "verification"
     description = "Check Kotlin code style."
     classpath = configurations.ktlint
-    mainClass.set("com.pinterest.ktlint.Main")
-    args "src/**/*.kt"
-    jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
+    mainClass = "com.pinterest.ktlint.Main"
+    // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
+    args "src/**/*.kt", "**.kts", "!**/build/**"
 }
-check.dependsOn ktlint
 
-task ktlintFormat(type: JavaExec, group: "formatting") {
+tasks.named("check") {
+    dependsOn tasks.named("ktlintCheck")
+}
+
+tasks.register("ktlintFormat", JavaExec) {
+    group = "formatting"
     description = "Fix Kotlin code style deviations."
     classpath = configurations.ktlint
-    mainClass.set("com.pinterest.ktlint.Main")
-    args "-F", "src/**/*.kt"
-    jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
+    mainClass = "com.pinterest.ktlint.Main"
+    jvmArgs "--add-opens=java.base/java.lang=ALL-UNNAMED"
+    // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
+    args "-F", "src/**/*.kt", "**.kts", "!**/build/**"
 }
+

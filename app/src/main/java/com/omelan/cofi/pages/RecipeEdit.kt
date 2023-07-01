@@ -28,6 +28,7 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -37,6 +38,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -51,18 +53,119 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.google.accompanist.navigation.animation.composable
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
-import com.omelan.cofi.share.Recipe
-import com.omelan.cofi.share.RecipeIcon
-import com.omelan.cofi.share.Step
+import com.omelan.cofi.share.model.*
+import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 import com.omelan.cofi.utils.getDefaultPadding
 import com.omelan.cofi.utils.requestFocusSafer
 import kotlinx.coroutines.launch
+
+fun NavGraphBuilder.addRecipe(
+    navController: NavController,
+    db: AppDatabase,
+    goBack: () -> Unit = {
+        navController.popBackStack()
+    },
+) {
+    composable(Destinations.RECIPE_ADD) {
+        val coroutineScope = rememberCoroutineScope()
+        RecipeEdit(
+            saveRecipe = { recipe, steps ->
+                coroutineScope.launch {
+                    val idOfRecipe = db.recipeDao().insertRecipe(recipe)
+                    db.stepDao().insertAll(steps.map { it.copy(recipeId = idOfRecipe.toInt()) })
+                }
+                goBack()
+            },
+            goBack = goBack,
+        )
+    }
+}
+
+fun NavGraphBuilder.recipeEdit(
+    navController: NavController,
+    db: AppDatabase,
+    goBack: () -> Unit = {
+        navController.popBackStack()
+    },
+) {
+    composable(
+        Destinations.RECIPE_EDIT,
+        arguments = listOf(navArgument("recipeId") { type = NavType.IntType }),
+    ) { backStackEntry ->
+        val recipeId = backStackEntry.arguments?.getInt("recipeId")
+            ?: throw IllegalStateException("No Recipe ID")
+        val coroutineScope = rememberCoroutineScope()
+        val context = LocalContext.current
+        val recipeViewModel: RecipeViewModel = viewModel()
+        val stepsViewModel: StepsViewModel = viewModel()
+        val recipe by recipeViewModel.getRecipe(recipeId)
+            .observeAsState(Recipe(name = "", description = ""))
+        val steps by stepsViewModel.getAllStepsForRecipe(recipeId)
+            .observeAsState(listOf())
+        RecipeEdit(
+            goBack = goBack,
+            isEditing = true,
+            recipeToEdit = recipe,
+            stepsToEdit = steps,
+            saveRecipe = { newRecipe, newSteps ->
+                coroutineScope.launch {
+                    db.recipeDao().updateRecipe(newRecipe)
+                    db.stepDao().deleteAllStepsForRecipe(newRecipe.id)
+                    db.stepDao().insertAll(newSteps)
+                }
+                goBack()
+            },
+            cloneRecipe = { newRecipe, newSteps ->
+                coroutineScope.launch {
+                    val idOfRecipe = db.recipeDao().insertRecipe(
+                        newRecipe.copy(
+                            id = 0,
+                            name = context.resources.getString(
+                                R.string.recipe_clone_suffix,
+                                recipe.name,
+                            ),
+                        ),
+                    )
+                    db.stepDao().insertAll(
+                        newSteps.map {
+                            it.copy(recipeId = idOfRecipe.toInt(), id = 0)
+                        },
+                    )
+                }
+                navController.navigate("list") {
+                    this.popUpTo("list") {
+                        inclusive = true
+                    }
+                }
+            },
+            deleteRecipe = {
+                coroutineScope.launch {
+                    db.recipeDao().deleteById(recipeId = recipeId)
+                    db.stepDao().deleteAllStepsForRecipe(recipeId = recipeId)
+                }
+                ShortcutManagerCompat.removeDynamicShortcuts(context, listOf(recipeId.toString()))
+                navController.navigate("list") {
+                    this.popUpTo("list") {
+                        inclusive = true
+                    }
+                }
+            },
+        )
+    }
+}
 
 @Composable
 fun RecipeEdit(
@@ -84,10 +187,10 @@ fun RecipeEdit(
     val lazyListState = rememberLazyListState()
     val (nameFocusRequester, descriptionFocusRequester) = remember { FocusRequester.createRefs() }
 
-    var showDeleteModal by remember { mutableStateOf(false) }
-    var showCloneModal by remember { mutableStateOf(false) }
-    var showSaveModal by remember { mutableStateOf(false) }
-    val iconSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var isDeleteModalVisible by remember { mutableStateOf(false) }
+    var isCloneModalVisible by remember { mutableStateOf(false) }
+    var isSaveModalVisible by remember { mutableStateOf(false) }
+    var isIconPickerVisible by remember { mutableStateOf(false) }
     var pickedIcon by remember(recipeToEdit) { mutableStateOf(recipeToEdit.recipeIcon) }
 
     var showDescription by remember(recipeToEdit.description) {
@@ -136,7 +239,7 @@ fun RecipeEdit(
             description.text != recipeToEdit.description ||
             pickedIcon != recipeToEdit.recipeIcon
         ) {
-            showSaveModal = true
+            isSaveModalVisible = true
         } else {
             goBack()
         }
@@ -176,11 +279,7 @@ fun RecipeEdit(
                     onClick = {
                         keyboardController?.hide()
                         coroutineScope.launch {
-                            if (iconSheetState.isVisible) {
-                                iconSheetState.hide()
-                            } else {
-                                iconSheetState.show()
-                            }
+                            isIconPickerVisible = !isIconPickerVisible
                         }
                     },
                 ) {
@@ -337,13 +436,13 @@ fun RecipeEdit(
                 },
                 actions = {
                     if (isEditing) {
-                        IconButton(onClick = { showCloneModal = true }) {
+                        IconButton(onClick = { isCloneModalVisible = true }) {
                             Icon(
                                 painterResource(id = R.drawable.ic_copy),
                                 contentDescription = null,
                             )
                         }
-                        IconButton(onClick = { showDeleteModal = true }) {
+                        IconButton(onClick = { isDeleteModalVisible = true }) {
                             Icon(
                                 painterResource(id = R.drawable.ic_delete),
                                 contentDescription = null,
@@ -394,78 +493,21 @@ fun RecipeEdit(
             }
         }
     }
-    if (iconSheetState.isVisible || iconSheetState.targetValue != SheetValue.Hidden) {
-        Material3BottomSheet(
-            onDismissRequest = {
-                coroutineScope.launch {
-                    iconSheetState.hide()
-                }
-            },
-            sheetState = iconSheetState,
-        ) {
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .waterfallPadding()
-                    .safeGesturesPadding(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.Bottom,
-            ) {
-                RecipeIcon.values().map {
-                    val tooltipState = remember { PlainTooltipState() }
-                    // TODO: Revisit tooltips later, for now it makes app sluggish
-
-                    Box(
-                        modifier = Modifier
-                            .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
-                            .aspectRatio(1f)
-                            .clip(CircleShape)
-                            .combinedClickable(
-                                role = Role.Button,
-                                onClick = {
-                                    coroutineScope.launch {
-                                        launch {
-                                            iconSheetState.hide()
-                                        }
-                                        pickedIcon = it
-                                    }
-                                },
-                                onLongClick = {
-                                    coroutineScope.launch {
-                                        tooltipState.show()
-                                    }
-                                },
-                            ),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        PlainTooltipBox(
-                            tooltip = { Text(stringResource(id = it.nameResId)) },
-                            tooltipState = tooltipState,
-                        ) {
-                            Icon(
-                                painter = painterResource(id = it.icon),
-                                tint = MaterialTheme.colorScheme.onSurface,
-                                contentDescription = it.name,
-                                modifier = Modifier.size(36.dp),
-                            )
-                        }
-                    }
-                }
-            }
-        }
+    if (isIconPickerVisible) {
+        IconPickerBottomSheet({ pickedIcon = it }, { isIconPickerVisible = false })
     }
-    if (showDeleteModal && isEditing) {
-        DeleteDialog(onConfirm = deleteRecipe, onDismiss = { showDeleteModal = false })
+    if (isDeleteModalVisible && isEditing) {
+        DeleteDialog(onConfirm = deleteRecipe, onDismiss = { isDeleteModalVisible = false })
     }
-    if (showSaveModal) {
+    if (isSaveModalVisible) {
         SaveDialog(
             canSave = canSave,
             onSave = onSave,
             onDiscard = goBack,
-            onDismiss = { showSaveModal = false },
+            onDismiss = { isSaveModalVisible = false },
         )
     }
-    if (showCloneModal) {
+    if (isCloneModalVisible) {
         CloneDialog(
             onConfirm = {
                 cloneRecipe(
@@ -477,7 +519,7 @@ fun RecipeEdit(
                     steps.mapIndexed { index, step -> step.copy(orderInRecipe = index) },
                 )
             },
-            onDismiss = { showCloneModal = false },
+            onDismiss = { isCloneModalVisible = false },
         )
     }
 
@@ -486,6 +528,60 @@ fun RecipeEdit(
             descriptionFocusRequester.requestFocusSafer()
         } else {
             nameFocusRequester.requestFocusSafer()
+        }
+    }
+}
+
+@Composable
+private fun IconPickerBottomSheet(
+    setPickedIcon: (RecipeIcon) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val coroutineScope = rememberCoroutineScope()
+
+    Material3BottomSheet(onDismissRequest = onDismiss) {
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .waterfallPadding()
+                .navigationBarsPadding(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.Bottom,
+        ) {
+            RecipeIcon.values().map {
+                val tooltipState = remember { PlainTooltipState() }
+                Box(
+                    modifier = Modifier
+                        .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
+                        .aspectRatio(1f)
+                        .clip(CircleShape)
+                        .combinedClickable(
+                            role = Role.Button,
+                            onClick = {
+                                onDismiss()
+                                setPickedIcon(it)
+                            },
+                            onLongClick = {
+                                coroutineScope.launch {
+                                    tooltipState.show()
+                                }
+                            },
+                        ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    PlainTooltipBox(
+                        tooltip = { Text(stringResource(id = it.nameResId)) },
+                        tooltipState = tooltipState,
+                    ) {
+                        Icon(
+                            painter = painterResource(id = it.icon),
+                            tint = MaterialTheme.colorScheme.onSurface,
+                            contentDescription = it.name,
+                            modifier = Modifier.size(36.dp),
+                        )
+                    }
+                }
+            }
         }
     }
 }

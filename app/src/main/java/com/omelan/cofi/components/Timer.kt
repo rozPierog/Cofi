@@ -34,11 +34,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
-import com.omelan.cofi.share.Step
-import com.omelan.cofi.share.StepType
 import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
 import com.omelan.cofi.share.components.TimerValue
+import com.omelan.cofi.share.model.Step
+import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.green600
 

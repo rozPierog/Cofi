@@ -1,3 +1,5 @@
+@file:Suppress("EmptyMethod", "SameReturnValue", "UNUSED_PARAMETER", "unused")
+
 package com.omelan.cofi.utils
 
 import android.app.Activity
@@ -11,10 +13,13 @@ object WearUtils {
     fun removeObservers(activity: AppCompatActivity) {}
 
     @Composable
-    fun ObserveIfWearAppInstalled(onChange: (nodesIdWithoutApp: List<String>) -> Unit) {}
+    fun ObserveIfWearAppInstalled(onChange: (nodesIdWithoutApp: List<String>) -> Unit) {
+    }
+
     fun openPlayStoreOnWearDevicesWithoutApp(
         lifecycleOwner: LifecycleOwner,
         activity: Activity,
         nodesIdWithoutApp: List<String>,
-    ) { }
+    ) {
+    }
 }

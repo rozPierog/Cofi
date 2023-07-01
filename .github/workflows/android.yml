@@ -22,7 +22,7 @@ jobs:
     - name: Create empty keystore
       run: echo "storeFile=/" > keystore.properties
     - name: KTLint
-      run: ./gradlew ktlint
+      run: ./gradlew ktlintCheck
     - name: Unit Tests
       run: ./gradlew testFullDebugUnitTest
 #     - name: Android Instrumantation Tests

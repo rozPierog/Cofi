@@ -146,7 +146,7 @@ platform :android do
   end
 
   lane :create_screenshots do
-      `cd .. && ./bin/createScreenshots`
+      `cd .. && ./bin/createScreenshots.sh`
   end
 
   desc "Removes default.txt changelog"

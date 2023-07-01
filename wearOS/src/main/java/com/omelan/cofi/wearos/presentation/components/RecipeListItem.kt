@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.*
-import com.omelan.cofi.share.Recipe
+import com.omelan.cofi.share.model.Recipe
 
 @Composable
 private fun RecipeListItemRaw(

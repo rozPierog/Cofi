@@ -11,6 +11,7 @@
   <a href="https://github.com/rozPierog/Cofi/releases">
     <img src="https://img.shields.io/github/v/release/rozPierog/Cofi.svg?include_prereleases?logo=github">
   </a>
+<a href="https://app.fossa.com/projects/git%2Bgithub.com%2FrozPierog%2FCofi?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FrozPierog%2FCofi.svg?type=shield"/></a>
   <a href="https://liberapay.com/LeonOmelan/">
     <img src="https://img.shields.io/liberapay/patrons/LeonOmelan.svg?logo=liberapay">
   </a>
@@ -79,3 +80,6 @@
 # License
 
 [GNU GENERAL PUBLIC LICENSE Version 3](LICENSE)
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FrozPierog%2FCofi.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FrozPierog%2FCofi?ref=badge_large)
