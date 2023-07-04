@@ -128,4 +128,22 @@
     <string name="support_dialog_github">Califique Cofi en GitHub</string>
     <string name="recipe_details_change_step_toast">Manten pulsado para cambiar de paso</string>
     <string name="recipe_details_read_description">Leer la descripción</string>
+    <string name="prepopulate_clever_dripper_description">Receta creada por: James Hoffmann
+\nFuente: https://youtu.be/RpOdennxP24
+\nTamaño del grano: Medio-fino
+\nTemperatura: Llevar a ebullición y utilizar inmediatamente
+\n Proporción: 1:16,67, es decir, 15 g por 250 ml
+\nDoble el filtro por ambas costuras para que encaje mejor dentro de la cafetera
+\nLa cantidad máxima de agua es de 500mL, pero se recomienda 400 o menos</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Romper la corteza removiendo o agitando un poco</string>
+    <string name="prepopulate_v60_1cup_description">Receta creada por: James Hoffmann
+\nFuente: https://youtu.be/1oB1oDrDkHM
+\nAntes de empezar, caliente la V60 colocando el papel dentro del cono y vertiendo agua caliente sobre el papel. Esto precalienta la V60 y prepara el papel para el proceso de infusión.
+\nTamaño de molido: fino - medio fino
+\nTemperatura: cuanto más caliente, mejor (especialmente con tuestes ligeros)</string>
+    <string name="prepopulate_v60_1cup_name">1 taza de V60</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Aclarar el filtro con agua caliente</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Colócalo en la parte superior de la taza y deja que baje completamente</string>
+    <string name="name_drip">Gotas</string>
+    <string name="recipe_details_recipeRatio">Proporción de la receta: 1:%1$s</string>
 </resources>
