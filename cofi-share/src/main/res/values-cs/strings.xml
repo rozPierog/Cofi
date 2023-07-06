@@ -13,7 +13,7 @@
     <string name="recipe_details_read_description">Přečíst popis</string>
     <string name="prepopulate_chemex_description">Recept vytvořil: James Hoffmann
 \nZdroj: https://youtu.be/ikt-X5x7yoc
-\nHrubost mletí: středně dobrá
+\nHrubost mletí: středně jemná
 \nTeplota: čím teplejší, tím lepší (obzvláště s nízkým pražením)
 \nUjistěte se že nejtužší část filtru je na drenážní části
 \nMyslete na to aby jste nezablokovali vzduch odcházející z vařiče</string>
@@ -74,7 +74,7 @@
     <string name="prepopulate_v60_name">Ultimate V60</string>
     <string name="prepopulate_v60_description">Recept vytvořil: James Hoffmann
 \nZdroj: https://youtu.be/AI4ynXzkSQo
-\nHrubost mletí: střední
+\nHrubost mletí: středně jemná
 \nTeplota: čím teplejší, tím lepší (obzvláště u nízkého pražení)</string>
     <string name="prepopulate_step_water">Přidejte vodu</string>
     <string name="prepopulate_step_plunge">Ponořte pouze pod povrch a nalijte</string>
@@ -128,4 +128,22 @@
     <string name="recipe_details_upNext">Nadcházející:</string>
     <string name="settings_wearOS_item">Stáhnout pro WearOS</string>
     <string name="recipe_details_change_step_toast">Stiskněte a podržte pro změnění kroku</string>
+    <string name="recipe_details_recipeRatio">Poměr receptu: 1:%1$s</string>
+    <string name="prepopulate_v60_1cup_name">1 Šálek V60</string>
+    <string name="prepopulate_v60_1cup_description">Recept vytvořil: James Hoffman
+\nZdroj: https://youtu.be/1oB1oDrDkHM
+\nPředtím než začnete, předehřejte V60 tím že vložíte papír do kuželu a přelijete jej horkou vodou. Toto předehřeje V60 a připraví papír na proces vaření.
+\nHrubost mletí: jemné - středně jemné
+\nTeplota: čím teplejší, tím lepší (zlváště u nízkého pražení)</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Opláchněte filtr horkou vodou</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Umístěte jej na vrch šálku a nechte jej zatáhnout až dolů</string>
+    <string name="prepopulate_clever_dripper_description">Recept vytvořil: James Hoffman
+\nZdroj: https://youtu.be/RpOdennxP24
+\nHrubost mletí: středně jemná
+\nTeplota: Přiveďte k varu a použijte ihned
+\nPoměr: 1:16.67, či 15g na 250ml
+\nPřeložte filtr podél obou švů aby se vešel lépe do vařiče
+\nMamixmální množství vody ne 500ml, ale je doporučeno 400 či méně</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Rozbijte krustu micháním či malým zatřesením</string>
+    <string name="name_drip">Překapávaná káva</string>
 </resources>
