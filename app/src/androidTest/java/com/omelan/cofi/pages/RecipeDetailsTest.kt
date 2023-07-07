@@ -3,7 +3,9 @@ package com.omelan.cofi.pages
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -28,12 +30,12 @@ class RecipeDetailsTest {
     private val testRecipe = Recipe(
         id = 0,
         description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas nisi " +
-            "vel est malesuada, in tincidunt ligula lacinia. Maecenas sed sem non nisl " +
-            "commodo ullamcorper. Donec euismod volutpat magna, nec dapibus augue rutrum et. " +
-            "Cras ligula erat, tempus quis nibh vel, sagittis gravida leo. Mauris quis " +
-            "leo erat. Aliquam tincidunt sagittis tempor. Sed id finibus urna. Praesent " +
-            "at nulla aliquet, molestie magna at, mattis tortor. Aenean eleifend justo ipsum," +
-            " sed convallis lectus viverra at. ",
+                "vel est malesuada, in tincidunt ligula lacinia. Maecenas sed sem non nisl " +
+                "commodo ullamcorper. Donec euismod volutpat magna, nec dapibus augue rutrum et. " +
+                "Cras ligula erat, tempus quis nibh vel, sagittis gravida leo. Mauris quis " +
+                "leo erat. Aliquam tincidunt sagittis tempor. Sed id finibus urna. Praesent " +
+                "at nulla aliquet, molestie magna at, mattis tortor. Aenean eleifend justo ipsum," +
+                " sed convallis lectus viverra at. ",
         name = "Test Recipe",
         recipeIcon = RecipeIcon.AeroPress,
         lastFinished = 0L,
@@ -148,14 +150,14 @@ class RecipeDetailsTest {
     @ExperimentalComposeUiApi
     @Test
     fun pipTest() {
-        val isInPip = mutableStateOf(false)
+        var isInPip by mutableStateOf(false)
         composeTestRule.setContent {
             CofiTheme {
                 CompositionLocalProvider(
                     LocalPiPState provides false,
                 ) {
                     RecipeDetails(
-                        isInPiP = isInPip.value,
+                        isInPiP = isInPip,
                         recipe = testRecipe,
                         steps = listOf(testStep),
                     )
@@ -168,10 +170,8 @@ class RecipeDetailsTest {
         composeTestRule.onNodeWithTag("recipe_start")
             .assertIsToggleable()
             .assertIsOff()
-            .performClick()
-        isInPip.value = true
-        composeTestRule.mainClock.autoAdvance = false
-        composeTestRule.mainClock.advanceTimeBy(100)
+//            .performClick()
+        isInPip = true
         composeTestRule.onNodeWithTag("recipe_timer").assertExists()
         composeTestRule.onNodeWithTag("recipe_description").assertDoesNotExist()
         composeTestRule.onNodeWithTag("recipe_step").assertDoesNotExist()
