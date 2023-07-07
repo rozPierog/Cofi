@@ -162,7 +162,7 @@ fun JSONObject.toStep(withId: Boolean = false, recipeId: Long? = null) = if (wit
         recipeId = recipeId?.toInt() ?: getInt(jsonRecipeId),
         time = getIntOrNull(jsonTime),
         value = getFloatOrNull(jsonValue),
-        orderInRecipe = getInt(jsonOrderInRecipe),
+        orderInRecipe = getIntOrNull(jsonOrderInRecipe),
         type = StepTypeConverter().stringToStepType(getString(jsonType)),
     )
 } else {
@@ -171,7 +171,7 @@ fun JSONObject.toStep(withId: Boolean = false, recipeId: Long? = null) = if (wit
         recipeId = recipeId?.toInt() ?: getInt(jsonRecipeId),
         time = getIntOrNull(jsonTime),
         value = getFloatOrNull(jsonValue),
-        orderInRecipe = getInt(jsonOrderInRecipe),
+        orderInRecipe = getIntOrNull(jsonOrderInRecipe),
         type = StepTypeConverter().stringToStepType(getString(jsonType)),
     )
 }
