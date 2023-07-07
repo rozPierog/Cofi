@@ -130,4 +130,22 @@
 \nФільтр не повинен ідеально прилягати до стінок з обох боків, повітря має кудись виходити</string>
     <string name="recipe_details_change_step_toast">Натисніть і утримуйте, щоб змінити крок</string>
     <string name="recipe_details_read_description">Читати опис</string>
+    <string name="prepopulate_v60_1cup_description">Рецепт створений Джеймсом Хоффманном
+\nДжерело: https://youtu.be/1oB1oDrDkHM
+\nПерш ніж почати, нагрійте V60, поклавши папір всередину конуса і заливши його гарячою водою. Це розігріє V60 і підготує папір до процесу заварювання.
+\nСтупінь помелу: дрібний - середньо-дрібний
+\nТемпература: чим гарячіше, тим краще (особливо для легкого обсмажування)</string>
+    <string name="prepopulate_clever_dripper_description">Рецепт створений Джеймслм Хоффманном
+\nДжерело: https://youtu.be/RpOdennxP24
+\nРозмір помелу: Середньо-дрібний
+\nТемпература: Довести до кипіння і використовувати негайно
+\nСпіввідношення: 1:16.67, або 15г на 250мл
+\nСкладіть фільтр уздовж обох швів, щоб він краще прилягав до пивовара
+\nМаксимальна кількість води - 500 мл, але рекомендується 400 або менше</string>
+    <string name="name_drip">Крапельниця</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Промийте фільтр гарячою водою</string>
+    <string name="recipe_details_recipeRatio">Пропорція рецепта: 1:%1$s</string>
+    <string name="prepopulate_v60_1cup_name">1 чашка V60</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Розбити скоринку, перемішавши або злегка струснувши її</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Покладіть зверху на чашку і дайте їй повністю опуститися</string>
 </resources>
