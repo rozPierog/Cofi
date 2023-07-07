@@ -299,6 +299,9 @@ fun RecipeEdit(
                         .focusRequester(nameFocusRequester)
                         .onFocusChanged {
                             nameHasFocus = it.isFocused
+                            if (it.isFocused) {
+                                collapse()
+                            }
                         }
                         .testTag("recipe_edit_name"),
                     singleLine = true,
@@ -339,6 +342,11 @@ fun RecipeEdit(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = Spacing.big)
+                            .onFocusChanged {
+                                if (it.isFocused) {
+                                    collapse()
+                                }
+                            }
                             .focusRequester(descriptionFocusRequester)
                             .testTag("recipe_edit_description"),
                         keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
@@ -396,7 +404,10 @@ fun RecipeEdit(
                 StepListItem(
                     step = step,
                     stepProgress = StepProgress.Upcoming,
-                    onClick = { stepWithOpenEditor = it },
+                    onClick = {
+                        collapse()
+                        stepWithOpenEditor = it
+                    },
                 )
             }
         }
