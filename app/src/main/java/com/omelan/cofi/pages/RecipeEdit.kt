@@ -229,7 +229,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -475,22 +475,20 @@ fun RecipeEdit(
             )
         },
     ) {
-        BoxWithConstraints {
-            if (isPhoneLayout) {
-                PhoneLayout(
-                    it,
-                    lazyListState,
-                    renderNameAndDescriptionEdit,
-                    renderSteps,
-                )
-            } else {
-                TabletLayout(
-                    it,
-                    lazyListState,
-                    renderNameAndDescriptionEdit,
-                    renderSteps,
-                )
-            }
+        if (isPhoneLayout) {
+            PhoneLayout(
+                it,
+                lazyListState,
+                renderNameAndDescriptionEdit,
+                renderSteps,
+            )
+        } else {
+            TabletLayout(
+                it,
+                lazyListState,
+                renderNameAndDescriptionEdit,
+                renderSteps,
+            )
         }
     }
     if (isIconPickerVisible) {
@@ -596,6 +594,7 @@ private fun PhoneLayout(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
+            .imePadding()
             .background(color = MaterialTheme.colorScheme.background),
         state = lazyListState,
         contentPadding = getDefaultPadding(
@@ -625,33 +624,23 @@ private fun TabletLayout(
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(getDefaultPadding(paddingValues)),
+            .padding(getDefaultPadding()),
         horizontalArrangement = Arrangement.spacedBy(Spacing.normal),
     ) {
         LazyColumn(
-            modifier = Modifier.weight(1f, fill = true),
+            modifier = Modifier
+                .weight(1f, fill = true)
+                .padding(paddingValues),
         ) {
             renderNameAndDescriptionEdit()
-            item {
-                Spacer(
-                    modifier = Modifier
-                        .imePadding()
-                        .navigationBarsPadding(),
-                )
-            }
         }
         LazyColumn(
-            modifier = Modifier.weight(1f, fill = true),
+            modifier = Modifier
+                .weight(1f, fill = true)
+                .padding(paddingValues),
             state = lazyListState,
         ) {
             renderSteps()
-            item {
-                Spacer(
-                    modifier = Modifier
-                        .imePadding()
-                        .navigationBarsPadding(),
-                )
-            }
         }
     }
 }

@@ -41,7 +41,6 @@ import com.omelan.cofi.share.utils.toMillis
 import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.requestFocusSafer
-import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
 
 @Composable
@@ -156,7 +155,6 @@ fun StepAddCard(
                         .onFocusEvent {
                             if (it.isFocused) {
                                 coroutineScope.launch {
-                                    awaitFrame()
                                     bringIntoViewRequester.bringIntoView()
                                 }
                             }
@@ -261,13 +259,23 @@ fun StepAddCard(
                     ) {
                         PillButton(
                             painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowUp),
-                            onClick = { onPositionChange(-1) },
+                            onClick = {
+                                onPositionChange(-1)
+                                coroutineScope.launch {
+                                    bringIntoViewRequester.bringIntoView()
+                                }
+                            },
                             enabled = !isFirst,
                         )
                         Spacer(modifier = Modifier.width(Spacing.normal))
                         PillButton(
                             painter = rememberVectorPainter(Icons.Rounded.KeyboardArrowDown),
-                            onClick = { onPositionChange(1) },
+                            onClick = {
+                                onPositionChange(1)
+                                coroutineScope.launch {
+                                    bringIntoViewRequester.bringIntoView()
+                                }
+                            },
                             enabled = !isLast,
                         )
                     }
