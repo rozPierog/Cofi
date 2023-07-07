@@ -31,11 +31,14 @@ android {
         versionCode 146
         versionName "1.19.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs 'en', 'de', 'es', 'fr', 'hi', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'tr', 'uk', 'zh'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
         manifestPlaceholders = [profileable: false]
+    }
 
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
 
     buildTypes {
@@ -176,6 +179,7 @@ dependencies {
     // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.3"
     testImplementation 'junit:junit:4.13.2'
+    androidTestUtil 'androidx.test:orchestrator:1.4.2'
 }
 
 tasks.register("ktlintCheck", JavaExec) {
