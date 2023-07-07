@@ -30,8 +30,6 @@ android {
         compileSdk 33
         versionCode 146
         versionName "1.19.0"
-
-        resConfigs 'en', 'de', 'es', 'fr', 'hi', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'tr', 'uk', 'zh'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
         manifestPlaceholders = [profileable: false]

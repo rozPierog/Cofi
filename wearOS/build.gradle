@@ -32,8 +32,6 @@ android {
         versionCode 144
         versionName "1.10.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs 'en', 'de', 'es', 'fr', 'hi', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'tr', 'uk', 'zh'
-
         vectorDrawables {
             useSupportLibrary true
         }
