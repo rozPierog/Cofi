@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- fixed crash on WearOS
+- added haptics on long press step
+- fixed recipe edit style on tablets/foldables
 
 ### Removed
 

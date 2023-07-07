@@ -64,6 +64,7 @@ import com.omelan.cofi.share.*
 import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
+import com.omelan.cofi.share.utils.Haptics
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.InstantUtils
@@ -196,6 +197,7 @@ fun RecipeDetails(
     val (appBarBehavior, collapse) = createAppBarBehaviorWithCollapse()
     val snackbarState = remember { SnackbarHostState() }
     val copyAutomateLink = rememberCopyAutomateLink(snackbarState, recipeId)
+    val context = LocalContext.current
 
     val lazyListState = rememberLazyListState()
 
@@ -346,6 +348,7 @@ fun RecipeDetails(
             }
         }
     }
+    val haptics = remember { Haptics(context) }
 
     val renderSteps: LazyListScope.() -> Unit = {
         itemsIndexed(items = steps, key = { _, step -> step.id }) { index, step ->
@@ -363,6 +366,7 @@ fun RecipeDetails(
                         if (newStep == currentStep) {
                             return@launch
                         }
+                        haptics.heavyClick()
                         animatedProgressValue.snapTo(0f)
                         changeCurrentStep(newStep)
                     }

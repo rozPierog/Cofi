@@ -14,9 +14,9 @@ class Haptics(context: Context) {
 //        vibrateCompat(VibrationEffect.EFFECT_CLICK)
 //    }
 //
-//    fun heavyClick() {
-//        vibrateCompat(VibrationEffect.EFFECT_HEAVY_CLICK)
-//    }
+    fun heavyClick() {
+        vibrator.vibrateCompat(VibrationEffect.EFFECT_HEAVY_CLICK)
+    }
 //
 //    fun doubleClick() {
 //        vibrateCompat(VibrationEffect.EFFECT_DOUBLE_CLICK)
