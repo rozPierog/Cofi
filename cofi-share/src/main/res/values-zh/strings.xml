@@ -123,4 +123,24 @@ Source: https://youtu.be/AI4ynXzkSQo
     <string name="settings_step_next_step_item">显示下一步</string>
     <string name="recipe_details_upNext">下一个:</string>
     <string name="settings_wearOS_item">下载WearOS版本</string>
+    <string name="name_drip">滴</string>
+    <string name="recipe_details_change_step_toast">按住以更改步骤</string>
+    <string name="recipe_details_recipeRatio">配方比例：1：%1$s</string>
+    <string name="prepopulate_clever_dripper_description">食谱创建者: James Hoffmann
+\n来源: https://youtu.be/RpOdennxP24
+\n研磨大小: 中-细
+\n温度: 煮沸后立即使用
+\n比例: 1:16.67, 或15克比250毫升
+\n沿着两边的缝隙折叠过滤器，使其更适合在冲煮器内。
+\n大水量为500mL，但建议使用400mL或更低的水量</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">通过搅拌或轻轻摇晃来打破表皮</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">放在杯子的顶部，让它完全拉下</string>
+    <string name="prepopulate_v60_1cup_name">单杯V60</string>
+    <string name="prepopulate_v60_1cup_description">食谱创建者: James Hoffmann
+\n来源: https://youtu.be/1oB1oDrDkHM
+\n在你开始之前，先把纸放在圆锥体内加热V60，然后把热水倒在纸上。这样可以预热V60，并为冲泡过程中的纸张做好准备。
+\n研磨尺寸：细 - 中细
+\n温度：越热越好（尤其是浅度烘焙）</string>
+    <string name="prepopulate_clever_dripper_step_rinse">用热水冲洗过滤器</string>
+    <string name="recipe_details_read_description">阅读说明</string>
 </resources>
