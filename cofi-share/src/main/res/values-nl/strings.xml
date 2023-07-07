@@ -125,4 +125,24 @@ Temperatuur: hoe warmer, hoe beter (zeker met lichtere brandingen)"</string>
     <string name="support_dialog_kofi">Koop een koffie voor me</string>
     <string name="support_dialog_github">Star Cofi op GitHub</string>
     <string name="recipe_details_change_step_toast">Ingedrukt houden om van stap te veranderen</string>
+    <string name="recipe_details_read_description">Lees de beschrijving</string>
+    <string name="prepopulate_clever_dripper_description">Recept gemaakt door: James Hoffmann
+\nBron: https://youtu.be/RpOdennxP24
+\nMaalgraad: Medium-fijn
+\nTemperatuur: Aan de kook brengen en direct gebruiken
+\nVerhouding: 1:16,67, of 15g op 250mL
+\nVouw het filter langs beide naden om het beter in de brewer te laten passen
+\nMaximale hoeveelheid water is 500mL, maar 400 of lager wordt aanbevolen</string>
+    <string name="prepopulate_v60_1cup_description">Recept bedacht door: James Hoffmann
+\nBron:
+\nhttps://youtu.be/1oB1oDrDkHM
+\nVoordat je begint, verwarm de V60 door het papier in de \'cone\' te plaatsen en giet heet water over het papier. Dit verwarmt de V60 voor en bereidt het papier voor het brouwproces.
+\nKorrel grootte: fijn - medium fijn
+\nTemperatuur: hoe heter, hoe beter (vooral met lichter geroosterde bonen)</string>
+    <string name="prepopulate_v60_1cup_name">1 Kopje V60</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Spoel de filter met heet water</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Breek de korst door te roeren of een beetje te schudden</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Plaats bovenop het kopje en laat het volledig naar beneden trekken</string>
+    <string name="name_drip">Druppelen</string>
+    <string name="recipe_details_recipeRatio">Receptverhouding: 1:%1$s</string>
 </resources>
