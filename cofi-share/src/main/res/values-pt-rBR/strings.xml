@@ -81,4 +81,16 @@
     <string name="settings_backup">Cópia de segurança</string>
     <string name="support_dialog_github">Curta o Cofi no GitHub</string>
     <string name="support_dialog_kofi">Compre-me um café</string>
+    <string name="recipe_details_automation_dialog_text">Use esse link para ir direto para sua receita. Escreve isto em uma tag NFC ou crie uma tarefa de automação no Tasker para facilitar sua manhã de café.
+\nAVISO: Você não pode compartilhar receita desta forma!</string>
+    <string name="settings_licenses_item">Agradecimentos</string>
+    <string name="prepopulate_v60_description">Receita criada por: James Hoffmann
+\nFonte: https://youtu.be/AI4ynXzkSQo
+\nTamanho da moagem: médio fino
+\nTemperatura: quanto mais quente, melhor (principalmente com torras mais leves)</string>
+    <string name="prepopulate_v60_1cup_description">Receita criada por: James Hoffmann
+\nFonte: https://youtu.be/1oB1oDrDkHM
+\nAntes de começar, aqueça o V60 colocando o papel dentro do cone e despejando água quente sobre o papel. Isso pré-aquece o V60 e prepara o papel para o processo de fermentação.
+\nTamanho da moagem: fino - médio fino
+\nTemperatura: quanto mais quente, melhor (principalmente com torras mais leves)</string>
 </resources>
