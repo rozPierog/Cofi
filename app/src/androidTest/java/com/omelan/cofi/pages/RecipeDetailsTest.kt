@@ -30,12 +30,12 @@ class RecipeDetailsTest {
     private val testRecipe = Recipe(
         id = 0,
         description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas nisi " +
-                "vel est malesuada, in tincidunt ligula lacinia. Maecenas sed sem non nisl " +
-                "commodo ullamcorper. Donec euismod volutpat magna, nec dapibus augue rutrum et. " +
-                "Cras ligula erat, tempus quis nibh vel, sagittis gravida leo. Mauris quis " +
-                "leo erat. Aliquam tincidunt sagittis tempor. Sed id finibus urna. Praesent " +
-                "at nulla aliquet, molestie magna at, mattis tortor. Aenean eleifend justo ipsum," +
-                " sed convallis lectus viverra at. ",
+            "vel est malesuada, in tincidunt ligula lacinia. Maecenas sed sem non nisl " +
+            "commodo ullamcorper. Donec euismod volutpat magna, nec dapibus augue rutrum et. " +
+            "Cras ligula erat, tempus quis nibh vel, sagittis gravida leo. Mauris quis " +
+            "leo erat. Aliquam tincidunt sagittis tempor. Sed id finibus urna. Praesent " +
+            "at nulla aliquet, molestie magna at, mattis tortor. Aenean eleifend justo ipsum," +
+            " sed convallis lectus viverra at. ",
         name = "Test Recipe",
         recipeIcon = RecipeIcon.AeroPress,
         lastFinished = 0L,
