@@ -32,12 +32,12 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: app-full-debug.apk
-        path: app/build/outputs/apk/full/debug/app-full-release.apk
+        path: ./app/build/outputs/apk/full/debug/app-full-release.apk
     - uses: actions/upload-artifact@v3
       with:
         name: app-playStore-debug.apk
-        path: app/build/outputs/apk/playStore/debug/app-playStore-release.apk
+        path: ./app/build/outputs/apk/playStore/debug/app-playStore-release.apk
     - uses: actions/upload-artifact@v3
       with:
         name: wearOS-debug.apk
-        path: wearOS/build/outputs/apk/debug/wearOS-release.apk
+        path: ./wearOS/build/outputs/apk/debug/wearOS-release.apk
