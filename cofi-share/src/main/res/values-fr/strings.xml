@@ -128,4 +128,21 @@
     <string name="settings_sync_with_phone">Obtenir les paramètres du téléphone</string>
     <string name="recipe_details_change_step_toast">Appuyer et maintenir pour changer d\'étape</string>
     <string name="recipe_details_read_description">Lire la description</string>
+    <string name="prepopulate_v60_1cup_description">Recette créée par : James Hoffmann
+\nSource : https://youtu.be/1oB1oDrDkHM
+\nAvant de commencer, chauffez le V60 en plaçant le papier à l’intérieur du cône et en versant de l’eau chaude sur le papier. Cela préchauffe le V60 et prépare le papier pour le processus de brassage.
+\nTaille de mouture : fine - moyenne fine
+\nTempérature : plus il fait chaud, mieux c’est (surtout avec les plus légers)</string>
+    <string name="prepopulate_clever_dripper_description">Recette créée par : James Hoffmann
+\nSource : https ://youtu.be/RpOdennxP24
+\nTaille de mouture : Moyenne-fine
+\nTempérature : Porter à ébullition et utiliser immédiatement
+\nRapport : 1 : 16.67, ou 15 g à 250 mL
+\nPliez le filtre le long des deux coutures pour qu’il s’adapte mieux à l’intérieur de la cafetière
+\nLa quantité maximale d’eau est de 500 mL, mais 400 ou moins est recommandée</string>
+    <string name="prepopulate_v60_1cup_name">1 tasse V60</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Rincer le filtre à l\'eau chaude</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Casser la croûte en remuant ou en la secouant un peu</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Placez-le sur le dessus de la tasse et laissez-le s\'abaisser complètement</string>
+    <string name="recipe_details_recipeRatio">Rapport de la recette : 1:%1$s</string>
 </resources>
