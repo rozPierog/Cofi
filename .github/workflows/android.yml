@@ -29,15 +29,15 @@ jobs:
 #       run: ./gradlew connectedFullDebugAndroidTest
     - name: Build with Gradle
       run: ./gradlew app:licenseFullDebug app:assembleFullDebug app:licensePlayStoreDebug app:assemblePlayStoreDebug wearOS:licenseDebug wearOS:assembleDebug
-    - uses: actions/upload-artficat@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: app-full-debug.apk
         path: app/build/outputs/apk/full/debug/app-full-release.apk
-    - uses: actions/upload-artficat@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: app-playStore-debug.apk
         path: app/build/outputs/apk/playStore/debug/app-playStore-release.apk
-    - uses: actions/upload-artficat@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: wearOS-debug.apk
         path: wearOS/build/outputs/apk/debug/wearOS-release.apk
