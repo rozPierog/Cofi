@@ -145,4 +145,5 @@
     <string name="prepopulate_clever_dripper_step_break_crust">Casser la croûte en remuant ou en la secouant un peu</string>
     <string name="prepopulate_clever_dripper_step_draw_down">Placez-le sur le dessus de la tasse et laissez-le s\'abaisser complètement</string>
     <string name="recipe_details_recipeRatio">Rapport de la recette : 1:%1$s</string>
+    <string name="name_drip">Goutter</string>
 </resources>
