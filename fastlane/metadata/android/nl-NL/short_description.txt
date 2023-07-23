@@ -1,1 +1,1 @@
-Open-source koffie timer. Gemakkelijk te gebruiken interface.
+Een eenvoudige opensource-zettĳdapp. Zet telkens weer het perfecte kopje!

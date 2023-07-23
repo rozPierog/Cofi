@@ -1,16 +1,15 @@
-Als gepassioneerd koffieliefhebber en amateur barista ben ik altijd op jacht geweest naar het perfecte kopje koffie. Daarom heb ik de gratis en open-source coffee brew timer voor Android gemaakt. Met deze app, kunt u gemakkelijk de tijd van uw koffie brouwt en het bereiken van de perfecte smaak elke keer.
+Als gepassioneerd koffieliefhebber en amateurbarista ben ik altijd op zoek geweest naar het perfecte kopje koffie. Daarom heb ik deze gratis en opensource-koffiezettĳdapp voor Android gemaakt. Met deze app kun je gemakkelijk de zettĳd van je koffie bĳhouden om telkens weer de perfecte smaak te krĳgen.
 
-Ik weet hoe belangrijk het is om volledige controle te hebben over uw brouwtijd, en dat is precies wat deze app biedt. Of u nu een Franse pers, pour-over, of een andere brouwen methode gebruikt, onze app maakt het gemakkelijk om bij te houden van uw brouwtijd en het bereiken van de perfecte smaak.
+Ik weet hoe belangrijk het is om volledige controle te hebben over de zettijd en dat is precies wat deze app biedt. Of je nu een cafetière, apparaat met koffiefilterhouder of een andere zetmethode gebruikt, alles is bĳ te houden.
 
 Kenmerken:
+- Open source en gratis te gebruiken;
+- Geen beperkingen in wat je kunt toevoegen in de app;
+- Kookwekker voor het zetten van je koffie;
+- Aanpasbare tĳdsinstellingen voor verschillende zetmethodes;
+- Gebruiksvriendelijke vormgeving met strak ontwerp en het nieuwste Material Design;
+- Beeld-in-beeldmodus voor multitasking;
+- WearOS-app voor eenvoudig bĳhouden op je smartwatch;
+- Absoluut geen tracking of gegevensverzameling.
 
-- Open-source en gratis te gebruiken
-- Geen kunstmatige beperkingen op wat je kunt toevoegen aan de app
-- Timer voor het zetten van uw koffie
-- Aanpasbare tijdsinstellingen voor verschillende zetmethodes
-- Gebruiksvriendelijke interface met een strak ontwerp en het nieuwste material design
-- Beeld-in-beeld modus voor multitasking
-- WearOS-app voor eenvoudige timing op uw smartwatch
-- Absoluut geen gebruikerstracking of gegevensverzameling
-
-Ik weet hoe frustrerend het kan zijn om genoegen te nemen met een middelmatig kopje koffie. Daarom wil ik je helpen brouwen als een pro en elke keer genieten van het perfecte kopje. Download Cofi nu en begin je reis naar perfecte koffie!
+Ik weet hoe frustrerend het kan zijn om genoegen te nemen met een middelmatig kopje koffie. Daarom wil ik je helpen koffie te zetten als een échte barista, zodat je telkens weer kunt genieten van het perfecte kopje. Download Cofi nu en begin met het zoeken naar de perfecte koffie!
