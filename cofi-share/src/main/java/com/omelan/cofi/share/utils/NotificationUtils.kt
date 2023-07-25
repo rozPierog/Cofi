@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.work.*
@@ -36,11 +37,16 @@ fun Context.createChannel() {
 fun Step.toNotificationBuilder(
     context: Context,
     currentProgress: Float,
+    alert: Boolean,
 ): NotificationCompat.Builder {
     val step = this
     val builder =
         NotificationCompat.Builder(context, "timer").run {
             setSmallIcon(step.type.iconRes)
+            setVisibility(VISIBILITY_PUBLIC)
+            setOnlyAlertOnce(!alert)
+            setAutoCancel(true)
+            setOngoing(true)
             color = ResourcesCompat.getColor(
                 context.resources,
                 R.color.ic_launcher_background,
@@ -104,6 +110,9 @@ fun Context.startTimerWorker(
     workManager.enqueue(timerWorker)
 }
 
+const val COFI_TIMER_NOTIFICATION_ID = 2137
+const val COFI_TIMER_NOTIFICATION_TAG = "cofi_notification_timer"
+
 class TimerWorker(
     private val context: Context,
     private val workerParams: WorkerParameters,
@@ -117,56 +126,75 @@ class TimerWorker(
         val db = AppDatabase.getInstance(context)
         withContext(Dispatchers.Main) {
             db.stepDao().getStepsForRecipe(recipeId).observeForever { steps ->
-                var currentStep = steps.find { it.id == startingStepId } ?: return@observeForever
+                val initialStep = steps.find { it.id == startingStepId } ?: return@observeForever
                 postTimerNotification(
                     context,
-                    currentStep.toNotificationBuilder(context, currentProgress),
-                    id = 1,
-                    tag = "cofi_notification_timer",
+                    initialStep.toNotificationBuilder(context, currentProgress, alert = true),
+                    id = COFI_TIMER_NOTIFICATION_ID + initialStep.id,
+                    tag = COFI_TIMER_NOTIFICATION_TAG,
                 )
                 fun startCountDown(step: Step) {
+                    var isFirstTimeOnThisStep = true
                     fun goToNextStep() {
                         startCountDown(steps[steps.indexOf(step) + 1])
                     }
                     if (step.time == null) {
+                        // TODO: Handle timeless steps (button to resume)
                         goToNextStep()
                         return
                     }
-                    val millisToCount = step.time.toLong() - currentProgress.toLong()
+                    val millisToCount = step.time.toLong() -
+                            (if (step.id == initialStep.id) currentProgress.toLong() else 0)
                     val countDownTimer = object : CountDownTimer(millisToCount, 1) {
                         override fun onTick(millisUntilFinished: Long) {
                             postTimerNotification(
                                 context,
-                                step.toNotificationBuilder(context, millisUntilFinished.toFloat()),
-                                id = 1,
-                                tag = "cofi_notification_timer",
+                                step.toNotificationBuilder(
+                                    context,
+                                    step.time - millisUntilFinished.toFloat(),
+                                    alert = isFirstTimeOnThisStep,
+                                ),
+                                id = COFI_TIMER_NOTIFICATION_ID + step.id,
+                                tag = COFI_TIMER_NOTIFICATION_TAG,
                             )
+                            isFirstTimeOnThisStep = false
                         }
 
                         override fun onFinish() {
+                            NotificationManagerCompat.from(context)
+                                .cancel(
+                                    COFI_TIMER_NOTIFICATION_TAG,
+                                    COFI_TIMER_NOTIFICATION_ID + step.id,
+                                )
                             if (steps.last().id == step.id) {
                                 postTimerNotification(
                                     context,
                                     NotificationCompat.Builder(context, "timer").apply {
                                         setSmallIcon(R.drawable.ic_monochrome)
+                                        setVisibility(VISIBILITY_PUBLIC)
+                                        setOnlyAlertOnce(false)
+                                        setAutoCancel(true)
+                                        setOngoing(false)
+                                        setTimeoutAfter(600.toMillis().toLong())
                                         color = ResourcesCompat.getColor(
                                             context.resources,
                                             R.color.ic_launcher_background,
                                             null,
                                         )
-                                        setColorized(true)
+                                        setColorized(false)
                                         setContentTitle(context.getString(R.string.timer_enjoy))
                                     },
-                                    id = 1,
-                                    tag = "cofi_notification_timer",
+                                    id = COFI_TIMER_NOTIFICATION_ID + step.id + 1,
+                                    tag = COFI_TIMER_NOTIFICATION_TAG,
                                 )
+                                return
                             }
                             goToNextStep()
                         }
                     }
                     countDownTimer.start()
                 }
-                startCountDown(currentStep)
+                startCountDown(initialStep)
             }
         }
         return Result.success()
