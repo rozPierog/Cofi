@@ -34,17 +34,41 @@ fun Context.createChannel() {
     }
 }
 
+fun createValueText(context: Context, step: Step, currentProgress: Float): String? {
+    val weightMultiplier = 1f
+    val alreadyDoneWeight = 0f
+
+    val currentStepValue = step.value ?: return null
+    val currentValueFromProgress = (currentStepValue * currentProgress)
+
+    val currentValueWithMultiplier =
+        (currentValueFromProgress * weightMultiplier) + alreadyDoneWeight
+
+    val currentTargetValue = (currentStepValue * weightMultiplier) + alreadyDoneWeight
+    val targetString = currentTargetValue.toStringShort()
+    val shouldShowDecimals = targetString.contains(".")
+    val currentValueString: Number = if (shouldShowDecimals) {
+        currentValueWithMultiplier.roundToDecimals()
+    } else {
+        currentValueWithMultiplier.roundToInt()
+    }
+    return context.getString(
+        R.string.timer_progress_weight,
+        currentValueString,
+        targetString,
+    )
+}
+
 fun Step.toNotificationBuilder(
     context: Context,
     currentProgress: Float,
-    alert: Boolean,
 ): NotificationCompat.Builder {
     val step = this
     val builder =
         NotificationCompat.Builder(context, "timer").run {
             setSmallIcon(step.type.iconRes)
             setVisibility(VISIBILITY_PUBLIC)
-            setOnlyAlertOnce(!alert)
+            setOnlyAlertOnce(true)
             setAutoCancel(true)
             setOngoing(true)
             color = ResourcesCompat.getColor(
@@ -54,10 +78,11 @@ fun Step.toNotificationBuilder(
             )
             setColorized(true)
             setContentTitle(step.name)
+            setContentText(createValueText(context, step, currentProgress))
             if (step.time != null) {
                 setProgress(
-                    step.time,
-                    currentProgress.roundToInt(),
+                    1000,
+                    (currentProgress * 1000).roundToInt(),
                     false,
                 )
             }
@@ -129,12 +154,11 @@ class TimerWorker(
                 val initialStep = steps.find { it.id == startingStepId } ?: return@observeForever
                 postTimerNotification(
                     context,
-                    initialStep.toNotificationBuilder(context, currentProgress, alert = true),
+                    initialStep.toNotificationBuilder(context, currentProgress),
                     id = COFI_TIMER_NOTIFICATION_ID + initialStep.id,
                     tag = COFI_TIMER_NOTIFICATION_TAG,
                 )
                 fun startCountDown(step: Step) {
-                    var isFirstTimeOnThisStep = true
                     fun goToNextStep() {
                         startCountDown(steps[steps.indexOf(step) + 1])
                     }
@@ -151,13 +175,11 @@ class TimerWorker(
                                 context,
                                 step.toNotificationBuilder(
                                     context,
-                                    step.time - millisUntilFinished.toFloat(),
-                                    alert = isFirstTimeOnThisStep,
+                                    1f - (millisUntilFinished.toFloat() / step.time),
                                 ),
                                 id = COFI_TIMER_NOTIFICATION_ID + step.id,
                                 tag = COFI_TIMER_NOTIFICATION_TAG,
                             )
-                            isFirstTimeOnThisStep = false
                         }
 
                         override fun onFinish() {
