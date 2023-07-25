@@ -8,12 +8,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.MotionDurationScale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.Haptics
+import com.omelan.cofi.share.utils.createChannel
 import com.omelan.cofi.share.utils.roundToDecimals
+import com.omelan.cofi.share.utils.startTimerWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -96,6 +101,39 @@ object Timer {
         val context = LocalContext.current
         val haptics = remember { Haptics(context) }
         val mediaPlayer = remember { MediaPlayer.create(context, R.raw.ding) }
+
+        val lifecycleOwner = LocalLifecycleOwner.current
+
+        DisposableEffect(lifecycleOwner) {
+            val observer = LifecycleEventObserver { _, event ->
+                when (event) {
+                    Lifecycle.Event.ON_CREATE -> {}
+                    Lifecycle.Event.ON_START -> {}
+                    Lifecycle.Event.ON_RESUME -> {}
+                    Lifecycle.Event.ON_PAUSE -> {}
+                    Lifecycle.Event.ON_STOP -> {
+                        context.createChannel()
+                        val safeStep = currentStep
+                        if (isTimerRunning && safeStep != null) {
+                            context.startTimerWorker(
+                                safeStep.recipeId,
+                                animatedProgressValue.value,
+                                safeStep.id,
+                            )
+                        }
+                    }
+
+                    Lifecycle.Event.ON_DESTROY -> {}
+                    else -> {}
+                }
+            }
+            lifecycleOwner.lifecycle.addObserver(observer)
+
+            // When the effect leaves the Composition, remove the observer
+            onDispose {
+                lifecycleOwner.lifecycle.removeObserver(observer)
+            }
+        }
 
         val indexOfCurrentStep = steps.indexOf(currentStep)
         val indexOfLastStep = steps.lastIndex
@@ -185,7 +223,7 @@ object Timer {
 
         return TimerControllers(
             currentStep,
-            {currentStep = it},
+            { currentStep = it },
             isDone,
             isTimerRunning,
             indexOfCurrentStep,
