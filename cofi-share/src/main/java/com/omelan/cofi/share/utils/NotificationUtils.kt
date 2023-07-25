@@ -19,6 +19,7 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.Step
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
@@ -137,6 +138,8 @@ fun Context.startTimerWorker(
 
 const val COFI_TIMER_NOTIFICATION_ID = 2137
 const val COFI_TIMER_NOTIFICATION_TAG = "cofi_notification_timer"
+const val COFI_TIMER_NOTIFICATION_PROGRESS_DATA = "cofi_timer_notification_progress_data"
+const val COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA = "cofi_timer_notification_current_step_data"
 
 class TimerWorker(
     private val context: Context,
@@ -147,14 +150,14 @@ class TimerWorker(
         val valueMap = workerParams.inputData.keyValueMap
         val recipeId = valueMap["recipeId"] as Int
         val startingStepId = valueMap["currentStepId"] as Int
-        val currentProgress = valueMap["currentProgress"] as Float
+        val initialProgress = valueMap["currentProgress"] as Float
         val db = AppDatabase.getInstance(context)
         withContext(Dispatchers.Main) {
             db.stepDao().getStepsForRecipe(recipeId).observeForever { steps ->
                 val initialStep = steps.find { it.id == startingStepId } ?: return@observeForever
                 postTimerNotification(
                     context,
-                    initialStep.toNotificationBuilder(context, currentProgress),
+                    initialStep.toNotificationBuilder(context, initialProgress),
                     id = COFI_TIMER_NOTIFICATION_ID + initialStep.id,
                     tag = COFI_TIMER_NOTIFICATION_TAG,
                 )
@@ -167,19 +170,28 @@ class TimerWorker(
                         goToNextStep()
                         return
                     }
-                    val millisToCount = step.time.toLong() -
-                            (if (step.id == initialStep.id) currentProgress.toLong() else 0)
+                    val millisToCount = step.time.toLong() *
+                            (if (step.id == initialStep.id) initialProgress.toLong() else 1)
                     val countDownTimer = object : CountDownTimer(millisToCount, 1) {
                         override fun onTick(millisUntilFinished: Long) {
+                            val currentProgress = 1f - (millisUntilFinished.toFloat() / step.time)
                             postTimerNotification(
                                 context,
                                 step.toNotificationBuilder(
                                     context,
-                                    1f - (millisUntilFinished.toFloat() / step.time),
+                                    currentProgress,
                                 ),
                                 id = COFI_TIMER_NOTIFICATION_ID + step.id,
                                 tag = COFI_TIMER_NOTIFICATION_TAG,
                             )
+                            launch {
+                                setProgress(
+                                    workDataOf(
+                                        COFI_TIMER_NOTIFICATION_PROGRESS_DATA to currentProgress,
+                                        COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA to step.id,
+                                    ),
+                                )
+                            }
                         }
 
                         override fun onFinish() {
