@@ -3,8 +3,12 @@ package com.omelan.cofi.wearos.presentation.pages.details
 import android.view.KeyEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
@@ -13,7 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.input.rotary.onRotaryScrollEvent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -63,7 +70,6 @@ fun TimerPage(
     ) = timerControllers
 
     var showDescriptionDialog by remember { mutableStateOf(false) }
-
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
     val coroutineScope = rememberCoroutineScope()
@@ -102,6 +108,11 @@ fun TimerPage(
         initialCenterItemScrollOffset = 0,
     )
     val focusRequester = remember { FocusRequester() }
+    val animatedBackgroundRadius by animateFloatAsState(targetValue = if (isDone) 200f else 1f,
+        label = "background animation",
+        animationSpec = tween(500, easing = FastOutSlowInEasing)
+    )
+
     LaunchedEffect(showDescriptionDialog) {
         if (showDescriptionDialog) {
             focusRequester.requestFocus()
@@ -160,6 +171,22 @@ fun TimerPage(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
+        Canvas(
+            modifier = Modifier,
+            onDraw = {
+                val radialGradient = Brush.radialGradient(
+                    center = Offset(0f, 0f),
+                    radius = animatedBackgroundRadius,
+                    colors = listOf(Color.DarkGray, Color.Transparent),
+                    tileMode = TileMode.Clamp,
+                )
+                drawCircle(
+                    center = Offset(0f, 0f),
+                    radius = animatedBackgroundRadius,
+                    brush = radialGradient,
+                )
+            },
+        )
         CircularProgressIndicator(
             modifier = Modifier
                 .fillMaxSize()
