@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- added a small animation to the end of the recipe on weaOS
 
 ### Changed
+- WearOS will now show recipes in the same order as Android
+- Improved rotary input on WearOS
 
 ### Removed
 
