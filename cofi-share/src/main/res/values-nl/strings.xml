@@ -144,4 +144,5 @@
     <string name="prepopulate_clever_dripper_step_draw_down">Plaats bovenop het kopje en laat het volledig naar beneden trekken</string>
     <string name="name_drip">Druppel</string>
     <string name="recipe_details_recipeRatio">Receptverhouding: 1:%1$s</string>
+    <string name="settings_translate_item">Helpen met vertalen</string>
 </resources>
