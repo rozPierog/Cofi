@@ -5,11 +5,16 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.rotary.onRotaryScrollEvent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -92,6 +97,16 @@ fun TimerPage(
             coroutineScope.launch { changeToNextStep(true) }
     }
 
+    val recipeDescriptionScrollState = rememberScalingLazyListState(
+        initialCenterItemIndex = 0,
+        initialCenterItemScrollOffset = 0,
+    )
+    val focusRequester = remember { FocusRequester() }
+    LaunchedEffect(showDescriptionDialog) {
+        if (showDescriptionDialog) {
+            focusRequester.requestFocus()
+        }
+    }
     ListenKeyEvents { keyCode, event ->
         if (event.repeatCount == 0) {
             when (keyCode) {
@@ -114,10 +129,16 @@ fun TimerPage(
         onDismissRequest = { showDescriptionDialog = false },
     ) {
         Alert(
-            scrollState = rememberScalingLazyListState(
-                initialCenterItemIndex = 0,
-                initialCenterItemScrollOffset = 0,
-            ),
+            modifier = Modifier
+                .onRotaryScrollEvent {
+                    coroutineScope.launch {
+                        recipeDescriptionScrollState.scrollBy(it.verticalScrollPixels)
+                    }
+                    true
+                }
+                .focusRequester(focusRequester)
+                .focusable(),
+            scrollState = recipeDescriptionScrollState,
             contentPadding = PaddingValues(18.dp),
             icon = {
                 Icon(
