@@ -175,6 +175,28 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
+                    text = {
+                        Text(
+                            text = stringResource(id = R.string.settings_translate_item),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    },
+                    icon = {
+                        Icon(
+                            painterResource(id = R.drawable.ic_translate),
+                            contentDescription = null,
+                        )
+                    },
+                    modifier = Modifier.settingsItemModifier(
+                        onClick = {
+                            uriHandler.openUri("https://hosted.weblate.org/engage/cofi/")
+                        },
+                    ),
+                )
+            }
+            item {
+                ListItem(
                     overlineText = {
                         Text(
                             text = stringResource(R.string.app_version),

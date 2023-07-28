@@ -42,6 +42,7 @@
     <string name="settings_combine_weight_none">Do not combine weight</string>
     <string name="settings_about_title">About</string>
     <string name="settings_licenses_item">Acknowledgments</string>
+    <string name="settings_translate_item">Help translate Cofi</string>
     <string name="settings_github_item">Github Repository</string>
     <plurals name="settings_snackbar_backup">
         <item quantity="one">Backed up %d recipe</item>
@@ -141,6 +142,7 @@
     <string name="support_dialog_kofi">Buy me a coffee</string>
     <string name="support_dialog_review">Write a review</string>
     <string name="support_title">Support Cofi</string>
+
     <string name="infoBox_update_title">Cofi has been updated</string>
     <string name="infoBox_update_body">Click here to read what\'s new</string>
     <string name="settings_step_next_step_item">Show next step</string>
