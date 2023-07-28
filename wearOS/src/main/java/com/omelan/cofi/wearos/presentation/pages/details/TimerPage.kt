@@ -177,6 +177,7 @@ fun TimerPage(
             },
             startAngle = 300f,
             endAngle = 240f,
+            strokeWidth = 5.dp,
         )
         Column(
             modifier = Modifier
