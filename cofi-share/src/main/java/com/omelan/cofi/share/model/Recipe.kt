@@ -83,6 +83,7 @@ private const val jsonName = "name"
 private const val jsonId = "id"
 private const val jsonDescription = "description"
 private const val jsonRecipeIcon = "recipeIcon"
+private const val jsonLastFinished = "lastFinished"
 const val jsonSteps = "steps"
 
 @Entity
@@ -93,14 +94,19 @@ data class Recipe(
     @ColumnInfo(name = "last_finished") val lastFinished: Long = 0L,
     @ColumnInfo(name = "icon") val recipeIcon: RecipeIcon = RecipeIcon.Grinder,
 ) : SharedData {
-    override fun serialize(): JSONObject = serialize(null)
-    fun serialize(steps: List<Step>?): JSONObject = JSONObject().run {
-        put(jsonId, id)
-        put(jsonName, name)
-        put(jsonDescription, description)
-        put(jsonRecipeIcon, recipeIcon.name)
-        put(jsonSteps, steps?.serialize())
-    }
+    override fun serialize(): JSONObject = serialize(null, true)
+    fun serialize(steps: List<Step>?, withLastFinished: Boolean = false): JSONObject =
+        JSONObject().run {
+            put(jsonId, id)
+            put(jsonName, name)
+            put(jsonDescription, description)
+            put(jsonRecipeIcon, recipeIcon.name)
+            put(jsonRecipeIcon, recipeIcon.name)
+            if (withLastFinished) {
+                put(jsonLastFinished, lastFinished)
+            }
+            put(jsonSteps, steps?.serialize())
+        }
 }
 
 
@@ -109,12 +115,14 @@ fun JSONObject.toRecipe(withId: Boolean = false) = if (withId) {
         id = getInt(jsonId),
         name = getString(jsonName),
         description = getString(jsonDescription),
+        lastFinished = optLong(jsonLastFinished, 0L),
         recipeIcon = RecipeIconTypeConverter().stringToRecipeIcon(getString(jsonRecipeIcon)),
     )
 } else {
     Recipe(
         name = getString(jsonName),
         description = getString(jsonDescription),
+        lastFinished = optLong(jsonLastFinished, 0L),
         recipeIcon = RecipeIconTypeConverter().stringToRecipeIcon(getString(jsonRecipeIcon)),
     )
 }
