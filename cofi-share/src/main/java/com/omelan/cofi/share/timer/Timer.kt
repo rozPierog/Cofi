@@ -2,12 +2,10 @@ package com.omelan.cofi.share.timer
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context.MODE_PRIVATE
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.SystemClock
-import android.widget.Toast
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -23,6 +21,7 @@ import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
+import com.omelan.cofi.share.model.findStepByElapsedTime
 import com.omelan.cofi.share.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -109,7 +108,7 @@ object Timer {
 
         val lifecycleOwner = LocalLifecycleOwner.current
 
-        DisposableEffect(lifecycleOwner) {
+        DisposableEffect(lifecycleOwner, steps) {
             val observer = LifecycleEventObserver { _, event ->
                 when (event) {
                     Lifecycle.Event.ON_CREATE -> {
@@ -130,20 +129,22 @@ object Timer {
 
                     Lifecycle.Event.ON_START -> {}
                     Lifecycle.Event.ON_RESUME -> {
-                        val recipeId = steps.first().recipeId
-                        val now = SystemClock.elapsedRealtime()
-                        val timerStartedOn =
-                            context.getSharedPreferences("TIMER_PREFS", MODE_PRIVATE).getLong(
-                                "RECIPE_${recipeId}_TIMER",
-                                now,
+                        try {
+                            val recipeId = steps.first().recipeId
+                            val now = SystemClock.elapsedRealtime()
+                            val (
+                                startTime,
+                                startingStepId,
+                                startingStepProgress,
+                            ) = TimerSharedPrefsHelper.getTimerDataFromSharedPrefs(
+                                context,
+                                recipeId
                             )
-
-                        Toast.makeText(
-                            context,
-                            "${now - timerStartedOn} ago",
-                            Toast.LENGTH_LONG,
-                        ).show()
-
+                            val elapsedTime = now - startTime
+                            currentStep = steps.findStepByElapsedTime(elapsedTime, startingStepId)
+                        } catch (e: Exception) {
+                            // Do nothing
+                        }
                     }
 
                     Lifecycle.Event.ON_PAUSE -> {}
@@ -151,14 +152,12 @@ object Timer {
                         context.createChannel()
                         val safeStep = currentStep
                         if (isTimerRunning && safeStep != null) {
-                            context.getSharedPreferences("TIMER_PREFS", MODE_PRIVATE).edit().run {
-                                val recipeId = steps.first().recipeId
-                                putLong(
-                                    "RECIPE_${recipeId}_TIMER",
-                                    SystemClock.elapsedRealtime(),
-                                )
-                                apply()
-                            }
+                            TimerSharedPrefsHelper.saveTimerToSharedPrefs(
+                                context,
+                                recipeId = steps.first().recipeId,
+                                currentProgress = animatedProgressValue.value,
+                                currentStep = safeStep,
+                            )
                             context.startTimerWorker(
                                 safeStep.recipeId,
                                 animatedProgressValue.value,
@@ -279,5 +278,4 @@ object Timer {
             changeToNextStep,
         )
     }
-
 }

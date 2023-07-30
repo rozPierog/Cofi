@@ -183,3 +183,14 @@ fun JSONArray.toSteps(withId: Boolean = false, recipeId: Long? = null): List<Ste
     }
     return steps
 }
+
+fun List<Step>.findStepByElapsedTime(elapsedTime: Long, startingStepId: Int = 0): Step? {
+    val startingIndex = indexOfFirst { it.id == startingStepId }
+    val remainingSteps = this.subList(startingIndex, this.size - 1)
+    var calculatedTime = 0
+    val newStep = remainingSteps.find {
+        calculatedTime += it.time ?: 0
+        calculatedTime >= elapsedTime
+    }
+    return newStep
+}
