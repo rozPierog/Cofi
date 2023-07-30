@@ -1,7 +1,6 @@
 package com.omelan.cofi.share.utils
 
 import android.Manifest
-import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -66,9 +65,10 @@ fun Step.toNotificationBuilder(
 ): NotificationCompat.Builder {
     val step = this
     val builder =
-        NotificationCompat.Builder(context, "timer").run {
+        NotificationCompat.Builder(context, TIMER_CHANNEL_ID).run {
             setSmallIcon(step.type.iconRes)
             setVisibility(VISIBILITY_PUBLIC)
+            setCategory(NotificationCompat.CATEGORY_ALARM)
             setOnlyAlertOnce(true)
             setAutoCancel(true)
             setOngoing(true)
@@ -108,13 +108,7 @@ fun postTimerNotification(
                 Manifest.permission.POST_NOTIFICATIONS,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                ActivityCompat.requestPermissions(
-                    context as Activity,
-                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                    1,
-                )
-            }
+            return
         }
         notify(tag, id, notificationBuilder.build())
     }
@@ -203,7 +197,7 @@ class TimerWorker(
                             if (steps.last().id == step.id) {
                                 postTimerNotification(
                                     context,
-                                    NotificationCompat.Builder(context, "timer").apply {
+                                    NotificationCompat.Builder(context, TIMER_CHANNEL_ID).apply {
                                         setSmallIcon(R.drawable.ic_monochrome)
                                         setVisibility(VISIBILITY_PUBLIC)
                                         setOnlyAlertOnce(false)

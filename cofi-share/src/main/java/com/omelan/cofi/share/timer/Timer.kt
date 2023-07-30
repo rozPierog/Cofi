@@ -1,6 +1,13 @@
 package com.omelan.cofi.share.timer
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context.MODE_PRIVATE
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
+import android.os.Build
+import android.os.SystemClock
+import android.widget.Toast
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -9,16 +16,14 @@ import androidx.compose.ui.MotionDurationScale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
-import com.omelan.cofi.share.utils.Haptics
-import com.omelan.cofi.share.utils.createChannel
-import com.omelan.cofi.share.utils.roundToDecimals
-import com.omelan.cofi.share.utils.startTimerWorker
+import com.omelan.cofi.share.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -107,14 +112,53 @@ object Timer {
         DisposableEffect(lifecycleOwner) {
             val observer = LifecycleEventObserver { _, event ->
                 when (event) {
-                    Lifecycle.Event.ON_CREATE -> {}
+                    Lifecycle.Event.ON_CREATE -> {
+                        if (ActivityCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.POST_NOTIFICATIONS,
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                ActivityCompat.requestPermissions(
+                                    context.getActivity() as Activity,
+                                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                                    1,
+                                )
+                            }
+                        }
+                    }
+
                     Lifecycle.Event.ON_START -> {}
-                    Lifecycle.Event.ON_RESUME -> {}
+                    Lifecycle.Event.ON_RESUME -> {
+                        val recipeId = steps.first().recipeId
+                        val now = SystemClock.elapsedRealtime()
+                        val timerStartedOn =
+                            context.getSharedPreferences("TIMER_PREFS", MODE_PRIVATE).getLong(
+                                "RECIPE_${recipeId}_TIMER",
+                                now,
+                            )
+
+                        Toast.makeText(
+                            context,
+                            "${now - timerStartedOn} ago",
+                            Toast.LENGTH_LONG,
+                        ).show()
+
+                    }
+
                     Lifecycle.Event.ON_PAUSE -> {}
                     Lifecycle.Event.ON_STOP -> {
                         context.createChannel()
                         val safeStep = currentStep
                         if (isTimerRunning && safeStep != null) {
+                            context.getSharedPreferences("TIMER_PREFS", MODE_PRIVATE).edit().run {
+                                val recipeId = steps.first().recipeId
+                                putLong(
+                                    "RECIPE_${recipeId}_TIMER",
+                                    SystemClock.elapsedRealtime(),
+                                )
+                                apply()
+                            }
                             context.startTimerWorker(
                                 safeStep.recipeId,
                                 animatedProgressValue.value,
