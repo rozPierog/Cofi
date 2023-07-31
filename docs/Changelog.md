@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - WearOS will now show recipes in the same order as Android
 - Improved rotary input on WearOS
+- Fixed Up Next not scaling with the recipe multipliers
 
 ### Removed
 

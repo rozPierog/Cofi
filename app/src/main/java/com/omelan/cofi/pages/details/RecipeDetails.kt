@@ -60,7 +60,7 @@ import com.omelan.cofi.appDeepLinkUrl
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
-import com.omelan.cofi.share.*
+import com.omelan.cofi.share.COMBINE_WEIGHT_DEFAULT_VALUE
 import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
@@ -344,6 +344,7 @@ fun RecipeDetails(
                         .animateItemPlacement()
                         .padding(bottom = Spacing.normal),
                     step = nextStep ?: Step(name = "", type = StepType.WAIT),
+                    weightMultiplier, timeMultiplier,
                 )
             }
         }
