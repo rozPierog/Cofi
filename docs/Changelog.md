@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - WearOS will now show recipes in the same order as Android
 - Improved rotary input on WearOS
+- Improved UI/UX of timer page on WearOS
+- Fixed ambient mode support on WearOS
 - Fixed Up Next not scaling with the recipe multipliers
 - Changed icon of "other" step type
 
