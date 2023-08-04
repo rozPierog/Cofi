@@ -28,7 +28,8 @@ import com.omelan.cofi.ui.shapes
 
 @Composable
 fun UpNext(
-    modifier: Modifier = Modifier, step: Step,
+    modifier: Modifier = Modifier,
+    step: Step,
     weightMultiplier: Float = 1f,
     timeMultiplier: Float = 1f,
 ) {

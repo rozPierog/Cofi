@@ -344,7 +344,8 @@ fun RecipeDetails(
                         .animateItemPlacement()
                         .padding(bottom = Spacing.normal),
                     step = nextStep ?: Step(name = "", type = StepType.WAIT),
-                    weightMultiplier, timeMultiplier,
+                    weightMultiplier,
+                    timeMultiplier,
                 )
             }
         }
