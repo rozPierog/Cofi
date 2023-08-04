@@ -105,6 +105,9 @@ platform :android do
       aab_paths: ["app/build/outputs/bundle/playStoreRelease/app-playStore-release.aab"]
 #       ,"wearOS/build/outputs/bundle/release/wearOS-release.aab"]
     )
+    UI.important "⚠️ Fastlane does not support uploading wearOS apps to google play console ⚠️"
+    UI.important "⚠️ Remember to upload wearOS app bundle to Play Console! ⚠️"
+    sh("open", "../wearOS/build/outputs/bundle/release")
   end
 
   desc "Upload metadata to Google Play Store"
