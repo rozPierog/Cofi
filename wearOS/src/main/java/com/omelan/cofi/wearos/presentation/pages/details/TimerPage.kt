@@ -1,13 +1,12 @@
+@file:OptIn(ExperimentalAnimationApi::class)
+
 package com.omelan.cofi.wearos.presentation.pages.details
 
 import android.view.KeyEvent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.scrollBy
@@ -74,11 +73,7 @@ fun TimerPage(
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
     val coroutineScope = rememberCoroutineScope()
     val ambientController = LocalAmbientModeProvider.current
-    val isAmbient = remember {
-        derivedStateOf {
-            ambientController?.isAmbient ?: false
-        }
-    }
+    val isAmbient = ambientController?.isAmbient ?: false
 
     val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
         indexOfCurrentStep = allSteps.indexOf(currentStep),
@@ -99,8 +94,7 @@ fun TimerPage(
                     }
                 }
             }
-        } else
-            coroutineScope.launch { changeToNextStep(true) }
+        } else coroutineScope.launch { changeToNextStep(true) }
     }
 
     val recipeDescriptionScrollState = rememberScalingLazyListState(
@@ -193,12 +187,12 @@ fun TimerPage(
                 .fillMaxSize()
                 .padding(4.dp),
             progress = if (isDone) 1f else animatedProgressValue.value,
-            indicatorColor = if (isAmbient.value) {
+            indicatorColor = if (isAmbient) {
                 Color.White
             } else {
                 animatedProgressColor.value
             },
-            trackColor = if (isAmbient.value) {
+            trackColor = if (isAmbient) {
                 MaterialTheme.colors.onBackground.copy(alpha = 0.1f)
             } else {
                 animatedProgressColor.value.copy(alpha = 0.2f)
@@ -214,102 +208,95 @@ fun TimerPage(
             Arrangement.SpaceBetween,
             Alignment.CenterHorizontally,
         ) {
-            AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
-                Column(
-                    modifier = Modifier.animateContentSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.timer_enjoy),
-                        color = MaterialTheme.colors.onSurface,
-                        maxLines = 2,
-                        style = MaterialTheme.typography.title1,
-                        textAlign = TextAlign.Center,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_coffee),
-                        contentDescription = "",
-                    )
-                }
-            }
-            AnimatedVisibility(
-                visible = currentStep == null && !isDone,
-                modifier = Modifier.weight(1f, true),
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(
-                            text = recipe.name,
-                            color = MaterialTheme.colors.onSurface,
-                            maxLines = if (recipe.description.isNotBlank()) 1 else 2,
-                            textAlign = TextAlign.Center,
-                            style = if (recipe.description.isNotBlank())
-                                MaterialTheme.typography.title2 else
-                                MaterialTheme.typography.title1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                        if (recipe.description.isNotBlank()) {
-                            OutlinedButton(
-                                onClick = { showDescriptionDialog = true },
-                                modifier = Modifier.height(ButtonDefaults.ExtraSmallButtonSize),
+            AnimatedContent(
+                targetState = Pair(currentStep, isDone), label = "Timer Content",
+                transitionSpec = { fadeIn() with fadeOut() },
+                modifier = Modifier.weight(1f, true)
+            ) { (currentStep, isDone) ->
+                when {
+                    isDone -> {
+                        Column(
+                            modifier = Modifier.animateContentSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.timer_enjoy),
+                                color = MaterialTheme.colors.onSurface,
+                                maxLines = 2,
+                                style = MaterialTheme.typography.title1,
+                                textAlign = TextAlign.Center,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_coffee),
+                                contentDescription = "",
+                            )
+                        }
+                    }
+                    currentStep != null -> {
+                        Column {
+                            TimeText(
+                                currentStep = currentStep,
+                                animatedProgressValue = animatedProgressValue.value * timeMultiplier,
+                                color = MaterialTheme.colors.onSurface,
+                                maxLines = 2,
+                                style = MaterialTheme.typography.title2,
+                                paddingHorizontal = 2.dp,
+                                showMillis = false,
+                            )
+                            StepNameText(
+                                currentStep = currentStep,
+                                timeMultiplier = timeMultiplier,
+                                color = MaterialTheme.colors.onSurface,
+                                style = MaterialTheme.typography.title3,
+                                maxLines = 1,
+                                paddingHorizontal = 2.dp,
+                            )
+                            TimerValue(
+                                currentStep = currentStep,
+                                animatedProgressValue = animatedProgressValue.value,
+                                weightMultiplier = weightMultiplier,
+                                alreadyDoneWeight = alreadyDoneWeight,
+                                color = MaterialTheme.colors.onSurface,
+                                maxLines = 1,
+                                style = MaterialTheme.typography.title1,
+                            )
+                        }
+                    }
+                    else -> {
+                        Box(contentAlignment = Alignment.Center) {
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Text(
-                                    text = stringResource(id = R.string.recipe_details_read_description),
-                                    modifier = Modifier.padding(horizontal = 8.dp),
+                                    text = recipe.name,
+                                    color = MaterialTheme.colors.onSurface,
+                                    maxLines = if (recipe.description.isNotBlank()) 1 else 2,
+                                    textAlign = TextAlign.Center,
+                                    style = if (recipe.description.isNotBlank())
+                                        MaterialTheme.typography.title2 else
+                                        MaterialTheme.typography.title1,
+                                    overflow = TextOverflow.Ellipsis,
                                 )
+                                if (recipe.description.isNotBlank()) {
+                                    OutlinedButton(
+                                        onClick = { showDescriptionDialog = true },
+                                        modifier = Modifier.height(ButtonDefaults.ExtraSmallButtonSize),
+                                    ) {
+                                        Text(
+                                            text = stringResource(id = R.string.recipe_details_read_description),
+                                            modifier = Modifier.padding(horizontal = 8.dp),
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
-//                    Text(
-//                        text = recipe.description,
-//                        color = MaterialTheme.colors.onSurface,
-//                        maxLines = 2,
-//                        textAlign = TextAlign.Center,
-//                        style = MaterialTheme.typography.title1,
-//                        overflow = TextOverflow.Ellipsis,
-//                    )
                 }
             }
-            AnimatedVisibility(
-                visible = currentStep != null && !isDone,
-            ) {
-                Column {
-                    if (currentStep != null) {
-                        TimeText(
-                            currentStep = currentStep,
-                            animatedProgressValue = animatedProgressValue.value * timeMultiplier,
-                            color = MaterialTheme.colors.onSurface,
-                            maxLines = 2,
-                            style = MaterialTheme.typography.title2,
-                            paddingHorizontal = 2.dp,
-                            showMillis = false,
-                        )
-                        StepNameText(
-                            currentStep = currentStep,
-                            timeMultiplier = timeMultiplier,
-                            color = MaterialTheme.colors.onSurface,
-                            style = MaterialTheme.typography.title3,
-                            maxLines = 1,
-                            paddingHorizontal = 2.dp,
-                        )
-                        TimerValue(
-                            currentStep = currentStep,
-                            animatedProgressValue = animatedProgressValue.value,
-                            weightMultiplier = weightMultiplier,
-                            alreadyDoneWeight = alreadyDoneWeight,
-                            color = MaterialTheme.colors.onSurface,
-                            maxLines = 1,
-                            style = MaterialTheme.typography.title1,
-                        )
-                    }
-                }
-            }
-            AnimatedVisibility(visible = !isAmbient.value) {
+            AnimatedVisibility(visible = !isAmbient, enter = fadeIn(), exit = fadeOut()) {
                 Spacer(Modifier.height(12.dp))
                 StartFAB(isTimerRunning, startButtonOnClick)
             }
