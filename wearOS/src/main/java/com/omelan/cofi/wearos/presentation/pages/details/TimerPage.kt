@@ -108,9 +108,10 @@ fun TimerPage(
         initialCenterItemScrollOffset = 0,
     )
     val focusRequester = remember { FocusRequester() }
-    val animatedBackgroundRadius by animateFloatAsState(targetValue = if (isDone) 200f else 1f,
+    val animatedBackgroundRadius by animateFloatAsState(
+        targetValue = if (isDone) 200f else 1f,
         label = "background animation",
-        animationSpec = tween(500, easing = FastOutSlowInEasing)
+        animationSpec = tween(500, easing = FastOutSlowInEasing),
     )
 
     LaunchedEffect(showDescriptionDialog) {
@@ -247,7 +248,9 @@ fun TimerPage(
                             color = MaterialTheme.colors.onSurface,
                             maxLines = if (recipe.description.isNotBlank()) 1 else 2,
                             textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.title1,
+                            style = if (recipe.description.isNotBlank())
+                                MaterialTheme.typography.title2 else
+                                MaterialTheme.typography.title1,
                             overflow = TextOverflow.Ellipsis,
                         )
                         if (recipe.description.isNotBlank()) {
