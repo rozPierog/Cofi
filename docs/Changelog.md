@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - added a small animation to the end of the recipe on weaOS
+- added two new icons - tea, and a teapot. Thanks to the patronage of @SeriousBug
 
 ### Changed
 - WearOS will now show recipes in the same order as Android
