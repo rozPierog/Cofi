@@ -25,6 +25,8 @@ enum class RecipeIcon(@DrawableRes val icon: Int, @StringRes val nameResId: Int)
     Siphon(R.drawable.recipe_icon_siphon, R.string.name_siphon),
     Bripe(R.drawable.recipe_icon_bripe, R.string.name_bripe),
     Cezve(R.drawable.recipe_icon_cezve, R.string.name_cezve),
+    Tea(R.drawable.recipe_icon_tea, R.string.name_tea),
+    Teapot(R.drawable.recipe_icon_teapot, R.string.name_teapot),
 }
 
 open class RecipeIconTypeConverter {

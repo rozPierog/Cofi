@@ -151,4 +151,6 @@
     <string name="recipe_details_change_step_toast">Press and hold to change step</string>
     <string name="recipe_details_read_description">Read description</string>
     <string name="recipe_details_recipeRatio">Recipe ratio: 1:%1$s</string>
+    <string name="name_tea">Tea</string>
+    <string name="name_teapot">Teapot</string>
 </resources>
