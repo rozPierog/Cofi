@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalTextApi::class)
+
 package com.omelan.cofi.components
 
 import androidx.compose.animation.animateContentSize
@@ -24,6 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.ui.CofiTheme
@@ -77,7 +81,10 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                 } else {
                     2
                 },
-                style = MaterialTheme.typography.bodyLarge.copy(color = LocalContentColor.current),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = LocalContentColor.current,
+                    textMotion = TextMotion.Animated,
+                ),
                 modifier = Modifier.animateContentSize(),
                 onClick = {
                     descriptionWithLinks
