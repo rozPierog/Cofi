@@ -148,4 +148,6 @@ Temperature: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)"</strin
 \nZłóż filtr wzdłuż obu szwów, aby lepiej pasował do zaparzacza
 \nMaksymalna ilość wody to 500 ml, ale zalecane jest 400 ml lub mniej</string>
     <string name="settings_translate_item">Pomóż w tłumaczeniu Cofi</string>
+    <string name="name_tea">Herbata</string>
+    <string name="name_teapot">Dzbanek do herbaty</string>
 </resources>
