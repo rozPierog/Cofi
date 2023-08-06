@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.19.2|1.10.2] - 2023-08-06
+
+### Added
 - added a small animation to the end of the recipe on weaOS
 - added two new icons - tea, and a teapot. Thanks to the patronage of @SeriousBug
 
