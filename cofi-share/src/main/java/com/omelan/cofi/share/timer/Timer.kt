@@ -86,24 +86,26 @@ object Timer {
             .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
         var currentStep by remember { mutableStateOf<Step?>(null) }
         var isDone by remember { mutableStateOf(false) }
-        var isTimerRunning by remember { mutableStateOf(false) }
-        val animatedProgressValue = remember { Animatable(0f) }
         val isDarkMode = isSystemInDarkTheme()
         val animatedProgressColor =
             remember { Animatable(if (isDarkMode) Color.LightGray else Color.DarkGray) }
+        val animatedProgressValue = remember { Animatable(0f) }
         val coroutineScope = rememberCoroutineScope()
 
         val context = LocalContext.current
         val haptics = remember { Haptics(context) }
         val mediaPlayer = remember { MediaPlayer.create(context, R.raw.ding) }
 
-        val indexOfCurrentStep = steps.indexOf(currentStep)
-        val indexOfLastStep = steps.lastIndex
+        val indexOfCurrentStep by remember(steps, currentStep) {
+            derivedStateOf { steps.indexOf(currentStep) }
+        }
+        val indexOfLastStep by remember(steps) {
+            derivedStateOf { steps.lastIndex }
+        }
 
         val pauseAnimations = suspend {
             animatedProgressColor.stop()
             animatedProgressValue.stop()
-            isTimerRunning = false
         }
 
         val changeToNextStep = suspendCompat { silent: Boolean ->
@@ -112,7 +114,6 @@ object Timer {
                 currentStep = steps[indexOfCurrentStep + 1]
             } else {
                 currentStep = null
-                isTimerRunning = false
                 isDone = true
                 onRecipeEnd()
             }
@@ -130,21 +131,26 @@ object Timer {
         val progressAnimation = suspendCompat<Unit, Unit> {
             val safeCurrentStep = currentStep ?: return@suspendCompat
             isDone = false
-            isTimerRunning = true
             val currentStepTime = safeCurrentStep.time?.times(timeMultiplier)
             if (currentStepTime == null) {
                 animatedProgressValue.snapTo(1f)
-                isTimerRunning = false
+                animatedProgressColor.snapTo(
+                    if (isDarkMode) {
+                        safeCurrentStep.type.colorNight
+                    } else {
+                        safeCurrentStep.type.color
+                    },
+                )
                 return@suspendCompat
             }
             val duration =
                 (currentStepTime - (currentStepTime * animatedProgressValue.value)).toInt()
-            coroutineScope.launch(Dispatchers.Default) {
-                withContext(
-                    object : MotionDurationScale {
-                        override val scaleFactor: Float = 1f
-                    },
-                ) {
+            withContext(
+                object : MotionDurationScale {
+                    override val scaleFactor: Float = 1f
+                },
+            ) {
+                launch(Dispatchers.Default) {
                     animatedProgressColor.animateTo(
                         targetValue = if (isDarkMode) {
                             safeCurrentStep.type.colorNight
@@ -154,12 +160,6 @@ object Timer {
                         animationSpec = tween(durationMillis = duration, easing = LinearEasing),
                     )
                 }
-            }
-            withContext(
-                object : MotionDurationScale {
-                    override val scaleFactor: Float = 1f
-                },
-            ) {
                 val result = animatedProgressValue.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(durationMillis = duration, easing = LinearEasing),
@@ -185,9 +185,9 @@ object Timer {
 
         return TimerControllers(
             currentStep,
-            {currentStep = it},
+            { currentStep = it },
             isDone,
-            isTimerRunning,
+            animatedProgressValue.isRunning,
             indexOfCurrentStep,
             animatedProgressValue,
             animatedProgressColor,

@@ -257,7 +257,7 @@ fun RecipeDetails(
         onTimerRunning(isTimerRunning)
     }
 
-    LaunchedEffect(key1 = recipe) {
+    LaunchedEffect(recipe) {
         lazyListState.animateScrollToItem(0)
     }
     DisposableEffect(true) {
