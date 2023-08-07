@@ -98,16 +98,22 @@ platform :android do
 
   desc "Deploy a new version to the Google Play Store"
   lane :deploy_gps do |options|
-    gradle(task: "app:licensePlayStoreRelease app:bundlePlayStoreRelease wearOS:licenseRelease wearOS:bundleRelease")
+    gradle(task: "app:licensePlayStoreRelease app:bundlePlayStoreRelease wearOS:licenseRelease wearOS:bundleRelease app:bundleInstantRelease")
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
       skip_upload_apk: true,
       aab_paths: ["app/build/outputs/bundle/playStoreRelease/app-playStore-release.aab"]
-#       ,"wearOS/build/outputs/bundle/release/wearOS-release.aab"]
     )
-    UI.important "⚠️ Fastlane does not support uploading wearOS apps to google play console ⚠️"
-    UI.important "⚠️ Remember to upload wearOS app bundle to Play Console! ⚠️"
-    sh("open", "../wearOS/build/outputs/bundle/release")
+   upload_to_play_store(
+      track: options[:prerelease] ? 'wear:internal' : 'wear:production',
+      skip_upload_apk: true,
+      aab_paths: ["wearOS/build/outputs/bundle/release/wearOS-release.aab"]
+    )
+    upload_to_play_store(
+      track: options[:prerelease] ? 'instant:internal' : 'instant:production',
+      skip_upload_apk: true,
+      aab_paths: ["app/build/outputs/bundle/instantRelease/app-instant-release.aab"]
+    )
   end
 
   desc "Upload metadata to Google Play Store"
@@ -140,14 +146,6 @@ platform :android do
     )
   end
 
-  desc "Builds an Instant App"
-  lane :build_instant do
-    gradle(task: "app:licenseInstantRelease app:bundleInstantRelease")
-    UI.important "⚠️ Fastlane does not support uploading instant apps to google play console ⚠️"
-    UI.important "⚠️ Remember to upload instant app bundle to Play Console! ⚠️"
-    sh("open", "../app/build/outputs/bundle/instantRelease")
-  end
-
   lane :create_screenshots do
       `cd .. && ./bin/createScreenshots.sh`
   end
@@ -173,8 +171,7 @@ platform :android do
     git_commit(path: ["./*.gradle"], message: "Prepare for release", allow_nothing_to_commit: true)
     gradle(task: "clean")
     deploy_gps(prerelease: prerelease)
-    build_instant
-    git_commit(path: ["./*.gradle"], message: "Update files after release", allow_nothing_to_commit: true)
+    git_commit(path: [".*"], message: "Update files after release", allow_nothing_to_commit: true)
     push_to_git_remote
     deploy_github(prerelease: prerelease)
     clean_changelog
