@@ -1,4 +1,4 @@
-name: Android CI
+name: Test & Build
 
 on:
   push:
@@ -21,8 +21,6 @@ jobs:
       run: chmod +x gradlew
     - name: Create empty keystore
       run: echo "storeFile=/" > keystore.properties
-    - name: KTLint
-      run: ./gradlew ktlintCheck
     - name: Unit Tests
       run: ./gradlew testFullDebugUnitTest
 #     - name: Android Instrumantation Tests
@@ -41,3 +39,6 @@ jobs:
       with:
         name: wearOS-debug.apk
         path: ./wearOS/build/outputs/apk/debug/wearOS-debug.apk
+    - name: KTLint
+      if: always()
+      run: ./gradlew ktlintCheck
