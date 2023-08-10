@@ -148,4 +148,7 @@
     <string name="prepopulate_v60_1cup_name">1 чашка V60</string>
     <string name="prepopulate_clever_dripper_step_break_crust">Розбити скоринку, перемішавши або злегка струснувши її</string>
     <string name="prepopulate_clever_dripper_step_draw_down">Покладіть зверху на чашку і дайте їй повністю опуститися</string>
+    <string name="settings_translate_item">Допомогти перекласти Cofi</string>
+    <string name="name_tea">Чай</string>
+    <string name="name_teapot">Чайник</string>
 </resources>
