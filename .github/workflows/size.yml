@@ -12,59 +12,60 @@ jobs:
             matrix:
                 build_type: [ benchmark ]
         steps:
-            -   uses: actions/checkout@v2
-            -   name: Create empty keystore
-                run: echo "storeFile=/" > keystore.properties
-            -   name: set up JDK 1.19
-                uses: actions/setup-java@v1
-                with:
-                    java-version: 1.19
-            -   name: Grant execute permission for gradlew
-                run: chmod +x gradlew
-            -   id: type
-                uses: ASzc/change-string-case-action@v2
-                with:
-                    string: ${{ matrix.build_type }}
-            -   name: Build PR app
-                run: ./gradlew assembleFull${{ steps.type.outputs.capitalized }}
-            -   name: Copy PR app
-                run: |
-                    ls
-                    cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk ../pr.apk
-                    ls
+            - uses: actions/checkout@v3
+            - name: set up JDK 1.19
+              uses: actions/setup-java@v2
+              with:
+                  java-version: '19'
+                  distribution: zulu
+            - name: Create empty keystore
+              run: echo "storeFile=/" > keystore.properties
+            - name: Grant execute permission for gradlew
+              run: chmod +x gradlew
+            - id: type
+              uses: ASzc/change-string-case-action@v2
+              with:
+                  string: ${{ matrix.build_type }}
+            - name: Build PR app
+              run: ./gradlew assembleFull${{ steps.type.outputs.capitalized }}
+            - name: Copy PR app
+              run: |
+                  ls
+                  cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk ../pr.apk
+                  ls
 
-            -   uses: actions/checkout@v2
-                with:
-                    ref: main
-            -   name: Build main app
-                run: ./gradlew assembleFull${{ steps.type.outputs.capitalized }}
-            -   name: Copy PR app
-                run: |
-                    ls
-                    cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk ../main.apk
-                    ls
-            -   name: diff between apks
-                id: diff
-                run: |
-                    curl -L https://github.com/JakeWharton/diffuse/releases/download/0.1.0/diffuse-0.1.0-binary.jar --output diffuse.jar
-                    chmod +x diffuse.jar
-                    COMMENT=$(./diffuse.jar diff ../main.apk ../pr.apk)
-                    COMMENT=${COMMENT%DEX*}
-                    COMMENT="${COMMENT//'%'/'%25'}"
-                    COMMENT="${COMMENT//$'\n'/'%0A'}"
-                    COMMENT="${COMMENT//$'\r'/'%0D'}"
-                    echo "COMMENT=$COMMENT" >> $GITHUB_ENV
-            -   uses: actions/github-script@v3
-                with:
-                    script: |
-                        var comment = `${{ env.COMMENT }}`
-                        comment = comment.replace(/%25/g, '%')
-                        comment = comment.replace(/%0A/g, '\n')
-                        comment = comment.replace(/%0D/g, '\r')
-                        comment = "```" + comment + "```"
-                        github.issues.createComment({
-                          issue_number: context.issue.number,
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          body: comment,
-                        })
+            - uses: actions/checkout@v2
+              with:
+                  ref: main
+            - name: Build main app
+              run: ./gradlew assembleFull${{ steps.type.outputs.capitalized }}
+            - name: Copy PR app
+              run: |
+                  ls
+                  cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk ../main.apk
+                  ls
+            - name: diff between apks
+              id: diff
+              run: |
+                  curl -L https://github.com/JakeWharton/diffuse/releases/download/0.1.0/diffuse-0.1.0-binary.jar --output diffuse.jar
+                  chmod +x diffuse.jar
+                  COMMENT=$(./diffuse.jar diff ../main.apk ../pr.apk)
+                  COMMENT=${COMMENT%DEX*}
+                  COMMENT="${COMMENT//'%'/'%25'}"
+                  COMMENT="${COMMENT//$'\n'/'%0A'}"
+                  COMMENT="${COMMENT//$'\r'/'%0D'}"
+                  echo "COMMENT=$COMMENT" >> $GITHUB_ENV
+            - uses: actions/github-script@v3
+              with:
+                  script: |
+                      var comment = `${{ env.COMMENT }}`
+                      comment = comment.replace(/%25/g, '%')
+                      comment = comment.replace(/%0A/g, '\n')
+                      comment = comment.replace(/%0D/g, '\r')
+                      comment = "```" + comment + "```"
+                      github.issues.createComment({
+                        issue_number: context.issue.number,
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        body: comment,
+                      })
