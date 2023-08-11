@@ -27,7 +27,12 @@ import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 
 @Composable
-fun UpNext(modifier: Modifier = Modifier, step: Step) {
+fun UpNext(
+    modifier: Modifier = Modifier,
+    step: Step,
+    weightMultiplier: Float = 1f,
+    timeMultiplier: Float = 1f,
+) {
     Surface(modifier = modifier.animateContentSize(), shape = shapes.card, tonalElevation = 2.dp) {
         Column(
             Modifier
@@ -47,7 +52,12 @@ fun UpNext(modifier: Modifier = Modifier, step: Step) {
                 },
                 label = "Next step",
             ) {
-                StepListItem(step = it, stepProgress = StepProgress.Upcoming)
+                StepListItem(
+                    step = it,
+                    stepProgress = StepProgress.Upcoming,
+                    weightMultiplier = weightMultiplier,
+                    timeMultiplier = timeMultiplier,
+                )
             }
         }
     }

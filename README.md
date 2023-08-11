@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/rozPierog/Cofi/actions">
-    <img src="https://github.com/rozPierog/Cofi/workflows/Android%20CI/badge.svg">
+    <img src="https://github.com/rozPierog/Cofi/actions/workflows/android.yml/badge.svg">
   </a>
   <img src="https://img.shields.io/badge/API-23%2B-blue?logo=android-studio">
   <a href="https://www.f-droid.org/en/packages/com.omelan.cofi/">

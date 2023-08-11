@@ -1,8 +1,10 @@
+@file:OptIn(ExperimentalTextApi::class)
+
 package com.omelan.cofi.components
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.ui.CofiTheme
@@ -38,18 +42,16 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     val uriHandler = LocalUriHandler.current
     var isExpanded by remember { mutableStateOf(false) }
     var showExpandButton by remember { mutableStateOf(false) }
-    val rotationDegree = remember { Animatable(initialValue = 0f) }
+    val rotationDegree by animateFloatAsState(
+        targetValue = if (isExpanded) 180f else 0f,
+        animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
+        label = "Icon rotation",
+    )
     val descriptionWithLinks = buildAnnotatedStringWithUrls(descriptionText)
-    LaunchedEffect(isExpanded) {
-        rotationDegree.animateTo(
-            targetValue = if (isExpanded) 180f else 0f,
-            animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
-        )
-    }
+
     Surface(modifier = modifier, shape = shapes.card, tonalElevation = 2.dp) {
         Column(
             modifier = Modifier
-                .animateContentSize()
                 .toggleable(
                     value = isExpanded,
                     enabled = showExpandButton,
@@ -57,7 +59,8 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     role = Role.Switch,
                     interactionSource = remember { MutableInteractionSource() },
                     indication = rememberRipple(bounded = true),
-                ).run {
+                )
+                .run {
                     if (showExpandButton || isExpanded) {
                         padding(
                             top = Spacing.big,
@@ -68,7 +71,8 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     } else {
                         padding(Spacing.big)
                     }
-                },
+                }
+                .animateContentSize(),
         ) {
             ClickableText(
                 text = descriptionWithLinks,
@@ -77,7 +81,10 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                 } else {
                     2
                 },
-                style = MaterialTheme.typography.bodyLarge.copy(color = LocalContentColor.current),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = LocalContentColor.current,
+                    textMotion = TextMotion.Animated,
+                ),
                 modifier = Modifier.animateContentSize(),
                 onClick = {
                     descriptionWithLinks
@@ -103,7 +110,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     modifier = Modifier
                         .padding(top = Spacing.small)
                         .align(Alignment.CenterHorizontally)
-                        .rotate(rotationDegree.value),
+                        .rotate(rotationDegree),
                 )
             }
         }

@@ -33,7 +33,7 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ambientController = AmbientModeSupport.attach(this)
-        ambientController.setAmbientOffloadEnabled(false)
+        ambientController.setAmbientOffloadEnabled(true)
         setContent {
             val edgeSwipeToDismissBoxState = rememberSwipeToDismissBoxState()
             val swipeDismissableNavHostState =

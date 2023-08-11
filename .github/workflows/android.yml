@@ -1,4 +1,4 @@
-name: Android CI
+name: Test & Build
 
 on:
   push:
@@ -12,21 +12,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: set up JDK 1.19
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v2
       with:
-        java-version: 1.19
+        java-version: '19'
+        distribution: zulu
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Create empty keystore
       run: echo "storeFile=/" > keystore.properties
-    - name: KTLint
-      run: ./gradlew ktlintCheck
     - name: Unit Tests
       run: ./gradlew testFullDebugUnitTest
-#     - name: Android Instrumantation Tests
-#       run: ./gradlew connectedFullDebugAndroidTest
     - name: Build with Gradle
       run: ./gradlew app:licenseFullDebug app:assembleFullDebug app:licensePlayStoreDebug app:assemblePlayStoreDebug wearOS:licenseDebug wearOS:assembleDebug
     - uses: actions/upload-artifact@v3
@@ -41,3 +38,6 @@ jobs:
       with:
         name: wearOS-debug.apk
         path: ./wearOS/build/outputs/apk/debug/wearOS-debug.apk
+    - name: KTLint
+      if: always()
+      run: ./gradlew ktlintCheck

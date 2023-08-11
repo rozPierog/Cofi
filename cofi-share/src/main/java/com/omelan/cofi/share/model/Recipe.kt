@@ -25,6 +25,8 @@ enum class RecipeIcon(@DrawableRes val icon: Int, @StringRes val nameResId: Int)
     Siphon(R.drawable.recipe_icon_siphon, R.string.name_siphon),
     Bripe(R.drawable.recipe_icon_bripe, R.string.name_bripe),
     Cezve(R.drawable.recipe_icon_cezve, R.string.name_cezve),
+    Tea(R.drawable.recipe_icon_tea, R.string.name_tea),
+    Teapot(R.drawable.recipe_icon_teapot, R.string.name_teapot),
 }
 
 open class RecipeIconTypeConverter {
@@ -83,6 +85,7 @@ private const val jsonName = "name"
 private const val jsonId = "id"
 private const val jsonDescription = "description"
 private const val jsonRecipeIcon = "recipeIcon"
+private const val jsonLastFinished = "lastFinished"
 const val jsonSteps = "steps"
 
 @Entity
@@ -93,14 +96,19 @@ data class Recipe(
     @ColumnInfo(name = "last_finished") val lastFinished: Long = 0L,
     @ColumnInfo(name = "icon") val recipeIcon: RecipeIcon = RecipeIcon.Grinder,
 ) : SharedData {
-    override fun serialize(): JSONObject = serialize(null)
-    fun serialize(steps: List<Step>?): JSONObject = JSONObject().run {
-        put(jsonId, id)
-        put(jsonName, name)
-        put(jsonDescription, description)
-        put(jsonRecipeIcon, recipeIcon.name)
-        put(jsonSteps, steps?.serialize())
-    }
+    override fun serialize(): JSONObject = serialize(null, true)
+    fun serialize(steps: List<Step>?, withLastFinished: Boolean = false): JSONObject =
+        JSONObject().run {
+            put(jsonId, id)
+            put(jsonName, name)
+            put(jsonDescription, description)
+            put(jsonRecipeIcon, recipeIcon.name)
+            put(jsonRecipeIcon, recipeIcon.name)
+            if (withLastFinished) {
+                put(jsonLastFinished, lastFinished)
+            }
+            put(jsonSteps, steps?.serialize())
+        }
 }
 
 
@@ -109,12 +117,14 @@ fun JSONObject.toRecipe(withId: Boolean = false) = if (withId) {
         id = getInt(jsonId),
         name = getString(jsonName),
         description = getString(jsonDescription),
+        lastFinished = optLong(jsonLastFinished, 0L),
         recipeIcon = RecipeIconTypeConverter().stringToRecipeIcon(getString(jsonRecipeIcon)),
     )
 } else {
     Recipe(
         name = getString(jsonName),
         description = getString(jsonDescription),
+        lastFinished = optLong(jsonLastFinished, 0L),
         recipeIcon = RecipeIconTypeConverter().stringToRecipeIcon(getString(jsonRecipeIcon)),
     )
 }

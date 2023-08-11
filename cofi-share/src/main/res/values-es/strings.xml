@@ -146,4 +146,7 @@
     <string name="prepopulate_clever_dripper_step_draw_down">Colócalo en la parte superior de la taza y deja que baje completamente</string>
     <string name="name_drip">Gotas</string>
     <string name="recipe_details_recipeRatio">Proporción de la receta: 1:%1$s</string>
+    <string name="settings_translate_item">Ayuda a traducir Cofi</string>
+    <string name="name_tea">Té</string>
+    <string name="name_teapot">Tetera</string>
 </resources>

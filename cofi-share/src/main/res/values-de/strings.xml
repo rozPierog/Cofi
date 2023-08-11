@@ -125,4 +125,14 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     </plurals>
     <string name="recipe_details_change_step_toast">Gedrückt halten, um den Schritt zu ändern</string>
     <string name="recipe_details_read_description">Beschreibung lesen</string>
+    <string name="settings_translate_item">Hilf mit Cofi zu übersetzen</string>
+    <string name="prepopulate_v60_1cup_name">1 Becher V60</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Zerstöre die Kruste indem du entweder umrührst oder ein wenig schüttelst.</string>
+    <string name="name_teapot">Teekanne</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Wasche den Filter mit heißem Wasser aus.</string>
+    <string name="prepopulate_v60_1cup_description">Rezept erstellt von: James Hoffmann
+\nQuelle: https://youtu.be/1oB1oDrDkHM
+\nBevor du beginnst, erhitze den V60 indem du das Papier in den Kegel platziert und mit heißem Wasser übergießt. Dies heizt den V60 vor und bereitet das Papier auf den Brau-Prozess vor.
+\nMahlgrad: fein - mittelfein
+\nTemperatur: je heißer, desto besser (insbesondere bei hellen Röstungen)</string>
 </resources>
