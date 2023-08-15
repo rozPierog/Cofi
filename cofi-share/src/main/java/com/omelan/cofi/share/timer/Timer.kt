@@ -170,6 +170,9 @@ object Timer {
             derivedStateOf { steps.lastIndex }
         }
         val pauseAnimations = suspend {
+            val timerData =
+                TimerSharedPrefsHelper.getTimerDataFromSharedPrefs(context, steps.first().recipeId)
+            TimerSharedPrefsHelper.saveTimerToSharedPrefs(context, timerData.pause())
             animatedProgressColor.stop()
             animatedProgressValue.stop()
         }
@@ -249,6 +252,9 @@ object Timer {
 
         val resumeAnimations: suspend () -> Unit = suspend {
             coroutineScope.launch {
+                val timerData =
+                    TimerSharedPrefsHelper.getTimerDataFromSharedPrefs(context, steps.first().recipeId)
+                TimerSharedPrefsHelper.saveTimerToSharedPrefs(context, timerData.start())
                 progressAnimation(Unit)
             }
         }

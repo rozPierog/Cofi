@@ -18,6 +18,7 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.timer.TimerSharedPrefsHelper
+import com.omelan.cofi.share.timer.TimerSharedPrefsHelper.toTimerData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
@@ -124,6 +125,7 @@ fun Context.startTimerWorker(timerData: TimerSharedPrefsHelper.TimerData) {
         putFloat("currentProgress", 0f)
         putInt("currentStepId", timerData.currentStepId)
     }.build()
+    TimerSharedPrefsHelper.saveTimerToSharedPrefs(this, timerData.start())
     val timerWorker =
         OneTimeWorkRequest.Builder(TimerWorker::class.java).setInputData(inputData).build()
     val workManager = WorkManager.getInstance(this)
@@ -146,6 +148,7 @@ class TimerWorker(
         val startingStepId = valueMap["currentStepId"] as Int
         val initialProgress = valueMap["currentProgress"] as Float
         val db = AppDatabase.getInstance(context)
+
         withContext(Dispatchers.Main) {
             db.stepDao().getStepsForRecipe(recipeId).observeForever { steps ->
                 val initialStep = steps.find { it.id == startingStepId } ?: return@observeForever
@@ -209,6 +212,11 @@ class TimerWorker(
                                 return
                             }
                             goToNextStep()
+                        }
+                    }
+                    TimerSharedPrefsHelper.observeTimerPreference(context) { preferences, string ->
+                        if (preferences.all.toTimerData().isPaused) {
+                            countDownTimer.cancel()
                         }
                     }
                     countDownTimer.start()

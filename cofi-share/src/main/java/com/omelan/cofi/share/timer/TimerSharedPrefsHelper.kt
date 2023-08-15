@@ -2,9 +2,9 @@ package com.omelan.cofi.share.timer
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.SystemClock
 import com.omelan.cofi.share.model.Step
-import com.omelan.cofi.share.utils.startTimerWorker
 
 object TimerSharedPrefsHelper {
     private const val SHARED_PREFERENCES_NAME = "TIMER_PREFS"
@@ -30,19 +30,19 @@ object TimerSharedPrefsHelper {
             return this.copy(isPaused = true, alreadyDoneTime = alreadyDoneTime + (now - startTime))
         }
 
-        fun start(context: Context): TimerData {
+        fun start(): TimerData {
             val now = SystemClock.elapsedRealtime()
             val updatedTimerData = this.copy(isPaused = false, startTime = now)
-            context.startTimerWorker(updatedTimerData)
+//            context.startTimerWorker(updatedTimerData)
             return updatedTimerData
         }
 
-        fun changeToStep(context: Context, step: Step): TimerData {
+        fun changeToStep(step: Step): TimerData {
             val nextStepId = (step.orderInRecipe ?: 0) + 1
             return if (step.isUserInputRequired) {
                 this.copy(currentStepId = nextStepId).pause()
             } else {
-                this.copy(currentStepId = nextStepId).start(context)
+                this.copy(currentStepId = nextStepId).start()
             }
         }
 
@@ -57,7 +57,7 @@ object TimerSharedPrefsHelper {
         )
     }
 
-    private fun Map<String, *>.toTimerData(): TimerData {
+    fun Map<String, *>.toTimerData(): TimerData {
         val recipeId: Int = this[TIMER_RECIPE_ID] as Int
         var currentStepId: Int? = null
         var weightMultiplier: Float? = null
@@ -115,5 +115,13 @@ object TimerSharedPrefsHelper {
     fun getTimerDataFromSharedPrefs(context: Context, recipeId: Int): TimerData {
         val sharedPrefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         return sharedPrefs.all.toTimerData()
+    }
+
+    fun observeTimerPreference(
+        context: Context,
+        onSharedPreferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener,
+    ) {
+        context.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
+            .registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener)
     }
 }
