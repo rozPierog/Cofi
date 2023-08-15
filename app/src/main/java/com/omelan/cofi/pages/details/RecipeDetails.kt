@@ -225,7 +225,7 @@ fun RecipeDetails(
         animatedProgressColor,
         pauseAnimations,
         progressAnimation,
-        startAnimations,
+        resumeAnimations,
         changeToNextStep,
     ) = Timer.createTimerControllers(
         steps = steps,
@@ -449,7 +449,7 @@ fun RecipeDetails(
                                     if (currentStep.time == null) {
                                         changeToNextStep(false)
                                     } else {
-                                        startAnimations()
+                                        resumeAnimations()
                                     }
                                 }
                             }

@@ -136,6 +136,9 @@ data class Step(
         it.put(jsonType, type.name)
         it
     }
+
+    val isUserInputRequired
+        get() = time == null
 }
 
 fun List<Step>.serialize() = JSONArray().let {

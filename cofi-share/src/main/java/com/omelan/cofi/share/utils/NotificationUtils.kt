@@ -17,8 +17,8 @@ import androidx.work.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.Step
+import com.omelan.cofi.share.timer.TimerSharedPrefsHelper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
@@ -87,6 +87,9 @@ fun Step.toNotificationBuilder(
                     false,
                 )
             }
+            if (step.isUserInputRequired) {
+                addAction(NotificationCompat.Action(null, "Continue", null))
+            }
             val bundle = Bundle()
             bundle.putFloat("animatedValue", currentProgress)
             bundle.putInt("currentStepId", step.id)
@@ -114,15 +117,12 @@ fun postTimerNotification(
     }
 }
 
-fun Context.startTimerWorker(
-    recipeId: Int,
-    currentProgress: Float,
-    currentStepId: Int,
-) {
+fun Context.startTimerWorker(timerData: TimerSharedPrefsHelper.TimerData) {
+    createChannel()
     val inputData = Data.Builder().apply {
-        putInt("recipeId", recipeId)
-        putFloat("currentProgress", currentProgress)
-        putInt("currentStepId", currentStepId)
+        putInt("recipeId", timerData.recipeId)
+        putFloat("currentProgress", 0f)
+        putInt("currentStepId", timerData.currentStepId)
     }.build()
     val timerWorker =
         OneTimeWorkRequest.Builder(TimerWorker::class.java).setInputData(inputData).build()
@@ -165,7 +165,7 @@ class TimerWorker(
                         return
                     }
                     val millisToCount = step.time.toLong() *
-                            (if (step.id == initialStep.id) initialProgress.toLong() else 1)
+                            (if (step.id == initialStep.id) (1 - initialProgress.toLong()) else 1)
                     val countDownTimer = object : CountDownTimer(millisToCount, 1) {
                         override fun onTick(millisUntilFinished: Long) {
                             val currentProgress = 1f - (millisUntilFinished.toFloat() / step.time)
@@ -178,14 +178,6 @@ class TimerWorker(
                                 id = COFI_TIMER_NOTIFICATION_ID + step.id,
                                 tag = COFI_TIMER_NOTIFICATION_TAG,
                             )
-                            launch {
-                                setProgress(
-                                    workDataOf(
-                                        COFI_TIMER_NOTIFICATION_PROGRESS_DATA to currentProgress,
-                                        COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA to step.id,
-                                    ),
-                                )
-                            }
                         }
 
                         override fun onFinish() {

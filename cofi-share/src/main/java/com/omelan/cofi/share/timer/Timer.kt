@@ -22,7 +22,10 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.model.findStepByElapsedTime
-import com.omelan.cofi.share.utils.*
+import com.omelan.cofi.share.utils.Haptics
+import com.omelan.cofi.share.utils.getActivity
+import com.omelan.cofi.share.utils.roundToDecimals
+import com.omelan.cofi.share.utils.startTimerWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -137,7 +140,7 @@ object Timer {
                                 startingStepProgress,
                             ) = TimerSharedPrefsHelper.getTimerDataFromSharedPrefs(
                                 context,
-                                recipeId
+                                recipeId,
                             )
                             val elapsedTime = now - startTime
                             currentStep = steps.findStepByElapsedTime(elapsedTime, startingStepId)
@@ -147,24 +150,7 @@ object Timer {
                     }
 
                     Lifecycle.Event.ON_PAUSE -> {}
-                    Lifecycle.Event.ON_STOP -> {
-                        context.createChannel()
-                        val safeStep = currentStep
-                        if (animatedProgressValue.isRunning && safeStep != null) {
-                            TimerSharedPrefsHelper.saveTimerToSharedPrefs(
-                                context,
-                                recipeId = steps.first().recipeId,
-                                currentProgress = animatedProgressValue.value,
-                                currentStep = safeStep,
-                            )
-                            context.startTimerWorker(
-                                safeStep.recipeId,
-                                animatedProgressValue.value,
-                                safeStep.id,
-                            )
-                        }
-                    }
-
+                    Lifecycle.Event.ON_STOP -> {}
                     Lifecycle.Event.ON_DESTROY -> {}
                     else -> {}
                 }
@@ -192,6 +178,16 @@ object Timer {
             animatedProgressValue.snapTo(0f)
             if (indexOfCurrentStep != indexOfLastStep) {
                 currentStep = steps[indexOfCurrentStep + 1]
+                if (indexOfCurrentStep == 0) {
+                    context.startTimerWorker(
+                        TimerSharedPrefsHelper.TimerData(
+                            recipeId = currentStep!!.recipeId,
+                            currentStepId = currentStep!!.id,
+                            weightMultiplier = 1f,
+                            timeMultiplier = 1f,
+                        ),
+                    )
+                }
             } else {
                 currentStep = null
                 isDone = true
@@ -251,7 +247,7 @@ object Timer {
             }
         }
 
-        val startAnimations: suspend () -> Unit = suspend {
+        val resumeAnimations: suspend () -> Unit = suspend {
             coroutineScope.launch {
                 progressAnimation(Unit)
             }
@@ -273,7 +269,7 @@ object Timer {
             animatedProgressColor,
             pauseAnimations,
             progressAnimation,
-            startAnimations,
+            resumeAnimations,
             changeToNextStep,
         )
     }
