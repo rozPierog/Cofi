@@ -159,9 +159,8 @@ class TimerWorker(
                     fun goToNextStep() {
                         startCountDown(steps[steps.indexOf(step) + 1])
                     }
-                    if (step.time == null) {
+                    if (step.time == null /* step.isUserInputRequired */) {
                         // TODO: Handle timeless steps (button to resume)
-                        goToNextStep()
                         return
                     }
                     val millisToCount = step.time.toLong() *
