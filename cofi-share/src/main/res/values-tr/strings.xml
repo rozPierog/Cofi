@@ -124,4 +124,14 @@ Sıcaklık: daha sıcak daha iyi</string>
     <string name="settings_wearOS_item">WearOS için indirin</string>
     <string name="support_dialog_github">Cofi\'ye Github\'da yıldız verin</string>
     <string name="recipe_details_change_step_toast">Adımı değiştirmek için basılı tutun</string>
+    <string name="settings_translate_item">Cofi\'yi çevirmeye yardım et</string>
+    <string name="prepopulate_v60_1cup_name">1 Fincan V60</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Filtreyi sıcak suyla durulayın</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Karıştırarak veya biraz sallayarak kabuğu kırın</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Bardağın üstüne yerleştirin ve tamamen aşağı çekmesine izin verin</string>
+    <string name="prepopulate_v60_1cup_description">Tarifi hazırlayan: James Hoffmann
+\nKaynak: https://youtu.be/1oB1oDrDkHM
+\nBaşlamadan önce, kağıdı koninin içine yerleştirin ve kağıdın üzerine sıcak su dökerek V60\'ı ısıtın. Bu, V60\'ı önceden ısıtır ve kağıdı demleme işlemi için hazırlar.
+\nÖğütme boyutu: ince - orta ince
+\nSıcaklık: ne kadar sıcaksa o kadar iyidir (özellikle daha hafif kızartmalarda)</string>
 </resources>
