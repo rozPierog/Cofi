@@ -5,6 +5,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.SystemClock
 import com.omelan.cofi.share.model.Step
+import com.omelan.cofi.share.utils.startTimerWorker
 
 object TimerSharedPrefsHelper {
     private const val SHARED_PREFERENCES_NAME = "TIMER_PREFS"
@@ -25,25 +26,32 @@ object TimerSharedPrefsHelper {
         val startTime: Long = SystemClock.elapsedRealtime(),
         val isPaused: Boolean = true,
     ) {
-        fun pause(): TimerData {
+        suspend fun pause(context: Context): TimerData {
             val now = SystemClock.elapsedRealtime()
-            return this.copy(isPaused = true, alreadyDoneTime = alreadyDoneTime + (now - startTime))
-        }
-
-        fun start(): TimerData {
-            val now = SystemClock.elapsedRealtime()
-            val updatedTimerData = this.copy(isPaused = false, startTime = now)
-//            context.startTimerWorker(updatedTimerData)
+            val updatedTimerData =
+                this.copy(isPaused = true, alreadyDoneTime = alreadyDoneTime + (now - startTime))
+            saveTimerToSharedPrefs(context, updatedTimerData)
+            context.startTimerWorker(updatedTimerData)
             return updatedTimerData
         }
 
-        fun changeToStep(step: Step): TimerData {
-            val nextStepId = (step.orderInRecipe ?: 0) + 1
-            return if (step.isUserInputRequired) {
-                this.copy(currentStepId = nextStepId).pause()
+        suspend fun start(context: Context): TimerData {
+            val now = SystemClock.elapsedRealtime()
+            val updatedTimerData = this.copy(isPaused = false, startTime = now)
+            saveTimerToSharedPrefs(context, updatedTimerData)
+            context.startTimerWorker(updatedTimerData)
+            return updatedTimerData
+        }
+
+        suspend fun changeToStep(context: Context, step: Step): TimerData {
+            val nextStepId = step.id
+            val updatedTimerData = if (step.isUserInputRequired) {
+                this.copy(currentStepId = nextStepId).pause(context)
             } else {
-                this.copy(currentStepId = nextStepId).start()
+                this.copy(currentStepId = nextStepId).start(context)
             }
+            context.startTimerWorker(updatedTimerData)
+            return updatedTimerData
         }
 
         fun propsToMap(): Map<String, Any> = mutableMapOf(
@@ -58,7 +66,8 @@ object TimerSharedPrefsHelper {
     }
 
     fun Map<String, *>.toTimerData(): TimerData {
-        val recipeId: Int = this[TIMER_RECIPE_ID] as Int
+        val recipeId: Int = this.getOrDefault(TIMER_RECIPE_ID, null) as Int?
+            ?: throw Exception("No recipe id saved in prefs")
         var currentStepId: Int? = null
         var weightMultiplier: Float? = null
         var timeMultiplier: Float? = null
@@ -114,7 +123,8 @@ object TimerSharedPrefsHelper {
 
     fun getTimerDataFromSharedPrefs(context: Context, recipeId: Int): TimerData {
         val sharedPrefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
-        return sharedPrefs.all.toTimerData()
+        return sharedPrefs.all.filterKeys { key -> key.contains(recipeId.toString()) }
+            .toTimerData()
     }
 
     fun observeTimerPreference(

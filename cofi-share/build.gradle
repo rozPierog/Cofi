@@ -76,6 +76,7 @@ dependencies {
 
     api "androidx.room:room-runtime:$room_version"
     api 'androidx.test.ext:junit-ktx:1.1.5'
+    api "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
     ksp "androidx.room:room-compiler:$room_version"
     api "androidx.room:room-ktx:$room_version"

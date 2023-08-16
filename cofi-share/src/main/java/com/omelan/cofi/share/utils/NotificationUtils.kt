@@ -7,21 +7,26 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.CountDownTimer
+import android.os.SystemClock
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.asFlow
 import androidx.work.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.timer.TimerSharedPrefsHelper
+import com.omelan.cofi.share.timer.TimerSharedPrefsHelper.getTimerDataFromSharedPrefs
 import com.omelan.cofi.share.timer.TimerSharedPrefsHelper.toTimerData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlin.math.roundToInt
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val TIMER_CHANNEL_ID = "cofi_timer_notification"
 fun Context.createChannel() {
@@ -89,7 +94,7 @@ fun Step.toNotificationBuilder(
                 )
             }
             if (step.isUserInputRequired) {
-                addAction(NotificationCompat.Action(null, "Continue", null))
+                addAction(NotificationCompat.Action(R.drawable.ic_monochrome, "Continue", null))
             }
             val bundle = Bundle()
             bundle.putFloat("animatedValue", currentProgress)
@@ -118,17 +123,18 @@ fun postTimerNotification(
     }
 }
 
-fun Context.startTimerWorker(timerData: TimerSharedPrefsHelper.TimerData) {
+suspend fun Context.startTimerWorker(timerData: TimerSharedPrefsHelper.TimerData) {
     createChannel()
     val inputData = Data.Builder().apply {
         putInt("recipeId", timerData.recipeId)
         putFloat("currentProgress", 0f)
         putInt("currentStepId", timerData.currentStepId)
     }.build()
-    TimerSharedPrefsHelper.saveTimerToSharedPrefs(this, timerData.start())
     val timerWorker =
-        OneTimeWorkRequest.Builder(TimerWorker::class.java).setInputData(inputData).build()
+        OneTimeWorkRequest.Builder(TimerWorker::class.java).setInputData(inputData)
+            .addTag(timerData.recipeId.toString()).build()
     val workManager = WorkManager.getInstance(this)
+    workManager.cancelAllWorkByTag(timerData.recipeId.toString())
     workManager.enqueue(timerWorker)
 }
 
@@ -142,88 +148,104 @@ class TimerWorker(
     private val workerParams: WorkerParameters,
 ) : CoroutineWorker(context, workerParams) {
 
-    override suspend fun doWork(): Result {
+    private fun tickerFlow(duration: Long, period: Duration = 50.milliseconds) = flow {
+        for (i in duration / 50 downTo 0L) {
+            emit(i * 50)
+            delay(period)
+        }
+    }
+
+    override suspend fun doWork() = coroutineScope {
         val valueMap = workerParams.inputData.keyValueMap
         val recipeId = valueMap["recipeId"] as Int
         val startingStepId = valueMap["currentStepId"] as Int
         val initialProgress = valueMap["currentProgress"] as Float
         val db = AppDatabase.getInstance(context)
+        val steps = db.stepDao().getStepsForRecipe(recipeId).asFlow().first()
 
-        withContext(Dispatchers.Main) {
-            db.stepDao().getStepsForRecipe(recipeId).observeForever { steps ->
-                val initialStep = steps.find { it.id == startingStepId } ?: return@observeForever
-                postTimerNotification(
-                    context,
-                    initialStep.toNotificationBuilder(context, initialProgress),
-                    id = COFI_TIMER_NOTIFICATION_ID + initialStep.id,
-                    tag = COFI_TIMER_NOTIFICATION_TAG,
-                )
-                fun startCountDown(step: Step) {
-                    fun goToNextStep() {
-                        startCountDown(steps[steps.indexOf(step) + 1])
-                    }
-                    if (step.time == null /* step.isUserInputRequired */) {
-                        // TODO: Handle timeless steps (button to resume)
-                        return
-                    }
-                    val millisToCount = step.time.toLong() *
-                            (if (step.id == initialStep.id) (1 - initialProgress.toLong()) else 1)
-                    val countDownTimer = object : CountDownTimer(millisToCount, 1) {
-                        override fun onTick(millisUntilFinished: Long) {
-                            val currentProgress = 1f - (millisUntilFinished.toFloat() / step.time)
-                            postTimerNotification(
-                                context,
-                                step.toNotificationBuilder(
-                                    context,
-                                    currentProgress,
-                                ),
-                                id = COFI_TIMER_NOTIFICATION_ID + step.id,
-                                tag = COFI_TIMER_NOTIFICATION_TAG,
-                            )
-                        }
-
-                        override fun onFinish() {
-                            NotificationManagerCompat.from(context)
-                                .cancel(
-                                    COFI_TIMER_NOTIFICATION_TAG,
-                                    COFI_TIMER_NOTIFICATION_ID + step.id,
-                                )
-                            if (steps.last().id == step.id) {
-                                postTimerNotification(
-                                    context,
-                                    NotificationCompat.Builder(context, TIMER_CHANNEL_ID).apply {
-                                        setSmallIcon(R.drawable.ic_monochrome)
-                                        setVisibility(VISIBILITY_PUBLIC)
-                                        setOnlyAlertOnce(false)
-                                        setAutoCancel(true)
-                                        setOngoing(false)
-                                        setTimeoutAfter(600.toMillis().toLong())
-                                        color = ResourcesCompat.getColor(
-                                            context.resources,
-                                            R.color.ic_launcher_background,
-                                            null,
-                                        )
-                                        setColorized(false)
-                                        setContentTitle(context.getString(R.string.timer_enjoy))
-                                    },
-                                    id = COFI_TIMER_NOTIFICATION_ID + step.id + 1,
-                                    tag = COFI_TIMER_NOTIFICATION_TAG,
-                                )
-                                return
-                            }
-                            goToNextStep()
-                        }
-                    }
-                    TimerSharedPrefsHelper.observeTimerPreference(context) { preferences, string ->
-                        if (preferences.all.toTimerData().isPaused) {
-                            countDownTimer.cancel()
-                        }
-                    }
-                    countDownTimer.start()
-                }
-                startCountDown(initialStep)
+        val initialStep =
+            steps.find { it.id == startingStepId } ?: return@coroutineScope Result.failure()
+        postTimerNotification(
+            context,
+            initialStep.toNotificationBuilder(context, initialProgress),
+            id = COFI_TIMER_NOTIFICATION_ID + initialStep.id,
+            tag = COFI_TIMER_NOTIFICATION_TAG,
+        )
+        suspend fun startCountDown(step: Step) {
+            suspend fun goToNextStep() {
+                startCountDown(steps[steps.indexOf(step) + 1])
             }
+            if (step.time == null /* step.isUserInputRequired */) {
+                // TODO: Handle timeless steps (button to resume)
+                return
+            }
+            var millisLeft = 0L
+            val startTime = SystemClock.elapsedRealtime()
+            fun createCountDownTimer(millis: Long) = tickerFlow(millis)
+                .distinctUntilChanged { old, new -> old == new }
+                .onEach {
+                    millisLeft = it
+                    postTimerNotification(
+                        context,
+                        step.toNotificationBuilder(
+                            context,
+                            (millis - it).toFloat() / millis,
+                        ),
+                        id = COFI_TIMER_NOTIFICATION_ID + step.id,
+                        tag = COFI_TIMER_NOTIFICATION_TAG,
+                    )
+                }.onCompletion {
+                    NotificationManagerCompat.from(context)
+                        .cancel(
+                            COFI_TIMER_NOTIFICATION_TAG,
+                            COFI_TIMER_NOTIFICATION_ID + step.id,
+                        )
+                    if (steps.last().id == step.id) {
+                        postTimerNotification(
+                            context,
+                            NotificationCompat.Builder(context, TIMER_CHANNEL_ID).apply {
+                                setSmallIcon(R.drawable.ic_monochrome)
+                                setVisibility(VISIBILITY_PUBLIC)
+                                setOnlyAlertOnce(false)
+                                setAutoCancel(true)
+                                setOngoing(false)
+                                setTimeoutAfter(600.toMillis().toLong())
+                                color = ResourcesCompat.getColor(
+                                    context.resources,
+                                    R.color.ic_launcher_background,
+                                    null,
+                                )
+                                setColorized(false)
+                                setContentTitle(context.getString(R.string.timer_enjoy))
+                            },
+                            id = COFI_TIMER_NOTIFICATION_ID + step.id + 1,
+                            tag = COFI_TIMER_NOTIFICATION_TAG,
+                        )
+                    }
+                    TimerSharedPrefsHelper.saveTimerToSharedPrefs(
+                        context,
+                        getTimerDataFromSharedPrefs(context, recipeId).changeToStep(
+                            context,
+                            steps[steps.indexOf(step) + 1],
+                        ),
+                    )
+                }
+                .launchIn(this) // or lifecycleScope or other
+
+            val millisToCount = step.time.toLong() *
+                    (if (step.id == initialStep.id) (1 - initialProgress.toLong()) else 1)
+            val countDownTimer = createCountDownTimer(millisToCount)
+            TimerSharedPrefsHelper.observeTimerPreference(context) { preferences, string ->
+                if (preferences.all.toTimerData().isPaused) {
+                    countDownTimer.cancel()
+                }
+                if (!preferences.all.toTimerData().isPaused) {
+                    createCountDownTimer(millisLeft).start()
+                }
+            }
+            countDownTimer.start()
         }
-        return Result.success()
+        startCountDown(initialStep)
+        return@coroutineScope Result.success()
     }
 }
