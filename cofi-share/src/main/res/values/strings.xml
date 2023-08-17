@@ -136,13 +136,12 @@
     <string name="name_cezve">Cezve</string>
     <string name="name_cup">Cup</string>
     <string name="support_dialog_title">Enjoying Cofi?</string>
-    <string name="support_dialog_body">I would greatly appreciate your support! You can help me continue doing what I love by choosing one or more of the following</string>
+    <string name="support_dialog_body">I would greatly appreciate your support! You can help me continue doing what I love by choosing one or more of the following.</string>
     <string name="support_dialog_github">Star Cofi on GitHub</string>
     <string name="support_dialog_mastodon">Follow me on Mastodon</string>
     <string name="support_dialog_kofi">Buy me a coffee</string>
     <string name="support_dialog_review">Write a review</string>
     <string name="support_title">Support Cofi</string>
-
     <string name="infoBox_update_title">Cofi has been updated</string>
     <string name="infoBox_update_body">Click here to read what\'s new</string>
     <string name="settings_step_next_step_item">Show next step</string>
