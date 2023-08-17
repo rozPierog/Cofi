@@ -24,10 +24,7 @@ import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
-import com.omelan.cofi.share.utils.Haptics
-import com.omelan.cofi.share.utils.getActivity
-import com.omelan.cofi.share.utils.roundToDecimals
-import com.omelan.cofi.share.utils.startTimerWorker
+import com.omelan.cofi.share.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -235,12 +232,19 @@ object Timer {
                                 object : Observer<WorkInfo> {
                                     override fun onChanged(value: WorkInfo) {
                                         val progress = value.progress
-                                        val stepID = progress.getInt("StepID", 0)
-                                        val stepProgress = progress.getFloat("progress", 0f)
+                                        val stepID = progress.getInt(WORKER_PROGRESS_STEP, 0)
+                                        val stepProgress =
+                                            progress.getFloat(WORKER_PROGRESS_PROGRESS, 0f)
+                                        val isPaused =
+                                            progress.getBoolean(WORKER_PROGRESS_IS_PAUSED, false)
                                         currentStep = steps.firstOrNull { it.id == stepID }
                                         coroutineScope.launch {
                                             animatedProgressValue.snapTo(stepProgress)
-                                            progressAnimation(Unit)
+                                            if (isPaused) {
+                                                pauseAnimations()
+                                            } else {
+                                                resumeAnimations()
+                                            }
                                         }
                                         workInfoByIdLiveData.removeObserver(this)
                                     }
@@ -248,6 +252,7 @@ object Timer {
                             )
                         }
                     }
+
                     else -> {}
                 }
             }

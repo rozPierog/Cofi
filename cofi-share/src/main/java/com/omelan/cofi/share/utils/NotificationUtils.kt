@@ -143,6 +143,9 @@ const val COFI_TIMER_NOTIFICATION_RECIPE_DATA = "cofi_timer_notification_recipe_
 const val COFI_TIMER_NOTIFICATION_START_TIME_DATA = "cofi_timer_notification_start_time_data"
 const val COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA = "cofi_timer_notification_current_step_data"
 
+const val WORKER_PROGRESS_STEP = "cofi_worker_progress_step_id"
+const val WORKER_PROGRESS_PROGRESS = "cofi_worker_progress_progress"
+const val WORKER_PROGRESS_IS_PAUSED = "cofi_worker_progress_is_paused"
 class TimerWorker(
     private val context: Context,
     private val workerParams: WorkerParameters,
@@ -186,9 +189,9 @@ class TimerWorker(
                     val progress = (millis - it).toFloat() / millis
                     setProgress(
                         workDataOf(
-                            "StepID" to step.id,
-                            "progress" to progress,
-                            "isPaused" to false,
+                            WORKER_PROGRESS_STEP to step.id,
+                            WORKER_PROGRESS_PROGRESS to progress,
+                            WORKER_PROGRESS_IS_PAUSED to false,
                         ),
                     )
                     millisLeft = it
