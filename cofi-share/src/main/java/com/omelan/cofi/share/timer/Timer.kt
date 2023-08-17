@@ -224,33 +224,36 @@ object Timer {
                     }
 
                     Lifecycle.Event.ON_RESUME -> {
-                        if (workerUUID != null) {
-                            val workInfoByIdLiveData = WorkManager.getInstance(context)
-                                .getWorkInfoByIdLiveData(workerUUID!!)
-                            workInfoByIdLiveData.observe(
-                                lifecycleOwner,
-                                object : Observer<WorkInfo> {
-                                    override fun onChanged(value: WorkInfo) {
-                                        val progress = value.progress
-                                        val stepID = progress.getInt(WORKER_PROGRESS_STEP, 0)
-                                        val stepProgress =
-                                            progress.getFloat(WORKER_PROGRESS_PROGRESS, 0f)
-                                        val isPaused =
-                                            progress.getBoolean(WORKER_PROGRESS_IS_PAUSED, false)
-                                        currentStep = steps.firstOrNull { it.id == stepID }
-                                        coroutineScope.launch {
-                                            animatedProgressValue.snapTo(stepProgress)
-                                            if (isPaused) {
-                                                pauseAnimations()
-                                            } else {
-                                                resumeAnimations()
-                                            }
-                                        }
+                        val workManager = WorkManager.getInstance(context)
+                        val workInfoByIdLiveData = workManager
+                            .getWorkInfosForUniqueWorkLiveData("cofi_${steps.first().recipeId}")
+                        workInfoByIdLiveData.observe(
+                            lifecycleOwner,
+                            object : Observer<List<WorkInfo>> {
+                                override fun onChanged(value: List<WorkInfo>) {
+                                    if (value.isEmpty()) {
                                         workInfoByIdLiveData.removeObserver(this)
+                                        return
                                     }
-                                },
-                            )
-                        }
+                                    val progress = value.first().progress
+                                    val stepID = progress.getInt(WORKER_PROGRESS_STEP, 0)
+                                    val stepProgress =
+                                        progress.getFloat(WORKER_PROGRESS_PROGRESS, 0f)
+                                    val isPaused =
+                                        progress.getBoolean(WORKER_PROGRESS_IS_PAUSED, false)
+                                    currentStep = steps.firstOrNull { it.id == stepID }
+                                    coroutineScope.launch {
+                                        animatedProgressValue.snapTo(stepProgress)
+                                        if (isPaused) {
+                                            pauseAnimations()
+                                        } else {
+                                            resumeAnimations()
+                                        }
+                                    }
+                                    workInfoByIdLiveData.removeObserver(this)
+                                }
+                            },
+                        )
                     }
 
                     else -> {}

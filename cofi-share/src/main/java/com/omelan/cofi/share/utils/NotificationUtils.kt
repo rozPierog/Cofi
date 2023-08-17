@@ -65,7 +65,8 @@ fun createValueText(context: Context, step: Step, currentProgress: Float): Strin
 
 fun Step.toNotificationBuilder(
     context: Context,
-    currentProgress: Float,
+    currentProgress: Float = 0f,
+    isPaused: Boolean = false,
 ): NotificationCompat.Builder {
     val step = this
     val builder =
@@ -132,8 +133,26 @@ fun Context.startTimerWorker(recipeId: Int, stepId: Int, startingTime: Long): UU
         OneTimeWorkRequest.Builder(TimerWorker::class.java).setInputData(inputData)
             .addTag(recipeId.toString()).build()
     val workManager = WorkManager.getInstance(this)
-    workManager.cancelAllWorkByTag(recipeId.toString())
-    workManager.enqueue(timerWorker)
+    workManager.enqueueUniqueWork(
+        "cofi_$recipeId",
+        ExistingWorkPolicy.REPLACE,
+        timerWorker,
+    )
+    return timerWorker.id
+}
+
+fun Context.stopTimerWorker(recipeId: Int, stepId: Int, startingTime: Long): UUID {
+    createChannel()
+    val inputData = Data.Builder().apply {
+        putInt(COFI_TIMER_NOTIFICATION_RECIPE_DATA, recipeId)
+        putInt(COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA, stepId)
+        putLong(COFI_TIMER_NOTIFICATION_START_TIME_DATA, startingTime)
+    }.build()
+    val timerWorker =
+        OneTimeWorkRequest.Builder(TimerWorker::class.java).setInputData(inputData)
+            .addTag(recipeId.toString()).build()
+    val workManager = WorkManager.getInstance(this)
+    workManager.updateWork(timerWorker)
     return timerWorker.id
 }
 
@@ -146,6 +165,7 @@ const val COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA = "cofi_timer_notification_c
 const val WORKER_PROGRESS_STEP = "cofi_worker_progress_step_id"
 const val WORKER_PROGRESS_PROGRESS = "cofi_worker_progress_progress"
 const val WORKER_PROGRESS_IS_PAUSED = "cofi_worker_progress_is_paused"
+
 class TimerWorker(
     private val context: Context,
     private val workerParams: WorkerParameters,
@@ -179,7 +199,12 @@ class TimerWorker(
                 startCountDown(steps[steps.indexOf(step) + 1])
             }
             if (step.time == null /* step.isUserInputRequired */) {
-                // TODO: Handle timeless steps (button to resume)
+                postTimerNotification(
+                    context,
+                    step.toNotificationBuilder(context),
+                    id = COFI_TIMER_NOTIFICATION_ID + step.id,
+                    tag = COFI_TIMER_NOTIFICATION_TAG,
+                )
                 return
             }
             var millisLeft = 0L
