@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.os.Build
-import android.os.SystemClock
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -17,11 +16,13 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.Observer
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
-import com.omelan.cofi.share.model.findStepByElapsedTime
 import com.omelan.cofi.share.utils.Haptics
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.roundToDecimals
@@ -29,6 +30,7 @@ import com.omelan.cofi.share.utils.startTimerWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.UUID
 
 
 fun <R, T> suspendCompat(block: suspend (T) -> R): suspend (T) -> R = block
@@ -96,6 +98,7 @@ object Timer {
             .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
         val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
             .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
+        var workerUUID by remember { mutableStateOf<UUID?>(null) }
         var currentStep by remember { mutableStateOf<Step?>(null) }
         var isDone by remember { mutableStateOf(false) }
         val isDarkMode = isSystemInDarkTheme()
@@ -110,59 +113,6 @@ object Timer {
 
         val lifecycleOwner = LocalLifecycleOwner.current
 
-        DisposableEffect(lifecycleOwner, steps) {
-            val observer = LifecycleEventObserver { _, event ->
-                when (event) {
-                    Lifecycle.Event.ON_CREATE -> {
-                        if (ActivityCompat.checkSelfPermission(
-                                context,
-                                Manifest.permission.POST_NOTIFICATIONS,
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                ActivityCompat.requestPermissions(
-                                    context.getActivity() as Activity,
-                                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                                    1,
-                                )
-                            }
-                        }
-                    }
-
-                    Lifecycle.Event.ON_START -> {}
-                    Lifecycle.Event.ON_RESUME -> {
-                        try {
-                            val recipeId = steps.first().recipeId
-                            val now = SystemClock.elapsedRealtime()
-                            val (
-                                startTime,
-                                startingStepId,
-                                startingStepProgress,
-                            ) = TimerSharedPrefsHelper.getTimerDataFromSharedPrefs(
-                                context,
-                                recipeId,
-                            )
-                            val elapsedTime = now - startTime
-                            currentStep = steps.findStepByElapsedTime(elapsedTime, startingStepId)
-                        } catch (e: Exception) {
-                            // Do nothing
-                        }
-                    }
-
-                    Lifecycle.Event.ON_PAUSE -> {}
-                    Lifecycle.Event.ON_STOP -> {}
-                    Lifecycle.Event.ON_DESTROY -> {}
-                    else -> {}
-                }
-            }
-            lifecycleOwner.lifecycle.addObserver(observer)
-
-            // When the effect leaves the Composition, remove the observer
-            onDispose {
-                lifecycleOwner.lifecycle.removeObserver(observer)
-            }
-        }
-
         val indexOfCurrentStep by remember(steps, currentStep) {
             derivedStateOf { steps.indexOf(currentStep) }
         }
@@ -170,9 +120,6 @@ object Timer {
             derivedStateOf { steps.lastIndex }
         }
         val pauseAnimations = suspend {
-            val timerData =
-                TimerSharedPrefsHelper.getTimerDataFromSharedPrefs(context, steps.first().recipeId)
-            TimerSharedPrefsHelper.saveTimerToSharedPrefs(context, timerData.pause(context))
             animatedProgressColor.stop()
             animatedProgressValue.stop()
         }
@@ -182,7 +129,7 @@ object Timer {
             if (indexOfCurrentStep != indexOfLastStep) {
                 currentStep = steps[indexOfCurrentStep + 1]
                 if (indexOfCurrentStep == 0) {
-                    context.startTimerWorker(
+                    workerUUID = context.startTimerWorker(
                         TimerSharedPrefsHelper.TimerData(
                             recipeId = currentStep!!.recipeId,
                             currentStepId = currentStep!!.id,
@@ -252,9 +199,6 @@ object Timer {
 
         val resumeAnimations: suspend () -> Unit = suspend {
             coroutineScope.launch {
-                val timerData =
-                    TimerSharedPrefsHelper.getTimerDataFromSharedPrefs(context, steps.first().recipeId)
-                TimerSharedPrefsHelper.saveTimerToSharedPrefs(context, timerData.start(context))
                 progressAnimation(Unit)
             }
         }
@@ -262,6 +206,80 @@ object Timer {
         LaunchedEffect(isDone) {
             if (isDone) {
                 animatedProgressColor.animateTo(doneTrackColor, tween())
+            }
+        }
+
+        DisposableEffect(lifecycleOwner, steps) {
+            val observer = LifecycleEventObserver { _, event ->
+                when (event) {
+                    Lifecycle.Event.ON_CREATE -> {
+                        if (ActivityCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.POST_NOTIFICATIONS,
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                ActivityCompat.requestPermissions(
+                                    context.getActivity() as Activity,
+                                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                                    1,
+                                )
+                            }
+                        }
+                    }
+
+                    Lifecycle.Event.ON_START -> {}
+                    Lifecycle.Event.ON_RESUME -> {
+                        if (workerUUID != null) {
+                            val workInfoByIdLiveData = WorkManager.getInstance(context)
+                                // requestId is the WorkRequest id
+                                .getWorkInfoByIdLiveData(workerUUID!!)
+                            workInfoByIdLiveData.observe(
+                                lifecycleOwner,
+                                object : Observer<WorkInfo> {
+                                    override fun onChanged(value: WorkInfo) {
+                                        val progress = value.progress
+                                        val stepID = progress.getInt("StepID", 0)
+                                        val stepProgress = progress.getFloat("progress", 0f)
+                                        currentStep = steps.firstOrNull { it.id == stepID }
+                                        coroutineScope.launch {
+                                            animatedProgressValue.snapTo(stepProgress)
+                                            progressAnimation(Unit)
+                                        }
+                                        workInfoByIdLiveData.removeObserver(this)
+                                    }
+                                },
+                            )
+                        }
+//                        try {
+//                            val recipeId = steps.first().recipeId
+//                            val now = SystemClock.elapsedRealtime()
+//                            val (
+//                                startTime,
+//                                startingStepId,
+//                                startingStepProgress,
+//                            ) = TimerSharedPrefsHelper.getTimerDataFromSharedPrefs(
+//                                context,
+//                                recipeId,
+//                            )
+//                            val elapsedTime = now - startTime
+//                            currentStep = steps.findStepByElapsedTime(elapsedTime, startingStepId)
+//                        } catch (e: Exception) {
+//                            // Do nothing
+//                        }
+                    }
+
+                    Lifecycle.Event.ON_PAUSE -> {}
+                    Lifecycle.Event.ON_STOP -> {}
+                    Lifecycle.Event.ON_DESTROY -> {}
+                    else -> {}
+                }
+            }
+            lifecycleOwner.lifecycle.addObserver(observer)
+
+            // When the effect leaves the Composition, remove the observer
+            onDispose {
+                lifecycleOwner.lifecycle.removeObserver(observer)
             }
         }
 

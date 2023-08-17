@@ -19,11 +19,10 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.timer.TimerSharedPrefsHelper
-import com.omelan.cofi.share.timer.TimerSharedPrefsHelper.getTimerDataFromSharedPrefs
-import com.omelan.cofi.share.timer.TimerSharedPrefsHelper.toTimerData
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import java.util.UUID
 import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -123,7 +122,7 @@ fun postTimerNotification(
     }
 }
 
-suspend fun Context.startTimerWorker(timerData: TimerSharedPrefsHelper.TimerData) {
+suspend fun Context.startTimerWorker(timerData: TimerSharedPrefsHelper.TimerData): UUID {
     createChannel()
     val inputData = Data.Builder().apply {
         putInt("recipeId", timerData.recipeId)
@@ -136,6 +135,7 @@ suspend fun Context.startTimerWorker(timerData: TimerSharedPrefsHelper.TimerData
     val workManager = WorkManager.getInstance(this)
     workManager.cancelAllWorkByTag(timerData.recipeId.toString())
     workManager.enqueue(timerWorker)
+    return timerWorker.id
 }
 
 const val COFI_TIMER_NOTIFICATION_ID = 2137
@@ -184,12 +184,20 @@ class TimerWorker(
             fun createCountDownTimer(millis: Long) = tickerFlow(millis)
                 .distinctUntilChanged { old, new -> old == new }
                 .onEach {
+                    val progress = (millis - it).toFloat() / millis
+                    setProgress(
+                        workDataOf(
+                            "StepID" to step.id,
+                            "progress" to progress,
+                            "isPaused" to false,
+                        ),
+                    )
                     millisLeft = it
                     postTimerNotification(
                         context,
                         step.toNotificationBuilder(
                             context,
-                            (millis - it).toFloat() / millis,
+                            progress,
                         ),
                         id = COFI_TIMER_NOTIFICATION_ID + step.id,
                         tag = COFI_TIMER_NOTIFICATION_TAG,
@@ -222,27 +230,28 @@ class TimerWorker(
                             tag = COFI_TIMER_NOTIFICATION_TAG,
                         )
                     }
-                    TimerSharedPrefsHelper.saveTimerToSharedPrefs(
-                        context,
-                        getTimerDataFromSharedPrefs(context, recipeId).changeToStep(
-                            context,
-                            steps[steps.indexOf(step) + 1],
-                        ),
-                    )
+                    goToNextStep()
+//                    TimerSharedPrefsHelper.saveTimerToSharedPrefs(
+//                        context,
+//                        getTimerDataFromSharedPrefs(context, recipeId).changeToStep(
+//                            context,
+//                            steps[steps.indexOf(step) + 1],
+//                        ),
+//                    )
                 }
                 .launchIn(this) // or lifecycleScope or other
 
             val millisToCount = step.time.toLong() *
                     (if (step.id == initialStep.id) (1 - initialProgress.toLong()) else 1)
             val countDownTimer = createCountDownTimer(millisToCount)
-            TimerSharedPrefsHelper.observeTimerPreference(context) { preferences, string ->
-                if (preferences.all.toTimerData().isPaused) {
-                    countDownTimer.cancel()
-                }
-                if (!preferences.all.toTimerData().isPaused) {
-                    createCountDownTimer(millisLeft).start()
-                }
-            }
+//            TimerSharedPrefsHelper.observeTimerPreference(context) { preferences, string ->
+//                if (preferences.all.toTimerData().isPaused) {
+//                    countDownTimer.cancel()
+//                }
+//                if (!preferences.all.toTimerData().isPaused) {
+//                    createCountDownTimer(millisLeft).start()
+//                }
+//            }
             countDownTimer.start()
         }
         startCountDown(initialStep)
