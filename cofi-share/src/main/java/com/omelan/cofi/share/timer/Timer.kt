@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.os.Build
+import android.os.SystemClock
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -130,12 +131,9 @@ object Timer {
                 currentStep = steps[indexOfCurrentStep + 1]
                 if (indexOfCurrentStep == 0) {
                     workerUUID = context.startTimerWorker(
-                        TimerSharedPrefsHelper.TimerData(
-                            recipeId = currentStep!!.recipeId,
-                            currentStepId = currentStep!!.id,
-                            weightMultiplier = 1f,
-                            timeMultiplier = 1f,
-                        ),
+                        recipeId = currentStep!!.recipeId,
+                        stepId = currentStep!!.id,
+                        startingTime = SystemClock.elapsedRealtime(),
                     )
                 }
             } else {
@@ -228,11 +226,9 @@ object Timer {
                         }
                     }
 
-                    Lifecycle.Event.ON_START -> {}
                     Lifecycle.Event.ON_RESUME -> {
                         if (workerUUID != null) {
                             val workInfoByIdLiveData = WorkManager.getInstance(context)
-                                // requestId is the WorkRequest id
                                 .getWorkInfoByIdLiveData(workerUUID!!)
                             workInfoByIdLiveData.observe(
                                 lifecycleOwner,
@@ -251,27 +247,7 @@ object Timer {
                                 },
                             )
                         }
-//                        try {
-//                            val recipeId = steps.first().recipeId
-//                            val now = SystemClock.elapsedRealtime()
-//                            val (
-//                                startTime,
-//                                startingStepId,
-//                                startingStepProgress,
-//                            ) = TimerSharedPrefsHelper.getTimerDataFromSharedPrefs(
-//                                context,
-//                                recipeId,
-//                            )
-//                            val elapsedTime = now - startTime
-//                            currentStep = steps.findStepByElapsedTime(elapsedTime, startingStepId)
-//                        } catch (e: Exception) {
-//                            // Do nothing
-//                        }
                     }
-
-                    Lifecycle.Event.ON_PAUSE -> {}
-                    Lifecycle.Event.ON_STOP -> {}
-                    Lifecycle.Event.ON_DESTROY -> {}
                     else -> {}
                 }
             }

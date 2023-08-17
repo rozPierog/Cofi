@@ -18,7 +18,6 @@ import androidx.work.*
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.Step
-import com.omelan.cofi.share.timer.TimerSharedPrefsHelper
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -122,25 +121,26 @@ fun postTimerNotification(
     }
 }
 
-suspend fun Context.startTimerWorker(timerData: TimerSharedPrefsHelper.TimerData): UUID {
+fun Context.startTimerWorker(recipeId: Int, stepId: Int, startingTime: Long): UUID {
     createChannel()
     val inputData = Data.Builder().apply {
-        putInt("recipeId", timerData.recipeId)
-        putFloat("currentProgress", 0f)
-        putInt("currentStepId", timerData.currentStepId)
+        putInt(COFI_TIMER_NOTIFICATION_RECIPE_DATA, recipeId)
+        putInt(COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA, stepId)
+        putLong(COFI_TIMER_NOTIFICATION_START_TIME_DATA, startingTime)
     }.build()
     val timerWorker =
         OneTimeWorkRequest.Builder(TimerWorker::class.java).setInputData(inputData)
-            .addTag(timerData.recipeId.toString()).build()
+            .addTag(recipeId.toString()).build()
     val workManager = WorkManager.getInstance(this)
-    workManager.cancelAllWorkByTag(timerData.recipeId.toString())
+    workManager.cancelAllWorkByTag(recipeId.toString())
     workManager.enqueue(timerWorker)
     return timerWorker.id
 }
 
 const val COFI_TIMER_NOTIFICATION_ID = 2137
 const val COFI_TIMER_NOTIFICATION_TAG = "cofi_notification_timer"
-const val COFI_TIMER_NOTIFICATION_PROGRESS_DATA = "cofi_timer_notification_progress_data"
+const val COFI_TIMER_NOTIFICATION_RECIPE_DATA = "cofi_timer_notification_recipe_data"
+const val COFI_TIMER_NOTIFICATION_START_TIME_DATA = "cofi_timer_notification_start_time_data"
 const val COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA = "cofi_timer_notification_current_step_data"
 
 class TimerWorker(
@@ -157,9 +157,9 @@ class TimerWorker(
 
     override suspend fun doWork() = coroutineScope {
         val valueMap = workerParams.inputData.keyValueMap
-        val recipeId = valueMap["recipeId"] as Int
-        val startingStepId = valueMap["currentStepId"] as Int
-        val initialProgress = valueMap["currentProgress"] as Float
+        val recipeId = valueMap[COFI_TIMER_NOTIFICATION_RECIPE_DATA] as Int
+        val startingStepId = valueMap[COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA] as Int
+        val startingTime = valueMap[COFI_TIMER_NOTIFICATION_START_TIME_DATA] as Long
         val db = AppDatabase.getInstance(context)
         val steps = db.stepDao().getStepsForRecipe(recipeId).asFlow().first()
 
@@ -167,7 +167,7 @@ class TimerWorker(
             steps.find { it.id == startingStepId } ?: return@coroutineScope Result.failure()
         postTimerNotification(
             context,
-            initialStep.toNotificationBuilder(context, initialProgress),
+            initialStep.toNotificationBuilder(context, 0f),
             id = COFI_TIMER_NOTIFICATION_ID + initialStep.id,
             tag = COFI_TIMER_NOTIFICATION_TAG,
         )
@@ -180,7 +180,6 @@ class TimerWorker(
                 return
             }
             var millisLeft = 0L
-            val startTime = SystemClock.elapsedRealtime()
             fun createCountDownTimer(millis: Long) = tickerFlow(millis)
                 .distinctUntilChanged { old, new -> old == new }
                 .onEach {
@@ -231,27 +230,13 @@ class TimerWorker(
                         )
                     }
                     goToNextStep()
-//                    TimerSharedPrefsHelper.saveTimerToSharedPrefs(
-//                        context,
-//                        getTimerDataFromSharedPrefs(context, recipeId).changeToStep(
-//                            context,
-//                            steps[steps.indexOf(step) + 1],
-//                        ),
-//                    )
                 }
                 .launchIn(this) // or lifecycleScope or other
 
-            val millisToCount = step.time.toLong() *
-                    (if (step.id == initialStep.id) (1 - initialProgress.toLong()) else 1)
+            val currentTime = SystemClock.elapsedRealtime()
+            val offset = if (step.id == initialStep.id) startingTime - currentTime else 0
+            val millisToCount = step.time.toLong() - offset
             val countDownTimer = createCountDownTimer(millisToCount)
-//            TimerSharedPrefsHelper.observeTimerPreference(context) { preferences, string ->
-//                if (preferences.all.toTimerData().isPaused) {
-//                    countDownTimer.cancel()
-//                }
-//                if (!preferences.all.toTimerData().isPaused) {
-//                    createCountDownTimer(millisLeft).start()
-//                }
-//            }
             countDownTimer.start()
         }
         startCountDown(initialStep)
