@@ -26,7 +26,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.composable
-import com.omelan.cofi.share.*
+import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
@@ -149,6 +149,7 @@ fun RecipeDetails(
         }
     }
     val timerControllers = Timer.createTimerControllers(
+        recipe = recipe,
         steps = steps,
         onRecipeEnd = { },
         dataStore = dataStore,

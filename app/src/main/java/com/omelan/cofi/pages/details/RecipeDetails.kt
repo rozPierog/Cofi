@@ -228,6 +228,7 @@ fun RecipeDetails(
         resumeAnimations,
         changeToNextStep,
     ) = Timer.createTimerControllers(
+        recipe = recipe,
         steps = steps,
         onRecipeEnd = { onRecipeEnd(recipe) },
         dataStore = dataStore,

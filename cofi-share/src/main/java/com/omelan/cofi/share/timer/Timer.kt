@@ -22,13 +22,13 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
+import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.UUID
 
 
 fun <R, T> suspendCompat(block: suspend (T) -> R): suspend (T) -> R = block
@@ -86,6 +86,7 @@ object Timer {
 
     @Composable
     fun createTimerControllers(
+        recipe: Recipe,
         steps: List<Step>,
         onRecipeEnd: () -> Unit,
         dataStore: DataStore,
@@ -96,7 +97,6 @@ object Timer {
             .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
         val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
             .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
-        var workerUUID by remember { mutableStateOf<UUID?>(null) }
         var currentStep by remember { mutableStateOf<Step?>(null) }
         var isDone by remember { mutableStateOf(false) }
         val isDarkMode = isSystemInDarkTheme()
@@ -127,8 +127,8 @@ object Timer {
             if (indexOfCurrentStep != indexOfLastStep) {
                 currentStep = steps[indexOfCurrentStep + 1]
                 if (indexOfCurrentStep == 0) {
-                    workerUUID = context.startTimerWorker(
-                        recipeId = currentStep!!.recipeId,
+                    context.startTimerWorker(
+                        recipeId = recipe.id,
                         stepId = currentStep!!.id,
                         startingTime = SystemClock.elapsedRealtime(),
                     )
@@ -226,7 +226,7 @@ object Timer {
                     Lifecycle.Event.ON_RESUME -> {
                         val workManager = WorkManager.getInstance(context)
                         val workInfoByIdLiveData = workManager
-                            .getWorkInfosForUniqueWorkLiveData("cofi_${steps.first().recipeId}")
+                            .getWorkInfosForUniqueWorkLiveData("cofi_${recipe.id}")
                         workInfoByIdLiveData.observe(
                             lifecycleOwner,
                             object : Observer<List<WorkInfo>> {
@@ -260,8 +260,6 @@ object Timer {
                 }
             }
             lifecycleOwner.lifecycle.addObserver(observer)
-
-            // When the effect leaves the Composition, remove the observer
             onDispose {
                 lifecycleOwner.lifecycle.removeObserver(observer)
             }
