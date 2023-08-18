@@ -25,7 +25,13 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
-import com.omelan.cofi.share.utils.*
+import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_IS_PAUSED
+import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_PROGRESS
+import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_STEP
+import com.omelan.cofi.share.timer.notification.startTimerWorker
+import com.omelan.cofi.share.utils.Haptics
+import com.omelan.cofi.share.utils.getActivity
+import com.omelan.cofi.share.utils.roundToDecimals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -235,7 +241,12 @@ object Timer {
                                         workInfoByIdLiveData.removeObserver(this)
                                         return
                                     }
-                                    val progress = value.first().progress
+                                    val workerInfo = value.first()
+                                    val progress = workerInfo.progress
+                                    if (workerInfo.state != WorkInfo.State.RUNNING) {
+                                        workInfoByIdLiveData.removeObserver(this)
+                                        return
+                                    }
                                     val stepID = progress.getInt(WORKER_PROGRESS_STEP, 0)
                                     val stepProgress =
                                         progress.getFloat(WORKER_PROGRESS_PROGRESS, 0f)
