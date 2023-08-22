@@ -115,7 +115,7 @@
     <string name="name_cezve">Cezve (café turco)</string>
     <string name="name_cup">Taza</string>
     <string name="support_dialog_title">¿Te gusta Cofi\?</string>
-    <string name="support_dialog_body">Le agradecería mucho su apoyo. Puedes ayudarme a seguir haciendo lo que me gusta eligiendo una o más de las siguientes opciones</string>
+    <string name="support_dialog_body">Te agradecería mucho el apoyo. Puedes ayudarme a seguir haciendo lo que me gusta eligiendo una o varias de las siguientes opciones.</string>
     <string name="support_dialog_mastodon">Sígueme en Mastodon</string>
     <string name="support_dialog_kofi">Invítame a un café</string>
     <string name="support_dialog_review">Escribe una opinión</string>

@@ -45,9 +45,10 @@
     <string name="step_add_remove">Kaldır</string>
     <string name="timer_enjoy">Kahvenizin keyfini çıkarın</string>
     <string name="prepopulate_v60_name">Ultimate V60</string>
-    <string name="prepopulate_v60_description">Tarifi oluşturan: James Hoffmann Kaynak: https://youtu.be/AI4ynXzkSQo
-Öğütme boyutu: orta
-Sıcaklık: daha sıcak daha iyi</string>
+    <string name="prepopulate_v60_description">Tarifi hazırlayan: James Hoffmann
+\nKaynak: https://youtu.be/AI4ynXzkSQo
+\nÖğütme boyutu: orta ince
+\nSıcaklık: ne kadar sıcak olursa o kadar iyi (özellikle hafif kızartmalarda)</string>
     <string name="prepopulate_step_coffee">Kahve ekle</string>
     <string name="prepopulate_step_water">Su ekle</string>
     <string name="prepopulate_step_swirl">Karıştır</string>
@@ -112,7 +113,7 @@ Sıcaklık: daha sıcak daha iyi</string>
     <string name="name_cezve">Cezve</string>
     <string name="name_cup">Fincan</string>
     <string name="support_dialog_title">Cofi\'yi beğendiniz mi\?</string>
-    <string name="support_dialog_body">Desteğinizden çok memnun olurum! Sevdiğim bu işi yapmama yardım etmek için bunlardan birini seçebilirsiniz</string>
+    <string name="support_dialog_body">Desteğinizden çok memnun olurum! Sevdiğim bu işi yapmama yardım etmek için bunlardan birini seçebilirsiniz.</string>
     <string name="support_dialog_mastodon">Beni Mastodon\'da takip edin</string>
     <string name="support_dialog_kofi">Bana bir kahve ısmarlayın</string>
     <string name="support_dialog_review">Yorum yazın</string>
@@ -134,4 +135,16 @@ Sıcaklık: daha sıcak daha iyi</string>
 \nBaşlamadan önce, kağıdı koninin içine yerleştirin ve kağıdın üzerine sıcak su dökerek V60\'ı ısıtın. Bu, V60\'ı önceden ısıtır ve kağıdı demleme işlemi için hazırlar.
 \nÖğütme boyutu: ince - orta ince
 \nSıcaklık: ne kadar sıcaksa o kadar iyidir (özellikle daha hafif kızartmalarda)</string>
+    <string name="recipe_details_read_description">Açıklamayı oku</string>
+    <string name="prepopulate_clever_dripper_description">Tarifi hazırlayan: James Hoffmann
+\nKaynak: https://youtu.be/RpOdennxP24
+\nÖğütme boyutu: Orta ince
+\nSıcaklık: Kaynatın ve hemen kullanın
+\nOran: 1:16,67 ya da 250 mL\'ye 15 g
+\nDemlendiricinin içine daha iyi oturması için filtreyi her iki dikişi boyunca katlayın
+\nAzami su miktarı 500 mL\'dir, ancak 400 veya daha az olması önerilir</string>
+    <string name="name_drip">Damla</string>
+    <string name="recipe_details_recipeRatio">Tarif oranı: 1:%1$s</string>
+    <string name="name_tea">Çay</string>
+    <string name="name_teapot">Çay fincanı</string>
 </resources>
