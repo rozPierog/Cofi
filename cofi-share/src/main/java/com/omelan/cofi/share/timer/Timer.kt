@@ -241,7 +241,7 @@ object Timer {
                                         workInfoByIdLiveData.removeObserver(this)
                                         return
                                     }
-                                    val workerInfo = value.first()
+                                    val workerInfo = value.firstOrNull() ?: return
                                     val progress = workerInfo.progress
                                     if (workerInfo.state != WorkInfo.State.RUNNING) {
                                         workInfoByIdLiveData.removeObserver(this)
