@@ -11,7 +11,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.work.*
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.utils.roundToDecimals
@@ -184,19 +187,3 @@ fun Context.startTimerWorker(recipeId: Int, stepId: Int, startingTime: Long): UU
     )
     return timerWorker.id
 }
-
-fun Context.stopTimerWorker(recipeId: Int, stepId: Int, startingTime: Long): UUID {
-    createChannel()
-    val inputData = Data.Builder().apply {
-        putInt(COFI_TIMER_NOTIFICATION_RECIPE_DATA, recipeId)
-        putInt(COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA, stepId)
-        putLong(COFI_TIMER_NOTIFICATION_START_TIME_DATA, startingTime)
-    }.build()
-    val timerWorker =
-        OneTimeWorkRequest.Builder(TimerWorker::class.java).setInputData(inputData)
-            .addTag(recipeId.toString()).build()
-    val workManager = WorkManager.getInstance(this)
-    workManager.updateWork(timerWorker)
-    return timerWorker.id
-}
-
