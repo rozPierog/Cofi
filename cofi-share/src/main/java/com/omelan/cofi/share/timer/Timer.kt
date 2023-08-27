@@ -25,10 +25,7 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
-import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_IS_PAUSED
-import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_PROGRESS
-import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_STEP
-import com.omelan.cofi.share.timer.notification.startTimerWorker
+import com.omelan.cofi.share.timer.notification.*
 import com.omelan.cofi.share.utils.Haptics
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.roundToDecimals
@@ -124,6 +121,15 @@ object Timer {
             derivedStateOf { steps.lastIndex }
         }
         val pauseAnimations = suspend {
+            context.sendBroadcast(
+                TimerActions.createIntent(
+                    context,
+                    TimerActions.Actions.ACTION_PAUSE,
+                    recipeId = recipe.id,
+                    stepId = currentStep?.id,
+                    alreadyDoneProgress = animatedProgressValue.value,
+                )
+            )
             animatedProgressColor.stop()
             animatedProgressValue.stop()
         }
@@ -199,6 +205,15 @@ object Timer {
         }
 
         val resumeAnimations: suspend () -> Unit = suspend {
+            context.sendBroadcast(
+                TimerActions.createIntent(
+                    context,
+                    TimerActions.Actions.ACTION_RESUME,
+                    recipeId = recipe.id,
+                    stepId = currentStep?.id,
+                    alreadyDoneProgress = animatedProgressValue.value,
+                )
+            )
             coroutineScope.launch {
                 progressAnimation(Unit)
             }

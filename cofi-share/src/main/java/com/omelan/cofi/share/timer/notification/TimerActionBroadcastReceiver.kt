@@ -1,4 +1,4 @@
- package com.omelan.cofi.share.timer.notification
+package com.omelan.cofi.share.timer.notification
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -15,6 +15,22 @@ object TimerActions {
         ACTION_PAUSE, ACTION_NEXT, ACTION_RESUME
     }
 
+    fun createIntent(
+        context: Context,
+        notificationAction: Actions,
+        recipeId: Int,
+        stepId: Int?,
+        alreadyDoneProgress: Float,
+    ): Intent {
+        val actionIntent = Intent(context, TimerActionBroadcastReceiver::class.java).apply {
+            action = notificationAction.name
+        }
+        actionIntent.putExtra(ACTION_RECIPE_ID, recipeId)
+        actionIntent.putExtra(ACTION_ALREADY_DONE_PROGRESS, alreadyDoneProgress)
+        actionIntent.putExtra(ACTION_STEP_ID, stepId)
+        return actionIntent
+    }
+
     fun createPendingIntent(
         context: Context,
         notificationAction: Actions,
@@ -22,14 +38,11 @@ object TimerActions {
         stepId: Int?,
         alreadyDoneProgress: Float,
     ): PendingIntent? {
-        val actionIntent = Intent(context, TimerActionBroadcastReceiver::class.java).apply {
-            action = notificationAction.name
-        }
-        actionIntent.putExtra(ACTION_RECIPE_ID, recipeId)
-        actionIntent.putExtra(ACTION_ALREADY_DONE_PROGRESS, alreadyDoneProgress)
-        actionIntent.putExtra(ACTION_STEP_ID, stepId)
+
         return PendingIntent.getBroadcast(
-            context, 0, actionIntent,
+            context,
+            0,
+            createIntent(context, notificationAction, recipeId, stepId, alreadyDoneProgress),
             PendingIntent.FLAG_MUTABLE,
         )
     }
