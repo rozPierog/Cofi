@@ -139,10 +139,6 @@ fun Step.toNotificationBuilder(
                     ),
                 )
             }
-//            val bundle = Bundle()
-//            bundle.putFloat("animatedValue", currentProgress)
-//            bundle.putInt("currentStepId", step.id)
-//            setExtras(bundle)
         }
     return builder
 }

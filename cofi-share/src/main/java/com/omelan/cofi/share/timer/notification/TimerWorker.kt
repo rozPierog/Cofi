@@ -135,7 +135,7 @@ class TimerWorker(
             fun createCountDownTimer(millis: Long) = tickerFlow(millis)
                 .distinctUntilChanged()
                 .onEach {
-                    val progress = startingProgress + ((millis - it).toFloat() / millis)
+                    val progress = ((step.time - it).toFloat() / step.time)
                     setProgress(
                         workDataOf(
                             WORKER_PROGRESS_STEP to step.id,
@@ -168,13 +168,13 @@ class TimerWorker(
                 .launchIn(this) // or lifecycleScope or other
 
             val currentTime = SystemClock.elapsedRealtime()
-            val offset = if (step.id == initialStep.id) startingTime - currentTime else 0
-            val millisToCount = (step.time.toLong() - offset * (1 - startingProgress)).toLong()
+            val offset = if (step.id == initialStep.id) currentTime - startingTime else 0
+            val millisToCount = ((step.time.toLong()) * (1 - startingProgress) - offset).toLong()
             val countDownTimer = createCountDownTimer(millisToCount)
             countDownTimer.start()
         }
         if (!isPaused) {
-            startCountDown(initialStep)
+            startCountDown(initialStep, startingProgress)
         } else {
             setProgress(
                 workDataOf(
