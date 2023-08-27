@@ -128,7 +128,7 @@ object Timer {
                     recipeId = recipe.id,
                     stepId = currentStep?.id,
                     alreadyDoneProgress = animatedProgressValue.value,
-                )
+                ),
             )
             animatedProgressColor.stop()
             animatedProgressValue.stop()
@@ -212,7 +212,7 @@ object Timer {
                     recipeId = recipe.id,
                     stepId = currentStep?.id,
                     alreadyDoneProgress = animatedProgressValue.value,
-                )
+                ),
             )
             coroutineScope.launch {
                 progressAnimation(Unit)
@@ -293,7 +293,18 @@ object Timer {
 
         return TimerControllers(
             currentStep,
-            { currentStep = it },
+            {
+                currentStep = it
+                context.sendBroadcast(
+                    TimerActions.createIntent(
+                        context,
+                        TimerActions.Actions.ACTION_NEXT,
+                        recipeId = recipe.id,
+                        stepId = it?.id,
+                        alreadyDoneProgress = 0f,
+                    ),
+                )
+            },
             isDone,
             animatedProgressValue.isRunning,
             indexOfCurrentStep,
