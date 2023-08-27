@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
+import androidx.core.app.NotificationManagerCompat
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -12,7 +13,7 @@ import androidx.work.workDataOf
 
 object TimerActions {
     enum class Actions {
-        ACTION_PAUSE, ACTION_NEXT, ACTION_RESUME
+        ACTION_PAUSE, ACTION_NEXT, ACTION_RESUME, ACTION_STOP
     }
 
     fun createIntent(
@@ -38,12 +39,12 @@ object TimerActions {
         stepId: Int?,
         alreadyDoneProgress: Float,
     ): PendingIntent? = PendingIntent.getBroadcast(
-            context,
-            SystemClock.elapsedRealtime().toInt(),
-            createIntent(context, notificationAction, recipeId, stepId, alreadyDoneProgress),
-            PendingIntent.FLAG_MUTABLE,
-        )
-    }
+        context,
+        SystemClock.elapsedRealtime().toInt(),
+        createIntent(context, notificationAction, recipeId, stepId, alreadyDoneProgress),
+        PendingIntent.FLAG_MUTABLE,
+    )
+}
 
 private const val ACTION_RECIPE_ID = "ACTION_RECIPE_ID"
 private const val ACTION_STEP_ID = "ACTION_STEP_ID"
@@ -57,6 +58,15 @@ class TimerActionBroadcastReceiver : BroadcastReceiver() {
         if (recipeId < 0) {
             throw Exception("recipeId is ${recipeId}, that shouldn't happen")
         }
+        val workManager = WorkManager.getInstance(context)
+
+        if (intent.action == TimerActions.Actions.ACTION_STOP.name) {
+            workManager.cancelUniqueWork("cofi_$recipeId")
+            NotificationManagerCompat.from(context)
+                .cancel(COFI_TIMER_NOTIFICATION_TAG, COFI_TIMER_NOTIFICATION_ID + stepId)
+            return
+        }
+
         val inputData = workDataOf(
             COFI_TIMER_NOTIFICATION_RECIPE_DATA to recipeId,
             COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA to stepId,
@@ -68,7 +78,6 @@ class TimerActionBroadcastReceiver : BroadcastReceiver() {
             .setInputData(inputData)
             .build()
 
-        val workManager = WorkManager.getInstance(context)
         workManager.enqueueUniqueWork(
             "cofi_$recipeId",
             ExistingWorkPolicy.REPLACE,

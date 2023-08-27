@@ -58,7 +58,6 @@ fun createValueText(context: Context, step: Step, currentProgress: Float): Strin
 
 fun Step.toNotificationBuilder(
     context: Context,
-    workerId: UUID,
     nextStepId: Int?,
     currentProgress: Float = 0f,
     isPaused: Boolean = false,
@@ -121,7 +120,13 @@ fun Step.toNotificationBuilder(
                     NotificationCompat.Action(
                         R.drawable.ic_monochrome,
                         "Stop",
-                        workManager.createCancelPendingIntent(workerId),
+                        TimerActions.createPendingIntent(
+                            context,
+                            TimerActions.Actions.ACTION_STOP,
+                            recipeId = recipeId,
+                            stepId = step.id,
+                            alreadyDoneProgress = currentProgress,
+                        ),
                     ),
                 )
             } else {

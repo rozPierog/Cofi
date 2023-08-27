@@ -101,15 +101,13 @@ class TimerWorker(
             context,
             initialStep.toNotificationBuilder(
                 context,
-                workerId = id,
                 nextStepId = steps.findNextId(initialStep),
                 currentProgress = startingProgress,
                 isPaused = isPaused,
             ),
             id = COFI_TIMER_NOTIFICATION_ID + initialStep.id,
             tag = COFI_TIMER_NOTIFICATION_TAG,
-
-            )
+        )
 
         suspend fun startCountDown(step: Step, startingProgress: Float = 0f) {
             if (step.time == null /* step.isUserInputRequired */) {
@@ -124,7 +122,6 @@ class TimerWorker(
                     context,
                     step.toNotificationBuilder(
                         context,
-                        workerId = id,
                         nextStepId = steps.findNextId(step),
                     ),
                     id = COFI_TIMER_NOTIFICATION_ID + step.id,
@@ -147,7 +144,6 @@ class TimerWorker(
                         context,
                         step.toNotificationBuilder(
                             context,
-                            workerId = id,
                             nextStepId = steps.findNextId(step),
                             progress,
                         ),

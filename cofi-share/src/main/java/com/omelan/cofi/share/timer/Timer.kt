@@ -293,7 +293,7 @@ object Timer {
 
         return TimerControllers(
             currentStep,
-            {
+            changeCurrentStep = {
                 currentStep = it
                 context.sendBroadcast(
                     TimerActions.createIntent(
