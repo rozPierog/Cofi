@@ -37,22 +37,19 @@ object TimerActions {
         recipeId: Int,
         stepId: Int?,
         alreadyDoneProgress: Float,
-    ): PendingIntent? {
-
-        return PendingIntent.getBroadcast(
+    ): PendingIntent? = PendingIntent.getBroadcast(
             context,
-            0,
+            SystemClock.elapsedRealtime().toInt(),
             createIntent(context, notificationAction, recipeId, stepId, alreadyDoneProgress),
             PendingIntent.FLAG_MUTABLE,
         )
     }
-}
 
 private const val ACTION_RECIPE_ID = "ACTION_RECIPE_ID"
 private const val ACTION_STEP_ID = "ACTION_STEP_ID"
 private const val ACTION_ALREADY_DONE_PROGRESS = "ACTION_ALREADY_DONE_PROGRESS"
 
-class TimerActionBroadcastReceiver() : BroadcastReceiver() {
+class TimerActionBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val recipeId = intent.getIntExtra(ACTION_RECIPE_ID, -1)
         val stepId = intent.getIntExtra(ACTION_STEP_ID, -1)

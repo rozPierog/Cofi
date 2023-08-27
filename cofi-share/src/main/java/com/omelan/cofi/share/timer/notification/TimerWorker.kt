@@ -2,6 +2,7 @@ package com.omelan.cofi.share.timer.notification
 
 import android.content.Context
 import android.os.SystemClock
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.res.ResourcesCompat
@@ -89,6 +90,7 @@ class TimerWorker(
         val action = valueMap[COFI_TIMER_NOTIFICATION_ACTION] as String?
         val db = AppDatabase.getInstance(context)
         val steps = db.stepDao().getStepsForRecipe(recipeId).asFlow().first()
+        Log.e("STARTING PROGRESS", startingProgress.toString())
         if (startingStepId == null) {
             postDoneNotification()
         }
