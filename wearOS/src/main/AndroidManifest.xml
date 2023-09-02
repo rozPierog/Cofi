@@ -22,7 +22,8 @@
         <activity
                 android:name=".presentation.MainActivity"
                 android:exported="true"
-                android:theme="@android:style/Theme.Material">
+                android:theme="@android:style/Theme.Material"
+                android:taskAffinity=".main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

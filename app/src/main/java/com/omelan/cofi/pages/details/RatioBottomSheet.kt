@@ -4,7 +4,6 @@ package com.omelan.cofi.pages.details
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -27,7 +26,6 @@ import com.omelan.cofi.share.utils.toStringShort
 import com.omelan.cofi.ui.Spacing
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RatioBottomSheet(
     timeMultiplier: Float,
