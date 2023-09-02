@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="step_type_water">水を入れる</string>
+    <string name="step_type_wait">待つ</string>
+    <string name="recipe_details_automation_dialog_title">ダイレクトリンク</string>
+    <string name="recipe_details_automation_dialog_text">このレシピに直接アクセスするには、このリンクを使用してください。 NFC タグに書き込むか、Tasker で自動化タスクを作成して、手軽に朝のコーヒーを淹れられます。
+\n注意：この方法ではレシピを共有できません。</string>
+    <string name="step_add_save">保存</string>
+    <string name="step_add_weight">重さ（g）</string>
+    <string name="step_add_duration">所要時間（秒）</string>
+    <string name="prepopulate_step_coffee">珈琲を入れる</string>
+    <string name="prepopulate_step_water">水を入れる</string>
+    <string name="step_type_add_coffee">珈琲を入れる</string>
+    <string name="step_add_name">名前</string>
+    <string name="recipe_edit_title">レシピの編集</string>
+    <string name="recipe_add_new_title">レシピの作成</string>
+    <string name="recipe_edit_name">名前</string>
+    <string name="recipe_edit_description">説明</string>
+    <string name="recipe_edit_description_button">説明を追加</string>
+    <string name="settings_title">設定</string>
+    <string name="settings_github_item">ギットハブリポジトリ</string>
+    <string name="prepopulate_step_wait">待つ</string>
+    <string name="step_type_other">その他</string>
+    <string name="recipe_unsaved_title">未保存の変更があります</string>
+    <string name="recipe_unsaved_text">破棄しますか？</string>
+</resources>

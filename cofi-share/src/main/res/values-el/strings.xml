@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cofi</string>
+    <string name="list_header">Cofi</string>
+    <string name="step_type_add_coffee">Προσθήκη καφέ</string>
+    <string name="step_type_water">Προσθήκη νερού</string>
+    <string name="step_type_wait">Περιμένετε</string>
+    <string name="step_type_other">Άλλο</string>
+    <string name="step_add_name">Όνομα</string>
+    <string name="step_add_duration">Διάρκεια (δ)</string>
+    <string name="step_add_weight">Βάρος (γραμμάρια)</string>
+    <string name="step_add_save">Αποθήκευση</string>
+    <string name="recipe_unsaved_title">Έχετε μη αποθηκευμένες αλλαγές</string>
+    <string name="recipe_unsaved_text">Θέλετε να τις απορρίψετε;</string>
+    <string name="recipe_delete_title">Είστε σίγουροι;</string>
+    <string name="recipe_delete_text">Αυτό θα διαγράψει αυτή τη συνταγή</string>
+    <string name="recipe_edit_name">Όνομα</string>
+    <string name="recipe_edit_description">Περιγραφή</string>
+    <string name="recipe_edit_description_button">Προσθήκη περιγραφής</string>
+    <string name="recipe_edit_title">Επεξεργασία συνταγής</string>
+    <string name="recipe_add_new_title">Δημιουργία νέας συνταγής</string>
+    <string name="recipe_details_automation_dialog_title">Σύνδεσμος</string>
+    <string name="recipe_details_automation_dialog_text">Χρησιμοποιήστε αυτόν τον σύνδεσμο για να μεταβείτε αμέσως σε αυτή τη συνταγή. Γράψτε τον σε μία ετικέτα NFC ή δημιουργήστε μια αυτοματοποιημένη διεργασία στο Tasker για να κάνετε τον πρωινό καφέ σας πιο εύκολο. 
+      \nΠΡΟΣΟΧΗ: Δεν μπορείτε να μοιραστείτε τη συνταγή με αυτόν τον τρόπο!</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="button_cancel">Ακύρωση</string>
+    <string name="button_delete">Διαγραφή</string>
+    <string name="button_discard">Απόρριψη</string>
+    <string name="button_continue_editing">Συνέχεια επεξεργασίας</string>
+    <string name="button_copy">Αντιγραφή</string>
+    <string name="snackbar_copied">Αντιγράφηκε!</string>
+    <string name="settings_licenses_title">Άδειες ανοικτού κώδικα</string>
+    <string name="settings_title">Ρυθμίσεις</string>
+    <string name="settings_about_item">Σχετικά με την εφαρμογή</string>
+    <string name="settings_pip_item">Εικόνα σε εικόνα</string>
+    <string name="settings_step_sound_item">Ήχος αλλαγής βήματος</string>
+    <string name="settings_bug_item">Αναφέρετε ένα σφάλμα ή προτείνετε μια λειτουργία</string>
+    <string name="settings_combine_weight_item">Συνδυασμός βάρους</string>
+    <string name="settings_combine_weight_all">Συνδυάστε κάθε βάρος</string>
+    <string name="settings_combine_weight_water">Συνδυάστε μόνο το βάρος του νερού</string>
+    <string name="settings_combine_weight_none">Μην συνδυάζετε το βάρος</string>
+    <string name="settings_about_title">Σχετικά</string>
+    <string name="settings_licenses_item">Ευχαριστίες</string>
+    <string name="settings_translate_item">Βοηθήστε στη μετάφραση του Cofi</string>
+    <string name="settings_github_item">Αποθετήριο στο Github</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Αντίγραφο %d συνταγής</item>
+        <item quantity="other">Αντίγραφα %d συνταγών</item>
+    </plurals>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Επαναφέρθηκε %d συνταγή</item>
+        <item quantity="other">Επαναφέρθηκαν %d συνταγές</item>
+    </plurals>
+    <string name="button_show">Εμφάνιση</string>
+    <string name="step_add_remove">Αφαίρεση</string>
+    <string name="timer_enjoy">Απολαύστε τον καφέ σας</string>
+    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_description">Συνταγή από: James Hoffmann
+    \nΠηγή: https://youtu.be/AI4ynXzkSQo
+    \nΜέγεθος αλέσης: medium fine
+    \nΘερμοκρασία: όσο πιο καυτό, τόσο το καλύτερο (ιδιαίτερα με ελαφρύτερα βρασίματα)</string>
+    <string name="prepopulate_v60_1cup_name">1 Κούπα V60</string>
+    <string name="prepopulate_v60_1cup_description">Συνταγή από: James Hoffmann
+    \nΠηγή: https://youtu.be/1oB1oDrDkHM
+    \nΠριν ξεκινήσετε, ζεστάνετε το V60 τοποθετώντας το χαρτί μέσα στον κώνο και ρίχνοντας ζεστό νερό πάνω στο χαρτί. Αυτό προθερμαίνει το V60 και προετοιμάζει το χαρτί για τη διαδικασία παρασκευής.
+    \nΜέγεθος αλέσης: fine - medium fine
+    \nΘερμοκρασία: όσο πιο καυτή, τόσο το καλύτερο (ιδιαίτερα με ελαφρύτερα ψησίματα)</string>
+    <string name="prepopulate_step_coffee">Προσθέστε καφέ</string>
+    <string name="prepopulate_step_water">Προσθέστε νερό</string>
+    <string name="prepopulate_step_swirl">Ανακατέψτε</string>
+    <string name="prepopulate_step_wait">Περιμένετε</string>
+    <string name="prepopulate_step_plunge">Πιέστε κάτω από την επιφάνεια και αδειάστε</string>
+    <string name="prepopulate_step_stir_crust">Ανακατέψτε την κρούστα</string>
+    <string name="prepopulate_step_scoop_coffee">Σκουπίστε τον αφρό και τα κομμάτια καφέ από την κορυφή</string>
+    <string name="prepopulate_frenchPress_name">French Press</string>
+    <string name="prepopulate_frenchPress_description">Συνταγή από: James Hoffmann
+    \nΠηγή: https://youtu.be/st571DYYTR8
+    \nΜέγεθος αλέσης: medium
+    \nΜπορείτε να ρίξετε μετά από 5 λεπτά του τελευταίου βήματος, αλλά όσο περισσότερο το κρατάτε τόσο καλύτερο γίνεται</string>
+    <string name="hoffmann_credits_title">Προεπιλεγμένες συνταγές από τον James Hoffmann</string>
+      <string name="hoffmann_credits_subtitle">Πηγαίνετε στο Youtube κανάλι του</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_chemex_description">Συνταγή από: James Hoffmann
+    \nΠηγή: https://youtu.be/ikt-X5x7yoc
+    \nΜέγεθος αλέσης: medium fine
+    \nΘερμοκρασία: όσο πιο καυτή, τόσο το καλύτερο (ιδιαίτερα με ελαφρύτερα βρασίματα)
+    \nΒεβαιωθείτε ότι η σκληρότερη πλευρά του φίλτρου βρίσκεται στην πλευρά της αποστράγγισης
+    \nΠροσέχτε να μην μπλοκάρετε τον αέρα που βγαίνει από τον καφετιέρα</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <string name="prepopulate_aero_step_piston">Τοποθετήστε το έμβολο 1εκ μέσα στην καφετιέρα</string>
+    <string name="prepopulate_aero_step_press">Πιέστε απαλά το έμβολο</string>
+    <string name="prepopulate_aero_description">Συνταγή από: James Hoffmann
+    \nΠηγή: https://youtu.be/j6VlT_jUVPc
+    \nΜέγεθος αλέσης: Για ελαφρύτερο ψήσιμο – λεπτότερο μέσο. Όσο πιο σκοτεινό γίνεται, τόσο περισσότερο μπορείτε να προτιμήσετε να αυξήσετε τη δόση και να κάνετε την άλεση πιο χοντρή
+    \nΘερμοκρασία: Για ελαφρύτερο ψήσιμο – φέρνετε σε βρασμό και χρησιμοποιείτε άμεσα. Για σκοτεινότερα ψησίματα – 85–90℃</string>
+    <string name="prepopulate_clever_dripper_name">Clever Dripper</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Ξεπλύνετε το φίλτρο με ζεστό νερό</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Σπάστε την κρούστα είτε ανακατεύοντας είτε κουνώντας το</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Τοποθετήστε πάνω σε μια κούπα και αφήστε τη να στραγγίξει πλήρως</string>
+    <string name="prepopulate_clever_dripper_description">Συνταγή  από: James Hoffmann
+    \nΠηγή: https://youtu.be/RpOdennxP24
+    \nΜέγεθος αλέσης: Medium-fine
+    \nΘερμοκρασία: Φέρνετε σε βρασμό και χρησιμοποιείτε άμεσα
+    \nΑναλογία: 1:16.67, ή 15g προς 250mL
+    \nΔιπλώστε το φίλτρο κατά μήκος και κατά πλάτος για να ταιριάζει καλύτερα μέσα στην καφετιέρα
+    \nΤο μέγιστο ποσό νερού είναι 500mL, αλλά συνιστάται 400 ή λιγότερο</string>
+    <string name="tereszkiewicz_credits_title">Εικονίδιο εφαρμογής από: Hubert Tereszkiewicz</string>
+    <string name="tereszkiewicz_credits_subtitle">Δείτε το Dribbble του</string>
+      <string name="recipe_create_title">Προσθήκη συνταγής</string>
+    <string name="recipe_clone_title">Κλωνοποίηση αυτής της συνταγής;</string>
+    <string name="recipe_clone_text">Αυτό θα δημιουργήσει ένα αντίγραφο αυτής της συνταγής</string>
+    <string name="recipe_clone_suffix">%1$s - Αντίγραφο</string>
+    <string name="app_version">Έκδοση εφαρμογής</string>
+    <string name="recipe_details_noTime">Πατήστε έναρξη για να συνεχίσετε</string>
+    <string name="step_add_duration_explainer">Η διάρκεια του βήματος καθορίζει πόσο χρόνο θα πάρει μια ενέργεια (σε δευτερόλεπτα). Αφήστε το κενό για να παύσετε τη συνταγή μέχρι να είστε έτοιμοι.</string>
+    <string name="settings_backup">Αντίγραφο ασφαλείας</string>
+    <string name="settings_restore">Επαναφορά</string>
+    <string name="settings_addDefault">Προσθήκη προεπιλεγμένων συνταγών</string>
+    <string name="settings_timer_item">Ρυθμίσεις χρονοδιακόπτη</string>
+    <string name="settings_backup_item">Αντίγραφο ασφαλείας/Επαναφορά</string>
+    <string name="settings_step_vibrate_item">Δόνηση αλλαγής βήματος</string>
+    <string name="recipe_details_multiply_time">Πολλαπλασιαστής χρόνου</string>
+    <string name="recipe_details_multiply_weight">Πολλαπλασιαστής βάρους</string>
+    <string name="infoBox_wearOS_title">Το Cofi είναι τώρα στο WearOS</string>
+    <string name="infoBox_wearOS_body">Κατεβάστε την εφαρμογή Cofi για το ρολόι WearOS σας!</string>
+    <string name="settings_sync_with_phone">Λήψη ρυθμίσεων από το τηλέφωνο</string>
+    <string name="name_grinder">Μύλος καφέ</string>
+    <string name="name_drip">Σταγόνα</string>
+    <string name="name_vietnamese_press">Φίλτρο Phin</string>
+    <string name="name_espresso">Μηχανή Espresso</string>
+    <string name="name_cold_brew">Κρύος καφές</string>
+    <string name="name_siphon">Σιφώνας</string>
+    <string name="name_cezve">Cezve</string>
+    <string name="name_cup">Κούπα</string>
+    <string name="support_dialog_title">Σας αρέσει το Cofi;</string>
+    <string name="support_dialog_body">Θα εκτιμούσα πολύ την υποστήριξή σας! Μπορείτε να με βοηθήσετε να συνεχίσω να κάνω αυτό που αγαπώ επιλέγοντας ένα ή περισσότερα από τα παρακάτω</string>
+    <string name="support_dialog_github">Δώστε ένα αστέρι στο Cofi στο GitHub</string>
+    <string name="support_dialog_mastodon">Ακολουθήστε μας στο Mastodon</string>
+      <string name="support_dialog_kofi">Κεράσέ με έναν καφέ</string>
+    <string name="support_dialog_review">Γράψτε μια κριτική</string>
+    <string name="support_title">Υποστηρίξτε το Cofi</string>
+
+    <string name="infoBox_update_title">Το Cofi έχει ενημερωθεί</string>
+    <string name="infoBox_update_body">Κάντε κλικ εδώ για να διαβάσετε τι έχει αλλάξει</string>
+    <string name="settings_step_next_step_item">Εμφάνιση επόμενου βήματος</string>
+    <string name="recipe_details_upNext">Επόμενο:</string>
+    <string name="settings_wearOS_item">Κατεβάστε για το WearOS</string>
+    <string name="recipe_details_change_step_toast">Πατήστε και κρατήστε για να αλλάξετε βήμα</string>
+    <string name="recipe_details_read_description">Διαβάστε την περιγραφή</string>
+    <string name="recipe_details_recipeRatio">Αναλογία συνταγής: 1:%1$s</string>
+    <string name="name_tea">Τσάι</string>
+    <string name="name_teapot">Τσαγιέρα</string>
+</resources>

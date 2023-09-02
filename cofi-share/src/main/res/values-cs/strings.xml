@@ -119,7 +119,7 @@
     <string name="name_cezve">Cezve</string>
     <string name="name_cup">Hrnek</string>
     <string name="support_dialog_title">Líbí se vám Cofi\?</string>
-    <string name="support_dialog_body">Byl bych velice rád za vaši podporu! Můžete mi pomoci s děláním toho co mám rád vybránín jednoho nebo více z následujících</string>
+    <string name="support_dialog_body">Byl bych velice rád za vaši podporu! Můžete mi pomoci s děláním toho co mám rád vybránín jednoho nebo více z následujících.</string>
     <string name="support_dialog_github">Dejte Cofi hvězdičku na GitHubu</string>
     <string name="support_dialog_mastodon">Sledujte mě na Mastodonu</string>
     <string name="infoBox_update_title">Cofi byla aktualizována</string>
