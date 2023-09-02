@@ -125,19 +125,6 @@ object Timer {
             derivedStateOf { steps.lastIndex }
         }
         val pauseAnimations = suspend {
-            context.sendBroadcast(
-                TimerActions.createIntent(
-                    context,
-                    TimerActions.Actions.ACTION_PAUSE,
-                    TimerData(
-                        recipeId = recipe.id,
-                        stepId = currentStep?.id,
-                        alreadyDoneProgress = animatedProgressValue.value,
-                        weightMultiplier,
-                        timeMultiplier,
-                    ),
-                ),
-            )
             animatedProgressColor.stop()
             animatedProgressValue.stop()
         }
@@ -206,19 +193,6 @@ object Timer {
         }
 
         val resumeAnimations: suspend () -> Unit = suspend {
-            context.sendBroadcast(
-                TimerActions.createIntent(
-                    context,
-                    TimerActions.Actions.ACTION_RESUME,
-                    TimerData(
-                        recipeId = recipe.id,
-                        stepId = currentStep?.id,
-                        alreadyDoneProgress = animatedProgressValue.value,
-                        weightMultiplier,
-                        timeMultiplier,
-                    ),
-                ),
-            )
             coroutineScope.launch {
                 progressAnimation(Unit)
             }
@@ -305,7 +279,7 @@ object Timer {
                         )
                     }
 
-                    Lifecycle.Event.ON_PAUSE -> {
+                    Lifecycle.Event.ON_STOP -> {
                         if (animatedProgressValue.isRunning && currentStep != null) {
                             context.sendBroadcast(
                                 TimerActions.createIntent(

@@ -24,6 +24,8 @@ data class TimerData(
     val timeMultiplier: Float,
 ) : Parcelable
 
+private const val ACTION_DATA = "ACTION_DATA"
+
 object TimerActions {
     enum class Actions {
         ACTION_PAUSE, ACTION_NEXT, ACTION_RESUME, ACTION_STOP
@@ -53,8 +55,6 @@ object TimerActions {
     )
 }
 
-private const val ACTION_DATA = "ACTION_DATA"
-
 class TimerActionBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val timerData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -77,8 +77,8 @@ class TimerActionBroadcastReceiver : BroadcastReceiver() {
             return
         }
         val inputData = workDataOf(
-            COFI_TIMER_NOTIFICATION_RECIPE_DATA to timerData.recipeId,
-            COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA to timerData.stepId,
+            COFI_TIMER_NOTIFICATION_RECIPE_ID to timerData.recipeId,
+            COFI_TIMER_NOTIFICATION_CURRENT_STEP_ID to timerData.stepId,
             COFI_TIMER_NOTIFICATION_START_TIME_DATA to SystemClock.elapsedRealtime(),
             COFI_TIMER_NOTIFICATION_PROGRESS to timerData.alreadyDoneProgress,
             COFI_TIMER_NOTIFICATION_WEIGHT_MULTIPLIER to timerData.weightMultiplier,

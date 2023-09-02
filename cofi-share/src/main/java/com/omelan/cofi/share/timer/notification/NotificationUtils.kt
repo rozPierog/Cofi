@@ -15,6 +15,7 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.utils.roundToDecimals
+import com.omelan.cofi.share.utils.toMillis
 import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.share.utils.toStringShort
 import kotlin.math.roundToInt
@@ -31,13 +32,13 @@ fun Context.createChannel() {
     }
 }
 
-fun createValueText(
+fun createContentText(
     context: Context,
     step: Step,
     currentProgress: Float,
     weightMultiplier: Float,
     timeMultiplier: Float,
-): String {
+): String? {
     val alreadyDoneWeight = 0f
     val valueText = step.value?.let {
         val currentValueFromProgress = (it * currentProgress)
@@ -62,8 +63,26 @@ fun createValueText(
 
     val timeText =
         step.time?.let { " (${(it * timeMultiplier).roundToInt().toStringDuration()})" } ?: ""
-    return "$valueText$timeText"
+    return "$valueText$timeText".ifBlank { null }
 }
+
+fun createDoneNotification(recipe: Recipe, context: Context) =
+    NotificationCompat.Builder(context, TIMER_CHANNEL_ID).apply {
+        setContentTitle(context.getString(R.string.timer_enjoy))
+        setSubText(recipe.name)
+        setSmallIcon(R.drawable.ic_monochrome)
+        setVisibility(VISIBILITY_PUBLIC)
+        setOnlyAlertOnce(false)
+        setAutoCancel(true)
+        setOngoing(false)
+        setTimeoutAfter(600.toMillis().toLong())
+        color = ResourcesCompat.getColor(
+            context.resources,
+            R.color.ic_launcher_background,
+            null,
+        )
+        setColorized(false)
+    }
 
 fun Step.toNotificationBuilder(
     context: Context,
@@ -75,118 +94,110 @@ fun Step.toNotificationBuilder(
     isPaused: Boolean = false,
 ): NotificationCompat.Builder {
     val step = this
-    val builder =
-        NotificationCompat.Builder(context, TIMER_CHANNEL_ID).run {
-            setContentTitle("${recipe.name}: ${step.name}")
-            setContentText(
-                createValueText(
-                    context,
-                    step,
-                    currentProgress,
-                    weightMultiplier,
-                    timeMultiplier,
+    return NotificationCompat.Builder(context, TIMER_CHANNEL_ID).run {
+        setSubText(recipe.name)
+        setContentTitle(step.name)
+        setContentText(
+            createContentText(
+                context,
+                step,
+                currentProgress,
+                weightMultiplier,
+                timeMultiplier,
+            ),
+        )
+        setSmallIcon(step.type.iconRes)
+        setVisibility(VISIBILITY_PUBLIC)
+        setCategory(NotificationCompat.CATEGORY_ALARM)
+        setOnlyAlertOnce(true)
+        setAutoCancel(true)
+        setOngoing(true)
+        color = ResourcesCompat.getColor(
+            context.resources,
+            R.color.ic_launcher_background,
+            null,
+        )
+        setColorized(true)
+        if (step.time != null) {
+            setProgress(
+                1000,
+                (currentProgress * 1000).roundToInt(),
+                false,
+            )
+        }
+        if (step.isUserInputRequired) {
+            addAction(
+                NotificationCompat.Action(
+                    R.drawable.ic_monochrome,
+                    "Continue",
+                    TimerActions.createPendingIntent(
+                        context,
+                        TimerActions.Actions.ACTION_NEXT,
+                        TimerData(
+                            recipeId,
+                            stepId = nextStepId,
+                            alreadyDoneProgress = 0f,
+                            weightMultiplier,
+                            timeMultiplier,
+                        ),
+                    ),
                 ),
             )
-            setSmallIcon(step.type.iconRes)
-            setVisibility(VISIBILITY_PUBLIC)
-            setCategory(NotificationCompat.CATEGORY_ALARM)
-            setOnlyAlertOnce(true)
-            setAutoCancel(true)
-            setOngoing(true)
-            color = ResourcesCompat.getColor(
-                context.resources,
-                R.color.ic_launcher_background,
-                null,
+        } else if (isPaused) {
+            addAction(
+                NotificationCompat.Action(
+                    R.drawable.ic_monochrome,
+                    "Continue",
+                    TimerActions.createPendingIntent(
+                        context,
+                        TimerActions.Actions.ACTION_RESUME,
+                        TimerData(
+                            recipeId,
+                            stepId = step.id,
+                            alreadyDoneProgress = currentProgress,
+                            weightMultiplier,
+                            timeMultiplier,
+                        ),
+                    ),
+                ),
             )
-            setColorized(true)
-            if (step.time != null) {
-                setProgress(
-                    1000,
-                    (currentProgress * 1000).roundToInt(),
-                    false,
-                )
-            }
-            if (step.isUserInputRequired) {
-                addAction(
-                    NotificationCompat.Action(
-                        R.drawable.ic_monochrome,
-                        "Continue",
-                        TimerActions.createPendingIntent(
-                            context,
-                            TimerActions.Actions.ACTION_NEXT,
-                            TimerData(
-                                recipeId,
-                                stepId = nextStepId,
-                                alreadyDoneProgress = 0f,
-                                weightMultiplier,
-                                timeMultiplier,
-                            )
+            addAction(
+                NotificationCompat.Action(
+                    R.drawable.ic_monochrome,
+                    "Stop",
+                    TimerActions.createPendingIntent(
+                        context,
+                        TimerActions.Actions.ACTION_STOP,
+                        TimerData(
+                            recipeId,
+                            stepId = step.id,
+                            alreadyDoneProgress = currentProgress,
+                            weightMultiplier,
+                            timeMultiplier,
                         ),
                     ),
-                )
-            } else if (isPaused) {
-                addAction(
-                    NotificationCompat.Action(
-                        R.drawable.ic_monochrome,
-                        "Continue",
-                        TimerActions.createPendingIntent(
-                            context,
-                            TimerActions.Actions.ACTION_RESUME,
-                            TimerData(
-                                recipeId,
-                                stepId = step.id,
-                                alreadyDoneProgress = currentProgress,
-                                weightMultiplier,
-                                timeMultiplier,
-                            )
+                ),
+            )
+        } else {
+            addAction(
+                NotificationCompat.Action(
+                    R.drawable.ic_monochrome,
+                    "Pause",
+                    TimerActions.createPendingIntent(
+                        context,
+                        TimerActions.Actions.ACTION_PAUSE,
+                        TimerData(
+                            recipeId,
+                            stepId = step.id,
+                            alreadyDoneProgress = currentProgress,
+                            weightMultiplier,
+                            timeMultiplier,
                         ),
                     ),
-                )
-                addAction(
-                    NotificationCompat.Action(
-                        R.drawable.ic_monochrome,
-                        "Stop",
-                        TimerActions.createPendingIntent(
-                            context,
-                            TimerActions.Actions.ACTION_STOP,
-                            TimerData(
-                                recipeId,
-                                stepId = step.id,
-                                alreadyDoneProgress = currentProgress,
-                                weightMultiplier,
-                                timeMultiplier,
-                            )
-                        ),
-                    ),
-                )
-            } else {
-                addAction(
-                    NotificationCompat.Action(
-                        R.drawable.ic_monochrome,
-                        "Pause",
-                        TimerActions.createPendingIntent(
-                            context,
-                            TimerActions.Actions.ACTION_PAUSE,
-                            TimerData(
-                                recipeId,
-                                stepId = step.id,
-                                alreadyDoneProgress = currentProgress,
-                                weightMultiplier,
-                                timeMultiplier,
-                            )
-                        ),
-                    ),
-                )
-            }
+                ),
+            )
         }
-//    val taskDetailIntent = Intent(
-//        Intent.ACTION_VIEW,
-//        "$appDeepLinkUrl/recipe/$recipeId".toUri(),
-//    )
-//    val pendingIntent =
-//        PendingIntent.getActivity(context, 0, taskDetailIntent, PendingIntent.FLAG_IMMUTABLE)
-//    builder.setContentIntent(pendingIntent)
-    return builder
+    }
 }
 
 fun postTimerNotification(
@@ -195,14 +206,11 @@ fun postTimerNotification(
     id: Int = System.currentTimeMillis().toInt(),
     tag: String = id.toString(),
 ) {
-    NotificationManagerCompat.from(context).apply {
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        notify(tag, id, notificationBuilder.build())
+    if (
+        ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+        == PackageManager.PERMISSION_GRANTED
+    ) {
+        context.createChannel()
+        NotificationManagerCompat.from(context).notify(tag, id, notificationBuilder.build())
     }
 }
