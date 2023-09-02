@@ -89,6 +89,7 @@ class TimerWorker(
         val startingProgress = valueMap[COFI_TIMER_NOTIFICATION_PROGRESS] as Float? ?: 0f
         val action = valueMap[COFI_TIMER_NOTIFICATION_ACTION] as String?
         val db = AppDatabase.getInstance(context)
+        val recipe = db.recipeDao().get(recipeId).asFlow().first()
         val steps = db.stepDao().getStepsForRecipe(recipeId).asFlow().first()
         Log.e("STARTING PROGRESS", startingProgress.toString())
         if (startingStepId == null) {
@@ -101,6 +102,7 @@ class TimerWorker(
             context,
             initialStep.toNotificationBuilder(
                 context,
+                recipe = recipe,
                 nextStepId = steps.findNextId(initialStep),
                 currentProgress = startingProgress,
                 isPaused = isPaused,
@@ -122,6 +124,7 @@ class TimerWorker(
                     context,
                     step.toNotificationBuilder(
                         context,
+                        recipe = recipe,
                         nextStepId = steps.findNextId(step),
                     ),
                     id = COFI_TIMER_NOTIFICATION_ID + step.id,
@@ -144,6 +147,7 @@ class TimerWorker(
                         context,
                         step.toNotificationBuilder(
                             context,
+                            recipe = recipe,
                             nextStepId = steps.findNextId(step),
                             progress,
                         ),
