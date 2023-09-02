@@ -103,8 +103,6 @@ fun RecipeDetails(
     val dataStore = DataStore(LocalContext.current)
 
     val ambientController = LocalAmbientModeProvider.current
-    var weightMultiplier by remember { mutableStateOf(1.0f) }
-    var timeMultiplier by remember { mutableStateOf(1.0f) }
     val combinedTime by remember(steps) {
         derivedStateOf {
             steps.sumOf { it.time ?: 0 }
@@ -154,7 +152,6 @@ fun RecipeDetails(
         onRecipeEnd = { },
         dataStore = dataStore,
         doneTrackColor = MaterialTheme.colors.primary,
-        timeMultiplier = timeMultiplier,
     )
     val context = LocalContext.current
     val ambientEnabled: Boolean = remember(LocalLifecycleOwner.current) {
@@ -213,14 +210,14 @@ fun RecipeDetails(
                     allSteps = steps,
                     recipe = recipe,
                     dataStore = dataStore,
-                    weightMultiplier = weightMultiplier,
-                    timeMultiplier = timeMultiplier,
+                    weightMultiplier = timerControllers.weightMultiplier,
+                    timeMultiplier = timerControllers.timeMultiplier,
                 )
 
                 1 -> Row {
                     MultiplierPage(
-                        multiplier = weightMultiplier,
-                        changeMultiplier = { weightMultiplier = it },
+                        multiplier = timerControllers.weightMultiplier,
+                        changeMultiplier = timerControllers.changeWeightMultiplier,
                         requestFocus = pagerState.currentPage == 1,
                     ) {
                         Text(text = "x$it")
@@ -236,8 +233,8 @@ fun RecipeDetails(
                 }
 
                 2 -> MultiplierPage(
-                    multiplier = timeMultiplier,
-                    changeMultiplier = { timeMultiplier = it },
+                    multiplier = timerControllers.timeMultiplier,
+                    changeMultiplier = timerControllers.changeTimeMultiplier,
                     requestFocus = pagerState.currentPage == 2,
                 ) {
                     Text(text = "x$it")

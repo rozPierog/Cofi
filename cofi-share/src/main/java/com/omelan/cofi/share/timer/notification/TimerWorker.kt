@@ -2,7 +2,6 @@ package com.omelan.cofi.share.timer.notification
 
 import android.content.Context
 import android.os.SystemClock
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.res.ResourcesCompat
@@ -25,11 +24,15 @@ const val COFI_TIMER_NOTIFICATION_TAG = "cofi_notification_timer"
 const val COFI_TIMER_NOTIFICATION_RECIPE_DATA = "cofi_timer_notification_recipe_data"
 const val COFI_TIMER_NOTIFICATION_START_TIME_DATA = "cofi_timer_notification_start_time_data"
 const val COFI_TIMER_NOTIFICATION_PROGRESS = "cofi_timer_notification_progress"
+const val COFI_TIMER_NOTIFICATION_WEIGHT_MULTIPLIER = "cofi_timer_notification_weight_multiplier"
+const val COFI_TIMER_NOTIFICATION_TIME_MULTIPLIER = "cofi_timer_notification_time_multiplier"
 const val COFI_TIMER_NOTIFICATION_ACTION = "cofi_timer_notification_action"
 const val COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA = "cofi_timer_notification_current_step_data"
 const val WORKER_PROGRESS_STEP = "cofi_worker_progress_step_id"
 const val WORKER_PROGRESS_PROGRESS = "cofi_worker_progress_progress"
 const val WORKER_PROGRESS_IS_PAUSED = "cofi_worker_progress_is_paused"
+const val WORKER_PROGRESS_WEIGHT_MULTIPLIER = "cofi_worker_progress_weight_multiplier"
+const val WORKER_PROGRESS_TIME_MULTIPLIER = "cofi_worker_progress_time_multiplier"
 
 
 private fun List<Step>.findNextId(currentStep: Step) = try {
@@ -87,11 +90,12 @@ class TimerWorker(
         val startingStepId = valueMap[COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA] as Int?
         val startingTime = valueMap[COFI_TIMER_NOTIFICATION_START_TIME_DATA] as Long
         val startingProgress = valueMap[COFI_TIMER_NOTIFICATION_PROGRESS] as Float? ?: 0f
+        val weightMultiplier = valueMap[COFI_TIMER_NOTIFICATION_WEIGHT_MULTIPLIER] as Float? ?: 0f
+        val timeMultiplier = valueMap[COFI_TIMER_NOTIFICATION_TIME_MULTIPLIER] as Float? ?: 0f
         val action = valueMap[COFI_TIMER_NOTIFICATION_ACTION] as String?
         val db = AppDatabase.getInstance(context)
         val recipe = db.recipeDao().get(recipeId).asFlow().first()
         val steps = db.stepDao().getStepsForRecipe(recipeId).asFlow().first()
-        Log.e("STARTING PROGRESS", startingProgress.toString())
         if (startingStepId == null) {
             postDoneNotification()
         }
@@ -104,6 +108,8 @@ class TimerWorker(
                 context,
                 recipe = recipe,
                 nextStepId = steps.findNextId(initialStep),
+                weightMultiplier = weightMultiplier,
+                timeMultiplier = timeMultiplier,
                 currentProgress = startingProgress,
                 isPaused = isPaused,
             ),
@@ -118,6 +124,8 @@ class TimerWorker(
                         WORKER_PROGRESS_STEP to step.id,
                         WORKER_PROGRESS_PROGRESS to startingProgress,
                         WORKER_PROGRESS_IS_PAUSED to true,
+                        WORKER_PROGRESS_WEIGHT_MULTIPLIER to weightMultiplier,
+                        WORKER_PROGRESS_TIME_MULTIPLIER to timeMultiplier,
                     ),
                 )
                 postTimerNotification(
@@ -125,6 +133,8 @@ class TimerWorker(
                     step.toNotificationBuilder(
                         context,
                         recipe = recipe,
+                        weightMultiplier = weightMultiplier,
+                        timeMultiplier = timeMultiplier,
                         nextStepId = steps.findNextId(step),
                     ),
                     id = COFI_TIMER_NOTIFICATION_ID + step.id,
@@ -132,15 +142,20 @@ class TimerWorker(
                 )
                 return
             }
+
+            val stepTimeCalculated = step.time.toLong() * timeMultiplier
+
             fun createCountDownTimer(millis: Long) = tickerFlow(millis)
                 .distinctUntilChanged()
                 .onEach {
-                    val progress = ((step.time - it).toFloat() / step.time)
+                    val progress = ((stepTimeCalculated - it).toFloat() / stepTimeCalculated)
                     setProgress(
                         workDataOf(
                             WORKER_PROGRESS_STEP to step.id,
                             WORKER_PROGRESS_PROGRESS to progress,
                             WORKER_PROGRESS_IS_PAUSED to false,
+                            WORKER_PROGRESS_WEIGHT_MULTIPLIER to weightMultiplier,
+                            WORKER_PROGRESS_TIME_MULTIPLIER to timeMultiplier,
                         ),
                     )
                     postTimerNotification(
@@ -148,6 +163,8 @@ class TimerWorker(
                         step.toNotificationBuilder(
                             context,
                             recipe = recipe,
+                            weightMultiplier = weightMultiplier,
+                            timeMultiplier = timeMultiplier,
                             nextStepId = steps.findNextId(step),
                             progress,
                         ),
@@ -169,7 +186,7 @@ class TimerWorker(
 
             val currentTime = SystemClock.elapsedRealtime()
             val offset = if (step.id == initialStep.id) currentTime - startingTime else 0
-            val millisToCount = ((step.time.toLong()) * (1 - startingProgress) - offset).toLong()
+            val millisToCount = (stepTimeCalculated * (1 - startingProgress) - offset).toLong()
             val countDownTimer = createCountDownTimer(millisToCount)
             countDownTimer.start()
         }
@@ -181,6 +198,8 @@ class TimerWorker(
                     WORKER_PROGRESS_STEP to initialStep.id,
                     WORKER_PROGRESS_PROGRESS to startingProgress,
                     WORKER_PROGRESS_IS_PAUSED to true,
+                    WORKER_PROGRESS_WEIGHT_MULTIPLIER to weightMultiplier,
+                    WORKER_PROGRESS_TIME_MULTIPLIER to timeMultiplier,
                 ),
             )
         }

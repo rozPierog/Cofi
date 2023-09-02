@@ -24,10 +24,7 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
-import com.omelan.cofi.share.timer.notification.TimerActions
-import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_IS_PAUSED
-import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_PROGRESS
-import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_STEP
+import com.omelan.cofi.share.timer.notification.*
 import com.omelan.cofi.share.utils.Haptics
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.roundToDecimals
@@ -46,6 +43,10 @@ data class TimerControllers(
     val indexOfCurrentStep: Int,
     val animatedProgressValue: Animatable<Float, AnimationVector1D>,
     val animatedProgressColor: Animatable<Color, AnimationVector4D>,
+    val weightMultiplier: Float,
+    val changeWeightMultiplier: (Float) -> Unit,
+    val timeMultiplier: Float,
+    val changeTimeMultiplier: (Float) -> Unit,
     val pauseAnimations: suspend () -> Unit,
     val progressAnimation: suspend (Unit) -> Unit,
     val startAnimations: suspend () -> Unit,
@@ -96,13 +97,14 @@ object Timer {
         onRecipeEnd: () -> Unit,
         dataStore: DataStore,
         doneTrackColor: Color,
-        timeMultiplier: Float = 1f,
     ): TimerControllers {
         val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
             .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
         val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
             .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
         var currentStep by remember { mutableStateOf<Step?>(null) }
+        var weightMultiplier by remember { mutableStateOf(1.0f) }
+        var timeMultiplier by remember { mutableStateOf(1.0f) }
         var isDone by remember { mutableStateOf(false) }
         val isDarkMode = isSystemInDarkTheme()
         val animatedProgressColor =
@@ -127,9 +129,13 @@ object Timer {
                 TimerActions.createIntent(
                     context,
                     TimerActions.Actions.ACTION_PAUSE,
-                    recipeId = recipe.id,
-                    stepId = currentStep?.id,
-                    alreadyDoneProgress = animatedProgressValue.value,
+                    TimerData(
+                        recipeId = recipe.id,
+                        stepId = currentStep?.id,
+                        alreadyDoneProgress = animatedProgressValue.value,
+                        weightMultiplier,
+                        timeMultiplier,
+                    ),
                 ),
             )
             animatedProgressColor.stop()
@@ -204,9 +210,13 @@ object Timer {
                 TimerActions.createIntent(
                     context,
                     TimerActions.Actions.ACTION_RESUME,
-                    recipeId = recipe.id,
-                    stepId = currentStep?.id,
-                    alreadyDoneProgress = animatedProgressValue.value,
+                    TimerData(
+                        recipeId = recipe.id,
+                        stepId = currentStep?.id,
+                        alreadyDoneProgress = animatedProgressValue.value,
+                        weightMultiplier,
+                        timeMultiplier,
+                    ),
                 ),
             )
             coroutineScope.launch {
@@ -258,11 +268,16 @@ object Timer {
                                         return
                                     }
                                     val stepID = progress.getInt(WORKER_PROGRESS_STEP, 0)
+                                    weightMultiplier = progress.getFloat(
+                                        WORKER_PROGRESS_TIME_MULTIPLIER, 1f)
+                                    timeMultiplier = progress.getFloat(
+                                        WORKER_PROGRESS_WEIGHT_MULTIPLIER, 1f)
                                     val stepProgress =
                                         progress.getFloat(WORKER_PROGRESS_PROGRESS, 0f)
                                     val isPaused =
                                         progress.getBoolean(WORKER_PROGRESS_IS_PAUSED, false)
                                     currentStep = steps.firstOrNull { it.id == stepID }
+
                                     coroutineScope.launch {
                                         animatedProgressValue.snapTo(stepProgress)
                                         if (isPaused) {
@@ -276,9 +291,13 @@ object Timer {
                                         TimerActions.createIntent(
                                             context,
                                             TimerActions.Actions.ACTION_STOP,
-                                            recipeId = recipe.id,
-                                            stepId = stepID,
-                                            alreadyDoneProgress = stepProgress,
+                                            TimerData(
+                                                recipeId = recipe.id,
+                                                stepId = stepID,
+                                                alreadyDoneProgress = stepProgress,
+                                                timeMultiplier,
+                                                weightMultiplier,
+                                            ),
                                         ),
                                     )
                                 }
@@ -292,9 +311,13 @@ object Timer {
                                 TimerActions.createIntent(
                                     context,
                                     TimerActions.Actions.ACTION_RESUME,
-                                    recipeId = recipe.id,
-                                    stepId = currentStep!!.id,
-                                    alreadyDoneProgress = animatedProgressValue.value,
+                                    TimerData(
+                                        recipeId = recipe.id,
+                                        stepId = currentStep?.id,
+                                        alreadyDoneProgress = animatedProgressValue.value,
+                                        timeMultiplier,
+                                        weightMultiplier,
+                                    ),
                                 ),
                             )
                         }
@@ -317,9 +340,13 @@ object Timer {
                     TimerActions.createIntent(
                         context,
                         TimerActions.Actions.ACTION_NEXT,
-                        recipeId = recipe.id,
-                        stepId = it?.id,
-                        alreadyDoneProgress = 0f,
+                        TimerData(
+                            recipeId = recipe.id,
+                            stepId = it?.id,
+                            alreadyDoneProgress = 0f,
+                            timeMultiplier,
+                            weightMultiplier,
+                        ),
                     ),
                 )
             },
@@ -328,6 +355,10 @@ object Timer {
             indexOfCurrentStep,
             animatedProgressValue,
             animatedProgressColor,
+            weightMultiplier,
+            { weightMultiplier = it },
+            timeMultiplier,
+            { timeMultiplier = it },
             pauseAnimations,
             progressAnimation,
             resumeAnimations,

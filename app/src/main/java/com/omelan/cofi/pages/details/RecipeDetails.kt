@@ -209,8 +209,6 @@ fun RecipeDetails(
 
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
 
-    var weightMultiplier by remember { mutableStateOf(1.0f) }
-    var timeMultiplier by remember { mutableStateOf(1.0f) }
     var ratioSheetIsVisible by remember {
         mutableStateOf(false)
     }
@@ -223,6 +221,10 @@ fun RecipeDetails(
         indexOfCurrentStep,
         animatedProgressValue,
         animatedProgressColor,
+        weightMultiplier,
+        changeWeightMultiplier,
+        timeMultiplier,
+        changeTimeMultiplier,
         pauseAnimations,
         progressAnimation,
         resumeAnimations,
@@ -233,7 +235,6 @@ fun RecipeDetails(
         onRecipeEnd = { onRecipeEnd(recipe) },
         dataStore = dataStore,
         doneTrackColor = MaterialTheme.colorScheme.primary,
-        timeMultiplier = timeMultiplier,
     )
 
     val nextStep = remember(indexOfCurrentStep, steps) {
@@ -470,9 +471,9 @@ fun RecipeDetails(
         if (ratioSheetIsVisible) {
             RatioBottomSheet(
                 timeMultiplier = timeMultiplier,
-                setTimeMultiplier = { newValue -> timeMultiplier = newValue },
+                setTimeMultiplier = changeTimeMultiplier,
                 weightMultiplier = weightMultiplier,
-                setWeightMultiplier = { newValue -> weightMultiplier = newValue },
+                setWeightMultiplier = changeWeightMultiplier,
                 onDismissRequest = { ratioSheetIsVisible = false },
                 allSteps = steps,
             )

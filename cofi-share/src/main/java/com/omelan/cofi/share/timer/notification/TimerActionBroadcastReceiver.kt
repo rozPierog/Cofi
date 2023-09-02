@@ -4,12 +4,25 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.Parcelable
 import android.os.SystemClock
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import kotlinx.parcelize.Parcelize
+
+
+@Parcelize
+data class TimerData(
+    val recipeId: Int,
+    val stepId: Int?,
+    val alreadyDoneProgress: Float,
+    val weightMultiplier: Float,
+    val timeMultiplier: Float,
+) : Parcelable
 
 object TimerActions {
     enum class Actions {
@@ -19,59 +32,57 @@ object TimerActions {
     fun createIntent(
         context: Context,
         notificationAction: Actions,
-        recipeId: Int,
-        stepId: Int?,
-        alreadyDoneProgress: Float,
+        timerData: TimerData,
     ): Intent {
         val actionIntent = Intent(context, TimerActionBroadcastReceiver::class.java).apply {
             action = notificationAction.name
         }
-        actionIntent.putExtra(ACTION_RECIPE_ID, recipeId)
-        actionIntent.putExtra(ACTION_ALREADY_DONE_PROGRESS, alreadyDoneProgress)
-        actionIntent.putExtra(ACTION_STEP_ID, stepId)
+        actionIntent.putExtra(ACTION_DATA, timerData)
         return actionIntent
     }
 
     fun createPendingIntent(
         context: Context,
         notificationAction: Actions,
-        recipeId: Int,
-        stepId: Int?,
-        alreadyDoneProgress: Float,
+        timerData: TimerData,
     ): PendingIntent? = PendingIntent.getBroadcast(
         context,
         SystemClock.elapsedRealtime().toInt(),
-        createIntent(context, notificationAction, recipeId, stepId, alreadyDoneProgress),
+        createIntent(context, notificationAction, timerData),
         PendingIntent.FLAG_MUTABLE,
     )
 }
 
-private const val ACTION_RECIPE_ID = "ACTION_RECIPE_ID"
-private const val ACTION_STEP_ID = "ACTION_STEP_ID"
-private const val ACTION_ALREADY_DONE_PROGRESS = "ACTION_ALREADY_DONE_PROGRESS"
+private const val ACTION_DATA = "ACTION_DATA"
 
 class TimerActionBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val recipeId = intent.getIntExtra(ACTION_RECIPE_ID, -1)
-        val stepId = intent.getIntExtra(ACTION_STEP_ID, -1)
-        val alreadyDoneProgress = intent.getFloatExtra(ACTION_ALREADY_DONE_PROGRESS, -1f)
-        if (recipeId < 0) {
-            throw Exception("recipeId is ${recipeId}, that shouldn't happen")
+        val timerData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(ACTION_DATA, TimerData::class.java)
+        } else {
+            intent.getParcelableExtra(ACTION_DATA) as TimerData?
+        }
+        if (timerData == null) {
+            return
+        }
+        if (timerData.recipeId < 0) {
+            throw Exception("recipeId is ${timerData.recipeId}, that shouldn't happen")
         }
         val workManager = WorkManager.getInstance(context)
 
-        if (intent.action == TimerActions.Actions.ACTION_STOP.name) {
-            workManager.cancelUniqueWork("cofi_$recipeId")
+        if (intent.action == TimerActions.Actions.ACTION_STOP.name && timerData.stepId != null) {
+            workManager.cancelUniqueWork("cofi_${timerData.recipeId}")
             NotificationManagerCompat.from(context)
-                .cancel(COFI_TIMER_NOTIFICATION_TAG, COFI_TIMER_NOTIFICATION_ID + stepId)
+                .cancel(COFI_TIMER_NOTIFICATION_TAG, COFI_TIMER_NOTIFICATION_ID + timerData.stepId)
             return
         }
-
         val inputData = workDataOf(
-            COFI_TIMER_NOTIFICATION_RECIPE_DATA to recipeId,
-            COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA to stepId,
+            COFI_TIMER_NOTIFICATION_RECIPE_DATA to timerData.recipeId,
+            COFI_TIMER_NOTIFICATION_CURRENT_STEP_DATA to timerData.stepId,
             COFI_TIMER_NOTIFICATION_START_TIME_DATA to SystemClock.elapsedRealtime(),
-            COFI_TIMER_NOTIFICATION_PROGRESS to alreadyDoneProgress,
+            COFI_TIMER_NOTIFICATION_PROGRESS to timerData.alreadyDoneProgress,
+            COFI_TIMER_NOTIFICATION_WEIGHT_MULTIPLIER to timerData.weightMultiplier,
+            COFI_TIMER_NOTIFICATION_TIME_MULTIPLIER to timerData.timeMultiplier,
             COFI_TIMER_NOTIFICATION_ACTION to intent.action,
         )
         val updatedWorkRequest = OneTimeWorkRequestBuilder<TimerWorker>()
@@ -79,7 +90,7 @@ class TimerActionBroadcastReceiver : BroadcastReceiver() {
             .build()
 
         workManager.enqueueUniqueWork(
-            "cofi_$recipeId",
+            "cofi_${timerData.recipeId}",
             ExistingWorkPolicy.REPLACE,
             updatedWorkRequest,
         )
