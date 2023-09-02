@@ -5,6 +5,7 @@ import android.os.SystemClock
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.asFlow
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.omelan.cofi.share.model.AppDatabase
@@ -15,6 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
+
 private fun List<Step>.findNextId(currentStep: Step) = try {
     this[this.indexOf(currentStep) + 1].id
 } catch (e: IndexOutOfBoundsException) {
@@ -26,10 +28,10 @@ class TimerWorker(
     private val workerParams: WorkerParameters,
 ) : CoroutineWorker(context, workerParams) {
 
-    private fun tickerFlow(duration: Long, period: Duration = 500.milliseconds) = flow {
-        for (i in duration / 500 downTo 0L) {
-            emit(i * 500)
-            delay(period)
+    private fun tickerFlow(duration: Duration, step: Duration = 500.milliseconds) = flow {
+        for (i in 0L..duration.inWholeMilliseconds / step.inWholeMilliseconds) {
+            emit(i * step.inWholeMilliseconds)
+            delay(step)
         }
     }
 
@@ -53,18 +55,18 @@ class TimerWorker(
         val valueMap = workerParams.inputData.keyValueMap
         val recipeId = valueMap[COFI_TIMER_NOTIFICATION_RECIPE_ID] as Int
         val startingStepId = valueMap[COFI_TIMER_NOTIFICATION_CURRENT_STEP_ID] as Int?
-        val startingTime = valueMap[COFI_TIMER_NOTIFICATION_START_TIME_DATA] as Long
+        val startingRealtime = valueMap[COFI_TIMER_NOTIFICATION_START_TIME_DATA] as Long
         val startingProgress = valueMap[COFI_TIMER_NOTIFICATION_PROGRESS] as Float? ?: 0f
         val weightMultiplier = valueMap[COFI_TIMER_NOTIFICATION_WEIGHT_MULTIPLIER] as Float? ?: 0f
         val timeMultiplier = valueMap[COFI_TIMER_NOTIFICATION_TIME_MULTIPLIER] as Float? ?: 0f
         val action = valueMap[COFI_TIMER_NOTIFICATION_ACTION] as String?
+        val isPaused = action == TimerActions.Actions.ACTION_PAUSE.name
         val db = AppDatabase.getInstance(context)
         val recipe = db.recipeDao().get(recipeId).asFlow().first()
         val steps = db.stepDao().getStepsForRecipe(recipeId).asFlow().first()
         if (startingStepId == null) {
             postDoneNotification(recipe)
         }
-        val isPaused = action == TimerActions.Actions.ACTION_PAUSE.name
         val initialStep =
             steps.find { it.id == startingStepId } ?: return@coroutineScope Result.failure()
 
@@ -72,16 +74,15 @@ class TimerWorker(
             step: Step,
             progress: Float = 1f,
             isPaused: Boolean = false,
-        ) {
-            setProgress(
-                workDataOf(
-                    WORKER_PROGRESS_STEP to step.id,
-                    WORKER_PROGRESS_PROGRESS to progress,
-                    WORKER_PROGRESS_IS_PAUSED to isPaused,
-                    WORKER_PROGRESS_WEIGHT_MULTIPLIER to weightMultiplier,
-                    WORKER_PROGRESS_TIME_MULTIPLIER to timeMultiplier,
-                ),
+        ): Data {
+            val progressData = workDataOf(
+                WORKER_PROGRESS_STEP to step.id,
+                WORKER_PROGRESS_PROGRESS to progress,
+                WORKER_PROGRESS_IS_PAUSED to isPaused,
+                WORKER_PROGRESS_WEIGHT_MULTIPLIER to weightMultiplier,
+                WORKER_PROGRESS_TIME_MULTIPLIER to timeMultiplier,
             )
+            setProgress(progressData)
             postTimerNotification(
                 context,
                 step.toNotificationBuilder(
@@ -91,10 +92,12 @@ class TimerWorker(
                     timeMultiplier = timeMultiplier,
                     nextStepId = steps.findNextId(step),
                     currentProgress = progress,
+                    isPaused = isPaused,
                 ),
                 id = COFI_TIMER_NOTIFICATION_ID + step.id,
                 tag = COFI_TIMER_NOTIFICATION_TAG,
             )
+            return progressData
         }
 
         suspend fun startCountDown(step: Step, startingProgress: Float = 0f) {
@@ -105,34 +108,37 @@ class TimerWorker(
 
             val stepTimeCalculated = step.time.toLong() * timeMultiplier
 
-            fun createCountDownTimer(millis: Long) = tickerFlow(millis)
+            fun createCountDownTimer(millis: Long) = tickerFlow(millis.milliseconds)
                 .distinctUntilChanged()
                 .onEach {
-                    val progress = ((stepTimeCalculated - it) / stepTimeCalculated)
-                    postNotificationWithProgress(step, progress)
-                }.onCompletion {
+                    postNotificationWithProgress(
+                        step,
+                        progress = (it / stepTimeCalculated) + startingProgress,
+                    )
+                }
+                .onCompletion {
                     NotificationManagerCompat.from(context)
                         .cancel(COFI_TIMER_NOTIFICATION_TAG, COFI_TIMER_NOTIFICATION_ID + step.id)
                     if (steps.last().id == step.id) {
                         postDoneNotification(recipe)
+                        return@onCompletion
                     }
                     startCountDown(steps[steps.indexOf(step) + 1])
                 }
                 .launchIn(this)
 
             val currentTime = SystemClock.elapsedRealtime()
-            val offset = if (step.id == initialStep.id) currentTime - startingTime else 0
+            val offset = if (step.id == initialStep.id) currentTime - startingRealtime else 0
             val millisToCount = (stepTimeCalculated * (1 - startingProgress) - offset).toLong()
-            val countDownTimer = createCountDownTimer(millisToCount)
-            countDownTimer.start()
+            createCountDownTimer(millisToCount).start()
         }
         if (!isPaused) {
             startCountDown(initialStep, startingProgress)
         } else {
-            postNotificationWithProgress(initialStep, startingProgress, isPaused = true)
+            val progressData =
+                postNotificationWithProgress(initialStep, startingProgress, isPaused = true)
+            return@coroutineScope Result.success(progressData)
         }
         return@coroutineScope Result.success()
     }
-
-
 }

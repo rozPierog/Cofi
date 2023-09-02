@@ -231,25 +231,35 @@ object Timer {
                             lifecycleOwner,
                             object : Observer<List<WorkInfo>> {
                                 override fun onChanged(value: List<WorkInfo>) {
-                                    if (value.isEmpty()) {
+                                    val workerInfo = value.firstOrNull()
+                                    if (
+                                        workerInfo == null ||
+                                        !arrayOf(WorkInfo.State.RUNNING, WorkInfo.State.SUCCEEDED)
+                                            .contains(workerInfo.state)
+                                    ) {
                                         workInfoByIdLiveData.removeObserver(this)
                                         return
                                     }
-                                    val workerInfo = value.firstOrNull() ?: return
-                                    val progress = workerInfo.progress
-                                    if (workerInfo.state != WorkInfo.State.RUNNING) {
-                                        workInfoByIdLiveData.removeObserver(this)
-                                        return
-                                    }
-                                    val stepID = progress.getInt(WORKER_PROGRESS_STEP, 0)
+                                    val progress =
+                                        if (workerInfo.state == WorkInfo.State.RUNNING) {
+                                            workerInfo.progress
+                                        } else {
+                                            workerInfo.outputData
+                                        }
+                                    val stepID = progress.getInt(WORKER_PROGRESS_STEP, -1)
                                     weightMultiplier = progress.getFloat(
-                                        WORKER_PROGRESS_TIME_MULTIPLIER, 1f)
+                                        WORKER_PROGRESS_TIME_MULTIPLIER, 1f,
+                                    )
                                     timeMultiplier = progress.getFloat(
-                                        WORKER_PROGRESS_WEIGHT_MULTIPLIER, 1f)
+                                        WORKER_PROGRESS_WEIGHT_MULTIPLIER, 1f,
+                                    )
                                     val stepProgress =
                                         progress.getFloat(WORKER_PROGRESS_PROGRESS, 0f)
                                     val isPaused =
-                                        progress.getBoolean(WORKER_PROGRESS_IS_PAUSED, false)
+                                        progress.getBoolean(
+                                            WORKER_PROGRESS_IS_PAUSED,
+                                            workerInfo.state == WorkInfo.State.SUCCEEDED,
+                                        )
                                     currentStep = steps.firstOrNull { it.id == stepID }
 
                                     coroutineScope.launch {
