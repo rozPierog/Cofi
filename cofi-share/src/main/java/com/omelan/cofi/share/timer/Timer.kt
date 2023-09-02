@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.os.Build
-import android.os.SystemClock
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -25,7 +24,10 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
-import com.omelan.cofi.share.timer.notification.*
+import com.omelan.cofi.share.timer.notification.TimerActions
+import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_IS_PAUSED
+import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_PROGRESS
+import com.omelan.cofi.share.timer.notification.WORKER_PROGRESS_STEP
 import com.omelan.cofi.share.utils.Haptics
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.roundToDecimals
@@ -138,13 +140,6 @@ object Timer {
             animatedProgressValue.snapTo(0f)
             if (indexOfCurrentStep != indexOfLastStep) {
                 currentStep = steps[indexOfCurrentStep + 1]
-                if (indexOfCurrentStep == 0) {
-                    context.startTimerWorker(
-                        recipeId = recipe.id,
-                        stepId = currentStep!!.id,
-                        startingTime = SystemClock.elapsedRealtime(),
-                    )
-                }
             } else {
                 currentStep = null
                 isDone = true
@@ -277,9 +272,32 @@ object Timer {
                                         }
                                     }
                                     workInfoByIdLiveData.removeObserver(this)
+                                    context.sendBroadcast(
+                                        TimerActions.createIntent(
+                                            context,
+                                            TimerActions.Actions.ACTION_STOP,
+                                            recipeId = recipe.id,
+                                            stepId = stepID,
+                                            alreadyDoneProgress = stepProgress,
+                                        ),
+                                    )
                                 }
                             },
                         )
+                    }
+
+                    Lifecycle.Event.ON_PAUSE -> {
+                        if (animatedProgressValue.isRunning && currentStep != null) {
+                            context.sendBroadcast(
+                                TimerActions.createIntent(
+                                    context,
+                                    TimerActions.Actions.ACTION_RESUME,
+                                    recipeId = recipe.id,
+                                    stepId = currentStep!!.id,
+                                    alreadyDoneProgress = animatedProgressValue.value,
+                                ),
+                            )
+                        }
                     }
 
                     else -> {}
