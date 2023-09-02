@@ -279,8 +279,8 @@ object Timer {
                                                 recipeId = recipe.id,
                                                 stepId = stepID,
                                                 alreadyDoneProgress = stepProgress,
-                                                timeMultiplier,
-                                                weightMultiplier,
+                                                weightMultiplier = weightMultiplier,
+                                                timeMultiplier = timeMultiplier,
                                             ),
                                         ),
                                     )
@@ -299,8 +299,8 @@ object Timer {
                                         recipeId = recipe.id,
                                         stepId = currentStep?.id,
                                         alreadyDoneProgress = animatedProgressValue.value,
-                                        timeMultiplier,
-                                        weightMultiplier,
+                                        weightMultiplier = weightMultiplier,
+                                        timeMultiplier = timeMultiplier,
                                     ),
                                 ),
                             )
@@ -328,8 +328,8 @@ object Timer {
                             recipeId = recipe.id,
                             stepId = it?.id,
                             alreadyDoneProgress = 0f,
-                            timeMultiplier,
-                            weightMultiplier,
+                            weightMultiplier = weightMultiplier,
+                            timeMultiplier = timeMultiplier,
                         ),
                     ),
                 )
