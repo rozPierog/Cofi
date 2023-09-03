@@ -183,13 +183,13 @@ fun RecipeDetails(
             canSwipeToClose(true)
         } else {
             if (timerControllers.isTimerRunning) {
-                timerControllers.pauseAnimations()
+                timerControllers.animationControllers.pauseAnimations()
             }
             canSwipeToClose(false)
         }
     }
     LaunchedEffect(timerControllers.currentStep) {
-        timerControllers.progressAnimation(Unit)
+        timerControllers.animationControllers.progressAnimation(Unit)
     }
 
     Scaffold(
@@ -210,14 +210,14 @@ fun RecipeDetails(
                     allSteps = steps,
                     recipe = recipe,
                     dataStore = dataStore,
-                    weightMultiplier = timerControllers.weightMultiplier,
-                    timeMultiplier = timerControllers.timeMultiplier,
+                    weightMultiplier = timerControllers.multiplierControllers.weightMultiplier,
+                    timeMultiplier = timerControllers.multiplierControllers.timeMultiplier,
                 )
 
                 1 -> Row {
                     MultiplierPage(
-                        multiplier = timerControllers.weightMultiplier,
-                        changeMultiplier = timerControllers.changeWeightMultiplier,
+                        multiplier = timerControllers.multiplierControllers.weightMultiplier,
+                        changeMultiplier = timerControllers.multiplierControllers.changeWeightMultiplier,
                         requestFocus = pagerState.currentPage == 1,
                     ) {
                         Text(text = "x$it")
@@ -233,8 +233,8 @@ fun RecipeDetails(
                 }
 
                 2 -> MultiplierPage(
-                    multiplier = timerControllers.timeMultiplier,
-                    changeMultiplier = timerControllers.changeTimeMultiplier,
+                    multiplier = timerControllers.multiplierControllers.timeMultiplier,
+                    changeMultiplier = timerControllers.multiplierControllers.changeTimeMultiplier,
                     requestFocus = pagerState.currentPage == 2,
                 ) {
                     Text(text = "x$it")

@@ -54,24 +54,23 @@ fun TimerPage(
     weightMultiplier: Float,
     timeMultiplier: Float,
 ) {
+
     val (
+        animationControllers,
         currentStep,
         _,
+        _,
+        changeToNextStep,
         isDone,
         isTimerRunning,
-        _,
+    ) = timerControllers
+    val (
         animatedProgressValue,
         animatedProgressColor,
-        _,
-        _,
-        _,
-        _,
         pauseAnimations,
         _,
-        startAnimations,
-        changeToNextStep,
-    ) = timerControllers
-
+        resumeAnimations,
+    ) = animationControllers
     var showDescriptionDialog by remember { mutableStateOf(false) }
     val combineWeightState by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
@@ -94,7 +93,7 @@ fun TimerPage(
                     if (currentStep.time == null) {
                         changeToNextStep(false)
                     } else {
-                        startAnimations()
+                        resumeAnimations()
                     }
                 }
             }
@@ -215,7 +214,7 @@ fun TimerPage(
             AnimatedContent(
                 targetState = Pair(currentStep, isDone), label = "Timer Content",
                 transitionSpec = { fadeIn() with fadeOut() },
-                modifier = Modifier.weight(1f, true)
+                modifier = Modifier.weight(1f, true),
             ) { (currentStep, isDone) ->
                 when {
                     isDone -> {
@@ -238,6 +237,7 @@ fun TimerPage(
                             )
                         }
                     }
+
                     currentStep != null -> {
                         Column {
                             TimeText(
@@ -268,6 +268,7 @@ fun TimerPage(
                             )
                         }
                     }
+
                     else -> {
                         Box(contentAlignment = Alignment.Center) {
                             Column(

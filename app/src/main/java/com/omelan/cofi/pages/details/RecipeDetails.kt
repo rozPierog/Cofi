@@ -214,21 +214,14 @@ fun RecipeDetails(
     }
 
     val (
+        animationControllers,
         currentStep,
+        indexOfCurrentStep,
         changeCurrentStep,
+        changeToNextStep,
         isDone,
         isTimerRunning,
-        indexOfCurrentStep,
-        animatedProgressValue,
-        animatedProgressColor,
-        weightMultiplier,
-        changeWeightMultiplier,
-        timeMultiplier,
-        changeTimeMultiplier,
-        pauseAnimations,
-        progressAnimation,
-        resumeAnimations,
-        changeToNextStep,
+        multiplierControllers,
     ) = Timer.createTimerControllers(
         recipe = recipe,
         steps = steps,
@@ -236,6 +229,14 @@ fun RecipeDetails(
         dataStore = dataStore,
         doneTrackColor = MaterialTheme.colorScheme.primary,
     )
+
+    val (
+        animatedProgressValue,
+        animatedProgressColor,
+        pauseAnimations,
+        progressAnimation,
+        resumeAnimations,
+    ) = animationControllers
 
     val nextStep = remember(indexOfCurrentStep, steps) {
         if (steps.isEmpty() || indexOfCurrentStep == -1 || indexOfCurrentStep == steps.lastIndex) {
@@ -249,7 +250,7 @@ fun RecipeDetails(
         indexOfCurrentStep = indexOfCurrentStep,
         allSteps = steps,
         combineWeightState = combineWeightState,
-        weightMultiplier = weightMultiplier,
+        weightMultiplier = multiplierControllers.weightMultiplier,
     )
 
     LaunchedEffect(currentStep) {
@@ -326,8 +327,8 @@ fun RecipeDetails(
             isInPiP = isInPiP,
             alreadyDoneWeight = alreadyDoneWeight,
             isDone = isDone,
-            weightMultiplier = weightMultiplier,
-            timeMultiplier = timeMultiplier,
+            weightMultiplier = multiplierControllers.weightMultiplier,
+            timeMultiplier = multiplierControllers.timeMultiplier,
         )
         if (!isInPiP) {
             Spacer(modifier = Modifier.height(Spacing.big))
@@ -346,8 +347,8 @@ fun RecipeDetails(
                         .animateItemPlacement()
                         .padding(bottom = Spacing.normal),
                     step = nextStep ?: Step(name = "", type = StepType.WAIT),
-                    weightMultiplier,
-                    timeMultiplier,
+                    weightMultiplier = multiplierControllers.weightMultiplier,
+                    timeMultiplier = multiplierControllers.timeMultiplier,
                 )
             }
         }
@@ -375,8 +376,8 @@ fun RecipeDetails(
                         changeCurrentStep(newStep)
                     }
                 },
-                weightMultiplier = weightMultiplier,
-                timeMultiplier = timeMultiplier,
+                weightMultiplier = multiplierControllers.weightMultiplier,
+                timeMultiplier = multiplierControllers.timeMultiplier,
             )
             Divider()
         }
@@ -470,10 +471,7 @@ fun RecipeDetails(
     ) {
         if (ratioSheetIsVisible) {
             RatioBottomSheet(
-                timeMultiplier = timeMultiplier,
-                setTimeMultiplier = changeTimeMultiplier,
-                weightMultiplier = weightMultiplier,
-                setWeightMultiplier = changeWeightMultiplier,
+                multiplierControllers,
                 onDismissRequest = { ratioSheetIsVisible = false },
                 allSteps = steps,
             )

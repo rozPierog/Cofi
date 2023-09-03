@@ -35,22 +35,30 @@ import kotlinx.coroutines.withContext
 
 fun <R, T> suspendCompat(block: suspend (T) -> R): suspend (T) -> R = block
 
-data class TimerControllers(
-    val currentStep: Step?,
-    val changeCurrentStep: (Step?) -> Unit,
-    val isDone: Boolean,
-    val isTimerRunning: Boolean,
-    val indexOfCurrentStep: Int,
+data class AnimationControllers(
     val animatedProgressValue: Animatable<Float, AnimationVector1D>,
     val animatedProgressColor: Animatable<Color, AnimationVector4D>,
+    val pauseAnimations: suspend () -> Unit,
+    val progressAnimation: suspend (Unit) -> Unit,
+    val resumeAnimations: suspend () -> Unit,
+)
+
+data class MultiplierControllers(
     val weightMultiplier: Float,
     val changeWeightMultiplier: (Float) -> Unit,
     val timeMultiplier: Float,
     val changeTimeMultiplier: (Float) -> Unit,
-    val pauseAnimations: suspend () -> Unit,
-    val progressAnimation: suspend (Unit) -> Unit,
-    val startAnimations: suspend () -> Unit,
+)
+
+data class TimerControllers(
+    val animationControllers: AnimationControllers,
+    val currentStep: Step?,
+    val indexOfCurrentStep: Int,
+    val changeCurrentStep: (Step?) -> Unit,
     val changeToNextStep: suspend (Boolean) -> Unit,
+    val isDone: Boolean,
+    val isTimerRunning: Boolean,
+    val multiplierControllers: MultiplierControllers,
 )
 
 object Timer {
@@ -317,7 +325,15 @@ object Timer {
         }
 
         return TimerControllers(
-            currentStep,
+            animationControllers = AnimationControllers(
+                animatedProgressValue = animatedProgressValue,
+                animatedProgressColor = animatedProgressColor,
+                pauseAnimations = pauseAnimations,
+                progressAnimation = progressAnimation,
+                resumeAnimations = resumeAnimations,
+            ),
+            currentStep = currentStep,
+            indexOfCurrentStep = indexOfCurrentStep,
             changeCurrentStep = {
                 currentStep = it
                 context.sendBroadcast(
@@ -334,19 +350,15 @@ object Timer {
                     ),
                 )
             },
-            isDone,
-            animatedProgressValue.isRunning,
-            indexOfCurrentStep,
-            animatedProgressValue,
-            animatedProgressColor,
-            weightMultiplier,
-            { weightMultiplier = it },
-            timeMultiplier,
-            { timeMultiplier = it },
-            pauseAnimations,
-            progressAnimation,
-            resumeAnimations,
-            changeToNextStep,
+            changeToNextStep = changeToNextStep,
+            isDone = isDone,
+            isTimerRunning = animatedProgressValue.isRunning,
+            multiplierControllers = MultiplierControllers(
+                weightMultiplier,
+                { weightMultiplier = it },
+                timeMultiplier,
+                { timeMultiplier = it },
+            ),
         )
     }
 }
