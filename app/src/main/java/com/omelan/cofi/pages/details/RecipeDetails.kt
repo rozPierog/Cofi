@@ -207,8 +207,18 @@ fun RecipeDetails(
     val isNextStepEnabled by dataStore.getNextStepSetting()
         .collectAsState(initial = NEXT_STEP_ENABLED_DEFAULT_VALUE)
 
+    val isBackgroundTimerEnabled by dataStore.getBackgroundTimerSetting()
+        .collectAsState(initial = false)
+
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
-    var showNotificationDialog by remember { mutableStateOf(!context.hasNotificationPermission()) }
+    var showNotificationDialog by remember {
+        mutableStateOf(!context.hasNotificationPermission() && isBackgroundTimerEnabled == null)
+    }
+
+    LaunchedEffect(isBackgroundTimerEnabled) {
+        showNotificationDialog =
+            !context.hasNotificationPermission() && isBackgroundTimerEnabled == null
+    }
 
     var ratioSheetIsVisible by remember {
         mutableStateOf(false)
@@ -487,10 +497,18 @@ fun RecipeDetails(
     }
     if (showNotificationDialog) {
         NotificationPermissionDialog(
-            dismiss = { showNotificationDialog = false },
+            dismiss = {
+                showNotificationDialog = false
+                coroutineScope.launch {
+                    dataStore.setBackgroundTimerEnabled(false)
+                }
+            },
             onConfirm = {
                 context.askForNotificationPermission()
                 showNotificationDialog = false
+                coroutineScope.launch {
+                    dataStore.setBackgroundTimerEnabled(true)
+                }
             },
         )
     }
