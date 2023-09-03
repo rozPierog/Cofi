@@ -207,9 +207,7 @@ fun RecipeDetails(
             when (page) {
                 0 -> TimerPage(
                     timerControllers = timerControllers,
-                    allSteps = steps,
                     recipe = recipe,
-                    dataStore = dataStore,
                     weightMultiplier = timerControllers.multiplierControllers.weightMultiplier,
                     timeMultiplier = timerControllers.multiplierControllers.timeMultiplier,
                 )

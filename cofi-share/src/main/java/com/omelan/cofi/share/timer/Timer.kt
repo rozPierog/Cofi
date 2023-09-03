@@ -58,12 +58,13 @@ data class TimerControllers(
     val changeToNextStep: suspend (Boolean) -> Unit,
     val isDone: Boolean,
     val isTimerRunning: Boolean,
+    val alreadyDoneWeight: Float,
     val multiplierControllers: MultiplierControllers,
 )
 
 object Timer {
     @Composable
-    fun rememberAlreadyDoneWeight(
+    private fun rememberAlreadyDoneWeight(
         indexOfCurrentStep: Int,
         allSteps: List<Step>,
         combineWeightState: String,
@@ -74,7 +75,7 @@ object Timer {
         } else {
             allSteps.subList(0, indexOfCurrentStep)
         }
-        return remember(combineWeightState, indexOfCurrentStep, weightMultiplier) {
+        return remember(combineWeightState, indexOfCurrentStep, weightMultiplier, doneSteps) {
             derivedStateOf {
                 when (combineWeightState) {
                     CombineWeight.ALL.name ->
@@ -91,7 +92,6 @@ object Timer {
                             } * weightMultiplier
                             ).toFloat().roundToDecimals()
 
-                    CombineWeight.NONE.name -> 0f
                     else -> 0f
                 }
             }
@@ -106,6 +106,13 @@ object Timer {
         dataStore: DataStore,
         doneTrackColor: Color,
     ): TimerControllers {
+        val coroutineScope = rememberCoroutineScope()
+        val context = LocalContext.current
+        val lifecycleOwner = LocalLifecycleOwner.current
+        val isDarkMode = isSystemInDarkTheme()
+        val haptics = remember { Haptics(context) }
+        val mediaPlayer = remember { MediaPlayer.create(context, R.raw.ding) }
+
         val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
             .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
         val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
@@ -114,17 +121,9 @@ object Timer {
         var weightMultiplier by remember { mutableStateOf(1.0f) }
         var timeMultiplier by remember { mutableStateOf(1.0f) }
         var isDone by remember { mutableStateOf(false) }
-        val isDarkMode = isSystemInDarkTheme()
         val animatedProgressColor =
             remember { Animatable(if (isDarkMode) Color.LightGray else Color.DarkGray) }
         val animatedProgressValue = remember { Animatable(0f) }
-        val coroutineScope = rememberCoroutineScope()
-
-        val context = LocalContext.current
-        val haptics = remember { Haptics(context) }
-        val mediaPlayer = remember { MediaPlayer.create(context, R.raw.ding) }
-
-        val lifecycleOwner = LocalLifecycleOwner.current
 
         val indexOfCurrentStep by remember(steps, currentStep) {
             derivedStateOf { steps.indexOf(currentStep) }
@@ -132,6 +131,17 @@ object Timer {
         val indexOfLastStep by remember(steps) {
             derivedStateOf { steps.lastIndex }
         }
+
+        val combineWeightState by dataStore.getWeightSetting()
+            .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+
+        val alreadyDoneWeight by rememberAlreadyDoneWeight(
+            indexOfCurrentStep = indexOfCurrentStep,
+            allSteps = steps,
+            combineWeightState = combineWeightState,
+            weightMultiplier = weightMultiplier,
+        )
+
         val pauseAnimations = suspend {
             animatedProgressColor.stop()
             animatedProgressValue.stop()
@@ -334,25 +344,11 @@ object Timer {
             ),
             currentStep = currentStep,
             indexOfCurrentStep = indexOfCurrentStep,
-            changeCurrentStep = {
-                currentStep = it
-                context.sendBroadcast(
-                    TimerActions.createIntent(
-                        context,
-                        TimerActions.Actions.ACTION_NEXT,
-                        TimerData(
-                            recipeId = recipe.id,
-                            stepId = it?.id,
-                            alreadyDoneProgress = 0f,
-                            weightMultiplier = weightMultiplier,
-                            timeMultiplier = timeMultiplier,
-                        ),
-                    ),
-                )
-            },
+            changeCurrentStep = { currentStep = it },
             changeToNextStep = changeToNextStep,
             isDone = isDone,
             isTimerRunning = animatedProgressValue.isRunning,
+            alreadyDoneWeight = alreadyDoneWeight,
             multiplierControllers = MultiplierControllers(
                 weightMultiplier,
                 { weightMultiplier = it },

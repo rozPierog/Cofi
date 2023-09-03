@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Parcelable
 import android.os.SystemClock
-import androidx.core.app.NotificationManagerCompat
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -70,20 +69,14 @@ class TimerActionBroadcastReceiver : BroadcastReceiver() {
         }
         val workManager = WorkManager.getInstance(context)
 
-        if (intent.action == TimerActions.Actions.ACTION_STOP.name && timerData.stepId != null) {
-            workManager.cancelUniqueWork("cofi_${timerData.recipeId}")
-            NotificationManagerCompat.from(context)
-                .cancel(COFI_TIMER_NOTIFICATION_TAG, COFI_TIMER_NOTIFICATION_ID + timerData.stepId)
-            return
-        }
         val inputData = workDataOf(
+            COFI_TIMER_NOTIFICATION_START_TIME_DATA to SystemClock.elapsedRealtime(),
+            COFI_TIMER_NOTIFICATION_ACTION to intent.action,
             COFI_TIMER_NOTIFICATION_RECIPE_ID to timerData.recipeId,
             COFI_TIMER_NOTIFICATION_CURRENT_STEP_ID to timerData.stepId,
-            COFI_TIMER_NOTIFICATION_START_TIME_DATA to SystemClock.elapsedRealtime(),
             COFI_TIMER_NOTIFICATION_PROGRESS to timerData.alreadyDoneProgress,
             COFI_TIMER_NOTIFICATION_WEIGHT_MULTIPLIER to timerData.weightMultiplier,
             COFI_TIMER_NOTIFICATION_TIME_MULTIPLIER to timerData.timeMultiplier,
-            COFI_TIMER_NOTIFICATION_ACTION to intent.action,
         )
         val updatedWorkRequest = OneTimeWorkRequestBuilder<TimerWorker>()
             .setInputData(inputData)

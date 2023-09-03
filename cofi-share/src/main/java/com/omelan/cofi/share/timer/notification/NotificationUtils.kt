@@ -38,15 +38,15 @@ fun createContentText(
     currentProgress: Float,
     weightMultiplier: Float,
     timeMultiplier: Float,
+    alreadyDoneWeight: Float
 ): String? {
-    val alreadyDoneWeight = 0f
     val valueText = step.value?.let {
         val currentValueFromProgress = (it * currentProgress)
 
         val currentValueWithMultiplier =
             (currentValueFromProgress * weightMultiplier) + alreadyDoneWeight
 
-        val currentTargetValue = (it * weightMultiplier)
+        val currentTargetValue = (it * weightMultiplier) + alreadyDoneWeight
         val targetString = currentTargetValue.toStringShort()
         val shouldShowDecimals = targetString.contains(".")
         val currentValueString: Number = if (shouldShowDecimals) {
@@ -90,6 +90,7 @@ fun Step.toNotificationBuilder(
     weightMultiplier: Float,
     timeMultiplier: Float,
     nextStepId: Int?,
+    alreadyDoneWeight: Float,
     currentProgress: Float = 0f,
     isPaused: Boolean = false,
 ): NotificationCompat.Builder {
@@ -104,6 +105,7 @@ fun Step.toNotificationBuilder(
                 currentProgress,
                 weightMultiplier,
                 timeMultiplier,
+                alreadyDoneWeight,
             ),
         )
         setSmallIcon(step.type.iconRes)

@@ -30,15 +30,11 @@ import androidx.wear.compose.material.*
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
 import com.google.android.horologist.compose.layout.fillMaxRectangle
-import com.omelan.cofi.share.COMBINE_WEIGHT_DEFAULT_VALUE
-import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
 import com.omelan.cofi.share.components.TimerValue
 import com.omelan.cofi.share.model.Recipe
-import com.omelan.cofi.share.model.Step
-import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.timer.TimerControllers
 import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
 import com.omelan.cofi.wearos.presentation.components.ListenKeyEvents
@@ -48,9 +44,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun TimerPage(
     timerControllers: TimerControllers,
-    allSteps: List<Step>,
     recipe: Recipe,
-    dataStore: DataStore,
     weightMultiplier: Float,
     timeMultiplier: Float,
 ) {
@@ -63,6 +57,7 @@ fun TimerPage(
         changeToNextStep,
         isDone,
         isTimerRunning,
+        alreadyDoneWeight,
     ) = timerControllers
     val (
         animatedProgressValue,
@@ -72,18 +67,11 @@ fun TimerPage(
         resumeAnimations,
     ) = animationControllers
     var showDescriptionDialog by remember { mutableStateOf(false) }
-    val combineWeightState by dataStore.getWeightSetting()
-        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+
     val coroutineScope = rememberCoroutineScope()
     val ambientController = LocalAmbientModeProvider.current
     val isAmbient = ambientController?.isAmbient ?: false
 
-    val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
-        indexOfCurrentStep = allSteps.indexOf(currentStep),
-        allSteps = allSteps,
-        combineWeightState = combineWeightState,
-        weightMultiplier = weightMultiplier,
-    )
     val startButtonOnClick: () -> Unit = {
         if (currentStep != null) {
             if (animatedProgressValue.isRunning) {

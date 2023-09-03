@@ -60,7 +60,6 @@ import com.omelan.cofi.appDeepLinkUrl
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
-import com.omelan.cofi.share.COMBINE_WEIGHT_DEFAULT_VALUE
 import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
@@ -202,8 +201,7 @@ fun RecipeDetails(
     val lazyListState = rememberLazyListState()
 
     val dataStore = DataStore(LocalContext.current)
-    val combineWeightState by dataStore.getWeightSetting()
-        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+
     val isNextStepEnabled by dataStore.getNextStepSetting()
         .collectAsState(initial = NEXT_STEP_ENABLED_DEFAULT_VALUE)
 
@@ -221,6 +219,7 @@ fun RecipeDetails(
         changeToNextStep,
         isDone,
         isTimerRunning,
+        alreadyDoneWeight,
         multiplierControllers,
     ) = Timer.createTimerControllers(
         recipe = recipe,
@@ -245,13 +244,6 @@ fun RecipeDetails(
             steps[indexOfCurrentStep + 1]
         }
     }
-
-    val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
-        indexOfCurrentStep = indexOfCurrentStep,
-        allSteps = steps,
-        combineWeightState = combineWeightState,
-        weightMultiplier = multiplierControllers.weightMultiplier,
-    )
 
     LaunchedEffect(currentStep) {
         progressAnimation(Unit)
