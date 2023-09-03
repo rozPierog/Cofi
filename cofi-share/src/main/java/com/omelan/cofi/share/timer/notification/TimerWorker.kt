@@ -55,6 +55,10 @@ class TimerWorker(
         )
     }
 
+
+    /**
+     *  TODO: DRY [Timer.rememberAlreadyDoneWeight]
+     */
     private suspend fun calculateAlreadyDoneWeight(
         indexOfCurrentStep: Int,
         steps: List<Step>,
