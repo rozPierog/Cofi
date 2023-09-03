@@ -88,11 +88,12 @@ fun NotificationPermissionDialog(dismiss: () -> Unit, onConfirm: () -> Unit) {
 
 @Preview
 @Composable
-fun DialogsPreview() {
-    NotificationPermissionDialog(dismiss = { /*TODO*/ }) {
+fun NotificationPermissionDialogPreview() {
+    NotificationPermissionDialog(dismiss = { }, onConfirm = { })
+}
 
-    }
-//        DirectLinkDialog(dismiss = { /*TODO*/ }) {
-//
-//        }
+@Preview
+@Composable
+fun DirectLinkDialogDialogPreview() {
+    DirectLinkDialog(dismiss = { }, onConfirm = { })
 }
