@@ -20,11 +20,14 @@
     <string name="recipe_edit_title">Edit recipe</string>
     <string name="recipe_add_new_title">Create new recipe</string>
     <string name="recipe_details_automation_dialog_title">Direct link</string>
+    <string name="recipe_detials_notification_dialog_title">Allow timer in the background?</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi will keep the timer running in the background if you want, but first you will need to give it permission to post notifications</string>
     <string name="recipe_details_automation_dialog_text">Use this link to go directly into this recipe. Write it to NFC tag or create automation task in Tasker to make your morning coffee easier.
 \nWARNING: You cannot share recipe this way!</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_no">No</string>
     <string name="button_delete">Delete</string>
     <string name="button_discard">Discard</string>
     <string name="button_continue_editing">Continue editing</string>
