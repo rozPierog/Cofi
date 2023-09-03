@@ -17,6 +17,7 @@ import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistC
 import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
+import com.omelan.cofi.share.utils.askForNotificationPermission
 import com.omelan.cofi.wearos.presentation.components.OpenOnPhoneConfirm
 import com.omelan.cofi.wearos.presentation.model.DataStore
 import com.omelan.cofi.wearos.presentation.model.SYNC_SETTINGS_FROM_PHONE_DEFAULT_VALUE
@@ -40,6 +41,8 @@ fun Settings(navigateToLicenses: () -> Unit) {
         .collectAsState(initial = STEP_VIBRATION_DEFAULT_VALUE)
     val weightSettings by dataStore.getWeightSetting()
         .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+    val backgroundTimer by dataStore.getBackgroundTimerSetting()
+        .collectAsState(initial = false)
     var showConfirmation by remember {
         mutableStateOf(false)
     }
@@ -66,6 +69,31 @@ fun Settings(navigateToLicenses: () -> Unit) {
         ) {
             item {
                 Text(text = stringResource(id = R.string.settings_title))
+            }
+            item {
+                ToggleChip(
+                    checked = backgroundTimer ?: false,
+                    onCheckedChange = {
+                        coroutineScope.launch {
+                            dataStore.setBackgroundTimerEnabled(it)
+                            context.askForNotificationPermission()
+                        }
+                    },
+                    label = {
+                        Text(text = stringResource(id = R.string.settings_background_timer_item))
+                    },
+                    toggleControl = {
+                        Switch(
+                            checked = backgroundTimer ?: false,
+                            onCheckedChange = {
+                                coroutineScope.launch {
+                                    dataStore.setBackgroundTimerEnabled(it)
+                                    context.askForNotificationPermission()
+                                }
+                            },
+                        )
+                    },
+                )
             }
             item {
                 ToggleChip(

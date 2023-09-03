@@ -34,6 +34,7 @@ import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
 import com.omelan.cofi.model.PIP_DEFAULT_VALUE
 import com.omelan.cofi.share.*
+import com.omelan.cofi.share.utils.askForNotificationPermission
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.checkPiPPermission
 import com.omelan.cofi.utils.getDefaultPadding
@@ -61,6 +62,7 @@ fun TimerSettings(goBack: () -> Unit) {
 
     val hasPiPPermission = checkPiPPermission(context)
     val toggleBackgroundTimer: () -> Unit = {
+        context.askForNotificationPermission()
         coroutineScope.launch { dataStore.toggleBackgroundTimerEnabled() }
     }
     val togglePiP: () -> Unit = {
@@ -134,7 +136,7 @@ fun TimerSettings(goBack: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = { Text(text = "Keep timer in the background") },
+                    text = { Text(text = stringResource(R.string.settings_background_timer_item)) },
                     icon = { Icon(Icons.Rounded.Notifications, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(onClick = toggleBackgroundTimer),
                     trailing = {
