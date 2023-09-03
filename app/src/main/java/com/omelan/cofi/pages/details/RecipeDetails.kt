@@ -64,7 +64,9 @@ import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.utils.Haptics
+import com.omelan.cofi.share.utils.askForNotificationPermission
 import com.omelan.cofi.share.utils.getActivity
+import com.omelan.cofi.share.utils.hasNotificationPermission
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.InstantUtils
 import kotlinx.coroutines.Dispatchers
@@ -206,6 +208,7 @@ fun RecipeDetails(
         .collectAsState(initial = NEXT_STEP_ENABLED_DEFAULT_VALUE)
 
     var showAutomateLinkDialog by remember { mutableStateOf(false) }
+    var showNotificationDialog by remember { mutableStateOf(!context.hasNotificationPermission()) }
 
     var ratioSheetIsVisible by remember {
         mutableStateOf(false)
@@ -482,7 +485,15 @@ fun RecipeDetails(
             TabletLayout(it, renderDescription, renderTimer, renderUpNext, renderSteps, isInPiP)
         }
     }
-
+    if (showNotificationDialog) {
+        NotificationPermissionDialog(
+            dismiss = { showNotificationDialog = false },
+            onConfirm = {
+                context.askForNotificationPermission()
+                showNotificationDialog = false
+            },
+        )
+    }
     if (showAutomateLinkDialog) {
         DirectLinkDialog(
             dismiss = { showAutomateLinkDialog = false },

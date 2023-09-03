@@ -30,6 +30,7 @@ import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
+import com.omelan.cofi.share.utils.askForNotificationPermission
 import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
@@ -169,6 +170,7 @@ fun RecipeDetails(
         onTimerRunning(timerControllers.isTimerRunning)
     }
     DisposableEffect(LocalLifecycleOwner.current) {
+        context.askForNotificationPermission()
         onDispose {
             ambientController?.setAmbientOffloadEnabled(false)
         }

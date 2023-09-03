@@ -1,10 +1,6 @@
 package com.omelan.cofi.share.timer
 
-import android.Manifest
-import android.app.Activity
-import android.content.pm.PackageManager
 import android.media.MediaPlayer
-import android.os.Build
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -13,7 +9,6 @@ import androidx.compose.ui.MotionDurationScale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.Observer
@@ -26,7 +21,6 @@ import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.timer.notification.*
 import com.omelan.cofi.share.utils.Haptics
-import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.roundToDecimals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -225,22 +219,6 @@ object Timer {
         DisposableEffect(lifecycleOwner, steps) {
             val observer = LifecycleEventObserver { _, event ->
                 when (event) {
-                    Lifecycle.Event.ON_CREATE -> {
-                        if (ActivityCompat.checkSelfPermission(
-                                context,
-                                Manifest.permission.POST_NOTIFICATIONS,
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                ActivityCompat.requestPermissions(
-                                    context.getActivity() as Activity,
-                                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                                    1,
-                                )
-                            }
-                        }
-                    }
-
                     Lifecycle.Event.ON_RESUME -> {
                         val workManager = WorkManager.getInstance(context)
                         val workInfoByIdLiveData = workManager
