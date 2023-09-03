@@ -46,9 +46,9 @@ class DataStore(val context: Context) : DataStoreShared(context) {
 
     suspend fun toggleBackgroundTimerEnabled() {
         context.dataStore.edit {
-            val currentNextStepEnabledState =
+            val currentBackgroundTimerState =
                 it[BACKGROUND_TIMER_ENABLED] ?: false
-            setBackgroundTimerEnabled(!currentNextStepEnabledState)
+            it[BACKGROUND_TIMER_ENABLED] = !currentBackgroundTimerState
         }
     }
 

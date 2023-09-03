@@ -13,6 +13,7 @@ import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowForward
+import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -48,6 +49,7 @@ fun TimerSettings(goBack: () -> Unit) {
     val isStepVibrationEnabled by dataStore.getStepChangeVibrationSetting()
         .collectAsState(STEP_VIBRATION_DEFAULT_VALUE)
     val isPiPEnabled by dataStore.getPiPSetting().collectAsState(PIP_DEFAULT_VALUE)
+    val isBackgroundTimerEnabled by dataStore.getBackgroundTimerSetting().collectAsState(false)
     val isNextStepEnabled by dataStore.getNextStepSetting().collectAsState(
         NEXT_STEP_ENABLED_DEFAULT_VALUE,
     )
@@ -58,6 +60,9 @@ fun TimerSettings(goBack: () -> Unit) {
     val appBarBehavior = createAppBarBehavior()
 
     val hasPiPPermission = checkPiPPermission(context)
+    val toggleBackgroundTimer: () -> Unit = {
+        coroutineScope.launch { dataStore.toggleBackgroundTimerEnabled() }
+    }
     val togglePiP: () -> Unit = {
         coroutineScope.launch { dataStore.togglePipSetting() }
     }
@@ -123,6 +128,19 @@ fun TimerSettings(goBack: () -> Unit) {
                             checked = if (!hasPiPPermission) false else isPiPEnabled,
                             onCheckedChange = { togglePiP() },
                             enabled = hasPiPPermission,
+                        )
+                    },
+                )
+            }
+            item {
+                ListItem(
+                    text = { Text(text = "Keep timer in the background") },
+                    icon = { Icon(Icons.Rounded.Notifications, contentDescription = null) },
+                    modifier = Modifier.settingsItemModifier(onClick = toggleBackgroundTimer),
+                    trailing = {
+                        Switch(
+                            checked = isBackgroundTimerEnabled ?: false,
+                            onCheckedChange = { toggleBackgroundTimer() },
                         )
                     },
                 )
