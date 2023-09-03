@@ -152,4 +152,8 @@
     <string name="recipe_details_recipeRatio">Recipe ratio: 1:%1$s</string>
     <string name="name_tea">Tea</string>
     <string name="name_teapot">Teapot</string>
+    <string name="notification_channel_timer_name">Background timer</string>
+    <string name="notification_action_continue">Continue</string>
+    <string name="notification_action_stop">Stop</string>
+    <string name="notification_action_pause">Pause</string>
 </resources>
