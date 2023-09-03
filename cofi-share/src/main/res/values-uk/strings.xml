@@ -109,7 +109,7 @@
     <string name="recipe_details_multiply_time">Множник часу</string>
     <string name="name_grinder">Кавомолка</string>
     <string name="name_cezve">Джезва</string>
-    <string name="support_dialog_body">Я був би дуже вдячний за вашу підтримку! Ви можете допомогти мені продовжувати займатися улюбленою справою, обравши один або декілька з наступних способів</string>
+    <string name="support_dialog_body">Я був би дуже вдячний за вашу підтримку! Ви можете допомогти мені продовжувати займатися улюбленою справою, обравши один або декілька з наступних способів.</string>
     <string name="support_title">Підтримка Cofi</string>
     <string name="support_dialog_mastodon">Слідкуйте за мною на Mastodon</string>
     <string name="infoBox_update_title">Cofi оновлено</string>
