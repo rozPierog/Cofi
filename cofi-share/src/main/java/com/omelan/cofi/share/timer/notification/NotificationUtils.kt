@@ -25,7 +25,7 @@ fun Context.createChannel() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val channel = NotificationChannel(
             TIMER_CHANNEL_ID,
-            "Timer",
+            resources.getString(R.string.notification_channel_timer_name),
             NotificationManager.IMPORTANCE_HIGH,
         )
         NotificationManagerCompat.from(this).createNotificationChannel(channel)
@@ -129,7 +129,7 @@ fun Step.toNotificationBuilder(
             addAction(
                 NotificationCompat.Action(
                     R.drawable.ic_monochrome,
-                    "Continue",
+                    context.resources.getString(R.string.notification_action_continue),
                     TimerActions.createPendingIntent(
                         context,
                         TimerActions.Actions.ACTION_NEXT,
@@ -147,7 +147,7 @@ fun Step.toNotificationBuilder(
             addAction(
                 NotificationCompat.Action(
                     R.drawable.ic_monochrome,
-                    "Continue",
+                    context.resources.getString(R.string.notification_action_continue),
                     TimerActions.createPendingIntent(
                         context,
                         TimerActions.Actions.ACTION_RESUME,
@@ -164,7 +164,7 @@ fun Step.toNotificationBuilder(
             addAction(
                 NotificationCompat.Action(
                     R.drawable.ic_monochrome,
-                    "Stop",
+                    context.resources.getString(R.string.notification_action_stop),
                     TimerActions.createPendingIntent(
                         context,
                         TimerActions.Actions.ACTION_STOP,
@@ -182,7 +182,7 @@ fun Step.toNotificationBuilder(
             addAction(
                 NotificationCompat.Action(
                     R.drawable.ic_monochrome,
-                    "Pause",
+                    context.resources.getString(R.string.notification_action_pause),
                     TimerActions.createPendingIntent(
                         context,
                         TimerActions.Actions.ACTION_PAUSE,
