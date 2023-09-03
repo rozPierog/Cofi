@@ -1,7 +1,6 @@
 package com.omelan.cofi.model
 
 import android.content.Context
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.map
 import org.json.JSONObject
@@ -15,11 +14,6 @@ class DataStore(val context: Context) : DataStoreShared(context) {
     fun getNextStepSetting() = context.dataStore.data.map { preferences ->
         preferences[NEXT_STEP_ENABLED] ?: NEXT_STEP_ENABLED_DEFAULT_VALUE
     }
-
-    fun getBackgroundTimerSetting() = context.dataStore.data.map { preferences: Preferences ->
-        preferences[BACKGROUND_TIMER_ENABLED]
-    }
-
     fun getAskedForSupport() = context.dataStore.data.map {
         it[ASKED_FOR_SUPPORT] ?: ASKED_FOR_SUPPORT_DEFAULT_VALUE
     }
@@ -43,21 +37,6 @@ class DataStore(val context: Context) : DataStoreShared(context) {
             it[NEXT_STEP_ENABLED] = !currentNextStepEnabledState
         }
     }
-
-    suspend fun toggleBackgroundTimerEnabled() {
-        context.dataStore.edit {
-            val currentBackgroundTimerState =
-                it[BACKGROUND_TIMER_ENABLED] ?: false
-            it[BACKGROUND_TIMER_ENABLED] = !currentBackgroundTimerState
-        }
-    }
-
-    suspend fun setBackgroundTimerEnabled(newValue: Boolean) {
-        context.dataStore.edit {
-            it[BACKGROUND_TIMER_ENABLED] = newValue
-        }
-    }
-
     suspend fun togglePipSetting() {
         context.dataStore.edit {
             val currentPiPState = it[PIP_ENABLED] ?: PIP_DEFAULT_VALUE

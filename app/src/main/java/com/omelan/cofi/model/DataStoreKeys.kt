@@ -9,7 +9,6 @@ val ASKED_FOR_SUPPORT = booleanPreferencesKey("asked_for_support")
 val UPDATE_NOTICE_VERSION = intPreferencesKey("update_notice_version")
 val PIP_ENABLED = booleanPreferencesKey("pip_enabled")
 val NEXT_STEP_ENABLED = booleanPreferencesKey("next_step_enabled")
-val BACKGROUND_TIMER_ENABLED = booleanPreferencesKey("background_timer_enabled")
 val DISMISSED_INFO = stringPreferencesKey("dismissed_info_boxes")
 
 const val ASKED_FOR_SUPPORT_DEFAULT_VALUE = false

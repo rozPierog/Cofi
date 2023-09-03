@@ -1,6 +1,7 @@
 package com.omelan.cofi.share
 
 import android.content.Context
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
@@ -22,6 +23,9 @@ open class DataStore(private val context: Context) {
         preferences[STEP_VIBRATION_ENABLED] ?: STEP_VIBRATION_DEFAULT_VALUE
     }
 
+    fun getBackgroundTimerSetting() = context.dataStore.data.map { preferences: Preferences ->
+        preferences[BACKGROUND_TIMER_ENABLED]
+    }
 
     suspend fun setStepChangeSound(value: Boolean) {
         context.dataStore.edit {
@@ -32,6 +36,20 @@ open class DataStore(private val context: Context) {
     suspend fun setStepChangeVibration(value: Boolean) {
         context.dataStore.edit {
             it[STEP_VIBRATION_ENABLED] = value
+        }
+    }
+
+    suspend fun toggleBackgroundTimerEnabled() {
+        context.dataStore.edit {
+            val currentBackgroundTimerState =
+                it[BACKGROUND_TIMER_ENABLED] ?: false
+            it[BACKGROUND_TIMER_ENABLED] = !currentBackgroundTimerState
+        }
+    }
+
+    suspend fun setBackgroundTimerEnabled(newValue: Boolean) {
+        context.dataStore.edit {
+            it[BACKGROUND_TIMER_ENABLED] = newValue
         }
     }
 

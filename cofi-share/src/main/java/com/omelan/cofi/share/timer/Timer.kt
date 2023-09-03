@@ -129,6 +129,9 @@ object Timer {
         val combineWeightState by dataStore.getWeightSetting()
             .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
 
+        val backgroundTimerState by dataStore.getBackgroundTimerSetting()
+            .collectAsState(initial = null)
+
         val alreadyDoneWeight by rememberAlreadyDoneWeight(
             indexOfCurrentStep = indexOfCurrentStep,
             allSteps = steps,
@@ -220,6 +223,9 @@ object Timer {
             val observer = LifecycleEventObserver { _, event ->
                 when (event) {
                     Lifecycle.Event.ON_RESUME -> {
+                        if (backgroundTimerState != true) {
+                            return@LifecycleEventObserver
+                        }
                         val workManager = WorkManager.getInstance(context)
                         val workInfoByIdLiveData = workManager
                             .getWorkInfosForUniqueWorkLiveData("cofi_${recipe.id}")
@@ -286,7 +292,11 @@ object Timer {
                     }
 
                     Lifecycle.Event.ON_STOP -> {
-                        if (animatedProgressValue.isRunning && currentStep != null) {
+                        if (
+                            backgroundTimerState == true &&
+                            animatedProgressValue.isRunning &&
+                            currentStep != null
+                        ) {
                             context.sendBroadcast(
                                 TimerActions.createIntent(
                                     context,
