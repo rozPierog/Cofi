@@ -149,4 +149,12 @@
     <string name="settings_translate_item">Ayuda a traducir Cofi</string>
     <string name="name_tea">Té</string>
     <string name="name_teapot">Tetera</string>
+    <string name="recipe_detials_notification_dialog_title">¿Permitir temporizador en segundo plano\?</string>
+    <string name="button_no">No</string>
+    <string name="notification_action_stop">Parar</string>
+    <string name="notification_action_pause">Pausar</string>
+    <string name="settings_background_timer_item">Permitir temporizador en segundo plano</string>
+    <string name="notification_channel_timer_name">Temporizador en segundo plano</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi mantendrá el temporizador corriendo en segundo plano si quieres, pero primero tienes que darle permiso para enviar notificaciones</string>
+    <string name="notification_action_continue">Continuar</string>
 </resources>
