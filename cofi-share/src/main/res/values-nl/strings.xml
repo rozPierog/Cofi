@@ -147,4 +147,12 @@
     <string name="settings_translate_item">Helpen met vertalen</string>
     <string name="name_teapot">Theepot</string>
     <string name="name_tea">Thee</string>
+    <string name="notification_channel_timer_name">Achtergrondwekker</string>
+    <string name="notification_action_continue">Hervatten</string>
+    <string name="notification_action_stop">Stoppen</string>
+    <string name="notification_action_pause">Onderbreken</string>
+    <string name="recipe_detials_notification_dialog_title">Toegang geven tot achtergrondwekker\?</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi laat de wekker op de achtergrond doorlopen, maar daarvoor moet je toegang tot meldingen geven</string>
+    <string name="button_no">Nee</string>
+    <string name="settings_background_timer_item">Achtergrondwekker toestaan</string>
 </resources>
