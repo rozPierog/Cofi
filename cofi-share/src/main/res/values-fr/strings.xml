@@ -104,7 +104,7 @@
     <string name="settings_timer_item">Paramètres de la minuterie</string>
     <string name="name_grinder">Moulin à café</string>
     <string name="support_dialog_title">Vous aimez Cofi \?</string>
-    <string name="support_dialog_body">J\'apprécierais beaucoup votre soutien ! Vous pouvez m\'aider à continuer à faire ce que j\'aime en choisissant une ou plusieurs des options suivantes</string>
+    <string name="support_dialog_body">J\'apprécierais beaucoup votre soutien ! Vous pouvez m\'aider à continuer à faire ce que j\'aime en choisissant une ou plusieurs des options suivantes.</string>
     <string name="support_title">Soutenir Cofi</string>
     <string name="infoBox_update_title">Cofi a été mis à jour</string>
     <string name="settings_backup">Sauvegarder</string>
@@ -146,4 +146,15 @@
     <string name="prepopulate_clever_dripper_step_draw_down">Placez-le sur le dessus de la tasse et laissez-le s\'abaisser complètement</string>
     <string name="recipe_details_recipeRatio">Rapport de la recette : 1:%1$s</string>
     <string name="name_drip">Goutter</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi gardera la minuterie en arrière-plan si vous voulez, mais d\'abord vous devrez lui donner la permission de poster des notifications</string>
+    <string name="name_tea">Thé</string>
+    <string name="name_teapot">Théière</string>
+    <string name="notification_action_stop">Arrêter</string>
+    <string name="notification_channel_timer_name">Minuterie en arrière-plan</string>
+    <string name="recipe_detials_notification_dialog_title">Autoriser la minuterie en arrière-plan \?</string>
+    <string name="notification_action_pause">Pause</string>
+    <string name="notification_action_continue">Continuer</string>
+    <string name="settings_background_timer_item">Autoriser la minuterie en arrière-plan</string>
+    <string name="button_no">Non</string>
+    <string name="settings_translate_item">Aidez à traduire Cofi</string>
 </resources>
