@@ -23,4 +23,6 @@
     <string name="step_type_other">その他</string>
     <string name="recipe_unsaved_title">未保存の変更があります</string>
     <string name="recipe_unsaved_text">破棄しますか？</string>
+    <string name="recipe_delete_text">これでこのレシピは永久に削除されます</string>
+    <string name="recipe_delete_title">これでよろしいですか？</string>
 </resources>

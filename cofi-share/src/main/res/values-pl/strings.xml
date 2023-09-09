@@ -150,4 +150,12 @@ Temperature: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)"</strin
     <string name="settings_translate_item">Pomóż w tłumaczeniu Cofi</string>
     <string name="name_tea">Herbata</string>
     <string name="name_teapot">Dzbanek do herbaty</string>
+    <string name="notification_channel_timer_name">Czasomierz w tle</string>
+    <string name="notification_action_continue">Kontynuuj</string>
+    <string name="notification_action_stop">Zatrzymaj</string>
+    <string name="notification_action_pause">Zapauzuj</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi będzie utrzymywać czasomierz działający w tle, ale najpierw musisz dać mu uprawnienia do wysyłania powiadomień</string>
+    <string name="button_no">Nie</string>
+    <string name="settings_background_timer_item">Zezwól na działanie czasomierz w tle</string>
+    <string name="recipe_detials_notification_dialog_title">Zezwolić na działanie czasomierza w tle\?</string>
 </resources>
