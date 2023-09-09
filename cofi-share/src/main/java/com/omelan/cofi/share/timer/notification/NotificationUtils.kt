@@ -63,7 +63,7 @@ fun createContentText(
 
     val timeText =
         step.time?.let { " (${(it * timeMultiplier).roundToInt().toStringDuration()})" } ?: ""
-    return "$valueText$timeText".ifBlank { null }
+    return "$valueText$timeText".trim().ifBlank { null }
 }
 
 fun createDoneNotification(recipe: Recipe, context: Context) =
