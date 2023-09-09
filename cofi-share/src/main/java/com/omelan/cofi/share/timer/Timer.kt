@@ -106,7 +106,6 @@ object Timer {
         val isDarkMode = isSystemInDarkTheme()
         val haptics = remember { Haptics(context) }
         val mediaPlayer = remember { MediaPlayer.create(context, R.raw.ding) }
-
         val isStepChangeSoundEnabled by dataStore.getStepChangeSoundSetting()
             .collectAsState(initial = STEP_SOUND_DEFAULT_VALUE)
         val isStepChangeVibrationEnabled by dataStore.getStepChangeVibrationSetting()
@@ -319,6 +318,7 @@ object Timer {
             lifecycleOwner.lifecycle.addObserver(observer)
             onDispose {
                 lifecycleOwner.lifecycle.removeObserver(observer)
+                mediaPlayer.release()
             }
         }
 
