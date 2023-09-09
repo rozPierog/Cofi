@@ -18,6 +18,7 @@ import com.omelan.cofi.share.utils.roundToDecimals
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlin.math.roundToLong
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -33,9 +34,16 @@ class TimerWorker(
 ) : CoroutineWorker(context, workerParams) {
 
     private fun tickerFlow(duration: Duration, step: Duration = 500.milliseconds) = flow {
-        for (i in 0L..duration.inWholeMilliseconds / step.inWholeMilliseconds) {
-            emit(i * step.inWholeMilliseconds)
+        val wholeSteps = (duration / step).roundToLong()
+        val rest = duration.inWholeMilliseconds % step.inWholeMilliseconds
+        emit(0)
+        for (i in 0L..wholeSteps) {
             delay(step)
+            emit(i * step.inWholeMilliseconds)
+        }
+        if (rest > 0) {
+            delay(rest)
+            emit(duration.inWholeMilliseconds)
         }
     }
 
@@ -101,6 +109,7 @@ class TimerWorker(
         val steps = db.stepDao().getStepsForRecipe(recipeId).asFlow().first()
         val initialStep =
             steps.find { it.id == startingStepId } ?: return@coroutineScope Result.failure()
+
         suspend fun calculateAlreadyDoneWeight(indexOfCurrentStep: Int) =
             calculateAlreadyDoneWeight(indexOfCurrentStep, steps, weightMultiplier)
 
@@ -161,29 +170,27 @@ class TimerWorker(
 
             val stepTimeCalculated = step.time.toLong() * timeMultiplier
 
-            fun createCountDownTimer(millis: Long) = tickerFlow(millis.milliseconds)
-                .distinctUntilChanged()
-                .onEach {
+            suspend fun createCountDownTimer(millis: Long) = tickerFlow(millis.milliseconds)
+                .buffer(1)
+                .collect { currentValue ->
                     postNotificationWithProgress(
                         step,
-                        progress = (it / stepTimeCalculated) + startingProgress,
+                        progress = (currentValue / stepTimeCalculated) + startingProgress,
                     )
-                }
-                .onCompletion {
-                    NotificationManagerCompat.from(context)
-                        .cancel(COFI_TIMER_NOTIFICATION_TAG, COFI_TIMER_NOTIFICATION_ID + step.id)
-                    if (steps.last().id == step.id) {
-                        postDoneNotification(recipe)
-                        return@onCompletion
+                    if (currentValue == millis) {
+                        NotificationManagerCompat.from(context)
+                            .cancel(COFI_TIMER_NOTIFICATION_TAG, COFI_TIMER_NOTIFICATION_ID + step.id)
+                        if (steps.last().id == step.id) {
+                            postDoneNotification(recipe)
+                            return@collect
+                        }
+                        startCountDown(steps[steps.indexOf(step) + 1])
                     }
-                    startCountDown(steps[steps.indexOf(step) + 1])
                 }
-                .launchIn(this)
-
             val currentTime = SystemClock.elapsedRealtime()
             val offset = if (step.id == initialStep.id) currentTime - startingRealtime else 0
             val millisToCount = (stepTimeCalculated * (1 - startingProgress) - offset).toLong()
-            createCountDownTimer(millisToCount).start()
+            createCountDownTimer(millisToCount)
         }
         if (!isPaused) {
             startCountDown(initialStep, startingProgress)
