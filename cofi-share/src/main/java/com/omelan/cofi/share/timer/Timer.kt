@@ -259,12 +259,15 @@ object Timer {
                                     val isPaused =
                                         progress.getBoolean(
                                             WORKER_PROGRESS_IS_PAUSED,
-                                            workerInfo.state == WorkInfo.State.SUCCEEDED,
+                                            workerInfo.state.isFinished,
                                         )
                                     currentStep = steps.firstOrNull { it.id == stepID }
 
                                     coroutineScope.launch {
                                         animatedProgressValue.snapTo(stepProgress)
+                                        // TODO: race condition!
+                                        //  Sometimes LaunchedEffect(currentStep) is done after this
+                                        //  and animation doesn't stop
                                         if (isPaused) {
                                             pauseAnimations()
                                         } else {
