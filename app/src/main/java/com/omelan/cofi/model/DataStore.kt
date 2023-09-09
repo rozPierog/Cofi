@@ -14,7 +14,6 @@ class DataStore(val context: Context) : DataStoreShared(context) {
     fun getNextStepSetting() = context.dataStore.data.map { preferences ->
         preferences[NEXT_STEP_ENABLED] ?: NEXT_STEP_ENABLED_DEFAULT_VALUE
     }
-
     fun getAskedForSupport() = context.dataStore.data.map {
         it[ASKED_FOR_SUPPORT] ?: ASKED_FOR_SUPPORT_DEFAULT_VALUE
     }
@@ -38,7 +37,6 @@ class DataStore(val context: Context) : DataStoreShared(context) {
             it[NEXT_STEP_ENABLED] = !currentNextStepEnabledState
         }
     }
-
     suspend fun togglePipSetting() {
         context.dataStore.edit {
             val currentPiPState = it[PIP_ENABLED] ?: PIP_DEFAULT_VALUE

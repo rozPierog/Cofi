@@ -60,12 +60,13 @@ import com.omelan.cofi.appDeepLinkUrl
 import com.omelan.cofi.components.*
 import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
-import com.omelan.cofi.share.COMBINE_WEIGHT_DEFAULT_VALUE
 import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.utils.Haptics
+import com.omelan.cofi.share.utils.askForNotificationPermission
 import com.omelan.cofi.share.utils.getActivity
+import com.omelan.cofi.share.utils.hasNotificationPermission
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.InstantUtils
 import kotlinx.coroutines.Dispatchers
@@ -202,38 +203,52 @@ fun RecipeDetails(
     val lazyListState = rememberLazyListState()
 
     val dataStore = DataStore(LocalContext.current)
-    val combineWeightState by dataStore.getWeightSetting()
-        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+
     val isNextStepEnabled by dataStore.getNextStepSetting()
         .collectAsState(initial = NEXT_STEP_ENABLED_DEFAULT_VALUE)
 
-    var showAutomateLinkDialog by remember { mutableStateOf(false) }
+    val isBackgroundTimerEnabled by dataStore.getBackgroundTimerSetting()
+        .collectAsState(initial = false)
 
-    var weightMultiplier by remember { mutableStateOf(1.0f) }
-    var timeMultiplier by remember { mutableStateOf(1.0f) }
+    var showAutomateLinkDialog by remember { mutableStateOf(false) }
+    var showNotificationDialog by remember {
+        mutableStateOf(!context.hasNotificationPermission() && isBackgroundTimerEnabled == null)
+    }
+
+    LaunchedEffect(isBackgroundTimerEnabled) {
+        showNotificationDialog =
+            !context.hasNotificationPermission() && isBackgroundTimerEnabled == null
+    }
+
     var ratioSheetIsVisible by remember {
         mutableStateOf(false)
     }
 
     val (
+        animationControllers,
         currentStep,
+        indexOfCurrentStep,
         changeCurrentStep,
+        changeToNextStep,
         isDone,
         isTimerRunning,
-        indexOfCurrentStep,
-        animatedProgressValue,
-        animatedProgressColor,
-        pauseAnimations,
-        progressAnimation,
-        startAnimations,
-        changeToNextStep,
+        alreadyDoneWeight,
+        multiplierControllers,
     ) = Timer.createTimerControllers(
+        recipe = recipe,
         steps = steps,
         onRecipeEnd = { onRecipeEnd(recipe) },
         dataStore = dataStore,
         doneTrackColor = MaterialTheme.colorScheme.primary,
-        timeMultiplier = timeMultiplier,
     )
+
+    val (
+        animatedProgressValue,
+        animatedProgressColor,
+        pauseAnimations,
+        progressAnimation,
+        resumeAnimations,
+    ) = animationControllers
 
     val nextStep = remember(indexOfCurrentStep, steps) {
         if (steps.isEmpty() || indexOfCurrentStep == -1 || indexOfCurrentStep == steps.lastIndex) {
@@ -242,13 +257,6 @@ fun RecipeDetails(
             steps[indexOfCurrentStep + 1]
         }
     }
-
-    val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
-        indexOfCurrentStep = indexOfCurrentStep,
-        allSteps = steps,
-        combineWeightState = combineWeightState,
-        weightMultiplier = weightMultiplier,
-    )
 
     LaunchedEffect(currentStep) {
         progressAnimation(Unit)
@@ -324,8 +332,8 @@ fun RecipeDetails(
             isInPiP = isInPiP,
             alreadyDoneWeight = alreadyDoneWeight,
             isDone = isDone,
-            weightMultiplier = weightMultiplier,
-            timeMultiplier = timeMultiplier,
+            weightMultiplier = multiplierControllers.weightMultiplier,
+            timeMultiplier = multiplierControllers.timeMultiplier,
         )
         if (!isInPiP) {
             Spacer(modifier = Modifier.height(Spacing.big))
@@ -344,8 +352,8 @@ fun RecipeDetails(
                         .animateItemPlacement()
                         .padding(bottom = Spacing.normal),
                     step = nextStep ?: Step(name = "", type = StepType.WAIT),
-                    weightMultiplier,
-                    timeMultiplier,
+                    weightMultiplier = multiplierControllers.weightMultiplier,
+                    timeMultiplier = multiplierControllers.timeMultiplier,
                 )
             }
         }
@@ -373,8 +381,8 @@ fun RecipeDetails(
                         changeCurrentStep(newStep)
                     }
                 },
-                weightMultiplier = weightMultiplier,
-                timeMultiplier = timeMultiplier,
+                weightMultiplier = multiplierControllers.weightMultiplier,
+                timeMultiplier = multiplierControllers.timeMultiplier,
             )
             Divider()
         }
@@ -449,7 +457,7 @@ fun RecipeDetails(
                                     if (currentStep.time == null) {
                                         changeToNextStep(false)
                                     } else {
-                                        startAnimations()
+                                        resumeAnimations()
                                     }
                                 }
                             }
@@ -468,10 +476,7 @@ fun RecipeDetails(
     ) {
         if (ratioSheetIsVisible) {
             RatioBottomSheet(
-                timeMultiplier = timeMultiplier,
-                setTimeMultiplier = { newValue -> timeMultiplier = newValue },
-                weightMultiplier = weightMultiplier,
-                setWeightMultiplier = { newValue -> weightMultiplier = newValue },
+                multiplierControllers,
                 onDismissRequest = { ratioSheetIsVisible = false },
                 allSteps = steps,
             )
@@ -490,7 +495,23 @@ fun RecipeDetails(
             TabletLayout(it, renderDescription, renderTimer, renderUpNext, renderSteps, isInPiP)
         }
     }
-
+    if (showNotificationDialog) {
+        NotificationPermissionDialog(
+            dismiss = {
+                showNotificationDialog = false
+                coroutineScope.launch {
+                    dataStore.setBackgroundTimerEnabled(false)
+                }
+            },
+            onConfirm = {
+                context.askForNotificationPermission()
+                showNotificationDialog = false
+                coroutineScope.launch {
+                    dataStore.setBackgroundTimerEnabled(true)
+                }
+            },
+        )
+    }
     if (showAutomateLinkDialog) {
         DirectLinkDialog(
             dismiss = { showAutomateLinkDialog = false },

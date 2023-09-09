@@ -26,10 +26,11 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.composable
-import com.omelan.cofi.share.*
+import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
+import com.omelan.cofi.share.utils.askForNotificationPermission
 import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.wearos.R
 import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
@@ -103,8 +104,6 @@ fun RecipeDetails(
     val dataStore = DataStore(LocalContext.current)
 
     val ambientController = LocalAmbientModeProvider.current
-    var weightMultiplier by remember { mutableStateOf(1.0f) }
-    var timeMultiplier by remember { mutableStateOf(1.0f) }
     val combinedTime by remember(steps) {
         derivedStateOf {
             steps.sumOf { it.time ?: 0 }
@@ -149,11 +148,11 @@ fun RecipeDetails(
         }
     }
     val timerControllers = Timer.createTimerControllers(
+        recipe = recipe,
         steps = steps,
         onRecipeEnd = { },
         dataStore = dataStore,
         doneTrackColor = MaterialTheme.colors.primary,
-        timeMultiplier = timeMultiplier,
     )
     val context = LocalContext.current
     val ambientEnabled: Boolean = remember(LocalLifecycleOwner.current) {
@@ -171,6 +170,7 @@ fun RecipeDetails(
         onTimerRunning(timerControllers.isTimerRunning)
     }
     DisposableEffect(LocalLifecycleOwner.current) {
+        context.askForNotificationPermission()
         onDispose {
             ambientController?.setAmbientOffloadEnabled(false)
         }
@@ -185,13 +185,13 @@ fun RecipeDetails(
             canSwipeToClose(true)
         } else {
             if (timerControllers.isTimerRunning) {
-                timerControllers.pauseAnimations()
+                timerControllers.animationControllers.pauseAnimations()
             }
             canSwipeToClose(false)
         }
     }
     LaunchedEffect(timerControllers.currentStep) {
-        timerControllers.progressAnimation(Unit)
+        timerControllers.animationControllers.progressAnimation(Unit)
     }
 
     Scaffold(
@@ -209,17 +209,15 @@ fun RecipeDetails(
             when (page) {
                 0 -> TimerPage(
                     timerControllers = timerControllers,
-                    allSteps = steps,
                     recipe = recipe,
-                    dataStore = dataStore,
-                    weightMultiplier = weightMultiplier,
-                    timeMultiplier = timeMultiplier,
+                    weightMultiplier = timerControllers.multiplierControllers.weightMultiplier,
+                    timeMultiplier = timerControllers.multiplierControllers.timeMultiplier,
                 )
 
                 1 -> Row {
                     MultiplierPage(
-                        multiplier = weightMultiplier,
-                        changeMultiplier = { weightMultiplier = it },
+                        multiplier = timerControllers.multiplierControllers.weightMultiplier,
+                        changeMultiplier = timerControllers.multiplierControllers.changeWeightMultiplier,
                         requestFocus = pagerState.currentPage == 1,
                     ) {
                         Text(text = "x$it")
@@ -235,8 +233,8 @@ fun RecipeDetails(
                 }
 
                 2 -> MultiplierPage(
-                    multiplier = timeMultiplier,
-                    changeMultiplier = { timeMultiplier = it },
+                    multiplier = timerControllers.multiplierControllers.timeMultiplier,
+                    changeMultiplier = timerControllers.multiplierControllers.changeTimeMultiplier,
                     requestFocus = pagerState.currentPage == 2,
                 ) {
                     Text(text = "x$it")

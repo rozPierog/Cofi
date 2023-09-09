@@ -21,6 +21,7 @@ import com.omelan.cofi.components.OutlinedNumbersField
 import com.omelan.cofi.share.components.slideLeftRight
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
+import com.omelan.cofi.share.timer.MultiplierControllers
 import com.omelan.cofi.share.utils.roundToDecimals
 import com.omelan.cofi.share.utils.toStringShort
 import com.omelan.cofi.ui.Spacing
@@ -28,10 +29,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun RatioBottomSheet(
-    timeMultiplier: Float,
-    setTimeMultiplier: (Float) -> Unit,
-    weightMultiplier: Float,
-    setWeightMultiplier: (Float) -> Unit,
+    multiplierControllers: MultiplierControllers,
     onDismissRequest: () -> Unit,
     allSteps: List<Step>,
 ) {
@@ -43,13 +41,7 @@ fun RatioBottomSheet(
                 .padding(horizontal = Spacing.big)
                 .padding(top = Spacing.big),
         ) {
-            ManualContent(
-                timeMultiplier,
-                setTimeMultiplier,
-                weightMultiplier,
-                setWeightMultiplier,
-                allSteps,
-            )
+            ManualContent(multiplierControllers, allSteps)
         }
     }
 }
@@ -58,12 +50,15 @@ val predefinedMultipliers = arrayOf(0.5f, 1f, 2f, 3f)
 
 @Composable
 private fun ColumnScope.ManualContent(
-    timeMultiplier: Float,
-    setTimeMultiplier: (Float) -> Unit,
-    weightMultiplier: Float,
-    setWeightMultiplier: (Float) -> Unit,
+    multiplierControllers: MultiplierControllers,
     allSteps: List<Step>,
 ) {
+    val (
+        weightMultiplier,
+        changeWeightMultiplier,
+        timeMultiplier,
+        changeTimeMultiplier,
+    ) = multiplierControllers
     val focusRequester = remember { FocusRequester() }
     val combinedWaterWeight by remember(allSteps) {
         derivedStateOf {
@@ -113,7 +108,7 @@ private fun ColumnScope.ManualContent(
             onValueChange = {
                 val newWeightMultiplier =
                     ((it.toFloatOrNull() ?: combinedCoffeeWeight) / combinedCoffeeWeight)
-                setWeightMultiplier(if (newWeightMultiplier.isNaN()) 0f else newWeightMultiplier)
+                changeWeightMultiplier(if (newWeightMultiplier.isNaN()) 0f else newWeightMultiplier)
             },
             suffix = {
                 Text(text = "g")
@@ -132,7 +127,7 @@ private fun ColumnScope.ManualContent(
             onValueChange = {
                 val newWeightMultiplier =
                     ((it.toFloatOrNull() ?: combinedWaterWeight) / combinedWaterWeight)
-                setWeightMultiplier(if (newWeightMultiplier.isNaN()) 0f else newWeightMultiplier)
+                changeWeightMultiplier(if (newWeightMultiplier.isNaN()) 0f else newWeightMultiplier)
             },
             suffix = {
                 Text(text = "g")
@@ -157,7 +152,7 @@ private fun ColumnScope.ManualContent(
                 value = "${it.toStringShort()}x",
                 onCheck = { checked ->
                     if (checked) {
-                        setWeightMultiplier(it)
+                        changeWeightMultiplier(it)
                     }
                 },
                 isChecked = weightMultiplier == it,
@@ -165,7 +160,7 @@ private fun ColumnScope.ManualContent(
         }
     }
     Title(stringResource(id = R.string.recipe_details_multiply_time))
-    SliderWithValue(timeMultiplier, setTimeMultiplier)
+    SliderWithValue(timeMultiplier, changeTimeMultiplier)
 }
 
 @Composable

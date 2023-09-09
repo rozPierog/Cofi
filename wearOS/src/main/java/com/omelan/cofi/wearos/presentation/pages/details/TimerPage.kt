@@ -30,15 +30,11 @@ import androidx.wear.compose.material.*
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
 import com.google.android.horologist.compose.layout.fillMaxRectangle
-import com.omelan.cofi.share.COMBINE_WEIGHT_DEFAULT_VALUE
-import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.R
 import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
 import com.omelan.cofi.share.components.TimerValue
 import com.omelan.cofi.share.model.Recipe
-import com.omelan.cofi.share.model.Step
-import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.timer.TimerControllers
 import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
 import com.omelan.cofi.wearos.presentation.components.ListenKeyEvents
@@ -48,39 +44,34 @@ import kotlinx.coroutines.launch
 @Composable
 fun TimerPage(
     timerControllers: TimerControllers,
-    allSteps: List<Step>,
     recipe: Recipe,
-    dataStore: DataStore,
     weightMultiplier: Float,
     timeMultiplier: Float,
 ) {
+
     val (
+        animationControllers,
         currentStep,
         _,
+        _,
+        changeToNextStep,
         isDone,
         isTimerRunning,
-        _,
+        alreadyDoneWeight,
+    ) = timerControllers
+    val (
         animatedProgressValue,
         animatedProgressColor,
         pauseAnimations,
         _,
-        startAnimations,
-        changeToNextStep,
-    ) = timerControllers
-
+        resumeAnimations,
+    ) = animationControllers
     var showDescriptionDialog by remember { mutableStateOf(false) }
-    val combineWeightState by dataStore.getWeightSetting()
-        .collectAsState(initial = COMBINE_WEIGHT_DEFAULT_VALUE)
+
     val coroutineScope = rememberCoroutineScope()
     val ambientController = LocalAmbientModeProvider.current
     val isAmbient = ambientController?.isAmbient ?: false
 
-    val alreadyDoneWeight by Timer.rememberAlreadyDoneWeight(
-        indexOfCurrentStep = allSteps.indexOf(currentStep),
-        allSteps = allSteps,
-        combineWeightState = combineWeightState,
-        weightMultiplier = weightMultiplier,
-    )
     val startButtonOnClick: () -> Unit = {
         if (currentStep != null) {
             if (animatedProgressValue.isRunning) {
@@ -90,7 +81,7 @@ fun TimerPage(
                     if (currentStep.time == null) {
                         changeToNextStep(false)
                     } else {
-                        startAnimations()
+                        resumeAnimations()
                     }
                 }
             }
@@ -211,7 +202,7 @@ fun TimerPage(
             AnimatedContent(
                 targetState = Pair(currentStep, isDone), label = "Timer Content",
                 transitionSpec = { fadeIn() with fadeOut() },
-                modifier = Modifier.weight(1f, true)
+                modifier = Modifier.weight(1f, true),
             ) { (currentStep, isDone) ->
                 when {
                     isDone -> {
@@ -234,6 +225,7 @@ fun TimerPage(
                             )
                         }
                     }
+
                     currentStep != null -> {
                         Column {
                             TimeText(
@@ -264,6 +256,7 @@ fun TimerPage(
                             )
                         }
                     }
+
                     else -> {
                         Box(contentAlignment = Alignment.Center) {
                             Column(
