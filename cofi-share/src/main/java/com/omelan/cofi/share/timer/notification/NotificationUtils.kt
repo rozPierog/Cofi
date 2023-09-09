@@ -75,6 +75,7 @@ fun createDoneNotification(recipe: Recipe, context: Context) =
         setOnlyAlertOnce(false)
         setAutoCancel(true)
         setOngoing(false)
+        setVibrate(longArrayOf(300))
         setTimeoutAfter(600.toMillis().toLong())
         color = ResourcesCompat.getColor(
             context.resources,
@@ -113,7 +114,10 @@ fun Step.toNotificationBuilder(
         setCategory(NotificationCompat.CATEGORY_ALARM)
         setOnlyAlertOnce(true)
         setAutoCancel(true)
+        // TODO: Make it optional to allow for bridging notification
+        // https://developer.android.com/training/wearables/notifications/bridger
         setOngoing(true)
+        setVibrate(longArrayOf(300))
         color = ResourcesCompat.getColor(
             context.resources,
             R.color.ic_launcher_background,
