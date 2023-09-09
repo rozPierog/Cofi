@@ -15,10 +15,10 @@ import com.omelan.cofi.share.R
 import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.utils.roundToDecimals
-import com.omelan.cofi.share.utils.toMillis
 import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.share.utils.toStringShort
 import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.minutes
 
 const val TIMER_CHANNEL_ID = "cofi_timer_notification"
 fun Context.createChannel() {
@@ -38,7 +38,7 @@ fun createContentText(
     currentProgress: Float,
     weightMultiplier: Float,
     timeMultiplier: Float,
-    alreadyDoneWeight: Float
+    alreadyDoneWeight: Float,
 ): String? {
     val valueText = step.value?.let {
         val currentValueFromProgress = (it * currentProgress)
@@ -76,7 +76,7 @@ fun createDoneNotification(recipe: Recipe, context: Context) =
         setAutoCancel(true)
         setOngoing(false)
         setVibrate(longArrayOf(300))
-        setTimeoutAfter(600.toMillis().toLong())
+        setTimeoutAfter(10.minutes.inWholeMilliseconds)
         color = ResourcesCompat.getColor(
             context.resources,
             R.color.ic_launcher_background,
@@ -131,77 +131,83 @@ fun Step.toNotificationBuilder(
                 false,
             )
         }
-        if (step.isUserInputRequired) {
-            addAction(
-                NotificationCompat.Action(
-                    R.drawable.ic_monochrome,
-                    context.resources.getString(R.string.notification_action_continue),
-                    TimerActions.createPendingIntent(
-                        context,
-                        TimerActions.Actions.ACTION_NEXT,
-                        TimerData(
-                            recipeId,
-                            stepId = nextStepId,
-                            alreadyDoneProgress = 0f,
-                            weightMultiplier = weightMultiplier,
-                            timeMultiplier = timeMultiplier,
+        when {
+            step.isUserInputRequired -> {
+                addAction(
+                    NotificationCompat.Action(
+                        R.drawable.ic_monochrome,
+                        context.resources.getString(R.string.notification_action_continue),
+                        TimerActions.createPendingIntent(
+                            context,
+                            TimerActions.Actions.ACTION_NEXT,
+                            TimerData(
+                                recipeId,
+                                stepId = nextStepId,
+                                alreadyDoneProgress = 0f,
+                                weightMultiplier = weightMultiplier,
+                                timeMultiplier = timeMultiplier,
+                            ),
                         ),
                     ),
-                ),
-            )
-        } else if (isPaused) {
-            addAction(
-                NotificationCompat.Action(
-                    R.drawable.ic_monochrome,
-                    context.resources.getString(R.string.notification_action_continue),
-                    TimerActions.createPendingIntent(
-                        context,
-                        TimerActions.Actions.ACTION_RESUME,
-                        TimerData(
-                            recipeId,
-                            stepId = step.id,
-                            alreadyDoneProgress = currentProgress,
-                            weightMultiplier = weightMultiplier,
-                            timeMultiplier = timeMultiplier,
+                )
+            }
+
+            isPaused -> {
+                addAction(
+                    NotificationCompat.Action(
+                        R.drawable.ic_monochrome,
+                        context.resources.getString(R.string.notification_action_continue),
+                        TimerActions.createPendingIntent(
+                            context,
+                            TimerActions.Actions.ACTION_RESUME,
+                            TimerData(
+                                recipeId,
+                                stepId = step.id,
+                                alreadyDoneProgress = currentProgress,
+                                weightMultiplier = weightMultiplier,
+                                timeMultiplier = timeMultiplier,
+                            ),
                         ),
                     ),
-                ),
-            )
-            addAction(
-                NotificationCompat.Action(
-                    R.drawable.ic_monochrome,
-                    context.resources.getString(R.string.notification_action_stop),
-                    TimerActions.createPendingIntent(
-                        context,
-                        TimerActions.Actions.ACTION_STOP,
-                        TimerData(
-                            recipeId,
-                            stepId = step.id,
-                            alreadyDoneProgress = currentProgress,
-                            weightMultiplier = weightMultiplier,
-                            timeMultiplier = timeMultiplier,
+                )
+                addAction(
+                    NotificationCompat.Action(
+                        R.drawable.ic_monochrome,
+                        context.resources.getString(R.string.notification_action_stop),
+                        TimerActions.createPendingIntent(
+                            context,
+                            TimerActions.Actions.ACTION_STOP,
+                            TimerData(
+                                recipeId,
+                                stepId = step.id,
+                                alreadyDoneProgress = currentProgress,
+                                weightMultiplier = weightMultiplier,
+                                timeMultiplier = timeMultiplier,
+                            ),
                         ),
                     ),
-                ),
-            )
-        } else {
-            addAction(
-                NotificationCompat.Action(
-                    R.drawable.ic_monochrome,
-                    context.resources.getString(R.string.notification_action_pause),
-                    TimerActions.createPendingIntent(
-                        context,
-                        TimerActions.Actions.ACTION_PAUSE,
-                        TimerData(
-                            recipeId,
-                            stepId = step.id,
-                            alreadyDoneProgress = currentProgress,
-                            weightMultiplier = weightMultiplier,
-                            timeMultiplier = timeMultiplier,
+                )
+            }
+
+            else -> {
+                addAction(
+                    NotificationCompat.Action(
+                        R.drawable.ic_monochrome,
+                        context.resources.getString(R.string.notification_action_pause),
+                        TimerActions.createPendingIntent(
+                            context,
+                            TimerActions.Actions.ACTION_PAUSE,
+                            TimerData(
+                                recipeId,
+                                stepId = step.id,
+                                alreadyDoneProgress = currentProgress,
+                                weightMultiplier = weightMultiplier,
+                                timeMultiplier = timeMultiplier,
+                            ),
                         ),
                     ),
-                ),
-            )
+                )
+            }
         }
     }
 }
