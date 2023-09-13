@@ -156,7 +156,7 @@ object Timer {
                 return@suspendCompat
             }
             if (isStepChangeSoundEnabled) {
-                mediaPlayer?.start()
+                mediaPlayer.start()
             }
             if (isStepChangeVibrationEnabled) {
                 haptics.progress()
@@ -321,7 +321,6 @@ object Timer {
             lifecycleOwner.lifecycle.addObserver(observer)
             onDispose {
                 lifecycleOwner.lifecycle.removeObserver(observer)
-                mediaPlayer.release()
             }
         }
 
