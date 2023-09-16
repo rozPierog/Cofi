@@ -340,6 +340,23 @@
     "dependency": "androidx.lifecycle:lifecycle-runtime:2.6.1"
   },
   {
+    "project": "Android Lifecycle Service",
+    "description": "Android Lifecycle Service",
+    "version": "2.6.1",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-service:2.6.1"
+  },
+  {
     "project": "Android Lifecycle ViewModel",
     "description": "Android Lifecycle ViewModel",
     "version": "2.6.1",
@@ -935,6 +952,57 @@
     "dependency": "androidx.tracing:tracing:1.0.0"
   },
   {
+    "project": "Android Wear Remote Interactions",
+    "description": "Android Wear Remote Interactions",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/wear#1.0.0",
+    "year": "2020",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.wear:wear-remote-interactions:1.0.0"
+  },
+  {
+    "project": "Android WorkManager Kotlin Extensions",
+    "description": "Android WorkManager Kotlin Extensions",
+    "version": "2.8.1",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/work#2.8.1",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.work:work-runtime-ktx:2.8.1"
+  },
+  {
+    "project": "Android WorkManager Runtime",
+    "description": "Android WorkManager runtime library",
+    "version": "2.8.1",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/work#2.8.1",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.work:work-runtime:2.8.1"
+  },
+  {
     "project": "AndroidX Autofill",
     "description": "AndroidX Autofill",
     "version": "1.0.0",
@@ -1120,6 +1188,24 @@
       }
     ],
     "dependency": "androidx.profileinstaller:profileinstaller:1.3.0"
+  },
+  {
+    "project": "Checker Qual",
+    "description": "checker-qual contains annotations (type qualifiers) that a programmer\nwrites to specify Java code for type-checking by the Checker Framework.",
+    "version": "3.12.0",
+    "developers": [
+      "Michael Ernst",
+      "Suzanne Millstein"
+    ],
+    "url": "https://checkerframework.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The MIT License",
+        "license_url": "http://opensource.org/licenses/MIT"
+      }
+    ],
+    "dependency": "org.checkerframework:checker-qual:3.12.0"
   },
   {
     "project": "Collections Kotlin Extensions",
@@ -1513,6 +1599,21 @@
     "dependency": "androidx.core:core-ktx:1.9.0"
   },
   {
+    "project": "error-prone annotations",
+    "description": null,
+    "version": "2.7.1",
+    "developers": [],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.errorprone:error_prone_annotations:2.7.1"
+  },
+  {
     "project": "Experimental annotation",
     "description": "Java annotation for use on unstable Android API surfaces. When used in conjunction with the Experimental annotation lint checks, this annotation provides functional parity with Kotlin\u0027s Experimental annotation.",
     "version": "1.3.0",
@@ -1532,7 +1633,7 @@
   {
     "project": "FindBugs-jsr305",
     "description": "JSR305 Annotations for Findbugs",
-    "version": "2.0.2",
+    "version": "3.0.2",
     "developers": [],
     "url": "http://findbugs.sourceforge.net/",
     "year": null,
@@ -1542,12 +1643,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "com.google.code.findbugs:jsr305:2.0.2"
+    "dependency": "com.google.code.findbugs:jsr305:3.0.2"
   },
   {
-    "project": "Guava ListenableFuture only",
-    "description": "Contains Guava\u0027s com.google.common.util.concurrent.ListenableFuture class,\n    without any of its other classes -- but is also available in a second\n    \"version\" that omits the class to avoid conflicts with the copy in Guava\n    itself. The idea is:\n\n    - If users want only ListenableFuture, they depend on listenablefuture-1.0.\n\n    - If users want all of Guava, they depend on guava, which, as of Guava\n    27.0, depends on\n    listenablefuture-9999.0-empty-to-avoid-conflict-with-guava. The 9999.0-...\n    version number is enough for some build systems (notably, Gradle) to select\n    that empty artifact over the \"real\" listenablefuture-1.0 -- avoiding a\n    conflict with the copy of ListenableFuture in guava itself. If users are\n    using an older version of Guava or a build system other than Gradle, they\n    may see class conflicts. If so, they can solve them by manually excluding\n    the listenablefuture artifact or manually forcing their build systems to\n    use 9999.0-....",
-    "version": "1.0",
+    "project": "Guava InternalFutureFailureAccess and InternalFutures",
+    "description": "Contains\n    com.google.common.util.concurrent.internal.InternalFutureFailureAccess and\n    InternalFutures. Most users will never need to use this artifact. Its\n    classes is conceptually a part of Guava, but they\u0027re in this separate\n    artifact so that Android libraries can use them without pulling in all of\n    Guava (just as they can use ListenableFuture by depending on the\n    listenablefuture artifact).",
+    "version": "1.0.1",
     "developers": [],
     "url": null,
     "year": null,
@@ -1557,7 +1658,37 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "com.google.guava:listenablefuture:1.0"
+    "dependency": "com.google.guava:failureaccess:1.0.1"
+  },
+  {
+    "project": "Guava ListenableFuture only",
+    "description": "An empty artifact that Guava depends on to signal that it is providing\n    ListenableFuture -- but is also available in a second \"version\" that\n    contains com.google.common.util.concurrent.ListenableFuture class, without\n    any other Guava classes. The idea is:\n\n    - If users want only ListenableFuture, they depend on listenablefuture-1.0.\n\n    - If users want all of Guava, they depend on guava, which, as of Guava\n    27.0, depends on\n    listenablefuture-9999.0-empty-to-avoid-conflict-with-guava. The 9999.0-...\n    version number is enough for some build systems (notably, Gradle) to select\n    that empty artifact over the \"real\" listenablefuture-1.0 -- avoiding a\n    conflict with the copy of ListenableFuture in guava itself. If users are\n    using an older version of Guava or a build system other than Gradle, they\n    may see class conflicts. If so, they can solve them by manually excluding\n    the listenablefuture artifact or manually forcing their build systems to\n    use 9999.0-....",
+    "version": "9999.0-empty-to-avoid-conflict-with-guava",
+    "developers": [],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava"
+  },
+  {
+    "project": "Guava: Google Core Libraries for Java",
+    "description": "Guava is a suite of core and expanded libraries that include\n    utility classes, Google\u0027s collections, I/O classes, and\n    much more.",
+    "version": "31.0.1-jre",
+    "developers": [],
+    "url": "https://github.com/google/guava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.guava:guava:31.0.1-jre"
   },
   {
     "project": "Hamcrest Core",
@@ -1590,6 +1721,21 @@
       }
     ],
     "dependency": "org.jetbrains:annotations:13.0"
+  },
+  {
+    "project": "J2ObjC Annotations",
+    "description": "A set of annotations that provide additional information to the J2ObjC\n    translator to modify the result of translation.",
+    "version": "1.3",
+    "developers": [],
+    "url": "https://github.com/google/j2objc/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.j2objc:j2objc-annotations:1.3"
   },
   {
     "project": "Jetpack WindowManager Library",
@@ -1644,6 +1790,23 @@
       }
     ],
     "dependency": "com.github.KieronQuinn:MonetCompat:0.2.1"
+  },
+  {
+    "project": "Kotlin Android Extensions Runtime",
+    "description": "Kotlin Android Extensions Runtime",
+    "version": "1.8.21",
+    "developers": [
+      "Kotlin Team"
+    ],
+    "url": "https://kotlinlang.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.8.21"
   },
   {
     "project": "Kotlin Stdlib",
@@ -1748,6 +1911,40 @@
     "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4"
   },
   {
+    "project": "kotlinx-coroutines-guava",
+    "description": "Coroutines support libraries for Kotlin",
+    "version": "1.6.4",
+    "developers": [
+      "JetBrains Team"
+    ],
+    "url": "https://github.com/Kotlin/kotlinx.coroutines",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.6.4"
+  },
+  {
+    "project": "kotlinx-coroutines-play-services",
+    "description": "Coroutines support libraries for Kotlin",
+    "version": "1.6.4",
+    "developers": [
+      "JetBrains Team"
+    ],
+    "url": "https://github.com/Kotlin/kotlinx.coroutines",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4"
+  },
+  {
     "project": "Lifecycle ViewModel Compose",
     "description": "Compose integration with Lifecycle ViewModel",
     "version": "2.6.1",
@@ -1765,6 +1962,40 @@
     "dependency": "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
   },
   {
+    "project": "LiveData Core Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027livedata-core\u0027 artifact",
+    "version": "2.6.1",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.1"
+  },
+  {
+    "project": "LiveData Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027livedata\u0027 artifact",
+    "version": "2.6.1",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+  },
+  {
     "project": "Palette Kotlin Extensions",
     "description": "Kotlin extensions for \u0027palette\u0027 artifact",
     "version": "1.0.0",
@@ -1780,6 +2011,23 @@
       }
     ],
     "dependency": "androidx.palette:palette-ktx:1.0.0"
+  },
+  {
+    "project": "Parcelize Runtime",
+    "description": "Runtime library for the Parcelize compiler plugin",
+    "version": "1.8.21",
+    "developers": [
+      "Kotlin Team"
+    ],
+    "url": "https://kotlinlang.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlin:kotlin-parcelize-runtime:1.8.21"
   },
   {
     "project": "play-services-base",
@@ -1812,21 +2060,6 @@
     "dependency": "com.google.android.gms:play-services-basement:18.0.0"
   },
   {
-    "project": "play-services-instantapps",
-    "description": null,
-    "version": "18.0.1",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "Android Software Development Kit License",
-        "license_url": "https://developer.android.com/studio/terms.html"
-      }
-    ],
-    "dependency": "com.google.android.gms:play-services-instantapps:18.0.1"
-  },
-  {
     "project": "play-services-tasks",
     "description": null,
     "version": "18.0.1",
@@ -1840,6 +2073,21 @@
       }
     ],
     "dependency": "com.google.android.gms:play-services-tasks:18.0.1"
+  },
+  {
+    "project": "play-services-wearable",
+    "description": null,
+    "version": "18.0.0",
+    "developers": [],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Android Software Development Kit License",
+        "license_url": "https://developer.android.com/studio/terms.html"
+      }
+    ],
+    "dependency": "com.google.android.gms:play-services-wearable:18.0.0"
   },
   {
     "project": "Saved State",
