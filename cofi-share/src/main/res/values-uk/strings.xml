@@ -151,4 +151,12 @@
     <string name="settings_translate_item">Допомогти перекласти Cofi</string>
     <string name="name_tea">Чай</string>
     <string name="name_teapot">Чайник</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi триматиме таймер у фоновому режимі, але спочатку ви маєте надати йому дозвіл на надсилання сповіщень</string>
+    <string name="notification_action_stop">Зупинити</string>
+    <string name="notification_channel_timer_name">Таймер у фоновому режимі</string>
+    <string name="recipe_detials_notification_dialog_title">Дозволити таймеру працювати у фоновому режимі\?</string>
+    <string name="notification_action_pause">Пауза</string>
+    <string name="notification_action_continue">Продовжити</string>
+    <string name="settings_background_timer_item">Дозволити таймеру працювати у фоновому режимі</string>
+    <string name="button_no">Ні</string>
 </resources>
