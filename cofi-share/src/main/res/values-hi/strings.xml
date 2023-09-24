@@ -114,8 +114,8 @@
     <string name="name_cezve">चेज़वे</string>
     <string name="name_cup">कप</string>
     <string name="support_dialog_title">क्या आप कॉफी ऐप का आनंद ले रहे हैं?</string>
-    <string name="support_dialog_body">मैं आपके सहायता की बहुत सराहना करूंगा! आप निम्न में से एक या अधिक को चुनकर मेरी पसंद का काम जारी रखने में मेरी मदद कर सकते हैं</string>
-    <string name="support_dialog_github">कॉफी को गिटहब पर स्टार करे</string>
+    <string name="support_dialog_body">"मैं आपके समर्थन की बहुत सराहना करूंगा!  आप निम्नलिखित में से एक या अधिक चुनकर मुझे वह काम जारी रखने में मदद कर सकते हैं जो मुझे पसंद है।"</string>
+    <string name="support_dialog_github">कॉफी को GitHub पर स्टार करे</string>
     <string name="support_dialog_mastodon">मुझे मास्टोडॉन पर फॉलो करें</string>
     <string name="support_dialog_kofi">मेरे लिए कॉफी खरीदें</string>
     <string name="support_dialog_review">रिव्यु लिखिए</string>
@@ -125,4 +125,23 @@
     <string name="settings_step_next_step_item">अगला स्टेप दिखाएं</string>
     <string name="recipe_details_upNext">अगला:</string>
     <string name="settings_wearOS_item">वेयरओएस के लिए डाउनलोड करें</string>
+    <string name="recipe_detials_notification_dialog_text">यदि आप चाहें तो COFI बैकग्राउंड में टाइमर चालू रखेगा, लेकिन पहले आपको इसे नोटिफिकेशन पोस्ट करने की अनुमति देनी होगी</string>
+    <string name="prepopulate_v60_1cup_name">1 कप V60</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">कप के ऊपर रखें और इसे पूरी तरह से नीचे की ओर खींचने दें</string>
+    <string name="prepopulate_v60_1cup_description">रेसिपी बनाई गई: जेम्स हॉफमैन
+\n
+\n स्रोत: https://youtu.be/1oB1oDrDkHM
+\n
+\n शुरू करने से पहले, कागज को शंकु के अंदर रखकर और कागज पर गर्म पानी डालकर V60 को गर्म करें। यह V60 को पहले से गर्म कर देता है और कॉफी बनाने की प्रक्रिया के लिए कागज तैयार कर देता हैं
+\n
+\nपीसने का आकार: बारीक - मध्यम बारीक
+\n
+\nतापमान: जितना गर्म, उतना बेहतर (विशेषकर हल्के भूनने पर)</string>
+    <string name="recipe_details_change_step_toast">चरण बदलने के लिए पकड़े और दबाकर रखें</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">क्रस्ट को या तो फेटकर या थोड़ा हिलाकर तोड़ लें</string>
+    <string name="prepopulate_clever_dripper_step_rinse">फिल्टर को गर्म पानी से धो लें</string>
+    <string name="recipe_detials_notification_dialog_title">टाइमर को बैकग्राउंड में चलने की अनुमति दे\?</string>
+    <string name="settings_background_timer_item">टाइमर को बैकग्राउंड में चलने की अनुमति दे</string>
+    <string name="button_no">नहीं</string>
+    <string name="settings_translate_item">Cofi को अनुवाद करने में सहायता करे</string>
 </resources>
