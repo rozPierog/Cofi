@@ -147,4 +147,12 @@
     <string name="recipe_details_recipeRatio">Tarif oranı: 1:%1$s</string>
     <string name="name_tea">Çay</string>
     <string name="name_teapot">Çay fincanı</string>
+    <string name="recipe_detials_notification_dialog_text">İsterseniz Cofi zamanlayıcı arka planda çalışır tutacaktır, ancak bildirim gönderme izni vermeniz gerekecektir</string>
+    <string name="notification_action_stop">Durdur</string>
+    <string name="notification_channel_timer_name">Arka plan zamanlayıcı</string>
+    <string name="recipe_detials_notification_dialog_title">Zamanlayıcı arka planda çalışsın mı\?</string>
+    <string name="notification_action_pause">Duraklat</string>
+    <string name="notification_action_continue">Devam Et</string>
+    <string name="settings_background_timer_item">Arka planda zamanlayıcıya izin ver</string>
+    <string name="button_no">Hayır</string>
 </resources>
