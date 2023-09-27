@@ -144,4 +144,7 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
 \nFalte den Filter beiden Nähten entlang, sodass er besser Platz im Brüher hat
 \nMaximal 500ml Wasser, empfohlen ist 400 oder weniger</string>
     <string name="name_tea">Tee</string>
+    <string name="recipe_detials_notification_dialog_text">Wenn du möchtest wird Cofi den Timer im Hintergrund weiter laufen lassen, aber zuerst musst du der App die Berechtigung geben dir Nachrichten zu senden</string>
+    <string name="recipe_detials_notification_dialog_title">Timer im Hintergrund erlauben\?</string>
+    <string name="button_no">Nein</string>
 </resources>
