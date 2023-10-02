@@ -125,4 +125,34 @@ Kaffen er klar 5 minutter etter det siste steget, men smaken blir bedre og bedre
     <string name="name_cezve">Cezve</string>
     <string name="support_dialog_body">Setter stor pris på din støtte. Hjelp meg å holde på med det jeg elsker ved å gjøre én eller flere av følgende</string>
     <string name="recipe_details_change_step_toast">Trykk og hold for å endre steg</string>
+    <string name="recipe_details_recipeRatio">Oppskriftsforhold: 1:%1$s</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi lar tidsuret kjøre i bakgrunnen hvis du vil, men først må du innvilge tilgangen til å gi merknader.</string>
+    <string name="name_tea">Te</string>
+    <string name="name_drip">Trakterkaffe</string>
+    <string name="prepopulate_v60_1cup_name">1 kopp V60</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Plasser på toppen av koppen og la synke helt ned</string>
+    <string name="recipe_details_read_description">Les beskrivelsen</string>
+    <string name="name_teapot">Tekanne</string>
+    <string name="prepopulate_v60_1cup_description">Oppskrift av: James Hoffmann
+\nKilde: https://yewtu.be/1oB1oDrDkHM
+\nFør du starter varmer du opp V60-en ved å plassere papir i kjeglen og helle vann over papiret. Dette forhåndsvarmer V60-en og forbereder papiret for bryggeprosessen.
+\nGranulatstørrelse: fin - middels fin
+\nTemperatur: Desto varmere dess bedre (spesielt med bønner som ikke er så brente)</string>
+    <string name="notification_action_stop">Stopp</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Knekk skorpen ved å enten røre, eller å riste</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Rens filteret med varmt vann</string>
+    <string name="notification_channel_timer_name">Bakgrunnstidsur</string>
+    <string name="recipe_detials_notification_dialog_title">Tillat tidsur i bakgrunnen\?</string>
+    <string name="notification_action_pause">Pause</string>
+    <string name="notification_action_continue">Fortsett</string>
+    <string name="settings_background_timer_item">Tillat tidsur i bakgrunnen</string>
+    <string name="button_no">Nei</string>
+    <string name="settings_translate_item">Bistå oversettelsen av Cofi</string>
+    <string name="prepopulate_clever_dripper_description">Oppskrift laget av: James Hoffmann
+\nKilde: https://yewtu.be/RpOdennxP24
+\nGranulatstørrelse: Middels-fin
+\nTemperatur: Kok opp og bruk umiddelbart
+\nForhold: 1:16.67, eller 15g per 250mL
+\nBrett filteret langs sømmene slik at det passer bedre i trakteren.
+\nMaksimal mengde vann er 500mL, men 400 eller mindre er anbefalt.</string>
 </resources>
