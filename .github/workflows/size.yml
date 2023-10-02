@@ -34,7 +34,7 @@ jobs:
                   cp ./app/build/outputs/apk/full/${{ matrix.build_type }}/app-full-${{ matrix.build_type }}.apk ../pr.apk
                   ls
 
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
               with:
                   ref: main
             - name: Build main app
