@@ -147,4 +147,9 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="recipe_detials_notification_dialog_text">Wenn du möchtest wird Cofi den Timer im Hintergrund weiter laufen lassen, aber zuerst musst du der App die Berechtigung geben dir Nachrichten zu senden</string>
     <string name="recipe_detials_notification_dialog_title">Timer im Hintergrund erlauben\?</string>
     <string name="button_no">Nein</string>
+    <string name="notification_action_stop">Stop</string>
+    <string name="notification_channel_timer_name">Hintergrund Timer</string>
+    <string name="notification_action_pause">Pause</string>
+    <string name="notification_action_continue">Fortfahren</string>
+    <string name="settings_background_timer_item">Timer im Hintergrund erlauben</string>
 </resources>
