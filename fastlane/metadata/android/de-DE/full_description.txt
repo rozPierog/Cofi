@@ -10,7 +10,7 @@ Funktionen:
 - Anpassbare Zeit-Einstellungen für verschiedene Brühmethoden
 - Benutzerfreundliche Oberfläche mit einem sauberen Design und dem neuesten Material Design
 - Picture-in-Picture-Modus zum Multitasking
-- WearOS-App für einfaches Timing auf Ihrer Smartwatch
+- WearOS App für einfaches Timing auf Ihrer Smartwatch
 - Kein Tracking oder Sammeln von Benutzerdaten
 
 Ich weiß, wie frustrierend es sein kann, sich mit einer mittelmäßigen Tasse Kaffee zufrieden zu geben. Deshalb möchte ich Ihnen helfen, wie ein Profi zu brühen und jedes Mal die perfekte Tasse zu genießen. Laden Sie jetzt Cofi herunter und beginnen Sie Ihre Reise zur Kaffee-Perfektion!

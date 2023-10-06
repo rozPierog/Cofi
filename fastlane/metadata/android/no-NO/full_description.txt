@@ -11,7 +11,7 @@ Funksjoner:
 - Tilpass tidsinnstillingen for forskjellige bryggemetoder
 - Enkelt brukergrensesnitt med et rent design og det nyeste materielle designet
 - Bilde-i-bilde -modus for fleroppgaveløsning
-- WearOS-program for enkel integrasjon med din smartklokke
+- WearOS program for enkel integrasjon med din smartklokke
 - Ingen sporing eller datainnsamling
 
 Jeg vet hvor frustrerende det kan være å hanskes med en middelmådig kaffe. Derfor vil jeg hjelpe deg å brygge som en proff og få perfekt resultat hver gang.
