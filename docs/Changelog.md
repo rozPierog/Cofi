@@ -13,6 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
+## [1.20.1|1.11.1] - 2023-10-06
+
+### Added
+- Timer will now try to continue in the background when the app isn't in the foreground
+
+### Changed
+- Updated translations
+
+### Removed
+
+
 ## [1.20.0|1.11.0] - 2023-09-13
 
 ### Added

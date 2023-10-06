@@ -107,11 +107,13 @@ platform :android do
    upload_to_play_store(
       track: options[:prerelease] ? 'wear:internal' : 'wear:production',
       skip_upload_apk: true,
+      skip_screenshots: true,
       aab_paths: ["wearOS/build/outputs/bundle/release/wearOS-release.aab"]
     )
     upload_to_play_store(
       track: options[:prerelease] ? 'instant:internal' : 'instant:production',
       skip_upload_apk: true,
+      skip_screenshots: true,
       aab_paths: ["app/build/outputs/bundle/instantRelease/app-instant-release.aab"]
     )
   end
