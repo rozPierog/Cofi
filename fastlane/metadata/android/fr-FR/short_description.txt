@@ -1,1 +1,1 @@
-Open-source coffee timer. Easy-to-use interface. Perfect cup every time!
+Minuteur pour café open-source. Interface facile d'utilisation. Pour le café parfait à chaque fois!
