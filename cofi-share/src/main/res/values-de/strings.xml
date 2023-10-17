@@ -125,9 +125,9 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     </plurals>
     <string name="recipe_details_change_step_toast">Gedrückt halten, um den Schritt zu ändern</string>
     <string name="recipe_details_read_description">Beschreibung lesen</string>
-    <string name="settings_translate_item">Hilf mit Cofi zu übersetzen</string>
+    <string name="settings_translate_item">Hilf Cofi zu übersetzen</string>
     <string name="prepopulate_v60_1cup_name">1 Becher V60</string>
-    <string name="prepopulate_clever_dripper_step_break_crust">Zerstöre die Kruste indem du entweder umrührst oder ein wenig schüttelst.</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Löse die Kruste indem du entweder umrührst oder ein wenig schüttelst.</string>
     <string name="name_teapot">Teekanne</string>
     <string name="prepopulate_clever_dripper_step_rinse">Wasche den Filter mit heißem Wasser aus.</string>
     <string name="prepopulate_v60_1cup_description">Rezept erstellt von: James Hoffmann
@@ -135,7 +135,7 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
 \nBevor du beginnst, erhitze den V60 indem du das Papier in den Kegel platziert und mit heißem Wasser übergießt. Dies heizt den V60 vor und bereitet das Papier auf den Brau-Prozess vor.
 \nMahlgrad: fein - mittelfein
 \nTemperatur: je heißer, desto besser (insbesondere bei hellen Röstungen)</string>
-    <string name="recipe_details_recipeRatio">Verhältniss: 1:%1$s</string>
+    <string name="recipe_details_recipeRatio">Rezept Verhältnis: 1:%1$s</string>
     <string name="prepopulate_clever_dripper_description">Rezept erstellt von: James Hoffmann
 \nQuelle: https://youtu.be/RpOdennxP24
 \nMahlgrad: Mittel-fein
@@ -147,4 +147,10 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="recipe_detials_notification_dialog_text">Wenn du möchtest wird Cofi den Timer im Hintergrund weiter laufen lassen, aber zuerst musst du der App die Berechtigung geben dir Nachrichten zu senden</string>
     <string name="recipe_detials_notification_dialog_title">Timer im Hintergrund erlauben\?</string>
     <string name="button_no">Nein</string>
+    <string name="notification_action_stop">Stop</string>
+    <string name="notification_channel_timer_name">Hintergrund Timer</string>
+    <string name="notification_action_pause">Pause</string>
+    <string name="notification_action_continue">Fortfahren</string>
+    <string name="settings_background_timer_item">Timer im Hintergrund erlauben</string>
+    <string name="name_drip">Tropfen</string>
 </resources>

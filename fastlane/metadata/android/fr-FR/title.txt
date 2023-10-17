@@ -1,1 +1,1 @@
-Cofi - Brew Timer
+Cofi - Minuteur d'infusion
