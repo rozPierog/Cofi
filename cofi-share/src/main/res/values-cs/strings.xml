@@ -146,4 +146,15 @@
 \nMamixmální množství vody ne 500ml, ale je doporučeno 400 či méně</string>
     <string name="prepopulate_clever_dripper_step_break_crust">Rozbijte krustu micháním či malým zatřesením</string>
     <string name="name_drip">Překapávaná káva</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi bude uchovávat časovač na pozadí pokud bude chtít, ale nejdřív nám musíte dát povolení pro posílání oznámení</string>
+    <string name="name_tea">Čaj</string>
+    <string name="name_teapot">Čajová konvice</string>
+    <string name="notification_action_stop">Zastavit</string>
+    <string name="notification_channel_timer_name">Časovač na pozadí</string>
+    <string name="recipe_detials_notification_dialog_title">Povolit časovač na pozadí systému\?</string>
+    <string name="notification_action_pause">Pozastavit</string>
+    <string name="notification_action_continue">Pokračovat</string>
+    <string name="settings_background_timer_item">Povolit časovač na pozadí</string>
+    <string name="button_no">Ne</string>
+    <string name="settings_translate_item">Pomocte přeložit Cofi</string>
 </resources>
