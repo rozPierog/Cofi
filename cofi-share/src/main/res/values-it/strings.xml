@@ -129,4 +129,8 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="recipe_details_change_step_toast">Tieni premuto per cambiare passo</string>
     <string name="recipe_details_read_description">Leggi la descrizione</string>
     <string name="settings_translate_item">Contribuisci alla traduzione di Cofi</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi farà funzionare il timer in background se vuoi, ma prima devi dargli il permesso di mandare le notifiche</string>
+    <string name="recipe_detials_notification_dialog_title">Permettere i timer in background\?</string>
+    <string name="settings_background_timer_item">Permettere i timer in background</string>
+    <string name="button_no">No</string>
 </resources>
