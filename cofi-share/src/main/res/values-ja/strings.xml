@@ -25,4 +25,48 @@
     <string name="recipe_unsaved_text">破棄しますか？</string>
     <string name="recipe_delete_text">これでこのレシピは永久に削除されます</string>
     <string name="recipe_delete_title">これでよろしいですか？</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi はタイマーをバックグラウンドで動かせますが、最初に通知の許可を与える必要があります</string>
+    <string name="settings_licenses_title">オープンソースライセンス</string>
+    <string name="button_copy">コピー</string>
+    <string name="button_cancel">キャンセル</string>
+    <string name="prepopulate_v60_description">レシピ: James Hoffmann
+\nソース: https://youtu.be/AI4ynXzkSQo
+\nグラインドサイズ: 中細挽き
+\n温度: 熱いほど良い（特に軽めの焙煎の場合）</string>
+    <string name="prepopulate_step_swirl">スワール</string>
+    <string name="button_discard">破棄</string>
+    <string name="prepopulate_v60_1cup_name">1 Cup V60 (1カップのV60)</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="prepopulate_v60_1cup_description">レシピ: James Hoffmann
+\nソース: https://youtu.be/1oB1oDrDkHM
+\n始める前に、紙を円錐の中に入れ、紙の上からお湯を注いでV60を温めます。これでV60を予熱され、紙が淹れられる状態になります。
+\nグラインドサイズ: 細挽き - 中細挽き
+\n温度: 熱いほど良い（特に軽めの焙煎の場合）</string>
+    <string name="button_delete">削除</string>
+    <string name="settings_pip_item">ピクチャーインピクチャー</string>
+    <string name="settings_combine_weight_all">すべての重さを足す</string>
+    <string name="snackbar_copied">コピーしました！</string>
+    <string name="prepopulate_v60_name">Ultimate V60 (究極のV60)</string>
+    <string name="timer_enjoy">コーヒーをお楽しみください</string>
+    <string name="button_show">表示を</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="settings_about_title">アプリについて</string>
+    <string name="settings_combine_weight_none">重さは足さない</string>
+    <string name="recipe_detials_notification_dialog_title">バックグラウンドでのタイマーを許可しますか？</string>
+    <string name="step_add_remove">削除</string>
+    <string name="settings_about_item">アプリについて</string>
+    <string name="settings_background_timer_item">タイマーのバックグラウンドでの動作を許可</string>
+    <string name="button_no">いいえ</string>
+    <string name="settings_licenses_item">謝辞</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="other">バックアップされた %d レシピ</item>
+    </plurals>
+    <string name="settings_bug_item">バグを報告、または機能を提案</string>
+    <string name="settings_combine_weight_water">水の重さだけを足す</string>
+    <string name="settings_translate_item">Cofi の翻訳を手伝う</string>
+    <string name="button_continue_editing">編集を続ける</string>
+    <string name="settings_combine_weight_item">重さ</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="other">リストアされた %d レシピ</item>
+    </plurals>
 </resources>

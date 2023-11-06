@@ -31,4 +31,8 @@
     <string name="settings_pip_item">Нарыс у нарысе</string>
     <string name="settings_step_sound_item">Гук змены крока</string>
     <string name="recipe_delete_text">Гэта выдаліць гэты рэцэпт назаўсёды</string>
+    <string name="recipe_detials_notification_dialog_text">Кофі захавае таймер у фонавым рэжыме, калі вы гэтага жадаеце, але спачатку вы павінны даць дазвол на адпраўку паведамленняў</string>
+    <string name="recipe_details_automation_dialog_text">Скарыстайцеся спасылкай, каб перайсці напрамую да рэцэпту. Запішыце яе ў NFC-тэг ці стварыце аўтыматазаванае заданне ў Tasker каб зрабіць вашую ранюшнюю каву прасцейшай.
+\nУВАГА: Вы не можаце падзяліцца рэцэптам гэтакім чынам!</string>
+    <string name="recipe_detials_notification_dialog_title">Дазволіць таймер у фонавым рэжыме\?</string>
 </resources>
