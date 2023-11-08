@@ -1,2 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="step_type_water">Víz hozzáadása</string>
+    <string name="recipe_detials_notification_dialog_text">Ha szeretnéd hogy a Cofi a háttérben futtassa az időzítőt akkor engedélyt kell adnod neki az értesítések küldésére</string>
+    <string name="settings_licenses_title">Nyílt forráskódú licencek</string>
+    <string name="button_copy">Másolás</string>
+    <string name="button_cancel">Mégse</string>
+    <string name="step_type_other">Egyéb</string>
+    <string name="prepopulate_v60_description">Receptet készítette: James Hoffmann
+\nForrás: https://youtu.be/AI4ynXzkSQo
+\nŐrlési finomság: közepesen finom
+\nHőmérséklet: minél forróbb, annál jobb (különösen a világosabban pörkölt kávébabok esetében)</string>
+    <string name="step_add_duration">Időtartam (mp)</string>
+    <string name="button_discard">Elvetés</string>
+    <string name="prepopulate_step_water">Víz hozzáadása</string>
+    <string name="prepopulate_v60_1cup_name">1 csésze V60</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="prepopulate_v60_1cup_description">Receptet készítette: James Hoffmann
+\nForrás: https://youtu.be/1oB1oDrDkHM
+\nMielőtt elkezdenéd, melegítsd fel a V60-at úgy, hogy a papírt a kúp belsejébe helyezed, és forró vizet öntesz a papírra. Ez előmelegíti a V60-at és előkészíti a papírt a főzési folyamatra.
+\nŐrlési finomság: közepesen finom
+\nHőmérséklet: minél forróbb, annál jobb (különösen a világosabban pörkölt kávébabok esetében)</string>
+    <string name="button_delete">Törlés</string>
+    <string name="step_type_wait">Várakozás</string>
+    <string name="settings_pip_item">Kép a képben</string>
+    <string name="settings_combine_weight_all">Összes súly összevonása</string>
+    <string name="recipe_edit_description">Leírás</string>
+    <string name="settings_title">Beállítások</string>
+    <string name="recipe_delete_title">Biztos vagy benne?</string>
+    <string name="recipe_unsaved_title">Mentetlen módosítások vannak</string>
+    <string name="step_add_weight">Súly (g)</string>
+    <string name="recipe_add_new_title">Új recept létrehozása</string>
+    <string name="step_add_name">Név</string>
+    <string name="recipe_edit_name">Név</string>
+    <string name="step_type_add_coffee">Kávé hozzáadása</string>
+    <string name="recipe_edit_description_button">Leírás hozzáadása</string>
+    <string name="snackbar_copied">Másolva!</string>
+    <string name="settings_step_sound_item">Lépésváltás hangja</string>
+    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="timer_enjoy">Élvezd a kávéd</string>
+    <string name="button_show">Megjelenítés</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="recipe_details_automation_dialog_text">Használd ezt a linket, hogy közvetlenül a recepthez ugorj. Írd rá egy NFC-címkére, vagy hozz létre automatizálási feladatot a Taskerben, hogy megkönnyítsd a reggeli kávézást.
+\nFIGYELMEZTETÉS: A receptet így nem oszthatod meg!</string>
+    <string name="prepopulate_step_wait">Várakozás</string>
+    <string name="settings_about_title">Névjegy</string>
+    <string name="settings_combine_weight_none">Nincs súly összevonás</string>
+    <string name="recipe_detials_notification_dialog_title">Engedélyezed az időzítőt a háttérben?</string>
+    <string name="step_add_remove">Eltávolítás</string>
+    <string name="step_add_save">Mentés</string>
+    <string name="settings_about_item">Névjegy</string>
+    <string name="settings_background_timer_item">Időzítő engedélyezése a háttérben</string>
+    <string name="recipe_details_automation_dialog_title">Közvetlen link</string>
+    <string name="button_no">Nem</string>
+    <string name="settings_licenses_item">Köszönetnyilvánítás</string>
+    <string name="recipe_unsaved_text">El akarod őket vetni?</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">%d recept elmentve</item>
+        <item quantity="other">%d recept elmentve</item>
+    </plurals>
+    <string name="settings_bug_item">Hibajelentés vagy funkciójavaslat</string>
+    <string name="prepopulate_step_coffee">Kávé hozzáadása</string>
+    <string name="recipe_delete_text">Ez véglegesen eltávolítja ezt a receptet</string>
+    <string name="settings_combine_weight_water">Csak a víz súlyának összevonása</string>
+    <string name="settings_translate_item">Segíts lefordítani a Cofi-t</string>
+    <string name="settings_github_item">Github tároló</string>
+    <string name="button_continue_editing">Szerkesztés folytatása</string>
+    <string name="recipe_edit_title">Recept szerkesztése</string>
+    <string name="settings_combine_weight_item">Súly összevonása</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">%d recept visszaállítva</item>
+        <item quantity="other">%d recept visszaállítva</item>
+    </plurals>
+</resources>
