@@ -33,7 +33,7 @@
 \nソース: https://youtu.be/AI4ynXzkSQo
 \nグラインドサイズ: 中細挽き
 \n温度: 熱いほど良い（特に軽めの焙煎の場合）</string>
-    <string name="prepopulate_step_swirl">スワール</string>
+    <string name="prepopulate_step_swirl">混ぜる</string>
     <string name="button_discard">破棄</string>
     <string name="prepopulate_v60_1cup_name">1 Cup V60 (1カップのV60)</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
@@ -59,7 +59,7 @@
     <string name="button_no">いいえ</string>
     <string name="settings_licenses_item">謝辞</string>
     <plurals name="settings_snackbar_backup">
-        <item quantity="other">バックアップされた %d レシピ</item>
+        <item quantity="other">%d レシピをバックアップしました</item>
     </plurals>
     <string name="settings_bug_item">バグを報告、または機能を提案</string>
     <string name="settings_combine_weight_water">水の重さだけを足す</string>
@@ -69,4 +69,24 @@
     <plurals name="settings_snackbar_restore">
         <item quantity="other">リストアされた %d レシピ</item>
     </plurals>
+    <string name="tereszkiewicz_credits_subtitle">Dribbble をチェックする</string>
+    <string name="prepopulate_frenchPress_description">レシピ: James Hoffmann
+\nソース: https://youtu.be/st571DYYTR8
+\nグラインドサイズ: 中挽き
+\n最後の工程が終わって5分待つ、もっと長く待てばさらに良くなる</string>
+    <string name="recipe_create_title">レシピを追加</string>
+    <string name="prepopulate_step_stir_crust">クラストをかき混ぜる</string>
+    <string name="hoffmann_credits_title">デフォルトのレシピは James Hoffmann より</string>
+    <string name="recipe_clone_text">このレシピをもう一つ作成します</string>
+    <string name="prepopulate_chemex_name">ケメックス</string>
+    <string name="recipe_clone_suffix">%1$s - コピー</string>
+    <string name="tereszkiewicz_credits_title">アプリアイコン: Hubert Tereszkiewicz</string>
+    <string name="hoffmann_credits_subtitle">Youtube チャンネルに行く</string>
+    <string name="settings_step_sound_item">次のステップへ進む時の音</string>
+    <string name="prepopulate_step_scoop_coffee">泡と珈琲のかけらを上から取り除く</string>
+    <string name="prepopulate_frenchPress_name">フレンチプレス</string>
+    <string name="app_version">アプリバージョン</string>
+    <string name="recipe_details_noTime">スタートを押して続けます</string>
+    <string name="recipe_clone_title">このレシピをクローンしますか？</string>
+    <string name="prepopulate_step_plunge">水面下まで沈め、注ぐ</string>
 </resources>
