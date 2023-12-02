@@ -115,7 +115,7 @@
     <string name="support_dialog_body">皆様のサポートに大変感謝申し上げます！以下のどれかを選ぶ、またはフォローしていただければ、私の愛することを続ける助けをすることができます。</string>
     <string name="support_title">Cofi をサポート</string>
     <string name="settings_timer_item">タイマー設定</string>
-    <string name="infoBox_update_body">クリックして更新情報を見る</string>
+    <string name="infoBox_update_body">タップして更新情報を見る</string>
     <string name="infoBox_update_title">Cofi がアップデートされました</string>
     <string name="settings_step_next_step_item">次のステップを表示</string>
     <string name="support_dialog_mastodon">Mastodon でフォロー</string>
