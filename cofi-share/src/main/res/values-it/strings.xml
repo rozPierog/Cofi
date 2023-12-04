@@ -133,4 +133,5 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="recipe_detials_notification_dialog_title">Permettere i timer in background\?</string>
     <string name="settings_background_timer_item">Permettere i timer in background</string>
     <string name="button_no">No</string>
+    <string name="prepopulate_v60_1cup_name">1 Tazza V60</string>
 </resources>
