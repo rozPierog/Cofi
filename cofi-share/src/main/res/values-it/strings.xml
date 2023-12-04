@@ -112,7 +112,7 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="support_dialog_kofi">Offrimi un caffè</string>
     <string name="support_title">Supporta Cofi</string>
     <string name="infoBox_update_body">Clicca qui per leggere gli aggiornamenti</string>
-    <string name="support_dialog_body">Ogni aiuto è gradito! Potete aiutarmi a continuare a fare ciò che amo scegliendo uno o più dei seguenti progetti</string>
+    <string name="support_dialog_body">Ogni aiuto è gradito! Potete aiutarmi a continuare a fare ciò che amo scegliendo uno o più dei seguenti progetti.</string>
     <string name="recipe_details_multiply_time">Moltiplicatore del tempo</string>
     <string name="recipe_details_multiply_weight">Moltiplicatore del peso</string>
     <string name="settings_step_next_step_item">Mostra prossimi passi</string>
@@ -134,4 +134,12 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="settings_background_timer_item">Permettere i timer in background</string>
     <string name="button_no">No</string>
     <string name="prepopulate_v60_1cup_name">1 Tazza V60</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Posizionala sopra la tazza e lascia che si filtri completamente</string>
+    <string name="prepopulate_v60_1cup_description">Ricetta creata da: James Hoffmann
+\nFonte: https://youtu.be/1oB1oDrDkHM
+\nPrima di iniziare, riscalda il V60 inserendo la carta nel cono e versando acqua calda sulla carta. Questo preriscalda il V60 e prepara la carta per il processo di infusione.
+\nMacinatura: fine - media fine
+\nTemperatura: il più caldo, il meglio (specialmente con tostature più leggere)</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Spezza la crosta mescolando o dandole una leggera scossa</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Sciacquare il filtro con acqua calda</string>
 </resources>
