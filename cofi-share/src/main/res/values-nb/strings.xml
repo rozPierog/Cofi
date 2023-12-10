@@ -42,16 +42,16 @@ ADVARSEL: Det er ikke mulig å dele oppskriften slik!"</string>
     <string name="settings_licenses_item">Anerkjennelser</string>
     <string name="settings_github_item">Github Repository</string>
     <plurals name="settings_snackbar_backup">
-        <item quantity="one">Sikkerhetskopierte %d oppskrift</item>
+        <item quantity="one">Sikkerhetskopiert %d oppskrift</item>
         <item quantity="other">Sikkerhetskopierte %d oppskrifter</item>
     </plurals>
     <plurals name="settings_snackbar_restore">
         <item quantity="one">Gjenopprettet %d oppskrift</item>
-        <item quantity="other">Gjennomprettet %d Oppskrifter</item>
+        <item quantity="other">Gjenopprettede %d oppskrifter</item>
     </plurals>
     <string name="button_show">Vis</string>
     <string name="step_add_remove">Fjern</string>
-    <string name="timer_enjoy">Håper det smaker!</string>
+    <string name="timer_enjoy">Kos deg med kaffen</string>
     <string name="prepopulate_v60_name">Den Ultimate V60en</string>
     <string name="prepopulate_v60_description">"Oppskrift av: James Hoffmann
 Kilde: https://youtu.be/AI4ynXzkSQo
@@ -64,7 +64,7 @@ Temperatur: desto varmere, desto bedre (spesielt for mer lysbrent kaffe)"</strin
     <string name="prepopulate_step_plunge">Sett stemplet rett under kaffe overflaten og hell</string>
     <string name="prepopulate_step_stir_crust">Rør gruten</string>
     <string name="prepopulate_step_scoop_coffee">Øs opp skummen og kaffe bitene fra toppen</string>
-    <string name="prepopulate_frenchPress_name">French Press</string>
+    <string name="prepopulate_frenchPress_name">Presskanne</string>
     <string name="prepopulate_frenchPress_description">"Oppskrift av: James Hoffmann
 Kilde: https://youtu.be/st571DYYTR8
 Kvernstørrelse: middels
@@ -117,16 +117,16 @@ Kaffen er klar 5 minutter etter det siste steget, men smaken blir bedre og bedre
     <string name="infoBox_update_body">Klikk her for å lese hva som er nytt</string>
     <string name="settings_step_next_step_item">Vis neste steg</string>
     <string name="settings_wearOS_item">Last ned for WearOS</string>
-    <string name="recipe_details_upNext">Neste:</string>
+    <string name="recipe_details_upNext">Neste steg:</string>
     <string name="support_dialog_title">Liker du Cofi\?</string>
     <string name="support_dialog_kofi">Kjøp meg en kaffe</string>
     <string name="support_dialog_review">Skriv en vurdering</string>
     <string name="support_title">Støtt Cofi</string>
     <string name="name_cezve">Cezve</string>
-    <string name="support_dialog_body">Setter stor pris på din støtte. Hjelp meg å holde på med det jeg elsker ved å gjøre én eller flere av følgende</string>
+    <string name="support_dialog_body">Jeg hadde satt stor pris på støtte fra deg. Hjelp meg fortsette å jobbe med det jeg elsker ved å gjøre én eller flere av følgende.</string>
     <string name="recipe_details_change_step_toast">Trykk og hold for å endre steg</string>
-    <string name="recipe_details_recipeRatio">Oppskriftsforhold: 1:%1$s</string>
-    <string name="recipe_detials_notification_dialog_text">Cofi lar tidsuret kjøre i bakgrunnen hvis du vil, men først må du innvilge tilgangen til å gi merknader.</string>
+    <string name="recipe_details_recipeRatio">Forhold mellom kaffe og vann: 1:%1$s</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi kan la nedtellingen kjøre i bakgrunnen om du vil, men for å gjøre dette trenger den tillatelse til å sende varsler</string>
     <string name="name_tea">Te</string>
     <string name="name_drip">Trakterkaffe</string>
     <string name="prepopulate_v60_1cup_name">1 kopp V60</string>
@@ -134,10 +134,10 @@ Kaffen er klar 5 minutter etter det siste steget, men smaken blir bedre og bedre
     <string name="recipe_details_read_description">Les beskrivelsen</string>
     <string name="name_teapot">Tekanne</string>
     <string name="prepopulate_v60_1cup_description">Oppskrift av: James Hoffmann
-\nKilde: https://yewtu.be/1oB1oDrDkHM
-\nFør du starter varmer du opp V60-en ved å plassere papir i kjeglen og helle vann over papiret. Dette forhåndsvarmer V60-en og forbereder papiret for bryggeprosessen.
+\nKilde: https://youtu.be/1oB1oDrDkHM
+\nFør man starter skal V60-en varmes opp ved å plassere filterpapiret i kjeglen og helle vann over. Dette varmer opp V60-en og klargjør filterpapiret for brygging.
 \nGranulatstørrelse: fin - middels fin
-\nTemperatur: Desto varmere dess bedre (spesielt med bønner som ikke er så brente)</string>
+\nTemperatur: Jo varmere, desto bedre (spesielt med lettbrente kaffebønner)</string>
     <string name="notification_action_stop">Stopp</string>
     <string name="prepopulate_clever_dripper_step_break_crust">Knekk skorpen ved å enten røre, eller å riste</string>
     <string name="prepopulate_clever_dripper_step_rinse">Rens filteret med varmt vann</string>
@@ -147,12 +147,12 @@ Kaffen er klar 5 minutter etter det siste steget, men smaken blir bedre og bedre
     <string name="notification_action_continue">Fortsett</string>
     <string name="settings_background_timer_item">Tillat tidsur i bakgrunnen</string>
     <string name="button_no">Nei</string>
-    <string name="settings_translate_item">Bistå oversettelsen av Cofi</string>
+    <string name="settings_translate_item">Hjelp med å oversette Cofi</string>
     <string name="prepopulate_clever_dripper_description">Oppskrift laget av: James Hoffmann
 \nKilde: https://yewtu.be/RpOdennxP24
 \nGranulatstørrelse: Middels-fin
 \nTemperatur: Kok opp og bruk umiddelbart
 \nForhold: 1:16.67, eller 15g per 250mL
 \nBrett filteret langs sømmene slik at det passer bedre i trakteren.
-\nMaksimal mengde vann er 500mL, men 400 eller mindre er anbefalt.</string>
+\nMaksimal mengde vann er 500mL, men 400 eller mindre er anbefalt</string>
 </resources>
