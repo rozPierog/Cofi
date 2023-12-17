@@ -1,2 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="recipe_details_recipeRatio">Relação da receita: 1:%1$s</string>
+    <string name="step_type_water">Adicione água</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi vai continuar a executar no plano de fundo se quiser, mas primeiro deverá dar permissão para postar notificações</string>
+    <string name="prepopulate_chemex_description">Receita criada por: James Hoffmann
+\nFonte: https://youtu.be/ikt-X5x7yoc
+\nTamanho da grade: médio fino
+\nTemperatura: quanto a mais quente, melhor (especialmente com assados mais leves)
+\nCertifique-se que a parte mais rígida do filtro está no lado da drenagem
+\nMantenha um olho fora para não bloquear o ar a mover para fora da cerveja</string>
+    <string name="settings_licenses_title">Licenças de código aberto</string>
+    <string name="button_copy">Copiar</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="settings_wearOS_item">Descarregar para o WearOS</string>
+    <string name="infoBox_wearOS_title">Cofi está agora no WearOS</string>
+    <string name="step_type_other">Outro</string>
+    <string name="name_siphon">Sifão</string>
+    <string name="prepopulate_v60_description">Receita criada por: James Hoffmann
+\nFonte: https://youtu.be/AI4ynXzkSQo
+\nTamanho da grade: médio fino
+\nTemperatura: quanto mais quente, melhor (especialmente com assados mais leves)</string>
+    <string name="support_dialog_review">Escreva uma avaliação</string>
+    <string name="prepopulate_step_swirl">Rodopiar</string>
+    <string name="settings_backup">Cópia de segurança</string>
+    <string name="name_espresso">Máquina de Expresso</string>
+    <string name="name_tea">Chá</string>
+    <string name="recipe_details_multiply_weight">Multiplicador de peso</string>
+    <string name="name_drip">Pingar</string>
+    <string name="prepopulate_frenchPress_description">Receita criada por: James Hoffmann
+\nFonte: https://youtu.be/st571DYYTR8
+\nTamanho do grão: médio
+\nPode servir após 5min do último passo, mas quanto mais mantê-lo melhor irá ficar</string>
+    <string name="recipe_create_title">Adicionar receita</string>
+    <string name="step_add_duration">Duração (s)</string>
+    <string name="button_discard">Descartar</string>
+    <string name="recipe_details_multiply_time">Multiplicador de tempo</string>
+    <string name="prepopulate_step_water">Adicione água</string>
+    <string name="infoBox_wearOS_body">Decarregue a app Cofi para o seu relógio WearOS!</string>
+    <string name="prepopulate_v60_1cup_name">1 copo de V60</string>
+    <string name="settings_sync_with_phone">Obter configurações do telefone</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Coloque em cima do copo e permita que se reduza completamente</string>
+    <string name="recipe_details_read_description">Ler a descrição</string>
+    <string name="name_grinder">Moedor de café</string>
+    <string name="name_teapot">Chávena de chá</string>
+    <string name="prepopulate_v60_1cup_description">Receita criada por: James Hoffmann
+\nFonte: https://youtu.be/1oB1oDrDkHM
+\nAntes de começar, aqueça o V60 a colocar o papel dentro do cone e despejar água quente sobre o papel. Isso pré-aquece o V60 e prepara o papel para o processo de fermentação.
+\nTamanho da moagem: fino - médio fino
+\nTemperatura: quanto mais quente, melhor (principalmente com torras mais leves)</string>
+    <string name="prepopulate_step_stir_crust">Mexer a côdea</string>
+    <string name="support_dialog_body">Apreciaria muito o seu apoio! Pode ajudar-me a continuar fazer o que amo através de escolher um ou mais dos seguintes.</string>
+    <string name="support_title">Apoie o Cofi</string>
+    <string name="hoffmann_credits_title">Receitas padrão por James Hoffmann</string>
+    <string name="recipe_clone_text">Isto criará uma réplica desta receita</string>
+    <string name="settings_timer_item">Configurações de cronômetro</string>
+    <string name="infoBox_update_body">Clique aqui para ler o que há de novo</string>
+    <string name="button_delete">Apagar</string>
+    <string name="step_type_wait">Espere</string>
+    <string name="settings_pip_item">Picture in picture</string>
+    <string name="infoBox_update_title">O Cofi foi atualizado</string>
+    <string name="settings_combine_weight_all">Combinar todos os pesos</string>
+    <string name="recipe_edit_description">Descrição</string>
+    <string name="settings_title">Configurações</string>
+    <string name="settings_step_next_step_item">Mostrar o próximo passo</string>
+    <string name="recipe_delete_title">Tem certeza?</string>
+    <string name="recipe_unsaved_title">Tem mudanças não gravadas</string>
+    <string name="step_add_weight">Peso (g)</string>
+    <string name="recipe_add_new_title">Criar receita</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="recipe_clone_suffix">%1$s - Copiar</string>
+    <string name="tereszkiewicz_credits_title">ícone da app por: Hubert Tereszkiewicz</string>
+    <string name="step_add_name">Nome</string>
+    <string name="recipe_edit_name">Nome</string>
+    <string name="step_type_add_coffee">Adicione café</string>
+    <string name="support_dialog_mastodon">Siga-me no Mastodon</string>
+    <string name="hoffmann_credits_subtitle">Ir ao seu canal YouTube</string>
+    <string name="recipe_edit_description_button">Adicionar descrição</string>
+    <string name="recipe_details_upNext">Em seguida:</string>
+    <string name="snackbar_copied">Copiado!</string>
+    <string name="settings_step_sound_item">Som de mudança de passo</string>
+    <string name="prepopulate_v60_name">Hario V60</string>
+    <string name="notification_action_stop">Parar</string>
+    <string name="settings_addDefault">Adicionar receitas padrão</string>
+    <string name="recipe_details_change_step_toast">Pressione e segure para mudar de etapa</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Quebre a crosta a mexer ou tremer um pouco</string>
+    <string name="support_dialog_kofi">Compre-me um café</string>
+    <string name="timer_enjoy">Aproveite o seu café</string>
+    <string name="button_show">Mostrar</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="recipe_details_automation_dialog_text">Use esta ligação para ir direto à sua receita. Escreva isto numa tag NFC ou crie uma tarefa de automação no Tasker para facilitar o seu café da manhã.
+\nAVISO: Não pode partilhar receitas desta forma!</string>
+    <string name="prepopulate_step_scoop_coffee">Retire a espuma e os pedaços de café do topo</string>
+    <string name="name_cold_brew">Cerveja fria</string>
+    <string name="prepopulate_step_wait">Espere</string>
+    <string name="name_cup">Chávena</string>
+    <string name="name_vietnamese_press">Filtro Phin</string>
+    <string name="prepopulate_frenchPress_name">Prensa Francesa</string>
+    <string name="settings_about_title">Sobre</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Enxágue o filtro com água quente</string>
+    <string name="support_dialog_github">Curta o Cofi no GitHub</string>
+    <string name="notification_channel_timer_name">Temporizador em plano de fundo</string>
+    <string name="settings_combine_weight_none">Não combinar peso</string>
+    <string name="recipe_detials_notification_dialog_title">Permitir timer em plano de fundo?</string>
+    <string name="step_add_remove">Remover</string>
+    <string name="step_add_save">Gravar</string>
+    <string name="notification_action_pause">Pausar</string>
+    <string name="notification_action_continue">Continuar</string>
+    <string name="settings_about_item">Sobre a app</string>
+    <string name="settings_background_timer_item">Permitir temporizador em plano de fundo</string>
+    <string name="recipe_details_automation_dialog_title">Ligação direta</string>
+    <string name="settings_restore">Restaurar</string>
+    <string name="prepopulate_aero_step_press">Pressione o pistão gentilmente</string>
+    <string name="button_no">Não</string>
+    <string name="settings_licenses_item">Agradecimentos</string>
+    <string name="recipe_unsaved_text">Deseja descartá-las?</string>
+    <string name="app_version">Versão da app</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Cópia de segurança de %d receita</item>
+        <item quantity="many">Cópia de segurança de %d receitas</item>
+        <item quantity="other">Cópia de segurança de %d receitas</item>
+    </plurals>
+    <string name="settings_bug_item">Reportar um bug ou sugerir um recurso</string>
+    <string name="recipe_details_noTime">Pressione em iniciar para continuar</string>
+    <string name="prepopulate_step_coffee">Adicione café</string>
+    <string name="recipe_delete_text">Isto apagará esta receita permanentemente</string>
+    <string name="settings_combine_weight_water">Combinar apenas com peso da água</string>
+    <string name="settings_translate_item">Ajude a traduzir o Cofi</string>
+    <string name="prepopulate_aero_step_piston">Colocar o pistão 1 cm no cervejeiro</string>
+    <string name="recipe_clone_title">Clonar esta receita?</string>
+    <string name="settings_github_item">Repositório do GitHub</string>
+    <string name="settings_backup_item">Backup/Restauração</string>
+    <string name="button_continue_editing">Continuar editando</string>
+    <string name="recipe_edit_title">Editar receita</string>
+    <string name="prepopulate_clever_dripper_description">Receita criada por: James Hoffmann
+\nFonte: https://youtu.be/RpOdennxP24
+\nTamanho da grade: Médio-fino
+\nTemperatura: Faça ferver e use imediatamente
+\nRelação: 1:16,67, ou 15g a 250ml
+\nDobre o filtro ao longo de ambas as costuras para entrar melhor na cerveja
+\nA quantidade máxima de água é 500ml, mas 400 ou menor é recomendado</string>
+    <string name="settings_combine_weight_item">Combinar peso</string>
+    <string name="support_dialog_title">Gosta do Cofi?</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">%d receita restaurada</item>
+        <item quantity="many">%d receitas restauradas</item>
+        <item quantity="other">%d receitas restauradas</item>
+    </plurals>
+    <string name="prepopulate_step_plunge">Afunde apenas abaixo da superfície e despeje</string>
+</resources>
