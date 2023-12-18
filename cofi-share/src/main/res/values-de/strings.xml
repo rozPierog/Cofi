@@ -153,4 +153,5 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="notification_action_continue">Fortfahren</string>
     <string name="settings_background_timer_item">Timer im Hintergrund erlauben</string>
     <string name="name_drip">Tropfen</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Auf den Tassenrand stellen und sich herabsetzen lassen</string>
 </resources>
