@@ -140,4 +140,14 @@
         <item quantity="many">Восстановлено %d рецептов</item>
         <item quantity="other">Восстановлено %d рецептов</item>
     </plurals>
+    <string name="prepopulate_step_swirl">Мешать</string>
+    <string name="timer_progress_weight">%1$sг/%2$sг</string>
+    <string name="step_type_wait">Подождите</string>
+    <string name="settings_combine_weight_all">Складывать каждый вес</string>
+    <string name="settings_step_sound_item">Звук смены шага</string>
+    <string name="prepopulate_v60_name">Ультимативный V60</string>
+    <string name="timer_step_name_time">%1$s (%2$sс)</string>
+    <string name="settings_combine_weight_none">Не складывать вес</string>
+    <string name="settings_combine_weight_water">Складывать только вес воды</string>
+    <string name="settings_combine_weight_item">Складывать вес</string>
 </resources>
