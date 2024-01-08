@@ -142,7 +142,7 @@
     </plurals>
     <string name="prepopulate_step_swirl">Мешать</string>
     <string name="timer_progress_weight">%1$sг/%2$sг</string>
-    <string name="step_type_wait">Подождите</string>
+    <string name="step_type_wait">Ожидание</string>
     <string name="settings_combine_weight_all">Складывать каждый вес</string>
     <string name="settings_step_sound_item">Звук смены шага</string>
     <string name="prepopulate_v60_name">Ультимативный V60</string>
@@ -150,4 +150,13 @@
     <string name="settings_combine_weight_none">Не складывать вес</string>
     <string name="settings_combine_weight_water">Складывать только вес воды</string>
     <string name="settings_combine_weight_item">Складывать вес</string>
+    <string name="recipe_details_multiply_time">Множитель времени</string>
+    <string name="recipe_details_multiply_weight">Весовой множитель</string>
+    <string name="recipe_detials_notification_dialog_text">Если желаете, Cofi продолжит работу таймера в фоне, но для этого требуется предоставить соответствующее разрешение</string>
+    <string name="recipe_details_automation_dialog_text">Для прямого перехода к данному рецепту используйте эту ссылку. Запишите её на NFC-метку или создайте автоматизированную задачу в Tasker, чтобы сделать ваш утренний кофе проще.
+\nВНИМАНИЕ: Вы не можете поделиться рецептом этим способом!</string>
+    <string name="prepopulate_step_plunge">Поместите под поверхность и заполните водой</string>
+    <string name="prepopulate_chemex_name">Кемекс</string>
+    <string name="prepopulate_step_stir_crust">Перемешать корочку</string>
+    <string name="settings_step_vibrate_item">Вибрация изменения шага</string>
 </resources>
