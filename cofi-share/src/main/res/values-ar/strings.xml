@@ -57,7 +57,7 @@
     <plurals name="settings_snackbar_restore">
         <item quantity="zero">لم يتم استرجاع أية وصفة</item>
         <item quantity="one">تم استرجاع وصفة واحدة</item>
-        <item quantity="two">تم استرجاع وصفتان</item>
+        <item quantity="two">تم استرجاع وصفتين</item>
         <item quantity="few">تم استرجاع %d وصفات</item>
         <item quantity="many">تم استرجاع %d وصفة</item>
         <item quantity="other">تم استرجاع %d وصفة</item>
