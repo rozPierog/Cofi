@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="step_type_add_coffee">أضف القهوة</string>
+    <string name="step_type_water">أضف الماء</string>
+    <string name="step_type_wait">إنتظر</string>
+    <string name="step_type_other">أُخرى</string>
+    <string name="step_add_name">الإسم</string>
+    <string name="step_add_duration">المدة (ث)</string>
+    <string name="step_add_weight">الوزن (غ)</string>
+    <string name="step_add_save">حفظ</string>
+    <string name="recipe_unsaved_title">لديك تغييرات غير محفوظة</string>
+    <string name="recipe_unsaved_text">هل تريد تجاهلها؟</string>
+    <string name="recipe_delete_title">هل انت متأكد؟</string>
+    <string name="recipe_delete_text">هذا سيؤدي الى ازالة هذه الوصفة بشكل كامل</string>
+    <string name="recipe_edit_name">الإسم</string>
+    <string name="recipe_edit_description">الوصف</string>
+    <string name="recipe_edit_description_button">أضف وصفاً</string>
+    <string name="recipe_edit_title">عَدل على الوصفة</string>
+    <string name="recipe_add_new_title">قم بتحضير وصفة جديدة</string>
+    <string name="recipe_details_automation_dialog_title">رابط مباشر</string>
+    <string name="recipe_detials_notification_dialog_title">السماح بتشغيل المؤقت في الخلفية؟</string>
+    <string name="recipe_detials_notification_dialog_text">سيبقي Cofi المؤقت فعالاً في الخلفية، ولكن سيتطلب ذلك منح إذن إرسال الإشعارات</string>
+    <string name="recipe_details_automation_dialog_text">استخدم هذا الرابط للانتقال مباشرة إلى هذه الوصفة. اكتبه على بطاقة NFC، أو أنشئ مهمة تلقائية في Tasker لتسهيل صنع قهوتك صباحًا.
+        \nتحذير: لا يمكنك مشاركة الوصفة بهذه الطريقة!</string>
+    <string name="timer_progress_weight">%1$sغ/%2$sغ</string>
+    <string name="timer_step_name_time">%1$s (%2$sث)</string>
+    <string name="button_cancel">إلغاء</string>
+    <string name="button_no">لا كلا</string>
+    <string name="button_delete">إحذف</string>
+    <string name="button_discard">التخلص من</string>
+    <string name="button_continue_editing">الاستمرار بالتعديل </string>
+    <string name="button_copy">نسخ</string>
+    <string name="snackbar_copied">تم النسخ!</string>
+    <string name="settings_licenses_title">تراخيص مفتوحة المصدر</string>
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_about_item">عن التطبيق</string>
+    <string name="settings_pip_item">صورة داخل صورة </string>
+    <string name="settings_step_sound_item">صوت انتهاء الخطوة</string>
+    <string name="settings_background_timer_item">السماح بتشغيل المؤقت في الخلفية</string>
+    <string name="settings_bug_item">أبلغ عن مشكلة أو اقترح خاصية جديدة</string>
+    <string name="settings_combine_weight_item">دمج الاوزان</string>
+    <string name="settings_combine_weight_all">جمع كل وزن</string>
+    <string name="settings_combine_weight_water">جمع وزن الماء فقط</string>
+    <string name="settings_combine_weight_none">لا تجمع الوزن</string>
+    <string name="settings_about_title">حَول</string>
+    <string name="settings_licenses_item">شكر وتقدير</string>
+    <string name="settings_translate_item">ساعد بترجمة Cofi</string>
+    <string name="settings_github_item">مستودع Github</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="zero">لم يتم عمل نسخ احتياطية لأية وصفة</item>
+        <item quantity="one">تم عمل نسخة احتياطية لوصفة واحدة</item>
+        <item quantity="two">تم عمل نسخ احتياطية لوصفتين</item>
+        <item quantity="few">تم عمل نسخ احتياطية ل%d وصفات</item>
+        <item quantity="many">تم عمل نسخ احتياطية ل%d وصفة</item>
+        <item quantity="other">تم عمل نسخ احتياطية ل%d وصفة</item>
+    </plurals>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="zero">لم يتم استرجاع أية وصفة</item>
+        <item quantity="one">تم استرجاع وصفة واحدة</item>
+        <item quantity="two">تم استرجاع وصفتين</item>
+        <item quantity="few">تم استرجاع %d وصفات</item>
+        <item quantity="many">تم استرجاع %d وصفة</item>
+        <item quantity="other">تم استرجاع %d وصفة</item>
+    </plurals>
+    <string name="button_show">عرض</string>
+    <string name="step_add_remove">حذف</string>
+    <string name="timer_enjoy">إستمتع بقهوتك</string>
+    <string name="prepopulate_v60_name">الألتيميت V60</string>
+    <string name="prepopulate_v60_description">الوصفة من اعداد: جيمس هوفمان
+        \nالمصدر: https://youtu.be/AI4ynXzkSQo
+        \nمستوى الطحن: ناعم متوسط
+        \nدرجة الحرارة: كلما ارتفعت درجة الحرارة كان ذلك افضل (بخاصة مع التحميص الفاتح)</string>
+    <string name="prepopulate_v60_1cup_name">1 كوب V60</string>
+    <string name="prepopulate_v60_1cup_description">الوصفة من اعداد:جيمس هوفمان
+        \nالمصدر:https://youtu.be/1oB1oDrDkHM
+        \nقبل البدء قم بتسخين V60 عن طريق وضع الورق داخل المخروط وسكب الماء الساخن فوق الورق. يقوم هذا بتسخين الV60 وتجهيز الورقة لعملية التقطير.
+        \nمستوى الطحن: ناعم متوسط
+        \nدرجة الحرارة: كلما ارتفعت درجة الحرارة كان ذلك افضل (بخاصة مع التحميص الفاتح)</string>
+    <string name="prepopulate_step_coffee">أضف القهوة</string>
+    <string name="prepopulate_step_water">أضف الماء</string>
+    <string name="prepopulate_step_swirl">حرّك دائرياً</string>
+    <string name="prepopulate_step_wait">انتظر</string>
+    <string name="prepopulate_step_plunge">امزج قشرة الخليط</string>
+    <string name="prepopulate_step_stir_crust">قم برفع الرغوة وفتات القهوة التي بالأعلى</string>
+    <string name="prepopulate_step_scoop_coffee">وعاء القهوة</string>
+    <string name="prepopulate_frenchPress_name">الوصفة من إعداد: جيمس هوفمان
+        \nالمصدر: https://youtu.be/st571DYYTR8
+        \nمستوى الطحن: متوسط
+        \nيمكنك السكب بعد 5 دقائق من الخطوة الأخيرة، كلما طالت مدة البقاء كان ذلك أفضل</string>
+    <string name="prepopulate_frenchPress_description">الوصفات الأساسية من إعداد جميس هوفمان</string>
+    <string name="hoffmann_credits_title">إذهب الى قناته على اليوتيوب</string>
+    <string name="hoffmann_credits_subtitle">كيميكس</string>
+    <string name="prepopulate_chemex_name">الوصفة من اعداد:جيمس هوفمان
+        \nالمصدر: https://youtu.be/ikt–X5x7yoc
+        \nمستوى الطحن: ناعم متوسط
+        \nدرجة الحرارة: كلما ارتفعت درجة الحرارة كان ذلك افضل (بخاصة مع التحميص الفاتح)
+        \nتأكد من أن يكون الجزء الصلب من الفلتر من جهة التصريف
+        \nإنتبه أن لا تمنع الهواء من الخروج من محضّر القهوة</string>
+    <string name="prepopulate_chemex_description">إيروبريس</string>
+    <string name="prepopulate_aero_name">ابدأ بوضع المكبس على بعد 1سم داخل المحضّر</string>
+    <string name="prepopulate_aero_step_piston">إضغط المكبس بخفة</string>
+    <string name="prepopulate_aero_step_press">الوصفة من إعداد: جيمس هوفمان
+        \nلمصدر: https://youtu.be/j6VlT_jUVPc
+        \nمستوى الطحن: للتحميصات الفاتحة، متوسط قريب من الناعم. كلما اصبح التحميص غامقاً اكثر، كلما ازدادت الجرعة وأصبح مستوى الطحن أخشن
+        \nدرجة الحرارة: للتحميصات الفاتحة، سخنها حتى درجة الغليان واستخدمها مباشرة. للتحميصات الغامقة، 80–90 درجة سيليزية</string>
+    <string name="prepopulate_aero_description">المقطر الذكي</string>
+    <string name="prepopulate_clever_dripper_step_rinse">إشطف الفلتر بماءٍ حار</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">بعثر [الكتلة/القشرة] الخارجية أما بالتحريك او بالهز</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">ثبت المقطّرة فوق الكوب واتركها حتى يتقطر المحلول بالكامل</string>
+    <string name="prepopulate_clever_dripper_description">وصفة من إعداد: جيمس هوفمان
+        \nالمصدر: https://youtu.be/RpOdennxP24
+        \nمستوى الطحن: ناعم متوسط
+        \nدرجة الحرارة:  سخنها حتى درجة الغليان واستخدمها مباشرة
+        \nالنسبة: 1:16.67، أو 15غم إلى 250مل
+        \nاطوي الفلتر على الجانبين ليلائم مكانه أكثر بداخل المحضّرة
+        \nأقصى مقدار من الماء هو 500مل، ولكن يفضل أن يكون 400مل أو أقل</string>
+    <string name="tereszkiewicz_credits_title">ايقونة التطبيق من تصميم: Hubert Tereszkiewicz</string>
+    <string name="tereszkiewicz_credits_subtitle">القِ نظرة على حسابه على Dribbble</string>
+    <string name="recipe_create_title">قم باضافة وصفة</string>
+    <string name="recipe_clone_title">إنسخ هذه الوصفة</string>
+    <string name="recipe_clone_text">هذا سينشئ وصفة مكررة من هذه الوصفة</string>
+    <string name="recipe_clone_suffix">%1$s – نسخة</string>
+    <string name="app_version">إصدار التطبيق</string>
+    <string name="recipe_details_noTime">أضغط بدء للإستمرار</string>
+    <string name="step_add_duration_explainer">مدة الخطوة تحدد الوقت اللازم لإنهاء إجراء معين (بالثواني). إترك الحقل فارغاً ليتم إيقاف المؤقت حتى تكون جاهزاً</string>
+    <string name="settings_backup">النسخ الاحتياطي</string>
+    <string name="settings_restore">استرجاع النسخ الاحتياطي</string>
+    <string name="settings_addDefault">قم بإضافة وصفات أساسية</string>
+    <string name="settings_timer_item">إعدادات المؤقت</string>
+    <string name="settings_backup_item">نسخ إحتياطي/إسترجاع</string>
+    <string name="settings_step_vibrate_item">اهتزاز عند انتهاء الخطوة</string>
+    <string name="recipe_details_multiply_time">مُضاعِف الوقت</string>
+    <string name="recipe_details_multiply_weight">مُضاعِف الوزن</string>
+    <string name="infoBox_wearOS_title">أصبح Cofi متوفراً على ساعات WearOS!</string>
+    <string name="infoBox_wearOS_body">قم بتنزيل Cofi لساعة WearOS خاصتك!</string>
+    <string name="settings_sync_with_phone">إسترجع الإعدادات من الهاتف</string>
+    <string name="name_grinder">مطحنة القهوة</string>
+    <string name="name_drip">المقطّر</string>
+    <string name="name_vietnamese_press">فلتر فن</string>
+    <string name="name_espresso">ماكنة إسبريسو</string>
+    <string name="name_cold_brew">كولد برو</string>
+    <string name="name_siphon">سايفون</string>
+    <string name="name_cezve">Cezve</string>
+    <string name="name_cup">كوب</string>
+    <string name="support_dialog_title">هل انت مستمتع بCofi؟</string>
+    <string name="support_dialog_body"> أقدر دعمك!  يمكنك مساعدتي لمواصلة القيام بما أحبه عن طريق اختيار واحد أو أكثر مما يلي.</string>
+    <string name="support_dialog_github">قم بوضع نجمة لCofi على Github</string>
+    <string name="support_dialog_mastodon">قم بمتابعتي على Mastodon</string>
+    <string name="support_dialog_kofi">إشتر لي قهوة</string>
+    <string name="support_dialog_review">اكتب تقييماً</string>
+    <string name="support_title">إدعم Cofi</string>
+    <string name="infoBox_update_title">تم تحديث Cofi</string>
+    <string name="infoBox_update_body">اضغط هنا لقراءة الجديد</string>
+    <string name="settings_step_next_step_item">اظهر الخطوة التالية</string>
+    <string name="recipe_details_upNext">التالي:</string>
+    <string name="settings_wearOS_item">حمل التطبيق لنظام WearOS</string>
+    <string name="recipe_details_change_step_toast">أضغط بإستمرار لتغيير الخطوة</string>
+    <string name="recipe_details_read_description">إقرأ الوصف</string>
+    <string name="recipe_details_recipeRatio">نسبة الوصفة: 1:%1$s</string>
+    <string name="name_tea">شاي</string>
+    <string name="name_teapot">أبريق شاي</string>
+    <string name="notification_channel_timer_name">مؤقت الخلفية</string>
+    <string name="notification_action_continue">إستمر</string>
+    <string name="notification_action_stop">إيقاف</string>
+    <string name="notification_action_pause">ايقاف مؤقت</string>
+</resources>
