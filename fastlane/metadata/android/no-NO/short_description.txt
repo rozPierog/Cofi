@@ -1,1 +1,1 @@
-Kaffetidsur brygget av fri programvare Enkelt brukergrensesnitt Perfekt resultat
+Open-source kaffe timer. Enkelt å bruke. Perfekt kaffe hver eneste gang!

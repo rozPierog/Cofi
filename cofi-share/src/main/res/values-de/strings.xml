@@ -68,7 +68,8 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
 \nQuelle: https://youtu.be/ikt-X5x7yoc
 \nMahlgrad: mittelfein
 \nTemperatur: je heißer, desto besser (vor allem bei helleren Röstungen)
-\nAchte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite befindet und die Luft aus dem Brüher strömt</string>
+\nAchte darauf, dass sich die dreilagige Seite des Filters an der Abflussseite befindet
+\nGib Acht, die aus dem Brüher strömende Luft nicht zu blockieren</string>
     <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">Kolben 1 cm in den Brüher stecken</string>
     <string name="prepopulate_aero_step_press">Kolben nur leicht drücken</string>
@@ -104,7 +105,7 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="name_cezve">Cezve</string>
     <string name="name_cup">Tasse</string>
     <string name="support_dialog_title">Gefällt dir Cofi?</string>
-    <string name="support_dialog_body">Ich würde mich sehr über deine Unterstützung freuen! Du kannst mir helfen, weiterhin das zu tun, was ich liebe, indem du eine oder mehrere der folgenden Optionen auswählst</string>
+    <string name="support_dialog_body">Ich würde mich sehr über deine Unterstützung freuen! Du kannst mir helfen, weiterhin das zu tun, was ich liebe, indem du eine oder mehrere der folgenden Optionen auswählst.</string>
     <string name="support_dialog_github">Cofi auf GitHub bewerten</string>
     <string name="support_dialog_mastodon">Mir auf Mastodon folgen</string>
     <string name="support_dialog_kofi">Mir einen Kaffee spendieren</string>
@@ -127,9 +128,9 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="recipe_details_read_description">Beschreibung lesen</string>
     <string name="settings_translate_item">Hilf Cofi zu übersetzen</string>
     <string name="prepopulate_v60_1cup_name">1 Becher V60</string>
-    <string name="prepopulate_clever_dripper_step_break_crust">Löse die Kruste indem du entweder umrührst oder ein wenig schüttelst.</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Löse die Kruste indem du entweder umrührst oder ein wenig schüttelst</string>
     <string name="name_teapot">Teekanne</string>
-    <string name="prepopulate_clever_dripper_step_rinse">Wasche den Filter mit heißem Wasser aus.</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Wasche den Filter mit heißem Wasser aus</string>
     <string name="prepopulate_v60_1cup_description">Rezept erstellt von: James Hoffmann
 \nQuelle: https://youtu.be/1oB1oDrDkHM
 \nBevor du beginnst, erhitze den V60 indem du das Papier in den Kegel platziert und mit heißem Wasser übergießt. Dies heizt den V60 vor und bereitet das Papier auf den Brau-Prozess vor.
@@ -153,4 +154,5 @@ Temperatur: je heißer, desto besser (vor allem bei helleren Röstungen)"</strin
     <string name="notification_action_continue">Fortfahren</string>
     <string name="settings_background_timer_item">Timer im Hintergrund erlauben</string>
     <string name="name_drip">Tropfen</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Auf den Tassenrand stellen und sich herabsetzen lassen</string>
 </resources>

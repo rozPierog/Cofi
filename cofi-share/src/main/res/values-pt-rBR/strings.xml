@@ -107,4 +107,10 @@
     <string name="settings_background_timer_item">Permitir temporizador em plano de fundo</string>
     <string name="prepopulate_aero_step_press">Pressione o pistão gentilmente</string>
     <string name="button_no">Não</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi vai continuar rodando no plano de fundo se você quiser, mas primeiro você precisará dar permissão para postar notificações</string>
+    <string name="prepopulate_frenchPress_description">Receita criada por: James Hoffmann
+\nFonte: https://youtu.be/st571DYYTR8
+\nTamanho do grão: médio
+\nVocê pode servir após 5min do último passo, mas quanto mais você mantê-lo melhor ele vai ficar</string>
+    <string name="recipe_detials_notification_dialog_title">Permitir timer em plano de fundo?</string>
 </resources>

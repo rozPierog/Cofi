@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recipe_details_recipeRatio">Коэффициент: 1:%1$s</string>
+    <string name="step_type_water">Добавить воду</string>
+    <string name="prepopulate_chemex_description">Автор рецепта: Джеймс Хоффман
+\nИсточник: https://youtu.be/ikt-X5x7yoc
+\nСтепень помола: средне-мелкий
+\nТемпература: чем выше - тем лучше (особенно для светлой обжарки)
+\nУбедитесь, что самая жесткая часть фильтра находится со стороны слива.
+\nСледите за тем, чтобы не перекрыть выход воздуха</string>
+    <string name="settings_licenses_title">Лицензии открытого ПО</string>
+    <string name="button_copy">Копировать</string>
+    <string name="button_cancel">Отмена</string>
+    <string name="settings_wearOS_item">Скачать для WearOS</string>
+    <string name="infoBox_wearOS_title">Cofi теперь на WearOS</string>
+    <string name="step_type_other">Иное</string>
+    <string name="name_siphon">Сифон</string>
+    <string name="prepopulate_v60_description">Автор рецепта: Джеймс Хоффман
+\nИсточник: https://youtu.be/AI4ynXzkSQo
+\nСтепень помола: средний
+\nТемпература: чем выше - тем лучше (особенно для светлой обжарки)</string>
+    <string name="tereszkiewicz_credits_subtitle">Загляните на его Dribbble</string>
+    <string name="support_dialog_review">Написать отзыв</string>
+    <string name="settings_backup">Бэкап</string>
+    <string name="name_espresso">Эспрессо-машина</string>
+    <string name="name_tea">Чай</string>
+    <string name="name_drip">Дрип</string>
+    <string name="prepopulate_frenchPress_description">Автор рецепта: Джеймс Хоффман
+\nИсточник: https://youtu.be/st571DYYTR8
+\nСтепень помола: средний
+\nВы можете вылить воду через 5 минут после последнего шага, но чем дольше он настаивается, тем лучше становится</string>
+    <string name="recipe_create_title">Добавить рецепт</string>
+    <string name="step_add_duration">Положительность (с)</string>
+    <string name="button_discard">Отклонить</string>
+    <string name="prepopulate_step_water">Добавить воды</string>
+    <string name="step_add_duration_explainer">Продолжительность шага определяет, сколько времени займет действие (в секундах). Оставьте пустым, чтобы приостановить выполнение рецепта, пока не будете готовы продолжить.</string>
+    <string name="infoBox_wearOS_body">Скачай Cofi на свои часы с WearOS!</string>
+    <string name="prepopulate_v60_1cup_name">1 чашка V60</string>
+    <string name="settings_sync_with_phone">Синхронизировать с настройками телефона</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Положите сверху чашки и дайте опуститься до самого дна</string>
+    <string name="recipe_details_read_description">Прочесть описание</string>
+    <string name="name_grinder">Кофемолка</string>
+    <string name="name_teapot">Чайник</string>
+    <string name="prepopulate_v60_1cup_description">Автор рецепта: Джеймс Хоффман
+\nИсточник: https://youtu.be/1oB1oDrDkHM
+\nПрежде, чем начать, нагрейте V60, расположив воронку внутри конуса и налив горячую воду вокруг неё. Это предварительно разогреет V60 и подготовит воронку к завариванию.
+\nСтепень помола: мелкий - средне мелкий
+\nТемпература: чем выше - тем лучше (особенно для светлой обжарки)</string>
+    <string name="support_dialog_body">Я буду очень признателен Вам за поддержку! Вы можете помочь мне продолжать заниматься любимым делом, выбрав один или несколько из следующих вариантов.</string>
+    <string name="support_title">Поддержать Cofi</string>
+    <string name="hoffmann_credits_title">Стандартные рецепты Джеймса Хоффмана</string>
+    <string name="recipe_clone_text">Это продублирует данный рецепт</string>
+    <string name="settings_timer_item">Настройки таймера</string>
+    <string name="infoBox_update_body">Нажмите, чтобы узнать, что нового</string>
+    <string name="button_delete">Удалить</string>
+    <string name="settings_pip_item">Картинка в картинке</string>
+    <string name="prepopulate_aero_description">Автор рецепта: Джеймс Хоффман
+\nИсточник: https://youtu.be/j6VlT_jUVPc
+\nСтепень помола: для светлой обжарки - мельче среднего. Чем она темнее, тем больше отдается предпочтение увеличию дозы и грубости помола.
+\nТемпература: Для светлой обжарки - довести до кипения и сразу же использовать. Для темной обжарки - 85-90℃</string>
+    <string name="infoBox_update_title">Cofi обновлен</string>
+    <string name="recipe_edit_description">Описание</string>
+    <string name="settings_title">Настройки</string>
+    <string name="settings_step_next_step_item">Показать следующий шаг</string>
+    <string name="recipe_delete_title">Вы уверены?</string>
+    <string name="recipe_unsaved_title">Имеются несохраненные изменения</string>
+    <string name="step_add_weight">Вес (г)</string>
+    <string name="recipe_add_new_title">Создать рецепт</string>
+    <string name="recipe_clone_suffix">%1$s - Копия</string>
+    <string name="tereszkiewicz_credits_title">Автор иконок приложения: Hubert Tereszkiewicz</string>
+    <string name="step_add_name">Название</string>
+    <string name="recipe_edit_name">Название</string>
+    <string name="step_type_add_coffee">Добавить кофе</string>
+    <string name="support_dialog_mastodon">Подписаться на меня в Mastodon</string>
+    <string name="hoffmann_credits_subtitle">Перейти на его Youtube канал</string>
+    <string name="recipe_edit_description_button">Добавить описание</string>
+    <string name="recipe_details_upNext">Следующий:</string>
+    <string name="snackbar_copied">Скопировано!</string>
+    <string name="notification_action_stop">Стоп</string>
+    <string name="settings_addDefault">Добавить рецепты по умолчанию</string>
+    <string name="recipe_details_change_step_toast">Нажмите и удерживайте, чтобы изменить шаг</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Разбейте корку, перемешав или слегка встряхнув</string>
+    <string name="support_dialog_kofi">Купить мне кофе</string>
+    <string name="timer_enjoy">Наслаждайтесь своим кофе</string>
+    <string name="button_show">Показать</string>
+    <string name="prepopulate_step_scoop_coffee">Зачерпнуть с верхушки пену и частички кофе</string>
+    <string name="name_cold_brew">Холодная заварка</string>
+    <string name="prepopulate_step_wait">Ожидание</string>
+    <string name="name_cup">Чашка</string>
+    <string name="name_vietnamese_press">Фильтр</string>
+    <string name="prepopulate_frenchPress_name">Френч-пресс</string>
+    <string name="settings_about_title">О нас</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Промойте фильтр горячей водой</string>
+    <string name="support_dialog_github">Оценить Cofi на GitHub</string>
+    <string name="notification_channel_timer_name">Фоновый таймер</string>
+    <string name="recipe_detials_notification_dialog_title">Разрешить фоновую работу таймера?</string>
+    <string name="step_add_remove">Стереть</string>
+    <string name="step_add_save">Сохранить</string>
+    <string name="notification_action_pause">Пауза</string>
+    <string name="notification_action_continue">Продолжить</string>
+    <string name="settings_about_item">О приложении</string>
+    <string name="settings_background_timer_item">Разрешить фоновую работу таймера</string>
+    <string name="recipe_details_automation_dialog_title">Прямая ссылка</string>
+    <string name="settings_restore">Восстановление</string>
+    <string name="prepopulate_aero_step_press">Аккуратно надавите на поршень</string>
+    <string name="button_no">Нет</string>
+    <string name="settings_licenses_item">Благодарности</string>
+    <string name="recipe_unsaved_text">Хотите отклонить их?</string>
+    <string name="app_version">Версия приложения</string>
+    <string name="prepopulate_aero_name">Аэропресс</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Сохранён %d рецепт</item>
+        <item quantity="few">Сохранено %d рецепта</item>
+        <item quantity="many">Сохранено %d рецептов</item>
+        <item quantity="other">Сохранено %d рецептов</item>
+    </plurals>
+    <string name="settings_bug_item">Сообщить об ошибке или предложить улучшение</string>
+    <string name="recipe_details_noTime">Для продолжения нажмите старт</string>
+    <string name="prepopulate_step_coffee">Добавить кофе</string>
+    <string name="recipe_delete_text">Это навсегда удалит рецепт</string>
+    <string name="settings_translate_item">Помочь перевести Cofi</string>
+    <string name="prepopulate_aero_step_piston">Погрузите поршень на 1 см в аэропресс</string>
+    <string name="recipe_clone_title">Клонировать этот рецепт?</string>
+    <string name="settings_github_item">Github репозиторий</string>
+    <string name="name_cezve">Cezve</string>
+    <string name="settings_backup_item">Бэкап/Восстановление</string>
+    <string name="button_continue_editing">Продолжить редактирование</string>
+    <string name="recipe_edit_title">Изменить рецепт</string>
+    <string name="prepopulate_clever_dripper_description">Автор рецепта: Джеймс Хоффман
+\nИсточник: https://youtu.be/RpOdennxP24
+\nСтепень помола: средне-мелкий
+\nТемпература: доведите до кипения и сразу же используйте
+\nКоэффициент: 1:16.67, или 15 г на 250 мл
+\nСложите фильтр по обоим швам, чтобы он лучше помещался в ёмкость
+\nМаксимальный объем воды - 500 мл, но рекомендуется 400 или меньше</string>
+    <string name="support_dialog_title">Нравится Cofi?</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Восстановлен %d рецепт</item>
+        <item quantity="few">Восстановлено %d рецепта</item>
+        <item quantity="many">Восстановлено %d рецептов</item>
+        <item quantity="other">Восстановлено %d рецептов</item>
+    </plurals>
+    <string name="prepopulate_step_swirl">Мешать</string>
+    <string name="timer_progress_weight">%1$sг/%2$sг</string>
+    <string name="step_type_wait">Ожидание</string>
+    <string name="settings_combine_weight_all">Складывать каждый вес</string>
+    <string name="settings_step_sound_item">Звук смены шага</string>
+    <string name="prepopulate_v60_name">Ультимативный V60</string>
+    <string name="timer_step_name_time">%1$s (%2$sс)</string>
+    <string name="settings_combine_weight_none">Не складывать вес</string>
+    <string name="settings_combine_weight_water">Складывать только вес воды</string>
+    <string name="settings_combine_weight_item">Складывать вес</string>
+    <string name="recipe_details_multiply_time">Множитель времени</string>
+    <string name="recipe_details_multiply_weight">Весовой множитель</string>
+    <string name="recipe_detials_notification_dialog_text">Если желаете, Cofi продолжит работу таймера в фоне, но для этого требуется предоставить соответствующее разрешение</string>
+    <string name="recipe_details_automation_dialog_text">Для прямого перехода к данному рецепту используйте эту ссылку. Запишите её на NFC-метку или создайте автоматизированную задачу в Tasker, чтобы сделать ваш утренний кофе проще.
+\nВНИМАНИЕ: Вы не можете поделиться рецептом этим способом!</string>
+    <string name="prepopulate_step_plunge">Поместите под поверхность и заполните водой</string>
+    <string name="prepopulate_chemex_name">Кемекс</string>
+    <string name="prepopulate_step_stir_crust">Перемешать корочку</string>
+    <string name="settings_step_vibrate_item">Вибрация изменения шага</string>
+</resources>

@@ -145,4 +145,13 @@ Source: https://youtu.be/AI4ynXzkSQo
     <string name="recipe_details_read_description">阅读说明</string>
     <string name="name_tea">茶</string>
     <string name="name_teapot">茶壶</string>
+    <string name="recipe_detials_notification_dialog_text">Cofi 可以在后台运行计时器，但您需要先允许通知权限</string>
+    <string name="notification_action_stop">停止</string>
+    <string name="notification_channel_timer_name">后台计时器</string>
+    <string name="recipe_detials_notification_dialog_title">是否允许在后台计时？</string>
+    <string name="notification_action_pause">暂停</string>
+    <string name="notification_action_continue">继续</string>
+    <string name="settings_background_timer_item">允许后台计时器</string>
+    <string name="button_no">否</string>
+    <string name="settings_translate_item">帮助翻译 Cofi</string>
 </resources>
