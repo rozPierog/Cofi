@@ -48,7 +48,7 @@
     <string name="recipe_detials_notification_dialog_title">Engedélyezed az időzítőt a háttérben?</string>
     <string name="step_add_remove">Eltávolítás</string>
     <string name="step_add_save">Mentés</string>
-    <string name="settings_about_item">Névjegy</string>
+    <string name="settings_about_item">Alkalmazás névjegye</string>
     <string name="settings_background_timer_item">Időzítő engedélyezése a háttérben</string>
     <string name="recipe_details_automation_dialog_title">Közvetlen link</string>
     <string name="button_no">Nem</string>
