@@ -1,1 +1,1 @@
-Temporizador open-source de café. Interface fácil de usar. Copo perfeito sempre!
+Open-source coffee timer. Easy-to-use interface. Perfect cup every time!
