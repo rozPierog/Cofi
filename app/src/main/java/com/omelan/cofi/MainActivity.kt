@@ -127,10 +127,18 @@ class MainActivity : MonetCompatActivity() {
                     navController,
                     startDestination = Destinations.RECIPE_LIST,
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
-                    enterTransition = { slideIn(AnimatedContentTransitionScope.SlideDirection.End) },
-                    exitTransition = { slideOut(AnimatedContentTransitionScope.SlideDirection.Start) },
-                    popEnterTransition = { slideIn(AnimatedContentTransitionScope.SlideDirection.Start) },
-                    popExitTransition = { slideOut(AnimatedContentTransitionScope.SlideDirection.End) },
+                    enterTransition = {
+                        slideIn(AnimatedContentTransitionScope.SlideDirection.End)
+                    },
+                    exitTransition = {
+                        slideOut(AnimatedContentTransitionScope.SlideDirection.Start)
+                    },
+                    popEnterTransition = {
+                        slideIn(AnimatedContentTransitionScope.SlideDirection.Start)
+                    },
+                    popExitTransition = {
+                        slideOut(AnimatedContentTransitionScope.SlideDirection.End)
+                    },
                 ) {
 //                    composable("list_color") {
 //                        ColorPicker(goToList = {
