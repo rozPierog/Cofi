@@ -58,8 +58,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.google.accompanist.navigation.animation.composable
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.R
 import com.omelan.cofi.components.*
@@ -316,7 +316,7 @@ fun RecipeEdit(
                 targetState = showDescription,
                 label = "Description animated content",
             ) {
-                if (!showDescription) {
+                if (!it) {
                     TextButton(
                         modifier = Modifier.testTag("recipe_edit_description_button"),
                         onClick = { showDescription = !showDescription },
@@ -555,7 +555,7 @@ private fun IconPickerBottomSheet(
                 .waterfallPadding()
                 .navigationBarsPadding(),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.Bottom,
+            verticalArrangement = Arrangement.Bottom,
         ) {
             RecipeIcon.values().map {
                 val tooltipState = remember { PlainTooltipState() }

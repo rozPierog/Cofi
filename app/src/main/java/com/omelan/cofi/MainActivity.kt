@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
@@ -23,8 +22,8 @@ import androidx.compose.ui.graphics.luminance
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kieronquinn.monetcompat.BuildConfig
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
@@ -37,7 +36,9 @@ import com.omelan.cofi.pages.settings.settings
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.ui.CofiTheme
-import com.omelan.cofi.utils.*
+import com.omelan.cofi.utils.WearUtils
+import com.omelan.cofi.utils.checkPiPPermission
+import com.omelan.cofi.utils.isUsingGestures
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -99,7 +100,7 @@ class MainActivity : MonetCompatActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     @Composable
     fun MainNavigation() {
-        val navController = rememberAnimatedNavController()
+        val navController = rememberNavController()
         val db = AppDatabase.getInstance(this)
         val isInPiP by mainActivityViewModel.pipState.observeAsState(false)
         val systemUiController = rememberSystemUiController()
@@ -123,14 +124,14 @@ class MainActivity : MonetCompatActivity() {
             CompositionLocalProvider(
                 LocalPiPState provides isInPiP,
             ) {
-                AnimatedNavHost(
+                NavHost(
                     navController,
                     startDestination = Destinations.RECIPE_LIST,
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
-                    enterTransition = { slideIn(AnimatedContentScope.SlideDirection.End) },
-                    exitTransition = { slideOut(AnimatedContentScope.SlideDirection.Start) },
-                    popEnterTransition = { slideIn(AnimatedContentScope.SlideDirection.Start) },
-                    popExitTransition = { slideOut(AnimatedContentScope.SlideDirection.End) },
+//                    enterTransition = slideIn,
+//                    exitTransition = { slideOut() },
+//                    popEnterTransition = { slideIn() },
+//                    popExitTransition = { slideOut() },
                 ) {
 //                    composable("list_color") {
 //                        ColorPicker(goToList = {

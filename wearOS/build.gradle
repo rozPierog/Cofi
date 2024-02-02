@@ -23,12 +23,12 @@ android {
         }
     }
     namespace 'com.omelan.cofi.wearos'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.omelan.cofi"
         minSdk 25
-        targetSdk 33
+        targetSdk 34
         versionCode 156
         versionName "1.11.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -63,7 +63,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.7'
+        kotlinCompilerExtensionVersion '1.5.8'
     }
     packagingOptions {
         resources {
@@ -86,8 +86,8 @@ dependencies {
     implementation project(path: ':cofi-share')
     implementation platform("androidx.compose:compose-bom:$compose_bom_version")
 
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'com.google.android.gms:play-services-wearable:18.0.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'com.google.android.gms:play-services-wearable:18.1.0'
     implementation "androidx.wear:wear-remote-interactions:1.0.0"
     implementation "androidx.wear.compose:compose-material:$wear_compose_version"
     implementation "androidx.wear.compose:compose-foundation:$wear_compose_version"
@@ -96,14 +96,14 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata"
     implementation "com.google.android.horologist:horologist-compose-layout:0.2.5"
     implementation "com.google.accompanist:accompanist-pager:0.30.1"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    implementation 'androidx.activity:activity-compose:1.7.2'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+    implementation 'androidx.activity:activity-compose:1.8.2'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0"
     implementation "androidx.wear:wear-input:1.1.0"
-    implementation 'androidx.wear:wear:1.2.0'
+    implementation 'androidx.wear:wear:1.3.0'
 
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.3"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.6.0"
     debugImplementation "androidx.compose.ui:ui-tooling"
     debugImplementation "androidx.compose.ui:ui-test-manifest"
     androidTestImplementation 'androidx.test:core:1.5.0'

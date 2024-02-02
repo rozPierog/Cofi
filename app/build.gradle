@@ -26,8 +26,8 @@ android {
     defaultConfig {
         applicationId "com.omelan.cofi"
         minSdkVersion 25
-        targetSdkVersion 33
-        compileSdk 33
+        targetSdkVersion 34
+        compileSdk 34
         versionCode 158
         versionName "1.20.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -95,7 +95,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     packagingOptions {
         resources {
@@ -146,9 +146,9 @@ dependencies {
     implementation platform("androidx.compose:compose-bom:$compose_bom_version")
 
     instantImplementation('com.google.android.gms:play-services-instantapps:18.0.1')
-    playStoreImplementation 'com.google.android.gms:play-services-wearable:18.0.0'
+    playStoreImplementation 'com.google.android.gms:play-services-wearable:18.1.0'
     playStoreImplementation "androidx.wear:wear-remote-interactions:1.0.0"
-    playStoreImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
+    playStoreImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1'
 
     // Tooling support (Previews, etc.)
     debugImplementation "androidx.compose.ui:ui-tooling"
@@ -156,26 +156,24 @@ dependencies {
 
     // Material Design
     implementation "androidx.compose.material:material"
-    implementation "androidx.compose.material3:material3:1.1.1"
+    implementation "androidx.compose.material3:material3:1.1.2"
     implementation "androidx.compose.material3:material3-window-size-class"
 
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     // Navigation
-    implementation "androidx.navigation:navigation-compose:2.6.0"
+    implementation "androidx.navigation:navigation-compose:2.7.6"
 
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata"
     // Jetpack Utils
-    implementation "com.google.accompanist:accompanist-flowlayout:0.30.1"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.30.1"
-    implementation "com.google.accompanist:accompanist-navigation-animation:0.30.1"
     implementation "androidx.compose.animation:animation-graphics"
 
-    implementation "androidx.activity:activity-compose:1.7.2"
+    implementation "androidx.activity:activity-compose:1.8.2"
 
     // UI Tests
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.3"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.6.0"
     testImplementation 'junit:junit:4.13.2'
     androidTestUtil 'androidx.test:orchestrator:1.4.2'
 }

@@ -52,7 +52,7 @@ import androidx.core.graphics.drawable.IconCompat
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.compose.composable
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.MainActivity
 import com.omelan.cofi.R
