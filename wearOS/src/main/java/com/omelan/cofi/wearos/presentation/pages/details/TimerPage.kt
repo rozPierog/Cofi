@@ -86,10 +86,11 @@ fun TimerPage(
         } else coroutineScope.launch { changeToNextStep(true) }
     }
 
-    val recipeDescriptionScrollState = androidx.wear.compose.foundation.lazy.rememberScalingLazyListState(
-        initialCenterItemIndex = 0,
-        initialCenterItemScrollOffset = 0,
-    )
+    val recipeDescriptionScrollState =
+        androidx.wear.compose.foundation.lazy.rememberScalingLazyListState(
+            initialCenterItemIndex = 0,
+            initialCenterItemScrollOffset = 0,
+        )
     val focusRequester = remember { FocusRequester() }
     val animatedBackgroundRadius by animateFloatAsState(
         targetValue = if (isDone) 200f else 1f,
@@ -277,7 +278,10 @@ fun TimerPage(
                                     if (recipe.description.isNotBlank()) {
                                         OutlinedButton(
                                             onClick = { showDescriptionDialog = true },
-                                            modifier = Modifier.height(ButtonDefaults.ExtraSmallButtonSize),
+                                            modifier = Modifier
+                                                .padding(top = 8.dp)
+                                                .height(ButtonDefaults.ExtraSmallButtonSize)
+                                                .fillMaxWidth(),
                                         ) {
                                             Text(
                                                 text = stringResource(id = R.string.recipe_details_read_description),
