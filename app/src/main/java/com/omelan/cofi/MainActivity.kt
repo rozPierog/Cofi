@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
@@ -36,9 +37,7 @@ import com.omelan.cofi.pages.settings.settings
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.ui.CofiTheme
-import com.omelan.cofi.utils.WearUtils
-import com.omelan.cofi.utils.checkPiPPermission
-import com.omelan.cofi.utils.isUsingGestures
+import com.omelan.cofi.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -128,10 +127,10 @@ class MainActivity : MonetCompatActivity() {
                     navController,
                     startDestination = Destinations.RECIPE_LIST,
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
-//                    enterTransition = slideIn,
-//                    exitTransition = { slideOut() },
-//                    popEnterTransition = { slideIn() },
-//                    popExitTransition = { slideOut() },
+                    enterTransition = { slideIn(AnimatedContentTransitionScope.SlideDirection.End) },
+                    exitTransition = { slideOut(AnimatedContentTransitionScope.SlideDirection.Start) },
+                    popEnterTransition = { slideIn(AnimatedContentTransitionScope.SlideDirection.Start) },
+                    popExitTransition = { slideOut(AnimatedContentTransitionScope.SlideDirection.End) },
                 ) {
 //                    composable("list_color") {
 //                        ColorPicker(goToList = {
