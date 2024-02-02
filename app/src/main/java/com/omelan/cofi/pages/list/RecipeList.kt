@@ -1,6 +1,5 @@
 package com.omelan.cofi.pages.list
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,7 +37,6 @@ import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.utils.FabType
 import com.omelan.cofi.utils.getDefaultPadding
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.recipeList(navController: NavController) {
     composable(Destinations.RECIPE_LIST) {
         RecipeList(

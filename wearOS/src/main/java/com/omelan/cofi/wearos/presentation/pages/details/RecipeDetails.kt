@@ -3,8 +3,6 @@
 package com.omelan.cofi.wearos.presentation.pages.details
 
 
-import android.provider.Settings
-import android.provider.Settings.SettingNotFoundException
 import android.view.Window
 import android.view.WindowManager
 import androidx.compose.animation.core.TweenSpec
@@ -24,8 +22,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import androidx.wear.compose.foundation.SwipeToDismissBoxDefaults
+import androidx.wear.compose.foundation.SwipeToDismissBoxState
+import androidx.wear.compose.foundation.edgeSwipeToDismiss
 import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.composable
+import com.google.android.horologist.compose.ambient.AmbientAware
+import com.google.android.horologist.compose.ambient.AmbientState
 import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
@@ -33,7 +36,6 @@ import com.omelan.cofi.share.timer.Timer
 import com.omelan.cofi.share.utils.askForNotificationPermission
 import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.wearos.R
-import com.omelan.cofi.wearos.presentation.LocalAmbientModeProvider
 import kotlin.math.roundToInt
 
 fun NavGraphBuilder.recipeDetails(
@@ -103,7 +105,6 @@ fun RecipeDetails(
 ) {
     val dataStore = DataStore(LocalContext.current)
 
-    val ambientController = LocalAmbientModeProvider.current
     val combinedTime by remember(steps) {
         derivedStateOf {
             steps.sumOf { it.time ?: 0 }
@@ -131,7 +132,7 @@ fun RecipeDetails(
             }
         }
     }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = { PAGE_COUNT })
     val animatedSelectedPage by animateFloatAsState(
         targetValue = pagerState.currentPage.toFloat(),
         animationSpec = TweenSpec(durationMillis = 500),
@@ -155,30 +156,12 @@ fun RecipeDetails(
         doneTrackColor = MaterialTheme.colors.primary,
     )
     val context = LocalContext.current
-    val ambientEnabled: Boolean = remember(LocalLifecycleOwner.current) {
-        try {
-            Settings.Global.getInt(context.contentResolver, "ambient_enabled") == 1
-        } catch (e: SettingNotFoundException) {
-            false
-        }
-    }
 
     LaunchedEffect(timerControllers.isTimerRunning) {
-        if (ambientEnabled) {
-            ambientController?.setAmbientOffloadEnabled(timerControllers.isTimerRunning)
-        }
         onTimerRunning(timerControllers.isTimerRunning)
     }
-    DisposableEffect(LocalLifecycleOwner.current) {
+    LaunchedEffect(LocalLifecycleOwner.current) {
         context.askForNotificationPermission()
-        onDispose {
-            ambientController?.setAmbientOffloadEnabled(false)
-        }
-    }
-    LaunchedEffect(ambientController?.isAmbient) {
-        if (ambientController?.isAmbient == true) {
-            pagerState.scrollToPage(0)
-        }
     }
     LaunchedEffect(pagerState.currentPage) {
         if (pagerState.currentPage == 0) {
@@ -193,55 +176,62 @@ fun RecipeDetails(
     LaunchedEffect(timerControllers.currentStep) {
         timerControllers.animationControllers.progressAnimation(Unit)
     }
-
-    Scaffold(
-        timeText = {
-            TimeText()
-        },
-        pageIndicator = {
-            HorizontalPageIndicator(
-                pageIndicatorState = pageIndicatorState,
-                modifier = Modifier.padding(10.dp),
-            )
-        },
-    ) {
-        HorizontalPager(pageCount = PAGE_COUNT, modifier = modifier, state = pagerState) { page ->
-            when (page) {
-                0 -> TimerPage(
-                    timerControllers = timerControllers,
-                    recipe = recipe,
-                    weightMultiplier = timerControllers.multiplierControllers.weightMultiplier,
-                    timeMultiplier = timerControllers.multiplierControllers.timeMultiplier,
+    AmbientAware(isAlwaysOnScreen = timerControllers.isTimerRunning) { ambientStateUpdate ->
+        LaunchedEffect(key1 = ambientStateUpdate.ambientState) {
+            val isAmbient = ambientStateUpdate.ambientState is AmbientState.Ambient
+            if (isAmbient) {
+                pagerState.scrollToPage(0)
+            }
+        }
+        Scaffold(
+            timeText = {
+                TimeText()
+            },
+            pageIndicator = {
+                HorizontalPageIndicator(
+                    pageIndicatorState = pageIndicatorState,
+                    modifier = Modifier.padding(10.dp),
                 )
+            },
+        ) {
+            HorizontalPager(modifier = modifier, state = pagerState) { page ->
+                when (page) {
+                    0 -> TimerPage(
+                        timerControllers = timerControllers,
+                        recipe = recipe,
+                        weightMultiplier = timerControllers.multiplierControllers.weightMultiplier,
+                        timeMultiplier = timerControllers.multiplierControllers.timeMultiplier,
+                    )
 
-                1 -> Row {
-                    MultiplierPage(
-                        multiplier = timerControllers.multiplierControllers.weightMultiplier,
-                        changeMultiplier = timerControllers.multiplierControllers.changeWeightMultiplier,
-                        requestFocus = pagerState.currentPage == 1,
+                    1 -> Row {
+                        MultiplierPage(
+                            multiplier = timerControllers.multiplierControllers.weightMultiplier,
+                            changeMultiplier = timerControllers.multiplierControllers.changeWeightMultiplier,
+                            requestFocus = pagerState.currentPage == 1,
+                        ) {
+                            Text(text = "x$it")
+                            ParamWithIcon(
+                                iconRes = R.drawable.ic_water,
+                                value = "${(combinedWaterWeight * it).roundToInt()}g",
+                            )
+                            ParamWithIcon(
+                                iconRes = R.drawable.ic_coffee,
+                                value = "${(combinedCoffeeWeight * it).roundToInt()}g",
+                            )
+                        }
+                    }
+
+                    2 -> MultiplierPage(
+                        multiplier = timerControllers.multiplierControllers.timeMultiplier,
+                        changeMultiplier = timerControllers.multiplierControllers.changeTimeMultiplier,
+                        requestFocus = pagerState.currentPage == 2,
                     ) {
                         Text(text = "x$it")
                         ParamWithIcon(
-                            iconRes = R.drawable.ic_water,
-                            value = "${(combinedWaterWeight * it).roundToInt()}g",
-                        )
-                        ParamWithIcon(
-                            iconRes = R.drawable.ic_coffee,
-                            value = "${(combinedCoffeeWeight * it).roundToInt()}g",
+                            iconRes = R.drawable.ic_timer,
+                            value = (combinedTime * it).roundToInt().toStringDuration(),
                         )
                     }
-                }
-
-                2 -> MultiplierPage(
-                    multiplier = timerControllers.multiplierControllers.timeMultiplier,
-                    changeMultiplier = timerControllers.multiplierControllers.changeTimeMultiplier,
-                    requestFocus = pagerState.currentPage == 2,
-                ) {
-                    Text(text = "x$it")
-                    ParamWithIcon(
-                        iconRes = R.drawable.ic_timer,
-                        value = (combinedTime * it).roundToInt().toStringDuration(),
-                    )
                 }
             }
         }

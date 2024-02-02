@@ -14,8 +14,8 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.AddCircle
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -59,7 +59,10 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = null,
+                        )
                     }
                 },
                 scrollBehavior = appBarBehavior,
@@ -320,6 +323,6 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
 @ExperimentalMaterialApi
 @Preview
 @Composable
-fun BackupRestoreSettings() {
+fun BackupRestoreSettingsPreview() {
     BackupRestoreSettings(goBack = {}, goToRoot = {})
 }

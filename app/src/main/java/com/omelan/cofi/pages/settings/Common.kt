@@ -1,6 +1,5 @@
 package com.omelan.cofi.pages.settings
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.height
@@ -35,7 +34,6 @@ fun Modifier.settingsItemModifier(
     return@composed modifier.height(56.dp)
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.settings(
     navController: NavController,
     goBack: () -> Unit = {

@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalHorologistComposeLayoutApi::class)
-
 package com.omelan.cofi.wearos.presentation.pages
 
 import androidx.compose.foundation.background
@@ -20,9 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
+import androidx.wear.compose.foundation.lazy.items
+import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.composable
-import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
+import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
 import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.RecipeIcon
@@ -55,6 +56,7 @@ fun RecipeList(goToDetails: (Recipe) -> Unit, openSettings: () -> Unit) {
     RecipeList(recipes = recipes, goToDetails = goToDetails, openSettings = openSettings)
 }
 
+@OptIn(ExperimentalHorologistApi::class)
 @Composable
 fun RecipeList(
     recipes: List<Recipe?>,
@@ -89,7 +91,7 @@ fun RecipeList(
         ScalingLazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .rotaryWithScroll(focusRequester, scrollableState = lazyListState)
+                .rotaryWithScroll(scrollableState = lazyListState, focusRequester)
                 .background(MaterialTheme.colors.background),
             state = lazyListState,
             verticalArrangement = Arrangement.spacedBy(4.dp),

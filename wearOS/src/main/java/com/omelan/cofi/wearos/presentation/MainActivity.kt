@@ -7,9 +7,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.navigation
-import androidx.wear.ambient.AmbientModeSupport
-import androidx.wear.ambient.AmbientModeSupport.AmbientCallback
-import androidx.wear.compose.material.rememberSwipeToDismissBoxState
+import androidx.wear.compose.foundation.rememberSwipeToDismissBoxState
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
@@ -22,27 +20,24 @@ import com.omelan.cofi.wearos.presentation.pages.settings.LicensesList
 import com.omelan.cofi.wearos.presentation.pages.settings.Settings
 import com.omelan.cofi.wearos.presentation.theme.CofiTheme
 
-class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvider {
+class MainActivity : FragmentActivity() {
     private val keyEventHandlers = mutableListOf<KeyEventHandler>()
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         return keyEventHandlers.reversed().any { it(keyCode, event) } ||
                 super.onKeyDown(keyCode, event)
     }
 
-    private lateinit var ambientController: AmbientModeSupport.AmbientController
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ambientController = AmbientModeSupport.attach(this)
-        ambientController.setAmbientOffloadEnabled(true)
+
         setContent {
             val edgeSwipeToDismissBoxState = rememberSwipeToDismissBoxState()
             val swipeDismissableNavHostState =
                 rememberSwipeDismissableNavHostState(edgeSwipeToDismissBoxState)
             val navController = rememberSwipeDismissableNavController()
-            CompositionLocalProvider(
-                LocalKeyEventHandlers provides keyEventHandlers,
-                LocalAmbientModeProvider provides ambientController,
-            ) {
+            CompositionLocalProvider(LocalKeyEventHandlers provides keyEventHandlers) {
                 CofiTheme {
                     SwipeDismissableNavHost(
                         navController = navController,
@@ -68,14 +63,8 @@ class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvi
             }
         }
     }
-
-    override fun getAmbientCallback() = object : AmbientCallback() {}
 }
 
 val LocalKeyEventHandlers = compositionLocalOf<MutableList<KeyEventHandler>?> {
-    null
-}
-
-val LocalAmbientModeProvider = compositionLocalOf<AmbientModeSupport.AmbientController?> {
     null
 }

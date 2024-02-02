@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Face
 import androidx.compose.material3.*
@@ -46,7 +46,10 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = null,
+                        )
                     }
                 },
                 scrollBehavior = appBarBehavior,

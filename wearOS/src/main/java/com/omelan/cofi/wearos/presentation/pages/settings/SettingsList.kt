@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalHorologistComposeLayoutApi::class)
+@file:OptIn(ExperimentalHorologistApi::class)
 
 package com.omelan.cofi.wearos.presentation.pages.settings
 
@@ -12,8 +12,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
+import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.*
-import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
+import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.google.android.horologist.compose.rotaryinput.rotaryWithScroll
 import com.omelan.cofi.share.*
 import com.omelan.cofi.share.R
@@ -65,7 +67,7 @@ fun Settings(navigateToLicenses: () -> Unit) {
             state = lazyListState,
             modifier = Modifier
                 .background(MaterialTheme.colors.background)
-                .rotaryWithScroll(focusRequester, scrollableState = lazyListState),
+                .rotaryWithScroll(scrollableState = lazyListState, focusRequester),
         ) {
             item {
                 Text(text = stringResource(id = R.string.settings_title))
@@ -180,7 +182,7 @@ fun Settings(navigateToLicenses: () -> Unit) {
                     },
                     enabled = !getSettingsFromPhone,
                     onCheckedChange = {
-                        val values = CombineWeight.values()
+                        val values = CombineWeight.entries.toTypedArray()
                         coroutineScope.launch {
                             dataStore.selectCombineMethod(
                                 values.getOrElse(

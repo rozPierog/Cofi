@@ -21,8 +21,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -338,12 +338,12 @@ fun RecipeEdit(
                                 OffsetMapping.Identity,
                             )
                         },
-                        onValueChange = { description = it },
+                        onValueChange = { newDescription -> description = newDescription },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = Spacing.big)
-                            .onFocusChanged {
-                                if (it.isFocused) {
+                            .onFocusChanged { focusState ->
+                                if (focusState.isFocused) {
                                     collapse()
                                 }
                             }
@@ -442,7 +442,7 @@ fun RecipeEdit(
             PiPAwareAppBar(
                 navigationIcon = {
                     IconButton(onClick = safeGoBack) {
-                        Icon(Icons.Rounded.ArrowBack, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
                     }
                 },
                 actions = {
@@ -557,7 +557,7 @@ private fun IconPickerBottomSheet(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalArrangement = Arrangement.Bottom,
         ) {
-            RecipeIcon.values().map {
+            RecipeIcon.entries.map {
                 val tooltipState = remember { PlainTooltipState() }
                 Box(
                     modifier = Modifier

@@ -2,7 +2,6 @@
     ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalMaterial3Api::class,
     ExperimentalFoundationApi::class,
-    ExperimentalAnimationApi::class,
 )
 
 package com.omelan.cofi.pages.details
@@ -17,7 +16,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -73,7 +72,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Date
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.recipeDetails(
     navController: NavController,
     onTimerRunning: (Boolean) -> Unit,
@@ -418,7 +416,7 @@ fun RecipeDetails(
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
-                        Icon(Icons.Rounded.ArrowBack, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
                     }
                 },
                 actions = {
