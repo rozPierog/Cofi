@@ -112,7 +112,7 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
     <string name="support_dialog_kofi">Offrimi un caffè</string>
     <string name="support_title">Supporta Cofi</string>
     <string name="infoBox_update_body">Clicca qui per leggere gli aggiornamenti</string>
-    <string name="support_dialog_body">Ogni aiuto è gradito! Potete aiutarmi a continuare a fare ciò che amo scegliendo uno o più dei seguenti progetti.</string>
+    <string name="support_dialog_body">Apprezzerei molto il tuo supporto! Potete aiutarmi a continuare a fare ciò che amo scegliendo uno o più dei seguenti progetti.</string>
     <string name="recipe_details_multiply_time">Moltiplicatore del tempo</string>
     <string name="recipe_details_multiply_weight">Moltiplicatore del peso</string>
     <string name="settings_step_next_step_item">Mostra prossimi passi</string>
@@ -142,4 +142,19 @@ Temperatura: più è calda, meglio è (soprattutto con arrosti più leggeri)"</s
 \nTemperatura: il più caldo, il meglio (specialmente con tostature più leggere)</string>
     <string name="prepopulate_clever_dripper_step_break_crust">Spezza la crosta mescolando o dandole una leggera scossa</string>
     <string name="prepopulate_clever_dripper_step_rinse">Sciacquare il filtro con acqua calda</string>
+    <string name="recipe_details_recipeRatio">Proporzioni della ricetta: 1:%1$s</string>
+    <string name="notification_channel_timer_name">Timer in secondo piano</string>
+    <string name="notification_action_continue">Continua</string>
+    <string name="notification_action_stop">Stop</string>
+    <string name="notification_action_pause">Pausa</string>
+    <string name="prepopulate_clever_dripper_description">Ricetta di: James Hoffmann
+\nFonte: https://youtu.be/RpOdennxP24
+\nMacinatura: Medio-fina
+\nTemperatura: Portare ad ebollizione e usare immediatamente
+\nProporzioni: 1:16.67, o 15g per 250mL
+\nPiega il filtro lungo entrambe le cuciture cosÌ che entri bene nella caffettiera
+\nIl quantitativo di acqua massima è 500mL, ma si consiglia 400 o meno</string>
+    <string name="name_drip">Gocce</string>
+    <string name="name_tea">Tè</string>
+    <string name="name_teapot">Teiera</string>
 </resources>
