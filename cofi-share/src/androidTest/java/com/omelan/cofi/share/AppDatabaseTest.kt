@@ -59,7 +59,7 @@ class AppDatabaseTest {
         val allRecipes = recipeDao.getAll()
         val firstRecipe = allRecipes.getOrAwaitValue().first()
         val lastRecipe = allRecipes.getOrAwaitValue().last()
-        val stepsForFirst = StepType.values().mapIndexed { index, type ->
+        val stepsForFirst = StepType.entries.toTypedArray().mapIndexed { index, type ->
             Step(
                 name = "$index",
                 recipeId = firstRecipe.id,
@@ -68,7 +68,7 @@ class AppDatabaseTest {
                 orderInRecipe = index,
             )
         }
-        val stepsForSecond = StepType.values().mapIndexed { index, type ->
+        val stepsForSecond = StepType.entries.toTypedArray().mapIndexed { index, type ->
             Step(
                 name = "$index",
                 recipeId = lastRecipe.id,
@@ -81,8 +81,8 @@ class AppDatabaseTest {
             stepDao.insertAll(stepsForFirst + stepsForSecond)
         }
         val allStepsForRecipe1 = stepDao.getStepsForRecipe(firstRecipe.id).getOrAwaitValue()
-        assertEquals(StepType.values().size, allStepsForRecipe1.size)
+        assertEquals(StepType.entries.size, allStepsForRecipe1.size)
         val typesOfStepsInDB: Array<StepType> = allStepsForRecipe1.map { it.type }.toTypedArray()
-        assertArrayEquals(StepType.values(), typesOfStepsInDB)
+        assertArrayEquals(StepType.entries.toTypedArray(), typesOfStepsInDB)
     }
 }

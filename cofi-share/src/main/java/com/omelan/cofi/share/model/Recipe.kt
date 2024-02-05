@@ -35,7 +35,7 @@ open class RecipeIconTypeConverter {
 
     @TypeConverter
     open fun stringToRecipeIcon(type: String) =
-        RecipeIcon.values().find { type.lowercase() == it.name.lowercase() } ?: RecipeIcon.Grinder
+        RecipeIcon.entries.find { type.lowercase() == it.name.lowercase() } ?: RecipeIcon.Grinder
 }
 
 @Dao

@@ -10,7 +10,6 @@ import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -52,7 +51,6 @@ val LocalPiPState = staticCompositionLocalOf<Boolean> {
 const val appDeepLinkUrl = "https://rozpierog.github.io"
 
 @ExperimentalMaterial3WindowSizeClassApi
-@OptIn(ExperimentalAnimationApi::class)
 class MainActivity : MonetCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
 

@@ -81,10 +81,10 @@ fun MultiplierPage(
             targetState = multiplier,
             transitionSpec = {
                 if (targetState > initialState) {
-                    slideInVertically { height -> -height } + fadeIn() with
+                    slideInVertically { height -> -height } + fadeIn() togetherWith
                             slideOutVertically { height -> height } + fadeOut()
                 } else {
-                    slideInVertically { height -> height } + fadeIn() with
+                    slideInVertically { height -> height } + fadeIn() togetherWith
                             slideOutVertically { height -> -height } + fadeOut()
                 }.using(
                     SizeTransform(clip = false),

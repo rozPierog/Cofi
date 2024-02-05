@@ -63,7 +63,7 @@ fun RecipeListItem(modifier: Modifier = Modifier, recipe: Recipe?, onClick: () -
         }
     }
     AnimatedContent(targetState = recipe, transitionSpec = {
-        fadeIn() with fadeOut()
+        fadeIn() togetherWith  fadeOut()
     }) {
         if (it != null) {
             RecipeListItemRaw(

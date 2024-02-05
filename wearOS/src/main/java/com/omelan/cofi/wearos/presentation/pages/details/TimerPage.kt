@@ -203,7 +203,7 @@ fun TimerPage(
             ) {
                 AnimatedContent(
                     targetState = Pair(currentStep, isDone), label = "Timer Content",
-                    transitionSpec = { fadeIn() with fadeOut() },
+                    transitionSpec = { fadeIn() togetherWith fadeOut() },
                     modifier = Modifier.weight(1f, true),
                 ) { (currentStep, isDone) ->
                     when {

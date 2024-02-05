@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalAnimationApi::class)
-
 package com.omelan.cofi.share.components
 
 import androidx.compose.animation.*

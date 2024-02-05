@@ -39,7 +39,7 @@ class StepAddCardTest {
             }
         }
         composeTestRule.onNodeWithTag("step_name").assertDoesNotExist()
-        StepType.values().forEach { stepType ->
+        StepType.entries.forEach { stepType ->
             composeTestRule.onNodeWithTag(
                 "step_type_button_${stepType.name.lowercase(Locale.getDefault())}",
             ).assertExists().performClick()

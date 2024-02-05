@@ -11,8 +11,8 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.ArrowForward
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -90,7 +90,7 @@ fun TimerSettings(goBack: () -> Unit) {
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
+                        Icon(imageVector = Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
                     }
                 },
                 scrollBehavior = appBarBehavior,
@@ -200,7 +200,7 @@ fun TimerSettings(goBack: () -> Unit) {
                     },
                     icon = {
                         Icon(
-                            Icons.Rounded.ArrowForward,
+                            Icons.AutoMirrored.Rounded.ArrowForward,
                             contentDescription = null,
                         )
                     },
@@ -269,7 +269,7 @@ fun CombineWeightDialog(
             Text(text = stringResource(id = R.string.settings_combine_weight_item))
         },
     ) {
-        CombineWeight.values().forEach {
+        CombineWeight.entries.forEach {
             ListItem(
                 text = { Text(stringResource(id = it.settingsStringId)) },
                 modifier = Modifier
