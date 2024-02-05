@@ -1,16 +1,14 @@
-As a passionate coffee lover and amateur barista, I've always been on the hunt for the perfect cup of coffee. That's why I created the free and open-source coffee brew timer for Android. With this app, you can easily time your coffee brews and achieve the perfect flavor every time.
+En temps qu'amateur de café passionné et barista, j'ai toujours été à la recherche du café parfait. C'est pour cela que j'ai créé le minuteur à infusion de café gratuit et open source pour Android.
 
-I know how important it is to have complete control over your brew time, and that's exactly what this app provides. Whether you're using a French press, pour-over, or any other brewing method, our app makes it easy to keep track of your brew time and achieve the perfect flavor.
+Je sais à quel point il est important d'avoir un contrôle complet sur son temps d'infusion, et c'est exactement ce que cette application permet. Que vous utilisiez une cafetière à piston, à filtre, ou tout autre méthode, notre application facilite la surveillance de l'infusion et permet d'atteindre la saveur parfaite.
 
-Features:
+- Open-source et utilisation gratuite
+- Pas de limites artificielles sur ce que vous pouvez ajouter sur l'app
+- Minuteur pour vos infusions de café
+- Minuteurs customisables selon la méthode d'infusion
+- Interface facile à utiliser avec un design épuré
+- Mode image-dans-l'image pour multitâcher
+- application WearOS for une meilleure gestion du temps sur votre montre
+- Aucun suivi des utilisateurs ou de collectage d'information
 
-- Open-source and free to use
-- No artificial limits on what you can add to the app
-- Timer for your coffee brews
-- Customizable time settings for different brewing methods
-- Easy-to-use interface with a clean design and the latest material design
-- Picture-in-picture mode for multitasking
-- WearOS app for easy timing on your smartwatch
-- Absolutely no user tracking or data collection
-
-I know how frustrating it can be to settle for a mediocre cup of coffee. That's why I want to help you brew like a pro and enjoy the perfect cup every time. Download Cofi now and start your journey to coffee perfection!
+Je sais à quel point il est frustrant de se contenter d'un café médiocre. C'est pour cela que je veux vous aider à faire votre café comme des professionnels et apprécier votre café à chaque fois. Télécharger Cofi now et commencer votre voyage vers le café parfait!
