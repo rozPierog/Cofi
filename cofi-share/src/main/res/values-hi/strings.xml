@@ -10,7 +10,7 @@
     <string name="step_add_save">सेव</string>
     <string name="recipe_unsaved_title">आपके परिवर्तन सेव नहीं किये गए हैं</string>
     <string name="recipe_unsaved_text">क्या आप इन्हे हटाना चाहते है?</string>
-    <string name="recipe_delete_title">क्या आप निश्चित है</string>
+    <string name="recipe_delete_title">क्या आप निश्चित हैं?</string>
     <string name="recipe_delete_text">यह कार्य इस रेसिपी को स्थायी रूप से विनाश कर देगा</string>
     <string name="recipe_edit_name">नाम</string>
     <string name="recipe_edit_description">वर्णन</string>
@@ -24,10 +24,10 @@
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="button_cancel">निरस्त करे</string>
     <string name="button_delete">मिटाये</string>
-    <string name="button_discard">हटाएं</string>
+    <string name="button_discard">रद्द करें</string>
     <string name="button_continue_editing">बदलाव जारी रखे</string>
     <string name="button_copy">कॉपी</string>
-    <string name="snackbar_copied">कॉपी कर लिया</string>
+    <string name="snackbar_copied">प्रतिलिपि बनाई गई!</string>
     <string name="settings_licenses_title">ओपन सोर्स लाइसेंस</string>
     <string name="settings_title">सेटिंग्स</string>
     <string name="settings_about_item">ऐप के बारे में</string>
@@ -50,7 +50,7 @@
         <item quantity="other">%d रेसिपीज लौटाए</item>
     </plurals>
     <string name="button_show">दिखाए</string>
-    <string name="step_add_remove">हटाएं</string>
+    <string name="step_add_remove">हटाएँ</string>
     <string name="timer_enjoy">अपनी कॉफी का आनंद लें</string>
     <string name="prepopulate_v60_name">अल्टीमेट  V60</string>
     <string name="prepopulate_v60_description">"रेसिपी बनाने वाले : जेम्स हॉफमन
@@ -103,7 +103,7 @@
     <string name="recipe_details_multiply_time">समय गुणक</string>
     <string name="recipe_details_multiply_weight">वजन गुणक</string>
     <string name="infoBox_wearOS_title">कॉफी अब वेअरओएस पर उपलब्ध है </string>
-    <string name="infoBox_wearOS_body">अपनी वेअरओएस घडी के लिए कॉफी ऍप डाउनलोड करे </string>
+    <string name="infoBox_wearOS_body">अपनी WearOS घड़ी के लिए Cofi ऐप डाउनलोड करें!</string>
     <string name="settings_sync_with_phone">फोन से सेटिंग्स प्राप्त करें</string>
     <string name="name_grinder">कॉफी ग्राइंडर</string>
     <string name="name_vietnamese_press">फिन फ़िल्टर</string>
@@ -114,7 +114,7 @@
     <string name="name_cezve">चेज़वे</string>
     <string name="name_cup">कप</string>
     <string name="support_dialog_title">क्या आप कॉफी ऐप का आनंद ले रहे हैं?</string>
-    <string name="support_dialog_body">"मैं आपके समर्थन की बहुत सराहना करूंगा!  आप निम्नलिखित में से एक या अधिक चुनकर मुझे वह काम जारी रखने में मदद कर सकते हैं जो मुझे पसंद है।"</string>
+    <string name="support_dialog_body">मैं आपके समर्थन की बहुत सराहना करूंगा! आप निम्नलिखित में से एक या अधिक चुनकर मुझे वह काम जारी रखने में मदद कर सकते हैं जो मुझे पसंद है।</string>
     <string name="support_dialog_github">कॉफी को GitHub पर स्टार करे</string>
     <string name="support_dialog_mastodon">मुझे मास्टोडॉन पर फॉलो करें</string>
     <string name="support_dialog_kofi">मेरे लिए कॉफी खरीदें</string>
@@ -129,13 +129,9 @@
     <string name="prepopulate_v60_1cup_name">1 कप V60</string>
     <string name="prepopulate_clever_dripper_step_draw_down">कप के ऊपर रखें और इसे पूरी तरह से नीचे की ओर खींचने दें</string>
     <string name="prepopulate_v60_1cup_description">रेसिपी बनाई गई: जेम्स हॉफमैन
-\n
-\n स्रोत: https://youtu.be/1oB1oDrDkHM
-\n
-\n शुरू करने से पहले, कागज को शंकु के अंदर रखकर और कागज पर गर्म पानी डालकर V60 को गर्म करें। यह V60 को पहले से गर्म कर देता है और कॉफी बनाने की प्रक्रिया के लिए कागज तैयार कर देता हैं
-\n
+\nस्रोत: https://youtu.be/1oB1oDrDkHM
+\nशुरू करने से पहले, कागज को शंकु के अंदर रखकर और कागज पर गर्म पानी डालकर V60 को गर्म करें। यह V60 को पहले से गरम कर देता है और कॉफ़ी बनाने की प्रक्रिया के लिए कागज़ तैयार कर देता है।
 \nपीसने का आकार: बारीक - मध्यम बारीक
-\n
 \nतापमान: जितना गर्म, उतना बेहतर (विशेषकर हल्के भूनने पर)</string>
     <string name="recipe_details_change_step_toast">चरण बदलने के लिए पकड़े और दबाकर रखें</string>
     <string name="prepopulate_clever_dripper_step_break_crust">क्रस्ट को या तो फेटकर या थोड़ा हिलाकर तोड़ लें</string>
@@ -143,5 +139,21 @@
     <string name="recipe_detials_notification_dialog_title">टाइमर को बैकग्राउंड में चलने की अनुमति दे\?</string>
     <string name="settings_background_timer_item">टाइमर को बैकग्राउंड में चलने की अनुमति दे</string>
     <string name="button_no">नहीं</string>
-    <string name="settings_translate_item">Cofi को अनुवाद करने में सहायता करे</string>
+    <string name="settings_translate_item">Cofi का अनुवाद करने में सहायता करें</string>
+    <string name="prepopulate_clever_dripper_description">रेसिपी बनाई गई: जेम्स हॉफमैन
+\nस्रोत: https://youtu.be/RpOdennxP24
+\nपीसने का आकार: मध्यम-बारीक
+\nतापमान: उबाल लें और तुरंत उपयोग करें
+\nअनुपात: 1:16.67, या 15 ग्राम से 250 एमएल
+\nफ़िल्टर को दोनों सीमों के साथ मोड़ें ताकि यह मशीन के अंदर बेहतर ढंग से फिट हो सके
+\nपानी की अधिकतम मात्रा 500 एमएल है, लेकिन 400 या उससे कम की सिफारिश की जाती है</string>
+    <string name="name_tea">चाय</string>
+    <string name="name_teapot">चाय का बर्तन</string>
+    <string name="notification_channel_timer_name">पृष्ठभूमि टाइमर</string>
+    <string name="notification_action_continue">जारी रखें</string>
+    <string name="notification_action_stop">रुको</string>
+    <string name="notification_action_pause">विराम</string>
+    <string name="name_drip">टपक</string>
+    <string name="recipe_details_read_description">विवरण पढ़ें</string>
+    <string name="recipe_details_recipeRatio">रेसिपी अनुपात: 1:%1$s</string>
 </resources>
