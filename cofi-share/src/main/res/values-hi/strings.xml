@@ -46,8 +46,8 @@
         <item quantity="other">%d रेसिपीज बैकअप किये</item>
     </plurals>
     <plurals name="settings_snackbar_restore">
-        <item quantity="one">%d रेसिपीज दी</item>
-        <item quantity="other">%d रेसिपीज लौटाए</item>
+        <item quantity="one">पुनर्स्थापित %d रेसिपी</item>
+        <item quantity="other">पुनर्स्थापित %d रेसिपीज</item>
     </plurals>
     <string name="button_show">दिखाए</string>
     <string name="step_add_remove">हटाएँ</string>
@@ -87,11 +87,11 @@
 \nतापमान: हल्के रोस्ट के लिए - उबालकर तुरंत इस्तेमालकरें। डार्क रोस्ट के लिए - 85–90℃</string>
     <string name="tereszkiewicz_credits_title">ऐप आइकन: ह्यूबर्ट टेरेस्ज़किविक्ज़</string>
     <string name="tereszkiewicz_credits_subtitle">उनका ड्रिबल देखें</string>
-    <string name="recipe_create_title">नुस्खा जोड़ें</string>
-    <string name="recipe_clone_title">इस नुस्खे की नकल करें?</string>
-    <string name="recipe_clone_text">यह इस नुस्खे की एक नकल बनाएगा</string>
+    <string name="recipe_create_title">रेसिपी जोड़ें</string>
+    <string name="recipe_clone_title">इस रेसिपी की नकल करें?</string>
+    <string name="recipe_clone_text">यह इस रेसिपी की एक नकल बनाएगा</string>
     <string name="recipe_clone_suffix">%1$s - की नकल</string>
-    <string name="app_version">ऍप वर्जन</string>
+    <string name="app_version">ऍप वर्शन</string>
     <string name="recipe_details_noTime">शुरू करने के लिए स्टार्ट बटन दबाये</string>
     <string name="step_add_duration_explainer">स्टेप अवधि निर्धारित करती है कि कोई कार्य कितनी देर तक चलेगा (सेकंड में)। जब तक आप तैयार न हों तब तक रेसिपी को रोकने के लिए खाली छोड़ दें।</string>
     <string name="settings_backup">बैकअप</string>
@@ -155,5 +155,5 @@
     <string name="notification_action_pause">विराम</string>
     <string name="name_drip">टपक</string>
     <string name="recipe_details_read_description">विवरण पढ़ें</string>
-    <string name="recipe_details_recipeRatio">नुस्खा अनुपात: 1:%1$s</string>
+    <string name="recipe_details_recipeRatio">रेसिपी अनुपात: 1:%1$s</string>
 </resources>
