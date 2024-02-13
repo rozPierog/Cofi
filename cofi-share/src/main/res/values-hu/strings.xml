@@ -71,4 +71,88 @@
         <item quantity="one">%d recept visszaállítva</item>
         <item quantity="other">%d recept visszaállítva</item>
     </plurals>
+    <string name="prepopulate_step_scoop_coffee">A tetejéről szedjük le a habot és a kávédarabkákat</string>
+    <string name="prepopulate_frenchPress_name">Francia presszó</string>
+    <string name="hoffmann_credits_title">James Hoffmann alapértelmezett receptjei</string>
+    <string name="hoffmann_credits_subtitle">Menj a Youtube csatornájára</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_aero_name">Aero presszó</string>
+    <string name="prepopulate_aero_step_piston">Helyezze a dugattyút 1 cm-re a főzőbe</string>
+    <string name="prepopulate_aero_step_press">Finoman nyomja meg a dugattyút</string>
+    <string name="prepopulate_aero_description">Receptet készítette: James Hoffmann
+\nForrás: https://youtu.be/j6VlT_jUVPc
+\nŐrlési méret: Világos pörköléshez – a közepes finomabb vége. Minél sötétebbre megy, annál inkább növeli az adagot és durvítja az őrlést
+\nHőmérséklet: Világos pörköléshez – forraljuk fel és azonnal használjuk fel. Sötét pörköléshezhez – 85-90 ℃</string>
+    <string name="prepopulate_clever_dripper_step_rinse">Öblítse át a szűrőt forró vízzel</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">Törje meg a felületet keveréssel vagy egy kis rázással</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">Helyezze a csésze tetejére, és hagyja, hogy teljesen lehúzódjon</string>
+    <string name="tereszkiewicz_credits_title">Alkalmazás ikonját készítette: Hubert Tereszkiewicz</string>
+    <string name="tereszkiewicz_credits_subtitle">Nézd meg a Dribbble-jét</string>
+    <string name="recipe_create_title">Recept hozzáadása</string>
+    <string name="recipe_clone_title">Klónozza ezt a receptet?</string>
+    <string name="recipe_clone_text">Létrehozza a recept duplikátumát</string>
+    <string name="recipe_clone_suffix">%1$s - Másolás</string>
+    <string name="app_version">App verzió</string>
+    <string name="recipe_details_noTime">Folytatáshoz nyomja meg a start gombot</string>
+    <string name="step_add_duration_explainer">A lépés időtartama határozza meg, hogy mennyi ideig tart egy művelet (másodpercben). Hagyja üresen a recept szüneteltetéséhez, amíg készen nem áll.</string>
+    <string name="settings_backup">Biztonsági mentés</string>
+    <string name="settings_restore">Visszaállítás</string>
+    <string name="settings_addDefault">Alapértelmezett receptek hozzáadása</string>
+    <string name="settings_timer_item">Időzítő beállításai</string>
+    <string name="settings_backup_item">Biztonsági mentés/Visszaállítás</string>
+    <string name="settings_step_vibrate_item">Lépés változtatás rezgés</string>
+    <string name="recipe_details_multiply_time">Idő szorzó</string>
+    <string name="infoBox_wearOS_title">Cofi már a WearOS-en is elérhető</string>
+    <string name="infoBox_wearOS_body">Töltsd le a Cofi alkalmazást WearOS órádra!</string>
+    <string name="settings_sync_with_phone">Beállítások lekérése a telefonról</string>
+    <string name="name_grinder">Kávédaráló</string>
+    <string name="name_drip">Csepegtetés</string>
+    <string name="support_dialog_title">Élvezed a Cofit?</string>
+    <string name="support_dialog_github">Star Cofi a GitHub-on</string>
+    <string name="support_title">Támogassa Cofi-t</string>
+    <string name="infoBox_update_title">Cofi frissítve lett</string>
+    <string name="infoBox_update_body">Kattints ide az újdonságokért</string>
+    <string name="settings_step_next_step_item">Következő lépés megjelenítése</string>
+    <string name="recipe_details_upNext">Következik:</string>
+    <string name="settings_wearOS_item">Letöltés WearOS-ra</string>
+    <string name="recipe_details_change_step_toast">Nyomja meg és tartsa lenyomva a lépés megváltoztatásához</string>
+    <string name="recipe_details_recipeRatio">Recept aránya: 1:%1$s</string>
+    <string name="name_teapot">Teáskanna</string>
+    <string name="notification_channel_timer_name">Háttér időzítő</string>
+    <string name="notification_action_continue">Folytatás</string>
+    <string name="notification_action_stop">Stop</string>
+    <string name="notification_action_pause">Szünet</string>
+    <string name="prepopulate_step_swirl">Keverés</string>
+    <string name="prepopulate_step_plunge">Mártsunk a felület alá, és öntsük</string>
+    <string name="prepopulate_frenchPress_description">A receptet készítette: James Hoffmann
+\nForrás: https://youtu.be/st571DYYTR8
+\nDarálási méret: közepes
+\nUtolsó lépés után 5 perc múlva kiöntheti, de minél tovább tartja, annál jobb lesz</string>
+    <string name="prepopulate_step_stir_crust">Keverje össze a felületet</string>
+    <string name="prepopulate_chemex_description">A receptet készítette: James Hoffmann
+\nForrás: https://youtu.be/ikt-X5x7yoc
+\nŐrlési méret: közepesen finom
+\nHőmérséklet: minél forróbb, annál jobb (különösen a világosabb pörkölteknél).
+\nÜgyeljen arra, hogy a szűrő legmerevebb része a lefolyó oldalon legyen.
+\nFigyeljen arra, hogy ne akadályozza a főzőből kifelé áramló levegőt</string>
+    <string name="prepopulate_clever_dripper_description">Receptet készítette: James Hoffmann
+\nForrás: https://youtu.be/RpOdennxP24
+\nÖrlési méret: Közepesen finom
+\nHőmérséklet: Forraljuk fel és azonnal használjuk fel.
+\nArány: 1:16,67, azaz 15 g 250 ml-hez.
+\nHajtsa be a szűrőt mindkét varrat mentén, hogy jobban illeszkedjen a főzőgép belsejébe.
+\nA maximális vízmennyiség 500mL, de 400 vagy annál kevesebb víz ajánlott</string>
+    <string name="recipe_details_multiply_weight">Súly szorzó</string>
+    <string name="name_vietnamese_press">Phin szűrő</string>
+    <string name="name_espresso">Eszpresszó gép</string>
+    <string name="name_cold_brew">Hideg főzet</string>
+    <string name="name_siphon">Szifon</string>
+    <string name="name_cezve">Kávéskanna</string>
+    <string name="support_dialog_mastodon">Kövess a Mastodonon</string>
+    <string name="support_dialog_review">Írd meg a véleményed</string>
+    <string name="recipe_details_read_description">Olvassa el a leírást</string>
+    <string name="support_dialog_kofi">Vegyél nekem egy kávét</string>
+    <string name="name_tea">Tea</string>
+    <string name="name_cup">Csésze</string>
+    <string name="support_dialog_body">Nagyon hálás lennék a támogatásodért! Segíthet folytatni azt, amit szeretek, ha választ egyet vagy többet az alábbiak közül.</string>
 </resources>
