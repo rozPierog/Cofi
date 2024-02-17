@@ -4,10 +4,10 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import com.omelan.cofi.share.utils.ensureNumbersOnly
 
 @Composable
 fun OutlinedNumbersField(
@@ -25,6 +25,7 @@ fun OutlinedNumbersField(
     imeAction: ImeAction = ImeAction.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
+    val pattern = remember { Regex(if (allowFloat) "^\\d+(?:\\.\\d{0,2})?\$" else "^\\d+\$") }
     OutlinedTextField(
         label = label,
         placeholder = placeholder,
@@ -36,7 +37,15 @@ fun OutlinedNumbersField(
         singleLine = true,
         value = value,
         onValueChange = { newValue ->
-            onValueChange(ensureNumbersOnly(newValue, value, allowFloat))
+            if (newValue.matches(pattern)) {
+                if (value == "0.0" && newValue != "0.0" && newValue.endsWith("0.0")) {
+                    onValueChange(newValue.removeSuffix("0.0"))
+                } else {
+                    onValueChange(newValue)
+                }
+            } else if (newValue.startsWith(".")) {
+                onValueChange("0${newValue}")
+            }
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Decimal,

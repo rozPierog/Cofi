@@ -42,39 +42,6 @@ fun Int.toStringDuration(
     }
 }
 
-fun ensureNumbersOnly(newValue: String, oldValue: String, allowFloat: Boolean): String {
-    val maxInt: Int = Int.MAX_VALUE / 1000
-    if (newValue.isEmpty()) {
-        return newValue
-    }
-    if (!allowFloat) {
-        val convertedNumber = newValue.toIntOrNull()
-        return if (convertedNumber != null && convertedNumber in 0..maxInt) {
-            newValue
-        } else {
-            oldValue
-        }
-    }
-
-    val decimalSeparator = DecimalFormat().decimalFormatSymbols.decimalSeparator
-
-    // Case when user clicked ⌫ before '.'
-    if (newValue == oldValue.filter { it != decimalSeparator }) {
-        return oldValue
-    }
-    // Check if there is more than one decimal separator and try to rescue value
-    val fixedNewValue = if (newValue.count { it == decimalSeparator } > 1) {
-        newValue.substringBeforeLast(".", missingDelimiterValue = "")
-    } else newValue
-
-    val convertedNumber = fixedNewValue.toDoubleOrNull()
-    return if (convertedNumber != null && convertedNumber in 0.0..maxInt.toDouble()) {
-        fixedNewValue
-    } else {
-        oldValue
-    }
-}
-
 fun String.safeToInt(): Int {
     return when {
         this.isBlank() -> 0

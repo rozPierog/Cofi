@@ -1,6 +1,5 @@
 package com.omelan.cofi.utils
 
-import com.omelan.cofi.share.utils.ensureNumbersOnly
 import com.omelan.cofi.share.utils.safeToInt
 import com.omelan.cofi.share.utils.toMillis
 import com.omelan.cofi.share.utils.toStringDuration
@@ -48,24 +47,4 @@ class NumberUtilsKtTest : TestCase() {
         }
     }
 
-    fun testEnsureNumbersOnly() {
-        listOf(
-            // newValue, oldValue, expectedValue
-            Triple("", ".", ""),
-            Triple(" ", "", ""),
-            Triple("a", "", ""),
-            Triple("-", "", ""),
-            Triple("1", "", "1"),
-            Triple("23 ", "2 ", "2 "),
-            Triple(" 17", "1", "1"),
-            Triple("17", "1", "17"),
-            Triple("2!", "2", "2"),
-            Triple("2147483647", "", ""),
-            Triple("1073741822", "", ""),
-            Triple("2147483", "", "2147483"),
-        ).forEach {
-            assertEquals(it.third, ensureNumbersOnly(it.first, it.second, false))
-        }
-        // TODO: fix me (add mocks of android.icu.text.DecimalFormat)
-    }
 }
