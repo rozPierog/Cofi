@@ -382,7 +382,7 @@ fun RecipeDetails(
                 weightMultiplier = multiplierControllers.weightMultiplier,
                 timeMultiplier = multiplierControllers.timeMultiplier,
             )
-            Divider()
+            HorizontalDivider()
         }
     }
 

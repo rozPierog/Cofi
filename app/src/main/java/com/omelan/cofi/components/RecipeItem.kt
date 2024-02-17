@@ -98,7 +98,7 @@ fun LazyGridItemScope.RecipeItem(
                 }
             }
         }
-        Divider()
+        HorizontalDivider()
         RecipeInfo(compactStyle = true, steps = allSteps)
     }
 }
