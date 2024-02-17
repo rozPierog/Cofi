@@ -5,29 +5,29 @@
     <string name="step_type_wait">ठहरिये</string>
     <string name="step_type_other">अन्य</string>
     <string name="step_add_name">नाम</string>
-    <string name="step_add_duration">समय (सेकंड)</string>
-    <string name="step_add_weight">वजन (ग्राम)</string>
-    <string name="step_add_save">सेव</string>
-    <string name="recipe_unsaved_title">आपके परिवर्तन सेव नहीं किये गए हैं</string>
-    <string name="recipe_unsaved_text">क्या आप इन्हे हटाना चाहते है?</string>
-    <string name="recipe_delete_title">क्या आप निश्चित है</string>
-    <string name="recipe_delete_text">यह कार्य इस रेसिपी को स्थायी रूप से विनाश कर देगा</string>
+    <string name="step_add_duration">समय (से)</string>
+    <string name="step_add_weight">वजन (ग्रा)</string>
+    <string name="step_add_save">सहेजें</string>
+    <string name="recipe_unsaved_title">आपके पास सहेजे नहीं गए परिवर्तन हैं</string>
+    <string name="recipe_unsaved_text">क्या आप उन्हें छोड़ना चाहते हैं?</string>
+    <string name="recipe_delete_title">क्या आप निश्चित हैं?</string>
+    <string name="recipe_delete_text">इससे यह नुस्खा स्थायी रूप से हट जाएगा</string>
     <string name="recipe_edit_name">नाम</string>
-    <string name="recipe_edit_description">वर्णन</string>
-    <string name="recipe_edit_description_button">वर्णन करें</string>
-    <string name="recipe_edit_title">इस रेसिपी को बदले</string>
-    <string name="recipe_add_new_title">नयी रेसिपी बनाये</string>
-    <string name="recipe_details_automation_dialog_title">विशिष्ट लिंक</string>
-    <string name="recipe_details_automation_dialog_text">"इस रेसिपी में सीधे जाने के लिए इस लिंक का उपयोग करें। अपनी सुबह की कॉफी को आसान बनाने के लिए इसे एनएफसी टैग में लिखें या टास्कर ऍप में ऑटोमेशन टास्क बनाएं।
-चेतावनी: आप इस तरह रेसिपी बाँट नहीं सकते!"</string>
+    <string name="recipe_edit_description">विवरण</string>
+    <string name="recipe_edit_description_button">विवरण जोड़ें</string>
+    <string name="recipe_edit_title">नुस्खा संपादित करें</string>
+    <string name="recipe_add_new_title">नया नुस्खा बनाएं</string>
+    <string name="recipe_details_automation_dialog_title">सीदा संबद्ध</string>
+    <string name="recipe_details_automation_dialog_text">इस नुस्खे में सीधे जाने के लिए इस लिंक का उपयोग करें। अपनी सुबह की कॉफी को आसान बनाने के लिए इसे NFC टैग में लिखें या Tasker ऍप में ऑटोमेशन टास्क बनाएं।
+\nचेतावनी: आप इस तरह नुस्खा बाँट नहीं सकते!</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
-    <string name="button_cancel">निरस्त करे</string>
+    <string name="button_cancel">रद्द करें</string>
     <string name="button_delete">मिटाये</string>
-    <string name="button_discard">हटाएं</string>
+    <string name="button_discard">रद्द करें</string>
     <string name="button_continue_editing">बदलाव जारी रखे</string>
     <string name="button_copy">कॉपी</string>
-    <string name="snackbar_copied">कॉपी कर लिया</string>
+    <string name="snackbar_copied">प्रतिलिपि बनाई गई!</string>
     <string name="settings_licenses_title">ओपन सोर्स लाइसेंस</string>
     <string name="settings_title">सेटिंग्स</string>
     <string name="settings_about_item">ऐप के बारे में</string>
@@ -38,25 +38,25 @@
     <string name="settings_combine_weight_all">सारे वजन मिलाएं</string>
     <string name="settings_combine_weight_water">सिर्फ पानी का वजन मिलाएं</string>
     <string name="settings_combine_weight_none">कोई वजन ना मिलाएं</string>
-    <string name="settings_about_title">इस बारे में</string>
-    <string name="settings_licenses_item">आभार</string>
-    <string name="settings_github_item">गिटहब रिपॉजिटरी</string>
+    <string name="settings_about_title">बारे में</string>
+    <string name="settings_licenses_item">अभिस्वीकृतियाँ</string>
+    <string name="settings_github_item">Github रिपॉजिटरी</string>
     <plurals name="settings_snackbar_backup">
-        <item quantity="one">%d रेसिपी बैकअप की</item>
-        <item quantity="other">%d रेसिपीज बैकअप किये</item>
+        <item quantity="one">%d नुस्खे का बैकअप लिया गया</item>
+        <item quantity="other">%d नुस्खों का बैकअप लिया गया</item>
     </plurals>
     <plurals name="settings_snackbar_restore">
-        <item quantity="one">%d रेसिपीज दी</item>
-        <item quantity="other">%d रेसिपीज लौटाए</item>
+        <item quantity="one">पुनर्स्थापित %d नुस्खा</item>
+        <item quantity="other">पुनर्स्थापित %d नुस्खे</item>
     </plurals>
     <string name="button_show">दिखाए</string>
-    <string name="step_add_remove">हटाएं</string>
+    <string name="step_add_remove">हटाएँ</string>
     <string name="timer_enjoy">अपनी कॉफी का आनंद लें</string>
-    <string name="prepopulate_v60_name">अल्टीमेट  V60</string>
-    <string name="prepopulate_v60_description">"रेसिपी बनाने वाले : जेम्स हॉफमन
-स्रोत: https://youtu.be/AI4ynXzkSQo
-पीसने का आकार: मध्यम छोटा
-तापमान: जितना गरम उतना बेहतर (विशेष रूप से हल्के रोस्ट के साथ)"</string>
+    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_description">नुस्खा बनाने वाले : जेम्स हॉफमन
+\nस्रोत: https://youtu.be/AI4ynXzkSQo
+\nपीसने का आकार: मध्यम छोटा
+\nतापमान: जितना गरम उतना बेहतर (विशेष रूप से हल्के रोस्ट के साथ)</string>
     <string name="prepopulate_step_coffee">कॉफ़ी डालिये</string>
     <string name="prepopulate_step_water">पानी डालिये</string>
     <string name="prepopulate_step_swirl">घुमाये</string>
@@ -65,83 +65,95 @@
     <string name="prepopulate_step_stir_crust">ऊपरी परत को हिलाये</string>
     <string name="prepopulate_step_scoop_coffee">ऊपर से झाग और कॉफी के कण निकाल लें</string>
     <string name="prepopulate_frenchPress_name">फ्रेंच प्रेस</string>
-    <string name="prepopulate_frenchPress_description">"रेसिपी बनाने वाले : जेम्स हॉफमन
-स्रोत: https://youtu.be/st571DYYTR8
-पीसने का आकार: मध्यम
-आप आखरी स्टेप के 5 मिनट बाद कॉफ़ी डाल सकते हैं, लेकिन आप इसे जितनी देर तक रखेंगे, यह उतना ही बेहतर होता जाएगा"</string>
-    <string name="hoffmann_credits_title">डिफ़ॉल्ट रेसिपी जेम्स हॉफमन के द्वारा</string>
-    <string name="hoffmann_credits_subtitle">उनके यूट्यूब चैनल पर जाए</string>
-    <string name="prepopulate_chemex_name">केमेक्स</string>
-    <string name="prepopulate_chemex_description">"रेसिपी बनाने वाले : जेम्स हॉफमन
-स्रोत: https://youtu.be/ikt-X5x7yoc
-पीसने का आकार: मध्यम छोटा
-तापमान: जितना गरम उतना बेहतर (विशेष रूप से हल्के रोस्ट के साथ)
-ध्यान दे कि फिल्टर का सबसे कठोर हिस्सा जल निकासी की तरफ है
-केमेक्स से बाहर निकलने वाली हवा को अवरुद्ध न करने का ध्यान रखें"</string>
-    <string name="prepopulate_aero_name">ऐरोप्रेस </string>
+    <string name="prepopulate_frenchPress_description">नुस्खा बनाने वाले : जेम्स हॉफमन
+\nस्रोत: https://youtu.be/st571DYYTR8
+\nपीसने का आकार: मध्यम
+\nआप आखरी स्टेप के 5 मिनट बाद कॉफ़ी डाल सकते हैं, लेकिन आप इसे जितनी देर तक रखेंगे, यह उतना ही बेहतर होता जाएगा</string>
+    <string name="hoffmann_credits_title">डिफ़ॉल्ट नुस्खा जेम्स हॉफमन के द्वारा</string>
+    <string name="hoffmann_credits_subtitle">उनके Youtube चैनल पर जाए</string>
+    <string name="prepopulate_chemex_name">Chemex</string>
+    <string name="prepopulate_chemex_description">नुस्खा बनाने वाले : जेम्स हॉफमन
+\nस्रोत: https://youtu.be/ikt-X5x7yoc
+\nपीसने का आकार: मध्यम छोटा
+\nतापमान: जितना गरम उतना बेहतर (विशेष रूप से हल्के रोस्ट के साथ)
+\nध्यान दे कि फिल्टर का सबसे कठोर हिस्सा जल निकासी की तरफ है
+\nकेमेक्स से बाहर निकलने वाली हवा को अवरुद्ध न करने का ध्यान रखें</string>
+    <string name="prepopulate_aero_name">AeroPress</string>
     <string name="prepopulate_aero_step_piston">पिस्टन को 1 सेमी ब्रूअर में रखें</string>
     <string name="prepopulate_aero_step_press">पिस्टन को हल्के से दबाएं</string>
-    <string name="prepopulate_aero_description">रेसिपी बनाने वाले : जेम्स हॉफमन
+    <string name="prepopulate_aero_description">नुस्खा बनाने वाले : जेम्स हॉफमन
 \nस्रोत: https://youtu.be/j6VlT_jUVPc
 \nपीसने का आकार: हल्के रोस्ट के लिए - माध्यम का महीन अंत। जितना डार्क रोस्ट उतना अधिक आप कॉफ़ी की मात्रा बढ़ाना और पीस को मोटा करना पसंद कर सकते हैं
 \nतापमान: हल्के रोस्ट के लिए - उबालकर तुरंत इस्तेमालकरें। डार्क रोस्ट के लिए - 85–90℃</string>
     <string name="tereszkiewicz_credits_title">ऐप आइकन: ह्यूबर्ट टेरेस्ज़किविक्ज़</string>
     <string name="tereszkiewicz_credits_subtitle">उनका ड्रिबल देखें</string>
-    <string name="recipe_create_title">रेसिपी बनाये</string>
-    <string name="recipe_clone_title">इस रेसिपी की नकल करें?</string>
-    <string name="recipe_clone_text">यह इस रेसिपी की एक नकल बनाएगा</string>
+    <string name="recipe_create_title">नुस्खा जोड़ें</string>
+    <string name="recipe_clone_title">इस नुस्खे की नकल करें?</string>
+    <string name="recipe_clone_text">यह इस नुस्खे की एक नकल बनाएगा</string>
     <string name="recipe_clone_suffix">%1$s - की नकल</string>
-    <string name="app_version">ऍप वर्जन</string>
+    <string name="app_version">ऍप वर्शन</string>
     <string name="recipe_details_noTime">शुरू करने के लिए स्टार्ट बटन दबाये</string>
-    <string name="step_add_duration_explainer">स्टेप अवधि निर्धारित करती है कि कोई कार्य कितनी देर तक चलेगा (सेकंड में)। जब तक आप तैयार न हों तब तक रेसिपी को रोकने के लिए खाली छोड़ दें।</string>
+    <string name="step_add_duration_explainer">स्टेप अवधि निर्धारित करती है कि कोई कार्य कितनी देर तक चलेगा (सेकंड में)। जब तक आप तैयार न हों तब तक नुस्खे को रोकने के लिए खाली छोड़ दें।</string>
     <string name="settings_backup">बैकअप</string>
     <string name="settings_restore">रिस्टोर</string>
-    <string name="settings_addDefault">डिफ़ॉल्ट रेसिपीज लौटाए</string>
+    <string name="settings_addDefault">डिफ़ॉल्ट नुस्खा जोड़ें</string>
     <string name="settings_timer_item">टाइमर सेटिंग्स</string>
     <string name="settings_backup_item">बैकअप/रिस्टोर</string>
     <string name="settings_step_vibrate_item">स्टेप बदलने का कंपन</string>
     <string name="recipe_details_multiply_time">समय गुणक</string>
     <string name="recipe_details_multiply_weight">वजन गुणक</string>
-    <string name="infoBox_wearOS_title">कॉफी अब वेअरओएस पर उपलब्ध है </string>
-    <string name="infoBox_wearOS_body">अपनी वेअरओएस घडी के लिए कॉफी ऍप डाउनलोड करे </string>
+    <string name="infoBox_wearOS_title">Cofi अब WearOS पर उपलब्ध है</string>
+    <string name="infoBox_wearOS_body">अपनी WearOS घड़ी के लिए Cofi ऐप डाउनलोड करें!</string>
     <string name="settings_sync_with_phone">फोन से सेटिंग्स प्राप्त करें</string>
     <string name="name_grinder">कॉफी ग्राइंडर</string>
-    <string name="name_vietnamese_press">फिन फ़िल्टर</string>
+    <string name="name_vietnamese_press">Phin Filter</string>
     <string name="name_mokapot">मोका पॉट</string>
-    <string name="name_espresso">एस्प्रेसो मशीन</string>
+    <string name="name_espresso">Espresso मशीन</string>
     <string name="name_cold_brew">कोल्ड ब्रू</string>
     <string name="name_siphon">साइफन</string>
-    <string name="name_cezve">चेज़वे</string>
+    <string name="name_cezve">Cezve</string>
     <string name="name_cup">कप</string>
-    <string name="support_dialog_title">क्या आप कॉफी ऐप का आनंद ले रहे हैं?</string>
-    <string name="support_dialog_body">"मैं आपके समर्थन की बहुत सराहना करूंगा!  आप निम्नलिखित में से एक या अधिक चुनकर मुझे वह काम जारी रखने में मदद कर सकते हैं जो मुझे पसंद है।"</string>
-    <string name="support_dialog_github">कॉफी को GitHub पर स्टार करे</string>
-    <string name="support_dialog_mastodon">मुझे मास्टोडॉन पर फॉलो करें</string>
+    <string name="support_dialog_title">क्या आप Cofi ऐप का आनंद ले रहे हैं?</string>
+    <string name="support_dialog_body">मैं आपके समर्थन की बहुत सराहना करूंगा! आप निम्नलिखित में से एक या अधिक चुनकर मुझे वह काम जारी रखने में मदद कर सकते हैं जो मुझे पसंद है।</string>
+    <string name="support_dialog_github">Cofi को GitHub पर स्टार करे</string>
+    <string name="support_dialog_mastodon">मुझे Mastodon पर फॉलो करें</string>
     <string name="support_dialog_kofi">मेरे लिए कॉफी खरीदें</string>
-    <string name="support_dialog_review">रिव्यु लिखिए</string>
-    <string name="support_title">कॉफी को सहायता दे</string>
-    <string name="infoBox_update_title">कॉफी अपडेट हुआ है</string>
-    <string name="infoBox_update_body">कॉफी में क्या नया है जानने के लिए इसे दबाये</string>
+    <string name="support_dialog_review">एक समीक्षा लिखे</string>
+    <string name="support_title">Cofi का समर्थन करें</string>
+    <string name="infoBox_update_title">Cofi अपडेट हुआ है</string>
+    <string name="infoBox_update_body">नया क्या है यह पढ़ने के लिए यहां क्लिक करें</string>
     <string name="settings_step_next_step_item">अगला स्टेप दिखाएं</string>
     <string name="recipe_details_upNext">अगला:</string>
-    <string name="settings_wearOS_item">वेयरओएस के लिए डाउनलोड करें</string>
-    <string name="recipe_detials_notification_dialog_text">यदि आप चाहें तो COFI बैकग्राउंड में टाइमर चालू रखेगा, लेकिन पहले आपको इसे नोटिफिकेशन पोस्ट करने की अनुमति देनी होगी</string>
+    <string name="settings_wearOS_item">WearOS के लिए डाउनलोड करें</string>
+    <string name="recipe_detials_notification_dialog_text">यदि आप चाहें तो Cofi बैकग्राउंड में टाइमर चालू रखेगा, लेकिन पहले आपको इसे नोटिफिकेशन पोस्ट करने की अनुमति देनी होगी</string>
     <string name="prepopulate_v60_1cup_name">1 कप V60</string>
     <string name="prepopulate_clever_dripper_step_draw_down">कप के ऊपर रखें और इसे पूरी तरह से नीचे की ओर खींचने दें</string>
-    <string name="prepopulate_v60_1cup_description">रेसिपी बनाई गई: जेम्स हॉफमैन
-\n
-\n स्रोत: https://youtu.be/1oB1oDrDkHM
-\n
-\n शुरू करने से पहले, कागज को शंकु के अंदर रखकर और कागज पर गर्म पानी डालकर V60 को गर्म करें। यह V60 को पहले से गर्म कर देता है और कॉफी बनाने की प्रक्रिया के लिए कागज तैयार कर देता हैं
-\n
+    <string name="prepopulate_v60_1cup_description">नुस्खा बनाने वाले: जेम्स हॉफमैन
+\nस्रोत: https://youtu.be/1oB1oDrDkHM
+\nशुरू करने से पहले, कागज को शंकु के अंदर रखकर और कागज पर गर्म पानी डालकर V60 को गर्म करें। यह V60 को पहले से गरम कर देता है और कॉफ़ी बनाने की प्रक्रिया के लिए कागज़ तैयार कर देता है।
 \nपीसने का आकार: बारीक - मध्यम बारीक
-\n
 \nतापमान: जितना गर्म, उतना बेहतर (विशेषकर हल्के भूनने पर)</string>
     <string name="recipe_details_change_step_toast">चरण बदलने के लिए पकड़े और दबाकर रखें</string>
     <string name="prepopulate_clever_dripper_step_break_crust">क्रस्ट को या तो फेटकर या थोड़ा हिलाकर तोड़ लें</string>
     <string name="prepopulate_clever_dripper_step_rinse">फिल्टर को गर्म पानी से धो लें</string>
-    <string name="recipe_detials_notification_dialog_title">टाइमर को बैकग्राउंड में चलने की अनुमति दे\?</string>
+    <string name="recipe_detials_notification_dialog_title">बैकग्राउंड में टाइमर की अनुमति दें?</string>
     <string name="settings_background_timer_item">टाइमर को बैकग्राउंड में चलने की अनुमति दे</string>
     <string name="button_no">नहीं</string>
-    <string name="settings_translate_item">Cofi को अनुवाद करने में सहायता करे</string>
+    <string name="settings_translate_item">Cofi का अनुवाद करने में सहायता करें</string>
+    <string name="prepopulate_clever_dripper_description">नुस्खा बनाने वाले: जेम्स हॉफमैन
+\nस्रोत: https://youtu.be/RpOdennxP24
+\nपीसने का आकार: मध्यम-बारीक
+\nतापमान: उबाल लें और तुरंत उपयोग करें
+\nअनुपात: 1:16.67, या 15 ग्राम से 250 एमएल
+\nफ़िल्टर को दोनों सीमों के साथ मोड़ें ताकि यह मशीन के अंदर बेहतर ढंग से फिट हो सके
+\nपानी की अधिकतम मात्रा 500 एमएल है, लेकिन 400 या उससे कम की सिफारिश की जाती है</string>
+    <string name="name_tea">चाय</string>
+    <string name="name_teapot">चाय का बर्तन</string>
+    <string name="notification_channel_timer_name">पृष्ठभूमि टाइमर</string>
+    <string name="notification_action_continue">जारी रखें</string>
+    <string name="notification_action_stop">रुको</string>
+    <string name="notification_action_pause">विराम</string>
+    <string name="name_drip">टपक</string>
+    <string name="recipe_details_read_description">विवरण पढ़ें</string>
+    <string name="recipe_details_recipeRatio">नुस्खा अनुपात: 1:%1$s</string>
 </resources>
