@@ -40,11 +40,15 @@ fun OutlinedNumbersField(
             if (newValue.matches(pattern)) {
                 if (value == "0.0" && newValue != "0.0" && newValue.endsWith("0.0")) {
                     onValueChange(newValue.removeSuffix("0.0"))
+                } else if (value == "0" && newValue != "0" && newValue.endsWith("0")) {
+                    onValueChange(newValue.removeSuffix("0"))
                 } else {
-                    onValueChange(newValue)
+                    onValueChange(newValue.removePrefix("0"))
                 }
             } else if (newValue.startsWith(".")) {
                 onValueChange("0${newValue}")
+            } else if (newValue.isBlank()) {
+                onValueChange("0")
             }
         },
         keyboardOptions = KeyboardOptions(
