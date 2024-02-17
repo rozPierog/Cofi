@@ -18,7 +18,7 @@
     <string name="recipe_add_new_title">Crea nuova ricetta</string>
     <string name="recipe_details_automation_dialog_title">Collegamento diretto</string>
     <string name="recipe_details_automation_dialog_text">Accedi alla ricetta tramite questo collegamento. Crea un\'etichetta NFC o un\'attività di automazione in Tasker per rendere più facile il tuo caffè mattutino.
-\nATTENZIONE: non puoi condividere la ricetta in questo modo!</string>
+\nATTENZIONE: non puoi conHorizontalDividere la ricetta in questo modo!</string>
     <string name="button_cancel">Annulla</string>
     <string name="button_delete">Elimina</string>
     <string name="button_copy">Copia</string>

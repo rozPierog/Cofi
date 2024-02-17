@@ -251,7 +251,7 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
         },
         title = { Text(text = stringResource(id = R.string.settings_backup)) },
     ) {
-        Divider()
+        HorizontalDivider()
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(recipes) {
                 val isSelected = recipesToBackup.contains(it)
@@ -268,7 +268,7 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
                 )
             }
         }
-        Divider()
+        HorizontalDivider()
     }
 }
 
@@ -299,7 +299,7 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
         },
         title = { Text(text = stringResource(id = R.string.settings_addDefault)) },
     ) {
-        Divider()
+        HorizontalDivider()
         LazyColumn {
             items(prepopulateData.recipes) {
                 val isSelected = recipesToAdd.contains(it)
@@ -315,7 +315,7 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
                 )
             }
         }
-        Divider()
+        HorizontalDivider()
     }
 }
 

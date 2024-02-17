@@ -9,7 +9,7 @@ import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.progressSemantics
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -182,7 +182,7 @@ fun Timer(
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                         showMillis = !isInPiP,
                     )
-                    Divider()
+                    HorizontalDivider()
                     StepNameText(
                         currentStep = currentStep,
                         timeMultiplier = timeMultiplier,
@@ -195,7 +195,7 @@ fun Timer(
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                     )
-                    Divider()
+                    HorizontalDivider()
                     TimerValue(
                         modifier = Modifier.weight(1f, true),
                         currentStep = currentStep,

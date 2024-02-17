@@ -35,8 +35,7 @@ fun RatioBottomSheet(
     Material3BottomSheet(onDismissRequest = onDismissRequest) {
         Column(
             modifier = Modifier
-                .waterfallPadding()
-                .navigationBarsPadding()
+                .imePadding()
                 .padding(horizontal = Spacing.big)
                 .padding(top = Spacing.big),
         ) {

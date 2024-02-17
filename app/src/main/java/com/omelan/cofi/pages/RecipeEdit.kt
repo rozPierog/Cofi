@@ -228,7 +228,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -557,7 +557,7 @@ private fun IconPickerBottomSheet(
             verticalArrangement = Arrangement.Bottom,
         ) {
             RecipeIcon.entries.map {
-                val tooltipState = remember { PlainTooltipState() }
+                val tooltipState = rememberTooltipState()
                 Box(
                     modifier = Modifier
                         .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
@@ -577,9 +577,14 @@ private fun IconPickerBottomSheet(
                         ),
                     contentAlignment = Alignment.Center,
                 ) {
-                    PlainTooltipBox(
-                        tooltip = { Text(stringResource(id = it.nameResId)) },
-                        tooltipState = tooltipState,
+                    TooltipBox(
+                        tooltip = {
+                            PlainTooltip {
+                                Text(stringResource(id = it.nameResId))
+                            }
+                        },
+                        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                        state = tooltipState,
                     ) {
                         Icon(
                             painter = painterResource(id = it.icon),
