@@ -1,16 +1,16 @@
-As a passionate coffee lover and amateur barista, I've always been on the hunt for the perfect cup of coffee. That's why I created the free and open-source coffee brew timer for Android. With this app, you can easily time your coffee brews and achieve the perfect flavor every time.
+Como amante apaixonado de café e barista amador, sempre fiquei à procura da xícara de café perfeita. Foi por isso que criei o temporizador de café gratuito e de código aberto para Android. Com este aplicativo, pode cronometrar facilmente a preparação do seu café e obter sempre o sabor perfeito.
 
-I know how important it is to have complete control over your brew time, and that's exactly what this app provides. Whether you're using a French press, pour-over, or any other brewing method, our app makes it easy to keep track of your brew time and achieve the perfect flavor.
+Sei como é importante ter controle total sobre o tempo de infusão, e é exatamente isso que esta aplicação proporciona. Esteja utilizando uma prensa francesa, um pour-over ou qualquer outro método de preparação, o nosso aplicativo facilita o controle do seu tempo de preparação e a conquista do sabor perfeito.
 
-Features:
+Características:
 
-- Open-source and free to use
-- No artificial limits on what you can add to the app
-- Timer for your coffee brews
-- Customizable time settings for different brewing methods
-- Easy-to-use interface with a clean design and the latest material design
-- Picture-in-picture mode for multitasking
-- WearOS app for easy timing on your smartwatch
-- Absolutely no user tracking or data collection
+- Código aberto e de utilização gratuita
+- Sem limites artificiais no que pode adicionar ao aplicativo.
+- Temporizador para as suas infusões de café
+- Definições de tempo personalizáveis para diferentes métodos de infusão
+- Interface fácil de usar com um design simples e o Material Design mais novo.
+- Modo Picture-in-picture para multitarefas
+- Aplicação WearOS para cronometrar facilmente no seu smartwatch
+- Sem qualquer rastreador ou coleta de dados.
 
-I know how frustrating it can be to settle for a mediocre cup of coffee. That's why I want to help you brew like a pro and enjoy the perfect cup every time. Download Cofi now and start your journey to coffee perfection!
+Sei como pode ser frustrante contentar-se com uma xícara de café medíocre. É por isso que quero ajudá-lo a preparar o seu café como um profissional e a desfrutar sempre de uma xícara perfeita. Instale o Cofi agora e comece a sua viagem até à perfeição do café!

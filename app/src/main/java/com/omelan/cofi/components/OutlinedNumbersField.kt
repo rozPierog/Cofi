@@ -46,7 +46,7 @@ fun OutlinedNumbersField(
                     onValueChange(newValue.removePrefix("0"))
                 }
             } else if (newValue.startsWith(".")) {
-                onValueChange("0${newValue}")
+                onValueChange("0$newValue")
             } else if (newValue.isBlank()) {
                 onValueChange("0")
             }
