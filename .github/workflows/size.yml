@@ -55,7 +55,7 @@ jobs:
                   COMMENT="${COMMENT//$'\n'/'%0A'}"
                   COMMENT="${COMMENT//$'\r'/'%0D'}"
                   echo "COMMENT=$COMMENT" >> $GITHUB_ENV
-            - uses: actions/github-script@v6
+            - uses: actions/github-script@v7
               with:
                   script: |
                       var comment = `${{ env.COMMENT }}`
