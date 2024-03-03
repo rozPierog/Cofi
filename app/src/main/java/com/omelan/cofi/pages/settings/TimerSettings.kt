@@ -90,7 +90,10 @@ fun TimerSettings(goBack: () -> Unit) {
                 },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
-                        Icon(imageVector = Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = null,
+                        )
                     }
                 },
                 scrollBehavior = appBarBehavior,
