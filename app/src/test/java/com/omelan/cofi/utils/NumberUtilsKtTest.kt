@@ -46,5 +46,4 @@ class NumberUtilsKtTest : TestCase() {
             assertEquals(entry.value, entry.key.safeToInt())
         }
     }
-
 }
