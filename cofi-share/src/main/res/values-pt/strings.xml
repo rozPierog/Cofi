@@ -149,4 +149,12 @@
         <item quantity="other">%d receitas restauradas</item>
     </plurals>
     <string name="prepopulate_step_plunge">Afunde apenas abaixo da superfície e despeje</string>
+    <string name="prepopulate_aero_description">Receita criada por: James Hoffmann
+\nFonte: https://youtu.be/j6VlT_jUVPc
+\nTamanho da moagem: Para uma torrefação ligeira - mais fina do que a média. Quanto mais escuro for o café, mais pode preferir aumentar a dose e tornar a moagem mais grossa
+\nTemperatura: Para torrefação ligeira - deixar ferver e utilizar imediatamente. Para torras escuras - 85-90℃</string>
+    <string name="tereszkiewicz_credits_subtitle">Veja o seu Dribbble</string>
+    <string name="step_add_duration_explainer">A duração do passo determina quanto tempo demorará uma ação (em segundos). Deixe em branco para colocar a receita em pausa até estar pronta.</string>
+    <string name="settings_step_vibrate_item">Vibração de mudança de passo</string>
+    <string name="name_cezve">Cezve (café turco)</string>
 </resources>
