@@ -1,17 +1,13 @@
-@file:OptIn(ExperimentalMaterialApi::class)
-
 package com.omelan.cofi.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.omelan.cofi.ui.Spacing
@@ -25,17 +21,19 @@ fun RecipeListInfoBox(
     text: @Composable () -> Unit,
     icon: (@Composable () -> Unit)? = null,
 ) {
-    val dismissState = rememberDismissState()
-    LaunchedEffect(key1 = dismissState.isDismissed(DismissDirection.StartToEnd)) {
-        if (dismissState.isDismissed(DismissDirection.StartToEnd)) {
+    val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = {
+        if (it == SwipeToDismissBoxValue.StartToEnd) {
             onDismiss()
         }
-    }
-    SwipeToDismiss(
+        true
+    })
+
+    SwipeToDismissBox(
         modifier = modifier,
         state = dismissState,
-        background = {},
-        directions = setOf(DismissDirection.StartToEnd),
+        backgroundContent = {},
+        enableDismissFromStartToEnd = true,
+        enableDismissFromEndToStart = false,
     ) {
         RecipeListItemBackground(
             contentPadding = PaddingValues(start = Spacing.big, bottom = Spacing.big),

@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.omelan.cofi.pages.settings
 
@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.AddCircle
@@ -99,8 +97,8 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
         ) {
             item {
                 ListItem(
-                    text = { Text(text = stringResource(id = R.string.settings_addDefault)) },
-                    icon = { Icon(Icons.Rounded.AddCircle, contentDescription = null) },
+                    headlineContent = { Text(text = stringResource(id = R.string.settings_addDefault)) },
+                    leadingContent = { Icon(Icons.Rounded.AddCircle, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(
                         onClick = { showDefaultRecipeDialog = true },
                     ),
@@ -111,8 +109,8 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = { Text(text = stringResource(id = R.string.settings_backup)) },
-                    icon = {
+                    headlineContent = { Text(text = stringResource(id = R.string.settings_backup)) },
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
                             contentDescription = null,
@@ -189,8 +187,8 @@ fun RestoreListItem(afterRestore: (numberOfRestored: Int) -> Unit) {
         }
 
     ListItem(
-        text = { Text(text = stringResource(id = R.string.settings_restore)) },
-        icon = {
+        headlineContent = { Text(text = stringResource(id = R.string.settings_restore)) },
+        leadingContent = {
             Icon(
                 painterResource(id = R.drawable.ic_restore),
                 contentDescription = null,
@@ -259,10 +257,10 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
                     if (isSelected) recipesToBackup.remove(it) else recipesToBackup.add(it)
                 }
                 ListItem(
-                    text = { Text(it.name) },
+                    headlineContent = { Text(it.name) },
                     modifier = Modifier
                         .selectable(selected = isSelected, onClick = onCheck),
-                    icon = {
+                    leadingContent = {
                         Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
                     },
                 )
@@ -273,7 +271,6 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
 }
 
 @Composable
-@ExperimentalMaterialApi
 fun DefaultRecipesDialog(dismiss: () -> Unit) {
     val recipesToAdd = remember { mutableStateListOf<Recipe>() }
     val coroutineScope = rememberCoroutineScope()
@@ -307,9 +304,9 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
                     if (isSelected) recipesToAdd.remove(it) else recipesToAdd.add(it)
                 }
                 ListItem(
-                    text = { Text(it.name) },
+                    headlineContent = { Text(it.name) },
                     modifier = Modifier.selectable(selected = isSelected, onClick = onCheck),
-                    icon = {
+                    leadingContent = {
                         Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
                     },
                 )
@@ -320,7 +317,6 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
 }
 
 @ExperimentalMaterial3Api
-@ExperimentalMaterialApi
 @Preview
 @Composable
 fun BackupRestoreSettingsPreview() {

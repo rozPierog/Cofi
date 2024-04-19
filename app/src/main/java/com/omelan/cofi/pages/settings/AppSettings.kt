@@ -1,12 +1,10 @@
-@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.omelan.cofi.pages.settings
 
 import android.app.Activity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Info
@@ -80,8 +78,8 @@ fun AppSettings(
         ) {
             item {
                 ListItem(
-                    text = { Text(text = stringResource(id = R.string.settings_timer_item)) },
-                    icon = {
+                    headlineContent = { Text(text = stringResource(id = R.string.settings_timer_item)) },
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_timer),
                             contentDescription = null,
@@ -92,8 +90,8 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    text = { Text(text = stringResource(id = R.string.settings_backup_item)) },
-                    icon = {
+                    headlineContent = { Text(text = stringResource(id = R.string.settings_backup_item)) },
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
                             contentDescription = null,
@@ -104,16 +102,16 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    text = { Text(text = stringResource(id = R.string.settings_about_item)) },
-                    icon = { Icon(Icons.Rounded.Info, contentDescription = null) },
+                    headlineContent = { Text(text = stringResource(id = R.string.settings_about_item)) },
+                    leadingContent = { Icon(Icons.Rounded.Info, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(onClick = goToAbout),
                 )
             }
             if (wearNodesWithoutApp.isNotEmpty()) {
                 item {
                     ListItem(
-                        text = { Text(text = stringResource(id = R.string.settings_wearOS_item)) },
-                        icon = {
+                        headlineContent = { Text(text = stringResource(id = R.string.settings_wearOS_item)) },
+                        leadingContent = {
                             Icon(
                                 painterResource(id = R.drawable.ic_watch),
                                 contentDescription = null,
@@ -133,8 +131,8 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    text = { Text(text = stringResource(id = R.string.settings_bug_item)) },
-                    icon = {
+                    headlineContent = { Text(text = stringResource(id = R.string.settings_bug_item)) },
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_bug_report),
                             contentDescription = null,
@@ -152,7 +150,6 @@ fun AppSettings(
 }
 
 @ExperimentalMaterial3Api
-@ExperimentalMaterialApi
 @Preview
 @Composable
 fun SettingsPagePreview() {

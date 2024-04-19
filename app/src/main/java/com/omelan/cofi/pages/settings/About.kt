@@ -2,8 +2,6 @@ package com.omelan.cofi.pages.settings
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Build
@@ -26,7 +24,7 @@ import com.omelan.cofi.components.SupportCofi
 import com.omelan.cofi.components.createAppBarBehavior
 import com.omelan.cofi.utils.getDefaultPadding
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
     val uriHandler = LocalUriHandler.current
@@ -68,10 +66,10 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
         ) {
             item {
                 ListItem(
-                    text = {
+                    headlineContent = {
                         Text(text = stringResource(id = R.string.settings_github_item))
                     },
-                    icon = {
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_github_icon),
                             contentDescription = null,
@@ -86,10 +84,10 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = {
+                    headlineContent = {
                         Text(text = stringResource(id = R.string.settings_licenses_item))
                     },
-                    icon = {
+                   leadingContent = {
                         Icon(painterResource(id = R.drawable.ic_gavel), contentDescription = null)
                     },
                     modifier = Modifier.settingsItemModifier(onClick = openLicenses),
@@ -97,14 +95,14 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    overlineText = {
+                    overlineContent =  {
                         Text(
                             text = stringResource(id = R.string.hoffmann_credits_title),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                     },
-                    text = {
+                    headlineContent = {
                         Text(
                             text = stringResource(id = R.string.hoffmann_credits_subtitle),
                             maxLines = 1,
@@ -112,7 +110,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                             fontWeight = FontWeight.Light,
                         )
                     },
-                    icon = {
+                   leadingContent = {
                         Icon(painterResource(id = R.drawable.ic_coffee), contentDescription = null)
                     },
                     modifier = Modifier.settingsItemModifier(
@@ -126,14 +124,14 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    overlineText = {
+                    overlineContent =  {
                         Text(
                             text = stringResource(id = R.string.tereszkiewicz_credits_title),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                     },
-                    text = {
+                    headlineContent = {
                         Text(
                             text = stringResource(id = R.string.tereszkiewicz_credits_subtitle),
                             maxLines = 1,
@@ -141,7 +139,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                             fontWeight = FontWeight.Light,
                         )
                     },
-                    icon = {
+                   leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.recipe_icon_coffee_grinder),
                             contentDescription = null,
@@ -158,14 +156,14 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = {
+                    headlineContent = {
                         Text(
                             text = stringResource(id = R.string.support_title),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                     },
-                    icon = {
+                   leadingContent = {
                         Icon(
                             Icons.Rounded.Face,
                             contentDescription = null,
@@ -178,14 +176,14 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = {
+                    headlineContent = {
                         Text(
                             text = stringResource(id = R.string.settings_translate_item),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                     },
-                    icon = {
+                   leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_translate),
                             contentDescription = null,
@@ -200,14 +198,14 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    overlineText = {
+                    overlineContent =  {
                         Text(
                             text = stringResource(R.string.app_version),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                     },
-                    text = {
+                    headlineContent = {
                         Text(
                             text = BuildConfig.VERSION_NAME,
                             maxLines = 1,
@@ -215,7 +213,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                             fontWeight = FontWeight.Light,
                         )
                     },
-                    icon = { Icon(Icons.Rounded.Build, contentDescription = null) },
+                   leadingContent = { Icon(Icons.Rounded.Build, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri(
@@ -233,7 +231,6 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
 }
 
 @ExperimentalMaterial3Api
-@ExperimentalMaterialApi
 @Preview
 @Composable
 fun AboutAppSettingsPreview() {

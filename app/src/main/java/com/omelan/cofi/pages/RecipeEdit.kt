@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Add
@@ -752,7 +751,6 @@ private fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
 }
 
 @ExperimentalComposeUiApi
-@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Preview
 @Composable
@@ -767,7 +765,6 @@ private fun RecipeAddPreview() {
 }
 
 @ExperimentalComposeUiApi
-@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Preview
 @Composable

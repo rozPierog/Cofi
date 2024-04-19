@@ -1,7 +1,6 @@
 package com.omelan.cofi
 
 import android.app.PictureInPictureParams
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -155,12 +154,13 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-    override fun onNewIntent(newIntent: Intent?) {
-        super.onNewIntent(intent)
-        if (newIntent != null) {
-            mainActivityViewModel.setIntent(newIntent)
-        }
-    }
+
+//    override fun onNewIntent(newIntent: Intent?) {
+//        super.onNewIntent(intent)
+//        if (newIntent != null) {
+//            mainActivityViewModel.setIntent(newIntent)
+//        }
+//    }
 
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,
@@ -173,6 +173,7 @@ class MainActivity : MonetCompatActivity() {
     }
 
     override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
         val isPiPEnabledFlow: Flow<Boolean> = DataStore(this).getPiPSetting()
         var isPiPEnabled: Boolean
         runBlocking {
