@@ -1,15 +1,17 @@
 package com.omelan.cofi.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.omelan.cofi.ui.Spacing
 
 @Composable
@@ -44,7 +46,7 @@ fun RecipeListInfoBox(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                ProvideTextStyle(MaterialTheme.typography.headlineSmall) {
+                ProvideTextStyle(MaterialTheme.typography.bodyLarge) {
                     title()
                 }
                 IconButton(onClick = onDismiss) {
@@ -66,4 +68,28 @@ fun RecipeListInfoBox(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun RecipeListInfoBoxPreview() {
+    RecipeListInfoBox(
+        title = {
+            Text(
+                text = stringResource(id = com.omelan.cofi.R.string.infoBox_wearOS_title),
+                fontWeight = FontWeight.Bold,
+            )
+        },
+        icon = {
+            Icon(
+                painterResource(id = com.omelan.cofi.R.drawable.ic_watch),
+                "",
+                modifier = Modifier.size(28.dp),
+            )
+        },
+        text = { Text(text = stringResource(id = com.omelan.cofi.R.string.infoBox_wearOS_body)) },
+        onClick = {
+        },
+        onDismiss = {  },
+    )
 }
