@@ -97,7 +97,9 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
         ) {
             item {
                 ListItem(
-                    headlineContent = { Text(text = stringResource(id = R.string.settings_addDefault)) },
+                    headlineContent = {
+                        Text(text = stringResource(id = R.string.settings_addDefault))
+                    },
                     leadingContent = { Icon(Icons.Rounded.AddCircle, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(
                         onClick = { showDefaultRecipeDialog = true },
@@ -109,7 +111,9 @@ fun BackupRestoreSettings(goBack: () -> Unit, goToRoot: () -> Unit) {
             }
             item {
                 ListItem(
-                    headlineContent = { Text(text = stringResource(id = R.string.settings_backup)) },
+                    headlineContent = {
+                        Text(text = stringResource(id = R.string.settings_backup))
+                    },
                     leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_save),

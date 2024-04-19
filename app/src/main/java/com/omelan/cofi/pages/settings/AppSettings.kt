@@ -78,7 +78,9 @@ fun AppSettings(
         ) {
             item {
                 ListItem(
-                    headlineContent = { Text(text = stringResource(id = R.string.settings_timer_item)) },
+                    headlineContent = {
+                        Text(text = stringResource(id = R.string.settings_timer_item))
+                    },
                     leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_timer),
@@ -90,7 +92,9 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    headlineContent = { Text(text = stringResource(id = R.string.settings_backup_item)) },
+                    headlineContent = {
+                        Text(text = stringResource(id = R.string.settings_backup_item))
+                    },
                     leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_save),
@@ -102,7 +106,9 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    headlineContent = { Text(text = stringResource(id = R.string.settings_about_item)) },
+                    headlineContent = {
+                        Text(text = stringResource(id = R.string.settings_about_item))
+                    },
                     leadingContent = { Icon(Icons.Rounded.Info, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(onClick = goToAbout),
                 )
@@ -110,7 +116,9 @@ fun AppSettings(
             if (wearNodesWithoutApp.isNotEmpty()) {
                 item {
                     ListItem(
-                        headlineContent = { Text(text = stringResource(id = R.string.settings_wearOS_item)) },
+                        headlineContent = {
+                            Text(text = stringResource(id = R.string.settings_wearOS_item))
+                        },
                         leadingContent = {
                             Icon(
                                 painterResource(id = R.drawable.ic_watch),
@@ -131,7 +139,9 @@ fun AppSettings(
             }
             item {
                 ListItem(
-                    headlineContent = { Text(text = stringResource(id = R.string.settings_bug_item)) },
+                    headlineContent = {
+                        Text(text = stringResource(id = R.string.settings_bug_item))
+                    },
                     leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_bug_report),

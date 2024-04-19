@@ -229,8 +229,10 @@ fun Timer(
 fun TimerPreview() {
     val animatedProgressValue = remember { Animatable(0f) }
     LaunchedEffect(key1 = true) {
-        animatedProgressValue.animateTo(1f,
-            tween(durationMillis = 5 * 1000, easing = LinearEasing),)
+        animatedProgressValue.animateTo(
+            1f,
+            tween(durationMillis = 5 * 1000, easing = LinearEasing),
+        )
     }
     Timer(
         currentStep = Step(

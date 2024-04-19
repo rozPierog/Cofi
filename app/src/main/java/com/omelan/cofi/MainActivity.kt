@@ -154,7 +154,6 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-
 //    override fun onNewIntent(newIntent: Intent?) {
 //        super.onNewIntent(intent)
 //        if (newIntent != null) {

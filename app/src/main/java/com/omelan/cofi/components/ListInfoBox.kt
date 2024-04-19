@@ -90,6 +90,6 @@ fun RecipeListInfoBoxPreview() {
         text = { Text(text = stringResource(id = com.omelan.cofi.R.string.infoBox_wearOS_body)) },
         onClick = {
         },
-        onDismiss = {  },
+        onDismiss = { },
     )
 }

@@ -87,7 +87,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                     headlineContent = {
                         Text(text = stringResource(id = R.string.settings_licenses_item))
                     },
-                   leadingContent = {
+                    leadingContent = {
                         Icon(painterResource(id = R.drawable.ic_gavel), contentDescription = null)
                     },
                     modifier = Modifier.settingsItemModifier(onClick = openLicenses),
@@ -95,7 +95,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    overlineContent =  {
+                    overlineContent = {
                         Text(
                             text = stringResource(id = R.string.hoffmann_credits_title),
                             maxLines = 1,
@@ -110,7 +110,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                             fontWeight = FontWeight.Light,
                         )
                     },
-                   leadingContent = {
+                    leadingContent = {
                         Icon(painterResource(id = R.drawable.ic_coffee), contentDescription = null)
                     },
                     modifier = Modifier.settingsItemModifier(
@@ -124,7 +124,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    overlineContent =  {
+                    overlineContent = {
                         Text(
                             text = stringResource(id = R.string.tereszkiewicz_credits_title),
                             maxLines = 1,
@@ -139,7 +139,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                             fontWeight = FontWeight.Light,
                         )
                     },
-                   leadingContent = {
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.recipe_icon_coffee_grinder),
                             contentDescription = null,
@@ -163,7 +163,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                             overflow = TextOverflow.Ellipsis,
                         )
                     },
-                   leadingContent = {
+                    leadingContent = {
                         Icon(
                             Icons.Rounded.Face,
                             contentDescription = null,
@@ -183,7 +183,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                             overflow = TextOverflow.Ellipsis,
                         )
                     },
-                   leadingContent = {
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_translate),
                             contentDescription = null,
@@ -198,7 +198,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
             }
             item {
                 ListItem(
-                    overlineContent =  {
+                    overlineContent = {
                         Text(
                             text = stringResource(R.string.app_version),
                             maxLines = 1,
@@ -213,7 +213,7 @@ fun AppSettingsAbout(goBack: () -> Unit, openLicenses: () -> Unit) {
                             fontWeight = FontWeight.Light,
                         )
                     },
-                   leadingContent = { Icon(Icons.Rounded.Build, contentDescription = null) },
+                    leadingContent = { Icon(Icons.Rounded.Build, contentDescription = null) },
                     modifier = Modifier.settingsItemModifier(
                         onClick = {
                             uriHandler.openUri(

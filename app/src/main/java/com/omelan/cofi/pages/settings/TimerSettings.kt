@@ -136,8 +136,12 @@ fun TimerSettings(goBack: () -> Unit) {
             }
             item {
                 ListItem(
-                    headlineContent = { Text(text = stringResource(R.string.settings_background_timer_item)) },
-                    leadingContent = { Icon(Icons.Rounded.Notifications, contentDescription = null) },
+                    headlineContent = {
+                        Text(text = stringResource(R.string.settings_background_timer_item))
+                    },
+                    leadingContent = {
+                        Icon(Icons.Rounded.Notifications, contentDescription = null)
+                    },
                     modifier = Modifier.settingsItemModifier(onClick = toggleBackgroundTimer),
                     trailingContent = {
                         Switch(
