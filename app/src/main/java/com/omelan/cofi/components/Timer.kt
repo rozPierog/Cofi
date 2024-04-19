@@ -3,9 +3,7 @@ package com.omelan.cofi.components
 import android.annotation.SuppressLint
 import androidx.annotation.FloatRange
 import androidx.compose.animation.*
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.AnimationVector1D
-import androidx.compose.animation.core.AnimationVector4D
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.progressSemantics
@@ -13,9 +11,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -47,12 +43,18 @@ fun Track(
     modifier: Modifier = Modifier,
     @FloatRange(from = 0.0, to = 1.0) progress: Float,
     color: Color,
-    backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     strokeWidth: Dp,
 ) {
     val stroke = with(LocalDensity.current) {
         Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Bevel)
     }
+    val trackOffset by remember(progress) {
+        derivedStateOf {
+            if (progress == 0f) 0f else 6f
+        }
+    }
+
     Canvas(
         modifier
             .progressSemantics(progress)
@@ -64,8 +66,8 @@ fun Track(
         val arcDimen = size.width - 2 * diameterOffset
         drawArc(
             color = backgroundColor,
-            startAngle = startAngle,
-            sweepAngle = 360f,
+            startAngle = sweep + startAngle + (trackOffset),
+            sweepAngle = 360f - sweep - (trackOffset * 2),
             useCenter = false,
             topLeft = Offset(diameterOffset, diameterOffset),
             size = Size(arcDimen, arcDimen),
@@ -225,6 +227,11 @@ fun Timer(
 @Preview
 @Composable
 fun TimerPreview() {
+    val animatedProgressValue = remember { Animatable(0f) }
+    LaunchedEffect(key1 = true) {
+        animatedProgressValue.animateTo(1f,
+            tween(durationMillis = 5 * 1000, easing = LinearEasing),)
+    }
     Timer(
         currentStep = Step(
             id = 1,
@@ -234,7 +241,7 @@ fun TimerPreview() {
             type = StepType.OTHER,
             orderInRecipe = 0,
         ),
-        animatedProgressValue = Animatable(0.5f),
+        animatedProgressValue = animatedProgressValue,
         animatedProgressColor = Animatable(green600),
         isInPiP = false,
         isDone = false,
