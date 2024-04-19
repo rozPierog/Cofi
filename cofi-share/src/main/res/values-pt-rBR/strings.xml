@@ -13,7 +13,7 @@
     <string name="snackbar_copied">Copiado!</string>
     <string name="settings_licenses_title">Licenças de código aberto</string>
     <string name="settings_title">Configurações</string>
-    <string name="settings_about_item">Sobre o app</string>
+    <string name="settings_about_item">Sobre o aplicativo</string>
     <string name="settings_about_title">Sobre</string>
     <string name="settings_github_item">Repositório do GitHub</string>
     <string name="step_add_remove">Remover</string>
@@ -39,7 +39,7 @@
     <string name="recipe_delete_title">Tem certeza\?</string>
     <string name="recipe_delete_text">Isso removerá esta receita permanentemente</string>
     <string name="recipe_unsaved_title">Você tem mudanças não salvas</string>
-    <string name="recipe_unsaved_text">Você quer descartá-los?</string>
+    <string name="recipe_unsaved_text">Você quer descartá-las?</string>
     <string name="step_type_other">Outro</string>
     <string name="prepopulate_step_water">Adicione água</string>
     <string name="settings_addDefault">Adicionar receitas padrão</string>
@@ -60,7 +60,7 @@
     <string name="settings_combine_weight_all">Combinar todos os pesos</string>
     <string name="settings_combine_weight_water">Combinar apenas com peso da água</string>
     <string name="hoffmann_credits_title">Receitas padrão por James Hoffmann</string>
-    <string name="hoffmann_credits_subtitle">Ir para seu canal YouTube</string>
+    <string name="hoffmann_credits_subtitle">Acesse o canal dele no Youtube</string>
     <string name="name_espresso">Máquina de Expresso</string>
     <string name="name_vietnamese_press">Filtro Phin</string>
     <string name="name_cold_brew">Cerveja gelada</string>
@@ -97,7 +97,7 @@
     <string name="settings_translate_item">Ajude a traduzir o Cofi</string>
     <string name="name_tea">Chá</string>
     <string name="recipe_details_read_description">Ler a descrição</string>
-    <string name="tereszkiewicz_credits_title">ícone da aplicação por: Hubert Tereszkiewicz</string>
+    <string name="tereszkiewicz_credits_title">ícone do aplicativo por: Hubert Tereszkiewicz</string>
     <string name="notification_action_stop">Parar</string>
     <string name="recipe_details_change_step_toast">Pressione e segure para mudar de etapa</string>
     <string name="prepopulate_clever_dripper_step_rinse">Enxágue o filtro com água quente</string>
