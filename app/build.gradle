@@ -161,7 +161,7 @@ dependencies {
     implementation 'com.github.KieronQuinn:MonetCompat:0.2.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     // Navigation
-    implementation "androidx.navigation:navigation-compose:2.7.7"
+    implementation "androidx.navigation:navigation-compose:2.8.0-alpha07"
 
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata"
