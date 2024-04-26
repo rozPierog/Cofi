@@ -231,24 +231,20 @@ fun RecipeEdit(
         }
     }
 
-    val safeGoBack: () -> Unit = {
-        if (steps !== stepsToEdit ||
+    val canSafelyExit = !(steps !== stepsToEdit ||
             name.text != recipeToEdit.name ||
             description.text != recipeToEdit.description ||
-            pickedIcon != recipeToEdit.recipeIcon
-        ) {
+            pickedIcon != recipeToEdit.recipeIcon)
+
+    val safeGoBack: () -> Unit = {
+        if (!canSafelyExit) {
             isSaveModalVisible = true
         } else {
             goBack()
         }
     }
 
-    BackHandler(
-        stepWithOpenEditor != null || steps !== stepsToEdit ||
-                name.text != recipeToEdit.name ||
-                description.text != recipeToEdit.description ||
-                pickedIcon != recipeToEdit.recipeIcon,
-    ) {
+    BackHandler(stepWithOpenEditor != null || !canSafelyExit) {
         if (stepWithOpenEditor != null) {
             stepWithOpenEditor = null
         } else {
