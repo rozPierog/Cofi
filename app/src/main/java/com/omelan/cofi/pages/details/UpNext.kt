@@ -29,7 +29,11 @@ fun UpNext(
     weightMultiplier: Float = 1f,
     timeMultiplier: Float = 1f,
 ) {
-    Surface(modifier = modifier.animateContentSize(), shape = shapes.medium, tonalElevation = 2.dp) {
+    Surface(
+        modifier = modifier.animateContentSize(),
+        shape = shapes.medium,
+        tonalElevation = 2.dp,
+    ) {
         Column(
             Modifier
                 .fillMaxWidth()

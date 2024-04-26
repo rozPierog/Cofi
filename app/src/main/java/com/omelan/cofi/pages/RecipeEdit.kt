@@ -226,14 +226,16 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
-    val canSafelyExit = !(steps !== stepsToEdit ||
+    val canSafelyExit = !(
+        steps !== stepsToEdit ||
             name.text != recipeToEdit.name ||
             description.text != recipeToEdit.description ||
-            pickedIcon != recipeToEdit.recipeIcon)
+            pickedIcon != recipeToEdit.recipeIcon
+        )
 
     val safeGoBack: () -> Unit = {
         if (!canSafelyExit) {
