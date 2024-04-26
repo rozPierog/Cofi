@@ -86,7 +86,7 @@ fun RecipeInfo(
         ) {
             item {
                 AnimatedVisibility(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     visible = stepInfo.coffeeWeight * weightMultiplier > 0,
                     enter = enter,
                     exit = exit,
@@ -101,7 +101,7 @@ fun RecipeInfo(
             }
             item {
                 AnimatedVisibility(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     visible = stepInfo.waterWeight * weightMultiplier > 0,
                     enter = enter,
                     exit = exit,

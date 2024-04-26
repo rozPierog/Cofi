@@ -52,7 +52,7 @@ fun LazyGridItemScope.RecipeItem(
     onPress: (recipeId: Int) -> Unit,
 ) {
     RecipeListItemBackground(
-        modifier = Modifier.animateItemPlacement(),
+        modifier = Modifier.animateItem(),
         onClick = { onPress(recipe.id) },
     ) {
         Row(

@@ -347,7 +347,7 @@ fun RecipeDetails(
                 UpNext(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .animateItemPlacement()
+                        .animateItem()
                         .padding(bottom = Spacing.normal),
                     step = nextStep ?: Step(name = "", type = StepType.WAIT),
                     weightMultiplier = multiplierControllers.weightMultiplier,

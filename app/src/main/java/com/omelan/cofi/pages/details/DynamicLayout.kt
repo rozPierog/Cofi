@@ -79,7 +79,7 @@ fun TabletLayout(
             ) {
                 description?.let {
                     item("description") {
-                        description(Modifier.animateItemPlacement())
+                        description(Modifier.animateItem())
                     }
                 }
                 upNext()
@@ -112,11 +112,11 @@ fun PhoneLayout(
     ) {
         if (!isInPiP && (description != null)) {
             item("description") {
-                description(Modifier.animateItemPlacement())
+                description(Modifier.animateItem())
             }
         }
         item("timer") {
-            timer(Modifier.animateItemPlacement())
+            timer(Modifier.animateItem())
         }
         upNext()
         if (!isInPiP) {
