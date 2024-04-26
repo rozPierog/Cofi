@@ -11,8 +11,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-const val URL_ANNOTATION = "URL"
-
 fun linkSpanStyle(color: Color) = SpanStyle(
     color = color,
     textDecoration = TextDecoration.Underline,

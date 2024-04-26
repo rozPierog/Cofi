@@ -1,8 +1,7 @@
-@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalFoundationApi::class)
+@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 
 package com.omelan.cofi.pages.details
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

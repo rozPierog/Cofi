@@ -70,7 +70,7 @@ dependencies {
     implementation 'androidx.test:core-ktx:1.5.0'
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.foundation:foundation"
-    implementation "androidx.compose.material:material"
+    implementation "androidx.compose.material3:material3"
     api "androidx.datastore:datastore-preferences:1.1.0"
 
     //Room

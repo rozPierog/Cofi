@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalAnimationApi::class)
-
 package com.omelan.cofi.wearos.presentation.pages.details
 
 import android.view.KeyEvent

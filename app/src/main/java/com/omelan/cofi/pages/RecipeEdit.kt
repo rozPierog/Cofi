@@ -1,7 +1,6 @@
 @file:OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalMaterial3WindowSizeClassApi::class,
-    ExperimentalComposeUiApi::class,
     ExperimentalFoundationApi::class,
     ExperimentalLayoutApi::class,
 )
