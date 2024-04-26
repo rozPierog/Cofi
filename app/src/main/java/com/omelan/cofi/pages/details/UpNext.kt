@@ -20,7 +20,6 @@ import com.omelan.cofi.components.StepProgress
 import com.omelan.cofi.share.components.slideUpDown
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 
 @Composable
@@ -30,7 +29,7 @@ fun UpNext(
     weightMultiplier: Float = 1f,
     timeMultiplier: Float = 1f,
 ) {
-    Surface(modifier = modifier.animateContentSize(), shape = shapes.card, tonalElevation = 2.dp) {
+    Surface(modifier = modifier.animateContentSize(), shape = shapes.medium, tonalElevation = 2.dp) {
         Column(
             Modifier
                 .fillMaxWidth()

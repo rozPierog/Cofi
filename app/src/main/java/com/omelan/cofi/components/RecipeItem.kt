@@ -27,7 +27,6 @@ import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.toMillis
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 
 @Composable
@@ -41,7 +40,7 @@ fun RecipeListItemBackground(
         modifier = modifier,
         tonalElevation = 2.dp,
         border = BorderStroke(Dp.Hairline, MaterialTheme.colorScheme.outlineVariant),
-        shape = shapes.card,
+        shape = shapes.medium,
         color = MaterialTheme.colorScheme.surface,
     ) {
         Column(

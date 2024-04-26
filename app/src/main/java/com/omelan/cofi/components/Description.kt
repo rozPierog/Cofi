@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 
@@ -39,7 +38,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     )
     val descriptionWithLinks = buildAnnotatedStringWithUrls(descriptionText)
 
-    Surface(modifier = modifier, shape = shapes.card, tonalElevation = 2.dp) {
+    Surface(modifier = modifier, shape = shapes.medium, tonalElevation = 2.dp) {
         Column(
             modifier = Modifier
                 .toggleable(
