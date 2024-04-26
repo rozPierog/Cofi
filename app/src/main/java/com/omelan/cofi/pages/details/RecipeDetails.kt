@@ -92,7 +92,7 @@ fun NavGraphBuilder.recipeDetails(
     ) { backStackEntry ->
         val recipeId = backStackEntry.arguments?.getInt("recipeId")
             ?: throw IllegalStateException("No Recipe ID")
-        val pipState = LocalPiPState.current
+        val isInPiP = LocalPiPState.current
         val context = LocalContext.current
         val dataStore = DataStore(context)
         val coroutineScope = rememberCoroutineScope()
@@ -109,7 +109,7 @@ fun NavGraphBuilder.recipeDetails(
                     }
                     db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
                 }
-                if (InstantUtils.isInstantApp(context) && !pipState) {
+                if (InstantUtils.isInstantApp(context) && !isInPiP) {
                     InstantUtils.showInstallPrompt(context as Activity)
                 } else {
                     coroutineScope.launch {
@@ -140,7 +140,7 @@ fun NavGraphBuilder.recipeDetails(
             onTimerRunning = onTimerRunning,
             windowSizeClass = windowSizeClass,
         )
-        if (!alreadyAskedForSupport && hasDoneThisRecipeMoreThanOnce) {
+        if (!alreadyAskedForSupport && hasDoneThisRecipeMoreThanOnce && !isInPiP) {
             SupportCofi(
                 onDismissRequest = {
                     coroutineScope.launch { dataStore.setAskedForSupport() }
