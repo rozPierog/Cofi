@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+
+## [1.21.1|1.12.1] - 2024-04-26
+
+### Added
 - Added support for Predictive Back
 ### Changed
 - Changed design of a few elements to better reflect Material You

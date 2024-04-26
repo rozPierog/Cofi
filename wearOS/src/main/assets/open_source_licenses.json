@@ -342,23 +342,6 @@
   {
     "project": "Android Support Library Custom View",
     "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
-    "version": "1.1.0",
-    "developers": [
-      "The Android Open Source Project"
-    ],
-    "url": "https://developer.android.com/jetpack/androidx",
-    "year": "2018",
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "androidx.customview:customview:1.1.0"
-  },
-  {
-    "project": "Android Support Library Custom View",
-    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
     "version": "1.0.0",
     "developers": [
       "The Android Open Source Project"
@@ -372,6 +355,23 @@
       }
     ],
     "dependency": "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+  },
+  {
+    "project": "Android Support Library Custom View",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.customview:customview:1.1.0"
   },
   {
     "project": "Android Support Library Document File",
@@ -733,23 +733,6 @@
   {
     "project": "AndroidX Test Library",
     "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
-    "version": "1.1.5",
-    "developers": [
-      "The Android Open Source Project"
-    ],
-    "url": "https://developer.android.com/testing",
-    "year": "2015",
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "androidx.test.ext:junit-ktx:1.1.5"
-  },
-  {
-    "project": "AndroidX Test Library",
-    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
     "version": "1.0.1",
     "developers": [
       "The Android Open Source Project"
@@ -763,6 +746,74 @@
       }
     ],
     "dependency": "androidx.test:annotation:1.0.1"
+  },
+  {
+    "project": "AndroidX Test Library",
+    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
+    "version": "1.5.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/testing",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.test:core-ktx:1.5.0"
+  },
+  {
+    "project": "AndroidX Test Library",
+    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
+    "version": "1.6.1",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/testing",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.test:monitor:1.6.1"
+  },
+  {
+    "project": "AndroidX Test Library",
+    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
+    "version": "1.1.5",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/testing",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.test.ext:junit:1.1.5"
+  },
+  {
+    "project": "AndroidX Test Library",
+    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
+    "version": "1.1.5",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/testing",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.test.ext:junit-ktx:1.1.5"
   },
   {
     "project": "AndroidX Test Library",
@@ -797,57 +848,6 @@
       }
     ],
     "dependency": "androidx.test:core:1.5.0"
-  },
-  {
-    "project": "AndroidX Test Library",
-    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
-    "version": "1.1.5",
-    "developers": [
-      "The Android Open Source Project"
-    ],
-    "url": "https://developer.android.com/testing",
-    "year": "2015",
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "androidx.test.ext:junit:1.1.5"
-  },
-  {
-    "project": "AndroidX Test Library",
-    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
-    "version": "1.6.1",
-    "developers": [
-      "The Android Open Source Project"
-    ],
-    "url": "https://developer.android.com/testing",
-    "year": "2015",
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "androidx.test:monitor:1.6.1"
-  },
-  {
-    "project": "AndroidX Test Library",
-    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
-    "version": "1.5.0",
-    "developers": [
-      "The Android Open Source Project"
-    ],
-    "url": "https://developer.android.com/testing",
-    "year": "2015",
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "androidx.test:core-ktx:1.5.0"
   },
   {
     "project": "AndroidX Widget ViewPager2",
