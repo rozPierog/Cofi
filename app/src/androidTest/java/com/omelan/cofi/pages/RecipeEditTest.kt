@@ -1,11 +1,13 @@
 package com.omelan.cofi.pages
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextClearance
+import androidx.compose.ui.test.performTextInput
 import com.omelan.cofi.LocalPiPState
 import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.Step
@@ -23,7 +25,6 @@ class RecipeEditTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     @Test
     fun testAddingNameAndDescription() {

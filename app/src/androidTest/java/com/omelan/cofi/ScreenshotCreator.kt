@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color.parseColor
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -29,7 +28,6 @@ import org.junit.runners.JUnit4
 
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
-@ExperimentalMaterialApi
 @ExperimentalMaterial3Api
 @RunWith(JUnit4::class)
 class ScreenshotCreator {
