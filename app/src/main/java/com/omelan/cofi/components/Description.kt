@@ -16,7 +16,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,7 +27,6 @@ import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
-    val uriHandler = LocalUriHandler.current
     var isExpanded by remember { mutableStateOf(false) }
     var showExpandButton by remember { mutableStateOf(false) }
     val rotationDegree by animateFloatAsState(
@@ -73,16 +71,6 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     textMotion = TextMotion.Animated,
                 ),
                 modifier = Modifier.animateContentSize(),
-//                onClick = {
-//                    descriptionWithLinks
-//                        .getStringAnnotations(URL_ANNOTATION, it, it)
-//                        .firstOrNull()?.let { stringAnnotation ->
-//                        uriHandler.openUri(stringAnnotation.item)
-//                    }
-//                    if (showExpandButton) {
-//                        isExpanded = !isExpanded
-//                    }
-//                },
                 onTextLayout = { textLayoutResult ->
                     if (!isExpanded) {
                         showExpandButton = textLayoutResult.didOverflowHeight
