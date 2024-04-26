@@ -3,7 +3,9 @@ package com.omelan.cofi.components
 import android.annotation.SuppressLint
 import androidx.annotation.FloatRange
 import androidx.compose.animation.*
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.progressSemantics
@@ -11,7 +13,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -47,11 +52,25 @@ fun Track(
     strokeWidth: Dp,
 ) {
     val stroke = with(LocalDensity.current) {
-        Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Bevel)
+        Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
     }
     val trackOffset by remember(progress) {
         derivedStateOf {
-            if (progress == 0f) 0f else 6f
+            if (progress == 0f) {
+                return@derivedStateOf 0f
+            }
+            val referenceOffsetForSmallWidth = 15f
+            val referenceWidthForSmallOffset = 10f
+            val referenceOffsetForLargeWidth = 24f
+            val referenceWidthForLargeOffset = 15f
+
+            val widthDifference = referenceWidthForSmallOffset - strokeWidth.value
+
+            val proportionalOffsetChange = widthDifference *
+                    ((referenceOffsetForLargeWidth - referenceOffsetForSmallWidth) /
+                            (referenceWidthForLargeOffset - referenceWidthForSmallOffset))
+
+            return@derivedStateOf referenceOffsetForSmallWidth + proportionalOffsetChange
         }
     }
 
@@ -184,7 +203,7 @@ fun Timer(
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                         showMillis = !isInPiP,
                     )
-                    HorizontalDivider()
+                    HorizontalDivider(color = MaterialTheme.colorScheme.secondaryContainer)
                     StepNameText(
                         currentStep = currentStep,
                         timeMultiplier = timeMultiplier,
@@ -197,7 +216,7 @@ fun Timer(
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                     )
-                    HorizontalDivider()
+                    HorizontalDivider(color = MaterialTheme.colorScheme.secondaryContainer)
                     TimerValue(
                         modifier = Modifier.weight(1f, true),
                         currentStep = currentStep,
@@ -227,18 +246,12 @@ fun Timer(
 @Preview
 @Composable
 fun TimerPreview() {
-    val animatedProgressValue = remember { Animatable(0f) }
-    LaunchedEffect(key1 = true) {
-        animatedProgressValue.animateTo(
-            1f,
-            tween(durationMillis = 5 * 1000, easing = LinearEasing),
-        )
-    }
+    val animatedProgressValue = remember { Animatable(0.5f) }
     Timer(
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,
