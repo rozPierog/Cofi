@@ -137,13 +137,6 @@ class MainActivity : MonetCompatActivity() {
                         slideOut(AnimatedContentTransitionScope.SlideDirection.End)
                     },
                 ) {
-//                    composable("list_color") {
-//                        ColorPicker(goToList = {
-//                            navController.navigate(
-//                                route = "list",
-//                            )
-//                        }, monet)
-//                    }
                     recipeList(navController = navController)
                     recipeDetails(navController, onTimerRunning, windowSizeClass, db)
                     recipeEdit(navController, db)
