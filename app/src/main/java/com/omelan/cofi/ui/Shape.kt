@@ -14,7 +14,7 @@ val Shapes.full: RoundedCornerShape
     get() = RoundedCornerShape(percent = 50)
 
 val Shapes.card: RoundedCornerShape
-    get() = RoundedCornerShape(14.dp)
+    get() = RoundedCornerShape(12.dp)
 
 val Shapes.modal: RoundedCornerShape
     get() = RoundedCornerShape(
