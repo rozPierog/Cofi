@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-
+- Added support for Predictive Back
 ### Changed
-
+- Changed design of a few elements to better reflect Material You
+- Fixed issue where Support dialog could show up in PiP mode
+- changed NumberInput behaviour to make it less frustrating
 ### Removed
 
 
