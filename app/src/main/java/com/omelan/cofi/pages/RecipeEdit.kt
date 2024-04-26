@@ -227,7 +227,7 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
@@ -243,12 +243,17 @@ fun RecipeEdit(
         }
     }
 
-    BackHandler {
+    BackHandler(
+        stepWithOpenEditor != null || steps !== stepsToEdit ||
+                name.text != recipeToEdit.name ||
+                description.text != recipeToEdit.description ||
+                pickedIcon != recipeToEdit.recipeIcon,
+    ) {
         if (stepWithOpenEditor != null) {
             stepWithOpenEditor = null
-            return@BackHandler
+        } else {
+            safeGoBack()
         }
-        safeGoBack()
     }
 
     val onSave: () -> Unit = {
