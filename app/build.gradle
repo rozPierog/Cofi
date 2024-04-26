@@ -28,8 +28,8 @@ android {
         minSdkVersion 25
         targetSdkVersion 34
         compileSdk 34
-        versionCode 161
-        versionName "1.20.2"
+        versionCode 164
+        versionName "1.21.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
         manifestPlaceholders = [profileable: false]
