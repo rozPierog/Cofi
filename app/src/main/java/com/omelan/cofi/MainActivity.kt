@@ -147,13 +147,6 @@ class MainActivity : MonetCompatActivity() {
         }
     }
 
-//    override fun onNewIntent(newIntent: Intent?) {
-//        super.onNewIntent(intent)
-//        if (newIntent != null) {
-//            mainActivityViewModel.setIntent(newIntent)
-//        }
-//    }
-
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration,
@@ -189,6 +182,10 @@ class MainActivity : MonetCompatActivity() {
     }
 
     private fun onResumedCompat() {
+        this.addOnNewIntentListener {
+            mainActivityViewModel.setIntent(it)
+        }
+
         val currentPiPStatus = mainActivityViewModel.canGoToPiP.value ?: false
         if (
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
