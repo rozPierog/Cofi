@@ -36,8 +36,8 @@ fun RatioBottomSheet(
         Column(
             modifier = Modifier
                 .imePadding()
-                .padding(horizontal = Spacing.big)
-                .padding(top = Spacing.big),
+                .navigationBarsPadding()
+                .padding(Spacing.big)
         ) {
             ManualContent(multiplierControllers, allSteps)
         }
