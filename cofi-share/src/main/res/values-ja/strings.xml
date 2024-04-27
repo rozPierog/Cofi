@@ -138,4 +138,9 @@
     <string name="name_cezve">ジェズヴェ</string>
     <string name="settings_backup_item">バックアップ/復元</string>
     <string name="support_dialog_title">Cofi をお楽しみいただけましたでしょうか？</string>
+    <string name="prepopulate_aero_description">レシピ作成者: James Hoffmann
+\n出典: https://youtu.be/j6VlT_jUVPc
+\n挽き加減: ライトローストならミディアムの細目。深煎りになればなるほど、挽く量を増やして粗挽きにしたほうがよい。
+\n温度: ライトロースト用-沸騰させてすぐに使う。ダークロースト用-85～90</string>
+    <string name="prepopulate_clever_dripper_step_rinse">お湯でフィルターを洗い流します</string>
 </resources>
