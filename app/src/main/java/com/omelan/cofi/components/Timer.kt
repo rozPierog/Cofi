@@ -67,10 +67,10 @@ fun Track(
             val widthDifference = referenceWidthForSmallOffset - strokeWidth.value
 
             val proportionalOffsetChange = widthDifference *
-                (
-                    (referenceOffsetForLargeWidth - referenceOffsetForSmallWidth) /
-                        (referenceWidthForLargeOffset - referenceWidthForSmallOffset)
-                    )
+                    (
+                            (referenceOffsetForLargeWidth - referenceOffsetForSmallWidth) /
+                                    (referenceWidthForLargeOffset - referenceWidthForSmallOffset)
+                            )
 
             return@derivedStateOf referenceOffsetForSmallWidth + proportionalOffsetChange
         }
@@ -81,23 +81,29 @@ fun Track(
             .progressSemantics(progress)
             .aspectRatio(1f),
     ) {
-        val startAngle = 270f
-        val sweep = progress * 360f
+        val progressStartAngle = 270f
+        val progressSweep = progress * 360f
         val diameterOffset = stroke.width / 2
         val arcDimen = size.width - 2 * diameterOffset
-        drawArc(
-            color = backgroundColor,
-            startAngle = sweep + startAngle + (trackOffset),
-            sweepAngle = 360f - sweep - (trackOffset * 2),
-            useCenter = false,
-            topLeft = Offset(diameterOffset, diameterOffset),
-            size = Size(arcDimen, arcDimen),
-            style = stroke,
-        )
+
+        val backgroundStart = progressStartAngle + progressSweep + trackOffset
+        val backgroundSweep = 360f - progressSweep - trackOffset - trackOffset
+
+        if (backgroundSweep > 0) {
+            drawArc(
+                color = backgroundColor,
+                startAngle = backgroundStart,
+                sweepAngle = backgroundSweep,
+                useCenter = false,
+                topLeft = Offset(diameterOffset, diameterOffset),
+                size = Size(arcDimen, arcDimen),
+                style = stroke,
+            )
+        }
         drawArc(
             color = color,
-            startAngle = startAngle,
-            sweepAngle = sweep,
+            startAngle = progressStartAngle,
+            sweepAngle = progressSweep,
             useCenter = false,
             topLeft = Offset(diameterOffset, diameterOffset),
             size = Size(arcDimen, arcDimen),
@@ -248,12 +254,12 @@ fun Timer(
 @Preview
 @Composable
 fun TimerPreview() {
-    val animatedProgressValue = remember { Animatable(0.5f) }
+    val animatedProgressValue = remember { Animatable(0.98f) }
     Timer(
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,
