@@ -10,7 +10,7 @@ Características:
 - Definições de tempo personalizáveis para diferentes métodos de infusão
 - Interface fácil de utilizar com um design simples e o mais recente material de design
 - Modo Picture-in-picture para multitarefas
-- Aplicação WearOS para cronometrar facilmente no seu smartwatch
+- Aplicação Wear OS para cronometrar facilmente no seu smartwatch
 - Sem qualquer rastreador ou recolha de dados.
 
 Sei como pode ser frustrante contentar-se com uma xícara de café medíocre. É por isso que quero ajudá-lo a preparar o seu café como um profissional e a desfrutar sempre de uma xícara perfeita. Instale o Cofi agora e comece a sua viagem até à perfeição do café!

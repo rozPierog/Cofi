@@ -10,7 +10,7 @@ Features:
 - Customizable time settings for different brewing methods
 - Easy-to-use interface with a clean design and the latest material design
 - Picture-in-picture mode for multitasking
-- WearOS app for easy timing on your smartwatch
+- Wear OS app for easy timing on your smartwatch
 - Absolutely no user tracking or data collection
 
 I know how frustrating it can be to settle for a mediocre cup of coffee. That's why I want to help you brew like a pro and enjoy the perfect cup every time. Download Cofi now and start your journey to coffee perfection!

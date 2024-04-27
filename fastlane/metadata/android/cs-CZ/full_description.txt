@@ -10,7 +10,7 @@ Funkce:
 - Upravitelné nastavení času pro metodu přípravy
 - Prostředí jednoduché na používání s jednoduchým designem a nejnovějším materiálovým designem
 - Obraz v obraze pro více možností použivání telefonu
-- WearOS aplikace pro jednoduché měření vašeho času
+- Wear OS aplikace pro jednoduché měření vašeho času
 - Absolutně žádné sledování ani sběr dat
 
 Vím jak frustrující může být vyrovnávání s normální kávou. Proto chci pomoci připravovat kávu jako profesionál a pokaždé si užít perfektní kávu. Stáhněte si Cofi nyní a začněte svou cestu k perfektní kávě!

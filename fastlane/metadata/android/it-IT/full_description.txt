@@ -10,7 +10,7 @@ Caratteristiche:
 - Impostazioni temporali personalizzabili per diversi metodi di preparazione
 - Interfaccia facile da usare con un design pulito e l'ultima versione del Material Design
 - Modalità PIP (Picture In Picture) per il multitasking
-- App per WearOS per un facile cronometraggio sul tuo smartwatch
+- App per Wear OS per un facile cronometraggio sul tuo smartwatch
 - Assolutamente nessun tracciamento utente o raccolta dati
 
 So quanto possa essere frustrante accontentarsi di una tazza di caffè mediocre. Ecco perché voglio aiutarti a preparare il caffè come un professionista e goderti la tazza perfetta ogni volta. Scarica Cofi ora e inizia il tuo viaggio verso la perfezione del caffè!

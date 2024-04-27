@@ -10,7 +10,7 @@ Cechy:
 - Konfigurowalne ustawienia czasu dla różnych metod parzenia
 - Łatwy w obsłudze interfejs o przejrzystym wyglądzie i designie Material You
 - Tryb obrazu w obrazie do wielozadaniowości
-- Aplikacja WearOS do łatwego mierzenia czasu na smartwatchu
+- Aplikacja Wear OS do łatwego mierzenia czasu na smartwatchu
 - Całkowity brak śledzenia użytkownika lub gromadzenia danych
 
 Wiem, jak frustrujące może być zadowalanie się przeciętną filiżanką kawy. Dlatego chcę pomóc Ci parzyć jak profesjonalista i cieszyć się idealną filiżanką za każdym razem. Pobierz teraz Cofi i rozpocznij swoją podróż do kawowej perfekcji!
