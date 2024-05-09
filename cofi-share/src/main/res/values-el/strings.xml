@@ -55,7 +55,7 @@
     <string name="button_show">Εμφάνιση</string>
     <string name="step_add_remove">Αφαίρεση</string>
     <string name="timer_enjoy">Απολαύστε τον καφέ σας</string>
-    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_name">Καφετιέρα V60</string>
     <string name="prepopulate_v60_description">Συνταγή από: James Hoffmann
     \nΠηγή: https://youtu.be/AI4ynXzkSQo
     \nΜέγεθος αλέσης: medium fine
@@ -73,13 +73,13 @@
     <string name="prepopulate_step_plunge">Πιέστε κάτω από την επιφάνεια και αδειάστε</string>
     <string name="prepopulate_step_stir_crust">Ανακατέψτε την κρούστα</string>
     <string name="prepopulate_step_scoop_coffee">Σκουπίστε τον αφρό και τα κομμάτια καφέ από την κορυφή</string>
-    <string name="prepopulate_frenchPress_name">French Press</string>
+    <string name="prepopulate_frenchPress_name">Γαλλικός καφές χειρός</string>
     <string name="prepopulate_frenchPress_description">Συνταγή από: James Hoffmann
     \nΠηγή: https://youtu.be/st571DYYTR8
     \nΜέγεθος αλέσης: medium
     \nΜπορείτε να ρίξετε μετά από 5 λεπτά του τελευταίου βήματος, αλλά όσο περισσότερο το κρατάτε τόσο καλύτερο γίνεται</string>
     <string name="hoffmann_credits_title">Προεπιλεγμένες συνταγές από τον James Hoffmann</string>
-      <string name="hoffmann_credits_subtitle">Πηγαίνετε στο Youtube κανάλι του</string>
+    <string name="hoffmann_credits_subtitle">Πηγαίνετε στο Youtube κανάλι του</string>
     <string name="prepopulate_chemex_name">Chemex</string>
     <string name="prepopulate_chemex_description">Συνταγή από: James Hoffmann
     \nΠηγή: https://youtu.be/ikt-X5x7yoc
@@ -107,7 +107,7 @@
     \nΤο μέγιστο ποσό νερού είναι 500mL, αλλά συνιστάται 400 ή λιγότερο</string>
     <string name="tereszkiewicz_credits_title">Εικονίδιο εφαρμογής από: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Δείτε το Dribbble του</string>
-      <string name="recipe_create_title">Προσθήκη συνταγής</string>
+    <string name="recipe_create_title">Προσθήκη συνταγής</string>
     <string name="recipe_clone_title">Κλωνοποίηση αυτής της συνταγής;</string>
     <string name="recipe_clone_text">Αυτό θα δημιουργήσει ένα αντίγραφο αυτής της συνταγής</string>
     <string name="recipe_clone_suffix">%1$s - Αντίγραφο</string>
@@ -131,16 +131,15 @@
     <string name="name_espresso">Μηχανή Espresso</string>
     <string name="name_cold_brew">Κρύος καφές</string>
     <string name="name_siphon">Σιφώνας</string>
-    <string name="name_cezve">Cezve</string>
+    <string name="name_cezve">Μπρίκι</string>
     <string name="name_cup">Κούπα</string>
     <string name="support_dialog_title">Σας αρέσει το Cofi;</string>
-    <string name="support_dialog_body">Θα εκτιμούσα πολύ την υποστήριξή σας! Μπορείτε να με βοηθήσετε να συνεχίσω να κάνω αυτό που αγαπώ επιλέγοντας ένα ή περισσότερα από τα παρακάτω</string>
+    <string name="support_dialog_body">Θα εκτιμούσα πολύ την υποστήριξή σας! Μπορείτε να με βοηθήσετε να συνεχίσω να κάνω αυτό που αγαπώ, επιλέγοντας ένα ή περισσότερα από τα παρακάτω.</string>
     <string name="support_dialog_github">Δώστε ένα αστέρι στο Cofi στο GitHub</string>
     <string name="support_dialog_mastodon">Ακολουθήστε μας στο Mastodon</string>
-      <string name="support_dialog_kofi">Κεράσέ με έναν καφέ</string>
+    <string name="support_dialog_kofi">Κεράσέ με έναν καφέ</string>
     <string name="support_dialog_review">Γράψτε μια κριτική</string>
     <string name="support_title">Υποστηρίξτε το Cofi</string>
-
     <string name="infoBox_update_title">Το Cofi έχει ενημερωθεί</string>
     <string name="infoBox_update_body">Κάντε κλικ εδώ για να διαβάσετε τι έχει αλλάξει</string>
     <string name="settings_step_next_step_item">Εμφάνιση επόμενου βήματος</string>
