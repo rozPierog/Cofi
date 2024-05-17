@@ -13,6 +13,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
+## [1.21.5|1.12.5] - 2024-05-17
+
+### Added
+
+### Changed
+- Default to empty duration when creating step
+- fixed crash when editing recipe
+- fixed issues with increased font size in the list screen
+- hopefully fixed issues with recipes and timer going invisible after a while
+
+### Removed
+
+
 ## [1.21.3|1.12.3] - 2024-04-27
 
 ### Added

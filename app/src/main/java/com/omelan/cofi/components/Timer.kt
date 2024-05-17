@@ -67,10 +67,10 @@ fun Track(
             val widthDifference = referenceWidthForSmallOffset - strokeWidth.value
 
             val proportionalOffsetChange = widthDifference *
-                    (
-                            (referenceOffsetForLargeWidth - referenceOffsetForSmallWidth) /
-                                    (referenceWidthForLargeOffset - referenceWidthForSmallOffset)
-                            )
+                (
+                    (referenceOffsetForLargeWidth - referenceOffsetForSmallWidth) /
+                        (referenceWidthForLargeOffset - referenceWidthForSmallOffset)
+                    )
 
             return@derivedStateOf referenceOffsetForSmallWidth + proportionalOffsetChange
         }
@@ -259,7 +259,7 @@ fun TimerPreview() {
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,

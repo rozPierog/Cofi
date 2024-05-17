@@ -663,6 +663,23 @@
     "dependency": "androidx.wear.compose:compose-navigation:1.3.1"
   },
   {
+    "project": "Android Wear Ongoing Activities",
+    "description": "Android Wear Ongoing Activities",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/wear#1.0.0",
+    "year": "2021",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.wear:wear-ongoing:1.0.0"
+  },
+  {
     "project": "Android Wear Remote Interactions",
     "description": "Android Wear Remote Interactions",
     "version": "1.0.0",
@@ -733,7 +750,7 @@
   {
     "project": "AndroidX Test Library",
     "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
-    "version": "1.5.0",
+    "version": "1.1.5",
     "developers": [
       "The Android Open Source Project"
     ],
@@ -745,7 +762,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.test:core:1.5.0"
+    "dependency": "androidx.test.ext:junit:1.1.5"
   },
   {
     "project": "AndroidX Test Library",
@@ -767,23 +784,6 @@
   {
     "project": "AndroidX Test Library",
     "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
-    "version": "1.5.0",
-    "developers": [
-      "The Android Open Source Project"
-    ],
-    "url": "https://developer.android.com/testing",
-    "year": "2015",
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "androidx.test:core-ktx:1.5.0"
-  },
-  {
-    "project": "AndroidX Test Library",
-    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
     "version": "1.1.5",
     "developers": [
       "The Android Open Source Project"
@@ -796,7 +796,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.test.ext:junit:1.1.5"
+    "dependency": "androidx.test.ext:junit-ktx:1.1.5"
   },
   {
     "project": "AndroidX Test Library",
@@ -835,7 +835,7 @@
   {
     "project": "AndroidX Test Library",
     "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
-    "version": "1.1.5",
+    "version": "1.5.0",
     "developers": [
       "The Android Open Source Project"
     ],
@@ -847,7 +847,24 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.test.ext:junit-ktx:1.1.5"
+    "dependency": "androidx.test:core-ktx:1.5.0"
+  },
+  {
+    "project": "AndroidX Test Library",
+    "description": "The AndroidX Test Library provides an extensive framework for testing Android apps",
+    "version": "1.5.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/testing",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.test:core:1.5.0"
   },
   {
     "project": "AndroidX Widget ViewPager2",
@@ -903,11 +920,11 @@
   {
     "project": "Annotation",
     "description": "Provides source annotations for tooling and readability.",
-    "version": "1.7.0",
+    "version": "1.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/annotation#1.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/annotation#1.8.0",
     "year": "2013",
     "licenses": [
       {
@@ -915,7 +932,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.annotation:annotation-jvm:1.7.0"
+    "dependency": "androidx.annotation:annotation-jvm:1.8.0"
   },
   {
     "project": "Checker Qual",
@@ -1329,11 +1346,11 @@
   {
     "project": "Core",
     "description": "Provides backward-compatible implementations of Android platform APIs and features.",
-    "version": "1.13.0",
+    "version": "1.13.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.13.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.13.1",
     "year": "2015",
     "licenses": [
       {
@@ -1341,16 +1358,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.core:core:1.13.0"
+    "dependency": "androidx.core:core:1.13.1"
   },
   {
     "project": "Core Kotlin Extensions",
     "description": "Kotlin extensions for \u0027core\u0027 artifact",
-    "version": "1.13.0",
+    "version": "1.13.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.13.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.13.1",
     "year": "2018",
     "licenses": [
       {
@@ -1358,16 +1375,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.core:core-ktx:1.13.0"
+    "dependency": "androidx.core:core-ktx:1.13.1"
   },
   {
     "project": "DataStore",
     "description": "Android DataStore - contains the underlying store used by each serialization method along with components that require an Android dependency",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1",
     "year": "2020",
     "licenses": [
       {
@@ -1375,16 +1392,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.datastore:datastore-android:1.1.0"
+    "dependency": "androidx.datastore:datastore-android:1.1.1"
   },
   {
     "project": "DataStore Core",
     "description": "Android DataStore Core - contains the underlying store used by each serialization method",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1",
     "year": "2020",
     "licenses": [
       {
@@ -1392,16 +1409,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.datastore:datastore-core-android:1.1.0"
+    "dependency": "androidx.datastore:datastore-core-android:1.1.1"
   },
   {
     "project": "DataStore Core Okio",
     "description": "Android DataStore Core Okio- contains APIs to use datastore-core in multiplatform via okio",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1",
     "year": "2020",
     "licenses": [
       {
@@ -1409,7 +1426,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.datastore:datastore-core-okio-jvm:1.1.0"
+    "dependency": "androidx.datastore:datastore-core-okio-jvm:1.1.1"
   },
   {
     "project": "error-prone annotations",
@@ -1743,11 +1760,11 @@
   {
     "project": "Lifecycle Kotlin Extensions",
     "description": "Kotlin extensions for \u0027lifecycle\u0027 artifact",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2019",
     "licenses": [
       {
@@ -1755,16 +1772,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.0"
   },
   {
     "project": "Lifecycle LiveData",
     "description": "Android Lifecycle LiveData",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2017",
     "licenses": [
       {
@@ -1772,16 +1789,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-livedata:2.8.0"
   },
   {
     "project": "Lifecycle LiveData Core",
     "description": "Android Lifecycle LiveData Core",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2017",
     "licenses": [
       {
@@ -1789,16 +1806,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.8.0"
   },
   {
     "project": "Lifecycle Process",
     "description": "Android Lifecycle Process",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2018",
     "licenses": [
       {
@@ -1806,16 +1823,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-process:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-process:2.8.0"
   },
   {
     "project": "Lifecycle Runtime",
     "description": "Android Lifecycle Runtime",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2017",
     "licenses": [
       {
@@ -1823,16 +1840,33 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-runtime-android:2.8.0"
+  },
+  {
+    "project": "Lifecycle Runtime",
+    "description": "Android Lifecycle Runtime",
+    "version": "2.8.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-runtime:2.8.0"
   },
   {
     "project": "Lifecycle Runtime Compose",
     "description": "Compose integration with Lifecycle",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2021",
     "licenses": [
       {
@@ -1840,16 +1874,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime-compose:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-runtime-compose-android:2.8.0"
   },
   {
     "project": "Lifecycle Service",
     "description": "Android Lifecycle Service",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2018",
     "licenses": [
       {
@@ -1857,16 +1891,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-service:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-service:2.8.0"
   },
   {
     "project": "Lifecycle ViewModel",
     "description": "Android Lifecycle ViewModel",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2017",
     "licenses": [
       {
@@ -1874,16 +1908,33 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-android:2.8.0"
+  },
+  {
+    "project": "Lifecycle ViewModel",
+    "description": "Android Lifecycle ViewModel",
+    "version": "2.8.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.8.0"
   },
   {
     "project": "Lifecycle ViewModel Compose",
     "description": "Compose integration with Lifecycle ViewModel",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2021",
     "licenses": [
       {
@@ -1891,16 +1942,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.0"
   },
   {
     "project": "Lifecycle ViewModel Kotlin Extensions",
     "description": "Kotlin extensions for \u0027viewmodel\u0027 artifact",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2018",
     "licenses": [
       {
@@ -1908,16 +1959,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0"
   },
   {
     "project": "Lifecycle ViewModel with SavedState",
     "description": "Android Lifecycle ViewModel",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2018",
     "licenses": [
       {
@@ -1925,16 +1976,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.0"
   },
   {
     "project": "Lifecycle-Common",
     "description": "Android Lifecycle-Common",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2017",
     "licenses": [
       {
@@ -1942,16 +1993,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-common:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-common-jvm:2.8.0"
   },
   {
     "project": "Lifecycle-Common for Java 8",
     "description": "Android Lifecycle-Common for Java 8 Language",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2017",
     "licenses": [
       {
@@ -1959,16 +2010,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-common-java8:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-common-java8:2.8.0"
   },
   {
     "project": "LiveData Core Kotlin Extensions",
     "description": "Kotlin extensions for \u0027livedata-core\u0027 artifact",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2018",
     "licenses": [
       {
@@ -1976,16 +2027,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.0"
   },
   {
     "project": "LiveData Kotlin Extensions",
     "description": "Kotlin extensions for \u0027livedata\u0027 artifact",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0",
     "year": "2018",
     "licenses": [
       {
@@ -1993,7 +2044,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata-ktx:2.7.0"
+    "dependency": "androidx.lifecycle:lifecycle-livedata-ktx:2.8.0"
   },
   {
     "project": "Material Components for Android",
@@ -2262,11 +2313,11 @@
   {
     "project": "Preferences DataStore",
     "description": "Android Preferences DataStore",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1",
     "year": "2020",
     "licenses": [
       {
@@ -2274,16 +2325,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.datastore:datastore-preferences-android:1.1.0"
+    "dependency": "androidx.datastore:datastore-preferences-android:1.1.1"
   },
   {
     "project": "Preferences DataStore Core",
     "description": "Android Preferences DataStore without the Android Dependencies",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1",
     "year": "2020",
     "licenses": [
       {
@@ -2291,7 +2342,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.datastore:datastore-preferences-core-jvm:1.1.0"
+    "dependency": "androidx.datastore:datastore-preferences-core-jvm:1.1.1"
   },
   {
     "project": "Room Kotlin Extensions",
