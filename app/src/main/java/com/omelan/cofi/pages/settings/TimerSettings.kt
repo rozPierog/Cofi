@@ -300,7 +300,7 @@ fun CombineWeightDialog(
 fun PreviewCombineWeightDialog() {
     CofiTheme {
         CombineWeightDialog(
-            dismiss = { /*TODO*/ },
+            dismiss = { },
             selectCombineMethod = {},
             combineWeightState = "",
         )
