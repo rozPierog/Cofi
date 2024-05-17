@@ -71,8 +71,8 @@ dependencies {
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.foundation:foundation"
     implementation "androidx.compose.material3:material3"
-    api "androidx.datastore:datastore-preferences:1.1.0"
-
+    api "androidx.datastore:datastore-preferences:1.1.1"
+    api "androidx.wear:wear-ongoing:1.0.0"
     //Room
 
     api "androidx.room:room-runtime:$room_version"

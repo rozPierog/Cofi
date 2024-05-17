@@ -28,7 +28,7 @@ android {
     defaultConfig {
         applicationId "com.omelan.cofi"
         minSdk 25
-        targetSdk 34
+        targetSdk 33
         versionCode 168
         versionName "1.12.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -86,7 +86,7 @@ dependencies {
     implementation project(path: ':cofi-share')
     implementation platform("androidx.compose:compose-bom:$compose_bom_version")
 
-    implementation 'androidx.core:core-ktx:1.13.0'
+    implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'com.google.android.gms:play-services-wearable:18.1.0'
     implementation "androidx.wear:wear-remote-interactions:1.0.0"
     implementation "androidx.wear.compose:compose-material:$wear_compose_version"
@@ -103,7 +103,7 @@ dependencies {
     implementation "androidx.wear:wear-input:1.1.0"
     implementation 'androidx.wear:wear:1.3.0'
 
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.6.6"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.6.7"
     debugImplementation "androidx.compose.ui:ui-tooling"
     debugImplementation "androidx.compose.ui:ui-test-manifest"
     androidTestImplementation 'androidx.test:core:1.5.0'
