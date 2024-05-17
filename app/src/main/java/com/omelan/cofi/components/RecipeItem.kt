@@ -65,8 +65,7 @@ fun LazyGridItemScope.RecipeItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = Spacing.medium)
-                .height(75.dp),
+                .padding(horizontal = Spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
