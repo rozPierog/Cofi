@@ -363,7 +363,6 @@ fun RecipeEdit(
             { _, step -> if (step.id == 0) step.hashCode() else step.id },
         ) { index, step ->
             AnimatedVisibility(
-                modifier = Modifier.animateItem(),
                 visible = stepWithOpenEditor == step,
                 enter = expandVertically(),
                 exit = shrinkVertically(),
@@ -398,7 +397,6 @@ fun RecipeEdit(
             AnimatedVisibility(
                 visible = stepWithOpenEditor != step,
                 enter = expandVertically(),
-                modifier = Modifier.animateItem(),
                 exit = shrinkVertically(),
             ) {
                 StepListItem(
@@ -415,7 +413,6 @@ fun RecipeEdit(
             AnimatedVisibility(
                 visible = stepWithOpenEditor == null,
                 enter = expandVertically(),
-                modifier = Modifier.animateItem(),
                 exit = shrinkVertically(),
             ) {
                 StepAddCard(
@@ -424,7 +421,6 @@ fun RecipeEdit(
                             collapse()
                         }
                     },
-                    modifier = Modifier.animateItem(),
                     save = { stepToSave ->
                         if (stepToSave != null) {
                             steps = steps.toMutableList().apply { add(stepToSave) }
