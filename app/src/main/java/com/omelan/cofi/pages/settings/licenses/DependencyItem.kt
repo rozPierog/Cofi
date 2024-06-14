@@ -34,7 +34,7 @@ fun DependencyItem(dependency: Dependency) {
             withLink(
                 LinkAnnotation.Url(
                     license.license_url,
-                    style = linkSpanStyle(MaterialTheme.colorScheme.secondary),
+                    styles = linkSpanStyle(MaterialTheme.colorScheme.secondary),
                 ),
             ) {
                 append(license.license)

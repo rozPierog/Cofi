@@ -6,14 +6,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-fun linkSpanStyle(color: Color) = SpanStyle(
-    color = color,
-    textDecoration = TextDecoration.Underline,
+fun linkSpanStyle(color: Color) = TextLinkStyles(
+    SpanStyle(
+        color = color,
+        textDecoration = TextDecoration.Underline,
+    ),
 )
 
 private fun extractUrls(text: String): List<String> {
@@ -49,7 +52,7 @@ fun buildAnnotatedStringWithUrls(baseText: String, color: Color) =
             addLink(
                 LinkAnnotation.Url(
                     it,
-                    style = linkSpanStyle(color),
+                    styles = linkSpanStyle(color),
                 ),
                 start = positionOfUrl,
                 end = positionOfUrl + it.length,
