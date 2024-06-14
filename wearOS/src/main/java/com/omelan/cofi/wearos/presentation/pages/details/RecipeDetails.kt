@@ -16,7 +16,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
@@ -33,7 +32,6 @@ import com.omelan.cofi.share.DataStore
 import com.omelan.cofi.share.model.*
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.share.timer.Timer
-import com.omelan.cofi.share.utils.askForNotificationPermission
 import com.omelan.cofi.share.utils.toStringDuration
 import com.omelan.cofi.wearos.R
 import kotlin.math.roundToInt
@@ -160,9 +158,9 @@ fun RecipeDetails(
     LaunchedEffect(timerControllers.isTimerRunning) {
         onTimerRunning(timerControllers.isTimerRunning)
     }
-    LaunchedEffect(LocalLifecycleOwner.current) {
-        context.askForNotificationPermission()
-    }
+//    LaunchedEffect(LocalLifecycleOwner.current) {
+//        context.askForNotificationPermission()
+//    }
     LaunchedEffect(pagerState.currentPage) {
         if (pagerState.currentPage == 0) {
             canSwipeToClose(true)
