@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="step_add_save">저장</string>
+    <string name="recipe_delete_title">확실합니까?</string>
+    <string name="timer_progress_weight">%1$sg/%2$sg</string>
+    <string name="step_type_add_coffee">커피를 담으세요</string>
+    <string name="step_type_water">물을 부으세요</string>
+    <string name="step_type_other">기타</string>
+    <string name="step_add_duration">시간(초)</string>
+    <string name="step_add_weight">무게(g)</string>
+    <string name="recipe_unsaved_title">수정 후 저장하지 않았습니다</string>
+    <string name="recipe_unsaved_text">삭제하시겠습니까?</string>
+    <string name="recipe_delete_text">이 레시피를 영구적으로 삭제할것입니다</string>
+    <string name="recipe_edit_name">이름</string>
+    <string name="recipe_edit_description">설명</string>
+    <string name="recipe_edit_description_button">설명을 추가하세요</string>
+    <string name="recipe_edit_title">레시피 수정</string>
+    <string name="recipe_add_new_title">레시피 작성</string>
+    <string name="recipe_details_automation_dialog_title">링크</string>
+    <string name="step_add_name">이름</string>
+    <string name="recipe_detials_notification_dialog_title">타이머를 백그라운드에서 활성화하시겠습니까?</string>
+    <string name="step_type_wait">기다리세요</string>
+    <string name="recipe_details_automation_dialog_text">이 링크를 사용하여 이 레시피로 직접 들어가십시오. NFC 태그에 작성하거나 tasker에서 자동화 작업을 만들어 모닝 커피를 더 쉽게 만들 수 있습니다.
+\n경고: 이런 식으로는 레시피를 공유할 수 없습니다!</string>
+    <string name="button_cancel">취소</string>
+    <string name="recipe_detials_notification_dialog_text">cofi는 당신이 원한다면 백그라운드에서 타이머를 계속 구동할 것입니다, 그러나 먼저 당신이 푸시 알림을 허용해야 합니다</string>
+    <string name="timer_step_name_time">%1$s (%2$ss)</string>
+</resources>
