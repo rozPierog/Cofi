@@ -25,4 +25,17 @@
     <string name="button_cancel">취소</string>
     <string name="recipe_detials_notification_dialog_text">cofi는 당신이 원한다면 백그라운드에서 타이머를 계속 구동할 것입니다, 그러나 먼저 당신이 푸시 알림을 허용해야 합니다</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
+    <string name="settings_step_sound_item">소리</string>
+    <string name="button_no">아니오</string>
+    <string name="button_delete">삭제</string>
+    <string name="button_discard">삭제</string>
+    <string name="button_continue_editing">계속 편집하기</string>
+    <string name="button_copy">복사</string>
+    <string name="snackbar_copied">복사됨!</string>
+    <string name="settings_licenses_title">오픈 소스 라이센스</string>
+    <string name="settings_title">설정</string>
+    <string name="settings_about_item">이 앱에 대하여</string>
+    <string name="settings_pip_item">창 모드</string>
+    <string name="settings_background_timer_item">백그라운드에서 타이머 허용</string>
+    <string name="settings_bug_item">버그 리포트 / 오류 진단</string>
 </resources>
