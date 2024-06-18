@@ -38,4 +38,42 @@
     <string name="settings_pip_item">창 모드</string>
     <string name="settings_background_timer_item">백그라운드에서 타이머 허용</string>
     <string name="settings_bug_item">버그 리포트 / 오류 진단</string>
+    <string name="settings_combine_weight_water">물양</string>
+    <string name="settings_combine_weight_all">전체 총량</string>
+    <string name="settings_about_title">세부항목</string>
+    <string name="settings_translate_item">Cofi를 번역하는데 도움이 돼주세요</string>
+    <string name="settings_github_item">Github Repository</string>
+    <string name="step_add_remove">지우기</string>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="other">단수형
+\n%d개의 레시피를 백업했습니다
+\n복수형
+\n%d개의 레시피를 백업했습니다</item>
+    </plurals>
+    <string name="timer_enjoy">당신의 커피를 즐기세요</string>
+    <string name="prepopulate_v60_description">레시피 제작자: James Hoffmann
+\n출처: https://youtu.be/AI4ynXzkSQo
+\ngrind size: 중간 얇게
+\n온도: 뜨거울수록 좋습니다(특히 약배전일수록)</string>
+    <string name="prepopulate_v60_1cup_description">레시피 제작자: James Hoffmann
+\n출처:https://youtu.be/1oB1oDrDkHM
+\n시작하기 전, V60에 필터종이를 놓고 뜨거운 물을 부음으로서 예열시켜주세요. 이는 V60과 필터를 예열시키며 커피 추출을 준비합니다.
+\ngrind size: 얇게 ~ 중간 얇게
+\n온도: 뜨거울수록 좋습니다(특히 약배전일수록)</string>
+    <string name="settings_combine_weight_item">총량</string>
+    <string name="settings_combine_weight_none">누적양으로 하지 않기</string>
+    <string name="settings_licenses_item">도움을 주신 분들</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="other">단수형
+\n%d개의 레시피를 복원했습니다
+\n복수형
+\n%d개의 레시피를 복원했습니다</item>
+    </plurals>
+    <string name="button_show">보기</string>
+    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_1cup_name">1컵 V60</string>
+    <string name="prepopulate_step_water">물을 부으십시오</string>
+    <string name="prepopulate_step_coffee">커피를 담으세요</string>
+    <string name="prepopulate_step_swirl">흔드세요</string>
+    <string name="prepopulate_step_wait">기다리세요</string>
 </resources>
