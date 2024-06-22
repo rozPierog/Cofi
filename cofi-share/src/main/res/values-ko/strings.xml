@@ -70,10 +70,93 @@
 \n%d개의 레시피를 복원했습니다</item>
     </plurals>
     <string name="button_show">보기</string>
-    <string name="prepopulate_v60_name">Ultimate V60</string>
+    <string name="prepopulate_v60_name">완벽한 V60</string>
     <string name="prepopulate_v60_1cup_name">1컵 V60</string>
     <string name="prepopulate_step_water">물을 부으십시오</string>
     <string name="prepopulate_step_coffee">커피를 담으세요</string>
     <string name="prepopulate_step_swirl">흔드세요</string>
     <string name="prepopulate_step_wait">기다리세요</string>
+    <string name="prepopulate_frenchPress_description">레시피 제작자: James Hoffmann
+\n출처: https://youtu.be/st571DYYTR8
+\ngrind size: 중간
+\n마지막 단계 5분 후에 부어주시면 되는데, 오래 우릴수록 결과가 좋아집니다</string>
+    <string name="prepopulate_aero_name">에어로프레스</string>
+    <string name="settings_backup_item">백업/복원</string>
+    <string name="prepopulate_aero_description">레시피 제작자: James Hoffmann
+\n출처: https://youtu.be/j6VlT_jUVPc
+\ngrind size: 약배전 ~ 중간이지만 얇게. 배전도가 높아질수록 투여량을 늘리고 분쇄도를 키우는 것이 낫습니다
+\n온도: 약배전~끓여서 바로 사용합니다. 강배전의 경우 85~90℃</string>
+    <string name="tereszkiewicz_credits_subtitle">그의 Dribbble을 확인하세요</string>
+    <string name="prepopulate_clever_dripper_description">레시피 제작자: James Hoffmann
+\n출처: https://youtu.be/RpOdennxP24
+\ngrind size: 중간-얇게
+\n온도: 끓여서 바로 사용하세요
+\n비율: 1:16.67, or 15g to 250mL
+\n필터가 압착된 부분을 따라 필터를 접어서 드리퍼 내부에 더 잘 맞도록 합니다
+\n최대 물의 양은 500mL이나 400 이하가 권장됩니다</string>
+    <string name="name_cup">컵</string>
+    <string name="support_dialog_title">Cofi 사용에 만족하십니까?</string>
+    <string name="support_dialog_body">저는 당신의 성원에 감사할 것입니다! 당신은 다음 중 하나 또는 그 이상을 선택함으로써 제가 사랑하는 일을 계속할 수 있도록 도와줄 수 있습니다.</string>
+    <string name="name_grinder">커피 그라인더</string>
+    <string name="name_vietnamese_press">Phin 필터</string>
+    <string name="name_siphon">사이폰</string>
+    <string name="name_cezve">제즈베</string>
+    <string name="support_dialog_review">리뷰 쓰기</string>
+    <string name="recipe_details_recipeRatio">레시피 비율: 1: %1$s</string>
+    <string name="prepopulate_step_plunge">표면 바로 아래까지 잠기게 물을 부으세요</string>
+    <string name="prepopulate_step_stir_crust">크러스트를 깨도록 저으세요</string>
+    <string name="prepopulate_step_scoop_coffee">거품과 커피를 위에서 조금씩 올리세요</string>
+    <string name="prepopulate_frenchPress_name">프렌치 프레스</string>
+    <string name="hoffmann_credits_title">디폴트 레시피들은 제임스 호프만의 레시피입니다</string>
+    <string name="hoffmann_credits_subtitle">그의 youtube 체널로 가십시오</string>
+    <string name="prepopulate_chemex_name">케멕스</string>
+    <string name="prepopulate_chemex_description">레시피 제작자: James Hoffmann
+\n출처: https://youtu.be/ikt-X5x7yoc
+\ngrind size: 중간 얇게
+\n온도: 뜨거울수록, 더 좋습니다(특히 약배전일수록)
+\n필터가 겹쳐진 부분이 배수구 쪽에 있는지 확인합니다
+\n케멕스에서 공기 흐름이 막히지 않도록 주의하십시오</string>
+    <string name="prepopulate_aero_step_piston">피스톤을 1cm 집어넣습니다</string>
+    <string name="prepopulate_aero_step_press">피스톤을 천천히 누르세요</string>
+    <string name="prepopulate_clever_dripper_step_rinse">필터를 뜨거운 물로 린싱해줍니다</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">크러스트를 저어주거나 살짝 흔듦으로 깨주세요</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">컵 위에 놓음으로 커피를 받도록 합니다</string>
+    <string name="tereszkiewicz_credits_title">App 아이콘: Hubert Tereszkiewicz</string>
+    <string name="recipe_create_title">레시피 추가</string>
+    <string name="recipe_clone_title">이 레시피를 복사하시겠습니까?</string>
+    <string name="recipe_clone_text">이는 이 레시피의 복제물을 만듭니다</string>
+    <string name="recipe_clone_suffix">%1$s - 복사</string>
+    <string name="app_version">버전 추가</string>
+    <string name="recipe_details_noTime">계속하려면 시작을 누릅니다</string>
+    <string name="step_add_duration_explainer">단계 지속 시간은 작업 시간(초)을 결정합니다. 준비가 될 때까지 레시피를 멈추려면 비워 둡니다.</string>
+    <string name="settings_backup">백업</string>
+    <string name="settings_restore">복원</string>
+    <string name="settings_addDefault">디폴트 레시피 추가</string>
+    <string name="settings_timer_item">타이머 세팅들</string>
+    <string name="settings_step_vibrate_item">스텝 변경 시 진동</string>
+    <string name="recipe_details_multiply_time">시간 multiplier</string>
+    <string name="recipe_details_multiply_weight">무게 multiplier</string>
+    <string name="infoBox_wearOS_title">Cofi는 이제 WearOS에 적용 가능합니다</string>
+    <string name="infoBox_wearOS_body">Cofi를 다운로드하고 WearOS watch에서 사용하세요!</string>
+    <string name="settings_sync_with_phone">핸드폰에서 setting을 완료하세요</string>
+    <string name="name_drip">드립</string>
+    <string name="name_espresso">에스프레소 머신</string>
+    <string name="name_cold_brew">콜드브루</string>
+    <string name="support_dialog_github">깃허브의 스타 Cofi</string>
+    <string name="support_dialog_mastodon">Mastodon에서 나를 follow 하십시오</string>
+    <string name="support_dialog_kofi">커피 한잔 사주실래요</string>
+    <string name="support_title">Cofi 지원하기</string>
+    <string name="infoBox_update_title">Cofi가 업데이트됐습니다</string>
+    <string name="infoBox_update_body">새로운 내용을 보려면 여기를 클릭하십시오</string>
+    <string name="settings_step_next_step_item">다음 스텝 보기</string>
+    <string name="recipe_details_upNext">다음 것:</string>
+    <string name="settings_wearOS_item">WearOS에서 사용하려면 다운로드</string>
+    <string name="recipe_details_change_step_toast">단계 변경 및 유지</string>
+    <string name="recipe_details_read_description">자주 묻는 질문</string>
+    <string name="name_tea">차</string>
+    <string name="name_teapot">찻주전자</string>
+    <string name="notification_channel_timer_name">백그라운드 타이머</string>
+    <string name="notification_action_continue">계속</string>
+    <string name="notification_action_stop">멈추기</string>
+    <string name="notification_action_pause">멈춤</string>
 </resources>
