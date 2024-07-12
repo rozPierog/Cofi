@@ -29,8 +29,8 @@ android {
         applicationId "com.omelan.cofi"
         minSdk 25
         targetSdk 33
-        versionCode 177
-        versionName "1.12.7"
+        versionCode 180
+        versionName "1.12.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
