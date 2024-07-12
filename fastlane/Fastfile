@@ -104,12 +104,12 @@ platform :android do
       skip_upload_apk: true,
       aab_paths: ["app/build/outputs/bundle/playStoreRelease/app-playStore-release.aab"]
     )
-#    upload_to_play_store(
-#       track: options[:prerelease] ? 'wear:internal' : 'wear:production',
-#       skip_upload_apk: true,
-#       skip_upload_screenshots: true,
-#       aab_paths: ["wearOS/build/outputs/bundle/release/wearOS-release.aab"]
-#     )
+   upload_to_play_store(
+      track: options[:prerelease] ? 'wear:internal' : 'wear:production',
+      skip_upload_apk: true,
+      skip_upload_screenshots: true,
+      aab_paths: ["wearOS/build/outputs/bundle/release/wearOS-release.aab"]
+    )
 #     upload_to_play_store(
 #       track: options[:prerelease] ? 'instant:internal' : 'instant:production',
 #       skip_upload_apk: true,
