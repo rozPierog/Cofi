@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- fixed Wear OS font scaling issues
+
+### Removed
+- Removed notification permission from WearOS
+
+
+## [1.21.7|1.12.7] - 2024-06-14
+
+### Added
+
+### Changed
+
+### Removed
+
+
+## [1.21.6|1.12.6] - 2024-06-14
+
+### Added
+
+### Changed
 
 ### Removed
 
