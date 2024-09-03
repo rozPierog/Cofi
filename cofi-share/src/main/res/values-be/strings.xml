@@ -31,8 +31,31 @@
     <string name="settings_pip_item">Нарыс у нарысе</string>
     <string name="settings_step_sound_item">Гук змены крока</string>
     <string name="recipe_delete_text">Гэта выдаліць гэты рэцэпт назаўсёды</string>
-    <string name="recipe_detials_notification_dialog_text">Кофі захавае таймер у фонавым рэжыме, калі вы гэтага жадаеце, але спачатку вы павінны даць дазвол на адпраўку паведамленняў</string>
-    <string name="recipe_details_automation_dialog_text">Скарыстайцеся спасылкай, каб перайсці напрамую да рэцэпту. Запішыце яе ў NFC-тэг ці стварыце аўтыматазаванае заданне ў Tasker каб зрабіць вашую ранюшнюю каву прасцейшай.
+    <string name="recipe_detials_notification_dialog_text">Cofi захавае таймер у фонавым рэжыме, калі вы гэтага жадаеце, але спачатку вы павінны даць дазвол на адпраўку паведамленняў</string>
+    <string name="recipe_details_automation_dialog_text">Карыстайцеся спасылкай, каб перайсці напрамую да рэцэпту. Запішыце яе ў NFC-тэг ці стварыце аўтаматызаванае заданне ў Tasker каб зрабіць вашую ранішнюю каву прасцейшай.
 \nУВАГА: Вы не можаце падзяліцца рэцэптам гэтакім чынам!</string>
     <string name="recipe_detials_notification_dialog_title">Дазволіць таймер у фонавым рэжыме\?</string>
+    <string name="settings_combine_weight_all">Сумяшчаць усе вагі</string>
+    <string name="settings_combine_weight_none">Не сумяшчаць вагу</string>
+    <string name="settings_licenses_item">Падзякі</string>
+    <string name="settings_github_item">Рэпазітарый Github</string>
+    <string name="button_show">Паказаць</string>
+    <string name="step_add_remove">Прыбраць</string>
+    <string name="settings_combine_weight_item">Сумяшчэнне вагі</string>
+    <string name="settings_combine_weight_water">Сумяшчаць толькі вагу вады</string>
+    <string name="prepopulate_v60_description">Рэцэпт створаны: Джэймс Хофман
+\nКрыніца: https://youtu.be/AI4ynXzkSQo
+\nУзровень памолу: сярэдні
+\nТэмпература: чым гарачэй, тым лепей (асабліва са светлымі смажаннямі)</string>
+    <string name="prepopulate_step_coffee">Дадаць каву</string>
+    <string name="prepopulate_step_water">Дадаць вады</string>
+    <string name="settings_translate_item">Дапамажы з перакладам Cofi</string>
+    <string name="timer_enjoy">Частуйся каваю</string>
+    <string name="prepopulate_v60_name">V60</string>
+    <string name="prepopulate_v60_1cup_name">V60 на 1 кубак</string>
+    <string name="button_no">Не</string>
+    <string name="settings_background_timer_item">Дазволіць таймеру працаваць у фонавым рэжыме</string>
+    <string name="settings_about_title">Пра прыкладанне</string>
+    <string name="prepopulate_step_swirl">Перамяшаць</string>
+    <string name="prepopulate_step_wait">Пачакаць</string>
 </resources>
