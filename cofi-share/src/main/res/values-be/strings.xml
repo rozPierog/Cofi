@@ -34,7 +34,7 @@
     <string name="recipe_detials_notification_dialog_text">Cofi захавае таймер у фонавым рэжыме, калі вы гэтага жадаеце, але спачатку вы павінны даць дазвол на адпраўку паведамленняў</string>
     <string name="recipe_details_automation_dialog_text">Карыстайцеся спасылкай, каб перайсці напрамую да рэцэпту. Запішыце яе ў NFC-тэг ці стварыце аўтаматызаванае заданне ў Tasker каб зрабіць вашую ранішнюю каву прасцейшай.
 \nУВАГА: Вы не можаце падзяліцца рэцэптам гэтакім чынам!</string>
-    <string name="recipe_detials_notification_dialog_title">Дазволіць таймер у фонавым рэжыме\?</string>
+    <string name="recipe_detials_notification_dialog_title">Дазволіць таймеру працаваць у фонавым рэжыме?</string>
     <string name="settings_combine_weight_all">Сумяшчаць усе вагі</string>
     <string name="settings_combine_weight_none">Не сумяшчаць вагу</string>
     <string name="settings_licenses_item">Падзякі</string>
@@ -55,7 +55,23 @@
     <string name="prepopulate_v60_1cup_name">V60 на 1 кубак</string>
     <string name="button_no">Не</string>
     <string name="settings_background_timer_item">Дазволіць таймеру працаваць у фонавым рэжыме</string>
-    <string name="settings_about_title">Пра прыкладанне</string>
+    <string name="settings_about_title">Звесткі пра прыкладанне</string>
     <string name="prepopulate_step_swirl">Перамяшаць</string>
     <string name="prepopulate_step_wait">Пачакаць</string>
+    <string name="settings_bug_item">Паведаміць пра памылку ці прапанаваць функцыю</string>
+    <string name="prepopulate_frenchPress_name">Фрэнч-прэс</string>
+    <string name="prepopulate_chemex_name">Кемекс</string>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Адноўлены %d рэцэпт</item>
+        <item quantity="few">Адноўлена %d рэцэпта</item>
+        <item quantity="many">Адноўлены %d рэцэптаў</item>
+        <item quantity="other">Адноўлены %d рэцэптаў</item>
+    </plurals>
+    <plurals name="settings_snackbar_backup">
+        <item quantity="one">Рэзервовая копія %d рэцэпту</item>
+        <item quantity="few">Рэзервовая копія %d рэцэптаў</item>
+        <item quantity="many">Рэзервовая копія %d рэцэптаў</item>
+        <item quantity="other">Рэзервовая копія %d рэцэптаў</item>
+    </plurals>
+    <string name="notification_action_pause">Паўза</string>
 </resources>
