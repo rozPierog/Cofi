@@ -41,7 +41,7 @@
     <string name="settings_github_item">Рэпазітарый Github</string>
     <string name="button_show">Паказаць</string>
     <string name="step_add_remove">Прыбраць</string>
-    <string name="settings_combine_weight_item">Сумяшчэнне вагі</string>
+    <string name="settings_combine_weight_item">Аб\'яднаць вагу</string>
     <string name="settings_combine_weight_water">Сумяшчаць толькі вагу вады</string>
     <string name="prepopulate_v60_description">Рэцэпт створаны: Джэймс Хофман
 \nКрыніца: https://youtu.be/AI4ynXzkSQo
@@ -50,7 +50,7 @@
     <string name="prepopulate_step_coffee">Дадаць каву</string>
     <string name="prepopulate_step_water">Дадаць вады</string>
     <string name="settings_translate_item">Дапамажы з перакладам Cofi</string>
-    <string name="timer_enjoy">Частуйся каваю</string>
+    <string name="timer_enjoy">Насалоджвайцеся сваёй кавай</string>
     <string name="prepopulate_v60_name">V60</string>
     <string name="prepopulate_v60_1cup_name">V60 на 1 кубак</string>
     <string name="button_no">Не</string>
