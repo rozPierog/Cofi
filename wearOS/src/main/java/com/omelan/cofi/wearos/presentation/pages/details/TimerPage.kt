@@ -153,6 +153,8 @@ fun TimerPage(
                 Spacer(modifier = Modifier.height(100.dp))
             }
         }
+        PositionIndicator(recipeDescriptionScrollState)
+
     }
     AmbientAware(isTimerRunning) { ambientStateUpdate ->
         val isAmbient = ambientStateUpdate.ambientState is AmbientState.Ambient
