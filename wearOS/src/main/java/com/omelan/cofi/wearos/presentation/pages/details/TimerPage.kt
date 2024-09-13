@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
@@ -23,6 +24,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.text.style.TextOverflow
@@ -111,7 +113,7 @@ fun TimerPage(
                 KeyEvent.KEYCODE_STEM_1,
                 KeyEvent.KEYCODE_STEM_2,
                 KeyEvent.KEYCODE_STEM_3,
-                -> {
+                    -> {
                     startButtonOnClick()
                     true
                 }
@@ -242,6 +244,16 @@ fun TimerPage(
                                     showMillis = false,
                                 )
                                 AnimatedContent(currentStep, label = "Step label") {
+                                    val style = MaterialTheme.typography.title3.copy(
+                                        textMotion = TextMotion.Animated,
+                                    )
+                                    var textStyle by remember { mutableStateOf(style) }
+                                    var readyToDraw by remember { mutableStateOf(false) }
+                                    val maxLines = if (it.time != null && it.value != null) {
+                                        1
+                                    } else {
+                                        2
+                                    }
                                     Text(
                                         text = if (it.time != null) {
                                             stringResource(
@@ -253,17 +265,26 @@ fun TimerPage(
                                             it.name
                                         },
                                         color = MaterialTheme.colors.onSurface,
-                                        style = MaterialTheme.typography.title3.copy(
-                                            textMotion = TextMotion.Animated,
-                                        ),
-                                        textAlign = TextAlign.Center,
-                                        maxLines = if (it.time != null) {
-                                            1
-                                        } else {
-                                            2
+                                        style = textStyle,
+                                        onTextLayout = { textLayoutResult: TextLayoutResult ->
+                                            if (textLayoutResult.hasVisualOverflow ||
+                                                textLayoutResult.lineCount > maxLines
+                                            ) {
+                                                textStyle = textStyle.copy(
+                                                    fontSize = textStyle.fontSize * 0.9,
+                                                )
+                                            } else {
+                                                readyToDraw = true
+                                            }
                                         },
-                                        overflow = TextOverflow.Ellipsis,
-                                        modifier = Modifier.testTag("timer_name"),
+                                        textAlign = TextAlign.Center,
+                                        overflow = TextOverflow.Visible,
+                                        modifier = Modifier
+                                            .testTag("timer_name")
+                                            .fillMaxWidth()
+                                            .drawWithContent {
+                                                if (readyToDraw) drawContent()
+                                            },
                                     )
                                 }
                                 TimerValue(
