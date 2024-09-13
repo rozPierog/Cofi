@@ -9,6 +9,9 @@ import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -125,16 +128,30 @@ class MainActivity : MonetCompatActivity() {
                     startDestination = Destinations.RECIPE_LIST,
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     enterTransition = {
-                        slideIn(AnimatedContentTransitionScope.SlideDirection.End)
+                        scaleIn(
+                            animationSpec = tween(
+                                durationMillis = 100,
+                                delayMillis = 35,
+                            ),
+                            initialScale = 1.1F,
+                        ) + slideIn(AnimatedContentTransitionScope.SlideDirection.End)
                     },
                     exitTransition = {
-                        slideOut(AnimatedContentTransitionScope.SlideDirection.Start)
+                        scaleOut(targetScale = 0.9F) +
+                                slideOut(AnimatedContentTransitionScope.SlideDirection.Start)
                     },
                     popEnterTransition = {
-                        slideIn(AnimatedContentTransitionScope.SlideDirection.Start)
+                        scaleIn(
+                            animationSpec = tween(
+                                durationMillis = 100,
+                                delayMillis = 35,
+                            ),
+                            initialScale = 1.1F,
+                        ) + slideIn(AnimatedContentTransitionScope.SlideDirection.Start)
                     },
                     popExitTransition = {
-                        slideOut(AnimatedContentTransitionScope.SlideDirection.End)
+                        scaleOut(targetScale = 0.9F) +
+                                slideOut(AnimatedContentTransitionScope.SlideDirection.End)
                     },
                 ) {
                     recipeList(navController = navController)
