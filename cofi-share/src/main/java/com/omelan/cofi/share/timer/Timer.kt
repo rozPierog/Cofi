@@ -8,10 +8,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.MotionDurationScale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.Observer
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.omelan.cofi.share.*

@@ -1,13 +1,15 @@
 package com.omelan.cofi.wearos.presentation
 
-import android.util.Log
 import com.google.android.gms.wearable.ChannelClient
 import com.google.android.gms.wearable.Wearable
 import com.google.android.gms.wearable.WearableListenerService
-import com.omelan.cofi.share.*
+import com.omelan.cofi.share.COMBINE_WEIGHT
+import com.omelan.cofi.share.STEP_SOUND_ENABLED
+import com.omelan.cofi.share.STEP_VIBRATION_ENABLED
 import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.model.toRecipes
 import com.omelan.cofi.share.model.toSteps
+import com.omelan.cofi.share.stringToCombineWeight
 import com.omelan.cofi.wearos.presentation.model.DataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,9 +39,6 @@ class CofiWearableListenerService : WearableListenerService() {
                     val jsonString = String(it.readBytes(), StandardCharsets.UTF_8)
                     JSONArray(jsonString)
                 } catch (e: JSONException) {
-                    if (BuildConfig.DEBUG) {
-                        Log.e("saveDataFromChannel", "Data isn't JSON")
-                    }
                     // Ignore the issue, it will retry again later anyway
                     return@use
                 }

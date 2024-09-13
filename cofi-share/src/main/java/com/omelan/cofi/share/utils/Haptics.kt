@@ -4,11 +4,17 @@ import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.os.VibratorManager
 
 class Haptics(context: Context) {
 
     private val vibrator =
-        context.applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            (context.applicationContext.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
+        } else {
+            context.applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        }
+
 //
 //    fun click() {
 //        vibrateCompat(VibrationEffect.EFFECT_CLICK)
