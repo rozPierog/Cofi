@@ -37,7 +37,7 @@ jobs:
       - name: Create empty keystore
         run: echo "storeFile=/" > keystore.properties
       - name: Android Emulator Runner
-        uses: ReactiveCircus/android-emulator-runner@v2.26.0
+        uses: ReactiveCircus/android-emulator-runner@v2.30.1
         with:
           api-level: ${{ matrix.api-level }}
           # target: ${{ matrix.target }}
