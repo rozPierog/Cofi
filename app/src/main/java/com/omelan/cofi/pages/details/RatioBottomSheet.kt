@@ -5,7 +5,10 @@ package com.omelan.cofi.pages.details
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -32,14 +35,29 @@ fun RatioBottomSheet(
     onDismissRequest: () -> Unit,
     allSteps: List<Step>,
 ) {
-    Material3BottomSheet(onDismissRequest = onDismissRequest) {
+    val focusRequester = remember { FocusRequester() }
+
+    Material3BottomSheet(
+        onDismissRequest = onDismissRequest,
+        sheetState = rememberModalBottomSheetState(
+            skipPartiallyExpanded = true,
+            confirmValueChange = {
+                if (it == SheetValue.Expanded) {
+                    focusRequester.requestFocus()
+                } else {
+                    focusRequester.freeFocus()
+                }
+                true
+            },
+        ),
+    ) {
         Column(
             modifier = Modifier
                 .imePadding()
-                .padding(horizontal = Spacing.big)
-                .padding(top = Spacing.big),
+                .navigationBarsPadding()
+                .padding(Spacing.big),
         ) {
-            ManualContent(multiplierControllers, allSteps)
+            ManualContent(multiplierControllers, allSteps, focusRequester)
         }
     }
 }
@@ -50,6 +68,7 @@ val predefinedMultipliers = arrayOf(0.5f, 1f, 2f, 3f)
 private fun ColumnScope.ManualContent(
     multiplierControllers: MultiplierControllers,
     allSteps: List<Step>,
+    focusRequester: FocusRequester,
 ) {
     val (
         weightMultiplier,
@@ -57,7 +76,6 @@ private fun ColumnScope.ManualContent(
         timeMultiplier,
         changeTimeMultiplier,
     ) = multiplierControllers
-    val focusRequester = remember { FocusRequester() }
     val combinedWaterWeight by remember(allSteps) {
         derivedStateOf {
             allSteps.sumOf {
@@ -79,10 +97,6 @@ private fun ColumnScope.ManualContent(
                 }
             }.toFloat()
         }
-    }
-
-    LaunchedEffect(true) {
-        focusRequester.requestFocus()
     }
     Title(stringResource(id = R.string.recipe_details_multiply_weight))
     Spacer(modifier = Modifier.height(Spacing.normal))

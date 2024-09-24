@@ -1,4 +1,4 @@
-@file:Suppress("UnusedReceiverParameter", "UnusedReceiverParameter")
+@file:Suppress("UnusedReceiverParameter")
 
 package com.omelan.cofi.utils
 

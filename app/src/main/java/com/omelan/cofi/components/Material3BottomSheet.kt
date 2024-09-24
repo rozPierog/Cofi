@@ -40,6 +40,6 @@ fun Material3BottomSheet(
         shape = modalBottomSheetShape,
         sheetState = sheetState,
         content = content,
-        windowInsets = WindowInsets(0),
+        contentWindowInsets = { WindowInsets(0) },
     )
 }

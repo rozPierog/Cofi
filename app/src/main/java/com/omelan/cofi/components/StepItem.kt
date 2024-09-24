@@ -12,9 +12,7 @@ import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -80,8 +78,6 @@ fun StepListItem(
                 onLongClick = { onLongClick?.let { it(step) } },
                 enabled = onLongClick != null || onClick != null,
                 role = Role.Button,
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(bounded = true),
             )
             .padding(vertical = Spacing.small),
         Arrangement.Center,

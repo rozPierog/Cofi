@@ -4,39 +4,29 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.ui.card
 import com.omelan.cofi.ui.shapes
-import com.omelan.cofi.utils.URL_ANNOTATION
 import com.omelan.cofi.utils.buildAnnotatedStringWithUrls
 
 @Composable
 fun Description(modifier: Modifier = Modifier, descriptionText: String) {
-    val uriHandler = LocalUriHandler.current
     var isExpanded by remember { mutableStateOf(false) }
     var showExpandButton by remember { mutableStateOf(false) }
     val rotationDegree by animateFloatAsState(
@@ -46,7 +36,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
     )
     val descriptionWithLinks = buildAnnotatedStringWithUrls(descriptionText)
 
-    Surface(modifier = modifier, shape = shapes.card, tonalElevation = 2.dp) {
+    Surface(modifier = modifier, shape = shapes.medium, tonalElevation = 2.dp) {
         Column(
             modifier = Modifier
                 .toggleable(
@@ -54,8 +44,6 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     enabled = showExpandButton,
                     onValueChange = { isExpanded = it },
                     role = Role.Switch,
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = rememberRipple(bounded = true),
                 )
                 .run {
                     if (showExpandButton || isExpanded) {
@@ -71,7 +59,7 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                 }
                 .animateContentSize(),
         ) {
-            ClickableText(
+            Text(
                 text = descriptionWithLinks,
                 maxLines = if (isExpanded) {
                     Int.MAX_VALUE
@@ -83,17 +71,6 @@ fun Description(modifier: Modifier = Modifier, descriptionText: String) {
                     textMotion = TextMotion.Animated,
                 ),
                 modifier = Modifier.animateContentSize(),
-                onClick = {
-                    descriptionWithLinks
-                        .getStringAnnotations(URL_ANNOTATION, it, it)
-                        .firstOrNull()?.let { stringAnnotation ->
-                        uriHandler.openUri(stringAnnotation.item)
-                        return@ClickableText
-                    }
-                    if (showExpandButton) {
-                        isExpanded = !isExpanded
-                    }
-                },
                 onTextLayout = { textLayoutResult ->
                     if (!isExpanded) {
                         showExpandButton = textLayoutResult.didOverflowHeight

@@ -8,7 +8,7 @@ Je sais à quel point il est important d'avoir un contrôle complet sur son temp
 - Minuteurs customisables selon la méthode d'infusion
 - Interface facile à utiliser avec un design épuré
 - Mode image-dans-l'image pour multitâcher
-- application WearOS for une meilleure gestion du temps sur votre montre
+- application Wear OS for une meilleure gestion du temps sur votre montre
 - Aucun suivi des utilisateurs ou de collectage d'information
 
 Je sais à quel point il est frustrant de se contenter d'un café médiocre. C'est pour cela que je veux vous aider à faire votre café comme des professionnels et apprécier votre café à chaque fois. Télécharger Cofi now et commencer votre voyage vers le café parfait!

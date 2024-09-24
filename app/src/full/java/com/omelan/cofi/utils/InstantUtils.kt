@@ -5,7 +5,6 @@ package com.omelan.cofi.utils
 import android.app.Activity
 import android.content.Context
 
-@Suppress("unused", "unused")
 object InstantUtils {
     fun isInstantApp(@Suppress("UNUSED_PARAMETER") context: Context) = false
 

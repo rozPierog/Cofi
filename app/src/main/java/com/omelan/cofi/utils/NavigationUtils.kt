@@ -9,7 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.navigation.NavBackStackEntry
 
 const val tweenDuration = 300
-private fun offsetCalculation(width: Int) = width / 8
+private fun offsetCalculation(width: Int) = width / 4
 fun AnimatedContentTransitionScope<NavBackStackEntry>.slideIn(
     towards: AnimatedContentTransitionScope.SlideDirection,
 ) =
@@ -22,10 +22,8 @@ fun AnimatedContentTransitionScope<NavBackStackEntry>.slideIn(
 
 fun AnimatedContentTransitionScope<NavBackStackEntry>.slideOut(
     towards: AnimatedContentTransitionScope.SlideDirection,
-) =
-    fadeOut(tween(tweenDuration, easing = LinearOutSlowInEasing)) +
-        slideOutOfContainer(
-            towards,
-            animationSpec = tween(tweenDuration, easing = FastOutSlowInEasing),
-            targetOffset = { fullWidth -> offsetCalculation(fullWidth) },
-        )
+) = slideOutOfContainer(
+    towards,
+    animationSpec = tween(tweenDuration, easing = FastOutSlowInEasing),
+    targetOffset = { fullWidth -> offsetCalculation(fullWidth) },
+) + fadeOut(tween(tweenDuration, easing = LinearOutSlowInEasing))

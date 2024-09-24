@@ -3,7 +3,6 @@ package com.omelan.cofi.pages.settings.licenses
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -11,15 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.cofi.pages.settings.settingsItemModifier
 import com.omelan.cofi.share.model.Dependency
 import com.omelan.cofi.share.model.License
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.utils.URL_ANNOTATION
-import com.omelan.cofi.utils.appendLink
+import com.omelan.cofi.utils.linkSpanStyle
 
 @Composable
 fun DependencyItem(dependency: Dependency) {
@@ -31,11 +31,14 @@ fun DependencyItem(dependency: Dependency) {
     }
     val licenses = buildAnnotatedString {
         dependency.licenses.forEachIndexed { index, license ->
-            appendLink(
-                text = license.license,
-                url = license.license_url,
-                color = MaterialTheme.colorScheme.secondary,
-            )
+            withLink(
+                LinkAnnotation.Url(
+                    license.license_url,
+                    styles = linkSpanStyle(MaterialTheme.colorScheme.secondary),
+                ),
+            ) {
+                append(license.license)
+            }
             if (index != dependency.licenses.size - 1) {
                 append(", ")
             }
@@ -71,16 +74,8 @@ fun DependencyItem(dependency: Dependency) {
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onBackground,
         )
-        ClickableText(
+        Text(
             text = licenses,
-            onClick = {
-                licenses
-                    .getStringAnnotations(URL_ANNOTATION, it, it)
-                    .firstOrNull()?.let { stringAnnotation ->
-                    uriHandler.openUri(stringAnnotation.item)
-                    return@ClickableText
-                }
-            },
             modifier = Modifier.padding(bottom = Spacing.normal),
         )
         HorizontalDivider()

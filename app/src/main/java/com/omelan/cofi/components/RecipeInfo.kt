@@ -1,9 +1,6 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package com.omelan.cofi.components
 
 import androidx.compose.animation.*
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.HorizontalDivider
@@ -86,7 +83,7 @@ fun RecipeInfo(
         ) {
             item {
                 AnimatedVisibility(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     visible = stepInfo.coffeeWeight * weightMultiplier > 0,
                     enter = enter,
                     exit = exit,
@@ -101,7 +98,7 @@ fun RecipeInfo(
             }
             item {
                 AnimatedVisibility(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     visible = stepInfo.waterWeight * weightMultiplier > 0,
                     enter = enter,
                     exit = exit,

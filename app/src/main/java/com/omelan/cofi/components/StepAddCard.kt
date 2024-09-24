@@ -65,7 +65,7 @@ fun StepAddCard(
     }
     var stepTime by remember(stepToEdit) {
         if (stepToEdit == null) {
-            return@remember mutableStateOf("0")
+            return@remember mutableStateOf("")
         }
         val stepToEditTime = stepToEdit.time
         if (stepToEditTime == null) {

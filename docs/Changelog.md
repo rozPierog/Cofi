@@ -13,6 +13,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
+## [1.21.8|1.12.8] - 2024-07-12
+
+### Added
+
+### Changed
+- fixed Wear OS font scaling issues
+
+### Removed
+- Removed notification permission from WearOS
+
+
+## [1.21.7|1.12.7] - 2024-06-14
+
+### Added
+
+### Changed
+
+### Removed
+
+
+## [1.21.6|1.12.6] - 2024-06-14
+
+### Added
+
+### Changed
+
+### Removed
+
+
+## [1.21.5|1.12.5] - 2024-05-17
+
+### Added
+
+### Changed
+- Default to empty duration when creating step
+- fixed crash when editing recipe
+- fixed issues with increased font size in the list screen
+- hopefully fixed issues with recipes and timer going invisible after a while
+
+### Removed
+
+
+## [1.21.3|1.12.3] - 2024-04-27
+
+### Added
+- Added support for Predictive Back
+### Changed
+- Changed design of a few elements to better reflect Material You
+- Fixed issue where Support dialog could show up in PiP mode
+- changed NumberInput behaviour to make it less frustrating
+### Removed
+
+
 ## [1.20.1|1.11.1] - 2023-10-06
 
 ### Added

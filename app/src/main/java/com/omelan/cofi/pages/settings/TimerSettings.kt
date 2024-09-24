@@ -1,5 +1,4 @@
 @file:OptIn(
-    ExperimentalMaterialApi::class,
     ExperimentalMaterial3Api::class,
 )
 
@@ -8,8 +7,6 @@ package com.omelan.cofi.pages.settings
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.ArrowForward
@@ -112,10 +109,10 @@ fun TimerSettings(goBack: () -> Unit) {
         ) {
             item {
                 ListItem(
-                    text = {
+                    headlineContent = {
                         Text(text = stringResource(id = R.string.settings_pip_item))
                     },
-                    icon = {
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_picture_in_picture),
                             contentDescription = null,
@@ -127,7 +124,7 @@ fun TimerSettings(goBack: () -> Unit) {
                             enabled = hasPiPPermission,
                         )
                         .testTag("settings_timer_list_item_pip"),
-                    trailing = {
+                    trailingContent = {
                         Switch(
                             modifier = Modifier.testTag("settings_timer_switch_pip"),
                             checked = if (!hasPiPPermission) false else isPiPEnabled,
@@ -139,10 +136,14 @@ fun TimerSettings(goBack: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = { Text(text = stringResource(R.string.settings_background_timer_item)) },
-                    icon = { Icon(Icons.Rounded.Notifications, contentDescription = null) },
+                    headlineContent = {
+                        Text(text = stringResource(R.string.settings_background_timer_item))
+                    },
+                    leadingContent = {
+                        Icon(Icons.Rounded.Notifications, contentDescription = null)
+                    },
                     modifier = Modifier.settingsItemModifier(onClick = toggleBackgroundTimer),
-                    trailing = {
+                    trailingContent = {
                         Switch(
                             checked = isBackgroundTimerEnabled ?: false,
                             onCheckedChange = { toggleBackgroundTimer() },
@@ -152,10 +153,10 @@ fun TimerSettings(goBack: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = {
+                    headlineContent = {
                         Text(text = stringResource(id = R.string.settings_step_sound_item))
                     },
-                    icon = {
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_sound),
                             contentDescription = null,
@@ -164,7 +165,7 @@ fun TimerSettings(goBack: () -> Unit) {
                     modifier = Modifier
                         .settingsItemModifier(onClick = toggleStepChangeSound)
                         .testTag("settings_timer_list_item_sound"),
-                    trailing = {
+                    trailingContent = {
                         Switch(
                             modifier = Modifier.testTag("settings_timer_switch_sound"),
                             checked = isStepSoundEnabled,
@@ -175,10 +176,10 @@ fun TimerSettings(goBack: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = {
+                    headlineContent = {
                         Text(text = stringResource(id = R.string.settings_step_vibrate_item))
                     },
-                    icon = {
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_vibration),
                             contentDescription = null,
@@ -187,7 +188,7 @@ fun TimerSettings(goBack: () -> Unit) {
                     modifier = Modifier
                         .settingsItemModifier(onClick = toggleStepChangeVibration)
                         .testTag("settings_timer_list_item_vibration"),
-                    trailing = {
+                    trailingContent = {
                         Switch(
                             modifier = Modifier.testTag("settings_timer_switch_vibration"),
                             checked = isStepVibrationEnabled,
@@ -198,10 +199,10 @@ fun TimerSettings(goBack: () -> Unit) {
             }
             item {
                 ListItem(
-                    text = {
+                    headlineContent = {
                         Text(text = stringResource(id = R.string.settings_step_next_step_item))
                     },
-                    icon = {
+                    leadingContent = {
                         Icon(
                             Icons.AutoMirrored.Rounded.ArrowForward,
                             contentDescription = null,
@@ -210,7 +211,7 @@ fun TimerSettings(goBack: () -> Unit) {
                     modifier = Modifier
                         .settingsItemModifier(onClick = toggleNextStep)
                         .testTag("settings_timer_list_item_nextStep"),
-                    trailing = {
+                    trailingContent = {
                         Switch(
                             modifier = Modifier.testTag("settings_timer_switch_nextStep"),
                             checked = isNextStepEnabled,
@@ -221,10 +222,10 @@ fun TimerSettings(goBack: () -> Unit) {
             }
             item {
                 ListItem(
-                    overlineText = {
+                    overlineContent = {
                         Text(text = stringResource(id = R.string.settings_combine_weight_item))
                     },
-                    text = {
+                    headlineContent = {
                         Text(
                             text = stringResource(
                                 stringToCombineWeight(combineWeightState).settingsStringId,
@@ -232,7 +233,7 @@ fun TimerSettings(goBack: () -> Unit) {
                             fontWeight = FontWeight.Light,
                         )
                     },
-                    icon = {
+                    leadingContent = {
                         Icon(
                             painterResource(id = R.drawable.ic_list_add),
                             contentDescription = null,
@@ -259,7 +260,6 @@ fun TimerSettings(goBack: () -> Unit) {
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 fun CombineWeightDialog(
     dismiss: () -> Unit,
@@ -274,14 +274,14 @@ fun CombineWeightDialog(
     ) {
         CombineWeight.entries.forEach {
             ListItem(
-                text = { Text(stringResource(id = it.settingsStringId)) },
+                headlineContent = { Text(stringResource(id = it.settingsStringId)) },
                 modifier = Modifier
                     .selectable(
                         selected = combineWeightState == it.name,
                         onClick = { selectCombineMethod(it) },
                     )
                     .testTag("settings_timer_list_item_weight_dialog"),
-                icon = {
+                leadingContent = {
                     RadioButton(
                         selected = combineWeightState == it.name,
                         onClick = { selectCombineMethod(it) },
@@ -300,7 +300,7 @@ fun CombineWeightDialog(
 fun PreviewCombineWeightDialog() {
     CofiTheme {
         CombineWeightDialog(
-            dismiss = { /*TODO*/ },
+            dismiss = { },
             selectCombineMethod = {},
             combineWeightState = "",
         )

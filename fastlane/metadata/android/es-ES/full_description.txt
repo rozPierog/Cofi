@@ -10,7 +10,7 @@ Características:
 - Ajustes de tiempo personalizables para diferentes métodos de preparación
 - Interfaz fácil de usar con un diseño limpio y el último material design
 - Modo imagen en imagen para multitarea
-- Aplicación WearOS para facilitar el cronometraje en su reloj inteligente
+- Aplicación Wear OS para facilitar el cronometraje en su reloj inteligente
 - Sin ningún tipo de seguimiento del usuario ni recopilación de datos
 
 Sé lo frustrante que puede ser conformarse con una taza de café mediocre. Es por eso que quiero ayudarlo a preparar cerveza como un profesional y disfrutar de la taza perfecta en todo momento. ¡Descarga Cofi ahora y comienza tu viaje hacia la perfección del café!

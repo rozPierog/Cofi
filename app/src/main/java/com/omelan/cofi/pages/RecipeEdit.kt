@@ -1,7 +1,6 @@
 @file:OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalMaterial3WindowSizeClassApi::class,
-    ExperimentalComposeUiApi::class,
     ExperimentalFoundationApi::class,
     ExperimentalLayoutApi::class,
 )
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Add
@@ -232,24 +230,27 @@ fun RecipeEdit(
         }
     }
 
-    val safeGoBack: () -> Unit = {
-        if (steps !== stepsToEdit ||
+    val canSafelyExit = !(
+        steps !== stepsToEdit ||
             name.text != recipeToEdit.name ||
             description.text != recipeToEdit.description ||
             pickedIcon != recipeToEdit.recipeIcon
-        ) {
+        )
+
+    val safeGoBack: () -> Unit = {
+        if (!canSafelyExit) {
             isSaveModalVisible = true
         } else {
             goBack()
         }
     }
 
-    BackHandler {
+    BackHandler(stepWithOpenEditor != null || !canSafelyExit) {
         if (stepWithOpenEditor != null) {
             stepWithOpenEditor = null
-            return@BackHandler
+        } else {
+            safeGoBack()
         }
-        safeGoBack()
     }
 
     val onSave: () -> Unit = {
@@ -362,7 +363,6 @@ fun RecipeEdit(
             { _, step -> if (step.id == 0) step.hashCode() else step.id },
         ) { index, step ->
             AnimatedVisibility(
-                modifier = Modifier.animateItemPlacement(),
                 visible = stepWithOpenEditor == step,
                 enter = expandVertically(),
                 exit = shrinkVertically(),
@@ -397,7 +397,6 @@ fun RecipeEdit(
             AnimatedVisibility(
                 visible = stepWithOpenEditor != step,
                 enter = expandVertically(),
-                modifier = Modifier.animateItemPlacement(),
                 exit = shrinkVertically(),
             ) {
                 StepListItem(
@@ -414,7 +413,6 @@ fun RecipeEdit(
             AnimatedVisibility(
                 visible = stepWithOpenEditor == null,
                 enter = expandVertically(),
-                modifier = Modifier.animateItemPlacement(),
                 exit = shrinkVertically(),
             ) {
                 StepAddCard(
@@ -423,7 +421,6 @@ fun RecipeEdit(
                             collapse()
                         }
                     },
-                    modifier = Modifier.animateItemPlacement(),
                     save = { stepToSave ->
                         if (stepToSave != null) {
                             steps = steps.toMutableList().apply { add(stepToSave) }
@@ -752,7 +749,6 @@ private fun CloneDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
 }
 
 @ExperimentalComposeUiApi
-@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Preview
 @Composable
@@ -767,7 +763,6 @@ private fun RecipeAddPreview() {
 }
 
 @ExperimentalComposeUiApi
-@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Preview
 @Composable

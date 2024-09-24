@@ -1,7 +1,6 @@
 package com.omelan.cofi
 
 import android.app.PictureInPictureParams
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -138,13 +137,6 @@ class MainActivity : MonetCompatActivity() {
                         slideOut(AnimatedContentTransitionScope.SlideDirection.End)
                     },
                 ) {
-//                    composable("list_color") {
-//                        ColorPicker(goToList = {
-//                            navController.navigate(
-//                                route = "list",
-//                            )
-//                        }, monet)
-//                    }
                     recipeList(navController = navController)
                     recipeDetails(navController, onTimerRunning, windowSizeClass, db)
                     recipeEdit(navController, db)
@@ -152,13 +144,6 @@ class MainActivity : MonetCompatActivity() {
                     settings(navController)
                 }
             }
-        }
-    }
-
-    override fun onNewIntent(newIntent: Intent?) {
-        super.onNewIntent(intent)
-        if (newIntent != null) {
-            mainActivityViewModel.setIntent(newIntent)
         }
     }
 
@@ -173,6 +158,7 @@ class MainActivity : MonetCompatActivity() {
     }
 
     override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
         val isPiPEnabledFlow: Flow<Boolean> = DataStore(this).getPiPSetting()
         var isPiPEnabled: Boolean
         runBlocking {
@@ -196,6 +182,10 @@ class MainActivity : MonetCompatActivity() {
     }
 
     private fun onResumedCompat() {
+        this.addOnNewIntentListener {
+            mainActivityViewModel.setIntent(it)
+        }
+
         val currentPiPStatus = mainActivityViewModel.canGoToPiP.value ?: false
         if (
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&

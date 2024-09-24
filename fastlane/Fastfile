@@ -107,15 +107,15 @@ platform :android do
    upload_to_play_store(
       track: options[:prerelease] ? 'wear:internal' : 'wear:production',
       skip_upload_apk: true,
-      skip_screenshots: true,
+      skip_upload_screenshots: true,
       aab_paths: ["wearOS/build/outputs/bundle/release/wearOS-release.aab"]
     )
-    upload_to_play_store(
-      track: options[:prerelease] ? 'instant:internal' : 'instant:production',
-      skip_upload_apk: true,
-      skip_screenshots: true,
-      aab_paths: ["app/build/outputs/bundle/instantRelease/app-instant-release.aab"]
-    )
+#     upload_to_play_store(
+#       track: options[:prerelease] ? 'instant:internal' : 'instant:production',
+#       skip_upload_apk: true,
+#       skip_upload_screenshots: true,
+#       aab_paths: ["app/build/outputs/bundle/instantRelease/app-instant-release.aab"]
+#     )
   end
 
   desc "Upload metadata to Google Play Store"
@@ -164,8 +164,8 @@ platform :android do
       text: "is this a prerelease: ",
       boolean: true
     )
-    test
-    create_screenshots
+#     test
+#     create_screenshots
     bump_version(bump_type: bump_type)
     if bump_type != "don't"
         prepare_changelog

@@ -1,4 +1,4 @@
-@file:Suppress("EmptyMethod", "SameReturnValue", "UNUSED_PARAMETER", "unused")
+@file:Suppress("EmptyMethod", "SameReturnValue", "UNUSED_PARAMETER")
 
 package com.omelan.cofi.utils
 

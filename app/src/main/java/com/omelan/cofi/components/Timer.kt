@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,34 +48,62 @@ fun Track(
     modifier: Modifier = Modifier,
     @FloatRange(from = 0.0, to = 1.0) progress: Float,
     color: Color,
-    backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     strokeWidth: Dp,
 ) {
     val stroke = with(LocalDensity.current) {
-        Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Bevel)
+        Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
     }
+    val trackOffset by remember(progress) {
+        derivedStateOf {
+            if (progress == 0f) {
+                return@derivedStateOf 0f
+            }
+            val referenceOffsetForSmallWidth = 15f
+            val referenceWidthForSmallOffset = 10f
+            val referenceOffsetForLargeWidth = 24f
+            val referenceWidthForLargeOffset = 15f
+
+            val widthDifference = referenceWidthForSmallOffset - strokeWidth.value
+
+            val proportionalOffsetChange = widthDifference *
+                (
+                    (referenceOffsetForLargeWidth - referenceOffsetForSmallWidth) /
+                        (referenceWidthForLargeOffset - referenceWidthForSmallOffset)
+                    )
+
+            return@derivedStateOf referenceOffsetForSmallWidth + proportionalOffsetChange
+        }
+    }
+
     Canvas(
         modifier
             .progressSemantics(progress)
             .aspectRatio(1f),
     ) {
-        val startAngle = 270f
-        val sweep = progress * 360f
+        val progressStartAngle = 270f
+        val progressSweep = progress * 360f
         val diameterOffset = stroke.width / 2
         val arcDimen = size.width - 2 * diameterOffset
-        drawArc(
-            color = backgroundColor,
-            startAngle = startAngle,
-            sweepAngle = 360f,
-            useCenter = false,
-            topLeft = Offset(diameterOffset, diameterOffset),
-            size = Size(arcDimen, arcDimen),
-            style = stroke,
-        )
+
+        val backgroundStart = progressStartAngle + progressSweep + trackOffset
+        val backgroundSweep = 360f - progressSweep - trackOffset - trackOffset
+
+        if (backgroundSweep > 0) {
+            drawArc(
+                color = backgroundColor,
+                startAngle = backgroundStart,
+                sweepAngle = backgroundSweep,
+                useCenter = false,
+                topLeft = Offset(diameterOffset, diameterOffset),
+                size = Size(arcDimen, arcDimen),
+                style = stroke,
+            )
+        }
         drawArc(
             color = color,
-            startAngle = startAngle,
-            sweepAngle = sweep,
+            startAngle = progressStartAngle,
+            sweepAngle = progressSweep,
             useCenter = false,
             topLeft = Offset(diameterOffset, diameterOffset),
             size = Size(arcDimen, arcDimen),
@@ -182,7 +211,7 @@ fun Timer(
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                         showMillis = !isInPiP,
                     )
-                    HorizontalDivider()
+                    HorizontalDivider(color = MaterialTheme.colorScheme.secondaryContainer)
                     StepNameText(
                         currentStep = currentStep,
                         timeMultiplier = timeMultiplier,
@@ -195,7 +224,7 @@ fun Timer(
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                     )
-                    HorizontalDivider()
+                    HorizontalDivider(color = MaterialTheme.colorScheme.secondaryContainer)
                     TimerValue(
                         modifier = Modifier.weight(1f, true),
                         currentStep = currentStep,
@@ -225,6 +254,7 @@ fun Timer(
 @Preview
 @Composable
 fun TimerPreview() {
+    val animatedProgressValue = remember { Animatable(0.98f) }
     Timer(
         currentStep = Step(
             id = 1,
@@ -234,7 +264,7 @@ fun TimerPreview() {
             type = StepType.OTHER,
             orderInRecipe = 0,
         ),
-        animatedProgressValue = Animatable(0.5f),
+        animatedProgressValue = animatedProgressValue,
         animatedProgressColor = Animatable(green600),
         isInPiP = false,
         isDone = false,

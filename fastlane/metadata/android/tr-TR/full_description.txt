@@ -10,7 +10,7 @@ Demleme süresini tam olarak kontrol etmenin ne kadar önemli olduğunu biliyoru
 - Değişik demleme metodları için değiştirilebilir zaman ayarları
 - Temiz bir tasarım ve en yeni materyal tasarım ile kolay kullanılabilir bir arayüz
 - Birden fazla şey yapabilmeniz için picture-in-picture modu
-- Akıllı saatinizden kolayca zamanlama için WearOS uygulaması
+- Akıllı saatinizden kolayca zamanlama için Wear OS uygulaması
 - Kesinlikle hiçbir kullanıcı takibi veya bilgi toplama yok
 
 Vasat bir kahveyi kabullenmenin ne kadar zor olduğunu biliyorum. Bu yüzden bir uzman gibi kahve yapıp her seferinde mükemmel bir fincan kahve içmenize yardım etmek istiyorum. Cofi'yi şimdi indirin ve mükemmel kahve yolculuğunuza başlayın!

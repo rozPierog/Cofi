@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="settings_snackbar_restore">
+        <item quantity="one">Αποκαταστάθηκε η συνταγή %d</item>
+        <item quantity="other">Αποκαταστάθηκαν οι συνταγές %d</item>
+    </plurals>
+</resources>

@@ -1,7 +1,6 @@
 package com.omelan.cofi.pages
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,7 +49,6 @@ class RecipeDetailsTest {
         type = StepType.OTHER,
     )
 
-    @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     @Test
     fun testEmptyDescription() {
@@ -70,7 +68,6 @@ class RecipeDetailsTest {
         composeTestRule.onNodeWithTag("recipe_description").assertDoesNotExist()
     }
 
-    @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     @Test
     fun testFilledDescription() {
@@ -90,7 +87,6 @@ class RecipeDetailsTest {
         composeTestRule.onNodeWithTag("recipe_description").assertExists()
     }
 
-    @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     @Test
     fun testStepsWithTime() {
@@ -118,7 +114,6 @@ class RecipeDetailsTest {
             .assertIsOn()
     }
 
-    @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     @Test
     fun testStepsWithoutTime() {
@@ -146,7 +141,6 @@ class RecipeDetailsTest {
             .assertIsOff()
     }
 
-    @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     @Test
     fun pipTest() {

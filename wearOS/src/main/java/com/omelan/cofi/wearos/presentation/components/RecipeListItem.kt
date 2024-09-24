@@ -1,9 +1,12 @@
-@file:OptIn(ExperimentalWearMaterialApi::class, ExperimentalAnimationApi::class)
+@file:OptIn(ExperimentalWearMaterialApi::class)
 
 package com.omelan.cofi.wearos.presentation.components
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -64,7 +67,9 @@ fun RecipeListItem(modifier: Modifier = Modifier, recipe: Recipe?, onClick: () -
     }
     AnimatedContent(targetState = recipe, transitionSpec = {
         fadeIn() togetherWith  fadeOut()
-    }) {
+    },
+        label = "RecipeListItemAnimation"
+    ) {
         if (it != null) {
             RecipeListItemRaw(
                 onClick = onClick,

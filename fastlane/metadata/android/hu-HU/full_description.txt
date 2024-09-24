@@ -10,7 +10,7 @@ Jellemzők:
 - Testreszabható időbeállítások a különböző főzési módokhoz
 - Könnyen használható felület letisztult dizájnnal és a legújabb anyagkialakítással
 - Kép a képben mód többfeladatos munkavégzéshez
-- WearOS alkalmazás az okosórán való egyszerű időzítéshez
+- Wear OS alkalmazás az okosórán való egyszerű időzítéshez
 - Abszolút nincs felhasználókövetés vagy adatgyűjtés
 
 Tudom, milyen frusztráló lehet megelégedni egy közepes csésze kávéval. Ezért szeretnék segíteni, hogy profiként főzzön, és minden alkalommal élvezze a tökéletes csészét. Töltse le most a Cofi-t, és induljon el a tökéletes kávé felé!
