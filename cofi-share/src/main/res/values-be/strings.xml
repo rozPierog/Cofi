@@ -128,4 +128,6 @@
     <string name="recipe_details_recipeRatio">Суадносіны рэцэпту: 1:%1$s</string>
     <string name="notification_channel_timer_name">Таймер у фонавым рэжыме</string>
     <string name="notification_action_continue">Працягнуць</string>
+    <string name="prepopulate_v60_1cup_description">Рэцэпт створаны Джэймсам Хофманам\nКрыніца: https://youtu.be/1oB1oDrDkHM\nПерш чым пачаць, нагрэйце V60, паклаўшы паперу ў сярэдзіну конуса і заліўшы яе гарачай вадой. Гэта падрыхтуе V60 і паперу да працэсу заварвання.\nСтупень памолу: дробны - сярэдне-дробны\nТэмпература: чым гарачэй, тым лепш (асабліва для лёгкага абсмажвання)</string>
+    <string name="prepopulate_frenchPress_description">Рэцэпт створаны Джэймсам Хофманам\nКрыніца: https://youtu.be/st571DYYTR8\nПамер памолу: сярэдні\nМожна піць праз 5 хвілін пасля апошняга этапу, але чым дольш чакаць, тым лепей ён будзе</string>
 </resources>
