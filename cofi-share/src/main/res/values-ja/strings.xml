@@ -35,7 +35,7 @@
 \n温度: 熱いほど良い（特に軽めの焙煎の場合）</string>
     <string name="prepopulate_step_swirl">混ぜる</string>
     <string name="button_discard">破棄</string>
-    <string name="prepopulate_v60_1cup_name">1 Cup V60 (1カップのV60)</string>
+    <string name="prepopulate_v60_1cup_name">1 Cup V60 (１カップのV60)</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="prepopulate_v60_1cup_description">レシピ: James Hoffmann
 \nソース: https://youtu.be/1oB1oDrDkHM
@@ -138,9 +138,8 @@
     <string name="name_cezve">ジェズヴェ</string>
     <string name="settings_backup_item">バックアップ/復元</string>
     <string name="support_dialog_title">Cofi をお楽しみいただけましたでしょうか？</string>
-    <string name="prepopulate_aero_description">レシピ作成者: James Hoffmann
-\n出典: https://youtu.be/j6VlT_jUVPc
-\n挽き加減: ライトローストならミディアムの細目。深煎りになればなるほど、挽く量を増やして粗挽きにしたほうがよい。
-\n温度: ライトロースト用-沸騰させてすぐに使う。ダークロースト用-85～90</string>
+    <string name="prepopulate_aero_description">レシピ作成者: James Hoffmann\n出典: https://youtu.be/j6VlT_jUVPc\n挽き加減: ライトローストならミディアムの細目。深煎りになればなるほど、挽く量を増やして粗挽きにしたほうがよい。\n温度: ライトロースト用-沸騰させてすぐに使う。ダークロースト用-85～90℃</string>
     <string name="prepopulate_clever_dripper_step_rinse">お湯でフィルターを洗い流します</string>
+    <string name="prepopulate_clever_dripper_step_break_crust">かき混ぜたり振ったりしてクラストを崩す</string>
+    <string name="prepopulate_clever_dripper_step_draw_down">カップの上に置き、下まで完全に引き下げる</string>
 </resources>
