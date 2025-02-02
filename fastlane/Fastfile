@@ -98,7 +98,7 @@ platform :android do
 
   desc "Deploy a new version to the Google Play Store"
   lane :deploy_gps do |options|
-    gradle(task: "app:licensePlayStoreRelease app:bundlePlayStoreRelease wearOS:licenseRelease wearOS:bundleRelease app:bundleInstantRelease")
+    gradle(task: "app:licensePlayStoreReleaseReport app:bundlePlayStoreRelease wearOS:licenseReleaseReport wearOS:bundleRelease app:bundleInstantRelease")
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
       skip_upload_apk: true,

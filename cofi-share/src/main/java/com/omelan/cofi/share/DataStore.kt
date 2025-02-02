@@ -24,7 +24,7 @@ open class DataStore(private val context: Context) {
     }
 
     fun getBackgroundTimerSetting() = context.dataStore.data.map { preferences: Preferences ->
-        preferences[BACKGROUND_TIMER_ENABLED]
+        preferences[BACKGROUND_TIMER_ENABLED] == true
     }
 
     suspend fun setStepChangeSound(value: Boolean) {
