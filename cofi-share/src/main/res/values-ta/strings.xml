@@ -126,7 +126,7 @@
     <string name="hoffmann_credits_title">சேம்ச் ஆஃப்மேன் எழுதிய இயல்புநிலை சமையல்</string>
     <string name="hoffmann_credits_subtitle">அவரது யூடியூப் சேனலுக்குச் செல்லுங்கள்</string>
     <string name="prepopulate_chemex_description">செய்முறை உருவாக்கியவர்: சேம்ச் ஆஃப்மேன்\n ஆதாரம்: https://youtu.be/ikt-x5x7yoc\n அரைக்கும் அளவு: நடுத்தர தண்டம்\n வெப்பநிலை: வெப்பமானது, சிறந்தது (குறிப்பாக இலகுவான ரோச்ட்களுடன்)\n வடிகட்டியின் கடினமான பகுதி வடிகால் பக்கத்தில் இருப்பதை உறுதிப்படுத்திக் கொள்ளுங்கள்\n மதுபானத்திலிருந்து காற்றை வெளியேற்றுவதைத் தடுக்க வேண்டாம் என்று ஒரு கண் வைத்திருங்கள்</string>
-    <string name="prepopulate_aero_step_piston">பிச்டன் 1 செ.மீ.</string>
+    <string name="prepopulate_aero_step_piston">பிஸ்டனை 1 செ.மீ. தொலைவில் ப்ரூவரில் வை</string>
     <string name="prepopulate_aero_step_press">மெதுவாக பிச்டனை அழுத்தவும்</string>
     <string name="prepopulate_aero_description">செய்முறை உருவாக்கியவர்: சேம்ச் ஆஃப்மேன்\n ஆதாரம்: https://youtu.be/j6vlt_juvpc\n அரைக்கும் அளவு: ஒளி வறுத்தலுக்கு - நடுத்தரத்தின் சிறந்த முடிவு. நீங்கள் இருண்ட நீங்கள் அதிகரிக்கும் போது, டோசை அதிகரிக்கவும், அரைக்கவும் நீங்கள் விரும்பலாம்\n வெப்பநிலை: ஒளி வறுத்தலுக்காக - ஒரு கொதி நிலைக்கு கொண்டு வரப்பட்டு உடனடியாகப் பயன்படுத்தப்படுகிறது. இருண்ட ரோச்ட்களுக்கு - 85-90</string>
     <string name="prepopulate_clever_dripper_step_rinse">வடிகட்டியை சூடான நீரில் துவைக்கவும்</string>
