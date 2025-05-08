@@ -83,27 +83,16 @@
     <string name="prepopulate_step_plunge">امزج قشرة الخليط</string>
     <string name="prepopulate_step_stir_crust">قم برفع الرغوة وفتات القهوة التي بالأعلى</string>
     <string name="prepopulate_step_scoop_coffee">وعاء القهوة</string>
-    <string name="prepopulate_frenchPress_name">الوصفة من إعداد: جيمس هوفمان
-        \nالمصدر: https://youtu.be/st571DYYTR8
-        \nمستوى الطحن: متوسط
-        \nيمكنك السكب بعد 5 دقائق من الخطوة الأخيرة، كلما طالت مدة البقاء كان ذلك أفضل</string>
-    <string name="prepopulate_frenchPress_description">الوصفات الأساسية من إعداد جميس هوفمان</string>
+    <string name="prepopulate_frenchPress_name">فرنش بريس</string>
+    <string name="prepopulate_frenchPress_description"><p>الوصفة أنشأها: جيمس هوفمان</p>\n<p>المصدر: <a href="https://youtu.be/st571DYYTR8">https://youtu.be/st571DYYTR8</a></p>\n<p>حجم الطحن: متوسط</p>\n<p>يمكنك الصب بعد 5 دقائق من الخطوة الأخيرة، لكن كلما تركته لفترة أطول، كان أفضل.</p></string>
     <string name="hoffmann_credits_title">إذهب الى قناته على اليوتيوب</string>
-    <string name="hoffmann_credits_subtitle">كيميكس</string>
-    <string name="prepopulate_chemex_name">الوصفة من اعداد:جيمس هوفمان
-        \nالمصدر: https://youtu.be/ikt–X5x7yoc
-        \nمستوى الطحن: ناعم متوسط
-        \nدرجة الحرارة: كلما ارتفعت درجة الحرارة كان ذلك افضل (بخاصة مع التحميص الفاتح)
-        \nتأكد من أن يكون الجزء الصلب من الفلتر من جهة التصريف
-        \nإنتبه أن لا تمنع الهواء من الخروج من محضّر القهوة</string>
-    <string name="prepopulate_chemex_description">إيروبريس</string>
+    <string name="hoffmann_credits_subtitle">انتقل إلى قناته على يوتيوب</string>
+    <string name="prepopulate_chemex_name">كيميكس</string>
+    <string name="prepopulate_chemex_description"><p>الوصفة أنشأها: جيمس هوفمان</p>\n<p>المصدر: <a href="https://youtu.be/ikt-X5x7yoc">https://youtu.be/ikt-X5x7yoc</a></p>\n<p>حجم الطحن: متوسط ناعم</p>\n<p>درجة الحرارة: كلما كانت أكثر سخونة، كان ذلك أفضل (خصوصًا مع التحميص الفاتح)</p>\n<p>تأكد من أن الجزء الأكثر صلابة من الفلتر في جانب التصريف</p>\n<p>راقب عدم حجب الهواء المتحرك خارج جهاز التحضير</p></string>
     <string name="prepopulate_aero_name">ابدأ بوضع المكبس على بعد 1سم داخل المحضّر</string>
     <string name="prepopulate_aero_step_piston">إضغط المكبس بخفة</string>
-    <string name="prepopulate_aero_step_press">الوصفة من إعداد: جيمس هوفمان
-        \nلمصدر: https://youtu.be/j6VlT_jUVPc
-        \nمستوى الطحن: للتحميصات الفاتحة، متوسط قريب من الناعم. كلما اصبح التحميص غامقاً اكثر، كلما ازدادت الجرعة وأصبح مستوى الطحن أخشن
-        \nدرجة الحرارة: للتحميصات الفاتحة، سخنها حتى درجة الغليان واستخدمها مباشرة. للتحميصات الغامقة، 80–90 درجة سيليزية</string>
-    <string name="prepopulate_aero_description">المقطر الذكي</string>
+    <string name="prepopulate_aero_step_press">اضغط على المكبس برفق</string>
+    <string name="prepopulate_aero_description"><p>الوصفة أنشأها: جيمس هوفمان</p>\n<p>المصدر: <a href="https://youtu.be/j6VlT_jUVPc">https://youtu.be/j6VlT_jUVPc</a></p>\n<p>حجم الطحن: للتحميص الفاتح – نهاية ناعمة من المتوسط. كلما كان التحميص أغمق، قد تفضل زيادة الجرعة وتكبير حجم الطحن.</p>\n<p>درجة الحرارة: للتحميص الفاتح – يُغلى ويُستخدم على الفور. للتحميص الداكن – 85–90℃.</p></string>
     <string name="prepopulate_clever_dripper_step_rinse">إشطف الفلتر بماءٍ حار</string>
     <string name="prepopulate_clever_dripper_step_break_crust">بعثر [الكتلة/القشرة] الخارجية أما بالتحريك او بالهز</string>
     <string name="prepopulate_clever_dripper_step_draw_down">ثبت المقطّرة فوق الكوب واتركها حتى يتقطر المحلول بالكامل</string>
@@ -117,12 +106,12 @@
     <string name="tereszkiewicz_credits_title">ايقونة التطبيق من تصميم: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">القِ نظرة على حسابه على Dribbble</string>
     <string name="recipe_create_title">قم باضافة وصفة</string>
-    <string name="recipe_clone_title">إنسخ هذه الوصفة</string>
+    <string name="recipe_clone_title">إنسخ هذه الوصفة؟</string>
     <string name="recipe_clone_text">هذا سينشئ وصفة مكررة من هذه الوصفة</string>
     <string name="recipe_clone_suffix">%1$s – نسخة</string>
     <string name="app_version">إصدار التطبيق</string>
     <string name="recipe_details_noTime">أضغط بدء للإستمرار</string>
-    <string name="step_add_duration_explainer">مدة الخطوة تحدد الوقت اللازم لإنهاء إجراء معين (بالثواني). إترك الحقل فارغاً ليتم إيقاف المؤقت حتى تكون جاهزاً</string>
+    <string name="step_add_duration_explainer">مدة الخطوة تحدد الوقت اللازم لإنهاء إجراء معين (بالثواني). إترك الحقل فارغاً ليتم إيقاف المؤقت حتى تكون جاهزاً.</string>
     <string name="settings_backup">النسخ الاحتياطي</string>
     <string name="settings_restore">استرجاع النسخ الاحتياطي</string>
     <string name="settings_addDefault">قم بإضافة وصفات أساسية</string>
@@ -131,7 +120,7 @@
     <string name="settings_step_vibrate_item">اهتزاز عند انتهاء الخطوة</string>
     <string name="recipe_details_multiply_time">مُضاعِف الوقت</string>
     <string name="recipe_details_multiply_weight">مُضاعِف الوزن</string>
-    <string name="infoBox_wearOS_title">أصبح Cofi متوفراً على ساعات WearOS!</string>
+    <string name="infoBox_wearOS_title">أصبح Cofi متوفراً على ساعات WearOS</string>
     <string name="infoBox_wearOS_body">قم بتنزيل Cofi لساعة WearOS خاصتك!</string>
     <string name="settings_sync_with_phone">إسترجع الإعدادات من الهاتف</string>
     <string name="name_grinder">مطحنة القهوة</string>
@@ -140,7 +129,7 @@
     <string name="name_espresso">ماكنة إسبريسو</string>
     <string name="name_cold_brew">كولد برو</string>
     <string name="name_siphon">سايفون</string>
-    <string name="name_cezve">Cezve</string>
+    <string name="name_cezve">إبريق القهوة</string>
     <string name="name_cup">كوب</string>
     <string name="support_dialog_title">هل انت مستمتع بCofi؟</string>
     <string name="support_dialog_body"> أقدر دعمك!  يمكنك مساعدتي لمواصلة القيام بما أحبه عن طريق اختيار واحد أو أكثر مما يلي.</string>
