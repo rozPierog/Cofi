@@ -109,7 +109,10 @@ fun RecipeList(
     ) {
         LazyVerticalGrid(
             contentPadding = getDefaultPadding(it, FabType.Normal),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xSmall),
+            verticalArrangement = Arrangement.spacedBy(
+                if (isMultiColumn)
+                    Spacing.normal else Spacing.xSmall,
+            ),
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.background),
@@ -123,7 +126,7 @@ fun RecipeList(
                     recipe = recipe,
                     onPress = navigateToRecipe,
                     shape = when {
-                        recipes.size == 1 -> ItemShape.Only
+                        recipes.size == 1 || isMultiColumn -> ItemShape.Only
                         index == 0 -> ItemShape.First
                         index == recipes.lastIndex -> ItemShape.Last
                         else -> ItemShape.Middle
