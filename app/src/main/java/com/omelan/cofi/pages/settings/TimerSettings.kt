@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
+import com.omelan.cofi.components.CofiSwitch
 import com.omelan.cofi.components.Material3Dialog
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
@@ -125,7 +126,7 @@ fun TimerSettings(goBack: () -> Unit) {
                         )
                         .testTag("settings_timer_list_item_pip"),
                     trailingContent = {
-                        Switch(
+                        CofiSwitch(
                             modifier = Modifier.testTag("settings_timer_switch_pip"),
                             checked = if (!hasPiPPermission) false else isPiPEnabled,
                             onCheckedChange = { togglePiP() },
@@ -144,8 +145,8 @@ fun TimerSettings(goBack: () -> Unit) {
                     },
                     modifier = Modifier.settingsItemModifier(onClick = toggleBackgroundTimer),
                     trailingContent = {
-                        Switch(
-                            checked = isBackgroundTimerEnabled ?: false,
+                        CofiSwitch(
+                            checked = isBackgroundTimerEnabled,
                             onCheckedChange = { toggleBackgroundTimer() },
                         )
                     },
@@ -166,7 +167,7 @@ fun TimerSettings(goBack: () -> Unit) {
                         .settingsItemModifier(onClick = toggleStepChangeSound)
                         .testTag("settings_timer_list_item_sound"),
                     trailingContent = {
-                        Switch(
+                        CofiSwitch(
                             modifier = Modifier.testTag("settings_timer_switch_sound"),
                             checked = isStepSoundEnabled,
                             onCheckedChange = { toggleStepChangeSound() },
@@ -189,7 +190,7 @@ fun TimerSettings(goBack: () -> Unit) {
                         .settingsItemModifier(onClick = toggleStepChangeVibration)
                         .testTag("settings_timer_list_item_vibration"),
                     trailingContent = {
-                        Switch(
+                        CofiSwitch(
                             modifier = Modifier.testTag("settings_timer_switch_vibration"),
                             checked = isStepVibrationEnabled,
                             onCheckedChange = { toggleStepChangeVibration() },
@@ -212,7 +213,7 @@ fun TimerSettings(goBack: () -> Unit) {
                         .settingsItemModifier(onClick = toggleNextStep)
                         .testTag("settings_timer_list_item_nextStep"),
                     trailingContent = {
-                        Switch(
+                        CofiSwitch(
                             modifier = Modifier.testTag("settings_timer_switch_nextStep"),
                             checked = isNextStepEnabled,
                             onCheckedChange = { toggleNextStep() },
