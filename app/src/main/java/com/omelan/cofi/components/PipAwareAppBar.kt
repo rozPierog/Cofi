@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 
 package com.omelan.cofi.components
 
@@ -102,7 +102,7 @@ fun InsetAwareTopAppBar(
     val appBarContainerColor by rememberUpdatedState(
         lerp(
             MaterialTheme.colorScheme.surface,
-            MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
+            MaterialTheme.colorScheme.surfaceContainer,
             FastOutLinearInEasing.transform(scrollFraction),
         ),
     )
@@ -113,7 +113,7 @@ fun InsetAwareTopAppBar(
             drawRect(appBarContainerColor)
         },
     ) {
-        LargeTopAppBar(
+        LargeFlexibleTopAppBar(
             title = title,
             navigationIcon = navigationIcon,
             actions = actions,
