@@ -31,6 +31,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component1
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -456,7 +458,7 @@ fun RecipeEdit(
                             )
                         }
                     }
-                    IconButton(
+                    FilledIconButton(
                         modifier = Modifier.testTag("recipe_edit_save"),
                         onClick = onSave,
                         enabled = canSave,
