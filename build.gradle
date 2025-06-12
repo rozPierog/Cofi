@@ -1,10 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlin_version = '2.0.20'
-        wear_compose_version = '1.4.0'
-        room_version = "2.6.1"
-        compose_bom_version = "2025.01.01"
+        kotlin_version = '2.1.0'
+        wear_compose_version = '1.4.1'
+        room_version = "2.7.1"
+        compose_bom_version = "2025.06.00"
     }
     repositories {
         google()
@@ -12,7 +12,7 @@ buildscript {
         maven { url 'https://plugins.gradle.org/m2' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.8.0'
+        classpath 'com.android.tools.build:gradle:8.12.0-alpha04'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.jaredsburrows:gradle-license-plugin:0.9.8'
     }

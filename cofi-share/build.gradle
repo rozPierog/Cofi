@@ -3,16 +3,16 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.devtools.ksp'
     id "kotlin-parcelize"
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.1.0"
 }
 
 android {
     namespace 'com.omelan.cofi.share'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         minSdk 25
-        targetSdk 35
+        targetSdk 36
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -37,9 +37,6 @@ android {
     }
     buildFeatures { // Enables Jetpack Compose for this module
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
     }
 }
 
@@ -67,19 +64,20 @@ class RoomSchemaArgProvider implements CommandLineArgumentProvider {
 dependencies {
     implementation platform("androidx.compose:compose-bom:$compose_bom_version")
 
-    api 'androidx.appcompat:appcompat:1.7.0'
+    api 'androidx.appcompat:appcompat:1.7.1'
     implementation 'androidx.test:core-ktx:1.6.1'
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.foundation:foundation"
     implementation "androidx.compose.material3:material3"
-    api "androidx.datastore:datastore-preferences:1.1.2"
+    api "androidx.compose.material:material-icons-core:1.7.8"
+    api "androidx.datastore:datastore-preferences:1.1.7"
     api "androidx.wear:wear-ongoing:1.0.0"
     //Room
 
     api "androidx.room:room-runtime:$room_version"
     api 'androidx.test.ext:junit-ktx:1.2.1'
-    api "androidx.lifecycle:lifecycle-livedata-ktx:2.8.7"
-    implementation 'androidx.work:work-runtime-ktx:2.10.0'
+    api "androidx.lifecycle:lifecycle-livedata-ktx:2.9.1"
+    implementation 'androidx.work:work-runtime-ktx:2.10.1'
     ksp "androidx.room:room-compiler:$room_version"
     api "androidx.room:room-ktx:$room_version"
     androidTestApi "androidx.room:room-testing:$room_version"
