@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3ExpressiveApi::class)
+
 package com.omelan.cofi.ui
 
 import android.content.Context
@@ -118,5 +120,5 @@ fun CofiTheme(
             if (isDarkMode) darkColorScheme() else lightColorScheme()
         }
     }
-    MaterialTheme(colorScheme = colors, content = content)
+    MaterialExpressiveTheme(colorScheme = colors, content = content)
 }
