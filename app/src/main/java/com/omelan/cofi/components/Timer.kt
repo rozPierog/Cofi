@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3ExpressiveApi::class)
+
 package com.omelan.cofi.components
 
 import android.annotation.SuppressLint
@@ -6,21 +8,13 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.AnimationVector4D
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.progressSemantics
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
@@ -48,68 +42,21 @@ fun Track(
     modifier: Modifier = Modifier,
     @FloatRange(from = 0.0, to = 1.0) progress: Float,
     color: Color,
-    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     strokeWidth: Dp,
 ) {
     val stroke = with(LocalDensity.current) {
         Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
     }
-    val trackOffset by remember(progress) {
-        derivedStateOf {
-            if (progress == 0f) {
-                return@derivedStateOf 0f
-            }
-            val referenceOffsetForSmallWidth = 15f
-            val referenceWidthForSmallOffset = 10f
-            val referenceOffsetForLargeWidth = 24f
-            val referenceWidthForLargeOffset = 15f
 
-            val widthDifference = referenceWidthForSmallOffset - strokeWidth.value
-
-            val proportionalOffsetChange = widthDifference *
-                (
-                    (referenceOffsetForLargeWidth - referenceOffsetForSmallWidth) /
-                        (referenceWidthForLargeOffset - referenceWidthForSmallOffset)
-                    )
-
-            return@derivedStateOf referenceOffsetForSmallWidth + proportionalOffsetChange
-        }
-    }
-
-    Canvas(
-        modifier
-            .progressSemantics(progress)
-            .aspectRatio(1f),
-    ) {
-        val progressStartAngle = 270f
-        val progressSweep = progress * 360f
-        val diameterOffset = stroke.width / 2
-        val arcDimen = size.width - 2 * diameterOffset
-
-        val backgroundStart = progressStartAngle + progressSweep + trackOffset
-        val backgroundSweep = 360f - progressSweep - trackOffset - trackOffset
-
-        if (backgroundSweep > 0) {
-            drawArc(
-                color = backgroundColor,
-                startAngle = backgroundStart,
-                sweepAngle = backgroundSweep,
-                useCenter = false,
-                topLeft = Offset(diameterOffset, diameterOffset),
-                size = Size(arcDimen, arcDimen),
-                style = stroke,
-            )
-        }
-        drawArc(
-            color = color,
-            startAngle = progressStartAngle,
-            sweepAngle = progressSweep,
-            useCenter = false,
-            topLeft = Offset(diameterOffset, diameterOffset),
-            size = Size(arcDimen, arcDimen),
-            style = stroke,
-        )
-    }
+    CircularWavyProgressIndicator(
+        progress = { progress },
+        color = color,
+        modifier = modifier .aspectRatio(1f),
+        stroke = stroke,
+        trackStroke = stroke,
+        waveSpeed = strokeWidth,
+        wavelength = strokeWidth * 4
+    )
 }
 
 @Composable
@@ -126,9 +73,9 @@ fun Timer(
     timeMultiplier: Float = 1.0f,
 ) {
     val strokeWidth = if (isInPiP) {
-        10.dp
+        5.dp
     } else {
-        15.dp
+        10.dp
     }
     val calculatedAnimatedProgress = remember {
         derivedStateOf {
