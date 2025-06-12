@@ -163,7 +163,7 @@ fun Timer(
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                         showMillis = !isInPiP,
                     )
-                    HorizontalDivider(color = MaterialTheme.colorScheme.secondaryContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.primaryContainer)
                     StepNameText(
                         currentStep = currentStep,
                         timeMultiplier = timeMultiplier,
@@ -177,7 +177,7 @@ fun Timer(
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                     )
-                    HorizontalDivider(color = MaterialTheme.colorScheme.secondaryContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.primaryContainer)
                     TimerValue(
                         modifier = Modifier.weight(1f, true),
                         currentStep = currentStep,
