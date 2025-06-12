@@ -23,12 +23,14 @@ fun RecipeListInfoBox(
     text: @Composable () -> Unit,
     icon: (@Composable () -> Unit)? = null,
 ) {
-    val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = {
-        if (it == SwipeToDismissBoxValue.StartToEnd) {
-            onDismiss()
-        }
-        true
-    })
+    val dismissState = rememberSwipeToDismissBoxState(
+        confirmValueChange = {
+            if (it == SwipeToDismissBoxValue.StartToEnd) {
+                onDismiss()
+            }
+            true
+        },
+    )
 
     SwipeToDismissBox(
         modifier = modifier,
@@ -38,7 +40,9 @@ fun RecipeListInfoBox(
         enableDismissFromEndToStart = false,
     ) {
         RecipeListItemBackground(
+            modifier.padding(bottom = Spacing.small),
             contentPadding = PaddingValues(start = Spacing.big, bottom = Spacing.big),
+            shape = ItemShape.Only,
             onClick = onClick,
         ) {
             Row(

@@ -1,6 +1,6 @@
 package com.omelan.cofi.pages.list
 
-import android.app.Activity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
@@ -95,9 +95,11 @@ fun createRecipeListHeaderInfo(animateToTop: suspend () -> Unit): (LazyGridScope
 
 @Composable
 fun LazyGridItemScope.WatchOsNotice(wearNodesWithoutApp: List<String>, onDismiss: () -> Unit) {
-    val activity = LocalContext.current as Activity
+    val activity = LocalActivity.current
     val lifecycleOwner = LocalLifecycleOwner.current
-
+    if (activity == null) {
+        return
+    }
     RecipeListInfoBox(
         title = {
             Text(

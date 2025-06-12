@@ -1,11 +1,11 @@
 package com.omelan.cofi.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,29 +16,32 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
 import com.omelan.cofi.share.model.Recipe
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.toMillis
-import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.ui.shapes
+import com.omelan.cofi.ui.*
+
+enum class ItemShape(val shape: CornerBasedShape) {
+    First(firstItem),
+    Middle(middleItem),
+    Last(lastItem),
+    Only(aloneItem), // Used when there is only one item in the list
+}
 
 @Composable
 fun RecipeListItemBackground(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onClick: () -> Unit,
+    shape: ItemShape,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Surface(
+    ElevatedCard(
         modifier = modifier,
-        tonalElevation = 2.dp,
-        border = BorderStroke(Dp.Hairline, MaterialTheme.colorScheme.outlineVariant),
-        shape = shapes.medium,
-        color = MaterialTheme.colorScheme.surface,
+        shape = shape.shape,
     ) {
         Column(
             modifier
@@ -55,11 +58,13 @@ fun RecipeListItemBackground(
 @Composable
 fun LazyGridItemScope.RecipeItem(
     recipe: Recipe,
+    shape: ItemShape = ItemShape.Middle,
     allSteps: List<Step> = emptyList(),
     onPress: (recipeId: Int) -> Unit,
 ) {
     RecipeListItemBackground(
         modifier = Modifier.animateItem(),
+        shape = shape,
         onClick = { onPress(recipe.id) },
     ) {
         Row(
@@ -110,6 +115,7 @@ fun PreviewRecipeItem() {
     LazyVerticalGrid(columns = GridCells.Fixed(1)) {
         item {
             RecipeItem(
+                shape = ItemShape.Middle,
                 recipe = Recipe(
                     id = 0,
                     name = "Ultimate V60",

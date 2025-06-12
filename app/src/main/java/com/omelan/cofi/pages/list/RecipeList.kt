@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
@@ -27,6 +27,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.omelan.cofi.R
+import com.omelan.cofi.components.ItemShape
 import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.RecipeItem
 import com.omelan.cofi.components.createAppBarBehavior
@@ -108,7 +109,7 @@ fun RecipeList(
     ) {
         LazyVerticalGrid(
             contentPadding = getDefaultPadding(it, FabType.Normal),
-            verticalArrangement = Arrangement.spacedBy(Spacing.normal),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xSmall),
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.background),
@@ -117,10 +118,16 @@ fun RecipeList(
             state = lazyGridState,
         ) {
             headerInfoBox()
-            items(recipes, key = { recipe -> recipe.id }) { recipe ->
+            itemsIndexed(recipes, key = { index, recipe -> recipe.id }) { index, recipe ->
                 RecipeItem(
                     recipe = recipe,
                     onPress = navigateToRecipe,
+                    shape = when {
+                        recipes.size == 1 -> ItemShape.Only
+                        index == 0 -> ItemShape.First
+                        index == recipes.lastIndex -> ItemShape.Last
+                        else -> ItemShape.Middle
+                    },
                     allSteps = stepsByRecipe[recipe.id] ?: emptyList(),
                 )
             }
