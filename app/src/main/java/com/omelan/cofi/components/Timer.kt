@@ -23,11 +23,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.math.MathUtils
 import com.omelan.cofi.R
 import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
@@ -43,19 +45,21 @@ fun Track(
     @FloatRange(from = 0.0, to = 1.0) progress: Float,
     color: Color,
     strokeWidth: Dp,
+    stepLength: Float,
 ) {
     val stroke = with(LocalDensity.current) {
         Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
     }
-
+    val waveSpeed =
+        MathUtils.clamp(stepLength * 2f, 5f, 50f) // Ensure wave speed is within a reasonable range
     CircularWavyProgressIndicator(
         progress = { progress },
         color = color,
-        modifier = modifier .aspectRatio(1f),
+        modifier = modifier.aspectRatio(1f),
         stroke = stroke,
         trackStroke = stroke,
-        waveSpeed = strokeWidth,
-        wavelength = strokeWidth * 4
+        wavelength = waveSpeed.dp,
+        waveSpeed = (waveSpeed / 2).dp,
     )
 }
 
@@ -151,10 +155,11 @@ fun Timer(
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = if (isInPiP) 2 else Int.MAX_VALUE,
                         style = if (isInPiP) {
-                            MaterialTheme.typography.titleMedium
+                            MaterialTheme.typography.bodyMediumEmphasized
                         } else {
-                            MaterialTheme.typography.headlineMedium
+                            MaterialTheme.typography.headlineMediumEmphasized
                         },
+                        fontWeight = FontWeight.SemiBold,
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                         showMillis = !isInPiP,
                     )
@@ -168,6 +173,7 @@ fun Timer(
                         } else {
                             MaterialTheme.typography.titleLarge
                         },
+                        fontWeight = FontWeight.Light,
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                         paddingHorizontal = if (isInPiP) Spacing.xSmall else Spacing.normal,
                     )
@@ -181,10 +187,11 @@ fun Timer(
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = if (isInPiP) 1 else Int.MAX_VALUE,
                         style = if (isInPiP) {
-                            MaterialTheme.typography.titleLarge
+                            MaterialTheme.typography.titleLargeEmphasized
                         } else {
-                            MaterialTheme.typography.headlineMedium
+                            MaterialTheme.typography.headlineMediumEmphasized
                         },
+                        fontWeight = FontWeight.Bold,
                     )
                 }
             }
@@ -193,6 +200,7 @@ fun Timer(
             progress = if (isDone) 1f else animatedProgressValue.value,
             color = animatedProgressColor.value,
             strokeWidth = strokeWidth,
+            stepLength = (currentStep?.time?.toFloat() ?: 1000f) / 300,
         )
     }
 }
@@ -201,12 +209,12 @@ fun Timer(
 @Preview
 @Composable
 fun TimerPreview() {
-    val animatedProgressValue = remember { Animatable(0.98f) }
+    val animatedProgressValue = remember { Animatable(0.80f) }
     Timer(
         currentStep = Step(
             id = 1,
             name = "ExperimentalAnimatedInsets ExperimentalAnimatedInsets " +
-                "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
+                    "ExperimentalAnimatedInsets ExperimentalAnimatedInsets",
             time = 5 * 1000,
             type = StepType.OTHER,
             orderInRecipe = 0,

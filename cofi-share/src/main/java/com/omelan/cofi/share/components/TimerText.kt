@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,6 +38,7 @@ fun ColumnScope.TimerValue(
     color: Color,
     maxLines: Int,
     style: TextStyle,
+    fontWeight: FontWeight = FontWeight.Normal,
 ) {
     Box(modifier = modifier.align(Alignment.CenterHorizontally)) {
         AnimatedContent(
@@ -80,6 +82,7 @@ fun ColumnScope.TimerValue(
                 maxLines = maxLines,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
+                fontWeight = fontWeight,
                 modifier = Modifier
                     .fillMaxWidth()
                     .testTag("timer_value"),
@@ -97,6 +100,7 @@ fun StepNameText(
     timeMultiplier: Float = 1f,
     color: Color,
     style: TextStyle,
+    fontWeight: FontWeight = FontWeight.Normal,
     maxLines: Int,
     paddingHorizontal: Dp,
 ) {
@@ -125,6 +129,7 @@ fun StepNameText(
             style = style.copy(
                 textMotion = TextMotion.Animated,
             ),
+            fontWeight = fontWeight,
             textAlign = TextAlign.Center,
             maxLines = maxLines,
             overflow = TextOverflow.Ellipsis,
@@ -138,7 +143,10 @@ fun StepNameText(
 fun ColumnScope.TimeText(
     modifier: Modifier = Modifier,
     currentStep: Step, animatedProgressValue: Float,
-    color: Color, maxLines: Int, style: TextStyle,
+    color: Color,
+    maxLines: Int,
+    style: TextStyle,
+    fontWeight: FontWeight = FontWeight.Normal,
     paddingHorizontal: Dp,
     showMillis: Boolean,
 ) {
@@ -166,6 +174,7 @@ fun ColumnScope.TimeText(
             ),
             color = color,
             textAlign = TextAlign.Center,
+            fontWeight = fontWeight,
             maxLines = maxLines,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
