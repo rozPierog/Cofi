@@ -1,4 +1,7 @@
-@file:OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
+@file:OptIn(
+    ExperimentalFoundationApi::class, ExperimentalLayoutApi::class,
+    ExperimentalMaterial3ExpressiveApi::class,
+)
 
 package com.omelan.cofi.components
 
@@ -121,17 +124,23 @@ fun StepAddCard(
                 .animateContentSize(),
         ) {
             FlowRow {
-                StepType.entries.forEach { stepType ->
-                    Chip(
-                        value = stringResource(id = stepType.stringRes),
-                        onCheck = {
+                StepType.entries.forEachIndexed { index, stepType ->
+                    ToggleButton(
+                        onCheckedChange = {
                             pickedType = stepType
                         },
-                        isChecked = pickedType == stepType,
+                        shapes = when (index) {
+                            0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                            StepType.entries.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                            else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                        },
+                        checked = pickedType == stepType,
                         modifier = Modifier.testTag(
                             "step_type_button_${stepType.name.lowercase()}",
                         ),
-                    )
+                    ) {
+                        Text(stringResource(id = stepType.stringRes))
+                    }
                 }
             }
             if (isExpanded) {
