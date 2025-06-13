@@ -26,6 +26,14 @@ class DataStore(val context: Context) : DataStoreShared(context) {
         stringToDismissedInfoBoxes(it[DISMISSED_INFO] ?: DISMISSED_INFO_DEFAULT_VALUE)
     }
 
+    fun getCustomMultipliers() = context.dataStore.data.map {
+        it[CUSTOM_MULTIPLIER] ?: CUSTOM_MULTIPLIER_DEFAULT_VALUE
+    }
+
+    suspend fun setCustomMultipliers(newValue: Set<String>) = context.dataStore.edit {
+        it[CUSTOM_MULTIPLIER] = newValue
+    }
+
     suspend fun setDismissedInfoBoxes(newValue: Map<String, Boolean>) = context.dataStore.edit {
         it[DISMISSED_INFO] = JSONObject(newValue).toString()
     }

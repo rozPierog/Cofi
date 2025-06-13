@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -25,6 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3BottomSheet
 import com.omelan.cofi.components.OutlinedNumbersField
+import com.omelan.cofi.model.CUSTOM_MULTIPLIER_DEFAULT_VALUE
+import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.share.components.slideLeftRight
 import com.omelan.cofi.share.model.Step
 import com.omelan.cofi.share.model.StepType
@@ -32,6 +35,7 @@ import com.omelan.cofi.share.timer.MultiplierControllers
 import com.omelan.cofi.share.utils.roundToDecimals
 import com.omelan.cofi.share.utils.toStringShort
 import com.omelan.cofi.ui.Spacing
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
@@ -67,8 +71,6 @@ fun RatioBottomSheet(
     }
 }
 
-val predefinedMultipliers = arrayOf(0.5f, 1f, 2f, 3f)
-
 @Composable
 private fun ColumnScope.ManualContent(
     multiplierControllers: MultiplierControllers,
@@ -81,9 +83,11 @@ private fun ColumnScope.ManualContent(
         timeMultiplier,
         changeTimeMultiplier,
     ) = multiplierControllers
-    var customMultiplier by remember {
-        mutableStateOf(predefinedMultipliers)
-    }
+
+    val dataStore = DataStore(LocalContext.current)
+    val coroutineScope = rememberCoroutineScope()
+    val customMultiplier by dataStore.getCustomMultipliers()
+        .collectAsState(initial = CUSTOM_MULTIPLIER_DEFAULT_VALUE)
     val combinedWaterWeight by remember(allSteps) {
         derivedStateOf {
             allSteps.sumOf {
@@ -178,10 +182,10 @@ private fun ColumnScope.ManualContent(
             customMultiplier.forEachIndexed { index, value ->
                 item(key = value) {
                     ToggleButton(
-                        checked = weightMultiplier == value,
+                        checked = weightMultiplier == value.toFloat(),
                         onCheckedChange = {
                             if (it) {
-                                changeWeightMultiplier(value)
+                                changeWeightMultiplier(value.toFloat())
                             }
                         },
                         modifier = Modifier
@@ -194,7 +198,7 @@ private fun ColumnScope.ManualContent(
                                 else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
                             },
                     ) {
-                        Text("${value.toStringShort()}x")
+                        Text("${value.toFloat().toStringShort()}x")
                     }
                 }
             }
@@ -202,10 +206,19 @@ private fun ColumnScope.ManualContent(
         ToggleButton(
             checked = false,
             onCheckedChange = { checked ->
-                customMultiplier = if (customMultiplier.none { it == weightMultiplier }) {
-                    customMultiplier.plus(weightMultiplier).also { it.sort() }
-                } else {
-                    customMultiplier.filter { it != weightMultiplier }.toTypedArray()
+                coroutineScope.launch {
+
+                    if (customMultiplier.none { it.toFloat() == weightMultiplier }) {
+                        dataStore.setCustomMultipliers(
+                            customMultiplier.plus(weightMultiplier.toString())
+                                .sortedBy { value -> value.toFloat() }
+                                .toSet(),
+                        )
+                    } else {
+                        dataStore.setCustomMultipliers(
+                            customMultiplier.filter { it.toFloat() != weightMultiplier }.toSet(),
+                        )
+                    }
                 }
             },
             colors = ToggleButtonDefaults.toggleButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
@@ -214,7 +227,7 @@ private fun ColumnScope.ManualContent(
                 .semantics { role = Role.RadioButton },
             shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
         ) {
-            AnimatedContent(customMultiplier.none { it == weightMultiplier }) {
+            AnimatedContent(customMultiplier.none { it.toFloat() == weightMultiplier }) {
                 if (it) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
