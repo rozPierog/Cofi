@@ -1,22 +1,27 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 
 package com.omelan.cofi.pages.details
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import com.omelan.cofi.R
 import com.omelan.cofi.components.Material3BottomSheet
 import com.omelan.cofi.components.OutlinedNumbersField
@@ -76,6 +81,9 @@ private fun ColumnScope.ManualContent(
         timeMultiplier,
         changeTimeMultiplier,
     ) = multiplierControllers
+    var customMultiplier by remember {
+        mutableStateOf(predefinedMultipliers)
+    }
     val combinedWaterWeight by remember(allSteps) {
         derivedStateOf {
             allSteps.sumOf {
@@ -156,19 +164,72 @@ private fun ColumnScope.ManualContent(
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = Spacing.big),
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.spacedBy(
+            ButtonGroupDefaults.ConnectedSpaceBetween,
+            Alignment.CenterHorizontally,
+        ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        predefinedMultipliers.forEach {
-            com.omelan.cofi.components.Chip(
-                value = "${it.toStringShort()}x",
-                onCheck = { checked ->
-                    if (checked) {
-                        changeWeightMultiplier(it)
+        LazyRow(
+            modifier = Modifier.weight(1f),
+            horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            customMultiplier.forEachIndexed { index, value ->
+                item(key = value) {
+                    ToggleButton(
+                        checked = weightMultiplier == value,
+                        onCheckedChange = {
+                            if (it) {
+                                changeWeightMultiplier(value)
+                            }
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .animateContentSize()
+                            .semantics { role = Role.RadioButton },
+                        shapes =
+                            when (index) {
+                                0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                                else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                            },
+                    ) {
+                        Text("${value.toStringShort()}x")
                     }
-                },
-                isChecked = weightMultiplier == it,
-            )
+                }
+            }
+        }
+        ToggleButton(
+            checked = false,
+            onCheckedChange = { checked ->
+                customMultiplier = if (customMultiplier.none { it == weightMultiplier }) {
+                    customMultiplier.plus(weightMultiplier).also { it.sort() }
+                } else {
+                    customMultiplier.filter { it != weightMultiplier }.toTypedArray()
+                }
+            },
+            colors = ToggleButtonDefaults.toggleButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+            modifier = Modifier
+                .animateContentSize()
+                .semantics { role = Role.RadioButton },
+            shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
+        ) {
+            AnimatedContent(customMultiplier.none { it == weightMultiplier }) {
+                if (it) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Rounded.Add,
+                            contentDescription = " stringResource(id = R.string.recipe_details_custom_multiplier),",
+                        )
+                        Text("${weightMultiplier.toStringShort()}x")
+                    }
+                } else {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_delete),
+                        contentDescription = " stringResource(id = R.string.recipe_details_custom_multiplier),",
+                    )
+                }
+            }
         }
     }
     Title(stringResource(id = R.string.recipe_details_multiply_time))
@@ -226,6 +287,28 @@ private fun SliderWithValue(value: Float, setValue: (Float) -> Unit) {
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .padding(horizontal = Spacing.normal),
+            )
+        }
+    }
+}
+
+@Composable
+@Preview
+fun RatioBottomSheetPreview() {
+    MaterialTheme {
+        Column {
+            ManualContent(
+                multiplierControllers = MultiplierControllers(
+                    weightMultiplier = 1f,
+                    changeWeightMultiplier = {},
+                    timeMultiplier = 1f,
+                    changeTimeMultiplier = {},
+                ),
+                allSteps = listOf(
+                    Step(name = "Water", value = 200f, type = StepType.WATER),
+                    Step(name = "Coffee", value = 20f, type = StepType.ADD_COFFEE),
+                ),
+                focusRequester = FocusRequester(),
             )
         }
     }
