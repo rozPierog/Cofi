@@ -127,7 +127,7 @@ fun RecipeInfo(
             }
         }
         if (!compactStyle) {
-            HorizontalDivider()
+            HorizontalDivider(color = MaterialTheme.colorScheme.primaryContainer)
         }
     }
 }

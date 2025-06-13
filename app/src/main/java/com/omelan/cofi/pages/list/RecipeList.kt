@@ -111,7 +111,7 @@ fun RecipeList(
             contentPadding = getDefaultPadding(it, FabType.Normal),
             verticalArrangement = Arrangement.spacedBy(
                 if (isMultiColumn)
-                    Spacing.normal else Spacing.xSmall,
+                    Spacing.normal else Spacing.small,
             ),
             modifier = Modifier
                 .fillMaxSize()
