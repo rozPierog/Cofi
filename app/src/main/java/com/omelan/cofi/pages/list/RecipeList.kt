@@ -19,9 +19,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -63,13 +65,14 @@ fun RecipeList(
     recipeViewModel: RecipeViewModel = viewModel(),
     stepsViewModel: StepsViewModel = viewModel(),
 ) {
-    val configuration = LocalConfiguration.current
+    val size = LocalWindowInfo.current.containerSize
+    val width = with (LocalDensity.current) { size.width.toDp() }
     val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = emptyList())
     val steps by stepsViewModel.getAllSteps().observeAsState(initial = emptyList())
     val stepsByRecipe = steps.groupBy { it.recipeId }
     val scrollBehavior = createAppBarBehavior()
-    val isMultiColumn by remember(configuration.screenWidthDp) {
-        derivedStateOf { configuration.screenWidthDp > 600 }
+    val isMultiColumn by remember(width) {
+        derivedStateOf { width > 600.dp }
     }
     val lazyGridState = rememberLazyGridState()
     val headerInfoBox = createRecipeListHeaderInfo(
