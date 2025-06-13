@@ -11,6 +11,7 @@ import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
@@ -19,9 +20,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
@@ -44,6 +47,7 @@ fun StepListItem(
     timeMultiplier: Float = 1.0f,
     onLongClick: ((Step) -> Unit)? = null,
     onClick: ((Step) -> Unit)? = null,
+    shape: ItemShape = ItemShape.Only,
 ) {
     val context = LocalContext.current
     val icon = AnimatedImageVector.animatedVectorResource(R.drawable.step_done_anim)
@@ -58,6 +62,9 @@ fun StepListItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .clip(shape.shape)
+            .background(MaterialTheme.colorScheme.surfaceContainer)
+            .padding(horizontal = Spacing.medium, vertical = Spacing.small)
             .heightIn(min = 42.dp)
             .combinedClickable(
                 onClick = {
@@ -91,7 +98,8 @@ fun StepListItem(
         )
         Text(
             text = step.name,
-            style = MaterialTheme.typography.titleSmall,
+            style = MaterialTheme.typography.bodyMedium,
+//            fontWeight = FontWeight.Light,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .weight(1f, true)
@@ -100,17 +108,19 @@ fun StepListItem(
         if (step.value != null) {
             Text(
                 text = "${(step.value!! * weightMultiplier).toStringShort()}g",
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(horizontal = Spacing.small),
 
-            )
+                )
         }
         if (step.time != null) {
             Text(
                 text = (step.time!! * timeMultiplier).roundToInt().toStringDuration(),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(horizontal = Spacing.small),
             )
         }
@@ -124,8 +134,8 @@ fun StepListItemPreview() {
         step = Step(
             id = 0,
             name = "Somebody once told me the world is gonna roll me I ain't the sharpest " +
-                "tool in the shed She was looking kind of dumb with her finger and her thumb " +
-                "In the shape of an \"L\" on her forehead",
+                    "tool in the shed She was looking kind of dumb with her finger and her thumb " +
+                    "In the shape of an \"L\" on her forehead",
             time = 35.toMillis(),
             type = StepType.WATER,
             value = 60.0f,

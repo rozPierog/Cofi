@@ -2,6 +2,8 @@ package com.omelan.cofi.pages.details
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,12 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omelan.cofi.R
+import com.omelan.cofi.components.ItemShape
 import com.omelan.cofi.components.StepListItem
 import com.omelan.cofi.components.StepProgress
 import com.omelan.cofi.share.components.slideUpDown
 import com.omelan.cofi.share.model.Step
+import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.ui.Spacing
 import com.omelan.cofi.ui.shapes
 
@@ -54,6 +59,11 @@ fun UpNext(
             ) {
                 StepListItem(
                     step = it,
+                    modifier = Modifier
+                        .border(
+                            BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+                            ItemShape.Only.shape,
+                        ),
                     stepProgress = StepProgress.Upcoming,
                     weightMultiplier = weightMultiplier,
                     timeMultiplier = timeMultiplier,
@@ -61,4 +71,20 @@ fun UpNext(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun UpNextPreview() {
+    UpNext(
+        step = Step(
+            id = 1,
+            name = "Add Water",
+            orderInRecipe = 1,
+            value = 0.5f,
+            type = StepType.WATER,
+        ),
+        weightMultiplier = 1f,
+        timeMultiplier = 1f,
+    )
 }
