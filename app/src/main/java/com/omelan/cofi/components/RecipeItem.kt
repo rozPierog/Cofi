@@ -1,15 +1,20 @@
+@file:OptIn(ExperimentalMaterial3ExpressiveApi::class)
+
 package com.omelan.cofi.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CornerBasedShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -77,7 +82,9 @@ fun LazyGridItemScope.RecipeItem(
                 painterResource(id = recipe.recipeIcon.icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(horizontal = Spacing.small)
+                    .clip(RoundedCornerShape(100))
+                    .background(MaterialTheme.colorScheme.primaryContainer)
+                    .padding(Spacing.normal)
                     .size(28.dp),
             )
             Column(
@@ -92,7 +99,7 @@ fun LazyGridItemScope.RecipeItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     fontWeight = FontWeight.SemiBold,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMediumEmphasized,
                 )
                 if (recipe.description.isNotBlank()) {
                     Text(
