@@ -364,6 +364,7 @@ fun RecipeEdit(
                 visible = stepWithOpenEditor == step,
                 enter = expandVertically(),
                 exit = shrinkVertically(),
+                modifier = Modifier.animateItem(),
             ) {
                 StepAddCard(
                     stepToEdit = step,
@@ -418,7 +419,9 @@ fun RecipeEdit(
                 visible = stepWithOpenEditor == null,
                 enter = expandVertically(),
                 exit = shrinkVertically(),
-                modifier = Modifier.padding(top = Spacing.medium)
+                modifier = Modifier
+                    .padding(top = Spacing.medium)
+                    .animateItem(),
             ) {
                 StepAddCard(
                     onTypeSelect = {
