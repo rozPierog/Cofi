@@ -360,9 +360,10 @@ fun RecipeDetails(
                     indexOfCurrentStep == index -> StepProgress.Current
                     else -> StepProgress.Upcoming
                 },
-                shape = when (index) {
-                    0 -> ItemShape.First
-                    steps.lastIndex -> ItemShape.Last
+                shape = when {
+                    steps.size <= 1 -> ItemShape.Only
+                    index == 0 -> ItemShape.First
+                    index == steps.lastIndex -> ItemShape.Last
                     else -> ItemShape.Middle
                 },
                 onLongClick = { newStep: Step ->

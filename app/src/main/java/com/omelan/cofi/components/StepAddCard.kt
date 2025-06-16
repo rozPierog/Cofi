@@ -11,7 +11,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -112,7 +111,14 @@ fun StepAddCard(
         )
     }
     Surface(
-        shape = RoundedCornerShape(10.dp),
+        shape = when {
+            stepToEdit != null && isFirst && isLast -> ItemShape.Only.shape
+            stepToEdit != null && isFirst -> ItemShape.First.shape
+            stepToEdit != null && isLast -> ItemShape.Last.shape
+            stepToEdit != null -> ItemShape.Middle.shape
+            else -> ItemShape.Only.shape
+        },
+        color = MaterialTheme.colorScheme.surfaceContainer,
         modifier = modifier
             .fillMaxWidth()
             .bringIntoViewRequester(bringIntoViewRequester),
@@ -123,7 +129,7 @@ fun StepAddCard(
                 .padding(Spacing.medium)
                 .animateContentSize(),
         ) {
-            FlowRow {
+            FlowRow(modifier = Modifier.fillMaxWidth(), Arrangement.Center) {
                 StepType.entries.forEachIndexed { index, stepType ->
                     ToggleButton(
                         onCheckedChange = {
@@ -134,6 +140,12 @@ fun StepAddCard(
                             StepType.entries.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
                             else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
                         },
+                        colors = ToggleButtonDefaults.toggleButtonColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                            contentColor = MaterialTheme.colorScheme.onSurface,
+                            checkedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                            checkedContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                        ),
                         checked = pickedType == stepType,
                         modifier = Modifier.testTag(
                             "step_type_button_${stepType.name.lowercase()}",

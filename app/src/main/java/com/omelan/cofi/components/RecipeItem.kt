@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -29,7 +28,7 @@ import com.omelan.cofi.share.model.StepType
 import com.omelan.cofi.share.utils.toMillis
 import com.omelan.cofi.ui.*
 
-enum class ItemShape(val shape: CornerBasedShape) {
+enum class ItemShape(val shape: RoundedCornerShape) {
     First(firstItem),
     Middle(middleItem),
     Last(lastItem),

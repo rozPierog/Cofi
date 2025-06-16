@@ -9,7 +9,6 @@ package com.omelan.cofi.pages
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -228,16 +227,16 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                (configuration.screenHeightDp > configuration.screenWidthDp)
+                    (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
     val canSafelyExit = !(
-        steps !== stepsToEdit ||
-            name.text != recipeToEdit.name ||
-            description.text != recipeToEdit.description ||
-            pickedIcon != recipeToEdit.recipeIcon
-        )
+            steps !== stepsToEdit ||
+                    name.text != recipeToEdit.name ||
+                    description.text != recipeToEdit.description ||
+                    pickedIcon != recipeToEdit.recipeIcon
+            )
 
     val safeGoBack: () -> Unit = {
         if (!canSafelyExit) {
@@ -269,15 +268,13 @@ fun RecipeEdit(
     val renderNameAndDescriptionEdit: LazyListScope.() -> Unit = {
         item {
             Row(verticalAlignment = Alignment.Bottom) {
-                OutlinedIconButton(
+                FilledIconButton(
                     modifier = Modifier
                         .padding(end = Spacing.normal)
                         .defaultMinSize(
                             minHeight = TextFieldDefaults.MinHeight,
                             minWidth = TextFieldDefaults.MinHeight,
                         ),
-                    shape = ShapeDefaults.ExtraSmall,
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                     onClick = {
                         keyboardController?.hide()
                         coroutineScope.launch {
@@ -287,7 +284,6 @@ fun RecipeEdit(
                 ) {
                     Icon(
                         painter = painterResource(id = pickedIcon.icon),
-                        tint = MaterialTheme.colorScheme.onBackground,
                         contentDescription = null,
                     )
                 }
@@ -402,6 +398,12 @@ fun RecipeEdit(
                 exit = shrinkVertically(),
             ) {
                 StepListItem(
+                    shape = when {
+                        steps.size <= 1 -> ItemShape.Only
+                        index == 0 -> ItemShape.First
+                        index == steps.lastIndex -> ItemShape.Last
+                        else -> ItemShape.Middle
+                    },
                     step = step,
                     stepProgress = StepProgress.Upcoming,
                     onClick = {
@@ -416,6 +418,7 @@ fun RecipeEdit(
                 visible = stepWithOpenEditor == null,
                 enter = expandVertically(),
                 exit = shrinkVertically(),
+                modifier = Modifier.padding(top = Spacing.medium)
             ) {
                 StepAddCard(
                     onTypeSelect = {
