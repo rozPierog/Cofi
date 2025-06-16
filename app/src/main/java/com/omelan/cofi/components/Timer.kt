@@ -78,9 +78,9 @@ fun Timer(
     timeMultiplier: Float = 1.0f,
 ) {
     val strokeWidth = if (isInPiP) {
-        5.dp
+        8.dp
     } else {
-        10.dp
+        12.dp
     }
     val calculatedAnimatedProgress = remember {
         derivedStateOf {
