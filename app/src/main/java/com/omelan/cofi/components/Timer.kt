@@ -8,6 +8,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.AnimationVector4D
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -106,6 +107,7 @@ fun Timer(
             )
         }
         AnimatedVisibility(visible = isDone, enter = fadeIn(), exit = fadeOut()) {
+            val infiniteTransition = rememberInfiniteTransition(label = "infinite transition")
             Column(
                 modifier = Modifier
                     .padding(strokeWidth)
@@ -116,12 +118,12 @@ fun Timer(
                 Text(
                     text = stringResource(id = R.string.timer_enjoy),
                     style = if (isInPiP) {
-                        MaterialTheme.typography.titleMedium
+                        MaterialTheme.typography.titleLargeEmphasized
                     } else {
-                        MaterialTheme.typography.headlineMedium
+                        MaterialTheme.typography.headlineMediumEmphasized
                     },
-                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = if (isInPiP) 2 else Int.MAX_VALUE,
+                    fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.testTag("timer_enjoy"),
@@ -129,7 +131,13 @@ fun Timer(
                 if (!isInPiP) {
                     Spacer(modifier = Modifier.height(Spacing.normal))
                 }
-                Icon(painter = painterResource(id = R.drawable.ic_coffee), contentDescription = "")
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_coffee),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(if (isInPiP) 24.dp else 48.dp)
+                        .animateContentSize(),
+                )
             }
         }
         AnimatedVisibility(
@@ -247,7 +255,7 @@ fun TimerPreviewPiP() {
 }
 
 @SuppressLint("UnrememberedAnimatable")
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun TimerPreviewDone() {
     Timer(
