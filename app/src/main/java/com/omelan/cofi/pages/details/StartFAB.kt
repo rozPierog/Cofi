@@ -2,6 +2,7 @@
 
 package com.omelan.cofi.pages.details
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
@@ -15,7 +16,8 @@ import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
@@ -27,6 +29,14 @@ import com.omelan.cofi.R
 @Composable
 fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
     val icon = AnimatedImageVector.animatedVectorResource(R.drawable.play_anim)
+    val background by animateColorAsState(
+        if (isTimerRunning) {
+            MaterialTheme.colorScheme.primary
+        } else {
+            MaterialTheme.colorScheme.primaryContainer
+        },
+        tween(if (isTimerRunning) 300 else 500),
+    )
     val animatedFabRadii by animateFloatAsState(
         if (isTimerRunning) 28.0f else 100f,
         tween(if (isTimerRunning) 300 else 500),
@@ -35,6 +45,7 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
     LargeFloatingActionButton(
         shape = RoundedCornerShape(animatedFabRadii.dp),
         onClick = onClick,
+        containerColor = background,
         modifier = Modifier
             .navigationBarsPadding()
             .semantics {
@@ -48,7 +59,7 @@ fun StartFAB(isTimerRunning: Boolean, onClick: () -> Unit) {
     ) {
         Icon(
             painter = rememberAnimatedVectorPainter(icon, isTimerRunning),
-            tint = MaterialTheme.colorScheme.onBackground,
+//            tint = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize),
             contentDescription = null,
         )
