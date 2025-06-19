@@ -60,13 +60,15 @@ fun RatioBottomSheet(
             },
         ),
     ) {
-        Column(
-            modifier = Modifier
-                .imePadding()
-                .navigationBarsPadding()
-                .padding(Spacing.big),
-        ) {
-            ManualContent(multiplierControllers, allSteps, focusRequester)
+        {
+            Column(
+                modifier = Modifier
+                    .imePadding()
+                    .navigationBarsPadding()
+                    .padding(Spacing.big),
+            ) {
+                ManualContent(multiplierControllers, allSteps, focusRequester)
+            }
         }
     }
 }
@@ -306,7 +308,7 @@ private fun SliderWithValue(value: Float, setValue: (Float) -> Unit) {
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 fun RatioBottomSheetPreview() {
     MaterialTheme {
         Column {

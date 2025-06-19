@@ -552,51 +552,53 @@ private fun IconPickerBottomSheet(
 ) {
     val coroutineScope = rememberCoroutineScope()
 
-    Material3BottomSheet(onDismissRequest = onDismiss) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .waterfallPadding()
-                .navigationBarsPadding(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalArrangement = Arrangement.Bottom,
-        ) {
-            RecipeIcon.entries.map {
-                val tooltipState = rememberTooltipState()
-                Box(
-                    modifier = Modifier
-                        .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
-                        .aspectRatio(1f)
-                        .clip(CircleShape)
-                        .combinedClickable(
-                            role = Role.Button,
-                            onClick = {
-                                onDismiss()
-                                setPickedIcon(it)
-                            },
-                            onLongClick = {
-                                coroutineScope.launch {
-                                    tooltipState.show()
+    Material3BottomSheet(onDismissRequest = onDismiss) { hideSheet ->
+        {
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .waterfallPadding()
+                    .navigationBarsPadding(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalArrangement = Arrangement.Bottom,
+            ) {
+                RecipeIcon.entries.map {
+                    val tooltipState = rememberTooltipState()
+                    Box(
+                        modifier = Modifier
+                            .sizeIn(minWidth = 48.dp, maxWidth = 68.dp)
+                            .aspectRatio(1f)
+                            .clip(CircleShape)
+                            .combinedClickable(
+                                role = Role.Button,
+                                onClick = {
+                                    hideSheet()
+                                    setPickedIcon(it)
+                                },
+                                onLongClick = {
+                                    coroutineScope.launch {
+                                        tooltipState.show()
+                                    }
+                                },
+                            ),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        TooltipBox(
+                            tooltip = {
+                                PlainTooltip {
+                                    Text(stringResource(id = it.nameResId))
                                 }
                             },
-                        ),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    TooltipBox(
-                        tooltip = {
-                            PlainTooltip {
-                                Text(stringResource(id = it.nameResId))
-                            }
-                        },
-                        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
-                        state = tooltipState,
-                    ) {
-                        Icon(
-                            painter = painterResource(id = it.icon),
-                            tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = it.name,
-                            modifier = Modifier.size(36.dp),
-                        )
+                            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                            state = tooltipState,
+                        ) {
+                            Icon(
+                                painter = painterResource(id = it.icon),
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                contentDescription = it.name,
+                                modifier = Modifier.size(36.dp),
+                            )
+                        }
                     }
                 }
             }

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 fun Material3BottomSheet(
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     onDismissRequest: () -> Unit,
-    content: @Composable ColumnScope.() -> Unit,
+    content: (dismiss: () -> Unit) -> @Composable ColumnScope.() -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     BackHandler {
@@ -35,11 +35,19 @@ fun Material3BottomSheet(
     )
     val modalBottomSheetShape =
         RoundedCornerShape(topEnd = modalBottomSheetShapeDp, topStart = modalBottomSheetShapeDp)
+
+    val hideSheet: () -> Unit = {
+        coroutineScope.launch {
+            sheetState.hide()
+            onDismissRequest()
+        }
+
+    }
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         shape = modalBottomSheetShape,
         sheetState = sheetState,
-        content = content,
+        content = content(hideSheet),
         contentWindowInsets = { WindowInsets(0) },
     )
 }
