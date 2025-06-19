@@ -13,10 +13,12 @@ import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,11 +63,7 @@ fun StepListItem(
     }
     Row(
         modifier = modifier
-            .fillMaxWidth()
             .clip(shape.shape)
-            .background(MaterialTheme.colorScheme.surfaceContainer)
-            .padding(horizontal = Spacing.medium, vertical = Spacing.small)
-            .heightIn(min = 42.dp)
             .combinedClickable(
                 onClick = {
                     if (onClick == null) {
@@ -83,9 +81,16 @@ fun StepListItem(
                     }
                 },
                 onLongClick = { onLongClick?.let { it(step) } },
+                indication = ripple(),
+                hapticFeedbackEnabled = true,
                 enabled = onLongClick != null || onClick != null,
                 role = Role.Button,
+                interactionSource = remember { MutableInteractionSource() },
             )
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surfaceContainer)
+            .padding(horizontal = Spacing.medium, vertical = Spacing.small)
+            .heightIn(min = 42.dp)
             .padding(vertical = Spacing.small),
         Arrangement.Center,
         Alignment.CenterVertically,
@@ -99,7 +104,6 @@ fun StepListItem(
         Text(
             text = step.name,
             style = MaterialTheme.typography.bodyMedium,
-//            fontWeight = FontWeight.Light,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .weight(1f, true)
@@ -156,6 +160,7 @@ fun StepListItemPreviewShort() {
             type = StepType.WAIT,
             orderInRecipe = 0,
         ),
+        onLongClick = {},
         stepProgress = StepProgress.Current,
     )
 }
