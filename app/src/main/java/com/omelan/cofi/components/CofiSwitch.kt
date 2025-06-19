@@ -28,6 +28,6 @@ fun CofiSwitch(
                     modifier = Modifier.size(SwitchDefaults.IconSize),
                 )
             }
-        }
+        },
     )
 }

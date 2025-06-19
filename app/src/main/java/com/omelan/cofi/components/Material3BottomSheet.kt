@@ -41,7 +41,6 @@ fun Material3BottomSheet(
             sheetState.hide()
             onDismissRequest()
         }
-
     }
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,

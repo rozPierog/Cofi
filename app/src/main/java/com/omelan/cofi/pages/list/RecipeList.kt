@@ -66,7 +66,7 @@ fun RecipeList(
     stepsViewModel: StepsViewModel = viewModel(),
 ) {
     val size = LocalWindowInfo.current.containerSize
-    val width = with (LocalDensity.current) { size.width.toDp() }
+    val width = with(LocalDensity.current) { size.width.toDp() }
     val recipes by recipeViewModel.getAllRecipes().observeAsState(initial = emptyList())
     val steps by stepsViewModel.getAllSteps().observeAsState(initial = emptyList())
     val stepsByRecipe = steps.groupBy { it.recipeId }
@@ -113,8 +113,11 @@ fun RecipeList(
         LazyVerticalGrid(
             contentPadding = getDefaultPadding(it, FabType.Normal),
             verticalArrangement = Arrangement.spacedBy(
-                if (isMultiColumn)
-                    Spacing.normal else Spacing.small,
+                if (isMultiColumn) {
+                    Spacing.normal
+                } else {
+                    Spacing.small
+                },
             ),
             modifier = Modifier
                 .fillMaxSize()

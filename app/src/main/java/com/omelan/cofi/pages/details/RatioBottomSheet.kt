@@ -195,10 +195,10 @@ private fun ColumnScope.ManualContent(
                             .animateContentSize()
                             .semantics { role = Role.RadioButton },
                         shapes =
-                            when (index) {
-                                0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
-                                else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
-                            },
+                        when (index) {
+                            0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                            else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                        },
                     ) {
                         Text("${value.toFloat().toStringShort()}x")
                     }
@@ -209,7 +209,6 @@ private fun ColumnScope.ManualContent(
             checked = false,
             onCheckedChange = { checked ->
                 coroutineScope.launch {
-
                     if (customMultiplier.none { it.toFloat() == weightMultiplier }) {
                         dataStore.setCustomMultipliers(
                             customMultiplier.plus(weightMultiplier.toString())
@@ -223,7 +222,9 @@ private fun ColumnScope.ManualContent(
                     }
                 }
             },
-            colors = ToggleButtonDefaults.toggleButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+            colors = ToggleButtonDefaults.toggleButtonColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+            ),
             modifier = Modifier
                 .animateContentSize()
                 .semantics { role = Role.RadioButton },
@@ -234,14 +235,14 @@ private fun ColumnScope.ManualContent(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Rounded.Add,
-                            contentDescription = " stringResource(id = R.string.recipe_details_custom_multiplier),",
+                            contentDescription = null,
                         )
                         Text("${weightMultiplier.toStringShort()}x")
                     }
                 } else {
                     Icon(
                         painter = painterResource(R.drawable.ic_delete),
-                        contentDescription = " stringResource(id = R.string.recipe_details_custom_multiplier),",
+                        contentDescription = null,
                     )
                 }
             }

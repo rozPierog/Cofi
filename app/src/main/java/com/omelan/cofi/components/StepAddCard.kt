@@ -1,5 +1,6 @@
 @file:OptIn(
-    ExperimentalFoundationApi::class, ExperimentalLayoutApi::class,
+    ExperimentalFoundationApi::class,
+    ExperimentalLayoutApi::class,
     ExperimentalMaterial3ExpressiveApi::class,
 )
 
@@ -137,7 +138,9 @@ fun StepAddCard(
                         },
                         shapes = when (index) {
                             0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
-                            StepType.entries.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                            StepType.entries.lastIndex ->
+                                ButtonGroupDefaults.connectedTrailingButtonShapes()
+
                             else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
                         },
                         colors = ToggleButtonDefaults.toggleButtonColors(

@@ -62,7 +62,7 @@ fun OutlinedNumbersField(
                 if (parts.isNotEmpty()) {
                     val integer = parts[0]
                     val decimal = if (parts.size > 1) parts[1] else ""
-                    if (newText == integer || (parts.size > 1 && newText == "${integer}${decimal}")) {
+                    if (newText == integer || (parts.size > 1 && newText == "${integer}$decimal")) {
                         val potentialNewValue = newText.trimStart('0')
                         if (potentialNewValue.isEmpty()) {
                             onValueChange("0")
@@ -89,7 +89,6 @@ fun OutlinedNumbersField(
                 }
             }
 
-
             // Limit decimal places
             val decimalIndex = newText.indexOf('.')
             if (decimalIndex != -1) {
@@ -98,7 +97,6 @@ fun OutlinedNumbersField(
                     newText = newText.substring(0, decimalIndex + 1 + 2)
                 }
             }
-
 
             // Handle ".5" -> "0.5"
             if (newText.startsWith(".")) {
@@ -114,7 +112,6 @@ fun OutlinedNumbersField(
                     newText = "0"
                 }
             }
-
 
             // Final check: if after all this, the number is somehow invalid (e.g. just "."),
             // it might be better to revert or set to a sensible default like "0".

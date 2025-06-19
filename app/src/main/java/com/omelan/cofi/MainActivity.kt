@@ -138,7 +138,7 @@ class MainActivity : MonetCompatActivity() {
                     },
                     exitTransition = {
                         scaleOut(targetScale = 0.9F) +
-                                slideOut(AnimatedContentTransitionScope.SlideDirection.Start)
+                            slideOut(AnimatedContentTransitionScope.SlideDirection.Start)
                     },
                     popEnterTransition = {
                         scaleIn(
@@ -151,7 +151,7 @@ class MainActivity : MonetCompatActivity() {
                     },
                     popExitTransition = {
                         scaleOut(targetScale = 0.9F) +
-                                slideOut(AnimatedContentTransitionScope.SlideDirection.End)
+                            slideOut(AnimatedContentTransitionScope.SlideDirection.End)
                     },
                 ) {
                     recipeList(navController = navController)

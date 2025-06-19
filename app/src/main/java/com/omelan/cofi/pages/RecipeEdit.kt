@@ -227,16 +227,16 @@ fun RecipeEdit(
     ) {
         derivedStateOf {
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
-                    (configuration.screenHeightDp > configuration.screenWidthDp)
+                (configuration.screenHeightDp > configuration.screenWidthDp)
         }
     }
 
     val canSafelyExit = !(
-            steps !== stepsToEdit ||
-                    name.text != recipeToEdit.name ||
-                    description.text != recipeToEdit.description ||
-                    pickedIcon != recipeToEdit.recipeIcon
-            )
+        steps !== stepsToEdit ||
+            name.text != recipeToEdit.name ||
+            description.text != recipeToEdit.description ||
+            pickedIcon != recipeToEdit.recipeIcon
+        )
 
     val safeGoBack: () -> Unit = {
         if (!canSafelyExit) {
@@ -589,7 +589,7 @@ private fun IconPickerBottomSheet(
                                     Text(stringResource(id = it.nameResId))
                                 }
                             },
-                            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
                             state = tooltipState,
                         ) {
                             Icon(
