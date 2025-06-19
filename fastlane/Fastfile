@@ -98,7 +98,7 @@ platform :android do
 
   desc "Deploy a new version to the Google Play Store"
   lane :deploy_gps do |options|
-    gradle(task: "app:licensePlayStoreReleaseReport app:bundlePlayStoreRelease wearOS:licenseReleaseReport wearOS:bundleRelease app:bundleInstantRelease")
+    gradle(task: "app:licensePlayStoreReleaseReport app:bundlePlayStoreRelease wearOS:licenseReleaseReport wearOS:bundleRelease")
     upload_to_play_store(
       track: options[:prerelease] ? 'internal' : 'production',
       skip_upload_apk: true,
@@ -110,12 +110,7 @@ platform :android do
       skip_upload_screenshots: true,
       aab_paths: ["wearOS/build/outputs/bundle/release/wearOS-release.aab"]
     )
-#     upload_to_play_store(
-#       track: options[:prerelease] ? 'instant:internal' : 'instant:production',
-#       skip_upload_apk: true,
-#       skip_upload_screenshots: true,
-#       aab_paths: ["app/build/outputs/bundle/instantRelease/app-instant-release.aab"]
-#     )
+
   end
 
   desc "Upload metadata to Google Play Store"

@@ -6,7 +6,6 @@
 
 package com.omelan.cofi.pages.details
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import androidx.compose.animation.*
@@ -58,7 +57,6 @@ import com.omelan.cofi.share.utils.askForNotificationPermission
 import com.omelan.cofi.share.utils.getActivity
 import com.omelan.cofi.share.utils.hasNotificationPermission
 import com.omelan.cofi.ui.Spacing
-import com.omelan.cofi.utils.InstantUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -100,30 +98,26 @@ fun NavGraphBuilder.recipeDetails(
                     }
                     db.recipeDao().updateRecipe(recipe.copy(lastFinished = Date().time))
                 }
-                if (InstantUtils.isInstantApp(context) && !isInPiP) {
-                    InstantUtils.showInstallPrompt(context as Activity)
-                } else {
-                    coroutineScope.launch {
-                        val deepLinkIntent = Intent(
-                            Intent.ACTION_VIEW,
-                            "$appDeepLinkUrl/recipe/$recipeId".toUri(),
-                            context,
-                            MainActivity::class.java,
-                        )
-                        val shortcut =
-                            ShortcutInfoCompat.Builder(context, recipeId.toString())
-                                .setShortLabel(recipe.name.ifEmpty { recipeId.toString() })
-                                .setLongLabel(recipe.name.ifEmpty { recipeId.toString() })
-                                .setIcon(
-                                    IconCompat.createWithResource(
-                                        context,
-                                        recipe.recipeIcon.icon,
-                                    ),
-                                )
-                                .setIntent(deepLinkIntent)
-                                .build()
-                        ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
-                    }
+                coroutineScope.launch {
+                    val deepLinkIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        "$appDeepLinkUrl/recipe/$recipeId".toUri(),
+                        context,
+                        MainActivity::class.java,
+                    )
+                    val shortcut =
+                        ShortcutInfoCompat.Builder(context, recipeId.toString())
+                            .setShortLabel(recipe.name.ifEmpty { recipeId.toString() })
+                            .setLongLabel(recipe.name.ifEmpty { recipeId.toString() })
+                            .setIcon(
+                                IconCompat.createWithResource(
+                                    context,
+                                    recipe.recipeIcon.icon,
+                                ),
+                            )
+                            .setIntent(deepLinkIntent)
+                            .build()
+                    ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
                 }
             },
             goBack = goBack,

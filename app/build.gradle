@@ -67,12 +67,6 @@ android {
 
     flavorDimensions.add("version")
     productFlavors {
-        instant {
-            dimension "version"
-            versionCode android.defaultConfig.versionCode - 1
-            versionNameSuffix "-instant"
-            minSdkVersion 26
-        }
         playStore {
             dimension "version"
         }
@@ -144,7 +138,6 @@ dependencies {
     }
     implementation platform("androidx.compose:compose-bom:$compose_bom_version")
 
-    instantImplementation('com.google.android.gms:play-services-instantapps:18.1.0')
     playStoreImplementation 'com.google.android.gms:play-services-wearable:19.0.0'
     playStoreImplementation "androidx.wear:wear-remote-interactions:1.1.0"
     playStoreImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2'

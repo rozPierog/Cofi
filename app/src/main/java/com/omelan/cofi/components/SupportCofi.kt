@@ -81,7 +81,7 @@ fun SupportCofi(onDismissRequest: () -> Unit) {
                 },
             )
 
-            "instant", "playStore" -> ListItem(
+            "playStore" -> ListItem(
                 modifier = Modifier.clickable {
                     uriHandler.openUri(
                         "https://play.google.com/store/apps/details?id=com.omelan.cofi",
