@@ -24,6 +24,7 @@ fun Material3Dialog(
     properties: DialogProperties = DialogProperties(),
     onSave: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = onDismissRequest,
+    isBusy: Boolean = false,
     title: (@Composable BoxScope.() -> Unit)? = null,
     icon: (@Composable BoxScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
@@ -72,12 +73,12 @@ fun Material3Dialog(
                         .padding(horizontal = Spacing.big),
                 ) {
                     if (onCancel != null) {
-                        TextButton(onClick = onCancel) {
+                        TextButton(onClick = onCancel, enabled = !isBusy) {
                             Text(text = stringResource(id = android.R.string.cancel))
                         }
                     }
                     if (onSave != null) {
-                        TextButton(onClick = onSave) {
+                        TextButton(onClick = onSave, enabled = !isBusy) {
                             Text(text = stringResource(id = android.R.string.ok))
                         }
                     }

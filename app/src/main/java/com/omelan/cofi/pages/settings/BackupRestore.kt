@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 
 package com.omelan.cofi.pages.settings
 
@@ -6,6 +6,7 @@ import android.icu.text.DateFormat
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.rounded.AddCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -31,6 +33,7 @@ import com.omelan.cofi.components.PiPAwareAppBar
 import com.omelan.cofi.components.createAppBarBehavior
 import com.omelan.cofi.share.model.*
 import com.omelan.cofi.utils.getDefaultPadding
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import java.nio.charset.StandardCharsets
@@ -185,8 +188,8 @@ fun RestoreListItem(afterRestore: (numberOfRestored: Int) -> Unit) {
                         val steps = jsonObject.getJSONArray(jsonSteps).toSteps(recipeId = recipeId)
                         db.stepDao().insertAll(steps)
                     }
+                    afterRestore(jsonArray.length())
                 }
-                afterRestore(jsonArray.length())
             }
         }
 
@@ -275,45 +278,69 @@ fun BackupDialog(dismiss: () -> Unit, afterBackup: (numberOfBackups: Int) -> Uni
 }
 
 @Composable
+@ExperimentalMaterial3ExpressiveApi
 fun DefaultRecipesDialog(dismiss: () -> Unit) {
     val recipesToAdd = remember { mutableStateListOf<Recipe>() }
+    var isBusy by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val prepopulateData = PrepopulateData(context)
     val steps = prepopulateData.steps.groupBy { it.recipeId }
     val db = AppDatabase.getInstance(context)
+
     Material3Dialog(
         onDismissRequest = dismiss,
+        isBusy = isBusy,
         onSave = {
-            recipesToAdd.forEach { recipe ->
-                coroutineScope.launch {
-                    val idOfRecipe = db.recipeDao().insertRecipe(recipe.copy(id = 0))
-                    val stepsOfTheRecipe = steps[recipe.id] ?: return@launch
-                    db.stepDao().insertAll(
-                        stepsOfTheRecipe.map {
-                            it.copy(id = 0, recipeId = idOfRecipe.toInt())
-                        },
-                    )
+            isBusy = true
+            val jobs = recipesToAdd.map { recipeToPrepopulate ->
+                val job = coroutineScope.launch {
+                    val newRecipeEntity = recipeToPrepopulate.copy(id = 0)
+                    val newRecipeId = db.recipeDao().insertRecipe(newRecipeEntity)
+                    val stepsOfOriginalRecipe = steps[recipeToPrepopulate.id]
+                    stepsOfOriginalRecipe?.let { originalSteps ->
+                        val newStepsEntities = originalSteps.map { originalStep ->
+                            originalStep.copy(
+                                id = 0,
+                                recipeId = newRecipeId.toInt(),
+                            )
+                        }
+                        db.stepDao().insertAll(newStepsEntities)
+                    }
                 }
+                return@map job
+            }
+            coroutineScope.launch {
+                jobs.joinAll()
+                isBusy = false
                 dismiss()
             }
         },
         title = { Text(text = stringResource(id = R.string.settings_addDefault)) },
     ) {
         HorizontalDivider()
-        LazyColumn {
-            items(prepopulateData.recipes) {
-                val isSelected = recipesToAdd.contains(it)
-                val onCheck: () -> Unit = {
-                    if (isSelected) recipesToAdd.remove(it) else recipesToAdd.add(it)
+        Box(contentAlignment = Alignment.Center) {
+            LazyColumn {
+                items(prepopulateData.recipes) {
+                    val isSelected = recipesToAdd.contains(it)
+                    val onCheck: () -> Unit = {
+                        if (isSelected) recipesToAdd.remove(it) else recipesToAdd.add(it)
+                    }
+                    ListItem(
+                        headlineContent = { Text(it.name) },
+                        modifier = Modifier.selectable(selected = isSelected, onClick = onCheck, enabled = !isBusy),
+                        leadingContent = {
+                            Checkbox(checked = isSelected, onCheckedChange = { onCheck() }, enabled = !isBusy)
+                        },
+                    )
                 }
-                ListItem(
-                    headlineContent = { Text(it.name) },
-                    modifier = Modifier.selectable(selected = isSelected, onClick = onCheck),
-                    leadingContent = {
-                        Checkbox(checked = isSelected, onCheckedChange = { onCheck() })
-                    },
-                )
+            }
+            if (isBusy) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                ) {
+                    LoadingIndicator()
+                }
             }
         }
         HorizontalDivider()
