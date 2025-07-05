@@ -12,6 +12,7 @@ object Destinations {
     const val SETTINGS_ABOUT = "about"
     const val SETTINGS_BACKUP = "backup"
     const val SETTINGS_TIMER = "timer"
+    const val SETTINGS_APPEARANCE= "appearance"
     const val SETTINGS_LICENSES = "licenses"
 }
 

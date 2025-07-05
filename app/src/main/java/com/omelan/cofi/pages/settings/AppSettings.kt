@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Face
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -32,6 +33,7 @@ fun AppSettings(
     goToAbout: () -> Unit,
     goToTimerSettings: () -> Unit,
     goToBackupRestore: () -> Unit,
+    gotToAppearance: () -> Unit,
 ) {
     val uriHandler = LocalUriHandler.current
     val appBarBehavior = createAppBarBehavior()
@@ -107,6 +109,15 @@ fun AppSettings(
             item {
                 ListItem(
                     headlineContent = {
+                        Text(text = "Apperence")
+                    },
+                    leadingContent = { Icon(Icons.Rounded.Face, contentDescription = null) },
+                    modifier = Modifier.settingsItemModifier(onClick = gotToAppearance),
+                )
+            }
+            item {
+                ListItem(
+                    headlineContent = {
                         Text(text = stringResource(id = R.string.settings_about_item))
                     },
                     leadingContent = { Icon(Icons.Rounded.Info, contentDescription = null) },
@@ -163,5 +174,11 @@ fun AppSettings(
 @Preview
 @Composable
 fun SettingsPagePreview() {
-    AppSettings(goBack = { }, goToAbout = { }, goToTimerSettings = {}, goToBackupRestore = {})
+    AppSettings(
+        goBack = { },
+        goToAbout = { },
+        goToTimerSettings = {},
+        goToBackupRestore = {},
+        gotToAppearance = {},
+    )
 }

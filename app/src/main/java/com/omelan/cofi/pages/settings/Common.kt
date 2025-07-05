@@ -48,6 +48,9 @@ fun NavGraphBuilder.settings(
                 goToTimerSettings = {
                     navController.navigate(Destinations.SETTINGS_TIMER)
                 },
+                gotToAppearance = {
+                    navController.navigate(Destinations.SETTINGS_APPEARANCE)
+                },
             )
         }
         composable(Destinations.SETTINGS_TIMER) {
@@ -75,6 +78,9 @@ fun NavGraphBuilder.settings(
         }
         composable(Destinations.SETTINGS_LICENSES) {
             LicensesList(goBack = goBack)
+        }
+        composable(Destinations.SETTINGS_APPEARANCE) {
+            AppearanceSettings(goBack = goBack)
         }
     }
 }

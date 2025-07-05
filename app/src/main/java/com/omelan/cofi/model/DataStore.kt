@@ -18,6 +18,10 @@ class DataStore(val context: Context) : DataStoreShared(context) {
         it[ASKED_FOR_SUPPORT] ?: ASKED_FOR_SUPPORT_DEFAULT_VALUE
     }
 
+    fun getDynamicThemeSetting() = context.dataStore.data.map {
+        it[DYNAMIC_THEME] ?: DYNAMIC_THEME_DEFAULT_VALUE
+    }
+
     fun getLastSeenUpdateNoticeVersion() = context.dataStore.data.map {
         it[UPDATE_NOTICE_VERSION] ?: UPDATE_NOTICE_VERSION_DEFAULT_VALUE
     }
@@ -28,6 +32,10 @@ class DataStore(val context: Context) : DataStoreShared(context) {
 
     fun getCustomMultipliers() = context.dataStore.data.map {
         it[CUSTOM_MULTIPLIER] ?: CUSTOM_MULTIPLIER_DEFAULT_VALUE
+    }
+
+    suspend fun setDynamicTheme(newValue: Boolean) = context.dataStore.edit {
+        it[DYNAMIC_THEME] = newValue
     }
 
     suspend fun setCustomMultipliers(newValue: Set<String>) = context.dataStore.edit {

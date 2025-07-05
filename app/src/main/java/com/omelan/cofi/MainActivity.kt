@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
@@ -22,13 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.kieronquinn.monetcompat.BuildConfig
-import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import com.omelan.cofi.model.DataStore
 import com.omelan.cofi.pages.addRecipe
 import com.omelan.cofi.pages.details.recipeDetails
@@ -39,11 +36,8 @@ import com.omelan.cofi.share.model.AppDatabase
 import com.omelan.cofi.share.pages.Destinations
 import com.omelan.cofi.ui.CofiTheme
 import com.omelan.cofi.utils.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 val LocalPiPState = staticCompositionLocalOf<Boolean> {
@@ -53,20 +47,13 @@ val LocalPiPState = staticCompositionLocalOf<Boolean> {
 const val appDeepLinkUrl = "https://rozpierog.github.io"
 
 @ExperimentalMaterial3WindowSizeClassApi
-class MainActivity : MonetCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Cofi)
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            CoroutineScope(Dispatchers.Main).launch {
-                repeatOnLifecycle(Lifecycle.State.CREATED) {
-                    monet.awaitMonetReady()
-                }
-            }
-        }
         this.setContent(null) {
             MainNavigation()
         }
@@ -108,7 +95,7 @@ class MainActivity : MonetCompatActivity() {
         LaunchedEffect(intent) {
             navController.handleDeepLink(intent)
         }
-        CofiTheme(monet) {
+        CofiTheme {
             val darkIcons = MaterialTheme.colorScheme.background.luminance() > 0.5
             systemUiController.setStatusBarColor(
                 color = Color.Transparent,
