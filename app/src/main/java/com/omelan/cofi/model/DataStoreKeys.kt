@@ -9,6 +9,7 @@ import org.json.JSONObject
 
 val ASKED_FOR_SUPPORT = booleanPreferencesKey("asked_for_support")
 val DYNAMIC_THEME = booleanPreferencesKey("dynamic_theme")
+val WAVY_TIMER = booleanPreferencesKey("wavy_timer")
 val UPDATE_NOTICE_VERSION = intPreferencesKey("update_notice_version")
 val PIP_ENABLED = booleanPreferencesKey("pip_enabled")
 val NEXT_STEP_ENABLED = booleanPreferencesKey("next_step_enabled")
@@ -20,6 +21,7 @@ const val DYNAMIC_THEME_DEFAULT_VALUE = true
 const val UPDATE_NOTICE_VERSION_DEFAULT_VALUE = 0
 const val PIP_DEFAULT_VALUE = true
 val NEXT_STEP_ENABLED_DEFAULT_VALUE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+const val WAVY_TIMER_DEFAULT_VALUE = true
 const val DISMISSED_INFO_DEFAULT_VALUE = "{}"
 val CUSTOM_MULTIPLIER_DEFAULT_VALUE = setOf("0.5", "1", "2", "3")
 

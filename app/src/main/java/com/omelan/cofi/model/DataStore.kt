@@ -22,6 +22,10 @@ class DataStore(val context: Context) : DataStoreShared(context) {
         it[DYNAMIC_THEME] ?: DYNAMIC_THEME_DEFAULT_VALUE
     }
 
+    fun getWavyTimerSetting() = context.dataStore.data.map {
+        it[WAVY_TIMER] ?: WAVY_TIMER_DEFAULT_VALUE
+    }
+
     fun getLastSeenUpdateNoticeVersion() = context.dataStore.data.map {
         it[UPDATE_NOTICE_VERSION] ?: UPDATE_NOTICE_VERSION_DEFAULT_VALUE
     }
@@ -32,6 +36,10 @@ class DataStore(val context: Context) : DataStoreShared(context) {
 
     fun getCustomMultipliers() = context.dataStore.data.map {
         it[CUSTOM_MULTIPLIER] ?: CUSTOM_MULTIPLIER_DEFAULT_VALUE
+    }
+
+    suspend fun setWavyTimer(newValue: Boolean) = context.dataStore.edit {
+        it[WAVY_TIMER] = newValue
     }
 
     suspend fun setDynamicTheme(newValue: Boolean) = context.dataStore.edit {

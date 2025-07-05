@@ -11,15 +11,14 @@ import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -32,6 +31,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.math.MathUtils
 import com.omelan.cofi.R
+import com.omelan.cofi.model.DataStore
+import com.omelan.cofi.model.NEXT_STEP_ENABLED_DEFAULT_VALUE
 import com.omelan.cofi.share.components.StepNameText
 import com.omelan.cofi.share.components.TimeText
 import com.omelan.cofi.share.components.TimerValue
@@ -48,20 +49,34 @@ fun Track(
     strokeWidth: Dp,
     stepLength: Float,
 ) {
+    val context = LocalContext.current
+    val dataStore = DataStore(context)
+    val isWavyTimerEnabled by dataStore.getWavyTimerSetting().collectAsState(
+        initial = NEXT_STEP_ENABLED_DEFAULT_VALUE,
+    )
     val stroke = with(LocalDensity.current) {
         Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
     }
     val waveSpeed =
-        MathUtils.clamp(stepLength * 2f, 5f, 50f) // Ensure wave speed is within a reasonable range
-    CircularWavyProgressIndicator(
-        progress = { progress },
-        color = color,
-        modifier = modifier.aspectRatio(1f),
-        stroke = stroke,
-        trackStroke = stroke,
-        wavelength = waveSpeed.dp,
-        waveSpeed = (waveSpeed / 2).dp,
-    )
+        MathUtils.clamp(stepLength * 2f, 5f, 50f)
+    if (isWavyTimerEnabled) {
+        CircularWavyProgressIndicator(
+            progress = { progress },
+            color = color,
+            modifier = modifier.aspectRatio(1f),
+            stroke = stroke,
+            trackStroke = stroke,
+            wavelength = waveSpeed.dp,
+            waveSpeed = (waveSpeed / 2).dp,
+        )
+    } else {
+        CircularProgressIndicator(
+            progress = { progress },
+            color = color,
+            modifier = modifier.aspectRatio(1f),
+            strokeWidth = strokeWidth,
+        )
+    }
 }
 
 @Composable

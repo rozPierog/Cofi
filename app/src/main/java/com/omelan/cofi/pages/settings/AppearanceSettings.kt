@@ -15,7 +15,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -37,6 +36,14 @@ fun AppearanceSettings(goBack: () -> Unit) {
     val isDynamicThemeEnabled by dataStore.getDynamicThemeSetting().collectAsState(
         NEXT_STEP_ENABLED_DEFAULT_VALUE,
     )
+    val isWavyTimerEnabled by dataStore.getWavyTimerSetting().collectAsState(
+        NEXT_STEP_ENABLED_DEFAULT_VALUE,
+    )
+    val toggleWavyTimer: () -> Unit = {
+        coroutineScope.launch {
+            dataStore.setWavyTimer(!isWavyTimerEnabled)
+        }
+    }
     val toggleDynamicTheme: () -> Unit = {
         coroutineScope.launch {
             dataStore.setDynamicTheme(!isDynamicThemeEnabled)
@@ -92,10 +99,32 @@ fun AppearanceSettings(goBack: () -> Unit) {
                         ),
                     trailingContent = {
                         CofiSwitch(
-                            modifier = Modifier.testTag("settings_timer_switch_pip"),
                             checked = isDynamicThemeEnabled,
                             onCheckedChange = { toggleDynamicTheme() },
                             enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
+                        )
+                    },
+                )
+            }
+            item {
+                ListItem(
+                    headlineContent = {
+                        Text(text = "Wavy Timer")
+                    },
+                    leadingContent = {
+                        Icon(
+                            painterResource(id = R.drawable.ic_timer),
+                            contentDescription = null,
+                        )
+                    },
+                    modifier = Modifier
+                        .settingsItemModifier(
+                            onClick = toggleWavyTimer,
+                        ),
+                    trailingContent = {
+                        CofiSwitch(
+                            checked = isWavyTimerEnabled,
+                            onCheckedChange = { toggleWavyTimer() },
                         )
                     },
                 )
