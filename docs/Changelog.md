@@ -7,11 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added toggle to enable/disable dynamic colors on Android 12+ devices
+- Added ability to save custom multiplier for recipes
 
 ### Changed
+- Updated translations
+- Updated Material You to Material You Expressive
+- fixed issues with restoring recipes
+- improved number input
 
 ### Removed
-
+- Removed dynamic colors from pre android 12 devices
+- Instant app is no longer supported as Google Play will soon stop supporting it
 
 ## [1.21.11|1.12.11] - 2025-02-02
 

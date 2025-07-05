@@ -328,9 +328,17 @@ fun DefaultRecipesDialog(dismiss: () -> Unit) {
                     }
                     ListItem(
                         headlineContent = { Text(it.name) },
-                        modifier = Modifier.selectable(selected = isSelected, onClick = onCheck, enabled = !isBusy),
+                        modifier = Modifier.selectable(
+                            selected = isSelected,
+                            onClick = onCheck,
+                            enabled = !isBusy,
+                        ),
                         leadingContent = {
-                            Checkbox(checked = isSelected, onCheckedChange = { onCheck() }, enabled = !isBusy)
+                            Checkbox(
+                                checked = isSelected,
+                                onCheckedChange = { onCheck() },
+                                enabled = !isBusy,
+                            )
                         },
                     )
                 }
