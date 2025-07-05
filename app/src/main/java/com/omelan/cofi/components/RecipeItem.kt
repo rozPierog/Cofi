@@ -80,6 +80,7 @@ fun LazyGridItemScope.RecipeItem(
             Icon(
                 painterResource(id = recipe.recipeIcon.icon),
                 contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
                 modifier = Modifier
                     .clip(RoundedCornerShape(100))
                     .background(MaterialTheme.colorScheme.primaryContainer)
