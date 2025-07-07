@@ -12,6 +12,7 @@ class PrepopulateData(context: Context) {
     private val aeroPress = 4
     private val cleverDripperId = 5
     private val v601CupId = 6
+    private val aeroPressChampionId = 7
     private var _stepId = 0
     private fun autoStepId(): Int {
         _stepId += 1
@@ -25,6 +26,7 @@ class PrepopulateData(context: Context) {
         aeroPress to 0,
         cleverDripperId to 0,
         v601CupId to 0,
+        aeroPressChampionId to 0,
     )
     private fun autoOrderInRecipe(recipeId: Int): Int {
         val currentOrder = _orderInRecipeMap[recipeId] ?: 0
@@ -64,6 +66,12 @@ class PrepopulateData(context: Context) {
             recipeIcon = RecipeIcon.AeroPress,
         ),
         Recipe(
+            id = aeroPressChampionId,
+            name = resources.getString(R.string.prepopulate_aero_champion_name),
+            description = resources.getString(R.string.prepopulate_aero_champion_description),
+            recipeIcon = RecipeIcon.AeroPress
+        ),
+                Recipe(
             id = cleverDripperId,
             name = resources.getString(R.string.prepopulate_clever_dripper_name),
             description = resources.getString(R.string.prepopulate_clever_dripper_description),
@@ -408,6 +416,57 @@ class PrepopulateData(context: Context) {
             time = 30.toMillis(),
             type = StepType.OTHER,
             orderInRecipe = autoOrderInRecipe(aeroPress),
+        ),
+        // AeroPress Champion 2024
+        Step(
+            id = autoStepId(),
+            recipeId = aeroPressChampionId,
+            name = resources.getString(R.string.prepopulate_aero_champion_step_coffee),
+            value = 18f,
+            time = 0.toMillis(),
+            type = StepType.ADD_COFFEE,
+            orderInRecipe = autoOrderInRecipe(aeroPressChampionId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = aeroPressChampionId,
+            name = resources.getString(R.string.prepopulate_aero_champion_step_water),
+            value = 200f,
+            time = 10.toMillis(),
+            type = StepType.WATER,
+            orderInRecipe = autoOrderInRecipe(aeroPressChampionId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = aeroPressChampionId,
+            name = resources.getString(R.string.prepopulate_aero_champion_step_stir),
+            time = 10.toMillis(),
+            type = StepType.OTHER,
+            orderInRecipe = autoOrderInRecipe(aeroPressChampionId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = aeroPressChampionId,
+            name = resources.getString(R.string.prepopulate_aero_champion_step_wait),
+            time = 30.toMillis(),
+            type = StepType.WAIT,
+            orderInRecipe = autoOrderInRecipe(aeroPressChampionId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = aeroPressChampionId,
+            name = resources.getString(R.string.prepopulate_aero_champion_step_press),
+            time = 20.toMillis(),
+            type = StepType.OTHER,
+            orderInRecipe = autoOrderInRecipe(aeroPressChampionId),
+        ),
+        Step(
+            id = autoStepId(),
+            recipeId = aeroPressChampionId,
+            name = resources.getString(R.string.prepopulate_aero_champion_step_finish),
+            time = 5.toMillis(),
+            type = StepType.OTHER,
+            orderInRecipe = autoOrderInRecipe(aeroPressChampionId),
         ),
         // Clever Dripper
         Step(
