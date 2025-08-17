@@ -109,6 +109,19 @@
 \nRatio: 1:16.67, or 15g to 250mL
 \nFold the filter along both seams to have it fit better inside the brewer
 \nMaximum amount of water is 500mL, but 400 or lower is recommended</string>
+    <string name="prepopulate_aero_champion_name">AeroPress Champion Recipe</string>
+    <string name="prepopulate_aero_champion_step_coffee">Put 18g of coffee into the chamber</string>
+    <string name="prepopulate_aero_champion_step_water">Pour 95°C water until 190ml</string>
+    <string name="prepopulate_aero_champion_step_stir">Stir 8 times and wait until 40 sec</string>
+    <string name="prepopulate_aero_champion_step_wait">Wait</string>
+    <string name="prepopulate_aero_champion_step_press">At 01:30 flip and start pressing until 02:00</string>
+    <string name="prepopulate_aero_champion_step_finish">Serve and enjoy</string>
+    <string name="prepopulate_aero_champion_description">
+    Recipe created by: World AeroPress Championship
+    \nSource: https://worldaeropresschampionship.com/pages/recipes
+    \nGrind size: Medium-fine
+    \nTemperature: 95°C
+    \nRatio: 1:13.9 18g to 250ml</string>
     <string name="tereszkiewicz_credits_title">App icon by: Hubert Tereszkiewicz</string>
     <string name="tereszkiewicz_credits_subtitle">Check out his Dribbble</string>
     <string name="recipe_create_title">Add recipe</string>
