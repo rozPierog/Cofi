@@ -93,7 +93,7 @@
     <string name="support_dialog_mastodon">மாச்டோடனில் என்னைப் பின்தொடரவும்</string>
     <string name="support_dialog_kofi">எனக்கு ஒரு காபி வாங்கவும்</string>
     <string name="support_dialog_review">மதிப்பாய்வு எழுதுங்கள்</string>
-    <string name="support_title">COFI ஐ ஆதரிக்கவும்</string>
+    <string name="support_title">Cofi ஐ ஆதரிக்கவும்</string>
     <string name="infoBox_update_title">கோஃபி புதுப்பிக்கப்பட்டுள்ளது</string>
     <string name="infoBox_update_body">புதியதைப் படிக்க இங்கே சொடுக்கு செய்க</string>
     <string name="settings_step_next_step_item">அடுத்த கட்டத்தைக் காட்டு</string>
@@ -130,4 +130,5 @@
     <string name="prepopulate_aero_step_press">மெதுவாக பிச்டனை அழுத்தவும்</string>
     <string name="prepopulate_aero_description">செய்முறை உருவாக்கியவர்: சேம்ச் ஆஃப்மேன்\n ஆதாரம்: https://youtu.be/j6vlt_juvpc\n அரைக்கும் அளவு: ஒளி வறுத்தலுக்கு - நடுத்தரத்தின் சிறந்த முடிவு. நீங்கள் இருண்ட நீங்கள் அதிகரிக்கும் போது, டோசை அதிகரிக்கவும், அரைக்கவும் நீங்கள் விரும்பலாம்\n வெப்பநிலை: ஒளி வறுத்தலுக்காக - ஒரு கொதி நிலைக்கு கொண்டு வரப்பட்டு உடனடியாகப் பயன்படுத்தப்படுகிறது. இருண்ட ரோச்ட்களுக்கு - 85-90</string>
     <string name="prepopulate_clever_dripper_step_rinse">வடிகட்டியை சூடான நீரில் துவைக்கவும்</string>
+    <string name="settings_appearance_item">தோற்றம்</string>
 </resources>

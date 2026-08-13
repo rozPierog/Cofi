@@ -157,4 +157,5 @@
     <string name="step_add_duration_explainer">A duração do passo determina quanto tempo demorará uma ação (em segundos). Deixe em branco para colocar a receita em pausa até estar pronta.</string>
     <string name="settings_step_vibrate_item">Vibração de mudança de passo</string>
     <string name="name_cezve">Cezve (café turco)</string>
+    <string name="settings_appearance_item">Aparência</string>
 </resources>

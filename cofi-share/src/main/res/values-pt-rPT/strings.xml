@@ -19,7 +19,7 @@
     <string name="recipe_edit_title">Editar receita</string>
     <string name="recipe_add_new_title">Criar nova receita</string>
     <string name="recipe_details_automation_dialog_title">Hiperligação</string>
-    <string name="recipe_details_automation_dialog_text">Usa este link para ires diretamente para a receita. Escreve num NFC Tag ou cria uma automatização no Tasker para tornares o teu café da manhã mais fácil.\nATENÇÃO: Tu não consegues partilhar receitas desta forma!</string>
+    <string name="recipe_details_automation_dialog_text">Use este link para ir diretamente para a receita. Escreva-a num NFC tag ou crie uma automatização no Tasker para tornar o seu café da manhã mais fácil. \nATENÇÃO: Não pode partilhar receitas desta forma!</string>
     <string name="recipe_detials_notification_dialog_text">Se pretender, Cofi irá manter o temporizador em segundo plano. Mas primeiro terá que permitir notificações</string>
     <string name="button_cancel">Cancelar</string>
     <string name="button_no">Não</string>
@@ -73,7 +73,7 @@
     <string name="prepopulate_aero_step_piston">Coloque o êmbolo 1cm dentro da câmara</string>
     <string name="prepopulate_aero_step_press">Pressione o êmbolo cuidadosamente</string>
     <string name="prepopulate_clever_dripper_step_rinse">Enxaguar o filtro com água quente</string>
-    <string name="prepopulate_aero_description">Receita criada por James Hoffmann\nFonte: https://youtu.be/j6VlT_jUVPc\nTipo de moagem: para torra clara - média fina. Possivelmente querá aumentar a dose e o tipo de moagem quanto mais torrado for o café\nTemperatura da água: para torrefação clara - aqueça a água até ferver e use imediatamente. Para torra escura - 84 a 90ºC</string>
+    <string name="prepopulate_aero_description">Receita criada por: James Hoffmann \nFonte: https://youtu.be/j6VlT_jUVPc \nTipo de moagem: para torra clara - média fina. Poderá querer aumentar a dose e o tipo de moagem quanto mais torrado o café for \nTemperatura da água: para torrefação clara - aqueça a água até ferver e use imediatamente. Para torra escura - 84 a 90ºC</string>
     <string name="prepopulate_clever_dripper_step_break_crust">Quebre a crusta misturando ou agitando</string>
     <string name="prepopulate_clever_dripper_step_draw_down">Coloque em cima de um copo e aguarde que drene na totalidade</string>
     <string name="tereszkiewicz_credits_title">Ícones criados por Hubert Tereszkiewicz</string>
@@ -96,11 +96,11 @@
     <string name="infoBox_wearOS_title">Cofi está disponível no WearOS</string>
     <string name="infoBox_wearOS_body">Descarregue a app Cofi para o seu relógio com WearOS!</string>
     <string name="settings_sync_with_phone">Obter opções do seu telemovel</string>
-    <string name="prepopulate_v60_description">Receita criada por James Hoffmann\nFonte: https://youtu.be/AI4ynXzkSQo\nTipo de moagem: Média fina\nTemperatura da água: quanto mais quente, melhor (especialmente em torrefação clara)</string>
-    <string name="prepopulate_v60_1cup_description">Receita criada por James Hoffmann\nFonte: https://youtu.be/1oB1oDrDkHM\nAntes de comerçar, aqueça o seu V60 pondo o filtro de paper dentro do cone e verta a água quente por cima do filtro. Isto pre-aquece o V60 e prepara o filtro para o processo de infusão.\nTipo de moagem: Média fina\nTemperatura da água: quanto mais quente, melhor (especialmente em torrefação clara)</string>
-    <string name="prepopulate_frenchPress_description">Receita criada por James Hoffmann\nFonte: https://youtu.be/st571DYYTR8\nTipo de moagem: Média\nPoderá servir 5 minutos após o ultimo passo, contudo quanto mais tempo esperar melhor ficará</string>
-    <string name="prepopulate_chemex_description">Receita criada por James Hoffmann\nFonte: https://youtu.be/ikt-X5x7yoc\nTipo de moagem: Média fina\nTemperatura da água: quanto mais quente, melhor (especialmente em torrefação clara)\nCertifique-se que a parte mais rígida do filtro está na lado do dreno \nTenha atenção para não bloquear a saída de ar da cafeteira</string>
-    <string name="prepopulate_clever_dripper_description">Receita criada por James Hoffmann\nFonte: https://youtu.be/RpOdennxP24\nTipo de moagem: Média fina\nTemperatura da água: aqueça a água até ferver e use imediatamente\nProporção: 1:16.67 ou 15g para 250 mL\nDobre as duas costuras do filtro para encaixar dentro do gotejador\nO máximo de água é 500mL, mas 400mL ou menos é recomendado</string>
+    <string name="prepopulate_v60_description">Receita criada por: James Hoffmann \nFonte: https://youtu.be/AI4ynXzkSQo \nTipo de moagem: Média fina \nTemperatura da água: quanto mais quente, melhor (especialmente em torrefação clara)</string>
+    <string name="prepopulate_v60_1cup_description">Receita criada por: James Hoffmann \nFonte: https://youtu.be/1oB1oDrDkHM \nAntes de começar, aqueça o seu V60 ao colocar o filtro de papel dentro do cone e verta a água quente por cima do filtro. Isto pre-aquece o V60 e prepara o filtro para o processo de infusão. \nTipo de moagem: Média fina \nTemperatura da água: quanto mais quente, melhor (especialmente em torrefação clara)</string>
+    <string name="prepopulate_frenchPress_description">Receita criada por: James Hoffmann \nFonte: https://youtu.be/st571DYYTR8 \nTipo de moagem: Média \nPoderá servir 5 minutos após o ultimo passo, contudo quanto mais tempo esperar melhor ficará</string>
+    <string name="prepopulate_chemex_description">Receita criada por: James Hoffmann \nFonte: https://youtu.be/ikt-X5x7yoc \nTipo de moagem: Média fina \nTemperatura da água: quanto mais quente, melhor (especialmente em torrefação clara) \nCertifique-se que a parte mais rígida do filtro está no lado do dreno \nTenha atenção para não bloquear a saída de ar da cafeteira</string>
+    <string name="prepopulate_clever_dripper_description">Receita criada por: James Hoffmann \nFonte: https://youtu.be/RpOdennxP24 \nTipo de moagem: Média fina \nTemperatura da água: aqueça a água até ferver e use imediatamente \nProporção: 1:16.67 ou 15g para 250 mL \nDobre as duas costuras do filtro para encaixar dentro do gotejador \nO máximo de água é 500mL, mas 400mL ou menos é recomendado</string>
     <string name="timer_progress_weight">%1$sg/%2$sg</string>
     <string name="timer_step_name_time">%1$s (%2$ss)</string>
     <string name="name_grinder">Moinho de Café</string>

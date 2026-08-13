@@ -157,4 +157,5 @@
     <string name="settings_background_timer_item">Povolit časovač na pozadí</string>
     <string name="button_no">Ne</string>
     <string name="settings_translate_item">Pomocte přeložit Cofi</string>
+    <string name="settings_appearance_item">Vzhled</string>
 </resources>

@@ -52,7 +52,7 @@
         <item quantity="other">Przywrócono %d przepisów</item>
     </plurals>
     <string name="prepopulate_v60_name">V60</string>
-    <string name="prepopulate_v60_description">Przepis od: James Hoffmann\nŹródło: https://youtu.be/AI4ynXzkSQo\nGrubość mielenia: średnio\nTemperature: im cieplej, tym lepiej (szczególnie z jasno paloną kawą)</string>
+    <string name="prepopulate_v60_description">Przepis stworzony przez: James Hoffmann\nŹródło: https://youtu.be/AI4ynXzkSQo\nGrubość mielenia: średnio drobno\nTemperatura: im cieplejsza, tym lepsza (szczególnie przy jasnych paleniach)</string>
     <string name="prepopulate_step_coffee">Dodaj kawę</string>
     <string name="prepopulate_step_water">Dodaj wodę</string>
     <string name="prepopulate_step_swirl">Zamieszaj</string>
@@ -155,4 +155,5 @@
     <string name="button_no">Nie</string>
     <string name="settings_background_timer_item">Zezwól na działanie czasomierz w tle</string>
     <string name="recipe_detials_notification_dialog_title">Zezwolić na działanie czasomierza w tle\?</string>
+    <string name="settings_appearance_item">Wygląd</string>
 </resources>

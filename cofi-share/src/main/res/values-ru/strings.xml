@@ -8,7 +8,7 @@
 \nТемпература: чем выше - тем лучше (особенно для светлой обжарки)
 \nУбедитесь, что самая жесткая часть фильтра находится со стороны слива.
 \nСледите за тем, чтобы не перекрыть выход воздуха</string>
-    <string name="settings_licenses_title">Лицензии открытого ПО</string>
+    <string name="settings_licenses_title">Лицензии с открытым исходным кодом</string>
     <string name="button_copy">Копировать</string>
     <string name="button_cancel">Отмена</string>
     <string name="settings_wearOS_item">Скачать для WearOS</string>
@@ -122,7 +122,7 @@
     <string name="prepopulate_aero_step_piston">Погрузите поршень на 1 см в аэропресс</string>
     <string name="recipe_clone_title">Клонировать этот рецепт?</string>
     <string name="settings_github_item">Github репозиторий</string>
-    <string name="name_cezve">Cezve</string>
+    <string name="name_cezve">Джезва</string>
     <string name="settings_backup_item">Бэкап/Восстановление</string>
     <string name="button_continue_editing">Продолжить редактирование</string>
     <string name="recipe_edit_title">Изменить рецепт</string>
@@ -159,4 +159,5 @@
     <string name="prepopulate_chemex_name">Кемекс</string>
     <string name="prepopulate_step_stir_crust">Перемешать корочку</string>
     <string name="settings_step_vibrate_item">Вибрация изменения шага</string>
+    <string name="settings_appearance_item">Внешний вид</string>
 </resources>

@@ -45,7 +45,7 @@
     <string name="step_add_remove">Entfernen</string>
     <string name="timer_enjoy">Genieße deinen Kaffee</string>
     <string name="prepopulate_v60_name">V60</string>
-    <string name="prepopulate_v60_description">Rezept erstellt von: James Hoffmann\nQuelle: https://youtu.be/AI4ynXzkSQo\nMahlgrad: mittelfein\nTemperatur: je heißer, desto besser (vor allem bei helleren Röstungen)</string>
+    <string name="prepopulate_v60_description">Rezept von: James Hoffmann\nQuelle: https://youtu.be\nMahlgrad: Medium-fein\nTemperatur: Je heißer, desto besser (besonders bei hellen Röstungen)</string>
     <string name="prepopulate_step_coffee">Kaffee hinzufügen</string>
     <string name="prepopulate_step_water">Wasser hinzufügen</string>
     <string name="prepopulate_step_swirl">Schwenken</string>
@@ -152,4 +152,5 @@
     <string name="settings_background_timer_item">Timer im Hintergrund erlauben</string>
     <string name="name_drip">Tropfen</string>
     <string name="prepopulate_clever_dripper_step_draw_down">Oben auf die Tasse legen und ganz nach unten ziehen lassen</string>
+    <string name="settings_appearance_item">Aussehen</string>
 </resources>

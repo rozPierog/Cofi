@@ -1,0 +1,16 @@
+Como um amante apaixonado por café e barista amador, sempre estive em busca da xícara de café perfeita. É por isso que criei este timer de preparo de café gratuito e de código aberto para Android. Com este aplicativo, você pode cronometrar facilmente seus preparos e alcançar o sabor perfeito todas as vezes.
+
+Eu sei como é importante ter controle total sobre o tempo de infusão, e é exatamente isso que este app oferece. Não importa se você está usando uma prensa francesa, método pour-over (filtrado) ou qualquer outro método de preparo, nosso aplicativo facilita o acompanhamento do tempo para garantir o sabor ideal.
+
+Recursos:
+
+- Código aberto e totalmente gratuito
+- Sem limites artificiais para o que você pode adicionar ao app
+- Timer para os seus preparos de café
+- Configurações de tempo personalizáveis para diferentes métodos
+- Interface fácil de usar com design moderno (Material Design mais recente)
+- Modo Picture-in-Picture para multitarefa
+- Aplicativo Wear OS para cronometrar direto no seu smartwatch
+- Absolutamente nenhum rastreamento de usuário ou coleta de dados
+
+Eu sei como pode ser frustrante se contentar com um café medíocre. É por isso que quero ajudar você a extrair café como um profissional e saborear a xícara perfeita sempre. Baixe o Cofi agora e comece sua jornada rumo à perfeição do café!

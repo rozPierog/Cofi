@@ -154,4 +154,5 @@
     <string name="name_drip">Gocce</string>
     <string name="name_tea">Tè</string>
     <string name="name_teapot">Teiera</string>
+    <string name="settings_appearance_item">Aspetto</string>
 </resources>
